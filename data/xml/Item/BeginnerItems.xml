@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+隠された渓谷の修練場管理人、各町にいる旅人案内人から象牙装備を受け取る為の設定ファイル
+上記NPCからは規定のレベルに達するまで何度でも受け取ることができる為、アデナな希少なアイテムは設定しないこと。
+独自のアイテムを設定したい場合は、beginner_items.sqlで行う。
+beginner_items.sqlで設定したアイテムは、キャラクター作成時の一回限りアイテムを受け取ることが可能となっている。
+-->
+<BeginnerItems>
+	<!-- クラス共通 -->
+	<Items ClassInitial="A">
+		<Item ItemId="20028" Amount="1" />
+		<Item ItemId="20082" Amount="1" />
+		<Item ItemId="20126" Amount="1" />
+		<Item ItemId="20173" Amount="1" />
+		<Item ItemId="20206" Amount="1" />
+		<Item ItemId="20232" Amount="1" />
+		<Item ItemId="21168" Amount="1" />
+	</Items>
+	<!-- 君主 -->
+	<Items ClassInitial="P">
+		<Item ItemId="7" Amount="1" />
+		<Item ItemId="35" Amount="1" />
+		<Item ItemId="48" Amount="1" />
+		<Item ItemId="147" Amount="1" />
+	</Items>
+	<!-- ナイト -->
+	<Items ClassInitial="K">
+		<Item ItemId="7" Amount="1" />
+		<Item ItemId="35" Amount="1" />
+		<Item ItemId="48" Amount="1" />
+		<Item ItemId="105" Amount="1" />
+		<Item ItemId="147" Amount="1" />
+		<Item ItemId="174" Amount="1" />
+		<Item ItemId="50540" Amount="1000" />
+	</Items>
+	<!-- エルフ -->
+	<Items ClassInitial="E">
+		<Item ItemId="7" Amount="1" />
+		<Item ItemId="35" Amount="1" />
+		<Item ItemId="174" Amount="1" />
+		<Item ItemId="175" Amount="1" />
+		<Item ItemId="50540" Amount="1000" />
+	</Items>
+	<!-- ウィザード -->
+	<Items ClassInitial="W">
+		<Item ItemId="7" Amount="1" />
+		<Item ItemId="120" Amount="1" />
+	</Items>
+	<!-- ダークエルフ -->
+	<Items ClassInitial="D">
+		<Item ItemId="7" Amount="1" />
+		<Item ItemId="35" Amount="1" />
+		<Item ItemId="73" Amount="1" />
+		<Item ItemId="156" Amount="1" />
+		<Item ItemId="174" Amount="1" />
+		<Item ItemId="50540" Amount="1000" />
+	</Items>
+	<!-- ドラゴンナイト -->
+	<Items ClassInitial="R">
+		<Item ItemId="35" Amount="1" />
+		<Item ItemId="48" Amount="1" />
+		<Item ItemId="147" Amount="1" />
+	</Items>
+	<!-- イリュージョニスト -->
+	<Items ClassInitial="I">
+		<Item ItemId="120" Amount="1" />
+		<Item ItemId="147" Amount="1" />
+		<Item ItemId="174" Amount="1" />
+		<Item ItemId="175" Amount="1" />
+		<Item ItemId="50540" Amount="1000" />
+	</Items>
+</BeginnerItems>

@@ -1,0 +1,928 @@
+/**
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package jp.l1j.server.model.item.executor;
+
+import jp.l1j.configure.Config;
+import jp.l1j.server.datatables.LogEnchantTable;
+import jp.l1j.server.model.Instance.L1ItemInstance;
+import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.inventory.L1PcInventory;
+import jp.l1j.server.model.item.L1ItemId;
+import static jp.l1j.server.model.item.L1ItemId.*;
+import jp.l1j.server.packets.server.S_OwnCharStatus;
+import jp.l1j.server.packets.server.S_ServerMessage;
+import jp.l1j.server.packets.server.S_SpMr;
+import jp.l1j.server.packets.server.S_SystemMessage;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
+import jp.l1j.server.templates.L1Armor;
+
+public class L1EnchantScroll {
+
+	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
+
+	private static L1EnchantScroll _instance;
+
+	public static L1EnchantScroll getInstance() {
+		if (_instance == null) {
+			_instance = new L1EnchantScroll();
+		}
+
+		return _instance;
+	}
+
+	public boolean use(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		boolean result = false;
+
+		int itemId = item.getItemId();
+		int use_type = item.getItem().getUseType();
+		if (itemId == 40075) { // 防具破壊スクロール
+			result = destroyArmor(pc, item, target);
+		} else if (itemId >= 41429 && itemId <= 41432) {
+			// 風の武器強化スクロール、地の武器強化スクロール
+			// 水の武器強化スクロール、火の武器強化スクロール
+			result = enchantAttrWeapon(pc, item, target);
+		} else if (itemId == 49148) { // 装飾品強化スクロール
+			result = enchantAccessory(pc, item, target);
+		} else if (itemId == 50541) { // 旅人の防具強化スクロール
+			result = enchantBeginnerArmor(pc, item, target);
+		} else if (itemId == 50542) { // 旅人の武器強化スクロール
+			result = enchantBeginnerWeapon(pc, item, target);
+		} else if (use_type == 26) { // 武器強化スクロール
+			result = enchantWeapon(pc, item, target);
+		} else if (use_type == 27) { // 防具強化スクロール
+			result = enchantArmor(pc, item, target);
+		}
+		return result;
+	}
+
+	private boolean destroyArmor(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		if (target.getItem().getType2() == 2) {
+			int msg = 0;
+			switch (target.getItem().getType()) {
+			case 1: // helm
+				msg = 171; // \f1ヘルムが塵になり、風に飛んでいきます。
+				break;
+			case 2: // armor
+				msg = 169; // \f1アーマーが壊れ、下に落ちました。
+				break;
+			case 3: // T
+				msg = 170; // \f1シャツが細かい糸になり、破けて落ちました。
+				break;
+			case 4: // cloak
+				msg = 168; // \f1マントが破れ、塵になりました。
+				break;
+			case 5: // glove
+				msg = 172; // \f1グローブが消えました。
+				break;
+			case 6: // boots
+				msg = 173; // \f1靴がバラバラになりました。
+				break;
+			case 7: // shield
+				msg = 174; // \f1シールドが壊れました。
+				break;
+			default:
+				msg = 167; // \f1肌がムズムズします。
+				break;
+			}
+			pc.sendPackets(new S_ServerMessage(msg));
+			pc.getInventory().removeItem(target, 1);
+		} else {
+			pc.sendPackets(new S_ServerMessage(154)); // \f1スクロールが散らばります。
+		}
+
+		return true;
+	}
+
+	private boolean enchantWeapon(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		int itemId = item.getItemId();
+
+		if (target == null || target.getItem().getType2() != 1) {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int safe_enchant = target.getItem().getSafeEnchant();
+		if (safe_enchant < 0) { // 強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		if (target.isSealed()) { // 封印された装備強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int quest_weapon = target.getItem().getItemId();
+		if (quest_weapon >= 246 && quest_weapon <= 249) { // 強化不可
+			if (itemId == SCROLL_OF_ENCHANT_QUEST_WEAPON) { // 試練のスクロール
+			} else {
+				pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+				return false;
+			}
+		}
+		if (itemId == SCROLL_OF_ENCHANT_QUEST_WEAPON) { // 試練のスクロール
+			if (quest_weapon >= 246 && quest_weapon <= 249) { // 強化不可
+			} else {
+				pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+				return false;
+			}
+		}
+		int weaponId = target.getItem().getItemId();
+		if (weaponId == 36 || weaponId == 183 || weaponId >= 250
+				&& weaponId <= 255) { // イリュージョン武器
+			if (itemId == 40128) { // イリュージョン武器強化スクロール
+			} else {
+				pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+				return false;
+			}
+		}
+		if (itemId == 40128) { // イリュージョン武器強化スクロール
+			if (weaponId == 36 || weaponId == 183 || weaponId >= 250
+					&& weaponId <= 255) { // イリュージョン武器
+			} else {
+				pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+				return false;
+			}
+		}
+
+		int enchant_level = target.getEnchantLevel();
+
+		if (itemId == C_SCROLL_OF_ENCHANT_WEAPON) { // c-dai
+			if (enchant_level < -6) {
+				// -7以上はできない。
+				failureEnchant(pc, target);
+			} else {
+				successEnchant(pc, target, -1);
+			}
+		} else if (enchant_level < safe_enchant) {
+			successEnchant(pc, target, randomLevel(target, itemId));
+		} else {
+			int rnd = _random.nextInt(100) + 1;
+			int enchant_chance_wepon;
+			if (enchant_level >= 9) {
+				enchant_chance_wepon = (100 + 3 * Config.ENCHANT_CHANCE_WEAPON) / 6;
+			} else {
+				enchant_chance_wepon = (100 + 3 * Config.ENCHANT_CHANCE_WEAPON) / 3;
+			}
+
+			if (rnd < enchant_chance_wepon) {
+				int randomEnchantLevel = randomLevel(target, itemId);
+				successEnchant(pc, target, randomEnchantLevel);
+			} else if (enchant_level >= 9
+					&& rnd < (enchant_chance_wepon * 2)) {
+				// \f1%0が%2と強烈に%1光りましたが、幸い無事にすみました。
+				pc.sendPackets(new S_ServerMessage(160, target.getLogName(), "$245", "$248"));
+			} else {
+				failureEnchant(pc, target);
+			}
+		}
+		return true;
+	}
+
+	private boolean enchantArmor(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		int itemId = item.getItemId();
+
+		if (target == null
+				|| target.getItem().getType2() != 2
+				|| target.getItem().getType() >= 10) {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int safe_enchant = ((L1Armor) target.getItem()).getSafeEnchant();
+		if (safe_enchant < 0) { // 強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		if (target.isSealed()) { // 封印された装備強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int armorId = target.getItem().getItemId();
+		if (armorId == 20161 || armorId >= 21035 && armorId <= 21038) { // イリュージョン防具
+			if (itemId == 40127) { // イリュージョン防具強化スクロール
+			} else {
+				pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+				return false;
+			}
+		}
+		if (itemId == 40127) { // イリュージョン防具強化スクロール
+			if (armorId == 20161 || armorId >= 21035
+					&& armorId <= 21038) { // イリュージョン防具
+			} else {
+				pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+				return false;
+			}
+		}
+
+		int enchant_level = target.getEnchantLevel();
+		if (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_ARMOR) { // c-zel
+			if (enchant_level < -6) {
+				// -7以上はできない。
+				failureEnchant(pc, target);
+			} else {
+				successEnchant(pc, target, -1);
+			}
+		} else if (enchant_level < safe_enchant) {
+			successEnchant(pc, target, randomLevel(target, itemId));
+		} else {
+			int rnd = _random.nextInt(100) + 1;
+			int enchant_chance_armor;
+			int enchant_level_tmp;
+			if (safe_enchant == 0) { // 骨、ブラックミスリル用補正
+				enchant_level_tmp = enchant_level + 2;
+			} else {
+				enchant_level_tmp = enchant_level;
+			}
+			if (enchant_level >= 9) {
+				enchant_chance_armor = (100 + enchant_level_tmp
+						* Config.ENCHANT_CHANCE_ARMOR)
+						/ (enchant_level_tmp * 2);
+			} else {
+				enchant_chance_armor = (100 + enchant_level_tmp
+						* Config.ENCHANT_CHANCE_ARMOR)
+						/ enchant_level_tmp;
+			}
+
+			if (rnd < enchant_chance_armor) {
+				int randomEnchantLevel = randomLevel(target, itemId);
+				successEnchant(pc, target, randomEnchantLevel);
+			} else if (enchant_level >= 9
+					&& rnd < (enchant_chance_armor * 2)) {
+				String item_name_id = target.getName();
+				String pm = "";
+				String msg = "";
+				if (enchant_level > 0) {
+					pm = "+";
+				}
+				msg = (new StringBuilder()).append(pm + enchant_level)
+						.append(" ").append(item_name_id).toString();
+				// \f1%0が%2と強烈に%1光りましたが、幸い無事にすみました。
+				pc.sendPackets(new S_ServerMessage(160, msg, "$252",
+						"$248"));
+			} else {
+				failureEnchant(pc, target);
+			}
+		}
+		return true;
+	}
+
+	private boolean enchantAttrWeapon(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		int itemId = item.getItemId();
+
+		if (target == null
+				|| target.getItem().getType2() != 1) {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int safeEnchant = target.getItem().getSafeEnchant();
+		if (safeEnchant < 0) { // 強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		if (target.isSealed()) { // 封印された装備強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		// 0:無属性 1:地 2:火 4:水 8:風
+		int oldAttrEnchantKind = target.getAttrEnchantKind();
+		int oldAttrEnchantLevel = target.getAttrEnchantLevel();
+
+		boolean isSameAttr = false; // スクロールと強化済みの属性が同一か
+		if (itemId == 41429 && oldAttrEnchantKind == 8
+				|| itemId == 41430 && oldAttrEnchantKind == 1
+				|| itemId == 41431 && oldAttrEnchantKind == 4
+				|| itemId == 41432 && oldAttrEnchantKind == 2) { // 同じ属性
+			isSameAttr = true;
+		}
+		if (isSameAttr && oldAttrEnchantLevel >= 3) {
+			pc.sendPackets(new S_ServerMessage(1453)); // これ以上は強化できません。
+			return false;
+		}
+
+		int rnd = _random.nextInt(100) + 1;
+		if (Config.ATTR_ENCHANT_CHANCE >= rnd) {
+			pc.sendPackets(new S_ServerMessage(1410, target
+					.getLogName(), "$245", "$247")); // f1%0に強力な魔法の力が染み入ります。
+			int newAttrEnchantKind = 0;
+			int newAttrEnchantLevel = 0;
+			if (isSameAttr) { // 同じ属性なら+1
+				newAttrEnchantLevel = oldAttrEnchantLevel + 1;
+			} else { // 異なる属性なら1
+				newAttrEnchantLevel = 1;
+			}
+			if (itemId == 41429) { // 風の武器強化スクロール
+				newAttrEnchantKind = 8;
+			} else if (itemId == 41430) { // 地の武器強化スクロール
+				newAttrEnchantKind = 1;
+			} else if (itemId == 41431) { // 水の武器強化スクロール
+				newAttrEnchantKind = 4;
+			} else if (itemId == 41432) { // 火の武器強化スクロール
+				newAttrEnchantKind = 2;
+			}
+			target.setAttrEnchantKind(newAttrEnchantKind);
+			pc.getInventory().updateItem(target,
+					L1PcInventory.COL_ATTR_ENCHANT_KIND);
+			pc.getInventory().saveItem(target);
+			target.setAttrEnchantLevel(newAttrEnchantLevel);
+			pc.getInventory().updateItem(target,
+					L1PcInventory.COL_ATTR_ENCHANT_LEVEL);
+			pc.getInventory().saveItem(target);
+		} else {
+			pc.sendPackets(new S_ServerMessage(1411, target.getLogName(), "$245", "$247")); // f1%0に魔法が入り込めません。
+		}
+		return true;
+	}
+
+	private boolean enchantAccessory(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		if (target == null
+				|| target.getItem().getType2() != 2
+				|| target.getItem().getType() < 10
+				|| target.getItem().getType() > 13) {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int safe_enchant = target.getItem().getSafeEnchant();
+		if (safe_enchant < 0) { // 強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		if (target.isSealed()) { // 封印された装備強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int enchant_level = target.getEnchantLevel();
+		if (enchant_level >= 10) { // 強化上限 +10
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int rnd = _random.nextInt(100) + 1;
+		int enchant_chance_accessory;
+		if (enchant_level >= 5) {
+			enchant_chance_accessory =
+					(100 + 3 * Config.ENCHANT_CHANCE_ACCESSORY) / 6;
+		} else {
+			enchant_chance_accessory =
+					(100 + 3 * Config.ENCHANT_CHANCE_ACCESSORY) / 3;
+		}
+
+		if (rnd < enchant_chance_accessory) { // 成功
+			successEnchant(pc, target, 1);
+		} else { // 失敗
+			failureEnchant(pc, target);
+		}
+		return true;
+	}
+
+	private boolean enchantBeginnerWeapon(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		if (target == null
+				|| target.getItem().getType2() != 1) {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		if (target.isSealed()) { // 封印された装備強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int weaponId = target.getItem().getItemId();
+		if (weaponId != 7 && weaponId != 35 && weaponId != 48 && weaponId != 73 && weaponId != 105
+				&& weaponId != 120 && weaponId != 147 && weaponId != 156
+				&& weaponId != 174 && weaponId != 175 && weaponId != 224) { // 象牙の塔装備以外
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int safe_enchant = target.getItem().getSafeEnchant();
+		if (target.getEnchantLevel() < safe_enchant) {
+			successEnchant(pc, target, 1);
+		} else {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+		return true;
+	}
+
+	private boolean enchantBeginnerArmor(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		if (target == null
+				|| target.getItem().getType2() != 2) {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		if (target.isSealed()) { // 封印された装備強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int armorId = target.getItem().getItemId();
+		if (armorId != 20028 && armorId != 20082 && armorId != 20126 && armorId != 20173
+				&& armorId != 20206 && armorId != 20232 && armorId != 21168
+				&& armorId != 21051 && armorId != 21052 && armorId != 21053
+				&& armorId != 21054 && armorId != 21055 && armorId != 21056
+				&& armorId != 21170 && armorId != 21171) { // 象牙の塔装備、濡れた装備以外
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int safe_enchant = target.getItem().getSafeEnchant();
+		if (target.getEnchantLevel() < safe_enchant) {
+			successEnchant(pc, target, 1);
+		} else {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+		return true;
+	}
+
+	private void successEnchant(L1PcInstance pc, L1ItemInstance item, int i) {
+		String s = "";
+		String sa = "";
+		String sb = "";
+		String s1 = item.getName();
+		String pm = "";
+		if (item.getEnchantLevel() > 0) {
+			pm = "+";
+		}
+		if (item.getItem().getType2() == 1) {
+			if (!item.isIdentified() || item.getEnchantLevel() == 0) {
+				switch (i) {
+				case -1:
+					s = s1;
+					sa = "$246";
+					sb = "$247";
+					break;
+
+				case 1: // '\001'
+					s = s1;
+					sa = "$245";
+					sb = "$247";
+					break;
+
+				case 2: // '\002'
+					s = s1;
+					sa = "$245";
+					sb = "$248";
+					break;
+
+				case 3: // '\003'
+					s = s1;
+					sa = "$245";
+					sb = "$248";
+					break;
+				}
+			} else {
+				switch (i) {
+				case -1:
+					s = (new StringBuilder()).append(
+							pm + item.getEnchantLevel()).append(" ").append(s1).toString();
+					// \f1%0が%2%1光ります。
+					sa = "$246";
+					sb = "$247";
+					break;
+
+				case 1: // '\001'
+					s = (new StringBuilder()).append(
+							pm + item.getEnchantLevel()).append(" ").append(s1).toString();
+					// \f1%0が%2%1光ります。
+					sa = "$245";
+					sb = "$247";
+					break;
+
+				case 2: // '\002'
+					s = (new StringBuilder()).append(
+							pm + item.getEnchantLevel()).append(" ").append(s1).toString();
+					// \f1%0が%2%1光ります。
+					sa = "$245";
+					sb = "$248";
+					break;
+
+				case 3: // '\003'
+					s = (new StringBuilder()).append(
+							pm + item.getEnchantLevel()).append(" ").append(s1).toString();
+					// \f1%0が%2%1光ります。
+					sa = "$245";
+					sb = "$248";
+					break;
+				}
+			}
+		} else if (item.getItem().getType2() == 2) {
+			if (!item.isIdentified() || item.getEnchantLevel() == 0) {
+				switch (i) {
+				case -1:
+					s = s1;
+					sa = "$246";
+					sb = "$247";
+					break;
+
+				case 1: // '\001'
+					s = s1;
+					sa = "$252";
+					sb = "$247 ";
+					break;
+
+				case 2: // '\002'
+					s = s1;
+					sa = "$252";
+					sb = "$248 ";
+					break;
+
+				case 3: // '\003'
+					s = s1;
+					sa = "$252";
+					sb = "$248 ";
+					break;
+				}
+			} else {
+				switch (i) {
+				case -1:
+					s = (new StringBuilder()).append(
+							pm + item.getEnchantLevel()).append(" ").append(s1).toString();
+					// \f1%0が%2%1光ります。
+					sa = "$246";
+					sb = "$247";
+					break;
+
+				case 1: // '\001'
+					s = (new StringBuilder()).append(
+							pm + item.getEnchantLevel()).append(" ").append(s1).toString();
+					// \f1%0が%2%1光ります。
+					sa = "$252";
+					sb = "$247 ";
+					break;
+
+				case 2: // '\002'
+					s = (new StringBuilder()).append(
+							pm + item.getEnchantLevel()).append(" ").append(s1).toString();
+					// \f1%0が%2%1光ります。
+					sa = "$252";
+					sb = "$248 ";
+					break;
+
+				case 3: // '\003'
+					s = (new StringBuilder()).append(
+							pm + item.getEnchantLevel()).append(" ").append(s1).toString();
+					// \f1%0が%2%1光ります。
+					sa = "$252";
+					sb = "$248 ";
+					break;
+				}
+			}
+		}
+		pc.sendPackets(new S_ServerMessage(161, s, sa, sb));
+
+		int safe_enchant = item.getItem().getSafeEnchant();
+		int oldEnchantLvl = item.getEnchantLevel();
+		int newEnchantLvl = oldEnchantLvl + i;
+		int itemId = item.getItem().getItemId();
+		if (itemId == 20011 || itemId == 20110 || itemId == 21108
+				|| itemId == 21194 || itemId == 120011) {
+			// マジックヘルム、マジックチェーンメイル、キャラクター名の魔法抵抗のＴシャツ
+			// タラスブーツ
+			item.setMr(item.getMr() + i);
+		}
+		if (itemId == 20056 || itemId == 120056 || itemId == 220056) { // マジック クローク
+			item.setMr(item.getMr() + i * 2);
+		}
+		if (itemId == 20465) { // フィアバンパイアマント
+			item.setMr(item.getMr() + i * 3);
+		}
+
+		int grade = item.getItem().getGrade();
+		if (item.getItem().getType2() == 2 && item.getItem().getType() >= 10
+				&& item.getItem().getType() <= 13) { // アクセサリー
+			if (grade == 0) { // 上級
+				// +1毎の強化効果
+				item.setDefenseEarth(item.getDefenseEarth() + 1);
+				item.setDefenseWater(item.getDefenseWater() + 1);
+				item.setDefenseFire(item.getDefenseFire() + 1);
+				item.setDefenseWind(item.getDefenseWind() + 1);
+				// +6以上の強化時のボーナス
+				if (newEnchantLvl >= 6) {
+					item.setHpr(item.getHpr() + 1);
+					item.setMpr(item.getMpr() + 1);
+				}
+			} else if (grade == 1) { // 中級
+				// +1毎の強化効果
+				item.setHp(item.getHp() + 2);
+				// +6以上の強化時のボーナス
+				if (newEnchantLvl >= 6) {
+					item.setMr(item.getMr() + 1);
+				}
+			} else if (grade == 2) { // 初級
+				// +1毎の強化効果
+				item.setMp(item.getMp() + 1);
+				// +6以上の強化時のボーナス
+				if (newEnchantLvl >= 6) {
+					item.setSp(item.getSp() + 1);
+				}
+			//} else if (grade == 3) { // 特級は未実装
+			}
+		}
+		item.setEnchantLevel(newEnchantLvl);
+		pc.getInventory().updateItem(item, L1PcInventory.COL_ENCHANTLVL);
+		if (newEnchantLvl > safe_enchant) {
+			pc.getInventory().saveItem(item);
+		}
+		if (item.getItem().getType2() == 1
+				&& Config.LOGGING_WEAPON_ENCHANT != 0) {
+			if (safe_enchant == 0
+					|| newEnchantLvl >= Config.LOGGING_WEAPON_ENCHANT) {
+				loggingEnchant(pc, item, oldEnchantLvl, newEnchantLvl);
+			}
+		}
+		if (item.getItem().getType2() == 2 && item.getItem().getType() < 10
+				&& Config.LOGGING_ARMOR_ENCHANT != 0) {
+			if (safe_enchant == 0
+					|| newEnchantLvl >= Config.LOGGING_ARMOR_ENCHANT) {
+				loggingEnchant(pc, item, oldEnchantLvl, newEnchantLvl);
+			}
+		}
+		if (item.getItem().getType2() == 2 && item.getItem().getType() >= 10
+				&& item.getItem().getType() <= 13
+				&& Config.LOGGING_ACCESSORY_ENCHANT != 0) {
+			if (safe_enchant == 0
+					|| newEnchantLvl >= Config.LOGGING_ACCESSORY_ENCHANT) {
+				loggingEnchant(pc, item, oldEnchantLvl, newEnchantLvl);
+			}
+		}
+		if (item.getItem().getType2() == 1
+				&& Config.ANNOUNCE_WEAPON_ENCHANT != 0) {
+			if (safe_enchant == 0
+					|| newEnchantLvl >= Config.ANNOUNCE_WEAPON_ENCHANT) {
+				announceEnchant(pc, item);
+			}
+		}
+		if (item.getItem().getType2() == 2 && item.getItem().getType() < 10
+				&& Config.ANNOUNCE_ARMOR_ENCHANT != 0) {
+			if (safe_enchant == 0
+					|| newEnchantLvl >= Config.ANNOUNCE_ARMOR_ENCHANT) {
+				announceEnchant(pc, item);
+			}
+		}
+		if (item.getItem().getType2() == 2 && item.getItem().getType() >= 10
+				&& item.getItem().getType() <= 13
+				&& Config.ANNOUNCE_ACCESSORY_ENCHANT != 0) {
+			if (safe_enchant == 0
+					|| newEnchantLvl >= Config.ANNOUNCE_ACCESSORY_ENCHANT) {
+				announceEnchant(pc, item);
+			}
+		}
+		if (item.isEquipped()) { // 装備中
+			if (item.getItem().getType2() == 2
+					&& item.getItem().getType() < 10) { // 防具
+				pc.addAc(-i);
+				int i2 = item.getItem().getItemId();
+				if (i2 == 20011 || i2 == 20110 || i2 == 21108
+						|| i2 == 21194 || i2 == 120011) {
+					// マジックヘルム、マジックチェーンメイル、キャラクター名の魔法抵抗のＴシャツ
+					// タラスブーツ
+					pc.addMr(i);
+					pc.sendPackets(new S_SpMr(pc));
+				}
+				if (i2 == 20056 || i2 == 120056 || i2 == 220056) { // マジック クローク
+					pc.addMr(i * 2);
+					pc.sendPackets(new S_SpMr(pc));
+				}
+				if (i2 == 20465) { // フィアバンパイアマント
+					pc.addMr(i * 3);
+					pc.sendPackets(new S_SpMr(pc));
+				}
+				pc.sendPackets(new S_OwnCharStatus(pc));
+			} else if (item.getItem().getType2() == 2
+					&& item.getItem().getType() >= 10
+					&& item.getItem().getType() <= 13) { // アクセサリー
+				if (grade == 0) { // 上級
+					pc.addFire(1);
+					pc.addWater(1);
+					pc.addEarth(1);
+					pc.addWind(1);
+					pc.sendPackets(new S_OwnCharStatus(pc));
+					if (newEnchantLvl >= 6) {
+						pc.addHpr(1);
+						pc.addMpr(1);
+					}
+				} else if (grade == 1) { // 中級
+					pc.addMaxHp(2);
+					if (newEnchantLvl >= 6) {
+						pc.addMr(1);
+						pc.sendPackets(new S_SpMr(pc));
+					}
+				} else if (grade == 2) { // 初級
+					pc.addMaxMp(1);
+					if (newEnchantLvl >= 6) {
+						pc.addSp(1);
+						pc.sendPackets(new S_SpMr(pc));
+					}
+				}
+			}
+		}
+	}
+
+	private void failureEnchant(L1PcInstance pc, L1ItemInstance item) {
+		String s = "";
+		String sa = "";
+		int itemType = item.getItem().getType2();
+		String nameId = item.getName();
+		String pm = "";
+		if (itemType == 1) { // 武器
+			if (!item.isIdentified() || item.getEnchantLevel() == 0) {
+				s = nameId; // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
+				sa = "$245";
+			} else {
+				if (item.getEnchantLevel() > 0) {
+					pm = "+";
+				}
+				s = (new StringBuilder()).append(pm + item.getEnchantLevel())
+						.append(" ").append(nameId).toString(); // \f1%0が強烈に%1
+				// 光ったあと
+				// 、蒸発してなくなります。
+				sa = "$245";
+			}
+		} else if (itemType == 2) { // 防具
+			if (!item.isIdentified() || item.getEnchantLevel() == 0) {
+				s = nameId; // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
+				sa = " $252";
+			} else {
+				if (item.getEnchantLevel() > 0) {
+					pm = "+";
+				}
+				s = (new StringBuilder()).append(pm + item.getEnchantLevel())
+						.append(" ").append(nameId).toString(); // \f1%0が強烈に%1
+				// 光ったあと
+				// 、蒸発してなくなります。
+				sa = " $252";
+			}
+		}
+		pc.sendPackets(new S_ServerMessage(164, s, sa));
+		pc.getInventory().removeItem(item, item.getCount());
+	}
+
+	private int enchantChance(L1ItemInstance l1iteminstance) {
+		byte byte0 = 0;
+		int i = l1iteminstance.getEnchantLevel();
+		if (l1iteminstance.getItem().getType2() == 1) {
+			switch (i) {
+			case 0: // '\0'
+				byte0 = 50;
+				break;
+
+			case 1: // '\001'
+				byte0 = 33;
+				break;
+
+			case 2: // '\002'
+				byte0 = 25;
+				break;
+
+			case 3: // '\003'
+				byte0 = 25;
+				break;
+
+			case 4: // '\004'
+				byte0 = 25;
+				break;
+
+			case 5: // '\005'
+				byte0 = 20;
+				break;
+
+			case 6: // '\006'
+				byte0 = 33;
+				break;
+
+			case 7: // '\007'
+				byte0 = 33;
+				break;
+
+			case 8: // '\b'
+				byte0 = 33;
+				break;
+
+			case 9: // '\t'
+				byte0 = 25;
+				break;
+
+			case 10: // '\n'
+				byte0 = 20;
+				break;
+			}
+		} else if (l1iteminstance.getItem().getType2() == 2) {
+			switch (i) {
+			case 0: // '\0'
+				byte0 = 50;
+				break;
+
+			case 1: // '\001'
+				byte0 = 33;
+				break;
+
+			case 2: // '\002'
+				byte0 = 25;
+				break;
+
+			case 3: // '\003'
+				byte0 = 25;
+				break;
+
+			case 4: // '\004'
+				byte0 = 25;
+				break;
+
+			case 5: // '\005'
+				byte0 = 20;
+				break;
+
+			case 6: // '\006'
+				byte0 = 17;
+				break;
+
+			case 7: // '\007'
+				byte0 = 14;
+				break;
+
+			case 8: // '\b'
+				byte0 = 12;
+				break;
+
+			case 9: // '\t'
+				byte0 = 11;
+				break;
+			}
+		}
+		return byte0;
+	}
+
+	private int randomLevel(L1ItemInstance item, int itemId) {
+		if (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_ARMOR
+				|| itemId == L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON
+				|| itemId == 140129 || itemId == 140130) {
+			if (item.getEnchantLevel() <= 2) {
+				int j = _random.nextInt(100) + 1;
+				if (j < 32) {
+					return 1;
+				} else if (j >= 33 && j <= 76) {
+					return 2;
+				} else if (j >= 77 && j <= 100) {
+					return 3;
+				}
+			} else if (item.getEnchantLevel() >= 3
+					&& item.getEnchantLevel() <= 5) {
+				int j = _random.nextInt(100) + 1;
+				if (j < 50) {
+					return 2;
+				} else {
+					return 1;
+				}
+			}
+			{
+				return 1;
+			}
+		}
+		return 1;
+	}
+
+	private void loggingEnchant(L1PcInstance pc, L1ItemInstance item,
+			int oldEnchantLvl, int newEnchantLvl) {
+		LogEnchantTable logenchant = new LogEnchantTable();
+		logenchant.storeLogEnchant(pc.getId(), item.getId(),
+				oldEnchantLvl, newEnchantLvl);
+	}
+
+	private void announceEnchant(L1PcInstance pc, L1ItemInstance item) {
+		for (L1PcInstance listner : L1World.getInstance().getAllPlayers()) {
+			if (!listner.getExcludingList().contains(pc.getName())) {
+				if (listner.isShowTradeChat() || listner.isShowWorldChat()) {
+					String msg = pc.getName() + "が" + item.getLogName()
+							+ "の製作に成功しました。";
+					listner.sendPackets(new S_SystemMessage(msg));
+				}
+			}
+		}
+	}
+
+}

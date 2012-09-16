@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ItemEffectList>
+	<!-- スペル スクロール (ヒール) -->
+	<Item ItemId="40859" Remove="1">
+		<Effect SkillId="1" />
+	</Item>
+	<!-- スペル スクロール (ライト) -->
+	<Item ItemId="40860" Remove="1">
+		<Effect SkillId="2" />
+	</Item>
+	<!-- スペル スクロール (シールド) -->
+	<Item ItemId="40861" Remove="1">
+		<Effect SkillId="3" />
+	</Item>
+	<!-- スペル スクロール (エネルギー ボルト) -->
+	<Item ItemId="40862" Remove="1">
+		<Effect SkillId="4" />
+	</Item>
+	<!-- スペル スクロール (テレポート) -->
+	<Item ItemId="40863" Remove="1">
+		<Effect SkillId="5" />
+	</Item>
+	<!-- スペル スクロール (アイス ダガー) -->
+	<Item ItemId="40864" Remove="1">
+		<Effect SkillId="6" />
+	</Item>
+	<!-- スペル スクロール (ウィンド カッター) -->
+	<Item ItemId="40865" Remove="1">
+		<Effect SkillId="7" />
+	</Item>
+	<!-- スペル スクロール (ホーリー ウェポン) -->
+	<Item ItemId="40866" Remove="1">
+		<Effect SkillId="8" />
+	</Item>
+	<!-- スペル スクロール (キュア ポイズン) -->
+	<Item ItemId="40867" Remove="1">
+		<Effect SkillId="9" />
+	</Item>
+	<!-- スペル スクロール (チル タッチ) -->
+	<Item ItemId="40868" Remove="1">
+		<Effect SkillId="10" />
+	</Item>
+	<!-- スペル スクロール (カーズポイズン) -->
+	<Item ItemId="40869" Remove="1">
+		<Effect SkillId="11" />
+	</Item>
+	<!-- スペル スクロール (エンチャント ウェポン) -->
+	<Item ItemId="40870" Remove="1">
+		<Effect SkillId="12" />
+	</Item>
+	<!-- スペル スクロール (ディテクション) -->
+	<Item ItemId="40871" Remove="1">
+		<Effect SkillId="13" />
+	</Item>
+	<!-- スペル スクロール (ディクリース ウェイト) -->
+	<Item ItemId="40872" Remove="1">
+		<Effect SkillId="14" />
+	</Item>
+	<!-- スペル スクロール (ファイアー アロー) -->
+	<Item ItemId="40873" Remove="1">
+		<Effect SkillId="15" />
+	</Item>
+	<!-- スペル スクロール (スタラック) -->
+	<Item ItemId="40874" Remove="1">
+		<Effect SkillId="16" />
+	</Item>
+	<!-- スペル スクロール (ライトニング) -->
+	<Item ItemId="40875" Remove="1">
+		<Effect SkillId="17" />
+	</Item>
+	<!-- スペル スクロール (ターン アンデッド) -->
+	<Item ItemId="40876" Remove="1">
+		<Effect SkillId="18" />
+	</Item>
+	<!-- スペル スクロール (エキストラ ヒール) -->
+	<Item ItemId="40877" Remove="1">
+		<Effect SkillId="19" />
+	</Item>
+	<!-- スペル スクロール (カーズ ブラインド) -->
+	<Item ItemId="40878" Remove="1">
+		<Effect SkillId="20" />
+	</Item>
+	<!-- スペル スクロール (ブレスド アーマー) -->
+	<Item ItemId="40879" Remove="1">
+		<Effect SkillId="21" />
+	</Item>
+	<!-- スペル スクロール (フローズン クラウド) -->
+	<Item ItemId="40880" Remove="1">
+		<Effect SkillId="22" />
+	</Item>
+	<!-- スペル スクロール (ウィーク エレメンタル) -->
+	<Item ItemId="40881" Remove="1">
+		<Effect SkillId="23" />
+	</Item>
+	<!-- スペル スクロール (ファイアー ボール) -->
+	<Item ItemId="40883" Remove="1">
+		<Effect SkillId="25" />
+	</Item>
+	<!-- スペル スクロール (フィジカルエンチャント：DEX) -->
+	<Item ItemId="40884" Remove="1">
+		<Effect SkillId="26" />
+	</Item>
+	<!-- スペル スクロール (ウェポン ブレイク) -->
+	<Item ItemId="40885" Remove="1">
+		<Effect SkillId="27" />
+	</Item>
+	<!-- スペル スクロール (バンパイアリック タッチ) -->
+	<Item ItemId="40886" Remove="1">
+		<Effect SkillId="28" />
+	</Item>
+	<!-- スペル スクロール (スロー) -->
+	<Item ItemId="40887" Remove="1">
+		<Effect SkillId="29" />
+	</Item>
+	<!-- スペル スクロール (アース ジェイル) -->
+	<Item ItemId="40888" Remove="1">
+		<Effect SkillId="30" />
+	</Item>
+	<!-- スペル スクロール (カウンター マジック) -->
+	<Item ItemId="40889" Remove="1">
+		<Effect SkillId="31" />
+	</Item>
+	<!-- スペル スクロール (メディテーション) -->
+	<Item ItemId="40890" Remove="1">
+		<Effect SkillId="32" />
+	</Item>
+	<!-- スペル スクロール (カーズ パラライズ) -->
+	<Item ItemId="40891" Remove="1">
+		<Effect SkillId="33" />
+	</Item>
+	<!-- スペル スクロール (コール ライトニング) -->
+	<Item ItemId="40892" Remove="1">
+		<Effect SkillId="34" />
+	</Item>
+	<!-- スペル スクロール (グレーター ヒール) -->
+	<Item ItemId="40893" Remove="1">
+		<Effect SkillId="35" />
+	</Item>
+	<!-- スペル スクロール (テイミング モンスター) -->
+	<Item ItemId="40894" Remove="1">
+		<Effect SkillId="36" />
+	</Item>
+	<!-- スペル スクロール (リムーブ カーズ) -->
+	<Item ItemId="40895" Remove="1">
+		<Effect SkillId="37" />
+	</Item>
+	<!-- スペル スクロール (コーン オブ コールド) -->
+	<Item ItemId="40896" Remove="1">
+		<Effect SkillId="38" />
+	</Item>
+	<!-- スペル スクロール (マナ ドレイン) -->
+	<Item ItemId="40897" Remove="1">
+		<Effect SkillId="39" />
+	</Item>
+	<!-- スペル スクロール (ダークネス) -->
+	<Item ItemId="40898" Remove="1">
+		<Effect SkillId="40" />
+	</Item>
+</ItemEffectList>

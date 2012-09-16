@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MapTimerList>
+	<!-- ギランプリズンダンジョン1F -->
+	<MapTimer MapId="53" AreaId="53">
+		<Effect Time="5400" Delay="10" X="33429" Y="32774" BackMapId="4" />
+	</MapTimer>
+	<!-- ギランプリズンダンジョン2F -->
+	<MapTimer MapId="54" AreaId="53">
+		<Effect Time="5400" Delay="10" X="33429" Y="32774" BackMapId="4" />
+	</MapTimer>
+	<!-- ギランプリズンダンジョン3F -->
+	<MapTimer MapId="55" AreaId="53">
+		<Effect Time="5400" Delay="10" X="33429" Y="32774" BackMapId="4" />
+	</MapTimer>
+	<!-- ギランプリズンダンジョン4F -->
+	<MapTimer MapId="56" AreaId="53">
+		<Effect Time="5400" Delay="10" X="33429" Y="32774" BackMapId="4" />
+	</MapTimer>
+	<!-- 象牙の塔4F -->
+	<MapTimer MapId="78" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapTimer>
+	<!-- 象牙の塔5F -->
+	<MapTimer MapId="79" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapTimer>
+	<!-- 象牙の塔6F -->
+	<MapTimer MapId="80" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapTimer>
+	<!-- 象牙の塔7F -->
+	<MapTimer MapId="81" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapTimer>
+	<!-- 象牙の塔8F -->
+	<MapTimer MapId="82" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapTimer>
+</MapTimerList>

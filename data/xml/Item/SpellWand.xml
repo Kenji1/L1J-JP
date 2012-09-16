@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ItemEffectList>
+	<!-- エボニーワンド -->
+	<Item ItemId="40007" Remove="1">
+		<Effect SkillId="34" /> <!-- コールライトニング -->
+	</Item>
+</ItemEffectList>
