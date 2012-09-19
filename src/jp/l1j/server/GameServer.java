@@ -174,30 +174,30 @@ public class GameServer extends Thread {
 	}
 
 	private void printStartupMessage() {
-		puts("サーバーセッティング: サーバーソケット生成");
+			puts("サーバーセッティング: サーバーソケット生成");
 
-		puts("┌───────────────────────────────┐");
-		puts("│  Lineage 3.52C  開発　 By L1J For All User\t\t │");
-		puts("└───────────────────────────────┘" + "\n");
+			puts("┌───────────────────────────────┐");
+			puts("│                 L1J-JP 3.52C  For All User\t\t        │");
+			puts("└───────────────────────────────┘" + "\n");
 
-		puts("●●●●〈サーバー設定〉●●●●");
-		puts("");
-		puts("┌「経験値」: %s【倍】", Config.RATE_XP);
-		puts("├「アライメント」: %s【倍】", Config.RATE_LA);
-		puts("├「カルマ」: %s【倍】", Config.RATE_KARMA);
-		puts("├「ドロップ率」: %s【倍】", Config.RATE_DROP_ITEMS);
-		puts("├「取得アデナ」: %s【倍】", Config.RATE_DROP_ADENA);
-		puts("├「武器エンチャント成功率」: %s【%%】", Config.ENCHANT_CHANCE_WEAPON);
-		puts("├「防具エンチャント成功率」: %s【%%】", Config.ENCHANT_CHANCE_ARMOR);
-		puts("├「属性強化成功率」: %s【%%】", Config.ATTR_ENCHANT_CHANCE);
-		puts("├「全体チャット可能Lv」: %s", Config.GLOBAL_CHAT_LEVEL);
-		puts("├「Non-PvP設定」: %s", Config.ALT_NONPVP ? "無効（PvP可能）" : "有効（PvP不可）");
-		puts("└「接続人数制限」： 最大%d人", Config.MAX_ONLINE_USERS);
-
-		puts("┌───────────────────────────────┐");
-		puts("│  Lineage 3.52C  開発　 By L1J For All User\t\t │");
-		puts("└───────────────────────────────┘" + "\n");
-	}
+			puts("  ■■■■〈サーバー設定〉■■■■");
+			puts("");
+			puts("  ┌「経験値」: %s【倍】", Config.RATE_XP);
+			puts("  ├「アライメント」: %s【倍】", Config.RATE_LA);
+			puts("  ├「カルマ」: %s【倍】", Config.RATE_KARMA);
+			puts("  ├「ドロップ率」: %s【倍】", Config.RATE_DROP_ITEMS);
+			puts("  ├「取得アデナ」: %s【倍】", Config.RATE_DROP_ADENA);
+			puts("  ├「武器エンチャント成功率」: %s【%%】", Config.ENCHANT_CHANCE_WEAPON);
+			puts("  ├「防具エンチャント成功率」: %s【%%】", Config.ENCHANT_CHANCE_ARMOR);
+			puts("  ├「属性強化成功率」: %s【%%】", Config.ATTR_ENCHANT_CHANCE);
+			puts("  ├「全体チャット可能Lv」: %s", Config.GLOBAL_CHAT_LEVEL);
+			puts("  ├「Non-PvP設定」: %s", Config.ALT_NONPVP ? "無効（PvP可能）" : "有効（PvP不可）");
+			puts("  └「接続人数制限」： 最大%d人", Config.MAX_ONLINE_USERS);
+			puts("");
+			puts("┌───────────────────────────────┐");
+			puts("│    by L1J-JP MMORPG Game Server Emulation Java Project\t│");
+			puts("└───────────────────────────────┘" + "\n");
+		}
 
 	public void initialize() throws Exception {
 		printStartupMessage();
