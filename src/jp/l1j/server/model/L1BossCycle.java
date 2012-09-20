@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -122,9 +122,9 @@ public class L1BossCycle {
 			"yyyy/MM/dd HH:mm");
 	private static Date _initDate = new Date();
 	private static String _initTime = "0:00";
-	private static final Calendar START_UP = Calendar.getInstance();
+	private  final Calendar START_UP = Calendar.getInstance();
 
-	public void init() throws Exception {
+	public final void init() throws Exception {
 		// 基準日時の設定
 		Base base = getBase();
 		// 基準がなければ、現在日付の0:00基準
@@ -206,12 +206,12 @@ public class L1BossCycle {
 		_baseDate = baseCal;
 	}
 
-	/*
+	/**
 	 * 指定日時を含む周期(の開始時間)を返す ex.周期が2時間の場合 target base 戻り値 4:59 7:00 3:00 5:00 7:00
 	 * 5:00 5:01 7:00 5:00 6:00 7:00 5:00 6:59 7:00 5:00 7:00 7:00 7:00 7:01
 	 * 7:00 7:00 9:00 7:00 9:00 9:01 7:00 9:00
 	 */
-	private Calendar getBaseCycleOnTarget(Calendar target) {
+	private Calendar getBaseCycleOnTarget(final Calendar target) {
 		// 基準日時取得
 		Calendar base = (Calendar) _baseDate.clone();
 		if (target.after(base)) {
@@ -242,10 +242,10 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現タイミングを算出する。
-	 * 
+	 *
 	 * @return 出現する時間
 	 */
-	public Calendar calcSpawnTime(Calendar now) {
+	public final Calendar calcSpawnTime(final Calendar now) {
 		// 基準日時取得
 		Calendar base = getBaseCycleOnTarget(now);
 		// 出現期間の計算
@@ -259,10 +259,10 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現開始時間を算出する。
-	 * 
+	 *
 	 * @return 周期の出現開始時間
 	 */
-	public Calendar getSpawnStartTime(Calendar now) {
+	public final Calendar getSpawnStartTime(final Calendar now) {
 		// 基準日時取得
 		Calendar startDate = getBaseCycleOnTarget(now);
 		// 出現期間の計算
@@ -272,10 +272,10 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現終了時間を算出する。
-	 * 
+	 *
 	 * @return 周期の出現終了時間
 	 */
-	public Calendar getSpawnEndTime(Calendar now) {
+	public final Calendar getSpawnEndTime(final Calendar now) {
 		// 基準日時取得
 		Calendar endDate = getBaseCycleOnTarget(now);
 		// 出現期間の計算
@@ -285,10 +285,10 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、次の周期の出現タイミングを算出する。
-	 * 
+	 *
 	 * @return 次の周期の出現する時間
 	 */
-	public Calendar nextSpawnTime(Calendar now) {
+	public final Calendar nextSpawnTime(final Calendar now) {
 		// 基準日時取得
 		Calendar next = (Calendar) now.clone();
 		next.add(Calendar.DAY_OF_MONTH, _periodDay);
@@ -299,10 +299,10 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時に対して、最近の出現開始時間を返却する。
-	 * 
+	 *
 	 * @return 最近の出現開始時間
 	 */
-	public Calendar getLatestStartTime(Calendar now) {
+	public final Calendar getLatestStartTime(final Calendar now) {
 		// 基準日時取得
 		Calendar latestStart = getSpawnStartTime(now);
 		if (!now.before(latestStart)) { // now >= latestStart
@@ -316,7 +316,7 @@ public class L1BossCycle {
 		return latestStart;
 	}
 
-	private static int getTimeParse(String target, String search) {
+	private static int getTimeParse(final String target, final String search) {
 		if (target == null) {
 			return 0;
 		}
@@ -385,11 +385,11 @@ public class L1BossCycle {
 
 	/**
 	 * 周期名と指定日時に対する出現期間、出現時間をコンソール出力
-	 * 
+	 *
 	 * @param now
 	 *            周期を出力する日時
 	 */
-	public void showData(Calendar now) {
+	public final void showData(final Calendar now) {
 		System.out.println("[Type]" + getName());
 		System.out.print("  [出現期間]");
 		System.out.print(_sdf.format(getSpawnStartTime(now).getTime()) + " - ");
@@ -398,31 +398,31 @@ public class L1BossCycle {
 
 	private static HashMap<String, L1BossCycle> _cycleMap = new HashMap<String, L1BossCycle>();
 
-	public static L1BossCycle getBossCycle(String type) {
+	public static L1BossCycle getBossCycle(final String type) {
 		return _cycleMap.get(type);
 	}
 
-	public String getName() {
+	public final String getName() {
 		return _name;
 	}
 
-	public void setName(String name) {
+	public final void setName(final String name) {
 		this._name = name;
 	}
 
-	public Base getBase() {
+	public final Base getBase() {
 		return _base;
 	}
 
-	public void setBase(Base base) {
+	public final void setBase(final Base base) {
 		this._base = base;
 	}
 
-	public Cycle getCycle() {
+	public final Cycle getCycle() {
 		return _cycle;
 	}
 
-	public void setCycle(Cycle cycle) {
+	public final void setCycle(Cycle cycle) {
 		this._cycle = cycle;
 	}
 
