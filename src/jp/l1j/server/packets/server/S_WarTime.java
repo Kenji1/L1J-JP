@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,7 +25,7 @@ import jp.l1j.server.codes.Opcodes;
 
 public class S_WarTime extends ServerBasePacket {
 	private static Logger _log = Logger.getLogger(S_WarTime.class.getName());
-	private static final String S_WAR_TIME = "[S] S_WarTime";	
+	private static final String S_WAR_TIME = "[S] S_WarTime";
 
 	public S_WarTime(Calendar cal) {
 		// 1997/01/01 17:00を基点としている
@@ -50,25 +50,25 @@ public class S_WarTime extends ServerBasePacket {
 		writeC(0);
 		writeD(time);
 		writeC(0);
-		writeD(time - 1);
+		writeD(time + 4);
 		writeC(0);
-		writeD(time - 2);
+		writeD(time + 8);
 		writeC(0);
-		writeD(time - 3);
+		writeD(time + 12);
 		writeC(0);
-		writeD(time - 4);
+		writeD(time + 16);
 		writeC(0);
-		writeD(time - 5);
+		writeD(time + 20);
 		writeC(0);
 	}
 
 	@Override
-	public byte[] getContent() {
+	public final byte[] getContent() {
 		return getBytes();
 	}
 
 	@Override
-	public String getType() {
+	public final String getType() {
 		return S_WAR_TIME;
 	}
 }

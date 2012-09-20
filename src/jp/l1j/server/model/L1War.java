@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -93,8 +93,8 @@ public class L1War {
 		}
 	}
 
-	public void handleCommands(int war_type, String attack_clan_name,
-			String defence_clan_name) {
+	public final void handleCommands(int war_type, String attack_clan_name,
+			final String defence_clan_name) {
 		// war_type - 1:攻城戦 2:模擬戦
 		// attack_clan_name - 布告したクラン名
 		// defence_clan_name - 布告されたクラン名（攻城戦時は、城主クラン）
@@ -222,7 +222,7 @@ public class L1War {
 		}
 	}
 
-	public void WinCastleWar(String clan_name) { // クラウンを奪取して、攻撃側クランが勝利
+	public final void WinCastleWar(String clan_name) { // クラウンを奪取して、攻撃側クランが勝利
 		String defence_clan_name = GetDefenceClanName();
 		L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0血盟が%1血盟との戦争で勝利しました。
 				231, clan_name, defence_clan_name));
@@ -246,7 +246,7 @@ public class L1War {
 						227, defence_clan_name, clanList[j]));
 				L1Clan clan = L1World.getInstance().getClan(clanList[j]);
 				if (clan != null) {
-					L1PcInstance clan_member[] = clan.getOnlineClanMember();
+					L1PcInstance[] clan_member = clan.getOnlineClanMember();
 					for (int k = 0; k < clan_member.length; k++) {
 						clan_member[k].sendPackets(new S_War(3, clanList[j],
 								defence_clan_name));
@@ -259,7 +259,7 @@ public class L1War {
 		delete();
 	}
 
-	public void CeaseCastleWar() { // 戦争時間満了し、防衛側クランが勝利
+	public final void CeaseCastleWar() { // 戦争時間満了し、防衛側クランが勝利
 		String defence_clan_name = GetDefenceClanName();
 		String clanList[] = GetAttackClanList();
 		if (defence_clan_name != null) {
@@ -283,7 +283,7 @@ public class L1War {
 						227, defence_clan_name, clanList[j]));
 				L1Clan clan = L1World.getInstance().getClan(clanList[j]);
 				if (clan != null) {
-					L1PcInstance clan_member[] = clan.getOnlineClanMember();
+					L1PcInstance[] clan_member = clan.getOnlineClanMember();
 					for (int k = 0; k < clan_member.length; k++) {
 						clan_member[k].sendPackets(new S_War(3, clanList[j],
 								defence_clan_name));
@@ -296,7 +296,7 @@ public class L1War {
 		delete();
 	}
 
-	public void DeclareWar(String clan1_name, String clan2_name) { // _血盟が_血盟に宣戦布告しました。
+	public final void DeclareWar(final String clan1_name, final String clan2_name) { // _血盟が_血盟に宣戦布告しました。
 		if (GetWarType() == 1) { // 攻城戦
 			RequestCastleWar(1, clan1_name, clan2_name);
 		} else { // 模擬戦
@@ -304,7 +304,7 @@ public class L1War {
 		}
 	}
 
-	public void SurrenderWar(String clan1_name, String clan2_name) { // _血盟が_血盟に降伏しました。
+	public final void SurrenderWar(final String clan1_name, final String clan2_name) { // _血盟が_血盟に降伏しました。
 		if (GetWarType() == 1) {
 			RequestCastleWar(2, clan1_name, clan2_name);
 		} else {
@@ -312,7 +312,7 @@ public class L1War {
 		}
 	}
 
-	public void CeaseWar(String clan1_name, String clan2_name) { // _血盟と_血盟との戦争が終結しました。
+	public final void CeaseWar(final String clan1_name, final String clan2_name) { // _血盟と_血盟との戦争が終結しました。
 		if (GetWarType() == 1) {
 			RequestCastleWar(3, clan1_name, clan2_name);
 		} else {
@@ -320,7 +320,7 @@ public class L1War {
 		}
 	}
 
-	public void WinWar(String clan1_name, String clan2_name) { // _血盟が_血盟との戦争で勝利しました。
+	public final void WinWar(final String clan1_name, final String clan2_name) { // _血盟が_血盟との戦争で勝利しました。
 		if (GetWarType() == 1) {
 			RequestCastleWar(4, clan1_name, clan2_name);
 		} else {
@@ -328,7 +328,7 @@ public class L1War {
 		}
 	}
 
-	public boolean CheckClanInWar(String clan_name) { // クランが戦争に参加しているかチェックする
+	public final boolean CheckClanInWar(final String clan_name) { // クランが戦争に参加しているかチェックする
 		boolean ret;
 		if (GetDefenceClanName().toLowerCase().equals(clan_name.toLowerCase())) { // 防衛側クランをチェック
 			ret = true;
@@ -338,8 +338,8 @@ public class L1War {
 		return ret;
 	}
 
-	public boolean CheckClanInSameWar(String player_clan_name,
-			String target_clan_name) { // 自クランと相手クランが同じ戦争に参加しているかチェックする（同じクランの場合も含む）
+	public final boolean CheckClanInSameWar(String player_clan_name,
+			final String target_clan_name) { // 自クランと相手クランが同じ戦争に参加しているかチェックする（同じクランの場合も含む）
 		boolean player_clan_flag;
 		boolean target_clan_flag;
 
@@ -364,7 +364,7 @@ public class L1War {
 		}
 	}
 
-	public String GetEnemyClanName(String player_clan_name) { // 相手のクラン名を取得する
+	public final String GetEnemyClanName(final String player_clan_name) { // 相手のクラン名を取得する
 		String enemy_clan_name = null;
 		if (GetDefenceClanName().toLowerCase().equals(
 				player_clan_name.toLowerCase())) { // 自クランが防衛側
@@ -382,58 +382,58 @@ public class L1War {
 		return enemy_clan_name;
 	}
 
-	public void delete() {
+	public final void delete() {
 		L1World.getInstance().removeWar(this); // 戦争リストから削除
 	}
 
-	public int GetWarType() {
+	public final int GetWarType() {
 		return _warType;
 	}
 
-	public void SetWarType(int war_type) {
+	public final void SetWarType(int war_type) {
 		_warType = war_type;
 	}
 
-	public String GetDefenceClanName() {
+	public final String GetDefenceClanName() {
 		return _defenceClanName;
 	}
 
-	public void SetDefenceClanName(String defence_clan_name) {
+	public final void SetDefenceClanName(String defence_clan_name) {
 		_defenceClanName = defence_clan_name;
 	}
 
-	public void InitAttackClan() {
+	public final void InitAttackClan() {
 		_attackClanList.clear();
 	}
 
-	public void AddAttackClan(String attack_clan_name) {
+	public final void AddAttackClan(String attack_clan_name) {
 		if (!_attackClanList.contains(attack_clan_name)) {
 			_attackClanList.add(attack_clan_name);
 		}
 	}
 
-	public void RemoveAttackClan(String attack_clan_name) {
+	public final void RemoveAttackClan(String attack_clan_name) {
 		if (_attackClanList.contains(attack_clan_name)) {
 			_attackClanList.remove(attack_clan_name);
 		}
 	}
 
-	public boolean CheckAttackClan(String attack_clan_name) {
+	public final boolean CheckAttackClan(String attack_clan_name) {
 		if (_attackClanList.contains(attack_clan_name)) {
 			return true;
 		}
 		return false;
 	}
 
-	public String[] GetAttackClanList() {
+	public final String[] GetAttackClanList() {
 		return _attackClanList.toArray(new String[_attackClanList.size()]);
 	}
 
-	public int GetAttackClanListSize() {
+	public final int GetAttackClanListSize() {
 		return _attackClanList.size();
 	}
 
-	public int GetCastleId() {
+	public final int GetCastleId() {
 		int castle_id = 0;
 		if (GetWarType() == 1) { // 攻城戦
 			L1Clan clan = L1World.getInstance().getClan(GetDefenceClanName());
@@ -444,7 +444,7 @@ public class L1War {
 		return castle_id;
 	}
 
-	public L1Castle GetCastle() {
+	public final L1Castle GetCastle() {
 		L1Castle l1castle = null;
 		if (GetWarType() == 1) { // 攻城戦
 			L1Clan clan = L1World.getInstance().getClan(GetDefenceClanName());
