@@ -1,4 +1,4 @@
-/**
+﻿/**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -105,14 +105,12 @@ public class L1Awake {
 
 	public static void doPoly(L1PcInstance pc, int skillId) {
 		int polyId = 0;
-		if (skillId == AWAKEN_ANTHARAS) {
+		if (skillId == AWAKEN_ANTHARAS) {//TODO 覚醒[アンタラス]
 			polyId = 9362;
-		} else if (skillId == AWAKEN_VALAKAS) {
-			polyId = 9363;
-		} else if (skillId == AWAKEN_FAFURION) {
+		} else if (skillId == AWAKEN_FAFURION) {//TODO 覚醒[パプリオン]
 			polyId = 9364;
-		//} else if (skillId == AWAKEN_LINDVIOR) { // 未実装
-		//	polyId = 9365;
+		} else if (skillId == AWAKEN_VALAKAS) {//TODO 覚醒[ヴァラカス]
+			polyId = 9363;
 		}
 		if (pc.hasSkillEffect(SHAPE_CHANGE)) {
 			pc.killSkillEffectTimer(SHAPE_CHANGE);

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -304,6 +304,24 @@ class L1SkillStop {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.addDmgup(-10);
 				pc.addBowDmgup(-10);
+			}
+		} else if (skillId == INSIGHT) {//TODO 実装インサイト
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addStr(-1);//TODO 力量
+				pc.addCon(-1);//TODO 體質
+				pc.addDex(-1);//TODO 敏捷
+				pc.addWis(-1);//TODO 精神
+				pc.addInt(-1);//TODO 智力
+			}
+		} else if (skillId == PANIC) {//TODO 実装パニック
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addStr(1);//TODO 力量
+				pc.addCon(1);//TODO 體質
+				pc.addDex(1);//TODO 敏捷
+				pc.addWis(1);//TODO 精神
+				pc.addInt(1);//TODO 智力
 			}
 		}
 

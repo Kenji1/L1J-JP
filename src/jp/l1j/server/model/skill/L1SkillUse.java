@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -639,8 +639,8 @@ public class L1SkillUse {
 
 		if (((_skill.getTargetTo() & L1Skill.TARGET_TO_PC) == L1Skill.TARGET_TO_PC
 				|| (_skill.getTargetTo() & L1Skill.TARGET_TO_CLAN) == L1Skill.TARGET_TO_CLAN || (_skill
-				.getTargetTo() & L1Skill.TARGET_TO_PARTY) == L1Skill.TARGET_TO_PARTY)
-				&& cha.getId() == _user.getId() && _skillId != HEAL_ALL && _skillId != DIVINE_SACRIFICE) {
+						.getTargetTo() & L1Skill.TARGET_TO_PARTY) == L1Skill.TARGET_TO_PARTY)
+						&& cha.getId() == _user.getId() && _skillId != HEAL_ALL && _skillId != DIVINE_SACRIFICE) {
 			return true; // ターゲットがパーティーかクラン員のものは自分に効果がある。（ただし、ヒールオールは除外）
 		}
 
@@ -681,7 +681,7 @@ public class L1SkillUse {
 								_player.getClanname(), enemy.getClanname())) {
 							if (L1CastleLocation.checkInAllWarArea(
 									enemy.getX(), enemy.getY(), enemy
-											.getMapId())) {
+									.getMapId())) {
 								return true;
 							}
 						}
@@ -745,19 +745,19 @@ public class L1SkillUse {
 		}
 		if (cha.isDead()
 				&& (_skillId != CREATE_ZOMBIE && _skillId != RESURRECTION
-						&& _skillId != GREATER_RESURRECTION && _skillId != CALL_OF_NATURE)) {
+				&& _skillId != GREATER_RESURRECTION && _skillId != CALL_OF_NATURE)) {
 			return false; // ターゲットが死亡している
 		}
 
 		if (cha.isDead() == false
 				&& (_skillId == CREATE_ZOMBIE || _skillId == RESURRECTION
-						|| _skillId == GREATER_RESURRECTION || _skillId == CALL_OF_NATURE)) {
+				|| _skillId == GREATER_RESURRECTION || _skillId == CALL_OF_NATURE)) {
 			return false; // ターゲットが死亡していない
 		}
 
 		if ((cha instanceof L1TowerInstance || cha instanceof L1DoorInstance)
 				&& (_skillId == CREATE_ZOMBIE || _skillId == RESURRECTION
-						|| _skillId == GREATER_RESURRECTION || _skillId == CALL_OF_NATURE)) {
+				|| _skillId == GREATER_RESURRECTION || _skillId == CALL_OF_NATURE)) {
 			return false; // ターゲットがガーディアンタワー、ドア
 		}
 
@@ -830,7 +830,7 @@ public class L1SkillUse {
 			if ((_skill.getTargetTo() & L1Skill.TARGET_TO_CLAN) == L1Skill.TARGET_TO_CLAN
 					&& ((_player.getClanid() != 0 // ターゲットがクラン員
 					&& _player.getClanid() == ((L1PcInstance) cha).getClanid()) || _player
-							.isGm())) {
+					.isGm())) {
 				return true;
 			}
 			if ((_skill.getTargetTo() & L1Skill.TARGET_TO_PARTY) == L1Skill.TARGET_TO_PARTY
@@ -1379,7 +1379,7 @@ public class L1SkillUse {
 					if (_skillId == MIND_BREAK || _skillId == CONFUSION
 							|| _skillId == JOY_OF_PAIN) {
 						_player
-								.sendPackets(new S_SkillSound(targetid, castgfx));
+						.sendPackets(new S_SkillSound(targetid, castgfx));
 						_player.broadcastPacket(new S_SkillSound(targetid,
 								castgfx));
 						S_DoActionGFX gfx = new S_DoActionGFX(_player.getId(),
@@ -1388,13 +1388,13 @@ public class L1SkillUse {
 						_player.broadcastPacket(gfx);
 					} else {
 						_player
-								.sendPackets(new S_UseAttackSkill(_player,
-										targetid, castgfx, _targetX, _targetY,
-										actionId));
+						.sendPackets(new S_UseAttackSkill(_player,
+								targetid, castgfx, _targetX, _targetY,
+								actionId));
 						_player
-								.broadcastPacket(new S_UseAttackSkill(_player,
-										targetid, castgfx, _targetX, _targetY,
-										actionId));
+						.broadcastPacket(new S_UseAttackSkill(_player,
+								targetid, castgfx, _targetX, _targetY,
+								actionId));
 						_target.broadcastPacketExceptTargetSight(
 								new S_DoActionGFX(targetid,
 										ActionCodes.ACTION_Damage), _player);
@@ -1441,7 +1441,7 @@ public class L1SkillUse {
 							|| _skillId == COUNTER_BARRIER
 							|| _skillId == COUNTER_MIRROR) {
 						_player
-								.sendPackets(new S_SkillSound(targetid, castgfx));
+						.sendPackets(new S_SkillSound(targetid, castgfx));
 					} else if (_skillId == TRUE_TARGET) { // トゥルーターゲットは個別処理で送信済
 						return;
 					} else if (_skillId == AWAKEN_ANTHARAS // 覚醒：アンタラス
@@ -1457,7 +1457,7 @@ public class L1SkillUse {
 						}
 					} else {
 						_player
-								.sendPackets(new S_SkillSound(targetid, castgfx));
+						.sendPackets(new S_SkillSound(targetid, castgfx));
 						_player.broadcastPacket(new S_SkillSound(targetid,
 								castgfx));
 					}
@@ -1534,26 +1534,26 @@ public class L1SkillUse {
 	// 例：ファイア ウェポンとバーニングウェポンなど
 	private void deleteRepeatedSkills(L1Character cha) {
 		final int[][] repeatedSkills = {
-		// ホーリー ウェポン、エンチャント ウェポン、ブレス ウェポン, シャドウ ファング
+				// ホーリー ウェポン、エンチャント ウェポン、ブレス ウェポン, シャドウ ファング
 				// これらはL1ItemInstanceで管理
 				// { HOLY_WEAPON, ENCHANT_WEAPON, BLESS_WEAPON, SHADOW_FANG },
 				// ファイアー ウェポン、ウィンド ショット、ファイアー ブレス、ストーム アイ、バーニング ウェポン、ストーム ショット
 				{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE,
-						BURNING_WEAPON, STORM_SHOT },
-				// シールド、シャドウ アーマー、アース スキン、アースブレス、アイアン スキン
-				{ SHIELD, SHADOW_ARMOR, EARTH_SKIN, EARTH_BLESS, IRON_SKIN },
-				// ホーリー ウォーク、ムービング アクセレーション、ウィンド ウォーク、BP、ワッフル、ブラッドラスト
-				{ HOLY_WALK, MOVING_ACCELERATION, WIND_WALK, STATUS_BRAVE,
+					BURNING_WEAPON, STORM_SHOT },
+					// シールド、シャドウ アーマー、アース スキン、アースブレス、アイアン スキン
+					{ SHIELD, SHADOW_ARMOR, EARTH_SKIN, EARTH_BLESS, IRON_SKIN },
+					// ホーリー ウォーク、ムービング アクセレーション、ウィンド ウォーク、BP、ワッフル、ブラッドラスト
+					{ HOLY_WALK, MOVING_ACCELERATION, WIND_WALK, STATUS_BRAVE,
 						STATUS_ELFBRAVE, BLOODLUST },
-				// ヘイスト、グレーター ヘイスト、GP
-				{ HASTE, GREATER_HASTE, STATUS_HASTE },
-				// フィジカル エンチャント：DEX、ドレス デクスタリティー
-				{ PHYSICAL_ENCHANT_DEX, DRESS_DEXTERITY,
-						STATUS_FLORA_POTION_DEX },
-				// フィジカル エンチャント：STR、ドレス マイティー
-				{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY, STATUS_FLORA_POTION_STR },
-				// グローウィングオーラ、シャイニングオーラ
-				{ GLOWING_AURA, SHINING_AURA } };
+						// ヘイスト、グレーター ヘイスト、GP
+						{ HASTE, GREATER_HASTE, STATUS_HASTE },
+						// フィジカル エンチャント：DEX、ドレス デクスタリティー
+						{ PHYSICAL_ENCHANT_DEX, DRESS_DEXTERITY,
+							STATUS_FLORA_POTION_DEX },
+							// フィジカル エンチャント：STR、ドレス マイティー
+							{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY, STATUS_FLORA_POTION_STR },
+							// グローウィングオーラ、シャイニングオーラ
+							{ GLOWING_AURA, SHINING_AURA } };
 
 		for (int[] skills : repeatedSkills) {
 			for (int id : skills) {
@@ -1787,8 +1787,8 @@ public class L1SkillUse {
 									buffIconDuration));
 						}
 						cha
-								.broadcastPacket(new S_SkillHaste(cha.getId(),
-										1, 0));
+						.broadcastPacket(new S_SkillHaste(cha.getId(),
+								1, 0));
 						cha.setMoveSpeed(1);
 					} else { // スロー中
 						int skillNum = 0;
@@ -1826,8 +1826,8 @@ public class L1SkillUse {
 									if (!visiblePc.isDead()) {
 										// \f1その場所に他の人が立っているので復活させることができません。
 										_player
-												.sendPackets(new S_ServerMessage(
-														592));
+										.sendPackets(new S_ServerMessage(
+												592));
 										return;
 									}
 								}
@@ -1860,8 +1860,8 @@ public class L1SkillUse {
 									if (!visiblePc.isDead()) {
 										// \f1その場所に他の人が立っているので復活させることができません。
 										_player
-												.sendPackets(new S_ServerMessage(
-														592));
+										.sendPackets(new S_ServerMessage(
+												592));
 										return;
 									}
 								}
@@ -1883,8 +1883,8 @@ public class L1SkillUse {
 									if (!visiblePc.isDead()) {
 										// \f1その場所に他の人が立っているので復活させることができません。
 										_player
-												.sendPackets(new S_ServerMessage(
-														592));
+										.sendPackets(new S_ServerMessage(
+												592));
 										return;
 									}
 								}
@@ -1910,8 +1910,8 @@ public class L1SkillUse {
 									if (!visiblePc.isDead()) {
 										// \f1その場所に他の人が立っているので復活させることができません。
 										_player
-												.sendPackets(new S_ServerMessage(
-														592));
+										.sendPackets(new S_ServerMessage(
+												592));
 										return;
 									}
 								}
@@ -1992,7 +1992,7 @@ public class L1SkillUse {
 						_target.onAction(_player);
 					}
 					_player
-							.sendPackets(new S_SkillSound(_player.getId(), 4394));
+					.sendPackets(new S_SkillSound(_player.getId(), 4394));
 					_player.broadcastPacket(new S_SkillSound(_player.getId(),
 							4394));
 				} else if (_skillId == FOE_SLAYER) { // フォースレイヤー
@@ -2003,9 +2003,9 @@ public class L1SkillUse {
 					_player.setFoeSlayer(false);
 
 					_player
-							.sendPackets(new S_SkillSound(_target.getId(), 6509));
+					.sendPackets(new S_SkillSound(_target.getId(), 6509));
 					_player
-							.sendPackets(new S_SkillSound(_player.getId(), 7020));
+					.sendPackets(new S_SkillSound(_player.getId(), 7020));
 					_player.broadcastPacket(new S_SkillSound(_target.getId(),
 							6509));
 					_player.broadcastPacket(new S_SkillSound(_player.getId(),
@@ -2013,19 +2013,19 @@ public class L1SkillUse {
 
 					if (_player.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
 						_player
-								.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV1);
+						.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV1);
 						_player.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1);
 						_player.sendPackets(new S_SkillIconGFX(75, 0));
 					} else if (_player
 							.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV2)) {
 						_player
-								.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV2);
+						.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV2);
 						_player.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV2);
 						_player.sendPackets(new S_SkillIconGFX(75, 0));
 					} else if (_player
 							.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV3)) {
 						_player
-								.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV3);
+						.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV3);
 						_player.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV3);
 						_player.sendPackets(new S_SkillIconGFX(75, 0));
 					}
@@ -2238,11 +2238,11 @@ public class L1SkillUse {
 						npc.setMoveSpeed(0);
 						npc.setBraveSpeed(0);
 						npc
-								.broadcastPacket(new S_SkillHaste(cha.getId(),
-										0, 0));
+						.broadcastPacket(new S_SkillHaste(cha.getId(),
+								0, 0));
 						npc
-								.broadcastPacket(new S_SkillBrave(cha.getId(),
-										0, 0));
+						.broadcastPacket(new S_SkillBrave(cha.getId(),
+								0, 0));
 						npc.setWeaponBreaked(false);
 						npc.setParalyzed(false);
 						npc.setParalysisTime(0);
@@ -2420,8 +2420,8 @@ public class L1SkillUse {
 							|| cha instanceof L1HousekeeperInstance) {
 						L1NpcInstance npc = (L1NpcInstance) cha;
 						npc
-								.broadcastPacket(new S_SkillSound(npc.getId(),
-										6526));
+						.broadcastPacket(new S_SkillSound(npc.getId(),
+								6526));
 					}
 				} else if (_skillId == CONFUSION) { // コンフュージョン
 					RandomGenerator random = RandomGeneratorFactory
@@ -2472,8 +2472,8 @@ public class L1SkillUse {
 							|| cha instanceof L1HousekeeperInstance) {
 						L1NpcInstance npc = (L1NpcInstance) cha;
 						npc
-								.broadcastPacket(new S_SkillSound(npc.getId(),
-										6551));
+						.broadcastPacket(new S_SkillSound(npc.getId(),
+								6551));
 					}
 					RandomGenerator random = RandomGeneratorFactory
 							.getSharedRandom();
@@ -2516,10 +2516,10 @@ public class L1SkillUse {
 										if (pc.getLocation()
 												.getTileLineDistance(
 														member.getLocation()) <= 3
-												&& member.getClanid() == pc
+														&& member.getClanid() == pc
 														.getClanid()
-												&& pc.getClanid() != 0
-												&& member.getId() != pc.getId()) {
+														&& pc.getClanid() != 0
+														&& member.getId() != pc.getId()) {
 											L1Teleport.teleport(member, newX,
 													newY, mapId, 5, true);
 										}
@@ -2547,10 +2547,10 @@ public class L1SkillUse {
 										if (pc.getLocation()
 												.getTileLineDistance(
 														member.getLocation()) <= 3
-												&& member.getClanid() == pc
+														&& member.getClanid() == pc
 														.getClanid()
-												&& pc.getClanid() != 0
-												&& member.getId() != pc.getId()) {
+														&& pc.getClanid() != 0
+														&& member.getId() != pc.getId()) {
 											L1Teleport.teleport(member, newX,
 													newY, mapId, 5, true);
 										}
@@ -2707,8 +2707,8 @@ public class L1SkillUse {
 						if (pc.getMap().isRecallPets() || pc.isGm()) {
 							if (pc.getInventory().checkEquipped(20284)) {
 								pc
-										.sendPackets(new S_ShowSummonList(pc
-												.getId()));
+								.sendPackets(new S_ShowSummonList(pc
+										.getId()));
 								if (!pc.isSummonMonster()) {
 									pc.setSummonMonster(true);
 								}
@@ -3087,10 +3087,20 @@ public class L1SkillUse {
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.addDmgup(10);
 						pc.addBowDmgup(10);
-					} else if (_skillId == INSIGHT) { // インサイト
-						_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
-					} else if (_skillId == PANIC) { // パニック
-						_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
+					} else if (_skillId == INSIGHT) {//TODO 実装インサイト
+						L1PcInstance pc = (L1PcInstance) cha;
+						pc.addStr(1);//TODO 力量
+						pc.addCon(1);//TODO 體質
+						pc.addDex(1);//TODO 敏捷
+						pc.addWis(1);//TODO 精神
+						pc.addInt(1);//TODO 智力
+					} else if (_skillId == PANIC) {//TODO 実装パニック
+						L1PcInstance pc = (L1PcInstance) cha;
+						pc.addStr(-1);//TODO 力量
+						pc.addCon(-1);//TODO 體質
+						pc.addDex(-1);//TODO 敏捷
+						pc.addWis(-1);//TODO 精神
+						pc.addInt(-1);//TODO 智力
 					}
 				}
 
@@ -3099,7 +3109,7 @@ public class L1SkillUse {
 					// ★★★ ペット系スキル ★★★
 					if (_skillId == TAMING_MONSTER
 							&& ((L1MonsterInstance) cha).getNpcTemplate()
-									.isTamable()) { // テイミングモンスター
+							.isTamable()) { // テイミングモンスター
 						int petcost = 0;
 						Object[] petlist = _user.getPetList().values()
 								.toArray();
@@ -3356,7 +3366,7 @@ public class L1SkillUse {
 				L1PcInstance pc = (L1PcInstance) cha;
 				if (_player.getId() == pc.getId()
 						|| (pc.getClanid() != 0 && _player.getClanid() == pc
-								.getClanid())) {
+						.getClanid())) {
 					return false;
 				}
 				return true;
@@ -3389,8 +3399,8 @@ public class L1SkillUse {
 		if ((_skillId == TURN_UNDEAD && (undeadType == 0 || undeadType == 2))
 				|| (_skillId == TURN_UNDEAD && enableTU == false)
 				|| ((_skillId == ERASE_MAGIC || _skillId == SLOW
-						|| _skillId == MANA_DRAIN || _skillId == MASS_SLOW
-						|| _skillId == ENTANGLE || _skillId == WIND_SHACKLE) && enableErase == false)
+				|| _skillId == MANA_DRAIN || _skillId == MASS_SLOW
+				|| _skillId == ENTANGLE || _skillId == WIND_SHACKLE) && enableErase == false)
 				|| (_skillId == MANA_DRAIN && enableManaDrain == false)) {
 			return true;
 		}
