@@ -1,4 +1,4 @@
-﻿/**
+/**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,16 +15,15 @@
 package jp.l1j.server.model;
 
 import java.util.logging.Logger;
-
 import jp.l1j.server.model.Instance.L1ItemInstance;
 import jp.l1j.server.model.Instance.L1PcInstance;
+import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_ChangeShape;
 import jp.l1j.server.packets.server.S_CharVisualUpdate;
 import jp.l1j.server.packets.server.S_HpUpdate;
 import jp.l1j.server.packets.server.S_OwnCharAttrDef;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.packets.server.S_SpMr;
-import static jp.l1j.server.model.skill.L1SkillId.*;
 
 // Referenced classes of package jp.l1j.server.model:
 // L1Cooking
