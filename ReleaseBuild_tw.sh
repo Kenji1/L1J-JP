@@ -1,8 +1,8 @@
 #!/bin/bash
 ant
 cd db
-sh MakeCreateTables.sh
-sh MakeUpdateTables.sh
+sh MakeCreateTables_tw.sh
+sh MakeUpdateTables_tw.sh
 cd ..
 mkdir -p release-build
 cp -ivR config release-build/config

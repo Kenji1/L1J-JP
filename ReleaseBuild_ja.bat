@@ -1,6 +1,6 @@
 cd .\db
-call .\MakeCreateTables.bat
-call .\MakeUpdateTables.bat
+call .\MakeCreateTables_ja.bat
+call .\MakeUpdateTables_ja.bat
 cd ..
 xcopy .\config .\release-build\config /D /E /I /-Y
 xcopy .\data .\release-build\data /D /E /I /-Y
