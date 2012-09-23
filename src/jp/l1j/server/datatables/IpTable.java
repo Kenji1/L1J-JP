@@ -38,23 +38,27 @@ public class IpTable {
 	private IpTable() {
 		if (!isInitialized) {
 			_banip = new ArrayList<String>();
+			_host = new ArrayList<String>();
 			_mask = new ArrayList<Integer>();
 			getIpTable();
 		}
 	}
 
-	public void banIp(String ip) {
+	public void banIp(String ip, String host) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO ban_ip SET ip=?,mask=?");
+			pstm = con.prepareStatement("INSERT INTO ban_ip SET ip=?, host=?, mask=?");
 			pstm.setString(1, ip);
-			pstm.setInt(2, 32);
+			pstm.setString(2, host);
+			pstm.setInt(3, 32);
 			pstm.execute();
 			_banip.add(ip);
+			_host.add(host);
+			_mask.add(32);
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -92,7 +96,8 @@ public class IpTable {
 
 			while (rs.next()) {
 				_banip.add(rs.getString(1));
-				_mask.add(rs.getInt(2));
+				_host.add(rs.getString(2));
+				_mask.add(rs.getInt(3));
 			}
 
 			isInitialized = true;
@@ -106,7 +111,7 @@ public class IpTable {
 		}
 	}
 
-	public boolean liftBanIp(String ip) {
+	public boolean liftBanIp(String ip, String host) {
 		boolean ret = false;
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -117,7 +122,10 @@ public class IpTable {
 			pstm = con.prepareStatement("DELETE FROM ban_ip WHERE ip=?");
 			pstm.setString(1, ip);
 			pstm.execute();
-			ret = _banip.remove(ip);
+			_banip.remove(_banip.indexOf(ip));
+			_host.remove(_host.indexOf(host));
+			_mask.remove(_mask.indexOf(32));
+			ret = true;
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -130,6 +138,8 @@ public class IpTable {
 	private static Logger _log = Logger.getLogger(IpTable.class.getName());
 
 	private static ArrayList<String> _banip;
+	
+	private static ArrayList<String> _host;
 
 	private static ArrayList<Integer> _mask;
 

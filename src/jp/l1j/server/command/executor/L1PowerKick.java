@@ -39,7 +39,8 @@ public class L1PowerKick implements L1CommandExecutor {
 
 			IpTable iptable = IpTable.getInstance();
 			if (target != null) {
-				iptable.banIp(target.getNetConnection().getIp()); // BANリストへIPを加える
+				iptable.banIp(target.getNetConnection().getIp(),
+						target.getNetConnection().getHostname()); // BANリストへIPを加える
 				pc.sendPackets(new S_SystemMessage((new StringBuilder())
 						.append(target.getName()).append("さんをキックしました。")
 						.toString()));

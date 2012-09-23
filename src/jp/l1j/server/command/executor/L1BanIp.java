@@ -48,23 +48,25 @@ public class L1BanIp implements L1CommandExecutor {
 
 			IpTable iptable = IpTable.getInstance();
 			boolean isBanned = iptable.isBannedIp(s1);
+			String host = null;
 
 			for (L1PcInstance tg : L1World.getInstance().getAllPlayers()) {
 				if (s1.equals(tg.getNetConnection().getIp())) {
 					String msg = new StringBuilder().append("IP:").append(s1)
 							.append(" で接続中のプレイヤー:").append(tg.getName())
 							.toString();
+					host = tg.getNetConnection().getHostname();
 					pc.sendPackets(new S_SystemMessage(msg));
 				}
 			}
 
 			if ("add".equals(s2) && !isBanned) {
-				iptable.banIp(s1); // BANリストへIPを加える
+				iptable.banIp(s1, host); // BANリストへIPを加える
 				String msg = new StringBuilder().append("IP:").append(s1)
 						.append(" をBAN IPに登録しました。").toString();
 				pc.sendPackets(new S_SystemMessage(msg));
 			} else if ("del".equals(s2) && isBanned) {
-				if (iptable.liftBanIp(s1)) { // BANリストからIPを削除する
+				if (iptable.liftBanIp(s1, host)) { // BANリストからIPを削除する
 					String msg = new StringBuilder().append("IP:").append(s1)
 							.append(" をBAN IPから削除しました。").toString();
 					pc.sendPackets(new S_SystemMessage(msg));
