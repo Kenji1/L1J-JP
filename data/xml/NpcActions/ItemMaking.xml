@@ -838,6 +838,17 @@
 			<Material Amount="1000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
+	<!--アンタラス マジックアーマー / クプ-->
+	<Action Name="request ancient green dragon armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="20130"/>
+			<Material Amount="1" ItemId="20146"/>
+			<Material Amount="3" ItemId="40445"/>
+			<Material Amount="30" ItemId="40048"/>
+			<Material Amount="5" ItemId="40162"/>
+			<Material Amount="50000" ItemId="40308"/>
+		</MakeItem>
+	</Action>
 	<!--パプリオン マジックアーマー / クプ-->
 	<Action Name="request ancient blue dragon armor">
 		<MakeItem>
@@ -849,14 +860,14 @@
 			<Material Amount="50000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
-	<!--アンタラス マジックアーマー / クプ-->
-	<Action Name="request ancient green dragon armor">
+	<!--リンドビオル マジックアーマー / クプ-->
+	<Action Name="request ancient azure dragon armor">
 		<MakeItem>
-			<Item Amount="1" ItemId="20130"/>
-			<Material Amount="1" ItemId="20146"/>
+			<Item Amount="1" ItemId="20108"/>
+			<Material Amount="1" ItemId="20156"/>
 			<Material Amount="3" ItemId="40445"/>
-			<Material Amount="30" ItemId="40048"/>
-			<Material Amount="5" ItemId="40162"/>
+			<Material Amount="30" ItemId="40050"/>
+			<Material Amount="5" ItemId="40169"/>
 			<Material Amount="50000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
@@ -871,15 +882,164 @@
 			<Material Amount="50000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
-	<!--リンドビオル マジックアーマー / クプ-->
-	<Action Name="request ancient azure dragon armor">
+	<!--アンタラス グランド プレートアーマー / 強靭なハイオス-->
+	<Action Name="request elite antharas plate armor">
 		<MakeItem>
-			<Item Amount="1" ItemId="20108"/>
-			<Material Amount="1" ItemId="20156"/>
-			<Material Amount="3" ItemId="40445"/>
-			<Material Amount="30" ItemId="40050"/>
-			<Material Amount="5" ItemId="40169"/>
-			<Material Amount="50000" ItemId="40308"/>
+			<Item Amount="1" ItemId="21172"/>
+			<Material Amount="1" ItemId="20130"/>
+			<Material Amount="2" ItemId="40346"/>
+			<Material Amount="3" ItemId="40052"/>
+			<Material Amount="50" ItemId="40304"/>
+		</MakeItem>
+	</Action>
+	<!--アンタラス グランド ローブ / 細やかなシューヌ-->
+	<Action Name="request elite antharas robe">
+		<MakeItem>
+			<Item Amount="1" ItemId="21173"/>
+			<Material Amount="1" ItemId="20130"/>
+			<Material Amount="2" ItemId="40346"/>
+			<Material Amount="3" ItemId="40052"/>
+			<Material Amount="50" ItemId="40304"/>
+		</MakeItem>
+	</Action>
+	<!--アンタラス グランド レザーアーマー / 根気のあるドオホ-->
+	<Action Name="request elite antharas leather armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21174"/>
+			<Material Amount="1" ItemId="20130"/>
+			<Material Amount="2" ItemId="40346"/>
+			<Material Amount="3" ItemId="40052"/>
+			<Material Amount="50" ItemId="40304"/>
+		</MakeItem>
+	</Action>
+	<!--アンタラス グランド スケイルメイル / 派手なバエミ-->
+	<Action Name="request elite antharas scale armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21175"/>
+			<Material Amount="1" ItemId="20130"/>
+			<Material Amount="2" ItemId="40346"/>
+			<Material Amount="3" ItemId="40052"/>
+			<Material Amount="50" ItemId="40304"/>
+		</MakeItem>
+	</Action>
+	<!--パプリオン ハイドロ プレートメイル / 強靭なハイオス-->
+	<Action Name="request elite fafurion plate armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21176"/>
+			<Material Amount="1" ItemId="20153"/>
+			<Material Amount="2" ItemId="40362"/>
+			<Material Amount="3" ItemId="40055"/>
+			<Material Amount="50" ItemId="40306"/>
+		</MakeItem>
+	</Action>
+	<!--パプリオン ハイドロ ローブ / 細やかなシューヌ-->
+	<Action Name="request elite fafurion robe">
+		<MakeItem>
+			<Item Amount="1" ItemId="21177"/>
+			<Material Amount="1" ItemId="20153"/>
+			<Material Amount="2" ItemId="40362"/>
+			<Material Amount="3" ItemId="40055"/>
+			<Material Amount="50" ItemId="40306"/>
+		</MakeItem>
+	</Action>
+	<!--パプリオン ハイドロ レザーアーマー / 根気のあるドオホ-->
+	<Action Name="request elite fafurion leather armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21178"/>
+			<Material Amount="1" ItemId="20153"/>
+			<Material Amount="2" ItemId="40362"/>
+			<Material Amount="3" ItemId="40055"/>
+			<Material Amount="50" ItemId="40306"/>
+		</MakeItem>
+	</Action>
+	<!--パプリオン ハイドロ スケイルメイル / 派手なバエミ-->
+	<Action Name="request elite fafurion scale armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21179"/>
+			<Material Amount="1" ItemId="20153"/>
+			<Material Amount="2" ItemId="40362"/>
+			<Material Amount="3" ItemId="40055"/>
+			<Material Amount="50" ItemId="40306"/>
+		</MakeItem>
+	</Action>
+	<!--リンドビオル ストーム プレートメイル / 強靭なハイオス-->
+	<Action Name="request elite lindvior plate armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21180"/>
+			<Material Amount="1" ItemId="20108"/>
+			<Material Amount="2" ItemId="40370"/>
+			<Material Amount="3" ItemId="40054"/>
+			<Material Amount="50" ItemId="40307"/>
+		</MakeItem>
+	</Action>
+	<!--リンドビオル ストーム ローブ / 細やかなシューヌ-->
+	<Action Name="request elite lindvior robe">
+		<MakeItem>
+			<Item Amount="1" ItemId="21181"/>
+			<Material Amount="1" ItemId="20108"/>
+			<Material Amount="2" ItemId="40370"/>
+			<Material Amount="3" ItemId="40054"/>
+			<Material Amount="50" ItemId="40307"/>
+		</MakeItem>
+	</Action>
+	<!--リンドビオル ストーム レザーアーマー / 根気のあるドオホ-->
+	<Action Name="request elite lindvior leather armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21182"/>
+			<Material Amount="1" ItemId="20108"/>
+			<Material Amount="2" ItemId="40370"/>
+			<Material Amount="3" ItemId="40054"/>
+			<Material Amount="50" ItemId="40307"/>
+		</MakeItem>
+	</Action>
+	<!--リンドビオル ストーム スケイルメイル / 派手なバエミ-->
+	<Action Name="request elite lindvior scale armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21183"/>
+			<Material Amount="1" ItemId="20108"/>
+			<Material Amount="2" ItemId="40370"/>
+			<Material Amount="3" ItemId="40054"/>
+			<Material Amount="50" ItemId="40307"/>
+		</MakeItem>
+	</Action>
+	<!--ヴァラカス フレイム プレートメイル / 強靭なハイオス-->
+	<Action Name="request elite valakas plate armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21184"/>
+			<Material Amount="1" ItemId="20119"/>
+			<Material Amount="2" ItemId="40354"/>
+			<Material Amount="3" ItemId="40053"/>
+			<Material Amount="50" ItemId="40305"/>
+		</MakeItem>
+	</Action>
+	<!--ヴァラカス フレイム ローブ / 細やかなシューヌ-->
+	<Action Name="request elite valakas robe">
+		<MakeItem>
+			<Item Amount="1" ItemId="21185"/>
+			<Material Amount="1" ItemId="20119"/>
+			<Material Amount="2" ItemId="40354"/>
+			<Material Amount="3" ItemId="40053"/>
+			<Material Amount="50" ItemId="40305"/>
+		</MakeItem>
+	</Action>
+	<!--ヴァラカス フレイム レザーアーマー / 根気のあるドオホ-->
+	<Action Name="request elite valakas leather armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21186"/>
+			<Material Amount="1" ItemId="20119"/>
+			<Material Amount="2" ItemId="40354"/>
+			<Material Amount="3" ItemId="40053"/>
+			<Material Amount="50" ItemId="40305"/>
+		</MakeItem>
+	</Action>
+	<!--ヴァラカス フレイム スケイルメイル / 派手なバエミ-->
+	<Action Name="request elite valakas scale armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21187"/>
+			<Material Amount="1" ItemId="20119"/>
+			<Material Amount="2" ItemId="40354"/>
+			<Material Amount="3" ItemId="40053"/>
+			<Material Amount="50" ItemId="40305"/>
 		</MakeItem>
 	</Action>
 	<!--ボーン ヘルム / 骨細工師-->
