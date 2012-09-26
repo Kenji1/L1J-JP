@@ -133,49 +133,28 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 		RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
 				
 		for (L1ObjectAmount<Integer> makingItem : _items) {
-			L1ItemInstance item = pc.getInventory().storeItem(
-					makingItem.getObject(), makingItem.getAmount() * amount);
-			if (item != null) {
-				// ユニークオプションを付加
-				if (item.getItem().getType2() == 1 || item.getItem().getType2() == 2) { // weapon or armor
-					if (item.getItem().getType2() == 1) { // weapon
-						item.setHitModifier(_getUniqueOption(Config.UNIQUE_MAX_HIT_MODIFIER, uniqueRate));
-						item.setDmgModifier(_getUniqueOption(Config.UNIQUE_MAX_DMG_MODIFIER, uniqueRate));
-					} else if (item.getItem().getType2() == 2) { // armor
-						item.setAc(_getUniqueOption(Config.UNIQUE_MAX_AC, uniqueRate));
+			L1ItemInstance item = null;
+			if (ItemTable.getInstance().getTemplate(makingItem.getObject()).isStackable()) {
+				item = pc.getInventory().storeItem(makingItem.getObject(),
+						makingItem.getAmount() * amount);
+			} else {
+				for (int i = makingItem.getAmount() * amount; i > 0; i--) {
+					item = pc.getInventory().storeItem(makingItem.getObject(), 1);
+					if (item != null) {
+						// ユニークオプションを付加
+						item.setUniqueOptions(uniqueRate);
 					}
-					item.setStr(_getUniqueOption(Config.UNIQUE_MAX_STR, uniqueRate));
-					item.setCon(_getUniqueOption(Config.UNIQUE_MAX_CON, uniqueRate));
-					item.setDex(_getUniqueOption(Config.UNIQUE_MAX_DEX, uniqueRate));
-					item.setWis(_getUniqueOption(Config.UNIQUE_MAX_WIS, uniqueRate));
-					item.setInt(_getUniqueOption(Config.UNIQUE_MAX_INT, uniqueRate));
-					item.setCha(_getUniqueOption(Config.UNIQUE_MAX_CHA, uniqueRate));
-					item.setHp(_getUniqueOption(Config.UNIQUE_MAX_HP, uniqueRate));
-					item.setHpr(_getUniqueOption(Config.UNIQUE_MAX_HPR, uniqueRate));
-					item.setMp(_getUniqueOption(Config.UNIQUE_MAX_MP, uniqueRate));
-					item.setMpr(_getUniqueOption(Config.UNIQUE_MAX_MPR, uniqueRate));
-					item.setSp(_getUniqueOption(Config.UNIQUE_MAX_SP, uniqueRate));
-					item.setMr(_getUniqueOption(Config.UNIQUE_MAX_MR, uniqueRate));
-					item.setDefenseEarth(_getUniqueOption(Config.UNIQUE_MAX_DEFENSE_EARTH, uniqueRate));
-					item.setDefenseWater(_getUniqueOption(Config.UNIQUE_MAX_DEFENSE_WATER, uniqueRate));
-					item.setDefenseFire(_getUniqueOption(Config.UNIQUE_MAX_DEFENSE_FIRE, uniqueRate));
-					item.setDefenseWind(_getUniqueOption(Config.UNIQUE_MAX_DEFENSE_WIND, uniqueRate));
-					item.setResistStun(_getUniqueOption(Config.UNIQUE_MAX_RESIST_STUN, uniqueRate));
-					item.setResistStone(_getUniqueOption(Config.UNIQUE_MAX_RESIST_STONE, uniqueRate));
-					item.setResistSleep(_getUniqueOption(Config.UNIQUE_MAX_RESIST_SLEEP, uniqueRate));
-					item.setResistFreeze(_getUniqueOption(Config.UNIQUE_MAX_RESIST_FREEZE, uniqueRate));
-					item.setResistHold(_getUniqueOption(Config.UNIQUE_MAX_RESIST_HOLD, uniqueRate));
-					item.setResistBlind(_getUniqueOption(Config.UNIQUE_MAX_RESIST_BLIND, uniqueRate));
-					item.setExpBonus(_getUniqueOption(Config.UNIQUE_MAX_EXP_BONUS, uniqueRate));
 				}
-				
+			}
+			
+			if (item != null) {
 				String itemName = ItemTable.getInstance().getTemplate(
 						makingItem.getObject()).getName();
 				if (makingItem.getAmount() * amount > 1) {
-					itemName = itemName + " (" + makingItem.getAmount()
-							* amount + ")";
+					itemName = itemName + " (" + makingItem.getAmount() * amount + ")";
 				}
-				pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0が%1をくれました。
+				pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
+				// \f1%0が%1をくれました。
 			}
 		}
 		return true;
@@ -225,15 +204,4 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 		return result == null ? L1NpcHtml.HTML_CLOSE : result;
 	}
 
-	private int _getUniqueOption(int n, double ratePct) {
-		RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
-		
-		int chance = random.nextInt(100) + 1 ;
-		
-		if (ratePct >= (double) chance) {
-			return random.nextInt(n);
-		} else {
-			return 0;
-		}
-	}
 }

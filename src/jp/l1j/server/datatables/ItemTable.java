@@ -361,13 +361,13 @@ public class ItemTable {
 				weapon.setDoubleDmgChance(rs.getInt("double_dmg_chance"));
 				weapon.setWeaknessExposure(rs.getInt("weakness_exposure"));
 				weapon.setMagicDmgModifier(rs.getInt("magic_dmg_modifier"));
-				weapon.setCanbeDmg(rs.getInt("can_be_dmg"));
+				weapon.setCanbeDmg(rs.getBoolean("can_be_dmg"));
 				weapon.setMinLevel(rs.getInt("min_level"));
 				weapon.setMaxLevel(rs.getInt("max_level"));
 				weapon.setBless(rs.getInt("bless"));
 				weapon.setTradable(rs.getInt("tradable") == 1 ? true : false);
 				weapon.setDeletable(rs.getInt("deletable") == 1 ? true : false);
-				weapon.setIsHaste(rs.getInt("is_haste") == 0 ? false : true);
+				weapon.setIsHaste(rs.getBoolean("is_haste"));
 				weapon.setChargeTime(rs.getInt("charge_time"));
 				weapon.setExpirationTime(rs.getString("expiration_time"));
 

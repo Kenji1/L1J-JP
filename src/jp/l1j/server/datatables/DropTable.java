@@ -122,10 +122,10 @@ public class DropTable {
 			return;
 		}
 
-		// ユニークアイテムレートを取得
-		double uniqueRate = Config.RATE_DROP_UNIQUE_ITEMS;
-		if (uniqueRate <= 0) {
-			uniqueRate = 0;
+		// ユニークドロップレートを取得
+		double uniqueDropRate = Config.RATE_DROP_UNIQUE_ITEMS;
+		if (uniqueDropRate <= 0) {
+			uniqueDropRate = 0;
 		}
 		double uniqueRateOfMapId = MapsTable.getInstance().getUniqueRate(
 				npc.getMap().getBaseMapId());
@@ -183,39 +183,8 @@ public class DropTable {
 			
 			// ユニークオプションを付加
 			double uniqueRateOfItem = DropItemTable.getInstance().getUniqueRate(itemId);
-			double unqRate = uniqueRate * uniqueRateOfMapId * uniqueRateOfItem;
-			
-			if (item.getItem().getType2() == 1 || item.getItem().getType2() == 2) { // weapon or armor
-				if (item.getItem().getType2() == 1) { // weapon
-					item.setHitModifier(_getUniqueOption(Config.UNIQUE_MAX_HIT_MODIFIER, unqRate));
-					item.setDmgModifier(_getUniqueOption(Config.UNIQUE_MAX_DMG_MODIFIER, unqRate));
-				} else if (item.getItem().getType2() == 2) { // armor
-					item.setAc(_getUniqueOption(Config.UNIQUE_MAX_AC, unqRate));
-				}
-				item.setStr(_getUniqueOption(Config.UNIQUE_MAX_STR, unqRate));
-				item.setCon(_getUniqueOption(Config.UNIQUE_MAX_CON, unqRate));
-				item.setDex(_getUniqueOption(Config.UNIQUE_MAX_DEX, unqRate));
-				item.setWis(_getUniqueOption(Config.UNIQUE_MAX_WIS, unqRate));
-				item.setInt(_getUniqueOption(Config.UNIQUE_MAX_INT, unqRate));
-				item.setCha(_getUniqueOption(Config.UNIQUE_MAX_CHA, unqRate));
-				item.setHp(_getUniqueOption(Config.UNIQUE_MAX_HP, unqRate));
-				item.setHpr(_getUniqueOption(Config.UNIQUE_MAX_HPR, unqRate));
-				item.setMp(_getUniqueOption(Config.UNIQUE_MAX_MP, unqRate));
-				item.setMpr(_getUniqueOption(Config.UNIQUE_MAX_MPR, unqRate));
-				item.setSp(_getUniqueOption(Config.UNIQUE_MAX_SP, unqRate));
-				item.setMr(_getUniqueOption(Config.UNIQUE_MAX_MR, unqRate));
-				item.setDefenseEarth(_getUniqueOption(Config.UNIQUE_MAX_DEFENSE_EARTH, unqRate));
-				item.setDefenseWater(_getUniqueOption(Config.UNIQUE_MAX_DEFENSE_WATER, unqRate));
-				item.setDefenseFire(_getUniqueOption(Config.UNIQUE_MAX_DEFENSE_FIRE, unqRate));
-				item.setDefenseWind(_getUniqueOption(Config.UNIQUE_MAX_DEFENSE_WIND, unqRate));
-				item.setResistStun(_getUniqueOption(Config.UNIQUE_MAX_RESIST_STUN, unqRate));
-				item.setResistStone(_getUniqueOption(Config.UNIQUE_MAX_RESIST_STONE, unqRate));
-				item.setResistSleep(_getUniqueOption(Config.UNIQUE_MAX_RESIST_SLEEP, unqRate));
-				item.setResistFreeze(_getUniqueOption(Config.UNIQUE_MAX_RESIST_FREEZE, unqRate));
-				item.setResistHold(_getUniqueOption(Config.UNIQUE_MAX_RESIST_HOLD, unqRate));
-				item.setResistBlind(_getUniqueOption(Config.UNIQUE_MAX_RESIST_BLIND, unqRate));
-				item.setExpBonus(_getUniqueOption(Config.UNIQUE_MAX_EXP_BONUS, unqRate));
-			}
+			double uniqueRate = uniqueDropRate * uniqueRateOfMapId * uniqueRateOfItem;
+			item.setUniqueOptions(uniqueRate);
 		}
 	}
 
@@ -438,17 +407,5 @@ public class DropTable {
 		}
 		npc.updateLight();
 	}
-	
-	private int _getUniqueOption(int n, double ratePct) {
-		RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
-		
-		int chance = random.nextInt(100) + 1 ;
-		
-		if (ratePct >= (double) chance) {
-			return random.nextInt(n);
-		} else {
-			return 0;
-		}
-	}
-	
+
 }

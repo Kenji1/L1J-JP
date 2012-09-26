@@ -99,7 +99,7 @@ public class ArmorSetTable {
 			as.setResistFreeze(rs.getInt("resist_freeze"));
 			as.setResistHold(rs.getInt("resist_hold"));
 			as.setResistBlind(rs.getInt("resist_blind"));
-			as.setIsHaste(rs.getInt("is_haste") == 0 ? false : true);
+			as.setIsHaste(rs.getBoolean("is_haste"));
 			as.setExpBonus(rs.getInt("exp_bonus"));
 			
 			_armorSetList.add(as);

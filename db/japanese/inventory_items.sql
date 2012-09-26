@@ -45,6 +45,9 @@ CREATE TABLE IF NOT EXISTS `inventory_items` (
   `resist_hold` tinyint(3) NOT NULL DEFAULT '0',
   `resist_blind` tinyint(3) NOT NULL DEFAULT '0',
   `exp_bonus` tinyint(3) NOT NULL DEFAULT '0',
+  `is_haste` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_be_dmg` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `is_unique` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `owner_index` (`owner_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

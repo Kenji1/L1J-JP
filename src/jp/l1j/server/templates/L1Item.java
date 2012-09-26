@@ -653,8 +653,8 @@ public abstract class L1Item implements Cloneable, Serializable {
 		return 0;
 	}
 
-	public int getCanbeDmg() {
-		return 0;
+	public boolean getCanbeDmg() {
+		return false;
 	}
 
 	public boolean isTwohanded() {

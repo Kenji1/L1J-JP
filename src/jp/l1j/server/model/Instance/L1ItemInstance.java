@@ -17,10 +17,12 @@ package jp.l1j.server.model.Instance;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
+import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.FurnitureSpawnTable;
 import jp.l1j.server.datatables.InnKeyTable;
 import jp.l1j.server.datatables.ItemTable;
@@ -33,9 +35,12 @@ import jp.l1j.server.model.L1ExpirationTimer;
 import jp.l1j.server.model.L1ItemOwnerTimer;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
+import static jp.l1j.server.model.item.L1ItemOptionId.*;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.packets.server.S_ServerMessage;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Armor;
 import jp.l1j.server.templates.L1InventoryItem;
 import jp.l1j.server.templates.L1Item;
@@ -48,6 +53,9 @@ import jp.l1j.server.utils.IntRange;
 // L1Object, L1PcInstance
 
 public class L1ItemInstance extends L1Object {
+	
+	private static final RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
+	
 	private static final long serialVersionUID = 1L;
 
 	private final L1InventoryItem _inventoryItem;
@@ -492,6 +500,34 @@ public class L1ItemInstance extends L1Object {
 	public void setExpBonus(int _expBonus) {
 		_inventoryItem.setExpBonus(_expBonus);
 	}
+
+	public boolean isHaste() {
+		return getItem().isHaste() || _inventoryItem.isHaste();
+	}
+	
+	public void setIsHaste(boolean _isHaste) {
+		_inventoryItem.setIsHaste(_isHaste);
+	}
+	
+	public boolean getCanBeDmg() {
+		if (getItem().getType2() == 1) {
+			return getItem().getCanbeDmg() && _inventoryItem.getCanBeDmg();
+		} else {
+			return _inventoryItem.getCanBeDmg();
+		}
+	}
+	
+	public void setCanBeDmg(boolean _canBeDmg) {
+		_inventoryItem.setCanBeDmg(_canBeDmg);
+	}
+	
+	public boolean isUnique() {
+		return _inventoryItem.isUnique();
+	}
+	
+	public void setIsUnique(boolean _isUnique) {
+		_inventoryItem.setIsUniuqe(_isUnique);
+	}
 	
 	/*
 	 * 耐久性、0~127まで -の値は許可しない。
@@ -582,6 +618,10 @@ public class L1ItemInstance extends L1Object {
 	public String getNumberedName(int count) {
 		StringBuilder name = new StringBuilder();
 
+		if (isUnique()) { // ユニークアイテムの接頭詞
+			name.append(Config.UNIQUE_PREFIX + " ");
+		}
+		
 		if (isIdentified()) {
 			if (getItem().getType2() == 1) { // 武器
 				int attrEnchantLevel = getAttrEnchantLevel();
@@ -865,7 +905,7 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(getItem().getSp() + getSp());
 			}
 			// ヘイスト
-			if (getItem().isHaste()) {
+			if (isHaste()) {
 				os.writeC(18);
 			}
 			// 火の属性
@@ -1104,6 +1144,227 @@ public class L1ItemInstance extends L1Object {
 		_isRunning = true;
 	}
 
+	public void setUniqueOptions(double uniqueRate) {
+		if (getItem().getType2() != 1 && getItem().getType2() != 2) { // 武器・防具以外
+			return;
+		}
+
+		ArrayList<Integer> options = new ArrayList<Integer>() {
+			{
+				add(OPT_STR); add(OPT_CON); add(OPT_DEX); add(OPT_WIS);
+				add(OPT_INT); add(OPT_CHA); add(OPT_HP); add(OPT_HPR);
+				add(OPT_MP); add(OPT_MPR); add(OPT_SP); add(OPT_MR);
+				add(OPT_DEF_EARTH); add(OPT_DEF_WATER); add(OPT_DEF_FIRE);
+				add(OPT_DEF_WIND); add(OPT_RES_STUN); add(OPT_RES_STONE);
+				add(OPT_RES_SLEEP); add(OPT_RES_FREEZE); add(OPT_RES_HOLD);
+				add(OPT_RES_BLIND); add(OPT_EXP_BONUS); add(OPT_HASTE);
+			}
+		};
+		
+		if (getItem().getType2() == 1) { // 武器
+			options.add(OPT_HIT_MOD);
+			options.add(OPT_DMG_MOD);
+			options.add(OPT_CAN_DMG);
+		} else { // 防具
+			options.add(OPT_AC);
+		}
+
+		boolean isUnique = false;
+		for(int i = 0; i < Config.UNIQUE_MAX_OPTIONS; i++) {
+			int res = 0;
+			int j = random.nextInt(options.size());
+			int option = options.get(j);
+			options.remove(j);
+			
+			if (option == OPT_STR) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_STR, uniqueRate);
+				if (res > 0) {
+					setStr(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_CON) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_CON, uniqueRate);
+				if (res > 0) {
+					setCon(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_DEX) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_DEX, uniqueRate);
+				if (res > 0) {
+					setDex(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_WIS) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_WIS, uniqueRate);
+				if (res > 0) {
+					setWis(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_INT) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_INT, uniqueRate);
+				if (res > 0) {
+					setInt(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_CHA) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_CHA, uniqueRate);
+				if (res > 0) {
+					setCha(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_HP) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_HP, uniqueRate);
+				if (res > 0) {
+					setHp(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_HPR) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_HPR, uniqueRate);
+				if (res > 0) {
+					setHpr(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_MP) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_MP, uniqueRate);
+				if (res > 0) {
+					setMp(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_MPR) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_MPR, uniqueRate);
+				if (res > 0) {
+					setMpr(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_SP) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_SP, uniqueRate);
+				if (res > 0) {
+					setSp(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_MR) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_MR, uniqueRate);
+				if (res > 0) {
+					setMr(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_DEF_EARTH) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_DEFENSE_EARTH, uniqueRate);
+				if (res > 0) {
+					setDefenseEarth(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_DEF_WATER) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_DEFENSE_WATER, uniqueRate);
+				if (res > 0) {
+					setDefenseWater(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_DEF_FIRE) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_DEFENSE_FIRE, uniqueRate);
+				if (res > 0) {
+					setDefenseFire(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_DEF_WIND) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_DEFENSE_WIND, uniqueRate);
+				if (res > 0) {
+					setDefenseWind(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_RES_STUN) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_STUN, uniqueRate);
+				if (res > 0) {
+					setResistStun(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_RES_STONE) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_STONE, uniqueRate);
+				if (res > 0) {
+					setResistStone(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_RES_SLEEP) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_SLEEP, uniqueRate);
+				if (res > 0) {
+					setResistSleep(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_RES_FREEZE) {	
+				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_FREEZE, uniqueRate);
+				if (res > 0) {
+					setResistFreeze(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_RES_HOLD) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_HOLD, uniqueRate);
+				if (res > 0) {
+					setResistHold(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_RES_BLIND) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_BLIND, uniqueRate);
+				if (res > 0) {
+					setResistBlind(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_EXP_BONUS) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_EXP_BONUS, uniqueRate);
+				if (res > 0) {
+					setExpBonus(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_HASTE) {
+				int flg = Config.UNIQUE_HASTE ? 1 : 0;
+				res = calcUniqueOption(flg, uniqueRate);
+				if (res > 0) {
+					setIsHaste(true);
+					isUnique = getItem().isHaste() ? false : true;
+				} else {
+					setIsHaste(getItem().isHaste());
+				}
+			} else if (option == OPT_HIT_MOD) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_HIT_MODIFIER, uniqueRate);
+				if (res > 0) {
+					setHitModifier(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_DMG_MOD) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_DMG_MODIFIER, uniqueRate);
+				if (res > 0) {
+					setDmgModifier(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_CAN_DMG) {
+				int flg = Config.UNIQUE_CAN_DMG ? 1 : 0;
+				res = calcUniqueOption(flg, uniqueRate);
+				if (res > 0) {
+					setCanBeDmg(getItem().getCanbeDmg());
+				} else {
+					setCanBeDmg(false);
+					isUnique = getItem().getCanbeDmg() ? true : false;
+				}
+			} else if (option == OPT_AC) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_AC, uniqueRate);
+				if (res > 0) {
+					setAc(res);
+					isUnique = true;
+				}
+			}
+		}
+		setIsUnique(isUnique);
+	}
+
+	private int calcUniqueOption(int n, double ratePct) {
+		int chance = random.nextInt(100) + 1 ;
+		
+		if (ratePct >= (double) chance) {
+			return random.nextInt(n);
+		} else {
+			return 0;
+		}
+	}
+	
 	private int _itemOwnerId = 0;
 
 	public int getItemOwnerId() {

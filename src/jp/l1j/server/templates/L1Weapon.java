@@ -78,14 +78,14 @@ public class L1Weapon extends L1Item {
 		_magicDmgModifier = i;
 	}
 
-	private int _canbeDmg = 0; // ● 損傷の有無
+	private boolean _canbeDmg; // ● 損傷の有無
 
 	@Override
-	public int getCanbeDmg() {
+	public boolean getCanbeDmg() {
 		return _canbeDmg;
 	}
 
-	public void setCanbeDmg(int i) {
+	public void setCanbeDmg(boolean i) {
 		_canbeDmg = i;
 	}
 

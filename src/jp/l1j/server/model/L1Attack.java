@@ -15,15 +15,11 @@
 
 package jp.l1j.server.model;
 
-import static jp.l1j.server.model.skill.L1SkillId.*;
-
 import java.util.logging.Logger;
-
 import jp.l1j.configure.Config;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.controller.timer.WarTimeController;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.Instance.L1DollInstance;
 import jp.l1j.server.model.Instance.L1ItemInstance;
 import jp.l1j.server.model.Instance.L1NpcInstance;
 import jp.l1j.server.model.Instance.L1PcInstance;
@@ -33,8 +29,7 @@ import jp.l1j.server.model.gametime.L1GameTimeClock;
 import jp.l1j.server.model.poison.L1DamagePoison;
 import jp.l1j.server.model.poison.L1ParalysisPoison;
 import jp.l1j.server.model.poison.L1SilencePoison;
-import jp.l1j.server.random.RandomGenerator;
-import jp.l1j.server.random.RandomGeneratorFactory;
+import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_AttackMissPacket;
 import jp.l1j.server.packets.server.S_AttackPacket;
 import jp.l1j.server.packets.server.S_AttackPacketForNpc;
@@ -44,6 +39,8 @@ import jp.l1j.server.packets.server.S_SkillIconGFX;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.packets.server.S_UseArrowSkill;
 import jp.l1j.server.packets.server.S_UseAttackSkill;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1MagicDoll;
 import jp.l1j.server.templates.L1Skill;
 import jp.l1j.server.types.Point;
@@ -2135,7 +2132,7 @@ public class L1Attack {
 		 */
 		if (_calcType != PC_NPC
 				|| _targetNpc.getNpcTemplate().isHard() == false
-				|| _weaponType == 0 || weapon.getItem().getCanbeDmg() == 0
+				|| _weaponType == 0 || weapon.getCanBeDmg()
 				|| _pc.hasSkillEffect(SOUL_OF_FLAME)) {
 			return;
 		}

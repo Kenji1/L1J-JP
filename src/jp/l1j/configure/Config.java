@@ -266,6 +266,9 @@ public final class Config {
 	@Configure(file = RATE, key = "RateMakeUniqueItems")
 	public static int RATE_MAKE_UNIQUE_ITEMS = 0;
 
+	@Configure(file = RATE, key = "UniqueMaxOptions")
+	public static int UNIQUE_MAX_OPTIONS = 3;
+	
 	@Configure(file = RATE, key = "UniqueMaxAc")
 	public static int UNIQUE_MAX_AC = 3;
 
@@ -344,6 +347,15 @@ public final class Config {
 	@Configure(file = RATE, key = "UniqueMaxExpBonus")
 	public static int UNIQUE_MAX_EXP_BONUS = 10;
 
+	@Configure(file = RATE, key = "UniqueHaste")
+	public static boolean UNIQUE_HASTE = true;
+	
+	@Configure(file = RATE, key = "UniqueCanDmg")
+	public static boolean UNIQUE_CAN_DMG = true;
+	
+	@Configure(file = RATE, key = "UniquePrefix")
+	public static String UNIQUE_PREFIX = "[HQ]";
+	
 	/** AltSettings control */
 	@Configure(file = ALT, key = "GlobalChatLevel")
 	public static int GLOBAL_CHAT_LEVEL = 30;
