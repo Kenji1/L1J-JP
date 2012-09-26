@@ -94,12 +94,15 @@ UNIQUE RATES
 <!-- Armor 固有のオプション -->
 <entry key="UniqueMaxAc">3</entry>
 
-<!-- Weapon 固有のオプション(0 - Max) -->
+<!-- Weapon 固有のオプション -->
+<!-- (0 - Max) -->
 <entry key="UniqueMaxHitModifier">5</entry>
 <entry key="UniqueMaxDmgModifier">5</entry>
-<entry key="UniqueCanDmg">1</entry>
+<!-- (True or False) -->
+<entry key="UniqueCanDmg">True</entry>
 
-<!-- Weapon, Armor 共通のオプション(0 - Max) -->
+<!-- Weapon, Armor 共通のオプション -->
+<!-- (0 - Max) -->
 <entry key="UniqueMaxStr">3</entry>
 <entry key="UniqueMaxCon">3</entry>
 <entry key="UniqueMaxDex">3</entry>
@@ -123,7 +126,8 @@ UNIQUE RATES
 <entry key="UniqueMaxResistHold">10</entry>
 <entry key="UniqueMaxResistBlind">10</entry>
 <entry key="UniqueMaxExpBonus">10</entry>
-<entry key="UniqueHaste">1</entry>
+<!-- (True or False) -->
+<entry key="UniqueHaste">True</entry>
 
 <!-- ユニークアイテムの接頭詞 -->
 <entry key="UniquePrefix">[HQ]</entry>
