@@ -1315,11 +1315,16 @@ public class L1ItemInstance extends L1Object {
 					isUnique = true;
 				}
 			} else if (option == OPT_HASTE) {
-				int flg = Config.UNIQUE_HASTE ? 1 : 0;
-				res = calcUniqueOption(flg, uniqueRate);
+				if (Config.UNIQUE_HASTE) {
+					res = calcUniqueOption(1, uniqueRate);
+				} else {
+					res = 0;
+				}
 				if (res > 0) {
 					setIsHaste(true);
-					isUnique = getItem().isHaste() ? false : true;
+					if (getItem().isHaste() == false) {
+						isUnique = true;
+					}
 				} else {
 					setIsHaste(getItem().isHaste());
 				}
@@ -1336,13 +1341,18 @@ public class L1ItemInstance extends L1Object {
 					isUnique = true;
 				}
 			} else if (option == OPT_CAN_DMG) {
-				int flg = Config.UNIQUE_CAN_DMG ? 1 : 0;
-				res = calcUniqueOption(flg, uniqueRate);
+				if (Config.UNIQUE_CAN_DMG) {
+					res = calcUniqueOption(1, uniqueRate);
+				} else {
+					res = 1;
+				}
 				if (res > 0) {
 					setCanBeDmg(getItem().getCanbeDmg());
 				} else {
 					setCanBeDmg(false);
-					isUnique = getItem().getCanbeDmg() ? true : false;
+					if (getItem().getCanbeDmg() == true) {
+						isUnique = true;
+					}
 				}
 			} else if (option == OPT_AC) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_AC, uniqueRate);

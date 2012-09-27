@@ -2132,7 +2132,7 @@ public class L1Attack {
 		 */
 		if (_calcType != PC_NPC
 				|| _targetNpc.getNpcTemplate().isHard() == false
-				|| _weaponType == 0 || weapon.getCanBeDmg()
+				|| _weaponType == 0 || weapon.getCanBeDmg() == false
 				|| _pc.hasSkillEffect(SOUL_OF_FLAME)) {
 			return;
 		}

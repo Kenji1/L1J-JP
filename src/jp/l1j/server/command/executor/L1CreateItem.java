@@ -90,6 +90,14 @@ public class L1CreateItem implements L1CommandExecutor {
 						}
 						if (pc.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {
 							pc.getInventory().storeItem(item);
+							if (item.getItem().getType2() == 1
+									|| item.getItem().getType2() == 2) {
+								item.setIsHaste(item.getItem().isHaste());
+								if (item.getItem().getType2() == 1) {
+									item.setCanBeDmg(item.getItem().getCanbeDmg());
+								}
+								item.save();
+							}
 						} else {
 							break;
 						}
