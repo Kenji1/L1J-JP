@@ -511,7 +511,7 @@ public class L1ItemInstance extends L1Object {
 	
 	public boolean getCanBeDmg() {
 		if (getItem().getType2() == 1) {
-			return getItem().getCanbeDmg() == _inventoryItem.getCanBeDmg();
+			return getItem().getCanbeDmg() && _inventoryItem.getCanBeDmg();
 		} else {
 			return _inventoryItem.getCanBeDmg();
 		}
