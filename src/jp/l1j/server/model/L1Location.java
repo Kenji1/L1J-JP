@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -117,7 +117,7 @@ public class L1Location extends Point {
 	/**
 	 * このLocationに対する、移動可能なランダム範囲のLocationを返す。
 	 * ランダムテレポートの場合は、城エリア、アジト内のLocationは返却されない。
-	 * 
+	 *
 	 * @param max
 	 *            ランダム範囲の最大値
 	 * @param isRandomTeleport
@@ -131,7 +131,7 @@ public class L1Location extends Point {
 	/**
 	 * このLocationに対する、移動可能なランダム範囲のLocationを返す。
 	 * ランダムテレポートの場合は、城エリア、アジト内のLocationは返却されない。
-	 * 
+	 *
 	 * @param min
 	 *            ランダム範囲の最小値(0で自身の座標を含む)
 	 * @param max
@@ -147,7 +147,7 @@ public class L1Location extends Point {
 	/**
 	 * 引数のLocationに対して、移動可能なランダム範囲のLocationを返す。
 	 * ランダムテレポートの場合は、城エリア、アジト内のLocationは返却されない。
-	 * 
+	 *
 	 * @param baseLocation
 	 *            ランダム範囲の元になるLocation
 	 * @param min
@@ -246,5 +246,21 @@ public class L1Location extends Point {
 			}
 		}
 		return newLocation;
+	}
+
+	/**
+	 * ブックマーク禁止エリアの設定
+	 */
+	public static boolean noMarkableLocation(int locX, int locY, short mapId){
+		boolean isNoMarkable = false;
+		if (locX >= 33490 && locX <= 33819 && locY >= 32212 // 火山エリア
+				&& locY <= 32433 && mapId == 4){
+			isNoMarkable = true;
+		}
+		if (locX >= 34238 && locX <= 34283 && locY >= 33105 // ジャイアント（傲慢の塔入口）エリア
+				&& locY <= 33510 && mapId == 4){
+			isNoMarkable = true;
+		}
+		return isNoMarkable;
 	}
 }
