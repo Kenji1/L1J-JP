@@ -59,26 +59,17 @@ public class L1DollInstance extends L1NpcInstance {
 			return true;
 		} else if (_master != null && _master.getMapId() == getMapId()) {
 			int dir = moveDirection(_master.getX(), _master.getY());
-			if (dir == -1) {
-				if (isChargeDoll()) { // 課金マジックドールのタイマーを停止
-					L1ItemInstance item = _master.getInventory().getItem(getItemObjId());
-					item.stopChargeTimer();
-				}
-				deleteDoll();
-				return true;
+			if (getLocation().getTileLineDistance(_master.getLocation()) > 3) {
+				setDirectionMove(dir);
+				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
 			} else {
-				if (getLocation().getTileLineDistance(_master.getLocation()) > 3) {
-					setDirectionMove(dir);
-					setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+				if (sleeptime_PT == 0) {
+					broadcastPacket(new S_DoActionGFX(getId(),
+							DollAction[_random.nextInt(2)]));
+					sleeptime_PT = _random.nextInt(20) + 10;
 				} else {
-					if (sleeptime_PT == 0) {
-						broadcastPacket(new S_DoActionGFX(getId(),
-								DollAction[_random.nextInt(2)]));
-						sleeptime_PT = _random.nextInt(20) + 10;
-					} else {
-						--sleeptime_PT;
-						setSleepTime(500);
-					}
+					--sleeptime_PT;
+					setSleepTime(500);
 				}
 			}
 		} else {
