@@ -671,6 +671,7 @@ class L1SkillStop {
 				L1PcInstance pc = (L1PcInstance) cha;
 				L1ExtraPotion extra = L1ExtraPotion.get(50631);
 				pc.addSp(-extra.getEffect().getSp());
+				pc.sendPackets(new S_SpMr(pc));
 				pc.sendPackets(new S_ServerMessage(830)); // 体に感じた力が消えていきます。
 			}
 		}

@@ -491,39 +491,39 @@ public class L1SkillId {
 
 	public static final int STATUS_DESTRUCTION_NOSTRUM = 1035;
 
-	public static final int STATUS_EXP_UP =1036; // 祈りのポーション
+	public static final int STATUS_END = 1036;
 
-	public static final int STATUS_EXP_UP_II =1037; // 祈りのポーションII
+	public static final int STATUS_EXP_UP =1100; // 祈りのポーション
 
-	public static final int POTION_OF_SWORDMAN = 1038; // 剣士のポーション
+	public static final int STATUS_EXP_UP_II =1101; // 祈りのポーションII
 
-	public static final int POTION_OF_MAGICIAN = 1039; // 術士のポーション
+	public static final int POTION_OF_SWORDMAN = 1102; // 剣士のポーション
 
-	public static final int POTION_OF_RECOVERY = 1040; // 治癒のポーション
+	public static final int POTION_OF_MAGICIAN = 1103; // 術士のポーション
 
-	public static final int POTION_OF_MEDITATION = 1041; // 瞑想のポーション
+	public static final int POTION_OF_RECOVERY = 1104; // 治癒のポーション
 
-	public static final int POTION_OF_LIFE = 1042; // 生命のポーション
+	public static final int POTION_OF_MEDITATION = 1105; // 瞑想のポーション
 
-	public static final int POTION_OF_MAGIC = 1043; // 魔法のポーション
+	public static final int POTION_OF_LIFE = 1106; // 生命のポーション
 
-	public static final int POTION_OF_MAGIC_RESIST = 1044; // 魔法抵抗のポーション
+	public static final int POTION_OF_MAGIC = 1107; // 魔法のポーション
 
-	public static final int POTION_OF_STR = 1045; // 腕力のポーション
+	public static final int POTION_OF_MAGIC_RESIST = 1108; // 魔法抵抗のポーション
 
-	public static final int POTION_OF_DEX = 1046; // 機敏のポーション
+	public static final int POTION_OF_STR = 1109; // 腕力のポーション
 
-	public static final int POTION_OF_CON = 1047; // 体力のポーション
+	public static final int POTION_OF_DEX = 1110; // 機敏のポーション
 
-	public static final int POTION_OF_INT = 1048; // 知力のポーション
+	public static final int POTION_OF_CON = 1111; // 体力のポーション
 
-	public static final int POTION_OF_WIS = 1049; // 精神のポーション
+	public static final int POTION_OF_INT = 1112; // 知力のポーション
 
-	public static final int POTION_OF_RAGE = 1050; // 憤怒のポーション
+	public static final int POTION_OF_WIS = 1113; // 精神のポーション
 
-	public static final int POTION_OF_CONCENTRATION = 1051; // 集中のポーション
+	public static final int POTION_OF_RAGE = 1114; // 憤怒のポーション
 
-	public static final int STATUS_END = 1051;
+	public static final int POTION_OF_CONCENTRATION = 1115; // 集中のポーション
 
 	public static final int GMSTATUS_BEGIN = 2000;
 
