@@ -73,7 +73,7 @@ public class L1EquipmentSlot {
 		if (armor.getItem().getType() < 10) { // 防具
 			_owner.addAc(item.getAc() + armor.getAc() - armor.getEnchantLevel() - armor.getAcByMagic());
 		} else if (armor.getItem().getType() >= 10
-				&& armor.getItem().getType() <= 13) { // アクセサリー
+				&& armor.getItem().getType() <= 18) { // アクセサリー、文様、タリスマン
 			_owner.addAc(item.getAc() + armor.getAc() - armor.getAcByMagic());
 		}
 		_owner.addDamageReductionByArmor(item.getDamageReduction());
@@ -147,7 +147,7 @@ public class L1EquipmentSlot {
 		if (armor.getItem().getType() < 10) { // 防具
 			_owner.addAc(-(item.getAc() + armor.getAc() - armor.getEnchantLevel() - armor.getAcByMagic()));
 		} else if (armor.getItem().getType() >= 10
-				&& armor.getItem().getType() <= 13) { // アクセサリー
+				&& armor.getItem().getType() <= 18) { // アクセサリー、文様、タリスマン
 			_owner.addAc(-(item.getAc() + armor.getAc() - armor.getAcByMagic()));
 		}
 		_owner.addDamageReductionByArmor(-item.getDamageReduction());
