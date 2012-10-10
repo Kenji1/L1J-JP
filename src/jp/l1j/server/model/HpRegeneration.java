@@ -107,7 +107,7 @@ public class HpRegeneration extends TimerTask {
 			}
 		}
 
-		int equipHpr = _pc.getInventory().hpRegenPerTick();
+		int equipHpr = 0;
 		equipHpr += _pc.getHpr();
 		int bonus = _random.nextInt(maxBonus) + 1;
 

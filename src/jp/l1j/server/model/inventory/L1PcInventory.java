@@ -531,30 +531,30 @@ public class L1PcInventory extends L1Inventory {
 	public void setSting(int id) {
 		_stingId = id;
 	}
-
+	// ↓ＨＰＲ、ＭＰＲを装備品で個別で追加しているため重複してしまう。念の為コメントアウトして残しておきます
 	// 装備によるＨＰ自然回復補正
-	public int hpRegenPerTick() {
-		int hpr = 0;
-		for (Object itemObject : _items) {
-			L1ItemInstance item = (L1ItemInstance) itemObject;
-			if (item.isEquipped()) {
-				hpr += item.getItem().getHpr();
-			}
-		}
-		return hpr;
-	}
+	//public int hpRegenPerTick() {
+	//	int hpr = 0;
+	//	for (Object itemObject : _items) {
+	//		L1ItemInstance item = (L1ItemInstance) itemObject;
+	//		if (item.isEquipped()) {
+	//			hpr += item.getItem().getHpr();
+	//		}
+	//	}
+	//	return hpr;
+	//}
 
 	// 装備によるＭＰ自然回復補正
-	public int mpRegenPerTick() {
-		int mpr = 0;
-		for (Object itemObject : _items) {
-			L1ItemInstance item = (L1ItemInstance) itemObject;
-			if (item.isEquipped()) {
-				mpr += item.getItem().getMpr();
-			}
-		}
-		return mpr;
-	}
+	//public int mpRegenPerTick() {
+	//	int mpr = 0;
+	//	for (Object itemObject : _items) {
+	//		L1ItemInstance item = (L1ItemInstance) itemObject;
+	//		if (item.isEquipped()) {
+	//			mpr += item.getItem().getMpr();
+	//		}
+	//	}
+	//	return mpr;
+	//}
 
 	public L1ItemInstance caoPenalty() {
 		RandomGenerator random = RandomGeneratorFactory.getSharedRandom();

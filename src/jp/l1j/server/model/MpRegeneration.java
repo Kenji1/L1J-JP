@@ -136,7 +136,7 @@ public class MpRegeneration extends TimerTask {
  			baseMpr += _pc.getOriginalMpr();
  		}
 
-		int itemMpr = _pc.getInventory().mpRegenPerTick();
+		int itemMpr = 0;
 		itemMpr += _pc.getMpr();
 
 		if (_pc.getFood() < 3 || isOverWeight(_pc)) {

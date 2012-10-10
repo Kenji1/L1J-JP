@@ -35,8 +35,8 @@ public class L1Describe implements L1CommandExecutor {
 			StringBuilder msg = new StringBuilder();
 			pc.sendPackets(new S_SystemMessage("-- describe: " + pc.getName()
 					+ " --"));
-			int hpr = pc.getHpr() + pc.getInventory().hpRegenPerTick();
-			int mpr = pc.getMpr() + pc.getInventory().mpRegenPerTick();
+			int hpr = pc.getHpr();
+			int mpr = pc.getMpr();
 			msg.append("Dmg: +" + pc.getDmgup() + " / ");
 			msg.append("Hit: +" + pc.getHitup() + " / ");
 			msg.append("BowDmg: +" + pc.getBowDmgup() + " / ");
