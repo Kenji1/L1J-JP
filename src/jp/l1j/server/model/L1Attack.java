@@ -985,7 +985,7 @@ public class L1Attack {
 		} else if (_weaponId == 276 || _weaponId == 277 || _weaponId == 278
 				|| _weaponId == 279 || _weaponId == 280 || _weaponId == 281) { // マリスエレメント武器
 			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
-		} else {
+		} else if (_weaponType2 != 14) { // キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId);
 		}
 
@@ -1007,6 +1007,7 @@ public class L1Attack {
 		if (_weaponType2 == 14) { // キーリンク
 			dmg = L1WeaponSkill.getKiringkuDamage(_pc, _target);
 			dmg += calcAttrEnchantDmg();
+			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId); // ＤＢでキーリングにスキルが設定されている場合
 		}
 
 		if (_weaponType != 20 && _weaponType != 62) { // 防具による追加ダメージ
@@ -1247,7 +1248,7 @@ public class L1Attack {
 		} else if (_weaponId == 276 || _weaponId == 277 || _weaponId == 278
 				|| _weaponId == 279 || _weaponId == 280 || _weaponId == 281) { // マリスエレメント武器
 			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
-		} else {
+		} else if (_weaponType2 != 14) { // キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId);
 		}
 
@@ -1269,6 +1270,7 @@ public class L1Attack {
 		if (_weaponType2 == 14) { // キーリンク
 			dmg = L1WeaponSkill.getKiringkuDamage(_pc, _target);
 			dmg += calcAttrEnchantDmg();
+			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId); // ＤＢでキーリングにスキルが設定されている場合
 		}
 
 		if (_weaponType != 20 && _weaponType != 62) { // 防具による追加ダメージ
