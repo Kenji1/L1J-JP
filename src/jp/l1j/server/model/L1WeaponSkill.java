@@ -506,7 +506,7 @@ public class L1WeaponSkill {
 			if (weapon.getItemId() == 276) { // マリス エレメント キーリンク
 				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
 						MIND_BREAK); // マインドブレイク
-				L1Magic magic = new L1Magic(cha, pc);
+				L1Magic magic = new L1Magic(pc, cha);
 
 				pc.sendPackets(new S_SkillSound(cha.getId(), l1skills
 						.getCastGfx()));
@@ -529,7 +529,7 @@ public class L1WeaponSkill {
 			} else if (weapon.getItemId() == 277) { // マリス エレメント チェーンソード
 				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
 						THUNDER_GRAB); // サンダーグラップ
-				L1Magic magic = new L1Magic(cha, pc);
+				L1Magic magic = new L1Magic(pc, cha);
 
 				pc.sendPackets(new S_SkillSound(cha.getId(), l1skills
 						.getCastGfx()));
@@ -569,7 +569,7 @@ public class L1WeaponSkill {
 			} else if (weapon.getItemId() == 279) { // マリス エレメント スタッフ
 				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
 						CHILL_TOUCH); // チルタッチ
-				L1Magic magic = new L1Magic(cha, pc);
+				L1Magic magic = new L1Magic(pc, cha);
 
 				pc.sendPackets(new S_SkillSound(pc.getId(), l1skills
 						.getCastGfx()));
@@ -596,7 +596,7 @@ public class L1WeaponSkill {
 				}
 			} else if (weapon.getItemId() == 280) { // マリス エレメント ボウ
 				L1Skill l1skills = SkillTable.getInstance().findBySkillId(15); // ファイアアロー
-				L1Magic magic = new L1Magic(cha, pc);
+				L1Magic magic = new L1Magic(pc, cha);
 
 				pc.sendPackets(new S_UseArrowSkill(pc, cha.getId(), l1skills
 						.getCastGfx(), cha.getX(), cha.getY(), true));
@@ -616,7 +616,7 @@ public class L1WeaponSkill {
 
 			} else if (weapon.getItemId() == 281) { // マリス エレメント ソード
 				L1Skill l1skills = SkillTable.getInstance().findBySkillId(25); // ファイアボール
-				L1Magic magic = new L1Magic(cha, pc);
+				L1Magic magic = new L1Magic(pc, cha);
 
 				pc.sendPackets(new S_SkillSound(cha.getId(), 218));
 				pc.broadcastPacket(new S_SkillSound(cha.getId(), 218));
@@ -645,7 +645,7 @@ public class L1WeaponSkill {
 							L1PcInstance targetPc = (L1PcInstance) object;
 							if (!targetPc.isDead()
 									&& pc.getId() != targetPc.getId()) {
-								L1Magic magic_area = new L1Magic(targetPc, pc);
+								L1Magic magic_area = new L1Magic(pc, targetPc);
 
 								pc.sendPackets(new S_SkillSound(targetPc
 										.getId(), 218));
@@ -667,7 +667,7 @@ public class L1WeaponSkill {
 						if (object instanceof L1NpcInstance) {
 							L1NpcInstance targetNpc = (L1NpcInstance) object;
 							if (!targetNpc.isDead()) {
-								L1Magic magic_area = new L1Magic(targetNpc, pc);
+								L1Magic magic_area = new L1Magic(pc, targetNpc);
 
 								pc.sendPackets(new S_SkillSound(targetNpc
 										.getId(), 218));
