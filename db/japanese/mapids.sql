@@ -426,8 +426,8 @@ INSERT INTO `mapids` VALUES(783, 'Tikal Ruin', 32704, 33343, 32576, 32959, 1, 1,
 INSERT INTO `mapids` VALUES(784, 'Tikal Kukulcan Altar', 32704, 32831, 32832, 32895, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(997, 'null', 32704, 32767, 32768, 32831, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(998, 'null', 32704, 32767, 32768, 32831, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(1000, 'Silveria', 32704, 32895, 32768, 32959, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(1001, 'Behemoth', 32704, 32895, 32768, 32959, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(1000, 'Silveria', 32704, 32895, 32768, 32959, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(1001, 'Behemoth', 32704, 32895, 32768, 32959, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(1002, 'Dwarven Village', 32576, 33087, 32512, 33023, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(1003, 'null', 32640, 32959, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(1004, 'null', 32512, 32959, 32512, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
