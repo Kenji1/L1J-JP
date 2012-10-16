@@ -830,6 +830,13 @@ public class C_UseItem extends ClientBasePacket {
 						} else {
 							pc.getInventory().removeItem(item, 1);
 						}
+						if (item.getChargeCount() > 1) {
+							item.setChargeCount(item.getChargeCount() - 1);
+							pc.getInventory().updateItem(item,
+									L1PcInventory.COL_CHARGE_COUNT);
+						} else {
+							pc.getInventory().removeItem(item, 1);
+						}
 					}
 				} else {
 					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
