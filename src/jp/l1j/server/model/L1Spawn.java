@@ -351,6 +351,8 @@ public class L1Spawn extends L1GameTimeAdapter {
 				mob.setMap((short) (getMapId() + _random.nextInt(2)));
 			} else if (npcId == 45601 && getMapId() == 11) { // デスナイト
 				mob.setMap((short) (getMapId() + _random.nextInt(3)));
+			} else if (npcId == 45649 && getMapId() == 80) { // デーモン
+				mob.setMap((short) (getMapId() + _random.nextInt(3)));
 			} else {
 				mob.setMap(getMapId());
 			}
