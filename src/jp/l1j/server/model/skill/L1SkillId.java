@@ -414,6 +414,8 @@ public class L1SkillId {
 	public static final int SKILLS_END = 220;
 
 	public static final int MASS_SHOCK_STUN = 500; // 範囲スタン
+
+	public static final int MASS_CANCELLATION = 501; // 範囲キャンセレーション
 	/*
 	 * Status
 	 */

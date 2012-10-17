@@ -247,7 +247,7 @@ public class L1Magic {
 		if (!checkZone(skillId)) {
 			return false;
 		}
-		if (skillId == CANCELLATION) {
+		if (skillId == CANCELLATION || skillId == MASS_CANCELLATION) {
 			if (_calcType == PC_PC && _pc != null && _targetPc != null) {
 				// 自分自身の場合は100%成功
 				if (_pc.getId() == _targetPc.getId()) {
@@ -279,13 +279,13 @@ public class L1Magic {
 		// アースバインド中はWB、キャンセレーション以外無効
 		if (_calcType == PC_PC || _calcType == NPC_PC) {
 			if (_targetPc.hasSkillEffect(EARTH_BIND)) {
-				if (skillId != WEAPON_BREAK && skillId != CANCELLATION) {
+				if (skillId != WEAPON_BREAK && skillId != CANCELLATION && skillId != MASS_CANCELLATION) {
 					return false;
 				}
 			}
 		} else {
 			if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
-				if (skillId != WEAPON_BREAK && skillId != CANCELLATION) {
+				if (skillId != WEAPON_BREAK && skillId != CANCELLATION && skillId != MASS_CANCELLATION) {
 					return false;
 				}
 			}

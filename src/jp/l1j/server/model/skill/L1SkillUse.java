@@ -768,8 +768,8 @@ public class L1SkillUse {
 						|| _skillId == DARKNESS || _skillId == WEAKNESS
 						|| _skillId == DISEASE || _skillId == FOG_OF_SLEEPING
 						|| _skillId == MASS_SLOW || _skillId == SLOW
-						|| _skillId == CANCELLATION || _skillId == SILENCE
-						|| _skillId == DECAY_POTION
+						|| _skillId == CANCELLATION || _skillId == MASS_CANCELLATION
+						|| _skillId == SILENCE || _skillId == DECAY_POTION
 						|| _skillId == MASS_TELEPORT || _skillId == DETECTION
 						|| _skillId == COUNTER_DETECTION
 						|| _skillId == ERASE_MAGIC || _skillId == ENTANGLE
@@ -2309,6 +2309,89 @@ public class L1SkillUse {
 						if (_user instanceof L1PcInstance) {
 							L1PinkName.onAction(pc, _user);
 						}
+					}
+				} else if (_skillId == MASS_CANCELLATION) { // 範囲キャンセレーション
+					if (_player != null && _player.isInvisble()) {
+						_player.delInvis();
+					}
+					if (!(cha instanceof L1PcInstance)) {
+						L1NpcInstance npc = (L1NpcInstance) cha;
+						npc.setMoveSpeed(0);
+						npc.setBraveSpeed(0);
+						npc
+						.broadcastPacket(new S_SkillHaste(cha.getId(),
+								0, 0));
+						npc
+						.broadcastPacket(new S_SkillBrave(cha.getId(),
+								0, 0));
+						npc.setWeaponBreaked(false);
+						npc.setParalyzed(false);
+						npc.setParalysisTime(0);
+					}
+
+					// スキルの解除
+					for (int skillNum = SKILLS_BEGIN; skillNum <= SKILLS_END; skillNum++) {
+						if (isNotCancelable(skillNum) && !cha.isDead()) {
+							continue;
+						}
+						cha.removeSkillEffect(skillNum);
+					}
+
+					// ステータス強化、異常の解除
+					cha.curePoison();
+					cha.cureParalaysis();
+					for (int skillNum = STATUS_BEGIN; skillNum <= STATUS_END; skillNum++) {
+						if (skillNum == STATUS_CHAT_PROHIBITED // チャット禁止は解除しない
+								|| skillNum == STATUS_CURSE_BARLOG // バルログの呪いは解除しない
+								|| skillNum == STATUS_CURSE_YAHEE) { // ヤヒの呪いは解除しない
+							continue;
+						}
+						cha.removeSkillEffect(skillNum);
+					}
+
+					if (cha instanceof L1PcInstance) {
+					}
+
+					// 料理の解除
+					for (int skillNum = COOKING_BEGIN; skillNum <= COOKING_END; skillNum++) {
+						if (isNotCancelable(skillNum)) {
+							continue;
+						}
+						cha.removeSkillEffect(skillNum);
+					}
+
+					if (cha instanceof L1PcInstance) {
+						L1PcInstance pc = (L1PcInstance) cha;
+
+						// アイテム装備による変身の解除
+						L1PolyMorph.undoPoly(pc);
+						pc.sendPackets(new S_CharVisualUpdate(pc));
+						pc.broadcastPacket(new S_CharVisualUpdate(pc));
+
+						// ヘイストアイテム装備時はヘイスト関連のスキルが何も掛かっていないはずなのでここで解除
+						if (pc.getHasteItemEquipped() > 0) {
+							pc.setMoveSpeed(0);
+							pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
+							pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0,
+									0));
+						}
+					}
+					cha.removeSkillEffect(STATUS_FREEZE); // Freeze解除
+					if (cha instanceof L1PcInstance) {
+						L1PcInstance pc = (L1PcInstance) cha;
+						pc.sendPackets(new S_CharVisualUpdate(pc));
+						pc.broadcastPacket(new S_CharVisualUpdate(pc));
+						if (pc.isPrivateShop()) {
+							pc.sendPackets(new S_DoActionShop(pc.getId(),
+									ActionCodes.ACTION_Shop, pc.getShopChat()));
+							pc.broadcastPacket(new S_DoActionShop(pc.getId(),
+									ActionCodes.ACTION_Shop, pc.getShopChat()));
+						}
+						if (_user instanceof L1PcInstance) {
+							L1PinkName.onAction(pc, _user);
+						}
+					pc.sendPackets(new S_SkillSound(cha.getId(), 870));
+					pc.broadcastPacket(new S_SkillSound(cha.getId(), 870));
 					}
 				} else if (_skillId == TURN_UNDEAD // ターン アンデッド
 						&& (undeadType == 1 || undeadType == 3)) {
