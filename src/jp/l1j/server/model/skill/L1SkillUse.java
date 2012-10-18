@@ -1488,7 +1488,8 @@ public class L1SkillUse {
 				return;
 			}
 
-			if (_skill.getTarget().equals("attack") && _skillId != 18) {
+			if (_skill.getTarget().equals("attack") && _skillId != 18 
+					   && _skillId != 10157 && _skillId != 10159) {
 				if (_skill.getArea() == 0) { // 単体攻撃魔法
 					_user.broadcastPacket(new S_UseAttackSkill(_user, targetid,
 							castgfx, _targetX, _targetY, actionId));
