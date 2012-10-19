@@ -2328,6 +2328,7 @@ public class L1SkillUse {
 						npc.setWeaponBreaked(false);
 						npc.setParalyzed(false);
 						npc.setParalysisTime(0);
+						npc.broadcastPacket(new S_SkillSound(npc.getId(), 870));
 					}
 
 					// スキルの解除
