@@ -2315,7 +2315,8 @@ public class L1SkillUse {
 					if (_player != null && _player.isInvisble()) {
 						_player.delInvis();
 					}
-					if (!(cha instanceof L1PcInstance)) {
+					if (cha instanceof L1SummonInstance
+							|| cha instanceof L1PetInstance) {
 						L1NpcInstance npc = (L1NpcInstance) cha;
 						npc.setMoveSpeed(0);
 						npc.setBraveSpeed(0);
