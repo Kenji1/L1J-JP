@@ -1777,7 +1777,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			} else if (npcid == 71056) { // シミズ（消えた息子）
 				if (pc.getQuest().getStep(L1Quest.QUEST_RESTA) == 4) {
-					if (pc.getInventory().checkItem(40631)) {
+					if (pc.getInventory().checkItem(49277)) {
 						htmlid = "SIMIZZ11";
 					} else {
 						htmlid = "SIMIZZ0";
