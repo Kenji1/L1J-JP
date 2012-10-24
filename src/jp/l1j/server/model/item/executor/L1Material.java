@@ -72,9 +72,9 @@ public class L1Material {
 		}
 		
 		@XmlAttribute(name = "NeedItemId")
-		private int _needItemId;
+		private String _needItemId;
 
-		public int getNeedItemId() {
+		public String getNeedItemId() {
 			return _needItemId;
 		}
 
@@ -184,12 +184,16 @@ public class L1Material {
 		
 		Effect effect = getEffect();
 
-		if (effect.getNeedItemId() > 0) {
-			if (pc.getInventory().checkItem(effect.getNeedItemId(), 1)) {
-				pc.getInventory().consumeItem(effect.getNeedItemId(), 1);
-			} else {
-				pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-				return false;
+		String[] ids;
+		if (!effect.getNeedItemId().equals("")) {
+			ids = effect.getNeedItemId().split(",", 0);
+			for (String id: ids) {
+				if (pc.getInventory().checkItem(Integer.parseInt(id), 1)) {
+					pc.getInventory().consumeItem(Integer.parseInt(id), 1);
+				} else {
+					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					return false;
+				}
 			}
 		}
 		
