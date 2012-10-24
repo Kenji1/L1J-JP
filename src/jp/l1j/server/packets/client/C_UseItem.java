@@ -834,7 +834,7 @@ public class C_UseItem extends ClientBasePacket {
 							item.setChargeCount(item.getChargeCount() - 1);
 							pc.getInventory().updateItem(item,
 									L1PcInventory.COL_CHARGE_COUNT);
-						} else {
+						} else if (item.getChargeCount() == 1) {
 							pc.getInventory().removeItem(item, 1);
 						}
 					}
