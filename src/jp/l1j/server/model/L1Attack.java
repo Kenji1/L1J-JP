@@ -29,6 +29,7 @@ import jp.l1j.server.model.gametime.L1GameTimeClock;
 import jp.l1j.server.model.poison.L1DamagePoison;
 import jp.l1j.server.model.poison.L1ParalysisPoison;
 import jp.l1j.server.model.poison.L1SilencePoison;
+import jp.l1j.server.model.skill.L1SkillUse;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_AttackMissPacket;
 import jp.l1j.server.packets.server.S_AttackPacket;
@@ -1131,6 +1132,36 @@ public class L1Attack {
 			_drainHp = 0; // ダメージ無しの場合は吸収による回復はしない
 		}
 
+		// マジックドールスキル
+		L1SkillUse l1skilluse = new L1SkillUse();
+		if (L1MagicDoll.getEffectByDoll(_pc, SLOW) == SLOW) {
+			l1skilluse.handleCommands(_pc,SLOW, // スロー
+				_targetPc.getId(), _targetPc.getX(), _targetPc.getY(), null, 0,L1SkillUse.TYPE_GMBUFF);
+		}
+		if (L1MagicDoll.getEffectByDoll(_pc, CURSE_PARALYZE) == CURSE_PARALYZE) {
+			l1skilluse.handleCommands(_pc,CURSE_PARALYZE, // カーズパラライズ
+				_targetPc.getId(), _targetPc.getX(), _targetPc.getY(), null, 0,L1SkillUse.TYPE_GMBUFF);
+		}
+		if (L1MagicDoll.getEffectByDoll(_pc, VAMPIRIC_TOUCH) == VAMPIRIC_TOUCH) {
+				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
+						VAMPIRIC_TOUCH); // バンパイアリックタッチ
+				L1Magic magic = new L1Magic(_pc, _targetPc);
+
+				_pc.sendPackets(new S_SkillSound(_pc.getId(), l1skills
+						.getCastGfx()));
+				_pc.broadcastPacket(new S_SkillSound(_pc.getId(), l1skills
+						.getCastGfx()));
+
+				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+				_targetPc.sendPackets(new S_DoActionGFX(_targetPc.getId(),
+						ActionCodes.ACTION_Damage));
+				_targetPc.broadcastPacket(new S_DoActionGFX(
+						_targetPc.getId(), ActionCodes.ACTION_Damage));
+				_targetPc.removeSkillEffect(ERASE_MAGIC); // イレースマジック中なら、攻撃魔法で解除
+				_targetPc.receiveDamage(_pc, damage, false);
+				_pc.setCurrentHp(_pc.getCurrentHp() + damage);
+		}
+
 		return (int) dmg;
 	}
 
@@ -1349,6 +1380,33 @@ public class L1Attack {
 		if (dmg <= 0) {
 			_isHit = false;
 			_drainHp = 0; // ダメージ無しの場合は吸収による回復はしない
+		}
+
+		// マジックドールスキル
+		L1SkillUse l1skilluse = new L1SkillUse();
+		if (L1MagicDoll.getEffectByDoll(_pc, SLOW) == SLOW) {
+			l1skilluse.handleCommands(_pc,SLOW, // スロー
+				_targetNpc.getId(), _targetNpc.getX(), _targetNpc.getY(), null, 0,L1SkillUse.TYPE_GMBUFF);
+		}
+		if (L1MagicDoll.getEffectByDoll(_pc, CURSE_PARALYZE) == CURSE_PARALYZE) {
+			l1skilluse.handleCommands(_pc,CURSE_PARALYZE, // カーズパラライズ
+				_targetNpc.getId(), _targetNpc.getX(), _targetNpc.getY(), null, 0,L1SkillUse.TYPE_GMBUFF);
+		}
+		if (L1MagicDoll.getEffectByDoll(_pc, VAMPIRIC_TOUCH) == VAMPIRIC_TOUCH) {
+				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
+						VAMPIRIC_TOUCH); // バンパイアリックタッチ
+				L1Magic magic = new L1Magic(_pc, _targetNpc);
+
+				_pc.sendPackets(new S_SkillSound(_pc.getId(), l1skills
+						.getCastGfx()));
+				_pc.broadcastPacket(new S_SkillSound(_pc.getId(), l1skills
+						.getCastGfx()));
+
+				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+				_targetNpc.broadcastPacket(new S_DoActionGFX(
+						_targetNpc.getId(), ActionCodes.ACTION_Damage));
+				_targetNpc.receiveDamage(_pc, damage);
+				_pc.setCurrentHp(_pc.getCurrentHp() + damage);
 		}
 
 		return (int) dmg;
