@@ -188,12 +188,13 @@ public class L1Material {
 		if (!effect.getNeedItemId().equals("")) {
 			ids = effect.getNeedItemId().split(",", 0);
 			for (String id: ids) {
-				if (pc.getInventory().checkItem(Integer.parseInt(id), 1)) {
-					pc.getInventory().consumeItem(Integer.parseInt(id), 1);
-				} else {
+				if (!pc.getInventory().checkItem(Integer.parseInt(id), 1)) {
 					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 					return false;
 				}
+			}
+			for (String id: ids) {
+				pc.getInventory().consumeItem(Integer.parseInt(id), 1);
 			}
 		}
 		
