@@ -72,7 +72,7 @@ public class L1Material {
 		}
 		
 		@XmlAttribute(name = "NeedItemId")
-		private String _needItemId;
+		private String _needItemId = "";
 
 		public String getNeedItemId() {
 			return _needItemId;
