@@ -545,27 +545,27 @@ public class L1WeaponSkill {
 				if(!(cha.hasSkillEffect(STATUS_HOLD))){
 					L1EffectSpawn.getInstance().spawnEffect(81182, time,
 							cha.getX(), cha.getY(), cha.getMapId());
-				}
-				if (cha instanceof L1PcInstance) {
-					L1PcInstance targetPc = (L1PcInstance) cha;
-					targetPc.setSkillEffect(STATUS_FREEZE, time);
-					targetPc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND,
-							true));
-					targetPc.sendPackets(new S_DoActionGFX(targetPc.getId(),
-							ActionCodes.ACTION_Damage));
-					targetPc.broadcastPacket(new S_DoActionGFX(
-							targetPc.getId(), ActionCodes.ACTION_Damage));
-					targetPc.broadcastPacket(new S_SkillSound(targetPc.getId(), 4184));
-					targetPc.receiveDamage(pc, damage, false);
-				} else if (cha instanceof L1MonsterInstance
-						|| cha instanceof L1SummonInstance
-						|| cha instanceof L1PetInstance) {
-					L1NpcInstance targetNpc = (L1NpcInstance) cha;
-					targetNpc.setSkillEffect(STATUS_HOLD, time);
-					targetNpc.broadcastPacket(new S_DoActionGFX(targetNpc
-							.getId(), ActionCodes.ACTION_Damage));
-					targetNpc.broadcastPacket(new S_SkillSound(targetNpc.getId(), 4184));
-					targetNpc.receiveDamage(pc, damage);
+					if (cha instanceof L1PcInstance) {
+						L1PcInstance targetPc = (L1PcInstance) cha;
+						targetPc.setSkillEffect(STATUS_FREEZE, time);
+						targetPc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND,
+								true));
+						targetPc.sendPackets(new S_DoActionGFX(targetPc.getId(),
+								ActionCodes.ACTION_Damage));
+						targetPc.broadcastPacket(new S_DoActionGFX(
+								targetPc.getId(), ActionCodes.ACTION_Damage));
+						targetPc.broadcastPacket(new S_SkillSound(targetPc.getId(), 4184));
+						targetPc.receiveDamage(pc, damage, false);
+					} else if (cha instanceof L1MonsterInstance
+							|| cha instanceof L1SummonInstance
+							|| cha instanceof L1PetInstance) {
+						L1NpcInstance targetNpc = (L1NpcInstance) cha;
+						targetNpc.setSkillEffect(STATUS_HOLD, time);
+						targetNpc.broadcastPacket(new S_DoActionGFX(targetNpc
+								.getId(), ActionCodes.ACTION_Damage));
+						targetNpc.broadcastPacket(new S_SkillSound(targetNpc.getId(), 4184));
+						targetNpc.receiveDamage(pc, damage);
+					}
 				}
 				return;
 			} else if (weapon.getItemId() == 278) { // マリス エレメント クロウ

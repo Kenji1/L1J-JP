@@ -2451,12 +2451,10 @@ public class L1SkillUse {
 					_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
 				} else if (_skillId == THUNDER_GRAB) { // サンダーグラップ
 					boolean isFetter = _magic.calcProbabilityMagic(_skillId);
-					if (isFetter) {
+					if (isFetter && !(cha.hasSkillEffect(STATUS_HOLD))) {
 						int time = _skill.getBuffDuration() * 1000;
-						if(!(cha.hasSkillEffect(STATUS_HOLD))){ // ホールドエフェクト重複の為の苦肉の対策
-							L1EffectSpawn.getInstance().spawnEffect(81182, time,
-									cha.getX(), cha.getY(), cha.getMapId());
-						}
+						L1EffectSpawn.getInstance().spawnEffect(81182, time,
+								cha.getX(), cha.getY(), cha.getMapId());
 						if (cha instanceof L1PcInstance) {
 							L1PcInstance targetPc = (L1PcInstance) cha;
 							targetPc.setSkillEffect(STATUS_FREEZE, time);
