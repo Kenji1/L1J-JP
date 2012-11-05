@@ -84,11 +84,15 @@ public class L1Present implements L1CommandExecutor {
 				item.setEnchantLevel(enchantLevel);
 				if (itemTemplate.isStackable()) {
 					item.setId(IdFactory.getInstance().nextId());
+					item.setItemId(itemTemplate.getItemId());
+					item.setLocation(1);
 					item.setItemCount(count);
 					item.save(con);
 				} else {
 					for (int i = 0; i < count; i++) {
 						item.setId(IdFactory.getInstance().nextId());
+						item.setItemId(itemTemplate.getItemId());
+						item.setLocation(1);
 						item.setItemCount(1);
 						item.save(con);
 					}
