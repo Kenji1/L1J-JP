@@ -493,7 +493,9 @@ public class L1SkillId {
 
 	public static final int STATUS_DESTRUCTION_NOSTRUM = 1035;
 
-	public static final int STATUS_END = 1036;
+	public static final int STATUS_HOLD = 1036;
+
+	public static final int STATUS_END = 1037;
 
 	public static final int STATUS_EXP_UP =1100; // 祈りのポーション
 

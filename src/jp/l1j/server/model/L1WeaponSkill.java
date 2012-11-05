@@ -539,6 +539,10 @@ public class L1WeaponSkill {
 				int time = l1skills.getBuffDuration() * 1000;
 				int damage = magic.calcMagicDamage(l1skills.getSkillId());
 
+				if(!(cha.hasSkillEffect(STATUS_HOLD))){
+					L1EffectSpawn.getInstance().spawnEffect(81182, time,
+							cha.getX(), cha.getY(), cha.getMapId());
+				}
 				if (cha instanceof L1PcInstance) {
 					L1PcInstance targetPc = (L1PcInstance) cha;
 					targetPc.setSkillEffect(STATUS_FREEZE, time);
@@ -548,15 +552,16 @@ public class L1WeaponSkill {
 							ActionCodes.ACTION_Damage));
 					targetPc.broadcastPacket(new S_DoActionGFX(
 							targetPc.getId(), ActionCodes.ACTION_Damage));
+					targetPc.broadcastPacket(new S_SkillSound(targetPc.getId(), 4184));
 					targetPc.receiveDamage(pc, damage, false);
 				} else if (cha instanceof L1MonsterInstance
 						|| cha instanceof L1SummonInstance
 						|| cha instanceof L1PetInstance) {
 					L1NpcInstance targetNpc = (L1NpcInstance) cha;
-					targetNpc.setSkillEffect(STATUS_FREEZE, time);
-					targetNpc.setParalyzed(true);
+					targetNpc.setSkillEffect(STATUS_HOLD, time);
 					targetNpc.broadcastPacket(new S_DoActionGFX(targetNpc
 							.getId(), ActionCodes.ACTION_Damage));
+					targetNpc.broadcastPacket(new S_SkillSound(targetNpc.getId(), 4184));
 					targetNpc.receiveDamage(pc, damage);
 				}
 				return;
@@ -709,9 +714,8 @@ public class L1WeaponSkill {
 					|| cha instanceof L1SummonInstance
 					|| cha instanceof L1PetInstance) {
 				L1NpcInstance npc = (L1NpcInstance) cha;
-				npc.setSkillEffect(STATUS_FREEZE, fettersTime);
+				npc.setSkillEffect(STATUS_HOLD, fettersTime);
 				npc.broadcastPacket(new S_SkillSound(npc.getId(), 4184));
-				npc.setParalyzed(true);
 			}
 		}
 	}

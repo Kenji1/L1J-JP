@@ -2453,17 +2453,23 @@ public class L1SkillUse {
 					boolean isFetter = _magic.calcProbabilityMagic(_skillId);
 					if (isFetter) {
 						int time = _skill.getBuffDuration() * 1000;
+						if(!(cha.hasSkillEffect(STATUS_HOLD))){ // ホールドエフェクト重複の為の苦肉の対策
+							L1EffectSpawn.getInstance().spawnEffect(81182, time,
+									cha.getX(), cha.getY(), cha.getMapId());
+						}
 						if (cha instanceof L1PcInstance) {
 							L1PcInstance targetPc = (L1PcInstance) cha;
 							targetPc.setSkillEffect(STATUS_FREEZE, time);
 							targetPc.sendPackets(new S_Paralysis(
 									S_Paralysis.TYPE_BIND, true));
+							targetPc.broadcastPacket(new S_SkillSound(targetPc.getId(),
+									4184));
 						} else if (cha instanceof L1MonsterInstance
 								|| cha instanceof L1SummonInstance
 								|| cha instanceof L1PetInstance) {
 							L1NpcInstance npc = (L1NpcInstance) cha;
-							npc.setSkillEffect(STATUS_FREEZE, time);
-							npc.setParalyzed(true);
+							npc.setSkillEffect(STATUS_HOLD, time);
+							npc.broadcastPacket(new S_SkillSound(npc.getId(), 4184));
 						}
 					}
 				} else if (_skillId == BONE_BREAK) { // ボーンブレイク
