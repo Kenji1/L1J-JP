@@ -1188,9 +1188,17 @@ public class L1Magic {
 			dmg = (int) (l1skills.getDamageValue() * sp);
 			// MPを5減少させる
 			if (_calcType == PC_PC || _calcType == NPC_PC) {
-				_targetPc.setCurrentMp(_targetPc.getCurrentMp() - 5);
+				if (_targetPc.getCurrentMp() >= 5) {
+					_targetPc.setCurrentMp(_targetPc.getCurrentMp() - 5);
+				} else {
+					_targetPc.setCurrentMp(0);
+				}
 			} else if (_calcType == NPC_NPC || _calcType == PC_NPC) {
-				_targetNpc.setCurrentMp(_targetNpc.getCurrentMp() - 5);
+				if (_targetNpc.getCurrentMp() >= 5) {
+					_targetNpc.setCurrentMp(_targetNpc.getCurrentMp() - 5);
+				} else {
+					_targetNpc.setCurrentMp(0);
+				}
 			}
 		} else if (skillId == CONFUSION) {
 			// コンフュージョン sp * value

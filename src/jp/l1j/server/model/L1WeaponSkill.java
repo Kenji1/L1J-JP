@@ -524,8 +524,11 @@ public class L1WeaponSkill {
 				}
 
 				// MPを5減少させる
-				cha.setCurrentMp(cha.getCurrentMp() - 5);
-
+				if (cha.getCurrentMp() >= 5) {
+					cha.setCurrentMp(cha.getCurrentMp() - 5);
+				} else {
+					cha.setCurrentMp(0);
+				}
 			} else if (weapon.getItemId() == 277) { // マリス エレメント チェーンソード
 				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
 						THUNDER_GRAB); // サンダーグラップ
