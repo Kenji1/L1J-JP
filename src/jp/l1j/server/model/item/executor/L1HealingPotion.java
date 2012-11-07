@@ -185,6 +185,9 @@ public class L1HealingPotion {
 		if (chance > 0) {
 			healHp += _random.nextInt(chance) + 1;
 		}
+		if (pc.getInventory().checkEquipped(21276)) {	// 癒しの紋様を装備している場合回復量２０％アップ
+			healHp *= 1.2;
+		}
 		if (pc.hasSkillEffect(POLLUTE_WATER)) { // ポルートウォーター中は回復量1/2倍
 			healHp /= 2;
 		}
