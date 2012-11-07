@@ -608,7 +608,7 @@ public class L1EnchantScroll {
 		if (itemId == 20056 || itemId == 120056 || itemId == 220056) { // マジック クローク
 			item.setMr(item.getMr() + i * 2);
 		}
-		if (itemId == 20465) { // フィアバンパイアマント
+		if (itemId == 20465 || itemId == 21235 || itemId == 21236) { // フィアバンパイアマント、ホノオノ外套、コオリノ外套
 			item.setMr(item.getMr() + i * 3);
 		}
 
@@ -708,7 +708,7 @@ public class L1EnchantScroll {
 					pc.addMr(i * 2);
 					pc.sendPackets(new S_SpMr(pc));
 				}
-				if (i2 == 20465) { // フィアバンパイアマント
+				if (i2 == 20465 || i2 == 21235 || i2 == 21236) { // フィアバンパイアマント、ホノオノ外套、コオリノ外套
 					pc.addMr(i * 3);
 					pc.sendPackets(new S_SpMr(pc));
 				}
