@@ -1605,6 +1605,16 @@ public class L1Character extends L1Object {
 		_isChaserHitting = i;
 	}
 
+	private boolean _isEvilHitting = false;
+
+	public boolean isEvilHitting() {
+		return _isEvilHitting;
+	}
+
+	public void setEvilHitting(boolean i) {
+		_isEvilHitting = i;
+	}
+
 	// ペット空腹度
 	private int _food;
 
