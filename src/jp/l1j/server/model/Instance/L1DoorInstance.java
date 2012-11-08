@@ -68,6 +68,7 @@ public class L1DoorInstance extends L1NpcInstance {
 				attack.calcDamage();
 				attack.addPcPoisonAttack(pc, this);
 				attack.addChaserAttack();
+				attack.addEvilAttack();
 			}
 			attack.action();
 			attack.commit();

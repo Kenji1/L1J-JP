@@ -57,6 +57,7 @@ public class L1QuestInstance extends L1NpcInstance {
 			attack.calcStaffOfMana();
 			attack.addPcPoisonAttack(pc, this);
 			attack.addChaserAttack();
+			attack.addEvilAttack();
 		}
 		attack.action();
 		attack.commit();

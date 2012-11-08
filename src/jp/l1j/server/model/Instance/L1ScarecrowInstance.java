@@ -46,6 +46,7 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 			attack.calcStaffOfMana();
 			attack.addPcPoisonAttack(pc, this);
 			attack.addChaserAttack();
+			attack.addEvilAttack();
 			if (pc.getLevel() < 5) { // ＬＶ制限もうける場合はここを変更
 				ArrayList<L1Character> targetList = new ArrayList<L1Character>();
 

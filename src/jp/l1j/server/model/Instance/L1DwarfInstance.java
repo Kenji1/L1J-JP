@@ -55,6 +55,7 @@ public class L1DwarfInstance extends L1NpcInstance {
 		attack.calcHit();
 		attack.action();
 		attack.addChaserAttack();
+		attack.addEvilAttack();
 		attack.calcDamage();
 		attack.calcStaffOfMana();
 		attack.addPcPoisonAttack(pc, this);

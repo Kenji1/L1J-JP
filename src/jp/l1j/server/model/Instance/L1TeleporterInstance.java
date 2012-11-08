@@ -56,6 +56,7 @@ public class L1TeleporterInstance extends L1NpcInstance {
 		attack.calcHit();
 		attack.action();
 		attack.addChaserAttack();
+		attack.addEvilAttack();
 		attack.calcDamage();
 		attack.calcStaffOfMana();
 		attack.addPcPoisonAttack(pc, this);

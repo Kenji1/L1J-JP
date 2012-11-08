@@ -936,7 +936,7 @@ public class L1Attack {
 			}
 		}
 
-		if (_weaponId == 262 && _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率
+		if ((_weaponId == 262 || _weaponId == 312)&& _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率
 			// (暫定)75%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
@@ -1216,7 +1216,7 @@ public class L1Attack {
 			}
 		}
 
-		if (_weaponId == 262 && _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率
+		if ((_weaponId == 262 || _weaponId == 312) && _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率
 			// (暫定)75%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
@@ -1848,6 +1848,25 @@ public class L1Attack {
 				L1Chaser chaser = new L1Chaser(_pc, _target,
 						L1Skill.ATTR_WATER, 7179);
 				chaser.begin();
+			}
+		}
+	}
+
+	// ■■■■ イビルスキルによる攻撃を付加 ■■■■
+	public void addEvilAttack() {
+		if (5 > _random.nextInt(100) + 1) {
+			if ((_weaponId >= 292 && _weaponId <= 294) ||
+					(_weaponId >= 298 && _weaponId <= 300)) {
+				// イビルリバース武器
+				L1Evil Evil = new L1Evil(_pc, _target,
+						L1Skill.ATTR_WATER, 8150);
+				Evil.begin();
+			} else if ((_weaponId >= 295 && _weaponId <= 297) ||
+					_weaponId == 301 || _weaponId == 302) {
+				// イビルトリック武器
+				L1Evil Evil = new L1Evil(_pc, _target,
+						L1Skill.ATTR_WATER, 8152);
+				Evil.begin();
 			}
 		}
 	}

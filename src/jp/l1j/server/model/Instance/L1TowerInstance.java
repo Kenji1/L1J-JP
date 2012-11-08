@@ -61,6 +61,7 @@ public class L1TowerInstance extends L1NpcInstance {
 				attack.calcDamage();
 				attack.addPcPoisonAttack(player, this);
 				attack.addChaserAttack();
+				attack.addEvilAttack();
 			}
 			attack.action();
 			attack.commit();

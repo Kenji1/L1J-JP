@@ -32,3 +32,12 @@ INSERT INTO `weapon_skill` VALUES(205, 'ルナ ロング ボウ', 5, 8, 0, 0, 0,
 INSERT INTO `weapon_skill` VALUES(256, 'ハロウィン パンプキン ロングソード', 8, 35, 25, 0, 0, 0, 2750, 0, 0, 1);
 INSERT INTO `weapon_skill` VALUES(257, 'ハロウィン ロングソード', 8, 35, 25, 0, 0, 0, 2750, 0, 0, 1);
 INSERT INTO `weapon_skill` VALUES(258, 'アルティメット ハロウィン ロングソード', 8, 35, 25, 0, 0, 0, 2750, 0, 0, 1);
+INSERT INTO `weapon_skill` VALUES(303, 'ハロウィン パンプキン スタッフ', 8, 35, 25, 0, 0, 0, 2750, 0, 0, 1);
+INSERT INTO `weapon_skill` VALUES(304, 'ハロウィン パンプキン ロングソード 2011', 8, 35, 25, 0, 0, 0, 2750, 0, 0, 1);
+INSERT INTO `weapon_skill` VALUES(305, 'ハロウィン パンプキン ツーハンドソード 2011', 8, 0, 0, 0, 167, 0, 7849, 0, 0, 0);
+INSERT INTO `weapon_skill` VALUES(306, 'ハロウィン パンプキン スタッフ 2011', 8, 0, 0, 0, 167, 0, 7849, 0, 0, 0);
+INSERT INTO `weapon_skill` VALUES(307, 'ハロウィン パンプキン ロングボウ 2011', 8, 0, 0, 0, 167, 0, 7849, 0, 0, 0);
+INSERT INTO `weapon_skill` VALUES(308, 'ハロウィン パンプキン ロングソード 2012', 8, 35, 25, 0, 0, 0, 2750, 0, 0, 1);
+INSERT INTO `weapon_skill` VALUES(309, 'ハロウィン パンプキン ツーハンドソード 2012', 8, 35, 25, 0, 0, 0, 2750, 0, 0, 1);
+INSERT INTO `weapon_skill` VALUES(310, 'ハロウィン パンプキン スタッフ 2012', 8, 0, 0, 0, 167, 0, 7849, 0, 0, 0);
+INSERT INTO `weapon_skill` VALUES(311, 'ハロウィン パンプキン ロングボウ 2012', 8, 0, 0, 0, 167, 0, 7849, 0, 0, 0);

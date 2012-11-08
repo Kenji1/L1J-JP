@@ -180,6 +180,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 			attack.calcStaffOfMana();
 			attack.addPcPoisonAttack(pc, this);
 			attack.addChaserAttack();
+			attack.addEvilAttack();
 		}
 		attack.action();
 		attack.commit();

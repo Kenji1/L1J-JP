@@ -320,6 +320,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				attack.calcStaffOfMana();
 				attack.addPcPoisonAttack(player, this);
 				attack.addChaserAttack();
+				attack.addEvilAttack();
 			}
 			attack.action();
 			attack.commit();
