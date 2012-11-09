@@ -2843,6 +2843,7 @@ public class L1PcInstance extends L1Character {
 		try {
 			// DBにキャラクター情報を書き込む
 			save();
+			saveInventory();
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}

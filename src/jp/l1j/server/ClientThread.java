@@ -393,6 +393,7 @@ public class ClientThread implements Runnable, PacketOutput {
 	private int _kick = 0;
 
 	public void kick() {
+		_activeChar.saveInventory();
 		sendPacket(new S_Disconnect());
 		_kick = 1;
 		StreamUtil.close(_out, _in);

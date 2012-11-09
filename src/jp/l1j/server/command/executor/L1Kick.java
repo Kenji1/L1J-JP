@@ -37,6 +37,7 @@ public class L1Kick implements L1CommandExecutor {
 			L1PcInstance target = L1World.getInstance().getPlayer(arg);
 
 			if (target != null) {
+				target.saveInventory();
 				pc.sendPackets(new S_SystemMessage((new StringBuilder())
 						.append(target.getName()).append("さんをキックしました。")
 						.toString()));

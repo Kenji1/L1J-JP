@@ -143,6 +143,7 @@ public class AcceleratorChecker {
 				} catch (Exception e) {
 					System.out.println(e.getLocalizedMessage());
 				}
+				_pc.saveInventory();
 				_pc.sendPackets(new S_Disconnect());
 				break;
 			case 1:// 行動停止
