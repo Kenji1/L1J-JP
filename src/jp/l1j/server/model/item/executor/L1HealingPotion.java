@@ -181,17 +181,17 @@ public class L1HealingPotion {
 			pc.sendPackets(new S_ServerMessage(77)); // \f1気分が良くなりました。
 		}
 		int chance = effect.getMax() - effect.getMin();
-		int healHp = effect.getMin();
+		double healHp = effect.getMin();
 		if (chance > 0) {
 			healHp += _random.nextInt(chance) + 1;
 		}
-		if (pc.getInventory().checkEquipped(21276)) {	// 癒しの紋様を装備している場合回復量２０％アップ
-			healHp *= 1.2;
-		}
+
+		healHp *= (double)pc.getPotionRecoveryRatePct() / 100 + 1;
+
 		if (pc.hasSkillEffect(POLLUTE_WATER)) { // ポルートウォーター中は回復量1/2倍
 			healHp /= 2;
 		}
-		pc.setCurrentHp(pc.getCurrentHp() + healHp);
+		pc.setCurrentHp(pc.getCurrentHp() + (int)healHp);
 		
 		if (getRemove() > 0) {
 			if (chargeCount > 0) {

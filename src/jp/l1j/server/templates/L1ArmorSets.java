@@ -358,5 +358,14 @@ public class L1ArmorSets {
 	public void setExpBonus(int i) {
 		_expBonus = i;
 	}
-							
+
+	private int _potionRecoveryRate;
+	
+	public int getPotionRecoveryRate() {
+		return _potionRecoveryRate;
+	}
+	
+	public void setPotionRecoveryRate(int i) {
+		_potionRecoveryRate = i;
+	}
 }

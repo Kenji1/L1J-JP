@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `inventory_items` (
   `is_haste` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `can_be_dmg` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `is_unique` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `potion_recovery_rate` tinyint(3) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `owner_index` (`owner_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

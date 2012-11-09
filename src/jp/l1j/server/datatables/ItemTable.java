@@ -463,6 +463,7 @@ public class ItemTable {
 				armor.setExpirationTime(rs.getString("expiration_time"));
 				armor.setIsHaste(rs.getInt("is_haste") == 0 ? false : true);
 				armor.setExpBonus(rs.getInt("exp_bonus"));
+				armor.setPotionRecoveryRate(rs.getInt("potion_recovery_rate"));
 
 				result.put(new Integer(armor.getItemId()), armor);
 			}

@@ -4765,4 +4765,14 @@ public class L1PcInstance extends L1Character {
 	public void addExpBonusPct(int i) {
 		_expBonus += i;
 	}
+
+	private int _potionRecoveryRate = 0; // ポーション回復率
+
+	public int getPotionRecoveryRatePct() {
+		return _potionRecoveryRate;
+	}
+
+	public void addPotionRecoveryRatePct(int i) {
+		_potionRecoveryRate += i;
+	}
 }

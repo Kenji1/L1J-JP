@@ -741,4 +741,8 @@ public abstract class L1Item implements Cloneable, Serializable {
 	public int getExpBonus() {
 		return 0;
 	}
+
+	public int getPotionRecoveryRate() {
+		return 0;
+	}
 }

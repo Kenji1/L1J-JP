@@ -81,7 +81,7 @@ public abstract class L1ArmorSet {
 						armorSets.getResistFreeze(), armorSets.getResistHold(),
 						armorSets.getResistBlind()));
 				impl.addEffect(new SpecialBonusEffect(armorSets.getIsHaste(),
-						armorSets.getExpBonus()));
+						armorSets.getExpBonus(), armorSets.getPotionRecoveryRate()));
 				_allSet.add(impl);
 			} catch(Exception ex) {
 				ex.printStackTrace();
@@ -397,10 +397,12 @@ class ResistBonusEffect implements L1ArmorSetEffect {
 class SpecialBonusEffect implements L1ArmorSetEffect {
 	private final boolean _isHaste;
 	private final int _expBonus;
+	private final int _potionRecoveryRate;
 
-	public SpecialBonusEffect(boolean isHaste, int expBonus) {
+	public SpecialBonusEffect(boolean isHaste, int expBonus, int potionRecoveryRate) {
 		_isHaste = isHaste;
 		_expBonus = expBonus;
+		_potionRecoveryRate = potionRecoveryRate;
 	}
 
 	@Override
@@ -409,6 +411,7 @@ class SpecialBonusEffect implements L1ArmorSetEffect {
 			pc.addHasteItemEquipped(1);
 		}
 		pc.addExpBonusPct(_expBonus);
+		pc.addPotionRecoveryRatePct(_potionRecoveryRate);
 	}
 
 	@Override
@@ -417,6 +420,7 @@ class SpecialBonusEffect implements L1ArmorSetEffect {
 			pc.addDamageReductionByArmor(-1);
 		}
 		pc.addExpBonusPct(-_expBonus);
+		pc.addPotionRecoveryRatePct(-_potionRecoveryRate);
 	}
 }
 

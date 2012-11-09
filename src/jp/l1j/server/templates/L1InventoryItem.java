@@ -77,6 +77,7 @@ public class L1InventoryItem {
 	private int _resistHold;
 	private int _resistBlind;
 	private int _expBonus;
+	private int _potionRecoveryRate;
 	private boolean _isHaste;
 	private boolean _canBeDmg;
 	private boolean _isUnique;
@@ -450,6 +451,14 @@ public class L1InventoryItem {
 	public void setIsUniuqe(boolean _isUnique) {
 		this._isUnique = _isUnique;
 	}
+
+	public int getPotionRecoveryRate() {
+		return _potionRecoveryRate;
+	}
+
+	public void setPotionRecoveryRate(int _potionRecoveryRate) {
+		this._potionRecoveryRate = _potionRecoveryRate;
+	}
 	
 	private static class Factory implements
 			L1QueryUtil.EntityFactory<L1InventoryItem> {
@@ -501,6 +510,7 @@ public class L1InventoryItem {
 			result._isHaste = rs.getBoolean("is_haste");
 			result._canBeDmg = rs.getBoolean("can_be_dmg");
 			result._isUnique = rs.getBoolean("is_unique");
+			result._potionRecoveryRate = rs.getInt("potion_recovery_rate");
 			return result;
 		}
 	}
@@ -569,12 +579,13 @@ public class L1InventoryItem {
 		qb.addColumn("is_haste", _isHaste);
 		qb.addColumn("can_be_dmg", _canBeDmg);
 		qb.addColumn("is_unique", _isUnique);
+		qb.addColumn("potion_recovery_rate", _potionRecoveryRate);
 		qb.buildQuery();
 		return qb;
 	}
 
 	private void insert(Connection con) {
-		String sql = "INSERT inventory_items VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT inventory_items VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		L1QueryUtil.execute(con, sql, _id, _ownerId, _location, _itemId,
 				_itemCount, _isEquipped, _enchantLevel, _isIdentified,
 				_durability, _chargeCount, _chargeTime, _expirationTime, _lastUsed,
@@ -583,7 +594,7 @@ public class L1InventoryItem {
 				_hitModifier, _dmgModifier, _defenseEarth, _defenseWater,
 				_defenseFire, _defenseWind, _resistStun, _resistStone, 
 				_resistSleep, _resistFreeze, _resistHold, _resistBlind,
-				_expBonus, _isHaste, _canBeDmg, _isUnique);
+				_expBonus, _isHaste, _canBeDmg, _isUnique, _potionRecoveryRate);
 		_storedId = _id;
 	}
 

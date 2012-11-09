@@ -232,4 +232,15 @@ public class L1Armor extends L1Item {
 	public int getExpBonus() {
 		return this._expBonus;
 	}
+
+	private int _potionRecoveryRate = 0; // ● ポーション回復率
+
+	public void setPotionRecoveryRate(int i) {
+		_potionRecoveryRate = i;
+	}
+
+	@Override
+	public int getPotionRecoveryRate() {
+		return this._potionRecoveryRate;
+	}
 }

@@ -101,6 +101,7 @@ public class ArmorSetTable {
 			as.setResistBlind(rs.getInt("resist_blind"));
 			as.setIsHaste(rs.getBoolean("is_haste"));
 			as.setExpBonus(rs.getInt("exp_bonus"));
+			as.setPotionRecoveryRate(rs.getInt("potion_recovery_rate"));
 			
 			_armorSetList.add(as);
 		}

@@ -224,6 +224,7 @@ public class L1EquipmentSlot {
 		_owner.addResistBlind(item.getResistBlind() + equipment.getResistBlind());
 
 		_owner.addExpBonusPct(item.getExpBonus() + equipment.getExpBonus());
+		_owner.addPotionRecoveryRatePct(item.getPotionRecoveryRate() + equipment.getPotionRecoveryRate());
 
 		if (item.isHaste()) {
 			_owner.addHasteItemEquipped(1);
@@ -297,6 +298,7 @@ public class L1EquipmentSlot {
 		_owner.addResistBlind(-(item.getResistBlind() + equipment.getResistBlind()));
 
 		_owner.addExpBonusPct(-(item.getExpBonus() + equipment.getExpBonus()));
+		_owner.addPotionRecoveryRatePct(-(item.getPotionRecoveryRate() + equipment.getPotionRecoveryRate()));
 
 		if (item.isHaste()) {
 			_owner.addHasteItemEquipped(-1);

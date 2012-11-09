@@ -529,6 +529,13 @@ public class L1ItemInstance extends L1Object {
 		_inventoryItem.setIsUniuqe(_isUnique);
 	}
 	
+	public int getPotionRecoveryRate() {
+		return _inventoryItem.getPotionRecoveryRate();
+	}
+	
+	public void setPotionRecoveryRate(int _potionRecoveryRate) {
+		_inventoryItem.setPotionRecoveryRate(_potionRecoveryRate);
+	}
 	/*
 	 * 耐久性、0~127まで -の値は許可しない。
 	 */
