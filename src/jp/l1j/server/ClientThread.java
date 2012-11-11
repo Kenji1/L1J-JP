@@ -363,6 +363,7 @@ public class ClientThread implements Runnable, PacketOutput {
 					quitGame(_activeChar);
 
 					synchronized (_activeChar) {
+						_activeChar.saveInventory();
 						// キャラクターをワールド内から除去
 						_activeChar.logout();
 						setActiveChar(null);
@@ -393,7 +394,6 @@ public class ClientThread implements Runnable, PacketOutput {
 	private int _kick = 0;
 
 	public void kick() {
-		_activeChar.saveInventory();
 		sendPacket(new S_Disconnect());
 		_kick = 1;
 		StreamUtil.close(_out, _in);
