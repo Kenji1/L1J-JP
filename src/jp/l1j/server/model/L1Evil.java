@@ -105,7 +105,6 @@ public class L1Evil extends TimerTask {
 				damage = 1;
 			}
 			if (_gfxid == 8150) { // イビルリバース時、ＨＰを吸収する
-				damage /= 8; // ダメージ調整
 				_pc.setCurrentHp(_pc.getCurrentHp() + (int) damage);
 			}
 		} else {
@@ -148,7 +147,7 @@ public class L1Evil extends TimerTask {
 		double dmg = 0;
 		L1Magic _magic = new L1Magic(pc, cha);
 		if (_gfxid == 8150) {
-			dmg = _magic.calcMagicDamage(10147);
+			dmg = _magic.calcMagicDamage(10161);
 		} else if (_gfxid == 8152) { // イビリトリックの場合、MP吸収率は１～４
 			dmg = (double)_random.nextInt(3) + 1;
 		}
