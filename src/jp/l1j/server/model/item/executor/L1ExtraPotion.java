@@ -266,6 +266,10 @@ public class L1ExtraPotion {
 				pc.removeSkillEffect(STATUS_EXP_UP);
 			if (pc.hasSkillEffect(STATUS_EXP_UP_II))
 				pc.removeSkillEffect(STATUS_EXP_UP_II);
+			if (pc.hasSkillEffect(BLESS_OF_COMA1))
+				pc.removeSkillEffect(BLESS_OF_COMA1);
+			if (pc.hasSkillEffect(BLESS_OF_COMA2))
+				pc.removeSkillEffect(BLESS_OF_COMA2);
 
 				int i = effect.getExp();
 				pc.addExpBonusPct(i);
@@ -279,6 +283,10 @@ public class L1ExtraPotion {
 				pc.removeSkillEffect(STATUS_EXP_UP);
 			if (pc.hasSkillEffect(STATUS_EXP_UP_II))
 				pc.removeSkillEffect(STATUS_EXP_UP_II);
+			if (pc.hasSkillEffect(BLESS_OF_COMA1))
+				pc.removeSkillEffect(BLESS_OF_COMA1);
+			if (pc.hasSkillEffect(BLESS_OF_COMA2))
+				pc.removeSkillEffect(BLESS_OF_COMA2);
 
 				int i = effect.getExp();
 				pc.addExpBonusPct(i);
