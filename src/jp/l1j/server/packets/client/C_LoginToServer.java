@@ -680,6 +680,23 @@ public class C_LoginToServer extends ClientBasePacket {
 				pc.addSp(potion.getEffect(pc).getSp());
 				pc.sendPackets(new S_SpMr(pc));
 				pc.setSkillEffect(skillId, remainingTime * 1000);
+			} else if (skillId == BLESS_OF_COMA1) { // コマの祝福Ａ
+				pc.setSkillEffect(skillId, remainingTime * 1000);
+				pc.addStr(5);
+				pc.addDex(5);
+				pc.addCon(1);
+				pc.addHitup(3);
+				pc.addAc(-3);
+			} else if (skillId == BLESS_OF_COMA2) { // コマの祝福Ｂ
+				pc.addStr(5);
+				pc.addDex(5);
+				pc.addCon(3);
+				pc.addHitup(5);
+				pc.addAc(-8);
+				pc.addSp(1);
+				pc.addExpBonusPct(20);
+				pc.sendPackets(new S_SpMr(pc));
+				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else {
 				L1SkillUse l1skilluse = new L1SkillUse();
 				l1skilluse.handleCommands(clientthread.getActiveChar(),

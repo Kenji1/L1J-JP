@@ -163,8 +163,11 @@ public class C_NpcAction extends ClientBasePacket {
 				L1NpcInstance npc = (L1NpcInstance) obj;
 				int difflocx = Math.abs(pc.getX() - npc.getX());
 				int difflocy = Math.abs(pc.getY() - npc.getY());
-				// 3マス以上離れた場合アクション無効
-				if (difflocx > 3 || difflocy > 3) {
+				int npcid = ((L1NpcInstance) obj).getNpcTemplate().getNpcId();
+				// 3マス以上離れた場合アクション無効（強化ＮＰＣは12マス以上離れたら無効）
+				if ((difflocx > 12 || difflocy > 12) && (npcid >= 81352 || npcid <= 81362)) {
+					return;
+				} else if ((difflocx > 3 || difflocy > 3) && (npcid < 81352 || npcid > 81362)) {
 					return;
 				}
 				npc.onFinalAction(pc, s);
@@ -5968,6 +5971,57 @@ public class C_NpcAction extends ClientBasePacket {
 				L1BuffUtil.effectBlessOfDragonSlayer(pc, BLESS_OF_SAEL,
 						2400, 7680); // サエルの祝福
 				htmlid = "";
+			}
+		// コマ
+		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80194) {
+			if (s.equalsIgnoreCase("A")) {
+				counts = new int[5];
+				int checkcount = 0;
+				int consumecount = 0;
+				for (int i = 0; i < 5; i++) {
+					if (pc.getInventory().checkItem(50515 + i, 1)) {
+						counts[i] = 1;
+						checkcount++;
+					} else {
+						counts[i] = 0;
+					}
+				}
+				if (checkcount > 2) {
+					L1BuffUtil.effectBlessOfComa(pc, BLESS_OF_COMA1,
+							3600, 7382); // コマの祝福Ａ
+					for (int i=0; i < 5; i++) {
+						if (counts[i] == 1) {
+							pc.getInventory().consumeItem(50515 + i, counts[i]);
+							consumecount++;
+						}
+						if (consumecount > 2) {
+							break;
+						}
+					}
+					htmlid = "";
+				} else {
+					htmlid = "coma3";
+				}
+			} else if (s.equalsIgnoreCase("B")) {
+				counts = new int[5];
+				int checkcount = 0;
+				int consumecount = 0;
+				for (int i = 0; i < 5; i++) {
+					if (pc.getInventory().checkItem(50515 + i, 1)) {
+						counts[i] = 1;
+						checkcount++;
+					}
+				}
+				if (checkcount > 4) {
+					L1BuffUtil.effectBlessOfComa(pc, BLESS_OF_COMA2,
+							7200, 7383); // コマの祝福Ｂ
+					for (int i = 0; i < 5; i++) {
+						pc.getInventory().consumeItem(50515 + i, 1);
+					}
+					htmlid = "";
+				} else {
+					htmlid = "coma3";
+				}
 			}
 		}
 

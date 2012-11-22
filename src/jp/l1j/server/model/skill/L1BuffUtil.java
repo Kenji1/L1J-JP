@@ -26,6 +26,7 @@ import jp.l1j.server.packets.server.S_SkillBrave;
 import jp.l1j.server.packets.server.S_SkillHaste;
 import jp.l1j.server.packets.server.S_SkillIconBloodstain;
 import jp.l1j.server.packets.server.S_SkillSound;
+import jp.l1j.server.packets.server.S_SpMr;
 
 public class L1BuffUtil {
 	private static Logger _log = Logger.getLogger(L1BuffUtil.class.getName());
@@ -188,6 +189,44 @@ public class L1BuffUtil {
 			pc.sendPackets(new S_MpUpdate(pc.getCurrentMp(), pc.getMaxMp()));
 			pc.sendPackets(new S_OwnCharStatus2(pc));
 			pc.sendPackets(new S_OwnCharAttrDef(pc));
+		}
+		pc.setSkillEffect(skillId, (time * 1000));
+	}
+
+	public static void effectBlessOfComa(L1PcInstance pc, int skillId,
+			int time, int showGfx) {
+		if (showGfx != 0) {
+			pc.sendPackets(new S_SkillSound(pc.getId(), showGfx));
+			pc.broadcastPacket(new S_SkillSound(pc.getId(), showGfx));
+		}
+
+		if (!pc.hasSkillEffect(skillId)) {
+			switch (skillId) {
+			case BLESS_OF_COMA1: // コマの祝福Ａ
+				if (pc.hasSkillEffect(BLESS_OF_COMA2)) {
+					pc.removeSkillEffect(BLESS_OF_COMA2);
+				}
+				pc.addStr(5);
+				pc.addDex(5);
+				pc.addCon(1);
+				pc.addHitup(3);
+				pc.addAc(-3);
+				break;
+			case BLESS_OF_COMA2: // コマの祝福Ｂ
+				if (pc.hasSkillEffect(BLESS_OF_COMA1)) {
+					pc.removeSkillEffect(BLESS_OF_COMA1);
+				}
+				pc.addStr(5);
+				pc.addDex(5);
+				pc.addCon(3);
+				pc.addHitup(5);
+				pc.addAc(-8);
+				pc.addSp(1);
+				pc.addExpBonusPct(20);
+				break;
+			}
+			pc.sendPackets(new S_OwnCharStatus2(pc));
+			pc.sendPackets(new S_SpMr(pc));
 		}
 		pc.setSkillEffect(skillId, (time * 1000));
 	}

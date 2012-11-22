@@ -738,7 +738,29 @@ class L1SkillStop {
 				pc.sendPackets(new S_MpUpdate(pc.getCurrentMp(), pc.getMaxMp()));
 			}
 		}
-
+		else if (skillId == BLESS_OF_COMA1) { // コマの祝福Ａ
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addStr(-5);
+				pc.addDex(-5);
+				pc.addCon(-1);
+				pc.addHitup(-3);
+				pc.addAc(3);
+			}
+		}
+		else if (skillId == BLESS_OF_COMA2) { // コマの祝福Ｂ
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addStr(-5);
+				pc.addDex(-5);
+				pc.addCon(-3);
+				pc.addHitup(-5);
+				pc.addAc(8);
+				pc.addSp(-1);
+				pc.addExpBonusPct(-20);
+				pc.sendPackets(new S_SpMr(pc));
+			}
+		}
 		// ****** 毒関係
 		else if (skillId == STATUS_POISON) { // ダメージ毒
 			cha.curePoison();

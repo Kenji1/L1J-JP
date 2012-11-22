@@ -677,4 +677,8 @@ public class L1SkillId {
 
 	public static final int STATUS_BRAVE2 = 11017; //TODO ペットレース用ステータス
 
+	public static final int BLESS_OF_COMA1 = 11018; // コマの祝福Ａ
+
+	public static final int BLESS_OF_COMA2 = 11019; // コマの祝福Ｂ
+
 }

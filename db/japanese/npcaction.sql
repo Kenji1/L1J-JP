@@ -1023,6 +1023,7 @@ INSERT INTO `npcaction` VALUES ('80189', 'warechar1', 'warechar2', '', '');
 INSERT INTO `npcaction` VALUES ('80190', 'warechar1', 'warechar2', '', '');
 INSERT INTO `npcaction` VALUES ('80191', 'warechar1', 'warechar2', '', '');
 INSERT INTO `npcaction` VALUES ('80192', '8event3', '8event3', '', '');
+INSERT INTO `npcaction` VALUES ('80194', 'coma1', 'coma1', '', '');
 INSERT INTO `npcaction` VALUES ('80213', 'gdummyc1', 'gdummyc1', '', '');
 INSERT INTO `npcaction` VALUES ('80238', '', '', '', '');
 INSERT INTO `npcaction` VALUES ('80239', '', '', '', '');
