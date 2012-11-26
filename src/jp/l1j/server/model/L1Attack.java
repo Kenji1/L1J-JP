@@ -1903,6 +1903,10 @@ public class L1Attack {
 				attackGrfxId = 8904;
 			if (_pc.getTempCharGfx() == 8913)
 				attackGrfxId = 8916;
+			if (_pc.getTempCharGfx() == 7959 || _pc.getTempCharGfx() == 7967 ||
+				_pc.getTempCharGfx() == 7968 || _pc.getTempCharGfx() == 7969 ||
+				_pc.getTempCharGfx() == 7970)
+				attackGrfxId = 7972;
 
 		} else if (_weaponType == 62 && _sting != null) { // ガントレット - スティング有
 			isFly = true;

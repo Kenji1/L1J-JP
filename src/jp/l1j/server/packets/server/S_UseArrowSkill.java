@@ -37,8 +37,8 @@ public class S_UseArrowSkill extends ServerBasePacket {
 			int x, int y, boolean isHit) {
 
 		int aid = 1;
-		// オークアーチャーのみ変更
-		if (cha.getTempCharGfx() == 3860) {
+		// オークアーチャー、蒼天のみ変更
+		if (cha.getTempCharGfx() == 3860 || cha.getTempCharGfx() == 7959) {
 			aid = 21;
 		}
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
