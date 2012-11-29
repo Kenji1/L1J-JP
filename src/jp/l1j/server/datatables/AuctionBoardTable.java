@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -135,8 +136,8 @@ public class AuctionBoardTable {
 					.prepareStatement("UPDATE board_auction SET house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=? WHERE house_id=?");
 			pstm.setString(1, board.getHouseName());
 			pstm.setInt(2, board.getHouseArea());
-			String fm = DateFormat.getDateTimeInstance().format(
-					board.getDeadline().getTime());
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			String fm = sdf.format(board.getDeadline().getTime());
 			pstm.setString(3, fm);
 			pstm.setInt(4, board.getPrice());
 			pstm.setString(5, board.getLocation());
