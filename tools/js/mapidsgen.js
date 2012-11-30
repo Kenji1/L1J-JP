@@ -148,6 +148,8 @@ function canMakable(id){
 	case    "0":
 	case    "4":
 	case  "304":
+	case "1000":
+	case "1001":
 	case "6321":
 		return 1;
 	default:
@@ -296,6 +298,8 @@ function canTeleportable(id){
 	case  "780":
 	case  "783":
 	case  "784":
+	case "1000":
+	case "1001":
 	case "2005":
 	case "5166":
 	case "5167":
@@ -461,8 +465,6 @@ function canResurrection(id){
 	case   "621":
 	case   "997":
 	case   "998":
-	case  "1000":
-	case  "1001":
 	case  "2005":
 	case  "4301":
 	case  "4831":
@@ -546,8 +548,6 @@ function usePainWand(id){
 	case   "784":
 	case   "997":
 	case   "998":
-	case  "1000":
-	case  "1001":
 	case  "1002":
 	case  "1003":
 	case  "1004":
@@ -654,8 +654,6 @@ function enablePenalty(id){
 	case  "621":
 	case  "997":
 	case  "998":
-	case "1000":
-	case "1001":
 	case "1005":
 	case "1006":
 	case "1007":
