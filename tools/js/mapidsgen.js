@@ -39,7 +39,7 @@ while(!zoneFile.AtEndOfStream){
 }
 
 // mapids.sqlファイルを作成
-var format = "INSERT INTO `mapids` VALUES ({0}, '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19});";
+var format = "INSERT INTO `mapids` VALUES({0}, '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19});";
 infoFile.SkipLine();
 while(!infoFile.AtEndOfStream){
 	var data = convert(infoFile.ReadLine()).split(" ");
@@ -78,7 +78,7 @@ function skipLines(file, n){
 
 // 文字列変換
 function convert(str) {
-	return str.replace(/["\{\},]/g, " ").replace(/\s+/g, " ").replace(/^\s+|\s+$/g, "");
+	return str.replace(/[,"\{\}]/g, " ").replace(/\s+/g, " ").replace(/^\s+|\s+$/g, "");
 }
 
 // クエリ整形
@@ -222,8 +222,6 @@ function canTeleportable(id){
 	case   "75":
 	case   "76":
 	case   "77":
-	case   "78":
-	case   "79":
 	case   "85":
 	case   "86":
 	case  "205":
@@ -552,7 +550,17 @@ function usePainWand(id){
 	case  "1003":
 	case  "1004":
 	case  "1005":
+	case  "1006":
+	case  "1007":
+	case  "1008":
+	case  "1009":
+	case  "1010":
 	case  "1011":
+	case  "1012":
+	case  "1013":
+	case  "1014":
+	case  "1015":
+	case  "1016":
 	case  "1017":
 	case  "1018":
 	case  "1019":
@@ -560,6 +568,11 @@ function usePainWand(id){
 	case  "1021":
 	case  "1022":
 	case  "1023":
+	case  "1024":
+	case  "1025":
+	case  "1026":
+	case  "1027":
+	case  "1028":
 	case  "2005":
 	case  "2006":
 	case  "4301":
@@ -751,7 +764,17 @@ function canTakePets(id){
 	case  "1003":
 	case  "1004":
 	case  "1005":
+	case  "1006":
+	case  "1007":
+	case  "1008":
+	case  "1009":
+	case  "1010":
 	case  "1011":
+	case  "1012":
+	case  "1013":
+	case  "1014":
+	case  "1015":
+	case  "1016":
 	case  "1017":
 	case  "1018":
 	case  "1019":
@@ -759,6 +782,11 @@ function canTakePets(id){
 	case  "1021":
 	case  "1022":
 	case  "1023":
+	case  "1024":
+	case  "1025":
+	case  "1026":
+	case  "1027":
+	case  "1028":
 	case  "2005":
 	case  "2006":
 	case  "4301":
@@ -906,7 +934,17 @@ function canRecallPets(id){
 	case  "1003":
 	case  "1004":
 	case  "1005":
+	case  "1006":
+	case  "1007":
+	case  "1008":
+	case  "1009":
+	case  "1010":
 	case  "1011":
+	case  "1012":
+	case  "1013":
+	case  "1014":
+	case  "1015":
+	case  "1016":
 	case  "1017":
 	case  "1018":
 	case  "1019":
@@ -914,6 +952,11 @@ function canRecallPets(id){
 	case  "1021":
 	case  "1022":
 	case  "1023":
+	case  "1024":
+	case  "1025":
+	case  "1026":
+	case  "1027":
+	case  "1028":
 	case  "2005":
 	case  "2006":
 	case  "4301":

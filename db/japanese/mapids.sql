@@ -175,7 +175,7 @@ INSERT INTO `mapids` VALUES(142, 'Tower of Insolence 42F', 32704, 32895, 32704, 
 INSERT INTO `mapids` VALUES(143, 'Tower of Insolence 43F', 32704, 32895, 32704, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(144, 'Tower of Insolence 44F', 32576, 32767, 32768, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(145, 'Tower of Insolence 45F', 32576, 32767, 32768, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(146, 'Tower of Insolence 46F', 32576, 32831, 32768, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(146, 'Tower of Insolence 46F', 32704, 32831, 32832, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(147, 'Tower of Insolence 47F', 32576, 32767, 32768, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(148, 'Tower of Insolence 48F', 32576, 32767, 32768, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(149, 'Tower of Insolence 49F', 32576, 32767, 32768, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
@@ -381,7 +381,7 @@ INSERT INTO `mapids` VALUES(606, 'Cave of Desire Air Room', 32640, 32895, 32704,
 INSERT INTO `mapids` VALUES(607, 'Cave of Desire Earth Room', 32640, 32895, 32768, 32959, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(608, 'Yahee''s Laboratory', 32640, 32767, 32832, 32959, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(610, 'null', 32640, 32895, 32704, 32959, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(611, 'ice Mission Camp', 32640, 32895, 32640, 32831, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(611, 'ground of soul waving', 32640, 32895, 32640, 32831, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(612, 'Forest of Abundance', 32640, 32895, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(613, 'Dubious Town', 32640, 32895, 32768, 33023, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(620, 'Netcafe Lobby', 32768, 32831, 32768, 32831, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1);
@@ -449,12 +449,6 @@ INSERT INTO `mapids` VALUES(1019, 'Dungeon Entrance of Lindvior', 32512, 33023, 
 INSERT INTO `mapids` VALUES(1020, 'Dungeon Entrance of Lindvior', 32512, 33023, 32768, 33279, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(1021, 'Dungeon Entrance of Lindvior', 32512, 33023, 32768, 33279, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(1022, 'Dungeon Entrance of Lindvior', 32512, 33023, 32768, 33279, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
-INSERT INTO `mapids` VALUES(1023, 'Dungeon Entrance of Valakas', 32512, 32959, 32704, 33087, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
-INSERT INTO `mapids` VALUES(1024, 'Dungeon Entrance of Valakas', 32512, 32959, 32704, 33087, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
-INSERT INTO `mapids` VALUES(1025, 'Dungeon Entrance of Valakas', 32512, 32959, 32704, 33087, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
-INSERT INTO `mapids` VALUES(1026, 'Dungeon Entrance of Valakas', 32512, 32959, 32704, 33087, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
-INSERT INTO `mapids` VALUES(1027, 'Dungeon Entrance of Valakas', 32512, 32959, 32704, 33087, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
-INSERT INTO `mapids` VALUES(1028, 'Dungeon Entrance of Valakas', 32512, 32959, 32704, 33087, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(2000, '1F Palingenesis Sanctuary', 32640, 32959, 32704, 33023, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(2001, '1F Palingenesis Sanctuary', 32640, 32959, 32704, 33023, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(2002, '1F Palingenesis Sanctuary', 32640, 32959, 32704, 33023, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
@@ -608,13 +602,13 @@ INSERT INTO `mapids` VALUES(5154, 'null', 32576, 32703, 32832, 32959, 1, 1, 1, 0
 INSERT INTO `mapids` VALUES(5155, 'null', 32576, 32703, 32832, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(5156, 'null', 32576, 32703, 32832, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(5166, 'Place of Recollection', 32704, 32831, 32768, 32895, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(5167, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(5168, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(5169, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(5170, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(5171, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(5172, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `mapids` VALUES(5173, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(5167, 'ground of soul wandering', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(5168, 'ground of soul wandering', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(5169, 'ground of soul wandering', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(5170, 'ground of soul wandering', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(5171, 'ground of soul wandering', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(5172, 'ground of soul wandering', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(5173, 'ground of soul wandering', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(5174, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(5175, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(5176, 'DevilKing''s Field', 32512, 32767, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
@@ -716,6 +710,7 @@ INSERT INTO `mapids` VALUES(7701, 'Ice Resort Island (1)', 32576, 33023, 32640, 
 INSERT INTO `mapids` VALUES(7771, 'Ice Resort Garden (1)', 32448, 32831, 32832, 33151, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(7781, 'Air Temple of Fairies (1)', 32576, 32959, 32576, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(7782, 'Air Temple of Fairies (2)', 32576, 32959, 32576, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `mapids` VALUES(8000, '惣構え', 32768, 32959, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(8011, 'Singing Island', 32768, 32895, 32768, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(8012, 'Singing Island West Area', 32704, 32895, 32704, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(8013, 'Doromond''s Room', 32704, 32767, 32768, 32831, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
@@ -730,7 +725,6 @@ INSERT INTO `mapids` VALUES(8118, 'null', 32576, 32639, 32704, 32831, 1, 1, 1, 0
 INSERT INTO `mapids` VALUES(9000, 'Secret Research Lab of The Past', 32576, 32895, 32640, 33023, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(9100, 'Ivory Tower Secret Research Lab', 32704, 32767, 32832, 32895, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `mapids` VALUES(9101, 'Deck of Liner', 32640, 32831, 32768, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
-INSERT INTO `mapids` VALUES(9102, 'null', 32704, 32831, 32768, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(9202, 'Ivory Tower Secret Research Lab', 32704, 32767, 32832, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(16384, 'null', 32704, 32767, 32768, 32831, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `mapids` VALUES(16896, 'null', 32704, 32767, 32768, 32831, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1);
