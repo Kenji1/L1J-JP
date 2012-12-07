@@ -507,7 +507,13 @@ public final class Config {
 	@Configure(file = ALT, key = "DeathMatchMinPlayer")
 	public static int DEATH_MATCH_MIN_PLAYER = 1;
 
-	/** Events control */	
+	/** Events control */
+	@Configure(file = EVENT, key = "HinomotoUpdate1")
+	public static boolean HINOMOTO_UPDATE_1 = true;
+	
+	@Configure(file = EVENT, key = "GiveExpLevel")
+	public static int GIVE_EXP_LEVEL = 0;
+
 	@Configure(file = EVENT, key = "RisingSunEvent")
 	public static boolean RISING_SUN_EVENT = true;
 

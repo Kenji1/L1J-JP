@@ -74,6 +74,12 @@ public class NpcSpawnTable {
 						continue;
 					}
 				}
+				if (Config.HINOMOTO_UPDATE_1 == false) {
+					int npcid = rs.getInt("id");
+					if (npcid == 50490) {
+						continue;
+					}
+				}
 				if (Config.RISING_SUN_EVENT == false) {
 					int npcid = rs.getInt("id");
 					if (npcid == 50483) {

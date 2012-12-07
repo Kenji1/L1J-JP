@@ -1888,6 +1888,19 @@ public class C_NpcAction extends ClientBasePacket {
 				htmlid = "";
 			}
 		}
+		// 日ノ本の特典女将
+		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46299) {
+			if (s.equalsIgnoreCase("a")) {
+				if (pc.getInventory().checkItem(42101, 1)) {
+					pc.getInventory().consumeItem(42101, 1);
+					pc.addExp(ExpTable.getNeedExpNextLevel(Config.GIVE_EXP_LEVEL)
+							/ ExpTable.getExpRate(pc.getLevel()));
+					htmlid = "jp_hinowms";
+				} else {
+					htmlid = "jp_hinowmf";
+				}
+			}
+		}
 		// 調査団長 アトゥバ ノア
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 71040) {
 			// 「やってみます」

@@ -95,6 +95,19 @@ public final class ExpTable {
 	}
 
 	/**
+	 * 現在のレベルから、経験値のレートを求める
+	 * 
+	 * @param level
+	 *            現在のレベル
+	 * @return 求められた経験値のレート
+	 */
+	public static int getExpRate(int level) {
+		level = level - 50 < 0 ? 0 : level - 50;
+		
+		return _expPenalty[level];
+	}
+
+	/**
 	 * 経験値テーブル(累積値) Lv0-100
 	 */
 	private static final int _expTable[] = { 0, 125, 300, 500, 750, 1296, 2401,

@@ -17,6 +17,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <properties>
 <comment>Events config</comment>
 
+<!-- 日ノ本の特典女将 -->
+<!-- GiveExpLevel:
+    熱い勇士の魂と引き換えに取得できる経験値
+    設定例：49から50にレベルアップする量に相当する
+-->
+<entry key="HinomotoUpdate1">False</entry>
+<entry key="GiveExpLevel">49</entry>
+
 <!-- 日出づる国よりの来訪者イベント -->
 <entry key="RisingSunEvent">False</entry>
 
