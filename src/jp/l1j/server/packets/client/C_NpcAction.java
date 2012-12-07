@@ -1874,6 +1874,20 @@ public class C_NpcAction extends ClientBasePacket {
 				htmlid = "";
 			}
 		}
+		// 佐ノ吉(ギラン → 惣構え)
+		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46293) {
+			if (s.equalsIgnoreCase("teleport jp yamato p1")) {
+				L1Teleport.teleport(pc, 32814, 32806, (short) 8000, 5, true);
+				htmlid = "";
+			}
+		}
+		// 万吉(惣構え → ギラン)
+		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46297) {
+			if (s.equalsIgnoreCase("a")) {
+				L1Teleport.teleport(pc, 33438, 32796, (short) 4, 5, true);
+				htmlid = "";
+			}
+		}
 		// 調査団長 アトゥバ ノア
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 71040) {
 			// 「やってみます」

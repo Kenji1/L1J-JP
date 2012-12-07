@@ -216,6 +216,7 @@ INSERT INTO `getback_restart` VALUES(5132, 'petmatch place', 32628, 32781, 4);
 INSERT INTO `getback_restart` VALUES(5133, 'petmatch place', 32628, 32781, 4);
 INSERT INTO `getback_restart` VALUES(5134, 'petmatch place', 32628, 32781, 4);
 INSERT INTO `getback_restart` VALUES(5143, 'ペットレース', 32628, 32772, 4);
+INSERT INTO `getback_restart` VALUES(8000, '惣構え', 32814, 32806, 8000);
 INSERT INTO `getback_restart` VALUES(16384, 'Talking Island Hotel', 32599, 32931, 0);
 INSERT INTO `getback_restart` VALUES(16896, 'Talking Island Hotel', 32599, 32931, 0);
 INSERT INTO `getback_restart` VALUES(17408, 'Gludio Hotel', 32631, 32761, 4);

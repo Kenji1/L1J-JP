@@ -75,6 +75,9 @@ INSERT INTO `npcaction` VALUES ('46287', 'alchemy1', 'alchemy1', 'alchemy4', '')
 INSERT INTO `npcaction` VALUES ('46288', 'alchemy1', 'alchemy1', 'alchemy4', '');
 INSERT INTO `npcaction` VALUES ('46289', 'alchemy1', 'alchemy1', 'alchemy4', '');
 INSERT INTO `npcaction` VALUES ('46290', 'jp_spmorph1', 'jp_spmorph1', '', '');
+INSERT INTO `npcaction` VALUES ('46293', 'jp_sanoki1', 'jp_sanoki1', '', '');
+INSERT INTO `npcaction` VALUES ('46297', 'jp_masahi1', 'jp_masahi1', '', '');
+INSERT INTO `npcaction` VALUES ('46298', 'jp_hiyosi1', 'jp_hiyosi1', '', '');
 INSERT INTO `npcaction` VALUES ('50001', 'barnia1', 'barnia1', 'barnia4', '');
 INSERT INTO `npcaction` VALUES ('50002', 'sky4', 'sky4', 'sky1', '');
 INSERT INTO `npcaction` VALUES ('50003', 'illdrath1', 'illdrath1', 'illdrath', '');
