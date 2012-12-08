@@ -761,6 +761,12 @@ class L1SkillStop {
 				pc.sendPackets(new S_SpMr(pc));
 			}
 		}
+		else if (skillId == BLESS_OF_SAMURAI) { // 武士の心得
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addExpBonusPct(-10);
+			}
+		}
 		// ****** 毒関係
 		else if (skillId == STATUS_POISON) { // ダメージ毒
 			cha.curePoison();

@@ -209,6 +209,8 @@ public class L1BuffUtil {
 					pc.removeSkillEffect(STATUS_EXP_UP);
 				} else if (pc.hasSkillEffect(STATUS_EXP_UP_II)) {
 					pc.removeSkillEffect(STATUS_EXP_UP_II);
+				} else if (pc.hasSkillEffect(BLESS_OF_SAMURAI)) {
+					pc.removeSkillEffect(BLESS_OF_SAMURAI);
 				}
 				pc.addStr(5);
 				pc.addDex(5);
@@ -223,6 +225,8 @@ public class L1BuffUtil {
 					pc.removeSkillEffect(STATUS_EXP_UP);
 				} else if (pc.hasSkillEffect(STATUS_EXP_UP_II)) {
 					pc.removeSkillEffect(STATUS_EXP_UP_II);
+				} else if (pc.hasSkillEffect(BLESS_OF_SAMURAI)) {
+					pc.removeSkillEffect(BLESS_OF_SAMURAI);
 				}
 				pc.addStr(5);
 				pc.addDex(5);
@@ -231,6 +235,18 @@ public class L1BuffUtil {
 				pc.addAc(-8);
 				pc.addSp(1);
 				pc.addExpBonusPct(20);
+				break;
+			case BLESS_OF_SAMURAI: // 武士の心得
+				if (pc.hasSkillEffect(BLESS_OF_COMA2)) {
+					pc.removeSkillEffect(BLESS_OF_COMA2);
+				} else if (pc.hasSkillEffect(STATUS_EXP_UP)) {
+					pc.removeSkillEffect(STATUS_EXP_UP);
+				} else if (pc.hasSkillEffect(STATUS_EXP_UP_II)) {
+					pc.removeSkillEffect(STATUS_EXP_UP_II);
+				} else if (pc.hasSkillEffect(BLESS_OF_SAMURAI)) {
+					pc.removeSkillEffect(BLESS_OF_SAMURAI);
+				}
+				pc.addExpBonusPct(10);
 				break;
 			}
 			pc.sendPackets(new S_OwnCharStatus2(pc));

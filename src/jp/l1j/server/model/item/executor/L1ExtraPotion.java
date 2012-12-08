@@ -270,6 +270,8 @@ public class L1ExtraPotion {
 				pc.removeSkillEffect(BLESS_OF_COMA1);
 			if (pc.hasSkillEffect(BLESS_OF_COMA2))
 				pc.removeSkillEffect(BLESS_OF_COMA2);
+			if (pc.hasSkillEffect(BLESS_OF_SAMURAI))
+				pc.removeSkillEffect(BLESS_OF_SAMURAI);
 
 				int i = effect.getExp();
 				pc.addExpBonusPct(i);
@@ -287,6 +289,8 @@ public class L1ExtraPotion {
 				pc.removeSkillEffect(BLESS_OF_COMA1);
 			if (pc.hasSkillEffect(BLESS_OF_COMA2))
 				pc.removeSkillEffect(BLESS_OF_COMA2);
+			if (pc.hasSkillEffect(BLESS_OF_SAMURAI))
+				pc.removeSkillEffect(BLESS_OF_SAMURAI);
 
 				int i = effect.getExp();
 				pc.addExpBonusPct(i);

@@ -697,6 +697,9 @@ public class C_LoginToServer extends ClientBasePacket {
 				pc.addExpBonusPct(20);
 				pc.sendPackets(new S_SpMr(pc));
 				pc.setSkillEffect(skillId, remainingTime * 1000);
+			} else if (skillId == BLESS_OF_SAMURAI) { // 武士の心得
+				pc.addExpBonusPct(10);
+				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else {
 				L1SkillUse l1skilluse = new L1SkillUse();
 				l1skilluse.handleCommands(clientthread.getActiveChar(),

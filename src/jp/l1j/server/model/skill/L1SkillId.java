@@ -681,4 +681,5 @@ public class L1SkillId {
 
 	public static final int BLESS_OF_COMA2 = 11019; // コマの祝福Ｂ
 
+	public static final int BLESS_OF_SAMURAI = 11020; // 武士の心得
 }

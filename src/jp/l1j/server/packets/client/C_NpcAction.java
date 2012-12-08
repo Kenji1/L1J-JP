@@ -1881,6 +1881,29 @@ public class C_NpcAction extends ClientBasePacket {
 				htmlid = "";
 			}
 		}
+		// 虎助
+		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46295) {
+			if (s.equalsIgnoreCase("a")) {
+				if (pc.getLevel() < 45) {
+					htmlid = "jp_takesif1";
+				} else if (pc.getLevel() > 54) {
+					htmlid = "jp_takesif2";
+				} else {
+					if (pc.getInventory().checkItem(42104, 1)) { // 武士の心得
+						htmlid = "jp_takesiff";
+					} else {
+						if (pc.getInventory().checkItem(42103, 100)) { //封印された妖怪の魂
+							pc.getInventory().consumeItem(42103, 100);
+							L1BuffUtil.effectBlessOfComa(pc, BLESS_OF_SAMURAI,
+							3600, 7612); // 武士の心得
+							htmlid = "jp_takesi2";
+						} else {
+							htmlid = "jp_takesif3";
+						}
+					}
+				}
+			}
+		}
 		// 万吉(惣構え → ギラン)
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46297) {
 			if (s.equalsIgnoreCase("a")) {
@@ -1891,7 +1914,7 @@ public class C_NpcAction extends ClientBasePacket {
 		// 日ノ本の特典女将
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46299) {
 			if (s.equalsIgnoreCase("a")) {
-				if (pc.getInventory().checkItem(42101, 1)) {
+				if (pc.getInventory().checkItem(42101, 1)) { // 熱い勇士の汗血
 					pc.getInventory().consumeItem(42101, 1);
 					pc.addExp(ExpTable.getNeedExpNextLevel(Config.GIVE_EXP_LEVEL)
 							/ ExpTable.getExpRate(pc.getLevel()));
