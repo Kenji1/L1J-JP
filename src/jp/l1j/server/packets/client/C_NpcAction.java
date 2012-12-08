@@ -1896,9 +1896,41 @@ public class C_NpcAction extends ClientBasePacket {
 							pc.getInventory().consumeItem(42103, 100);
 							L1BuffUtil.effectBlessOfComa(pc, BLESS_OF_SAMURAI,
 							3600, 7612); // 武士の心得
+							L1NpcInstance npc = (L1NpcInstance) obj;
+							L1ItemInstance item = pc.getInventory().storeItem(42104, 1); // 武士の心得
+							String npcName = npc.getNpcTemplate().getName();
+							String itemName = item.getItem().getName();
+							pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 							htmlid = "jp_takesi2";
 						} else {
 							htmlid = "jp_takesif3";
+						}
+					}
+				}
+			}
+		}
+		// 小六郎
+		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46296) {
+			if (s.equalsIgnoreCase("a")) {
+				if (pc.getLevel() < 49) {
+					htmlid = "jp_kazukif1";
+				} else if (pc.getLevel() > 54) {
+					htmlid = "jp_kazukif2";
+				} else {
+					if (pc.getInventory().checkItem(42105, 1)) { // 癒毒の巻物
+						htmlid = "jp_kazukiff";
+					} else {
+						if (pc.getInventory().checkItem(42102, 1)) { //牛鬼の毒
+							pc.getInventory().consumeItem(42102, 1);
+							pc.addExp(ExpTable.getNeedExpNextLevel(pc.getLevel()) / 20); // 経験値5%
+							L1NpcInstance npc = (L1NpcInstance) obj;
+							L1ItemInstance item = pc.getInventory().storeItem(42105, 1); // 癒毒の巻物
+							String npcName = npc.getNpcTemplate().getName();
+							String itemName = item.getItem().getName();
+							pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
+							htmlid = "jp_kazuki2";
+						} else {
+							htmlid = "jp_kazukif3";
 						}
 					}
 				}
