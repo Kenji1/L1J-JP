@@ -66,7 +66,7 @@ public class C_Chat extends ClientBasePacket {
 				return;
 			}
 			// GMコマンド
-			if (chatText.startsWith(".")) {
+			if (chatText.startsWith(".") && chatText.length() > 1) {
 				String cmd = chatText.substring(1);
 				GMCommands.getInstance().handleCommands(pc, cmd);
 				return;
