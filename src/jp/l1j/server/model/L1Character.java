@@ -1668,7 +1668,17 @@ public class L1Character extends L1Object {
 		_portalNumber = portalNumber;
 	}
 
-	// 特定条件有攻可能 NPC判定
+	// 特定NPC 固定ダメージ判定
+	public int getFixedDamage(int npcId) {
+		switch (npcId) {
+		case 99006: // 幻牛鬼
+			return 1;
+		default:
+			return -1;
+		}
+	}
+	
+	// 特定NPC 命中判定
 	public boolean isAttackMiss(L1Character cha, int npcId) {
 		switch (npcId) {
 		case 45912:
