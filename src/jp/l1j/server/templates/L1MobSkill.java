@@ -42,6 +42,8 @@ public class L1MobSkill {
 	private int _summonMin;
 	private int _summonMax;
 	private int _polyId;
+	private int _chatId;
+	
 	public static final int TYPE_NONE = 0;
 	public static final int TYPE_PHYSICAL_ATTACK = 1;
 	public static final int TYPE_MAGIC_ATTACK = 2;
@@ -205,6 +207,13 @@ public class L1MobSkill {
 	}
 
 	/**
+	 * @return スキル発生時のチャットID
+	 */
+	public int getChatId() {
+		return _chatId;
+	}
+
+	/**
 	 * distanceが指定idxスキルの発動条件を満たしているか
 	 */
 	public boolean isTriggerDistance(int distance) {
@@ -242,6 +251,7 @@ public class L1MobSkill {
 			result._summonMin = rs.getInt("summon_min");
 			result._summonMax = rs.getInt("summon_max");
 			result._polyId = rs.getInt("poly_id");
+			result._chatId = rs.getInt("chat_id");
 			return result;
 		}
 	}

@@ -32,6 +32,7 @@ import jp.l1j.server.model.skill.L1SkillUse;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.packets.server.S_DoActionGFX;
+import jp.l1j.server.packets.server.S_NpcChatPacket;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.templates.L1MobSkill;
 import jp.l1j.server.templates.L1Skill;
@@ -123,6 +124,10 @@ public class L1MobSkillUse {
 		L1MobSkill skill = availableSkill.getSkill();
 		if (!useSkill(skill, availableSkill.getTarget())) {
 			return false;
+		}
+		int chatId = skill.getChatId();
+		if (chatId > 0) {
+			_attacker.broadcastPacket(new S_NpcChatPacket(_attacker,"$" + chatId, 0));
 		}
 		incrementSkillUsedCount(skill);
 		return true;
