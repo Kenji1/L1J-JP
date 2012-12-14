@@ -672,6 +672,16 @@ public class L1Npc extends L1Object implements Cloneable {
 		_isCantResurrect = isCantResurrect;
 	}
 
+	private boolean _isEqualityDrop;
+	
+	public boolean isEqualityDrop() {
+		return _isEqualityDrop;
+	}
+	
+	public void setEqualityDrop(boolean isEqualityDrop) {
+		_isEqualityDrop = isEqualityDrop;
+	}
+
 	// TODO boss_end_log用start
 	private boolean _boss;
 

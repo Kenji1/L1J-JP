@@ -342,8 +342,13 @@ public class L1GuardianInstance extends L1NpcInstance {
 				ArrayList<Integer> dropHateList = _dropHateList
 						.toHateArrayList();
 				try {
-					DropTable.getInstance().dropShare(_npc, dropTargetList,
-							dropHateList);
+					if (getNpcTemplate().isEqualityDrop()) {
+						// 平等にドロップ
+						DropTable.getInstance().equalityDrop(_npc, dropTargetList);
+					} else {
+						// ヘイトに応じてドロップ
+						DropTable.getInstance().dropShare(_npc, dropTargetList, dropHateList);
+					}
 				} catch (Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}

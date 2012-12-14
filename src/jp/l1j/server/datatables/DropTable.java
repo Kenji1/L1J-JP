@@ -39,6 +39,7 @@ import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Drop;
+import jp.l1j.server.types.Point;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
@@ -188,7 +189,50 @@ public class DropTable {
 		}
 	}
 
-	// ドロップを分配
+	// 平等にドロップ(ルーティング設定に関わらず、キャラクターのインベントリ内に格納)
+	public void equalityDrop(L1NpcInstance npc, ArrayList recipientList) {
+		// ドロップアイテムが無い場合
+		L1Inventory inventory = npc.getInventory();
+		if (inventory.getSize() == 0) {
+			return;
+		}
+		// ドロップ非対象者を除外(サモン、ペット、モンスターを中心に画面範囲外のキャラクター)
+		L1Character recipient;
+		Point pt = npc.getLocation();
+		for (int i= recipientList.size() - 1; i >= 0; i--) {
+			recipient = (L1Character) recipientList.get(i);
+			if (recipient instanceof L1SummonInstance
+					|| recipient instanceof L1PetInstance) {
+				recipientList.remove(i);
+			} else if(recipient == null) {
+				recipientList.remove(i);
+			} else if(npc.getMapId() != recipient.getMapId()) {
+				recipientList.remove(i);
+			} else if(!pt.isInScreen(recipient.getLocation())) {
+				recipientList.remove(i);
+			}
+		}
+		// ドロップアイテムを分配
+		for (L1ItemInstance drop : inventory.getItems()) {
+			for (int i= recipientList.size() - 1; i >= 0; i--) {
+				L1PcInstance pc = (L1PcInstance) recipientList.get(i);
+				if (pc.getInventory().checkAddItem(drop, drop.getCount()) == L1Inventory.OK) {
+					L1ItemInstance item = pc.getInventory().storeItem(drop.getItemId(), 1);
+					if (pc.isInParty()) {
+						pc.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), pc.getName()));
+					} else {
+						pc.sendPackets(new S_ServerMessage(143, npc.getName(), item.getLogName()));
+					}
+				} else {
+					// インベントリが一杯の場合は足元にドロップ
+					L1Inventory ground = L1World.getInstance().getInventory(pc.getX(), pc.getY(), pc.getMapId());
+					ground.storeItem(drop.getItemId(), drop.getCount());
+				}
+			}
+		}
+	}
+	
+	// ドロップをヘイトに応じて分配
 	public void dropShare(L1NpcInstance npc, ArrayList acquisitorList,
 			ArrayList hateList) {
 		L1Inventory inventory = npc.getInventory();

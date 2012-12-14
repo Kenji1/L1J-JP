@@ -157,6 +157,7 @@ public class NpcTable {
 				npc.setAmountFixed(rs.getBoolean("amount_fixed"));
 				npc.setChangeHead(rs.getBoolean("change_head"));
 				npc.setCantResurrect(rs.getBoolean("cant_resurrect"));
+				npc.setEqualityDrop(rs.getBoolean("is_equality_drop"));
 				npc.setBoss(rs.getBoolean("boss")); // TODO boss_endlog用
 
 				registerConstructorCache(npc.getImpl());

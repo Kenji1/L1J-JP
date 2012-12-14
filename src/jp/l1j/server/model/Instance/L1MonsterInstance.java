@@ -646,8 +646,15 @@ public class L1MonsterInstance extends L1NpcInstance {
 		try {
 			int npcId = getNpcTemplate().getNpcId();
 			if (npcId != 45640 || (npcId == 45640 && getTempCharGfx() == 2332)) {
-				DropTable.getInstance().dropShare(L1MonsterInstance.this,
-						dropTargetList, dropHateList);
+				if (getNpcTemplate().isEqualityDrop()) {
+					// 平等にドロップ
+					DropTable.getInstance().equalityDrop(L1MonsterInstance.this,
+							dropTargetList);
+				} else {
+					// ヘイトに応じてドロップ
+					DropTable.getInstance().dropShare(L1MonsterInstance.this,
+							dropTargetList, dropHateList);
+				}
 			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
