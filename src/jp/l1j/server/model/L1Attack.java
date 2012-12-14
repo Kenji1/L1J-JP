@@ -1167,13 +1167,6 @@ public class L1Attack {
 
 	// ●●●● プレイヤー から ＮＰＣ へのダメージ算出 ●●●●
 	private int calcPcNpcDamage() {
-		
-		// 特定NPC 固定ダメージ判定
-		int fixedDamage = _pc.getFixedDamage(_targetNpc.getNpcTemplate().getNpcId());
-		if (fixedDamage >= 0) {
-			return fixedDamage;
-		}
-		
 		int weaponMaxDamage = 0;
 		if (_targetNpc.getNpcTemplate().getSize().equalsIgnoreCase("small")
 				&& _weaponSmall > 0) {
@@ -1370,7 +1363,13 @@ public class L1Attack {
 				}
 			}
 		}
-
+		
+		// 特定NPC 固定ダメージ判定
+		int fixedDamage = _pc.getFixedDamage(_targetNpc.getNpcTemplate().getNpcId());
+		if (fixedDamage >= 0) {
+			dmg = fixedDamage;
+		}
+		
 		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
 			dmg = 0;
 		}
@@ -1586,6 +1585,12 @@ public class L1Attack {
 		}
 
 		addNpcPoisonAttack(_npc, _targetNpc);
+
+		// 特定NPC 固定ダメージ判定
+		int fixedDamage = _npc.getFixedDamage(_targetNpc.getNpcTemplate().getNpcId());
+		if (fixedDamage >= 0) {
+			dmg = fixedDamage;
+		}
 
 		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
 			dmg = 0;
