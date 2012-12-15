@@ -1773,4 +1773,23 @@ public class L1Character extends L1Object {
 		}
 		return false;
 	}
+
+	/**
+	 * 幻想料理を使用中かどうか。
+	 * @return
+	 * 		使用中であればtrue
+	 */
+	public boolean isCookingReduction() {
+		return (hasSkillEffect(COOKING_1_0_S) || hasSkillEffect(COOKING_1_1_S) ||
+				hasSkillEffect(COOKING_1_2_S) || hasSkillEffect(COOKING_1_3_S) ||
+				hasSkillEffect(COOKING_1_4_S) || hasSkillEffect(COOKING_1_5_S) ||
+				hasSkillEffect(COOKING_1_6_S) || hasSkillEffect(COOKING_2_0_S) ||
+				hasSkillEffect(COOKING_2_1_S) || hasSkillEffect(COOKING_2_2_S) ||
+				hasSkillEffect(COOKING_2_3_S) || hasSkillEffect(COOKING_2_4_S) ||
+				hasSkillEffect(COOKING_2_5_S) || hasSkillEffect(COOKING_2_6_S) ||
+				hasSkillEffect(COOKING_3_0_S) || hasSkillEffect(COOKING_3_1_S) ||
+				hasSkillEffect(COOKING_3_2_S) || hasSkillEffect(COOKING_3_3_S) ||
+				hasSkillEffect(COOKING_3_4_S) || hasSkillEffect(COOKING_3_5_S) ||
+				hasSkillEffect(COOKING_3_6_S));
+	}
 }
