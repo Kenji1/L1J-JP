@@ -210,6 +210,12 @@ public class L1WeaponSkill {
 					}
 				}
 
+				if (object instanceof L1PcInstance) { // セーフティゾーンの場合は除外
+					if (((L1Character) cha).getZoneType() == 1) {
+						continue;
+					}
+				}
+
 				damage = calcDamageReduction(pc, (L1Character) object, damage,
 						weaponSkill.getAttr());
 				if (damage <= 0) {
@@ -443,6 +449,12 @@ public class L1WeaponSkill {
 					}
 				}
 
+				if (object instanceof L1PcInstance) { // セーフティゾーンの場合は除外
+					if (((L1Character) cha).getZoneType() == 1) {
+						continue;
+					}
+				}
+
 				dmg = calcDamageReduction(pc, (L1Character) object, dmg, attr);
 				if (dmg <= 0) {
 					continue;
@@ -651,6 +663,9 @@ public class L1WeaponSkill {
 					if (cha instanceof L1PcInstance) {
 						if (object instanceof L1PcInstance) {
 							L1PcInstance targetPc = (L1PcInstance) object;
+							if (targetPc.getZoneType() == 1) {
+								continue;
+							}
 							if (!targetPc.isDead()
 									&& pc.getId() != targetPc.getId()) {
 								L1Magic magic_area = new L1Magic(pc, targetPc);
