@@ -397,7 +397,7 @@ public class L1Attack {
 			} else if (_calcType == PC_NPC) {
 				_isHit = calcPcNpcHit();
 			}
-			if (_calcType == PC_NPC && _weaponId != 246 && 
+			if (_calcType == PC_NPC && _weaponId != 246 &&
 					_targetNpc.getNpcTemplate().getNpcId() == 45878) {
 				_isHit = false; // 試練の剣A以外でドレイクの幽霊への攻撃を無効
 			}
@@ -416,6 +416,34 @@ public class L1Attack {
 	 * 最小命中率5% 最大命中率95%
 	 */
 	private boolean calcPcPcHit() {
+
+		if (_targetPc.isFreeze()) {
+			_hitRate = 0;
+			return false;
+		}
+
+		// TODO マジックドール效果 - ダメージ回避
+		if (L1MagicDoll.getDamageEvasionByDoll(_targetPc) > 0) {
+			_hitRate = 0;
+			return false;
+		}
+		// 魔眼によるダメージ回避
+		if (_targetPc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)
+				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)
+				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)
+				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
+			int _avoidChance = _random.nextInt(100) + 1;
+			if (_avoidChance <= 10) {
+				_hitRate = 0;
+				return false;
+			}
+		}
+
+		if (_weaponType2 == 14) {
+			_hitRate = 100; // キーリンクの命中率は100%
+			return true;
+		}
+
 		_hitRate = _pc.getLevel();
 
 		if (_pc.getStr() > 59) {
@@ -515,40 +543,6 @@ public class L1Attack {
 			}
 		}
 
-		if (_weaponType2 == 14) {
-			_hitRate = 100; // キーリンクの命中率は100%
-		}
-
-		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
-			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
-			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
-			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
-			_hitRate = 0;
-		}
-		// TODO マジックドール效果 - ダメージ回避
-		else if (L1MagicDoll.getDamageEvasionByDoll(_targetPc) > 0) {
-			_hitRate = 0;
-		}
-		// 魔眼によるダメージ回避
-		if (_targetPc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
-			int _avoidChance = _random.nextInt(100) + 1;
-			if (_avoidChance <= 10) {
-				_hitRate = 0;
-			}
-		}
-
 		int rnd = _random.nextInt(100) + 1;
 		if (_weaponType == 20 && _hitRate > rnd) { // 弓の場合、ヒットした場合でもERでの回避を再度行う。
 			return calcErEvasion();
@@ -618,6 +612,15 @@ public class L1Attack {
 	private boolean calcPcNpcHit() {
 		// ＮＰＣへの命中率
 		// ＝（PCのLv＋クラス補正＋STR補正＋DEX補正＋武器補正＋DAIの枚数/2＋魔法補正）×5−{NPCのAC×（-5）}
+		if (_targetNpc.isFreeze()) {
+			_hitRate = 0;
+			return false;
+		}
+		if (_weaponType2 == 14) {
+			_hitRate = 100; // キーリンクの命中率は100%
+			return true;
+		}
+
 		_hitRate = _pc.getLevel();
 
 		if (_pc.getStr() > 59) {
@@ -709,10 +712,6 @@ public class L1Attack {
 			}
 		}
 
-		if (_weaponType2 == 14) {
-			_hitRate = 100; // キーリンクの命中率は100%
-		}
-
 		// 特定条件有攻可能 NPC判定
 		if (_pc.isAttackMiss(_pc, _targetNpc.getNpcTemplate().getNpcId())) {
 			_hitRate = 0;
@@ -725,6 +724,38 @@ public class L1Attack {
 
 	// ●●●● ＮＰＣ から プレイヤー への命中判定 ●●●●
 	private boolean calcNpcPcHit() {
+
+		if (_targetPc.isFreeze()) {
+			_hitRate = 0;
+			return false;
+		}
+
+		if ((_npc instanceof L1PetInstance)
+				|| (_npc instanceof L1SummonInstance)) {
+			// 目標攻判定、NOPVP
+			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
+					|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
+				_hitRate = 0;
+				return false;
+			}
+		}
+
+		// TODO マジックドール効果 - ダメージ回避
+		if (L1MagicDoll.getDamageEvasionByDoll(_targetPc) > 0) {
+			_hitRate = 0;
+			return false;
+		}
+		// 魔眼によるダメージ回避
+		if (_targetPc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)
+				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)
+				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)
+				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
+			int _avoidChance = _random.nextInt(100) + 1;
+			if (_avoidChance <= 10) {
+				_hitRate = 0;
+				return false;
+			}
+		}
 
 		_hitRate += _npc.getLevel();
 
@@ -773,43 +804,6 @@ public class L1Attack {
 			}
 		}
 
-		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
-			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
-			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
-			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
-			_hitRate = 0;
-		} else if ((_npc instanceof L1PetInstance)
-				|| (_npc instanceof L1SummonInstance)) {
-			// 目標攻判定、NOPVP
-			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
-					|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
-				_hitRate = 0;
-			}
-		}
-		// TODO マジックドール効果 - ダメージ回避
-		else if (L1MagicDoll.getDamageEvasionByDoll(_targetPc) > 0) {
-			_hitRate = 0;
-		}
-		// 魔眼によるダメージ回避
-		if (_targetPc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
-			int _avoidChance = _random.nextInt(100) + 1;
-			if (_avoidChance <= 10) {
-				_hitRate = 0;
-			}
-		}
-
 		int rnd = _random.nextInt(100) + 1;
 
 		// NPCの攻撃レンジが10以上の場合で、2以上離れている場合弓攻撃とみなす
@@ -824,6 +818,11 @@ public class L1Attack {
 
 	// ●●●● ＮＰＣ から ＮＰＣ への命中判定 ●●●●
 	private boolean calcNpcNpcHit() {
+
+		if (_targetNpc.isFreeze()) {
+			_hitRate = 0;
+			return false;
+		}
 
 		_hitRate += _npc.getLevel();
 
@@ -1363,13 +1362,13 @@ public class L1Attack {
 				}
 			}
 		}
-		
+
 		// 特定NPC 固定ダメージ判定
 		int fixedDamage = _pc.getFixedDamage(_targetNpc.getNpcTemplate().getNpcId());
 		if (fixedDamage >= 0) {
 			dmg = fixedDamage;
 		}
-		
+
 		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
 			dmg = 0;
 		}
