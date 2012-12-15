@@ -416,6 +416,9 @@ public class L1SkillId {
 	public static final int MASS_SHOCK_STUN = 500; // 範囲スタン
 
 	public static final int MASS_CANCELLATION = 501; // 範囲キャンセレーション
+
+	public static final int AREA_POISON = 502; // 範囲毒攻撃（汎用）
+
 	/*
 	 * Status
 	 */

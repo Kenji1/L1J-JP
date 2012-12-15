@@ -2585,6 +2585,13 @@ public class L1SkillUse {
 							npc.setSkillEffect(ARM_BREAKER, time);
 						}
 					}
+				} else if (_skillId == AREA_POISON || _skillId == 502) { // 範囲毒（汎用）
+					if (_player != null && _player.isInvisble()) {
+						_player.delInvis();
+					} else {
+						// 通常毒 （3秒周期でダメージ5）
+						L1DamagePoison.doInfection(_user, cha, 3000, 5);
+					}
 				}
 
 				// ●●●● PCにしか効果のないスキル ●●●●
