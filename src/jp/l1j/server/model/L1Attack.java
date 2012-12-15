@@ -1055,27 +1055,7 @@ public class L1Attack {
 		// TODO マジックドール效果 - ダメージリダクション
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
-		if (_targetPc.hasSkillEffect(COOKING_1_0_S) // 料理によるダメージ軽減
-				|| _targetPc.hasSkillEffect(COOKING_1_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_6_S)) {
+		if (_targetPc.isCookingReduction()) { // 幻想料理によるダメージ軽減
 			dmg -= 5;
 		}
 		if (_targetPc.hasSkillEffect(COOKING_1_7_S) // デザートによるダメージ軽減
@@ -1101,29 +1081,8 @@ public class L1Attack {
 		if (_targetPc.hasSkillEffect(IMMUNE_TO_HARM)) {
 			dmg /= 2;
 		}
-		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
+		if (_targetPc.isFreeze()) {
 			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
-			int _avoidChance = _random.nextInt(100) + 1;
-			if (_avoidChance <= 10) {
-				dmg = 0;
-			}
 		}
 
 		if (dmg <= 0) {
@@ -1369,16 +1328,7 @@ public class L1Attack {
 			dmg = fixedDamage;
 		}
 
-		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
+		if (_targetNpc.isFreeze()) {
 			dmg = 0;
 		}
 
@@ -1455,27 +1405,7 @@ public class L1Attack {
 		// TODO マジックドール效果 - ダメージリダクション
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
-		if (_targetPc.hasSkillEffect(COOKING_1_0_S) // 料理によるダメージ軽減
-				|| _targetPc.hasSkillEffect(COOKING_1_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_6_S)) {
+		if (_targetPc.isCookingReduction()) { // 幻想料理によるダメージ軽減
 			dmg -= 5;
 		}
 		if (_targetPc.hasSkillEffect(COOKING_1_7_S) // デザートによるダメージ軽減
@@ -1501,29 +1431,8 @@ public class L1Attack {
 		if (_targetPc.hasSkillEffect(IMMUNE_TO_HARM)) {
 			dmg /= 2;
 		}
-		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
+		if (_targetPc.isFreeze()) {
 			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
-			int _avoidChance = _random.nextInt(100) + 1;
-			if (_avoidChance <= 10) {
-				dmg = 0;
-			}
 		}
 
 		// ペット、サモンからプレイヤーに攻撃
@@ -1591,16 +1500,7 @@ public class L1Attack {
 			dmg = fixedDamage;
 		}
 
-		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
+		if (_targetNpc.isFreeze()) {
 			dmg = 0;
 		}
 
