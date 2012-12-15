@@ -585,6 +585,37 @@ public class L1Magic {
 		return damage;
 	}
 
+	/* ■■■■■■■■■■■■■■ 魔法武器用ダメージ算出 ■■■■■■■■■■■■■■
+	 *
+	 * 固定ダメージの時に使用。
+	 */
+	public int calcWeaponSkillDamage(int dmg, int attr) {
+		if (attr == 0) {
+			return calcMrDefense(dmg);
+		}
+
+		int charaIntelligence = 0;
+
+		if (_calcType == PC_PC || _calcType == PC_NPC) { // XXX
+			int spByItem = _pc.getSp() - _pc.getTrueSp(); // アイテムによるSP変動
+			charaIntelligence = _pc.getInt() + spByItem - 12;
+		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
+			int spByItem = _npc.getSp() - _npc.getTrueSp(); // アイテムによるSP変動
+			charaIntelligence = _npc.getInt() + spByItem - 12;
+		}
+
+		double attrDeffence = calcAttrResistance(attr);
+
+		double coefficient = Math.max(0D, 1.0 + attrDeffence) + 3.0 / 32.0 * charaIntelligence;
+		if (coefficient < 0) {
+			coefficient = 0;
+		}
+
+		dmg *= coefficient;
+
+		return calcMrDefense(dmg);
+	}
+
 	// ●●●● プレイヤー へのファイアーウォールの魔法ダメージ算出 ●●●●
 	public int calcPcFireWallDamage() {
 		int dmg = 0;
@@ -592,19 +623,7 @@ public class L1Magic {
 		L1Skill l1skills = SkillTable.getInstance().findBySkillId(FIRE_WALL);
 		dmg = (int) ((1.0 - attrDeffence) * l1skills.getDamageValue());
 
-		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
+		if (_targetPc.isFreeze()) {
 			dmg = 0;
 		}
 
@@ -622,16 +641,7 @@ public class L1Magic {
 		L1Skill l1skills = SkillTable.getInstance().findBySkillId(FIRE_WALL);
 		dmg = (int) ((1.0 - attrDeffence) * l1skills.getDamageValue());
 
-		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
+		if (_targetNpc.isFreeze()) {
 			dmg = 0;
 		}
 
@@ -661,27 +671,7 @@ public class L1Magic {
 		// TODO マジックドール効果 　ダメージリダクション
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
-		if (_targetPc.hasSkillEffect(COOKING_1_0_S) // 料理によるダメージ軽減
-				|| _targetPc.hasSkillEffect(COOKING_1_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_6_S)) {
+		if (_targetPc.isCookingReduction()) { // 幻想料理によるダメージ軽減
 			dmg -= 5;
 		}
 		if (_targetPc.hasSkillEffect(COOKING_1_7_S) // デザートによるダメージ軽減
@@ -728,19 +718,7 @@ public class L1Magic {
 		if (_targetPc.hasSkillEffect(IMMUNE_TO_HARM)) {
 			dmg /= 2;
 		}
-		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
+		if (_targetPc.isFreeze()) {
 			dmg = 0;
 		}
 
@@ -820,16 +798,7 @@ public class L1Magic {
 			}
 		}
 
-		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
+		if (_targetNpc.isFreeze()) {
 			dmg = 0;
 		}
 
@@ -1066,29 +1035,103 @@ public class L1Magic {
 	// attr:0.無属性魔法,1.地魔法,2.火魔法,4.水魔法,8.風魔法(,16.光魔法)
 	private double calcAttrResistance(int attr) {
 		int resist = 0;
+		int sign = 1;
+		double attrDefCoeff = 0.0D;
 		if (_calcType == PC_PC || _calcType == NPC_PC) {
-			if (attr == L1Skill.ATTR_EARTH) {
-				resist = _targetPc.getEarth();
-			} else if (attr == L1Skill.ATTR_FIRE) {
-				resist = _targetPc.getFire();
-			} else if (attr == L1Skill.ATTR_WATER) {
-				resist = _targetPc.getWater();
-			} else if (attr == L1Skill.ATTR_WIND) {
-				resist = _targetPc.getWind();
-			}
+			attrDefCoeff = calcPcArmorCoefficient(attr) + calcPcMagicCoefficient(attr);
 		} else if (_calcType == PC_NPC || _calcType == NPC_NPC) {
+			if (attr == L1Skill.ATTR_EARTH) {
+				resist = _targetNpc.getEarth();
+			} else if (attr == L1Skill.ATTR_FIRE) {
+				resist = _targetNpc.getFire();
+			} else if (attr == L1Skill.ATTR_WATER) {
+				resist = _targetNpc.getWater();
+			} else if (attr == L1Skill.ATTR_WIND) {
+				resist = _targetNpc.getWind();
+			}
+			if (resist >= 0) {
+				sign = 1;
+			} else {
+				sign = -1;
+			}
+			attrDefCoeff =  -1 / 32.0 * sign * Math.floor(0.32 * Math.abs(resist));
 		}
+		return attrDefCoeff;
+	}
 
-		int resistFloor = (int) (0.32 * Math.abs(resist));
-		if (resist >= 0) {
-			resistFloor *= 1;
-		} else {
-			resistFloor *= -1;
+	/**
+	 * 魔法による属性軽減係数の算出。
+	 */
+	private double calcPcMagicCoefficient(int attr) {
+		double sumCoeff = 0D;
+		int attrDeff = 0;
+
+		if (_targetPc.hasSkillEffect(ELEMENTAL_PROTECTION)) {
+			if (attr == _targetPc.getElfAttr()) {
+				attrDeff = 50;
+				sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
+			}
 		}
+		if (_targetPc.hasSkillEffect(RESIST_ELEMENTAL)) {
+			attrDeff = 10;
+			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
+		}
+		if (_targetPc.hasSkillEffect(COOKING_1_0_N) || _targetPc.hasSkillEffect(COOKING_1_0_S)) {
+			attrDeff = 10;
+			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
+		}
+		if (_targetPc.hasSkillEffect(COOKING_3_4_N) || _targetPc.hasSkillEffect(COOKING_3_4_S)) {
+			attrDeff = 10;
+			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
+		}
+		if (_targetPc.hasSkillEffect(STATUS_CUBE_IGNITION_TO_ALLY) && attr == L1Skill.ATTR_FIRE) {
+			attrDeff = 30;
+			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
+		}
+		if (_targetPc.hasSkillEffect(STATUS_CUBE_QUAKE_TO_ALLY) && attr == L1Skill.ATTR_EARTH) {
+			attrDeff = 30;
+			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
+		}
+		if (_targetPc.hasSkillEffect(STATUS_CUBE_SHOCK_TO_ALLY) && attr == L1Skill.ATTR_WIND) {
+			attrDeff = 30;
+			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
+		}
+		if (_targetPc.hasSkillEffect(ELEMENTAL_FALL_DOWN) && attr == _targetPc.getAddAttrKind()) {
+			attrDeff -= 50;
+			sumCoeff += -1 / 32.0 * -1 * Math.floor(0.32 * Math.abs(attrDeff));
+		}
+		return sumCoeff;
+	}
 
-		double attrDeffence = resistFloor / 32.0;
+	/**
+	 * PCの装備による属性軽減係数。魔法や料理による属性耐性係数は算出されない。
+	 */
+	private double calcPcArmorCoefficient(int attr) {
+		double sumCoeff = 0D;
+		int attrDeff = 0;
+		int sign = 1;
+		for (L1ItemInstance armor : _targetPc.getEquipSlot().getArmors()) {
+			if ((attr & L1Skill.ATTR_EARTH) == L1Skill.ATTR_EARTH) {
+				attrDeff = armor.getItem().getDefenseEarth();
+			} else if ((attr & L1Skill.ATTR_FIRE) == L1Skill.ATTR_FIRE) {
+				attrDeff = armor.getItem().getDefenseFire();
+			} else if ((attr & L1Skill.ATTR_WATER) == L1Skill.ATTR_WATER) {
+				attrDeff = armor.getItem().getDefenseWater();
+			} else if ((attr & L1Skill.ATTR_WIND) == L1Skill.ATTR_WIND) {
+				attrDeff = armor.getItem().getDefenseWind();
+			}
 
-		return attrDeffence;
+			if (attrDeff != 0) {
+				if (attrDeff < 0) {
+					sign = -1;
+				} else {
+					sign = 1;
+				}
+				sumCoeff += -1 / 32.0 * sign * Math.floor(0.32 * Math.abs(attrDeff));
+				attrDeff = 0;
+			}
+		}
+		return sumCoeff;
 	}
 
 	/* ■■■■■■■■■■■■■■■ 計算結果反映 ■■■■■■■■■■■■■■■ */
