@@ -257,17 +257,23 @@ public class L1BravePotion {
 			}
 		}
 		
-		if (effect.getGfxId2() == 0) { // ユグドラの実
-			pc.sendPackets(new S_SkillSound(pc.getId(), effect.getGfxId()));
-			pc.broadcastPacket(new S_SkillSound(pc.getId(), effect.getGfxId()));
-			pc.setSkillEffect(STATUS_RIBRAVE, effect.getTime() * 1000);
-		} else {
-			pc.sendPackets(new S_SkillBrave(pc.getId(), effect.getGfxId2(), effect.getTime()));
-			pc.broadcastPacket(new S_SkillBrave(pc.getId(), effect.getGfxId2(), 0));
-			pc.sendPackets(new S_SkillSound(pc.getId(), effect.getGfxId()));
-			pc.broadcastPacket(new S_SkillSound(pc.getId(), effect.getGfxId()));
-			pc.setSkillEffect(STATUS_BRAVE, effect.getTime() * 1000);
-		}
+		if (getItemId() == 40068 || getItemId() == 140068) { // エルヴンワッフル
+            pc.sendPackets(new S_SkillBrave(pc.getId(), effect.getGfxId2(), effect.getTime()));
+            pc.broadcastPacket(new S_SkillBrave(pc.getId(), effect.getGfxId2(), 0));
+            pc.sendPackets(new S_SkillSound(pc.getId(), effect.getGfxId()));
+            pc.broadcastPacket(new S_SkillSound(pc.getId(), effect.getGfxId()));
+            pc.setSkillEffect(STATUS_ELFBRAVE, effect.getTime() * 1000);
+        } else if (getItemId() == 49158) { // ユグドラの実
+            pc.sendPackets(new S_SkillSound(pc.getId(), effect.getGfxId()));
+            pc.broadcastPacket(new S_SkillSound(pc.getId(), effect.getGfxId()));
+            pc.setSkillEffect(STATUS_RIBRAVE, effect.getTime() * 1000);
+        } else {
+            pc.sendPackets(new S_SkillBrave(pc.getId(), effect.getGfxId2(), effect.getTime()));
+            pc.broadcastPacket(new S_SkillBrave(pc.getId(), effect.getGfxId2(), 0));
+            pc.sendPackets(new S_SkillSound(pc.getId(), effect.getGfxId()));
+            pc.broadcastPacket(new S_SkillSound(pc.getId(), effect.getGfxId()));
+            pc.setSkillEffect(STATUS_BRAVE, effect.getTime() * 1000);
+        }
 		pc.setBraveSpeed(1);
 		
 		if (getRemove() > 0) {
