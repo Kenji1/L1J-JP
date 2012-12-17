@@ -901,11 +901,6 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(32);
 				os.writeC(getItem().getMp() + getMp());
 			}
-			// MR
-			if (getItem().getMr() != 0 || getMr() != 0) {
-				os.writeC(15);
-				os.writeH(getItem().getMr() + getMr());
-			}
 			// SP(魔力)
 			if (getItem().getSp() != 0 || getSp() != 0) {
 				os.writeC(17);
@@ -976,6 +971,11 @@ public class L1ItemInstance extends L1Object {
 				os.writeH(getItem().getResistHold() + getResistHold());
 				os.writeC(33);
 				os.writeC(6);
+			}
+			// MR
+			if (getItem().getMr() != 0 || getMr() != 0) {
+				os.writeC(15);
+				os.writeH(getItem().getMr() + getMr());
 			}
 			// 経験値ボーナス
 			if (getItem().getExpBonus() != 0 || getExpBonus() != 0) {
