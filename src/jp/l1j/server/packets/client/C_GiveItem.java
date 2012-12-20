@@ -62,6 +62,11 @@ public class C_GiveItem extends ClientBasePacket {
 		if (!isNpcItemReceivable(target.getNpcTemplate())) {
 			return;
 		}
+		if (target.getNpcTemplate().isEqualityDrop()) {
+			pc.sendPackets(new S_ServerMessage(942));
+			// 相手のアイテムが重すぎるため、これ以上あげられません。
+			return;
+		}
 		L1Inventory targetInv = target.getInventory();
 
 		L1Inventory inv = pc.getInventory();
