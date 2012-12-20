@@ -590,6 +590,13 @@ public class L1Magic {
 	 * 固定ダメージの時に使用。
 	 */
 	public int calcWeaponSkillDamage(int dmg, int attr) {
+		
+		if (_calcType == PC_NPC || _calcType == NPC_NPC) {
+			if (_targetNpc.getNpcId() == 99006) { // 幻牛鬼
+				return 0;
+			}
+		}
+
 		if (attr == 0) {
 			return calcMrDefense(dmg);
 		}
@@ -648,7 +655,11 @@ public class L1Magic {
 		if (dmg < 0) {
 			dmg = 0;
 		}
-
+		
+		if (_targetNpc.getNpcId() == 99006) { // 幻牛鬼
+			dmg = 0;
+		}
+		
 		return dmg;
 	}
 
@@ -854,6 +865,9 @@ public class L1Magic {
 			if (npcId >= 46092 && npcId <= 46106 // 影の神殿側mob
 					&& _pc.getTempCharGfx() == 6034) {
 				dmg = 0;
+			}
+			if (npcId == 99006) { // 幻牛鬼
+				dmg = 2;
 			}
 		}
 
