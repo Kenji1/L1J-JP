@@ -1,16 +1,14 @@
 #!/bin/bash
 ant
 cd db
-sh MakeCreateTables_tw.sh
-sh MakeUpdateTables_tw.sh
+sh MakeCreateTables.sh
+sh MakeUpdateTables.sh
 cd ..
 mkdir -p release-build
 cp -ivR config release-build/config
 cp -ivR data release-build/data
 mkdir -p release-build/db
-cp -iv db/create_db.sql release-build/db/create_db.sql
-cp -iv db/create_tables.sql release-build/db/create_tables.sql
-cp -iv db/update_tables.sql release-build/db/update_tables.sql
+cp -fvR db release-build/db
 mkdir -p release-build/emblem
 cp -fvR lib release-build/lib
 mkdir -p release-build/log

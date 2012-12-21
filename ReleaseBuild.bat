@@ -1,12 +1,11 @@
+ant
 cd .\db
-call .\MakeCreateTables_ja.bat
-call .\MakeUpdateTables_ja.bat
+call .\MakeCreateTables.bat
+call .\MakeUpdateTables.bat
 cd ..
 xcopy .\config .\release-build\config /D /E /I /-Y
 xcopy .\data .\release-build\data /D /E /I /-Y
-xcopy .\db\create_db.sql .\release-build\db\ /D /E /I /Y
-xcopy .\db\create_tables.sql .\release-build\db\ /D /E /I /Y
-xcopy .\db\update_tables.sql .\release-build\db\ /D /E /I /Y
+xcopy .\db .\release-build\db /D /E /I /Y
 xcopy .\emblem .\release-build\emblem /D /E /I /Y
 xcopy .\lib .\release-build\lib /D /E /I /Y
 xcopy .\log .\release-build\log /D /E /I /Y
