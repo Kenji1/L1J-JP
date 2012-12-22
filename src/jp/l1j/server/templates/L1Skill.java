@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -171,6 +171,12 @@ public class L1Skill {
 		return _probabilityDice;
 	}
 
+	private int _probabilityMax;
+
+	public int getProbabilityMax() {
+		return _probabilityMax;
+	}
+
 	private int _attr;
 
 	/**
@@ -307,6 +313,7 @@ public class L1Skill {
 		skill._damageDiceCount = rs.getInt("damage_dice_count");
 		skill._probabilityValue = rs.getInt("probability_value");
 		skill._probabilityDice = rs.getInt("probability_dice");
+		skill._probabilityMax = rs.getInt("probability_max");
 		skill._attr = rs.getInt("attr");
 		skill._type = rs.getInt("type");
 		skill._lawful = rs.getInt("lawful");

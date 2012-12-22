@@ -294,9 +294,6 @@ public class L1Magic {
 		probability = calcProbability(skillId);
 
 		int rnd = _random.nextInt(100) + 1;
-		if (probability > 90) {
-			probability = 90; // 最高成功率を90%とする。
-		}
 
 		if (probability >= rnd) {
 			isSuccess = true;
@@ -409,11 +406,12 @@ public class L1Magic {
 			}
 		}
 
-		if (skillId == ELEMENTAL_FALL_DOWN || skillId == RETURN_TO_NATURE
-				|| skillId == ENTANGLE || skillId == ERASE_MAGIC
-				|| skillId == AREA_OF_SILENCE || skillId == WIND_SHACKLE
-				|| skillId == STRIKER_GALE || skillId == POLLUTE_WATER
-				|| skillId == EARTH_BIND) {
+		if (skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN ||
+				skillId == COUNTER_BARRIER ||
+				skillId == ELEMENTAL_FALL_DOWN || skillId == RETURN_TO_NATURE ||
+				skillId == ENTANGLE || skillId == ERASE_MAGIC || skillId == EARTH_BIND ||
+				skillId == AREA_OF_SILENCE || skillId == WIND_SHACKLE ||
+				skillId == STRIKER_GALE || skillId == POLLUTE_WATER) {
 			// 成功確率は 魔法固有係数 × LV差 + 基本確率
 			probability = (int) (((l1skills.getProbabilityDice()) / 10D) * (attackLevel - defenseLevel))
 					+ l1skills.getProbabilityValue();
@@ -422,24 +420,15 @@ public class L1Magic {
 			if (_calcType == PC_PC || _calcType == PC_NPC) {
 				probability += 2 * _pc.getOriginalMagicHit();
 			}
-		} else if (skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN) {
-			// 成功確率は 基本確率 + LV差1毎に+-2%
-			probability = l1skills.getProbabilityValue()
-					+ (attackLevel - defenseLevel) * 2;
-
-			// オリジナルINTによる魔法命中
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
-				probability += 2 * _pc.getOriginalMagicHit();
-			}
-		} else if (skillId == COUNTER_BARRIER) {
-			// 成功確率は 基本確率 + LV差1毎に+-1%
-			probability = l1skills.getProbabilityValue() + attackLevel
-					- defenseLevel;
-
-			// オリジナルINTによる魔法命中
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
-				probability += 2 * _pc.getOriginalMagicHit();
-			}
+//		} else if (skillId == COUNTER_BARRIER) {
+//			// 成功確率は 基本確率 + LV差1毎に+-1%
+//			probability = l1skills.getProbabilityValue() + attackLevel
+//					- defenseLevel;
+//
+//			// オリジナルINTによる魔法命中
+//			if (_calcType == PC_PC || _calcType == PC_NPC) {
+//				probability += 2 * _pc.getOriginalMagicHit();
+//			}
 // 念のため、リニューアル前の計算式を残しておく
 //		} else if (skillId == GUARD_BRAKE || skillId == RESIST_FEAR
 //				|| skillId == HORROR_OF_DEATH) {
@@ -565,6 +554,13 @@ public class L1Magic {
 			}
 		}
 
+		// スキル別の最大成功率の指定
+		if (l1skills.getProbabilityMax() != -1) {
+			if (probability > l1skills.getProbabilityMax()) {
+				probability = l1skills.getProbabilityMax();
+			}
+		}
+
 		return probability;
 	}
 
@@ -590,7 +586,7 @@ public class L1Magic {
 	 * 固定ダメージの時に使用。
 	 */
 	public int calcWeaponSkillDamage(int dmg, int attr) {
-		
+
 		if (_calcType == PC_NPC || _calcType == NPC_NPC) {
 			if (_targetNpc.getNpcId() == 99006) { // 幻牛鬼
 				return 0;
@@ -655,11 +651,11 @@ public class L1Magic {
 		if (dmg < 0) {
 			dmg = 0;
 		}
-		
+
 		if (_targetNpc.getNpcId() == 99006) { // 幻牛鬼
 			dmg = 0;
 		}
-		
+
 		return dmg;
 	}
 
