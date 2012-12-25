@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `inventory_items` (
   `sp` tinyint(3) NOT NULL DEFAULT '0',
   `hit_modifier` tinyint(3) NOT NULL DEFAULT '0',
   `dmg_modifier` tinyint(3) NOT NULL DEFAULT '0',
+  `bow_hit_modifier` tinyint(3) NOT NULL DEFAULT '0',
+  `bow_dmg_modifier` tinyint(3) NOT NULL DEFAULT '0',
   `defense_earth` tinyint(3) NOT NULL DEFAULT '0',
   `defense_water` tinyint(3) NOT NULL DEFAULT '0',
   `defense_fire` tinyint(3) NOT NULL DEFAULT '0',

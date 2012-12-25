@@ -78,10 +78,10 @@ public class L1EquipmentSlot {
 		}
 		_owner.addDamageReductionByArmor(item.getDamageReduction());
 		_owner.addWeightReduction(item.getWeightReduction());
-		_owner.addHitModifierByArmor(item.getHitModifierByArmor());
-		_owner.addDmgModifierByArmor(item.getDmgModifierByArmor());
-		_owner.addBowHitModifierByArmor(item.getBowHitModifierByArmor());
-		_owner.addBowDmgModifierByArmor(item.getBowDmgModifierByArmor());
+		_owner.addHitModifierByArmor(item.getHitModifierByArmor() + armor.getHitModifier());
+		_owner.addDmgModifierByArmor(item.getDmgModifierByArmor() + armor.getDmgModifier());
+		_owner.addBowHitModifierByArmor(item.getBowHitModifierByArmor() + armor.getBowHitModifier());
+		_owner.addBowDmgModifierByArmor(item.getBowDmgModifierByArmor() + armor.getBowDmgModifier());
 		armor.startChargeTimer(_owner);
 		_armors.add(armor);
 
@@ -152,10 +152,10 @@ public class L1EquipmentSlot {
 		}
 		_owner.addDamageReductionByArmor(-item.getDamageReduction());
 		_owner.addWeightReduction(-item.getWeightReduction());
-		_owner.addHitModifierByArmor(-item.getHitModifierByArmor());
-		_owner.addDmgModifierByArmor(-item.getDmgModifierByArmor());
-		_owner.addBowHitModifierByArmor(-item.getBowHitModifierByArmor());
-		_owner.addBowDmgModifierByArmor(-item.getBowDmgModifierByArmor());
+		_owner.addHitModifierByArmor(-(item.getHitModifierByArmor() + armor.getHitModifier()));
+		_owner.addDmgModifierByArmor(-(item.getDmgModifierByArmor() + armor.getDmgModifier()));
+		_owner.addBowHitModifierByArmor(-(item.getBowHitModifierByArmor() + armor.getBowHitModifier()));
+		_owner.addBowDmgModifierByArmor(-(item.getBowDmgModifierByArmor() + armor.getBowDmgModifier()));
 		armor.stopChargeTimer();
 
 		for (L1ArmorSet armorSet : L1ArmorSet.getAllSet()) {

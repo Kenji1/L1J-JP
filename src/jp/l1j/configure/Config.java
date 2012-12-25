@@ -314,6 +314,12 @@ public final class Config {
 	@Configure(file = RATE, key = "UniqueMaxDmgModifier")
 	public static int UNIQUE_MAX_DMG_MODIFIER = 5;
 
+	@Configure(file = RATE, key = "UniqueMaxBowHitModifier")
+	public static int UNIQUE_MAX_BOW_HIT_MODIFIER = 5;
+
+	@Configure(file = RATE, key = "UniqueMaxBowDmgModifier")
+	public static int UNIQUE_MAX_BOW_DMG_MODIFIER = 5;
+
 	@Configure(file = RATE, key = "UniqueMaxDefenseEarth")
 	public static int UNIQUE_MAX_DEFENSE_EARTH = 10;
 

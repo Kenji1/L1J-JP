@@ -92,12 +92,12 @@ UNIQUE RATES
 <entry key="UniqueMaxOptions">3</entry>
 
 <!-- Armor 固有のオプション -->
+<!-- (0 - Max) -->
 <entry key="UniqueMaxAc">3</entry>
+<entry key="UniqueMaxBowHitModifier">5</entry>
+<entry key="UniqueMaxBowDmgModifier">5</entry>
 
 <!-- Weapon 固有のオプション -->
-<!-- (0 - Max) -->
-<entry key="UniqueMaxHitModifier">5</entry>
-<entry key="UniqueMaxDmgModifier">5</entry>
 <!-- (True or False) -->
 <entry key="UniqueCanDmg">True</entry>
 
@@ -126,6 +126,8 @@ UNIQUE RATES
 <entry key="UniqueMaxResistHold">10</entry>
 <entry key="UniqueMaxResistBlind">10</entry>
 <entry key="UniqueMaxExpBonus">10</entry>
+<entry key="UniqueMaxHitModifier">5</entry>
+<entry key="UniqueMaxDmgModifier">5</entry>
 <!-- (True or False) -->
 <entry key="UniqueHaste">True</entry>
 

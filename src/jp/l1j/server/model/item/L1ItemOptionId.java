@@ -47,6 +47,10 @@ public class L1ItemOptionId {
 	
 	public static final int OPT_DMG_MOD = 15;
 	
+	public static final int OPT_BOW_HIT_MOD = 29;
+	
+	public static final int OPT_BOW_DMG_MOD = 30;
+	
 	public static final int OPT_DEF_EARTH = 16;
 	
 	public static final int OPT_DEF_WATER = 17;

@@ -66,6 +66,8 @@ public class L1InventoryItem {
 	private int _mr;
 	private int _hitModifier;
 	private int _dmgModifier;
+	private int _bowHitModifier;
+	private int _bowDmgModifier;
 	private int _defenseWater;
 	private int _defenseWind;
 	private int _defenseFire;
@@ -340,6 +342,22 @@ public class L1InventoryItem {
 		this._dmgModifier = _dmgModifier;
 	}
 
+	public int getBowHitModifier() {
+		return _bowHitModifier;
+	}
+
+	public void setBowHitModifier(int _bowHitModifier) {
+		this._bowHitModifier = _bowHitModifier;
+	}
+	
+	public int getBowDmgModifier() {
+		return _bowDmgModifier;
+	}
+
+	public void setBowDmgModifier(int _bowDmgModifier) {
+		this._bowDmgModifier = _bowDmgModifier;
+	}
+
 	public int getDefenseEarth() {
 		return _defenseEarth;
 	}
@@ -496,6 +514,8 @@ public class L1InventoryItem {
 			result._sp = rs.getInt("sp");
 			result._hitModifier = rs.getInt("hit_modifier");
 			result._dmgModifier = rs.getInt("dmg_modifier");
+			result._bowHitModifier = rs.getInt("bow_hit_modifier");
+			result._bowDmgModifier = rs.getInt("bow_dmg_modifier");
 			result._defenseEarth = rs.getInt("defense_earth");
 			result._defenseWater = rs.getInt("defense_water");
 			result._defenseFire = rs.getInt("defense_fire");
@@ -565,6 +585,8 @@ public class L1InventoryItem {
 		qb.addColumn("mr", _mr);
 		qb.addColumn("hit_modifier", _hitModifier);
 		qb.addColumn("dmg_modifier", _dmgModifier);
+		qb.addColumn("bow_hit_modifier", _bowHitModifier);
+		qb.addColumn("bow_dmg_modifier", _bowDmgModifier);
 		qb.addColumn("defense_earth", _defenseEarth);
 		qb.addColumn("defense_water", _defenseWater);
 		qb.addColumn("defense_fire", _defenseFire);
@@ -585,16 +607,17 @@ public class L1InventoryItem {
 	}
 
 	private void insert(Connection con) {
-		String sql = "INSERT inventory_items VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT inventory_items VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		L1QueryUtil.execute(con, sql, _id, _ownerId, _location, _itemId,
 				_itemCount, _isEquipped, _enchantLevel, _isIdentified,
 				_durability, _chargeCount, _chargeTime, _expirationTime, _lastUsed,
 				_isSealed, _attrEnchantKind, _attrEnchantLevel, _ac, _str, _con,
 				_dex, _wis, _cha, _int, _hp, _hpr, _mp, _mpr, _sp, _mr,
-				_hitModifier, _dmgModifier, _defenseEarth, _defenseWater,
-				_defenseFire, _defenseWind, _resistStun, _resistStone, 
-				_resistSleep, _resistFreeze, _resistHold, _resistBlind,
-				_expBonus, _isHaste, _canBeDmg, _isUnique, _potionRecoveryRate);
+				_hitModifier, _dmgModifier, _bowHitModifier, _bowDmgModifier,
+				_defenseEarth, _defenseWater, _defenseFire, _defenseWind,
+				_resistStun, _resistStone, _resistSleep, _resistFreeze,
+				_resistHold, _resistBlind, _expBonus, _isHaste, _canBeDmg,
+				_isUnique, _potionRecoveryRate);
 		_storedId = _id;
 	}
 

@@ -413,6 +413,22 @@ public class L1ItemInstance extends L1Object {
 		_inventoryItem.setDmgModifier(_dmgModifier);
 	}
 	
+	public int getBowHitModifier() {
+		return _inventoryItem.getBowHitModifier();
+	}
+	
+	public void setBowHitModifier(int _hitModifier) {
+		_inventoryItem.setBowHitModifier(_hitModifier);
+	}
+	
+	public int getBowDmgModifier() {
+		return _inventoryItem.getBowDmgModifier();
+	}
+	
+	public void setBowDmgModifier(int _dmgModifier) {
+		_inventoryItem.setBowDmgModifier(_dmgModifier);
+	}
+	
 	public int getDefenseEarth() {
 		return _inventoryItem.getDefenseEarth();
 	}
@@ -820,9 +836,9 @@ public class L1ItemInstance extends L1Object {
 					os.writeC(getItem().getHitModifier() + getHitModifier());
 				}
 			} else if (itemType2 == 2) { // armor
-				if (getItem().getHitModifierByArmor() != 0) {
+				if (getItem().getHitModifierByArmor() != 0 || getHitModifier() != 0) {
 					os.writeC(5);
-					os.writeC(getItem().getHitModifierByArmor());
+					os.writeC(getItem().getHitModifierByArmor() + getHitModifier());
 				}
 			}
 			// 追加打撃
@@ -832,9 +848,9 @@ public class L1ItemInstance extends L1Object {
 					os.writeC(getItem().getDmgModifier() + getDmgModifier());
 				}
 			} else if (itemType2 == 2) { // armor
-				if (getItem().getDmgModifierByArmor() != 0) {
+				if (getItem().getDmgModifierByArmor() != 0 || getDmgModifier() != 0) {
 					os.writeC(6);
-					os.writeC(getItem().getDmgModifierByArmor());
+					os.writeC(getItem().getDmgModifierByArmor() + getDmgModifier());
 				}
 			}
 			// 使用可能
@@ -850,14 +866,14 @@ public class L1ItemInstance extends L1Object {
 			os.writeC(7);
 			os.writeC(bit);
 			// 弓の命中率補正
-			if (getItem().getBowHitModifierByArmor() != 0) {
+			if (getItem().getBowHitModifierByArmor() != 0 || getBowHitModifier() != 0) {
 				os.writeC(24);
-				os.writeC(getItem().getBowHitModifierByArmor());
+				os.writeC(getItem().getBowHitModifierByArmor() + getBowHitModifier());
 			}
 			// 弓のダメージ補正
-			if (getItem().getBowDmgModifierByArmor() != 0) {
+			if (getItem().getBowDmgModifierByArmor() != 0 || getBowDmgModifier() != 0) {
 				os.writeC(35);
-				os.writeC(getItem().getBowDmgModifierByArmor());
+				os.writeC(getItem().getBowDmgModifierByArmor() + getBowDmgModifier());
 			}
 			// MP吸収
 			if (itemId == 126 || itemId == 127) { // マナスタッフ、鋼鉄のマナスタッフ
@@ -1165,15 +1181,16 @@ public class L1ItemInstance extends L1Object {
 				add(OPT_DEF_WIND); add(OPT_RES_STUN); add(OPT_RES_STONE);
 				add(OPT_RES_SLEEP); add(OPT_RES_FREEZE); add(OPT_RES_HOLD);
 				add(OPT_RES_BLIND); add(OPT_EXP_BONUS); add(OPT_HASTE);
+				add(OPT_HIT_MOD); add(OPT_DMG_MOD);
 			}
 		};
 		
 		if (getItem().getType2() == 1) { // 武器
-			options.add(OPT_HIT_MOD);
-			options.add(OPT_DMG_MOD);
 			options.add(OPT_CAN_DMG);
 		} else { // 防具
 			options.add(OPT_AC);
+			options.add(OPT_BOW_HIT_MOD);
+			options.add(OPT_BOW_DMG_MOD);
 		}
 
 		boolean isUnique = false;
@@ -1345,6 +1362,18 @@ public class L1ItemInstance extends L1Object {
 				res = calcUniqueOption(Config.UNIQUE_MAX_DMG_MODIFIER, uniqueRate);
 				if (res > 0) {
 					setDmgModifier(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_BOW_HIT_MOD) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_BOW_HIT_MODIFIER, uniqueRate);
+				if (res > 0) {
+					setBowHitModifier(res);
+					isUnique = true;
+				}
+			} else if (option == OPT_BOW_DMG_MOD) {
+				res = calcUniqueOption(Config.UNIQUE_MAX_BOW_DMG_MODIFIER, uniqueRate);
+				if (res > 0) {
+					setBowDmgModifier(res);
 					isUnique = true;
 				}
 			} else if (option == OPT_CAN_DMG) {
