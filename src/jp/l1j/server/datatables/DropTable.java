@@ -217,11 +217,11 @@ public class DropTable {
 			for (int i= recipientList.size() - 1; i >= 0; i--) {
 				L1PcInstance pc = (L1PcInstance) recipientList.get(i);
 				if (pc.getInventory().checkAddItem(drop, drop.getCount()) == L1Inventory.OK) {
-					L1ItemInstance item = pc.getInventory().storeItem(drop.getItemId(), 1);
+					pc.getInventory().storeItem(drop.getItemId(), 1);
 					if (pc.isInParty()) {
-						pc.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), pc.getName()));
+						pc.sendPackets(new S_ServerMessage(813, npc.getName(), drop.getLogName(), pc.getName()));
 					} else {
-						pc.sendPackets(new S_ServerMessage(143, npc.getName(), item.getLogName()));
+						pc.sendPackets(new S_ServerMessage(143, npc.getName(), drop.getLogName()));
 					}
 				} else {
 					// インベントリが一杯の場合は足元にドロップ
