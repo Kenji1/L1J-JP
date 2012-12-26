@@ -593,8 +593,42 @@ public class C_NpcAction extends ClientBasePacket {
 			} else {
 				htmlid = "";
 			}
-		}
-		else if (s.equalsIgnoreCase("enter")) {
+		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91328) {
+			// ユキ - 象牙の塔秘密研究室
+			if (s.equalsIgnoreCase("enter")) { // 過去にテレポートする。
+				boolean entrance = false;
+				if (pc.isInParty()) { // パーティに所属しているか？
+					if (pc.getParty().isLeader(pc)) { // リーダーか？
+						int members = 1;
+						for (L1PcInstance player : L1World.getInstance().getVisiblePlayer(pc)) {
+							if (pc.getParty().isMember(player)) {
+								members++;
+								if (pc.getParty().getNumOfMembers() == members
+										&& pc.getParty().getNumOfMembers()> 1) {
+									// 画面内にパーティメンバーが全員いる
+									entrance = true;
+								}
+							}
+						}
+					}
+				}
+
+				if (entrance) {
+					if (L1HardinQuest.getInstance().getNumOfActiveMaps() < 50) {
+						int instanceMap = L1HardinQuest.getInstance().setActiveMaps(9000);
+						for (L1PcInstance ptmember : pc.getParty().getMembers()) {
+							L1PolyMorph.undoPoly(ptmember);
+							L1Teleport.teleport(ptmember, 32726, 32724,
+									(short) (instanceMap), 6, true);
+						}
+						L1HardinQuest.getInstance().getActiveMaps(instanceMap).setLeader(pc);
+						L1HardinQuest.getInstance().getActiveMaps(instanceMap).start();
+					}
+				}else{
+					htmlid = "";
+				}
+			}
+		} else if (s.equalsIgnoreCase("enter")) {
 			L1NpcInstance npc = (L1NpcInstance) obj;
 			int npcId = npc.getNpcTemplate().getNpcId();
 
@@ -647,45 +681,6 @@ public class C_NpcAction extends ClientBasePacket {
 						}
 					}
 				}
-			}
-		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91328) { // 象牙の塔秘密研究室
-			if (s.equalsIgnoreCase("enter")) { // 部屋・ホールに入る
-				// -
-				// ユキ
-				// /
-				// /
-				// XXX
-				/*
-				 * if(pc.isInParty()){//パーティに所属しているか？
-				 * if(pc.getParty().isLeader(pc)){//リーダーか？ int members=1;
-				 * for(L1PcInstance player:pc.getKnownPlayers()){
-				 * if(pc.getParty().isMember(player)){ members++; } }
-				 * if(pc.getParty().getNumOfMembers()==members //&&
-				 * pc.getParty().getNumOfMembers()>4 ){//画面内にパーティメンバーが全員いる
-				 */
-
-				if (L1HardinQuest.getInstance().getNumOfActiveMaps() < 50) {
-					int instanceMap = L1HardinQuest.getInstance()
-							.setActiveMaps(9000);
-					/*
-					 * 作成中 for(L1PcInstance
-					 * ptmember:pc.getParty().getMembers()){
-					 */
-
-					L1PolyMorph.undoPoly(pc);// ptmember
-					L1Teleport.teleport(pc, 32726, 32724,
-							(short) (instanceMap), 6, true);
-					L1HardinQuest.getInstance().getActiveMaps(instanceMap)
-							.setLeader(pc);
-					L1HardinQuest.getInstance().getActiveMaps(instanceMap)
-							.start();
-					/* } */
-				}
-
-				/*
-				 * } } }
-				 */
-				htmlid = "";
 			}
 		} else if (s.equalsIgnoreCase("openigate")) { // ゲートキーパー / 城門を開ける
 			L1NpcInstance npc = (L1NpcInstance) obj;

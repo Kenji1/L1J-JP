@@ -107,6 +107,10 @@ public class L1MobGroupInfo {
 		// 残りのメンバー数を返す
 		return _membersList.size();
 	}
+	
+	public List<L1NpcInstance> getMembers() {
+		return _membersList;
+	}
 
 	public int getNumOfMembers() {
 		return _membersList.size();

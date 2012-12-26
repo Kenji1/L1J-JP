@@ -43,11 +43,11 @@ import jp.l1j.server.model.skill.L1SkillId;
 import jp.l1j.server.model.skill.L1SkillUse;
 import jp.l1j.server.model.trap.L1Trap;
 import jp.l1j.server.model.trap.L1WorldTraps;
-import jp.l1j.server.packets.server.S_BlueMessage;
+import jp.l1j.server.packets.server.S_GreenMessage;
 import jp.l1j.server.packets.server.S_NpcChatPacket;
 import jp.l1j.server.packets.server.S_NpcPack;
 import jp.l1j.server.packets.server.S_NpcTalkReturn;
-import jp.l1j.server.packets.server.S_ServerMessage;
+import jp.l1j.server.packets.server.S_ShockWave;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
@@ -65,25 +65,17 @@ public class L1HardinQuestInstance {
 			timer.scheduleAtFixedRate(this, 10 * 1000, 160 * 1000);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 *
-		 * @see java.util.TimerTask#run()
-		 */
 		@Override
 		public void run() {
 			if (!isDeleteTransactionNow()) {
-				if (getBoneLaidStatus() == 0) {
-					final RandomGenerator rd = RandomGeneratorFactory
-							.getSharedRandom();
+				if (getBoneLaidStatus() == -1 && _leader.getMapId() == getMapId()) {
+					final RandomGenerator rd = RandomGeneratorFactory.getSharedRandom();
 					final int i = rd.nextInt(3);
-					final int mobGroupLeaderId = MobGroupTable.getInstance()
-							.getTemplate(85 + i).getLeaderId();
-					doSpawnGroup(_leader.getLocation(), mobGroupLeaderId,
-							85 + i);
+					final int mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(85 + i).getLeaderId();
+					doSpawnGroup(_leader.getLocation(), mobGroupLeaderId, 85 + i);
 					if (i == 1) {
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$" + 7596, 0));// 7596 キャ?！オーガよぉ?！
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7596", 0));
+						// 7596 キャ?！オーガよぉ?！
 					}
 				} else {
 					this.cancel();
@@ -109,12 +101,10 @@ public class L1HardinQuestInstance {
 		@Override
 		public void run() {
 			if (!isDeleteTransactionNow()) {
-				if (getBoneLaidStatus() == 0) {
-					final RandomGenerator rd = RandomGeneratorFactory
-							.getSharedRandom();
+				if (!isAlreadyGuardManDeath()) {
+					final RandomGenerator rd = RandomGeneratorFactory.getSharedRandom();
 					randomtime = 20 + rd.nextInt(10);
-					for (final L1Object obj : L1World.getInstance()
-							.getVisibleObjects(_Kerenis, 6)) {
+					for (final L1Object obj : L1World.getInstance().getVisibleObjects(_Kerenis, 6)) {
 						if (obj instanceof L1MonsterInstance) {
 							if (!((L1MonsterInstance) obj).isDead()) {
 								final L1SkillUse l1skilluse = new L1SkillUse();
@@ -136,29 +126,16 @@ public class L1HardinQuestInstance {
 		}
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class HardinQuestMonitor extends TimerTask {
-		/**
-		 *
-		 */
 		public void begin() {
 			final Timer timer = new Timer();
 			timer.scheduleAtFixedRate(this, 30 * 1000, 300 * 1000);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 *
-		 * @see java.util.TimerTask#run()
-		 */
 		@Override
 		public void run() {
 			if (!isDeleteTransactionNow()) {// 念のため
-				for (final L1PcInstance pc : L1World.getInstance()
-						.getAllPlayers()) {
+				for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
 					if (getMapId() == pc.getMapId()) {
 						return;
 					}
@@ -172,17 +149,7 @@ public class L1HardinQuestInstance {
 		}
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class HqThread extends Thread {
-
-		/*
-		 * (non-Javadoc)スレッドプロシージャ
-		 *
-		 * @see java.lang.Thread#run()
-		 */
 		@Override
 		public void run() {
 			try {
@@ -198,18 +165,21 @@ public class L1HardinQuestInstance {
 						setCurRound(round);
 						sendRoundMessage(round);
 
-						if ((round > 1) && hardMode) {// ハード･･･進行中にバフォコースならスーパーハードへ
-							if (getRoundStatus(round - 1) == 1) {// スーパーハード
-								pattern = 3;
-							} else {
-								pattern = 2;
+						if (hardMode) {// ハード
+							if (round > 1) {
+								if (getBoneLaidStatus() == 2) {
+									pattern = 3;// スーパーハード
+								} else {
+									pattern = 2;// ハード
+								}
+							} else if (getBoneLaidStatus() == 2) {
+								pattern = 3;//スーパーハード
 							}
 						}
 						if (round % 4 == 0) {// ボスラウンドのみボス出現時とモンスターの出現をずらす
 							Thread.sleep(5 * 1000);// 5秒のみ
 						}
-						final RandomGenerator random = RandomGeneratorFactory
-								.getSharedRandom();
+						final RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
 						if (99 < (random.nextInt(100) + 1)) {
 							setBonusStage(true);
 						}
@@ -226,8 +196,7 @@ public class L1HardinQuestInstance {
 							Thread.sleep(75 * 1000);
 						}
 						int cnt = 0;
-						for (final L1PcInstance pc : L1World.getInstance()
-								.getAllPlayers()) {
+						for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
 							if (pc.getMapId() == getMapId()) {
 								cnt++;
 							}
@@ -237,49 +206,53 @@ public class L1HardinQuestInstance {
 						 * outPushPlayer(); clearColosseum(); setActive(false);
 						 * return; }
 						 */
-						if (serchCountMonster() > 4 || isBonusStage()) {
-							if (!isBonusStage()) {
-								sendMessage(7653, 0);// 悪鬼羅刹どもが湧いてきたわい！覚悟はいいかの！
+						if (searchCountMonster() > 6 || isBonusStage()) {
+							if (!isBonusStage() && getCurRound() != 12) {
+								sendMessage("$7653", 0);
+								// 悪鬼羅刹どもが湧いてきたわい！覚悟はいいかの！
 							}
 							Thread.sleep(25 * 1000);
-							if (serchCountMonster() > 4 || isBonusStage()) {
+							if (searchCountMonster() > 6 || isBonusStage()) {
 								Thread.sleep(35 * 1000);
-								sendMessage(7811, 0);
-								_Hardin.broadcastPacket(new S_NpcChatPacket(
-										_Hardin, "$7811", 0));// ブルー//このままでは…お前たち、がんばっておくれ！
-								// 7811
+								sendMessage("$7811", 0);
+								_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7811", 0));
+								// このままでは…お前たち、がんばっておくれ！
 								boolean remain = true;
 								for (int i = 0; ((i < 3) && remain)
 										|| isBonusStage(); i++) {
 									if (isDeleteTransactionNow())
 										return;
 									Thread.sleep(30000);
-									remain = serchCountMonster() > 4;
+									remain = searchCountMonster() > 6;
 								}
 
 								if (remain || isBonusStage()) {
-									sendMessage(7681, 0);
-									_Hardin
-											.broadcastPacket(new S_NpcChatPacket(
-													_Hardin, "$7681", 0));// 7681
+									sendMessage("$7681", 0);
+									_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7681", 0));
 									// どうやらお前たちに過度の期待を寄せていたようじゃ…
 									if (!isDeleteTransactionNow())
-										outPushPlayer();// end();//
-									// サブラウンド1毎に終了の有無を確認
+										outPushPlayer();
+										// サブラウンド毎に終了の有無を確認
 									return;
 								} else {
-									sendMessage(8703, 0);
-									_Hardin
-											.broadcastPacket(new S_NpcChatPacket(
-													_Hardin, "$8703", 0));// *
-									// 8703
-									// ハーディン：ふぅ…かろうじて防げたようだな。もっとがんばるのだ！！
+									if (getCurRound() != 12) {
+										sendMessage("$8703", 0);
+										_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8703", 0));
+										// ハーディン：ふぅ…かろうじて防げたようだな。もっとがんばるのだ！！
+									}									
 								}
 							}
 							setRoundStatus(round - 1, 2);// 遅い
 						} else {
-							sendMessage(7652, 0);// 7652 思ったより進行が早いぞ！気を抜くな！
-							setRoundStatus(round - 1, 1);// 早い
+							if (searchCountMonster() < 4) {
+								setRoundStatus(round - 1, 1);// 早い spawnPartを進める
+							} else {
+								setRoundStatus(round - 1, 3);// 普通 spawnPartを停止
+							}
+							if (getCurRound() != 12) {
+								sendMessage("$7652", 0);
+								// 7652 思ったより進行が早いぞ！気を抜くな！
+							}
 						}
 					} else {
 						return;
@@ -289,43 +262,32 @@ public class L1HardinQuestInstance {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}
-		// 32711 32845 kerenis
-		// 32707 32846
-
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class KerenisPart1 extends Thread {
-		/*
-		 * (non-Javadoc)
-		 *
-		 * @see java.lang.Thread#run()
-		 */
 		@Override
 		public void run() {
 			try {
 				final L1Location loc = new L1Location(32742, 32930, getMapId());
 				spawnOne(loc, 91320, 0);
-				// オリムはどう思う？ハーディン様は私のことを疎ましく思ってるかもしれないわ。
-				_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-						"j_ep003"));
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7616",
-						0));// 7616 ハーディンがわたしのことをどう思っているのか、オリムは知ってる？
-				setActionKerenis(0);
+				if (_leader.getMapId() == getMapId()) {
+					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep003"));
+					// オリムはどう思う？ハーディン様は私のことを疎ましく思ってるかもしれないわ。
+				}
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7616", 0));
+				// 7616 ハーディンがわたしのことをどう思っているのか、オリムは知ってる？
+				setActionKerenisDirect(0);
 				Thread.sleep(3000);
 				if (getActionKerenis() == 1) {
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7562", 0));// 7562 まあ、こんなところかしら。
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7562", 0));
+					// 7562 まあ、こんなところかしら。
 				} else {
 					if (getActionKerenis() == 2) {
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7570", 0));// 7570 へぇ?、そんなにわたしと戦いたいってわけ。
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7570", 0));
+						// 7570 へぇ?、そんなにわたしと戦いたいってわけ。
 					} else {// 0
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7617", 0));// 7617 え、知らないって？
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7617", 0));
+						// 7617 え、知らないって？
 					}
 				}
 
@@ -334,32 +296,33 @@ public class L1HardinQuestInstance {
 					setSwitchStatus(0, -1);
 				}
 				if (isAlreadyFirstSwitch()) {// 0＝ギリギリ 1早い 2遅い
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7622", 0));// 7622 スタートは順調のようね。その調子よ。
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7622", 0));
+					// 7622 スタートは順調のようね。その調子よ。
 					return;
 				} else {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_ep004"));
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7618", 0));// 7618 みんなに何かあったのかな？いくらなんでも遅い…
-					setActionKerenis(0);//
+					if (_leader.getMapId() == getMapId()) {
+						_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep004"));
+					}
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7618", 0));
+					sendMessage("$7560 : $7618", 0);
+					// 7618 みんなに何かあったのかな？いくらなんでも遅い…
+					setActionKerenisDirect(0);//
 					Thread.sleep(3000);
 					if (isAlreadyFirstSwitch()) {
 						setSwitchStatus(0, 2);
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7620", 0));// あら、ちょっと急ぎすぎたかもね。ごめんなさい。
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7620", 0));
+						// あら、ちょっと急ぎすぎたかもね。ごめんなさい。
 					}
 
 					if (getActionKerenis() == 1) {
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7571", 0));// 7620 7571 こっちのことなんてどうでもいいんでしょ！
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7571", 0));
+						// 7620 7571 こっちのことなんてどうでもいいんでしょ！
 					} else {
 						if (getActionKerenis() == 2) {
-							_Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7563", 0));// 7563 ふふ、認める気になった？
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7563", 0));
+							// 7563 ふふ、認める気になった？
 						} else {
-							_Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7619", 0));// 7619
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7619", 0));
 							// 分かったのなら、何か反応してよ！
 						}
 
@@ -382,16 +345,7 @@ public class L1HardinQuestInstance {
 		}
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class KerenisPart2 extends Thread {
-		/*
-		 * (non-Javadoc)
-		 *
-		 * @see java.lang.Thread#run()
-		 */
 		@Override
 		public void run() {
 			try {
@@ -402,32 +356,32 @@ public class L1HardinQuestInstance {
 				if (isAlreadySecondSwitch()) {
 					return;
 				} else {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_ep004"));
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7625", 0));// 7625 みんな何してるの？遅すぎる…
-					setActionKerenis(0);
+					if (_leader.getMapId() == getMapId()) {
+						_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep004"));
+					}
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7625", 0));
+					sendMessage("$7560 : $7625", 0);
+					// 7625 みんな何してるの？遅すぎる…
+					setActionKerenisDirect(0);
 					Thread.sleep(3000);
 					if (isAlreadySecondSwitch()) {
 						setSwitchStatus(1, 2);
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7627", 0));// おそぶみ　7627
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7627", 0));
 						// お願い、急いで！もしかして、いじわるじゃないよね？
 					}
-					setActionKerenis(0);
 					if (getActionKerenis() == 1) {
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7571", 0));// 7571 こっちのことなんてどうでもいいんでしょ！
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7571", 0));
+						// 7571 こっちのことなんてどうでもいいんでしょ！
 					} else {
 						if (getActionKerenis() == 2) {
-							_Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7563", 0));// 7563 ふふ、認める気になった？
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7563", 0));
+							// 7563 ふふ、認める気になった？
 						} else {
-							_Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7626", 0));// 7626
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7626", 0));
 							// 怒ってるのに、何も言わないの？
 						}
 					}
+					setActionKerenisDirect(0);
 
 				}
 				Thread.sleep(15 * 1000);// 15秒後強制帰還
@@ -445,16 +399,7 @@ public class L1HardinQuestInstance {
 		}
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class KerenisPart3 extends Thread {
-		/*
-		 * (non-Javadoc)
-		 *
-		 * @see java.lang.Thread#run()
-		 */
 		@Override
 		public void run() {
 			try {
@@ -465,31 +410,33 @@ public class L1HardinQuestInstance {
 				if (isAlreadyPortal()) {
 					return;
 				} else {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_ep004"));
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7632", 0));// 7632 もう最低！
-					setActionKerenis(0);
+					if (_leader.getMapId() == getMapId()) {
+						_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep004"));
+					}
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7632", 0));
+					sendMessage("$7560 : $7632", 0);
+					// 7632 もう最低！
+					setActionKerenisDirect(0);
 					Thread.sleep(3000);
 					if (isAlreadyPortal()) {
 						setSwitchStatus(2, 2);
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7634", 0));// おそぶみ　7634 これじゃあわたしが横暴みたいじゃない！
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7634", 0));
+						// これじゃあわたしが横暴みたいじゃない！
 					}
 
 					if (getActionKerenis() == 1) {
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7563", 0));// 7563 ふふ、認める気になった？
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7563", 0));
+						// 7563 ふふ、認める気になった？
 					} else {
 						if (getActionKerenis() == 2) {
-							_Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7571", 0));// 7620 7571
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7571", 0));
 							// こっちのことなんてどうでもいいんでしょ！
 						} else {
-							_Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7633", 0));// 7633 オリム！聞いてよ！
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7633", 0));
+							// 7633 オリム！聞いてよ！
 						}
 					}
+					setActionKerenisDirect(0);
 				}
 				Thread.sleep(15 * 1000);// 15秒後強制帰還
 				// -1のままならクエスト失敗へ
@@ -506,16 +453,7 @@ public class L1HardinQuestInstance {
 		}
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class KerenisPart4 extends Thread {
-		/*
-		 * (non-Javadoc)
-		 *
-		 * @see java.lang.Thread#run()
-		 */
 		@Override
 		public void run() {
 			try {
@@ -526,31 +464,31 @@ public class L1HardinQuestInstance {
 				if (isAlreadyGuardManDeath()) {
 					return;
 				} else {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_ep004"));
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7640", 0));// 7640 救いようがないわ。
-					setActionKerenis(0);
+					if (_leader.getMapId() == getMapId()) {
+						_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep004"));
+					}
+					sendMessage("$7560 : $7640", 0);// 7640 救いようがないわ。
+					setActionKerenisDirect(0);
 					Thread.sleep(3000);
 					if (isAlreadyGuardManDeath()) {
 						setSwitchStatus(3, 2);
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7642", 0));// 7642 あったまきた！わたしが切れるまで何もしない気ね！
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7642", 0));
+						// 7642 あったまきた！わたしが切れるまで何もしない気ね！
 					}
 
 					if (getActionKerenis() == 1) {
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7563", 0));// 7563 ふふ、認める気になった？
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7563", 0));
+						// 7563 ふふ、認める気になった？
 					} else {
 						if (getActionKerenis() == 2) {
-							_Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7571", 0));// 7620 7571
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7571", 0));
 							// こっちのことなんてどうでもいいんでしょ！
 						}
 					}
 					Thread.sleep(3000);
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7641", 0));// 7641 はぁ…まあいいいでしょ。これで大丈夫ってことよね。
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7641", 0));
+					// 7641 はぁ…まあいいいでしょ。これで大丈夫ってことよね。
+					setActionKerenisDirect(0);
 				}
 				Thread.sleep(15 * 1000);// 15秒後強制帰還
 				// -1のままならクエスト失敗へ
@@ -567,10 +505,6 @@ public class L1HardinQuestInstance {
 		}
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class KerenisRandomMessage extends TimerTask {
 		private final int MSGID = 7576;
 
@@ -590,21 +524,19 @@ public class L1HardinQuestInstance {
 		@Override
 		public void run() {
 			if (!isDeleteTransactionNow()) {
-				final RandomGenerator rd = RandomGeneratorFactory
-						.getSharedRandom();
-				final int i = rd.nextInt(12);
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$"
-						+ (MSGID + i), 0));
+				if (!isAlreadyGuardManDeath()) {
+					final RandomGenerator rd = RandomGeneratorFactory.getSharedRandom();
+					final int i = rd.nextInt(12);
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$" + (MSGID + i), 0));
+				} else {
+					this.cancel();
+				}
 			} else {
 				this.cancel();
 			}
 		}
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class moveWall extends TimerTask {// 壁が開き数秒で戻る
 		private final RandomGenerator _rnd = RandomGeneratorFactory.newRandom();
 
@@ -645,17 +577,25 @@ public class L1HardinQuestInstance {
 
 		public void begin() {
 			final Timer timer = new Timer();
-			timer.schedule(this, 3 * 1000);
+			timer.schedule(this, 6000);
 		}
 
 		@Override
 		public void run() {
 			try {
+				int cnt = 3;
 				for (L1DoorInstance wall : Lists.newArrayList(getAllDoors())) {
+					if (cnt % 4 == 0) {
+						sendShockWave();
+					}
+					if (wall.getGfxId() != WALL_GFXID) {
+						continue;
+					}
 					L1Location newLoc = findLocation(wall.getLocation());
 					removeDoor(wall);
 					addDoor(newLoc);
 					Thread.sleep(600);
+					cnt++;
 				}
 				Thread.sleep(5000);
 				// 扉の閉止を開始　パターン１　左から　２　右から
@@ -673,9 +613,12 @@ public class L1HardinQuestInstance {
 					startX1 = 32711;
 					startX2 = 32709;
 				}
-				int cnt = 0;
+				cnt = 0;
 				for (L1DoorInstance wall : Lists.newArrayList(getAllDoors())) {
 					L1Location newLoc = new L1Location();
+					if (cnt % 4 == 0) {
+						sendShockWave();
+					}
 					if (cnt % 2 == 0) {
 						newLoc.set(startX1, 32866, getMapId());
 						startX1 += val;
@@ -690,10 +633,8 @@ public class L1HardinQuestInstance {
 					cnt++;
 				}
 				Thread.sleep(20000);
+				sendMessage("$8718", 0);
 				// 8718 中央の足場は一度だけしか作動しませんのでご注意ください。
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8718",
-								0));// ブルー
 			} catch (final InterruptedException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
@@ -702,19 +643,12 @@ public class L1HardinQuestInstance {
 
 	}
 
-	/**
-	 * @author
-	 *
-	 */
 	class orcVocabulary extends TimerTask {
 		public void begin() {
 			final Timer timer = new Timer();
 			timer.schedule(this, 2 * 1000);
 		}
 
-		/*
- *
- */
 		@Override
 		public void run() {
 			try {
@@ -728,54 +662,50 @@ public class L1HardinQuestInstance {
 				loc.set(32747, 32934, getMapId());
 				final L1NpcInstance barusim = spawnOne(loc, 91335, 7);// バルシム
 				Thread.sleep(2000);
-				barusim
-						.broadcastPacket(new S_NpcChatPacket(barusim, "$7842",
-								0));// あのま、ま、魔女…お、お、俺は… 7842 バルシム
+				barusim.broadcastPacket(new S_NpcChatPacket(barusim, "$7842", 0));
+				// あのま、ま、魔女…お、お、俺は… 7842 バルシム
 				Thread.sleep(2000);
-				orc.broadcastPacket(new S_NpcChatPacket(orc, "$7848", 0));// 俺たち、魔女、殴った。
-				// 7848　オーク
+				orc.broadcastPacket(new S_NpcChatPacket(orc, "$7848", 0));
+				// 俺たち、魔女、殴った。 7848 オーク
 				Thread.sleep(2000);
-				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter,
-						"$7854", 0));// お前、出るな！ 7854　おーくF
+				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter, "$7854", 0));
+				// お前、出るな！ 7854 オークファイター
 				Thread.sleep(2000);
-				orc.broadcastPacket(new S_NpcChatPacket(orc, "$7849", 0));// すまない…
-				// 7849
+				orc.broadcastPacket(new S_NpcChatPacket(orc, "$7849", 0));
+				// すまない… 7849
 				Thread.sleep(2000);
-				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter,
-						"$7855", 0));// 俺たち、魔女、罰する！ 7855
+				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter, "$7855", 0));
+				// 俺たち、魔女、罰する！ 7855
 				Thread.sleep(2000);
-				barusim
-						.broadcastPacket(new S_NpcChatPacket(barusim, "$7843",
-								0));// お、お、俺は…魔女が…こ、こ、怖い… 7843
+				barusim.broadcastPacket(new S_NpcChatPacket(barusim, "$7843", 0));
+				// お、お、俺は…魔女が…こ、こ、怖い… 7843
 				Thread.sleep(2000);
-				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter,
-						"$7856", 0));// バルシム、ばか！お前、ここで、待つ！ 7856
+				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter, "$7856", 0));
+				// バルシム、ばか！お前、ここで、待つ！ 7856
 				Thread.sleep(2000);
-				barusim
-						.broadcastPacket(new S_NpcChatPacket(barusim, "$7844",
-								0));// バルシム、す、す、すまない！ 7844
+				barusim.broadcastPacket(new S_NpcChatPacket(barusim, "$7844", 0));
+				// バルシム、す、す、すまない！ 7844
 				Thread.sleep(2000);
-				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter,
-						"$7857", 0));// やつらに連絡したか。 7857
+				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter, "$7857", 0));
+				// やつらに連絡したか。 7857
 				Thread.sleep(2000);
-				orcArcher.broadcastPacket(new S_NpcChatPacket(orcArcher,
-						"$7851", 0));// 連絡した。すぐに来る。 7851
+				orcArcher.broadcastPacket(new S_NpcChatPacket(orcArcher, "$7851", 0));
+				// 連絡した。すぐに来る。 7851
 				Thread.sleep(2000);
-				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter,
-						"$7858", 0));// やつらが来るまで、俺たちここで状況見る。 7858
+				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter, "$7858", 0));
+				// やつらが来るまで、俺たちここで状況見る。 7858
 				Thread.sleep(2000);
-				orcArcher.broadcastPacket(new S_NpcChatPacket(orcArcher,
-						"$7852", 0));// 隊長も恐ろしいか。 7852
+				orcArcher.broadcastPacket(new S_NpcChatPacket(orcArcher, "$7852", 0));
+				// 隊長も恐ろしいか。 7852
 				Thread.sleep(2000);
-				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter,
-						"$7859", 0));// うるさい！賢い俺、戦略立てた！ 7859
+				orcFighter.broadcastPacket(new S_NpcChatPacket(orcFighter, "$7859", 0));
+				// うるさい！賢い俺、戦略立てた！ 7859
 				Thread.sleep(2000);
 				// 出口748 935
 				while (orcFighter.moveDirection(32748, 32935) != -1) {
 					if (orcFighter.getLocation().getLineDistance(
 							new Point(32748, 32935)) != 0) {
-						orcFighter.setDirectionMove(orcFighter.moveDirection(
-								32748, 32935));
+						orcFighter.setDirectionMove(orcFighter.moveDirection(32748, 32935));
 						Thread.sleep(orcFighter.getPassiSpeed());
 					} else {
 						break;
@@ -784,14 +714,13 @@ public class L1HardinQuestInstance {
 				Thread.sleep(2000);
 				orcFighter.deleteMe();
 
-				orcArcher.broadcastPacket(new S_NpcChatPacket(orcArcher,
-						"$7853", 0));// まただ…すまない… 7853
+				orcArcher.broadcastPacket(new S_NpcChatPacket(orcArcher, "$7853", 0));
+				// まただ…すまない… 7853
 				Thread.sleep(2000);
 				while (orcArcher.moveDirection(32748, 32935) != -1) {
 					if (orcArcher.getLocation().getLineDistance(
 							new Point(32748, 32935)) != 0) {
-						orcArcher.setDirectionMove(orcArcher.moveDirection(
-								32748, 32935));
+						orcArcher.setDirectionMove(orcArcher.moveDirection(32748, 32935));
 						Thread.sleep(orcArcher.getPassiSpeed());
 					} else {
 						break;
@@ -800,8 +729,8 @@ public class L1HardinQuestInstance {
 				Thread.sleep(2000);
 				orcArcher.deleteMe();
 
-				orc.broadcastPacket(new S_NpcChatPacket(orc, "$7850", 0));// 俺、出ていない。
-				// 7850
+				orc.broadcastPacket(new S_NpcChatPacket(orc, "$7850", 0));
+				// 俺、出ていない。 7850
 				Thread.sleep(2000);
 				while (orc.moveDirection(32748, 32935) != -1) {
 					if (orc.getLocation().getLineDistance(
@@ -815,23 +744,19 @@ public class L1HardinQuestInstance {
 				Thread.sleep(2000);
 				orc.deleteMe();
 
-				barusim
-						.broadcastPacket(new S_NpcChatPacket(barusim, "$7845",
-								0));// 魔女が…こ、こ、怖い… 7845
+				barusim.broadcastPacket(new S_NpcChatPacket(barusim, "$7845", 0));
+				// 魔女が…こ、こ、怖い… 7845
 				Thread.sleep(4000);
-				barusim
-						.broadcastPacket(new S_NpcChatPacket(barusim, "$7846",
-								0));// と、と、ところで…い、い、いつ行くんだ？ 7846
+				barusim.broadcastPacket(new S_NpcChatPacket(barusim, "$7846", 0));
+				// と、と、ところで…い、い、いつ行くんだ？ 7846
 				Thread.sleep(4000);
-				barusim
-						.broadcastPacket(new S_NpcChatPacket(barusim, "$7847",
-								0));// 俺は怖い。も、も、もう…ま、ま、待てない… 7847
+				barusim.broadcastPacket(new S_NpcChatPacket(barusim, "$7847", 0));
+				// 俺は怖い。も、も、もう…ま、ま、待てない… 7847
 				Thread.sleep(2000);
 				while (barusim.moveDirection(32748, 32935) != -1) {
 					if (barusim.getLocation().getLineDistance(
 							new Point(32748, 32935)) != 0) {
-						barusim.setDirectionMove(barusim.moveDirection(32748,
-								32935));
+						barusim.setDirectionMove(barusim.moveDirection(32748, 32935));
 						Thread.sleep(barusim.getPassiSpeed());
 					} else {
 						break;
@@ -839,12 +764,9 @@ public class L1HardinQuestInstance {
 				}
 				Thread.sleep(2000);
 				barusim.deleteMe();
-
 			} catch (final InterruptedException e) {
-
 				e.printStackTrace();
 			}
-
 		}
 	}
 
@@ -853,114 +775,113 @@ public class L1HardinQuestInstance {
 	 *
 	 * @throws InterruptedException
 	 */
-	/**
-	 * @author
-	 *
-	 */
 	class Preliminary extends Thread {
 		@Override
 		public void run() {
 			try {
 				Thread.sleep(2000);
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7598",
-								0));// 7598 来たか…少し待っておれ。今準備をすます。4
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7598", 0));
+				// 7598 来たか…少し待っておれ。今準備をすます。4
 				Thread.sleep(4000);
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8693",
-								0));// 8693 最終確認を始めるとするか。8
+				sendMessage(_Hardin.getName() + " : $8693", 0);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8693", 0));
+				// 8693 最終確認を始めるとするか。8
 				Thread.sleep(8000);
-				setActionHardin(0);
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8694",
-								0));// 8694 最終確認が必要ないなら[alt + 2]を押せばいい。8
+				setActionHardinDirect(0);
+				sendMessage(_Hardin.getName() + " : $8694", 0);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8694", 0));
+				// 8694 最終確認が必要ないなら[alt + 2]を押せばいい。8
 				Thread.sleep(8000);
 				if (getActionHardin() != 1) {
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$8695", 0));// 8695 ダンジョンに入ると、おまえたちの最小限の資格が試されるだろう。
+					sendMessage(_Hardin.getName() + " : $8695", 0);
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8695", 0));
+					// 8695 ダンジョンに入ると、おまえたちの最小限の資格が試されるだろう。
 					Thread.sleep(8000);
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$8696", 0));// 8696 そう難しくない相手だ。簡単にパスできると信じているぞ。
+					sendMessage(_Hardin.getName() + " : $8696", 0);
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8696", 0));
+					// 8696 そう難しくない相手だ。簡単にパスできると信じているぞ。
 					Thread.sleep(8000);
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$8697", 0));// 8697
-					// それと中にはトラップを解除したり、設置したりするための足場が用意されている。
+					sendMessage(_Hardin.getName() + " : $8697", 0);
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8697", 0));
+					// 8697 それと中にはトラップを解除したり、設置したりするための足場が用意されている。
 					Thread.sleep(8000);
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$8698", 0));// 8698 足場はできるだけわかりやすいようにしてあるつもりだが。
+					sendMessage(_Hardin.getName() + " : $8698", 0);
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8698", 0));
+					// 8698 足場はできるだけわかりやすいようにしてあるつもりだが。
 					Thread.sleep(8000);
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$8699", 0));// 8699 私の美的感覚については文句を言わないでくれ。
+					sendMessage(_Hardin.getName() + " : $8699", 0);
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8699", 0));
+					// 8699 私の美的感覚については文句を言わないでくれ。
 					Thread.sleep(8000);
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$8700", 0));// 8700 それとまぁ興味深いものも目にするだろう
+					sendMessage(_Hardin.getName() + " : $8700", 0);
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8700", 0));
+					// 8700 それとまぁ興味深いものも目にするだろう
 					// ｪ、時間に遅れないように急いだほうがいい。
 					Thread.sleep(8000);
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$8701", 0));// 8701
-					// それではくれぐれも気をつけて。悪いが安全は保証してやれないんだ。
+					sendMessage(_Hardin.getName() + " : $8701", 0);
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8701", 0));
+					// 8701 それではくれぐれも気をつけて。悪いが安全は保証してやれないんだ。
 					Thread.sleep(8000);
 				}
-				setActionHardin(0);
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8702",
-								0));// 8702* では始めるとするか？
+				setActionHardinDirect(0);
+				sendMessage(_Hardin.getName() + " : $8702", 0);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$8702", 0));
+				// 8702* では始めるとするか？
 				Thread.sleep(4000);
 				if (getActionHardin() != 1) {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_ep002"));// 10秒だけ時間をやろう
+					if (_leader.getMapId() == getMapId()) {
+						_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep002"));
+						// 10秒だけ時間をやろう
+					}
 					Thread.sleep(10000);
 				}
 
-				setActionHardin(0);// 初期化
-				_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-						"j_ep001"));
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7599",
-								0));// 7599 オリム！これでお別れじゃな。[Alt + 2]を押してみよ。
+				setActionHardinDirect(0);// 初期化
+				if (_leader.getMapId() == getMapId()) {
+					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep001"));
+				}
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7599", 0));
+				// 7599 オリム！これでお別れじゃな。[Alt + 2]を押してみよ。
 				Thread.sleep(8000);
 				if (getActionHardin() != 1) {
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$7601", 0));// 7601 オリム。しばし別れの時間をやろう。
-					setActionHardin(0);// 初期化
+					sendMessage(_Hardin.getName() + " : $7601", 0);
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7601", 0));
+					// 7601 オリム。しばし別れの時間をやろう。
+					setActionHardinDirect(0);// 初期化
 					Thread.sleep(10000);
 					for (int i = 0; i < 5; i++) {// 5回まで待つ
 						if (getActionHardin() != 1) {
-							setActionHardin(0);// 初期化
-							_Hardin.broadcastPacket(new S_NpcChatPacket(
-									_Hardin, "$7602", 0));// 7602 急ぐのじゃ。オリム。
+							setActionHardinDirect(0);// 初期化
+							sendMessage(_Hardin.getName() + " : $7602", 0);
+							_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7602", 0));
+							// 7602 急ぐのじゃ。オリム。
 							Thread.sleep(8000);
 						} else {
 							break;
 						}
 					}
 				}
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7600",
-								0));// 7600 支度が終わったようだな。オリムよ。
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7600", 0));
+				// 7600 支度が終わったようだな。オリムよ。
 				Thread.sleep(8000);
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7603",
-								0));// 7603 オリム。それではケレニスのところに送ってやろう。
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7603", 0));
+				// 7603 オリム。それではケレニスのところに送ってやろう。
 				Thread.sleep(2000);
 				// 転送 0 ,47 s
 				if (_leader.getMapId() == getMapId()) {
-					L1Teleport.teleport(_leader, 32738, 32930, getMapId(), 5,
-							true);
+					L1Teleport.teleport(_leader, 32738, 32930, getMapId(), 5, true);
 				}
 				final L1Location loc = new L1Location();
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7604",
-								0));// 7604 いいだろう。残った者も早く準備なさい。
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7604", 0));
+				// 7604 いいだろう。残った者も早く準備なさい。
 				/* 1 */
 				Thread.sleep(1000);
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7607",
-						0));// 7607 やっぱり、来たのね。オリム。
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7607", 0));
+				// 7607 やっぱり、来たのね。オリム。
 				/* 5 */
 				Thread.sleep(4000);
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7605",
-								0));// 7605 早く魔法陣に入るのじゃ！そう長くは持たんぞ。
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7605", 0));
+				// 7605 早く魔法陣に入るのじゃ！そう長くは持たんぞ。
 				/* 10 */
 				Thread.sleep(2000);
 				// 陣出現
@@ -969,12 +890,11 @@ public class L1HardinQuestInstance {
 				setSwitch(loc, 65);
 				spawnOne(loc, 91319, 0);
 				/* 12 */Thread.sleep(5000);
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7606",
-								0));// 7606 儂は一足先に目的地に行ってるからの。
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7606", 0));
+				// 7606 儂は一足先に目的地に行ってるからの。
 				Thread.sleep(4000);
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7608",
-						0));// 7608 なにかあったらわたしを守って。…なにもおきないと思うけど。
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7608", 0));
+				// 7608 なにかあったらわたしを守って。…なにもおきないと思うけど。
 				Thread.sleep(4000);
 				/* 20 */
 				// ハーディンテレポート
@@ -982,42 +902,43 @@ public class L1HardinQuestInstance {
 				loc.set(32716, 32846, getMapId());
 				spawnOne(loc, 91319, 0);
 				spawnOne(loc, 91317, 0);
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7609",
-						0));// 7609 ねぇ、退屈でしょ、なんなら話でもしてみる？
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7609", 0));
+				// 7609 ねぇ、退屈でしょ、なんなら話でもしてみる？
 				Thread.sleep(5000);
-				setActionKerenis(0);
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7610",
-						0));// 7610 わたしの話をきいてそうだと思うなら[Alt + 2]、違うと思うのなら[Alt +
-				// 4]を押すのよ。
+				setActionKerenisDirect(0);
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7610", 0));
+				// 7610 わたしの話をきいてそうだと思うなら[Alt + 2]、違うと思うのなら[Alt + 4]を押すのよ。
 				Thread.sleep(5000);
 				/* 30 */// ここは危険
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7611",
-								0));// 7611 ここは危険じゃ。よそ者が立ち入らぬよう装置を止めてくれ。
+				sendMessage(_Hardin.getName() + " : $7611", 0);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7611", 0));
+				// 7611 ここは危険じゃ。よそ者が立ち入らぬよう装置を止めてくれ。
 				Thread.sleep(2000);
 				if (getActionKerenis() == 1) {
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7561", 0));// 7561 そうそう、そんな感じ。
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7561", 0));
+					// 7561 そうそう、そんな感じ。
 				} else {
 					if (getActionKerenis() == 2) {
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7569", 0));// 7569 何？どういうこと？
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7569", 0));
+						// 7569 何？どういうこと？
 					} else {
-						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-								"$7612", 0));// 7612 ほらやり方が分かったのなら、なんか言ってみなさいよ。
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7612", 0));
+						// 7612 ほらやり方が分かったのなら、なんか言ってみなさいよ。
 					}
 				}
-				Thread.sleep(5000);
+				setActionKerenisDirect(0);
+				Thread.sleep(6000);
 				/* 37 */// 装置は～
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7613",
-								0));// 7613 装置はお前たちだけが見られるようにしておいた。頼んだぞ。
-				Thread.sleep(2000);
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7614",
-						0));// 7614 準備はいいようね。じゃあ、始めましょうか。
-				_Hardin
-						.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7615",
-								0));// 7615 早くすませてこっちにきてくれんか。
+				sendMessage(_Hardin.getName() + " : $7613", 0);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7613", 0));
+				// 7613 装置はお前たちだけが見られるようにしておいた。頼んだぞ。
+				Thread.sleep(5000);
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7614", 0));
+				// 7614 準備はいいようね。じゃあ、始めましょうか。
+				sendMessage(_Hardin.getName() + " : $7615", 0);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7615", 0));
+				// 7615 早くすませてこっちにきてくれんか。
+				sendShockWave();
 				Thread.sleep(2000);
 				/* 41 */// 扉開放--ここまでに初期処理を済ませておく
 				/* タイマーおよびスレッド開始 */
@@ -1028,7 +949,6 @@ public class L1HardinQuestInstance {
 					_krm.begin();
 				}
 			} catch (final InterruptedException e) {
-
 				e.printStackTrace();
 			}
 		}
@@ -1063,7 +983,7 @@ public class L1HardinQuestInstance {
 							cnt++;
 						}
 					}
-					L1MonsterInstance Kerenis = null;
+					//L1MonsterInstance Kerenis = null;
 					if (8 < cnt) {// 9回以上早いモードならバフォメット出現、それ以外はリーパー
 						_lunker = spawnOneMob(getLocation(), 91294);// バフォメット
 					} else {
@@ -1076,65 +996,55 @@ public class L1HardinQuestInstance {
 					/*
 					 * 7656 俺を呼んだのは誰だ！ 7657 ふふふ…ハーディン！おまえか！くはははは！
 					 */
-					_lunker.broadcastPacket(new S_NpcChatPacket(_lunker,
-							"$7656", 0));
-					Thread.sleep(1000);
-					_lunker.broadcastPacket(new S_NpcChatPacket(_lunker,
-							"$7657", 0));
+					_lunker.broadcastPacket(new S_NpcChatPacket(_lunker, "$7656", 0));
+					Thread.sleep(1500);
+					_lunker.broadcastPacket(new S_NpcChatPacket(_lunker, "$7657", 0));
 					if (!isKerenisAngry()) {// ケレニスが怒っていなければ出てくれる
-						Kerenis = spawnOneMob(loc, 91296);
+						_Kerenis = spawnOneMob(loc, 91296);
 					} else {// 怒っている場合で全て遅延処理の場合、ブラックケレニスへ
-						if (isHardMode() && (getBoneLaidStatus() == 2)) {
-							Kerenis = spawnOneMob(loc, 91295);
+						if (isHardMode()) {
+							_Kerenis = spawnOneMob(loc, 91295);
 						} else {
 							kerenisSpawn = false;
 						}
 					}
 					if (kerenisSpawn) {
-						Kerenis.tagertClear();
-						Kerenis.setTarget(_lunker);
+						_Kerenis.tagertClear();
+						_Kerenis.setTarget(_lunker);
 						_lunker.tagertClear();
-						_lunker.setTarget(Kerenis);
-						if (Kerenis.getNpcId() == 91296) {// ケレニス
+						_lunker.setTarget(_Kerenis);
+						if (_Kerenis.getNpcId() == 91296) {// ケレニス
 							/*
 							 * ちょっと遅れたかしらね。 7820 ケレニス！モンスターの意識をそらしてくれ！ 7821
 							 * 分かりました！でもすこし手間取りそう… 7822 ハーディン、力を解き放ったら何が起こるか…
 							 * 7823 あとはわしに任せるんじゃ、ケレニス。 7824
 							 */
-							Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7820", 0));
 							Thread.sleep(1500);
-							_Hardin.broadcastPacket(new S_NpcChatPacket(
-									_Hardin, "$7821", 0));
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7820", 0));
 							Thread.sleep(1500);
-							Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7822", 0));
+							_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7821", 0));
 							Thread.sleep(1500);
-							Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7823", 0));
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7822", 0));
 							Thread.sleep(1500);
-							_Hardin.broadcastPacket(new S_NpcChatPacket(
-									_Hardin, "$7824", 0));
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7823", 0));
+							Thread.sleep(1500);
+							_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7824", 0));
 						} else {// ブラックウィングケレニス
 							/*
 							 * オリム！覚悟は出来たかしら？ 7815 わたしのエモノを横取りしたのはだれ！？ 7816
 							 * オリム、何があったんじゃ！？ 7817 まずはあなたが相手よ！ 7818 この生意気な女め！
 							 * 7819
 							 */
-							Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7815", 0));
 							Thread.sleep(1500);
-							Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7816", 0));
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7815", 0));
 							Thread.sleep(1500);
-							_Hardin.broadcastPacket(new S_NpcChatPacket(
-									_Hardin, "$7817", 0));
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7816", 0));
 							Thread.sleep(1500);
-							Kerenis.broadcastPacket(new S_NpcChatPacket(
-									_Kerenis, "$7818", 0));
+							_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7817", 0));
 							Thread.sleep(1500);
-							_lunker.broadcastPacket(new S_NpcChatPacket(
-									_lunker, "$7819", 0));
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7818", 0));
+							Thread.sleep(1500);
+							_lunker.broadcastPacket(new S_NpcChatPacket(_lunker, "$7819", 0));
 							Thread.sleep(1500);
 						}
 					}
@@ -1174,11 +1084,7 @@ public class L1HardinQuestInstance {
 
 	private boolean _kerenisAngry;
 
-	private static Logger _log = Logger
-			.getLogger(L1HardinQuestInstance.class.getName());
-
-	// private final ArrayList<L1PcInstance> _members = new
-	// ArrayList<L1PcInstance>();
+	private static final Logger _log = Logger.getLogger(L1HardinQuestInstance.class.getName());
 
 	private boolean _alreadyFirstSwitch;
 
@@ -1186,7 +1092,7 @@ public class L1HardinQuestInstance {
 
 	private boolean _alreadyPortal;
 
-	private boolean _hintAlready;
+	//private boolean _hintAlready;
 
 	private int _curRound;
 
@@ -1249,8 +1155,7 @@ public class L1HardinQuestInstance {
 
 	private void addDoor(L1Location loc) {
 		// XXX keeperId = 1とすることで開閉を防ぐ。
-		L1DoorInstance door = DoorTable.getInstance().createDoor(0, _wallGfx,
-				loc, 0, 1, false);
+		L1DoorInstance door = DoorTable.getInstance().createDoor(0, _wallGfx, loc, 0, 1, false);
 		getAllDoors().add(door);
 	}
 
@@ -1267,12 +1172,7 @@ public class L1HardinQuestInstance {
 	 * @param groupId
 	 */
 	private void doSpawnGroup(L1Location loc, int npcId, int groupId) {
-		final L1NpcInstance mob = new L1NpcInstance(NpcTable.getInstance()
-				.getTemplate(npcId));
-		if (mob == null) {
-			_log.warning("mob == null");
-			return;
-		}
+		final L1NpcInstance mob = new L1NpcInstance(NpcTable.getInstance().getTemplate(npcId));
 
 		mob.setId(IdFactory.getInstance().nextId());
 		mob.setHeading(5);
@@ -1296,96 +1196,54 @@ public class L1HardinQuestInstance {
 		L1HardinQuest.getInstance().resetActiveMaps(getMapId());// 該当マップを未使用に
 	}
 
-	/**
-	 * @return
-	 */
 	private int getActionHardin() {
 		return _actionHardin;
 	}
 
-	/**
-	 * @return
-	 */
 	private int getActionKerenis() {
 		return _actionKerenis;
 	}
 
-	/**
-	 * @return
-	 */
 	private ArrayList<L1DoorInstance> getAllDoors() {
 		return _doors;
 	}
 
-	/**
-	 * @return
-	 */
 	private int getBoneLaidStatus() {// 1なら早い、２なら遅い
 		return getSwitchStatus(_switchStatus.length - 1);
 	}
 
-	/**
-	 * @return
-	 */
 	private int getCurRound() {
 		return _curRound;
 	}
 
-	/**
-	 * @return
-	 */
 	L1Location getLocation() {
 		return _location;
 	}
 
-	/**
-	 * @return
-	 */
 	public short getMapId() {
 		return _mapId;
 	}
 
-	/**
-	 * @return
-	 */
 	private int[] getOnPlayerList() {
 		return _onPlayerList;
 	}
 
-	/**
-	 * @param i
-	 * @return
-	 */
 	private int getRandomRuneEffect(int i) {
 		return _randomRuneEffect[i];
 	}
 
-	/**
-	 * @return
-	 */
 	private boolean getReceiveAllAction() {
 		return _receiveAllAction;
 	}
 
-	/**
-	 * @param i
-	 * @return
-	 */
 	private int getRoundStatus(int i) {
 		return _roundStatus[i];
 	}
 
-	/**
-	 * @param x
-	 * @return
-	 */
 	private int getSwitchStatus(int x) {
 		return _switchStatus[x];
 	}
 
-	/**
-	 * @return
-	 */
 	private ArrayList<L1TrapInstance> getTrapList() {
 		return _trapList;
 	}
@@ -1394,130 +1252,135 @@ public class L1HardinQuestInstance {
 	 * @throws InterruptedException
 	 */
 	public void guardmanDeath() throws InterruptedException {
-		if (getSwitchStatus(3) == 0) {
-			setSwitchStatus(3, 1);
-		}
-		setAlreadyGuardManDeath(true);
-		_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep008"));
-		// まずはオリムだけ先に送ってあげるわ、いってらっしゃい。 オリム、準備がよければハーディンのところに送っちゃうよ。
-		_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7643", 0));// 7643
-		// オリム、準備がよければハーディンのところに送っちゃうよ。
-		if (getReceiveAllAction()) {
-			Thread.sleep(8000);
-			if (getActionKerenis() == 1) {
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7567",
-						0));// 7567 わたしもすぐ行くわ。
-			} else {
-				if (getActionKerenis() == 2) {
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7575", 0));// 7575 オリムは言うとおりにしててよ。
-				} else {// 0
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7646", 0));// 7646 なにぼーっとしてんのよ！さっさと送っちゃうわよ！
-				}
-			}
-		} else {// 全て無視
-			_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7644", 0));// 7644
-			// オリムのくせに生意気！
-			Thread.sleep(3000);
-			if (getActionKerenis() == 1) {
-				setKerenisAngry(true);
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7568",
-						0));// yes 7568 もうやめてよ…
-
-			} else {
-				// musi 7645 バイバイ！
-				if (getActionKerenis() == 0) {
-					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis,
-							"$7645", 0));
-				}
-			}
-		}
-		Thread.sleep(2500);
-		L1Teleport.teleport(_leader, 32718, 32849, getMapId(), 5, true);
-		// killTimer();
-		// _Kerenis.deleteMe();
-		// _Kerenis=null;
-		/*
-		 * 7647 オリムも来たようじゃな。それでは儀式が始まるぞ。こっちじゃ。 7648 早くせんと扉が閉まってしまうぞ！急ぐのじゃ。 7649
-		 * ああ、時間切れじゃ。悪い気が地上に流れないように防がなくては。
-		 */
-		sendMessage(7647, 0);
-		Thread.sleep(4000);
-		sendMessage(7648, 0);
-		Thread.sleep(3000);
-		sendMessage(7649, 0);
-		Thread.sleep(5000);
-		if (!isDeleteTransactionNow()) {
-			_hq = new HqThread();
-			GeneralThreadPool.getInstance().execute(_hq);
-		}
-
+		GuardmanDeath temp = new GuardmanDeath();
+		temp.begin();
 	}
+	class GuardmanDeath extends TimerTask {
+		public void begin() {
+			final Timer timer = new Timer();
+			timer.schedule(this, 0);
+		}
 
+		@Override
+		public void run() {
+			if (!isDeleteTransactionNow()) {// 念のため
+				try {
+					if (getSwitchStatus(3) == 0) {
+						setSwitchStatus(3, 1);
+					}
+					setAlreadyGuardManDeath(true);
+					if (_leader.getMapId() == getMapId()) {
+						_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep008"));
+					}
+					// まずはオリムだけ先に送ってあげるわ、いってらっしゃい。
+					_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7643", 0));// 7643
+					// オリム、準備がよければハーディンのところに送っちゃうよ。
+					if (getReceiveAllAction()) {
+						setActionKerenisDirect(0);
+						Thread.sleep(8000);
+						if (getActionKerenis() == 1) {
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7567", 0));
+							// 7567 わたしもすぐ行くわ。
+						} else {
+							if (getActionKerenis() == 2) {
+								_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7575", 0));
+								// 7575 オリムは言うとおりにしててよ。
+							} else {// 0
+								_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7646", 0));
+								// 7646 なにぼーっとしてんのよ！さっさと送っちゃうわよ！
+							}
+						}
+					} else {// 全て無視
+						_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7644", 0));// 7644
+						// オリムのくせに生意気！
+						setActionKerenisDirect(0);
+						Thread.sleep(3000);
+						if (getActionKerenis() == 1) {
+							setKerenisAngry(true);
+							_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7568", 0));
+							// yes 7568 もうやめてよ…
+						} else {
+							// musi 7645 バイバイ！
+							if (getActionKerenis() == 0) {
+								_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7645", 0));
+							}
+						}
+					}
+					Thread.sleep(2500);
+					if(_leader != null){
+						if(_leader.getMapId()==getMapId()){
+							L1Teleport.teleport(_leader, 32718, 32849, getMapId(), 5, true);
+						}
+					}
+					/*
+					 * 7647 オリムも来たようじゃな。それでは儀式が始まるぞ。こっちじゃ。 7648 早くせんと扉が閉まってしまうぞ！急ぐのじゃ。 7649
+					 * ああ、時間切れじゃ。悪い気が地上に流れないように防がなくては。
+					 */
+					sendMessage("$7647", 0);
+					Thread.sleep(4000);
+					sendMessage("$7648", 0);
+					Thread.sleep(4000);
+					sendMessage("$7649", 0);
+					sendShockWave();
+					Thread.sleep(5000);
+					if (!isDeleteTransactionNow()) {
+						_hq = new HqThread();
+						GeneralThreadPool.getInstance().execute(_hq);
+					}
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+			}
+			this.cancel();
+		}
+	}
+	
 	GuestSpawn _gs;
 
 	class GuestSpawn extends Thread {
-		/*
-		 * (non-Javadoc)
-		 *
-		 * @see java.lang.Thread#run()
-		 */
 		@Override
 		public void run() {
 			try {
+				sendShockWave();
 				final L1Location loc = new L1Location();
 				loc.set(32707, 32858, getMapId());
 				if (isHardMode()) {
 					L1NpcInstance Mob = null;
 					if (isKerenisAngry()) {// バルログ
 						Mob = spawnOne(loc, 91344, 0);
-
-						Mob
-								.broadcastPacket(new S_NpcChatPacket(Mob,
-										"$7694", 0));// 7694 全ては計画通り。ふっふっふ…
+						Mob.broadcastPacket(new S_NpcChatPacket(Mob, "$7694", 0));
+						// 7694 全ては計画通り。ふっふっふ…
 						Thread.sleep(1000);
-						Mob
-								.broadcastPacket(new S_NpcChatPacket(Mob,
-										"$7695", 0));// 7695
+						Mob.broadcastPacket(new S_NpcChatPacket(Mob, "$7695", 0));// 7695
 						// これもすべてあのお方の計画に含まれているからな…
 						Thread.sleep(1000);
-						Mob
-								.broadcastPacket(new S_NpcChatPacket(Mob,
-										"$7709", 0));// 7709
+						Mob.broadcastPacket(new S_NpcChatPacket(Mob, "$7709", 0));// 7709
 						// 疑念は消えないと思うが、あのウィザードがお前たちに猶予を与えるとは思えん。ククク。
 						Thread.sleep(1000);
-						_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-								"$7677", 0));// 7677
+						_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7677", 0));// 7677
 						// さあ、早く！脱出するんじゃ！熱気で肺が焼けてしまう前に！
-
-					} else {//
+					} else {
 						Mob = spawnOne(loc, 91343, 0);
-						Mob
-								.broadcastPacket(new S_NpcChatPacket(Mob,
-										"$7663", 0));// 7663
+						Mob.broadcastPacket(new S_NpcChatPacket(Mob, "$7663", 0));// 7663
 						// 諸君、ご苦労！期待以上の成果だ。クククク…
 						Thread.sleep(1000);
-						Mob
-								.broadcastPacket(new S_NpcChatPacket(Mob,
-										"$7664", 0));// 7664
+						Mob.broadcastPacket(new S_NpcChatPacket(Mob, "$7664", 0));// 7664
 						// ケレニスまで気絶させるとは…こりゃおどろいたな！ククク。
 						Thread.sleep(1000);
-						Mob
-								.broadcastPacket(new S_NpcChatPacket(Mob,
-										"$7665", 0));// 7665
+						Mob.broadcastPacket(new S_NpcChatPacket(Mob, "$7665", 0));// 7665
 						// 気になることはいっぱいあるだろうが、あのウィザードはお前たちに時間をくれないだろう！ククク。
 						Thread.sleep(1000);
-						_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-								"$7837", 0));// お前たち早く逃げるのじゃ！この領域を封印する！ 7837
+						_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7837", 0));
+						// お前たち早く逃げるのじゃ！この領域を封印する！ 7837
 					}
 
 					Thread.sleep(1000);
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$7838", 0));// 南口を塞ぐ！急ぐのじゃ！ 7838
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7838", 0));
+					// 南口を塞ぐ！急ぐのじゃ！ 7838
 					Thread.sleep(1000);
-					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin,
-							"$7839", 0));// 脱出口は東の方角じゃ！急げ！ 7839
+					_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7839", 0));
+					// 脱出口は東の方角じゃ！急げ！ 7839
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -1528,29 +1391,35 @@ public class L1HardinQuestInstance {
 	/*
 	 * 初期設定をする
 	 */
-
 	private void init() {
 		setActive(true);
 		// 1400000 過去話せる島-フィールド 1 91297 32741 32930 0 0 6 0 9000 0
 		_location = new L1Location(32707, 32846, getMapId());
 		_switchStatus = new int[4];
 		_roundStatus = new int[12];
-		_randomRuneEffect = new int[5];
+		_randomRuneEffect = new int[9];
 		_doors = new ArrayList<L1DoorInstance>();
-		for (int i = 0; i < _randomRuneEffect.length; i++) {
-			setRandomRuneEffect(i, -1);
-		}
 		final RandomGenerator rd = RandomGeneratorFactory.getSharedRandom();
 		int value = 0;
+		int[] tmp = new int[4];
 		boolean find = false;
 		setRandomRuneEffect(0, value);// 0番目を0に設定
-		for (int i = 1; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			while (!find) {
 				value = rd.nextInt(4) + 1;
-				find = serchRandomRuneEffect(value);
+				find = searchRandomRuneEffect(value, tmp);
 			}
-			setRandomRuneEffect(i, value);
+			tmp[i] = value;
 			find = false;
+		}
+		for (int i = 0; i < 4; i++) {
+			if (rd.nextInt(2) == 1) {
+				setRandomRuneEffect(i * 2 + 1, (tmp[i] - 1) * 2 + 1);
+				setRandomRuneEffect(i * 2 + 2, (tmp[i] - 1) * 2 + 2);
+			} else {
+				setRandomRuneEffect(i * 2 + 1, (tmp[i] - 1) * 2 + 2);
+				setRandomRuneEffect(i * 2 + 2, (tmp[i] - 1) * 2 + 1);
+			}
 		}
 		final L1Location loc = new L1Location();
 		loc.set(32742, 32930, getMapId());
@@ -1559,10 +1428,6 @@ public class L1HardinQuestInstance {
 		loc.set(32733, 32724, getMapId());
 		// 魔法陣91320
 		_Hardin = spawnOne(loc, 91330, 6);// テレポート後 32716 32846
-
-		// spawnOne(loc,91340,6);
-		// 81167 光
-
 		loc.set(32684, 32817, getMapId());
 		spawnOne(loc, 81167, 0);
 		loc.set(32732, 32789, getMapId());
@@ -1571,7 +1436,6 @@ public class L1HardinQuestInstance {
 		spawnOne(loc, 81167, 0);
 		loc.set(32667, 32874, getMapId());
 		spawnOne(loc, 81167, 0);
-
 		loc.set(32729, 32854, getMapId());
 		spawnOne(loc, 81167, 0);
 		// 玉
@@ -1612,8 +1476,8 @@ public class L1HardinQuestInstance {
 		loc.set(32800, 32873, getMapId());
 		spawnOne(loc, 91339, 0);
 
-		loc.set(32802, 32868, getMapId());
-		spawnOne(loc, 91338, 0);
+		//loc.set(32802, 32868, getMapId());
+		//spawnOne(loc, 91338, 0);
 
 		/* トラップ追加 */
 
@@ -1678,70 +1542,55 @@ public class L1HardinQuestInstance {
 
 		loc.set(32785, 32871, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32725, 32789, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32745, 32813, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32686, 32790, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32664, 32813, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32669, 32850, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32683, 32813, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32715, 32810, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32745, 32789, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32784, 32795, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32805, 32797, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		loc.set(32792, 32828, getMapId());
 		temp = rd.nextInt(7) + mobGroupIdFirst;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
-		// loc.set(32748,32847,getMapId());
-
 		loc.set(32775, 32846, getMapId());
 		temp = 77;
-		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp)
-				.getLeaderId();
+		mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(temp).getLeaderId();
 		doSpawnGroup(loc, mobGroupLeaderId, temp);
 		/* ハーディンの日記1~10 */
 		final int diaryFirstId = 50008;
@@ -1755,11 +1604,29 @@ public class L1HardinQuestInstance {
 						diaryFirstId + rd.nextInt(10), 1);
 			}
 		}
-		/* ドア */
+
 		if (getMapId() != 9000) {
+			// ドア
 			for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
-				if (door.getMapId() == 9000) {// GFXIDの指定無し
-					// addDoor(door,door.getGfxId());
+				if (door.getMapId() == 2) {// TIC2Fのドア
+					if (door.getX() == 32684 && door.getY() == 32850) {
+						continue;
+					}
+					L1DoorGfx gfx = L1DoorGfx.findByGfxId(door.getGfxId());
+					L1DoorInstance createDoor = DoorTable.getInstance().createDoor(0, gfx,
+							new L1Location(door.getX(), door.getY(), getMapId()), 0, 0, false);
+				}
+			}
+			// 炎
+			for (L1Object obj : L1World.getInstance().getObject()) {
+				if (obj.getMapId() == 2) {
+					if (obj instanceof L1FieldObjectInstance) {
+						if (((L1FieldObjectInstance) obj).getNpcId() == 91269) {
+							continue;
+						}
+						spawnOne(new L1Location(obj.getX(), obj.getY(), getMapId()),
+								((L1FieldObjectInstance) obj).getNpcId(), 0);
+					}
 				}
 			}
 		}
@@ -1782,71 +1649,44 @@ public class L1HardinQuestInstance {
 	/**
 	 * @return 入場可能～競技終了まではtrue,それ以外はfalseを返す。
 	 */
-	/**
-	 * @return
-	 */
 	public boolean isActive() {
 		return _active;
 	}
 
-	/**
-	 * @return
-	 */
 	public boolean isAlreadyFirstSwitch() {
 		return _alreadyFirstSwitch;
 	}
 
-	/**
-	 * @return
-	 */
 	private boolean isAlreadyGuardManDeath() {
 		return _alreadyGuardManDeath;
 	}
 
-	/**
-	 * @return
-	 */
 	public boolean isAlreadyPortal() {
 		return _alreadyPortal;
 	}
 
-	/**
-	 * @return
-	 */
 	public boolean isAlreadySecondSwitch() {
 		return _alreadySecondSwitch;
 	}
 
-	/**
-	 * @return
-	 */
 	private boolean isBlackRuneCreated() {
 
 		return _blackRune;
 	}
 
-	/**
-	 * @return
-	 */
 	private boolean isBlackRuneTrodAlready() {
 
 		return _BlackRuneTrodAlready;
 	}
 
-	/**
-	 * @return
-	 */
 	public boolean isDeleteTransactionNow() {
 		return _deleteTransactionNow;
 	}
 
-	/**
-	 * @return
-	 */
 	private boolean isHardMode() {
 		boolean flag = true;
 		for (int n = 0; n < _switchStatus.length - 1; n++) {
-			if (getSwitchStatus(n) != 1) {// 1=早い
+			if (getSwitchStatus(n) != 2) {// 2=遅い
 				flag = false;
 				break;
 			}
@@ -1854,9 +1694,6 @@ public class L1HardinQuestInstance {
 		return flag;
 	}
 
-	/**
-	 * @return
-	 */
 	private boolean isKerenisAngry() {
 		return _kerenisAngry;
 	}
@@ -1962,8 +1799,8 @@ public class L1HardinQuestInstance {
 				for (L1Object obj : L1World.getInstance().getVisiblePoint(
 						getLocation(), 15)) {
 					if (obj instanceof L1MonsterInstance) {
-						if (((L1MonsterInstance) obj).getNpcId() == 91295
-								|| ((L1MonsterInstance) obj).getNpcId() == 91296) {
+						if (((L1MonsterInstance) obj).getNpcId() == 91290
+								|| ((L1MonsterInstance) obj).getNpcId() == 91294) {
 							if (!((L1MonsterInstance) obj).isDead()) {
 								find = true;
 							}
@@ -1972,14 +1809,15 @@ public class L1HardinQuestInstance {
 					}
 				}
 				if (find) {// 死んでいない
-
+					BossEndTalks bet = new BossEndTalks(1, _Hardin, _Kerenis);
+					bet.begin();
 				} else {// 死亡済み
 					if (guestSpawn) {
 						_gs = new GuestSpawn();
 						GeneralThreadPool.getInstance().execute(_gs);
-						_mw = new moveWall();
-						_mw.begin();
 					}
+					_mw = new moveWall();
+					_mw.begin();
 				}
 			} else {// バフォ　リーパー
 				boolean find = false;
@@ -1996,23 +1834,45 @@ public class L1HardinQuestInstance {
 					}
 				}
 				if (find) {// 死んでいない
-
+					BossEndTalks bet = new BossEndTalks(2, _Hardin, _Kerenis);
+					bet.begin();
 				} else {// 死亡済み
 					if (guestSpawn) {
 						_gs = new GuestSpawn();
 						GeneralThreadPool.getInstance().execute(_gs);
-						_mw = new moveWall();
-						_mw.begin();
 					}
+					_mw = new moveWall();
+					_mw.begin();
 				}
 			}
 		} else {// 1匹の場合は検索の必要無し
 			if (guestSpawn) {
 				_gs = new GuestSpawn();
 				GeneralThreadPool.getInstance().execute(_gs);
-				_mw = new moveWall();
-				_mw.begin();
 			}
+			_mw = new moveWall();
+			_mw.begin();
+		}
+	}
+	
+	private void setItemEffect(L1ItemInstance item, int type){
+		if(type == 0){
+			item.setIsHaste(true) ;
+		}else if(type == 1){
+			item.setMr(5) ;
+		}else if(type == 2){
+			item.setHitModifier(1) ;
+		}else if(type == 3){
+			item.setBowHitModifier(1) ;
+		}else if(type == 4){
+			item.setDmgModifier(1) ;
+			item.setBowDmgModifier(1);
+		}else if(type == 5){
+			item.setSp(1) ;
+		}else if(type == 6){
+			item.setHpr(1) ;
+		}else if(type == 7){
+			item.setMpr(1) ; ;
 		}
 	}
 
@@ -2037,53 +1897,47 @@ public class L1HardinQuestInstance {
 		if (isBlackRuneTrodAlready()) {
 			return;
 		}
+		sendShockWave();
 		setBlackRuneTrodAlready(true);
-		final int[] itemlist = { 40002, 40003, 40002, 40003, 40002, 40003,
-				40002, 40003 };
 		final int mapId = getMapId();
-		int cnt = 0;
-		int starCount = 0;// オプション。星を付加する　未実装
+		int starItem = 0;// オプション。星を付加する　未実装
+		int player_cnt = 0;
 		for (int i = 0; i < getOnPlayerList().length; i++) {
 			if (getOnPlayerList()[i] != 0) {
-				starCount++;
+				player_cnt++;
 			}
 		}
+		
+		if (player_cnt != 0) {
+			if(player_cnt <= 4){//4以下は四つ星
+				starItem = 21156;
+			}else if(player_cnt == 5){
+				starItem = 21157;
+			}else if(player_cnt == 6){
+				starItem = 21158;
+			}else if(player_cnt >= 7){
+				starItem = 21159;
+			}
+		}
+		
 		final L1Location loc = new L1Location(32802, 32868, mapId);// 黒のルーン
+		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
+			if (obj instanceof L1PcInstance) {
+				L1ItemInstance item = L1World.getInstance().getInventory(loc).storeItem(starItem,1);//取得条件不明
+				final RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
+				final int rnd = random.nextInt(8);
+				setItemEffect(item, rnd);//最後に踏む人が得るタリスマンの条件不明のためランダム
+			}
+		}
+		
+		loc.set(32806, 32863, mapId);
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
 			if (obj instanceof L1PcInstance) {
 				for (int i = 0; i < getOnPlayerList().length; i++) {
 					if (obj.getId() == getOnPlayerList()[i]) {
-						final int effectNum = (int) Math.floor((double) i / 2) + 1;
-						int item;
-						final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-						if (flag == 1) {// 奇数
-							item = itemlist[getRandomRuneEffect((effectNum) - 1)
-									* 2
-									+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-						} else {// 偶数
-							item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
-						}
-						L1World.getInstance().getInventory(loc).storeItem(item,
-								1);
+						L1ItemInstance item = L1World.getInstance().getInventory(loc).storeItem(starItem, 1);
+						setItemEffect(item,getRandomRuneEffect(i + 1) - 1);
 					}
-				}
-			}
-		}
-		loc.set(32806, 32863, mapId);
-		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
-			if (obj instanceof L1PcInstance) {
-				if (obj.getId() == getOnPlayerList()[cnt]) {
-					final int effectNum = (int) Math.floor((double) cnt / 2) + 1;
-					int item;
-					final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-					if (flag == 1) {// 奇数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1)
-								* 2
-								+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-					} else {// 偶数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
-					}
-					L1World.getInstance().getInventory(loc).storeItem(item, 1);
 				}
 			}
 		}
@@ -2091,39 +1945,24 @@ public class L1HardinQuestInstance {
 		loc.set(32808, 32864, mapId);
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
 			if (obj instanceof L1PcInstance) {
-				if (obj.getId() == getOnPlayerList()[cnt]) {
-					final int effectNum = (int) Math.floor((double) cnt / 2) + 1;
-					int item;
-					final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-					if (flag == 1) {// 奇数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1)
-								* 2
-								+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-					} else {// 偶数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
+				for (int i = 0; i < getOnPlayerList().length; i++) {
+					if (obj.getId() == getOnPlayerList()[i]) {
+						L1ItemInstance item =  L1World.getInstance().getInventory(loc).storeItem(starItem, 1);
+						setItemEffect(item,getRandomRuneEffect(i + 1) - 1);
 					}
-					L1World.getInstance().getInventory(loc).storeItem(item, 1);
-				}
 
+				}
 			}
 		}
 
-		cnt++;
 		loc.set(32800, 32864, mapId);
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
 			if (obj instanceof L1PcInstance) {
-				if (obj.getId() == getOnPlayerList()[cnt]) {
-					final int effectNum = (int) Math.floor((double) cnt / 2) + 1;
-					int item;
-					final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-					if (flag == 1) {// 奇数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1)
-								* 2
-								+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-					} else {// 偶数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
+				for (int i = 0; i < getOnPlayerList().length; i++) {
+					if (obj.getId() == getOnPlayerList()[i]) {
+						L1ItemInstance item =  L1World.getInstance().getInventory(loc).storeItem(starItem, 1);
+						setItemEffect(item,getRandomRuneEffect(i + 1) - 1);
 					}
-					L1World.getInstance().getInventory(loc).storeItem(item, 1);
 				}
 			}
 		}
@@ -2131,38 +1970,23 @@ public class L1HardinQuestInstance {
 		loc.set(32799, 32866, mapId);
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
 			if (obj instanceof L1PcInstance) {
-				if (obj.getId() == getOnPlayerList()[cnt]) {
-					final int effectNum = (int) Math.floor((double) cnt / 2) + 1;
-					int item;
-					final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-					if (flag == 1) {// 奇数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1)
-								* 2
-								+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-					} else {// 偶数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
+				for (int i = 0; i < getOnPlayerList().length; i++) {
+					if (obj.getId() == getOnPlayerList()[i]) {
+						L1ItemInstance item =  L1World.getInstance().getInventory(loc).storeItem(starItem, 1);
+						setItemEffect(item,getRandomRuneEffect(i + 1) - 1);
 					}
-					L1World.getInstance().getInventory(loc).storeItem(item, 1);
 				}
 			}
 		}
 
-		cnt++;
 		loc.set(32807, 32870, mapId);
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
 			if (obj instanceof L1PcInstance) {
-				if (obj.getId() == getOnPlayerList()[cnt]) {
-					final int effectNum = (int) Math.floor((double) cnt / 2) + 1;
-					int item;
-					final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-					if (flag == 1) {// 奇数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1)
-								* 2
-								+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-					} else {// 偶数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
+				for (int i = 0; i < getOnPlayerList().length; i++) {
+					if (obj.getId() == getOnPlayerList()[i]) {
+						L1ItemInstance item =  L1World.getInstance().getInventory(loc).storeItem(starItem, 1);
+						setItemEffect(item,getRandomRuneEffect(i + 1) - 1);
 					}
-					L1World.getInstance().getInventory(loc).storeItem(item, 1);
 				}
 			}
 		}
@@ -2170,38 +1994,23 @@ public class L1HardinQuestInstance {
 		loc.set(32806, 32872, mapId);
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
 			if (obj instanceof L1PcInstance) {
-				if (obj.getId() == getOnPlayerList()[cnt]) {
-					final int effectNum = (int) Math.floor((double) cnt / 2) + 1;
-					int item;
-					final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-					if (flag == 1) {// 奇数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1)
-								* 2
-								+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-					} else {// 偶数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
+				for (int i = 0; i < getOnPlayerList().length; i++) {
+					if (obj.getId() == getOnPlayerList()[i]) {
+						L1ItemInstance item =  L1World.getInstance().getInventory(loc).storeItem(starItem, 1);
+						setItemEffect(item,getRandomRuneEffect(i + 1) - 1);
 					}
-					L1World.getInstance().getInventory(loc).storeItem(item, 1);
 				}
 			}
 		}
 
-		cnt++;
 		loc.set(32798, 32872, mapId);
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
 			if (obj instanceof L1PcInstance) {
-				if (obj.getId() == getOnPlayerList()[cnt]) {
-					final int effectNum = (int) Math.floor((double) cnt / 2) + 1;
-					int item;
-					final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-					if (flag == 1) {// 奇数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1)
-								* 2
-								+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-					} else {// 偶数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
+				for (int i = 0; i < getOnPlayerList().length; i++) {
+					if (obj.getId() == getOnPlayerList()[i]) {
+						L1ItemInstance item =  L1World.getInstance().getInventory(loc).storeItem(starItem, 1);
+						setItemEffect(item,getRandomRuneEffect(i + 1) - 1);
 					}
-					L1World.getInstance().getInventory(loc).storeItem(item, 1);
 				}
 			}
 		}
@@ -2209,18 +2018,11 @@ public class L1HardinQuestInstance {
 		loc.set(32800, 32873, mapId);
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(loc, 0)) {
 			if (obj instanceof L1PcInstance) {
-				if (obj.getId() == getOnPlayerList()[cnt]) {
-					final int effectNum = (int) Math.floor((double) cnt / 2) + 1;
-					int item;
-					final int flag = (effectNum + getRandomRuneEffect(effectNum)) % 2;
-					if (flag == 1) {// 奇数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1)
-								* 2
-								+ ((effectNum + getRandomRuneEffect(effectNum)) % 2)];
-					} else {// 偶数
-						item = itemlist[getRandomRuneEffect((effectNum) - 1) * 2];
+				for (int i = 0; i < getOnPlayerList().length; i++) {
+					if (obj.getId() == getOnPlayerList()[i]) {
+						L1ItemInstance item =  L1World.getInstance().getInventory(loc).storeItem(starItem, 1);
+						setItemEffect(item,getRandomRuneEffect(i + 1) - 1);
 					}
-					L1World.getInstance().getInventory(loc).storeItem(item, 1);
 				}
 			}
 		}
@@ -2228,6 +2030,7 @@ public class L1HardinQuestInstance {
 		/*
 		 * 8719 中央の足場が作動して報酬が現われました。
 		 */
+		sendMessage("$8719", 0);
 		Thread.sleep(30 * 1000);// 30秒後強制帰還
 		if (!isDeleteTransactionNow())
 			outPushPlayer();// end();
@@ -2238,6 +2041,7 @@ public class L1HardinQuestInstance {
 	 */
 	public void onFirstSwitch() throws InterruptedException {// 32741 32930
 		if (!isDeleteTransactionNow()) {
+			sendShockWave();
 			_kp2 = new KerenisPart2();
 			GeneralThreadPool.getInstance().execute(_kp2);
 		}
@@ -2252,6 +2056,7 @@ public class L1HardinQuestInstance {
 		loc.set(32667, 32818, getMapId());
 		spawnOne(loc, 91318, 0);//
 
+		sendMessage(_Hardin.getName() + " : $7621", 0);
 		_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7621", 0));// 7621
 		// 早くアロートラップを設置するんじゃ。簡単なことじゃろ？
 		// オークタイマー
@@ -2260,7 +2065,9 @@ public class L1HardinQuestInstance {
 		_ov.begin();
 
 		// ああっ！あのオークたちは…困ったわねぇ。オリム～お願い～ね？ またオークが来たわ！前に白く染めたやつ！オリム、頼んだわよ！
-		_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep005"));
+		if (_leader.getMapId() == getMapId()) {
+			_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep005"));
+		}
 		_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7623", 0));// //7623
 		// またオークが来たわ！前に白く染めたやつ！オリム、頼んだわよ！
 		Thread.sleep(8000);
@@ -2269,17 +2076,16 @@ public class L1HardinQuestInstance {
 			// オリムのことだから、注意ぐらいは引き付けてくれるかもね。
 		} else {
 			if (getActionKerenis() == 2) {
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7572",
-						0));// 7572 ちゃんとやってよ。オリム。
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7572", 0));
+				// 7572 ちゃんとやってよ。オリム。
 			} else {// 0
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7624",
-						0));// 7624 オリム?！なにびびってんのよ！
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7624", 0));
+				// 7624 オリム?！なにびびってんのよ！
 			}
 		}
 
 		// オーク出現
-		final int mobGroupLeaderId = MobGroupTable.getInstance()
-				.getTemplate(85).getLeaderId();
+		final int mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(85).getLeaderId();
 		doSpawnGroup(_leader.getLocation(), mobGroupLeaderId, 85);
 		// タイマーセット
 		// ランダムにMobGroupを出現させる
@@ -2295,6 +2101,7 @@ public class L1HardinQuestInstance {
 	 */
 	public void onSecondSwitch() throws InterruptedException {
 		if (!isDeleteTransactionNow()) {
+			sendShockWave();
 			_kp3 = new KerenisPart3();
 			GeneralThreadPool.getInstance().execute(_kp3);
 		}
@@ -2313,19 +2120,21 @@ public class L1HardinQuestInstance {
 		loc.set(32703, 32800, getMapId());
 		spawnOne(loc, 81167, 0);
 
-		_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7529", 0));// 7629
+		_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7629", 0));// 7629
 		// ふぅ…まだまだ余裕だけれど、急いでくれると助かるわね。
-		_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7528", 0));// 7628
+		sendMessage(_Hardin.getName() + " : $7628", 0);
+		_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7628", 0));// 7628
 		// ご苦労！次はこちらに来ることができる魔法陣を作ってくれ。さぁ急ぐんじゃ！
 		// 鬱陶しいわね、このオークたち！ハーディン様はここがオークの巣窟と分かってたのかしら。
 		// ハーディンはここがオークのなわばりって分かってたのでしょうね。
-		_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep006"));
+		if (_leader.getMapId() == getMapId()) {
+			_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep006"));
+		}
 		_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7630", 0));// 7630
 		// ハーディンはここがオークのなわばりって分かってたのでしょうね。
-
+		setActionKerenisDirect(0);
 		Thread.sleep(8000);
-		final int mobGroupLeaderId = MobGroupTable.getInstance()
-				.getTemplate(85).getLeaderId();
+		final int mobGroupLeaderId = MobGroupTable.getInstance().getTemplate(85).getLeaderId();
 		doSpawnGroup(_leader.getLocation(), mobGroupLeaderId, 85);
 		if (getActionKerenis() == 1) {
 			_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7565", 0));// 7565
@@ -2333,11 +2142,11 @@ public class L1HardinQuestInstance {
 
 		} else {
 			if (getActionKerenis() == 2) {
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7573",
-						0));// 7573 いまさら何を言ってるの？
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7573", 0));
+				// 7573 いまさら何を言ってるの？
 			} else {// 0
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7631",
-						0));// 7631 オリム?！しゃきっとしなさい！
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7631", 0));
+				// 7631 オリム?！しゃきっとしなさい！
 			}
 		}
 	}
@@ -2367,12 +2176,15 @@ public class L1HardinQuestInstance {
 		/* ワールドに新しいトラップを作成して追加する */
 		setSwitch(loc, 53);
 
-		_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7535", 0));// 7635
+		sendMessage(_Hardin.getName() + " : $7635", 0);
+		_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7635", 0));// 7635
 		// うむ！では門番を倒してこちらに来てくれ！
-		_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7536", 0));// 7636
+		_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7636", 0));// 7636
 		// や、ばいな…ちょっと集中力が切れちゃったみたい…
 		// これで終わりよ。がんばってね、オリム！ これで最後よ！頑張りなさい、オリム！
-		_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep007"));
+		if (_leader.getMapId() == getMapId()) {
+			_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_ep007"));
+		}
 		_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7637", 0));// 7637
 		// これで最後よ！頑張りなさい、オリム！
 
@@ -2384,11 +2196,11 @@ public class L1HardinQuestInstance {
 
 		} else {
 			if (getActionKerenis() == 2) {
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7574",
-						0));// 7574 もう嫌…。
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7574", 0));
+				// 7574 もう嫌…。
 			} else {// 0
-				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7638",
-						0));// 7638 オ?リ?ム?！
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7638", 0));
+				// 7638 オ?リ?ム?！
 			}
 		}
 		// 敵出現
@@ -2404,8 +2216,7 @@ public class L1HardinQuestInstance {
 		for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) // ダンジョン内に居るPCを外へ出す
 		{
 			if (pc.getMapId() == getMapId()) {
-				final RandomGenerator random = RandomGeneratorFactory
-						.getSharedRandom();
+				final RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
 				final int rndx = random.nextInt(4);
 				final int rndy = random.nextInt(4);
 				final int locx = 32587 + rndx;
@@ -2436,25 +2247,14 @@ public class L1HardinQuestInstance {
 						L1World.getInstance().removeVisibleObject(obj);
 						L1World.getInstance().removeObject(obj);
 					} else if (obj instanceof L1ItemInstance) {
-						final L1Inventory groundInventory = L1World
-								.getInstance().getInventory(obj.getX(),
-										obj.getY(), obj.getMapId());
+						final L1Inventory groundInventory = L1World.getInstance().getInventory(
+								obj.getX(), obj.getY(), obj.getMapId());
 						groundInventory.deleteItem((L1ItemInstance) obj);
 						L1World.getInstance().removeVisibleObject(obj);
 						L1World.getInstance().removeObject(obj);
 					} else if (obj instanceof L1DoorInstance) {
-						if (obj.getMapId() == 9000) {
-							if ((((L1DoorInstance) obj).getGfxId() >= 7534)
-									&& (((L1DoorInstance) obj).getGfxId() <= 7537)) {// 移動する壁は除外
-								removeDoor((L1DoorInstance) obj);
-							} else {
-								((L1DoorInstance) obj).close();
-							}
-						} else {
-							removeDoor((L1DoorInstance) obj);
-						}
+						removeDoor((L1DoorInstance) obj);
 					} else if (obj instanceof L1NpcInstance) {
-
 						((L1NpcInstance) obj).deleteMe();
 					}
 				}
@@ -2466,7 +2266,6 @@ public class L1HardinQuestInstance {
 				}
 			}
 		} catch (final Exception e) {
-
 			e.printStackTrace();
 		}
 	}
@@ -2476,8 +2275,7 @@ public class L1HardinQuestInstance {
 	 * @param curRound
 	 * @throws InterruptedException
 	 */
-	private void selectSpawn(int pattern, int curRound)
-			throws InterruptedException {
+	private void selectSpawn(int pattern, int curRound) throws InterruptedException {
 		final int npcid[] = { 91274, 91275, 91276, 91277, 91278, 91279, 91280,
 				91281, 91282, 91283, 91284, 91285, 91286, 91287, 91288, 91289,
 				91292 };
@@ -2501,11 +2299,18 @@ public class L1HardinQuestInstance {
 		final int X[] = { 32706, 32695, 32702, 32717, 32706 };
 		final int Y[] = { 32836, 32847, 32855, 32847, 32846 };
 		final L1Location loc = new L1Location();
-		if (pattern != 1) {
+		if (pattern == 2) {
 			// if(pattern==3){
 			// startPoint=12;
 			// }else{
 			startPoint = 9;
+			endPoint = 14;
+			// }
+		} else if (pattern == 3) {
+			// if(pattern==3){
+			// startPoint=12;
+			// }else{
+			startPoint = 12;
 			endPoint = 14;
 			// }
 		} else {
@@ -2519,27 +2324,36 @@ public class L1HardinQuestInstance {
 				} else {
 					break;
 				}
+			}else if (getRoundStatus(i) == 2) {//slow
+				if (startPoint > 0) {
+					startPoint--;
+					endPoint--;
+				} else {
+					break;
+				}
+			}else{//stop case : 3
+
+			}
+
+		}
+		if (isBonusStage()) {
+			int s = random.nextInt(4);
+			for (L1PcInstance pc  :  L1World.getInstance().getAllPlayers()) {
+				if (pc.getMapId() == getMapId()) {
+					pc.sendPackets(new S_SkillSound(pc.getId(), 2028 + s));
+					pc.broadcastPacket(new S_SkillSound(pc.getId(), 2028 + s));
+				}
 			}
 		}
 		for (int i = 0; startPoint + i <= endPoint; i++) {
 			final int n = random.nextInt(5);
-			loc.set(X[n] - 3 + random.nextInt(6), Y[n] - 3 + random.nextInt(6),
-					getMapId());
+			loc.set(X[n] - 3 + random.nextInt(6), Y[n] - 3 + random.nextInt(6), getMapId());
 			if (isBonusStage()) {
-				int s = random.nextInt(4);
-				for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-					if (pc.getMapId() == getMapId()) {
-						pc.sendPackets(new S_SkillSound(pc.getId(), 2028 + s));
-						pc.broadcastPacket(new S_SkillSound(pc.getId(),
-								2028 + s));
-					}
-				}
 				// 揺れ＆意味不明な表示 WAHT THE!!
 				spawnOneMob(loc, 91337);
 
 			} else {
-				spawnOneMob(loc, npcid[startPoint
-						+ random.nextInt(endPoint - startPoint)]);
+				spawnOneMob(loc, npcid[startPoint + random.nextInt(endPoint + 1 - startPoint)]);
 			}
 			delay += 500;
 			Thread.sleep(500);
@@ -2574,13 +2388,13 @@ public class L1HardinQuestInstance {
 	 */
 	private void sendBossRoundMessage(int curRound) throws InterruptedException {
 		if (curRound / 4 > 1) {
-			sendMessage(8706, 0);// blue
-			Thread.sleep(2000);
-			sendMessage(8707, 0);// blue
+			sendMessage("$8706", 0);// blue
+			Thread.sleep(3000);
+			sendMessage("$8707", 0);// blue
 		} else {
-			sendMessage(8704, 0);// blue
-			Thread.sleep(2000);
-			sendMessage(8705, 0);// blue
+			sendMessage("$8704", 0);// blue
+			Thread.sleep(3000);
+			sendMessage("$8705", 0);// blue
 		}
 		_sb = new spawnBoss();
 		_sb.begin();
@@ -2601,29 +2415,48 @@ public class L1HardinQuestInstance {
 		 * 7650 次元の境界が不安定になった隙をついて、魑魅魍魎どもが押し寄せてきたぞい！ 7651 用意はいいか！
 		 */
 		Thread.sleep(4000);
-		sendMessage(7650, 0);
+		sendMessage("$7650", 0);
 		Thread.sleep(4000);
-		sendMessage(7651, 0);
+		sendMessage("$7651", 0);
 		Thread.sleep(4000);
 	}
 
 	/**
-	 * クエストに参加しているプレイヤーへメッセージ(S_ServerMessage)を送信する。
-	 * グリーンメッセージのオペコードが不明のためブルーメッセージで対応
+	 * クエストに参加しているプレイヤーへメッセージ(S_GreenMessage)を送信する。
 	 *
-	 * @param nameId
-	 *            送信するnameId
+	 * @param s
+	 *            送信する文字列
 	 * @param cases
 	 *            送信する範囲 0=ALL 1=リーダー 2=MAP内にいるリーダー以外の全てプレイヤー
 	 */
+	private void sendMessage(String s, int cases) {
+		if(cases==0){
+			for (final L1PcInstance pc  :  L1World.getInstance().getAllPlayers()) {
+				if (pc.getMapId() == this.getMapId()) {
+					pc.sendPackets(new S_GreenMessage(s));
+				}
+			}
+		}else if(cases==1){
+			if (_leader.getMapId() == this.getMapId()) {
+				_leader.sendPackets(new S_GreenMessage(s));
+			}
+		}else if(cases==2){
+			for (final L1PcInstance pc  :  L1World.getInstance().getAllPlayers()) {
+				if (pc.getMapId() == this.getMapId() && _leader.getId() != pc.getId()) {
+					pc.sendPackets(new S_GreenMessage(s));
+				}
+			}
+		}
+
+	}
+
 	/**
-	 * @param nameId
-	 * @param cases
+	 * クエストに参加しているプレイヤーへ画面ゆれアクションを送信する。
 	 */
-	private void sendMessage(int nameId, int cases) {
-		for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
+	private void sendShockWave() {
+		for (final L1PcInstance pc  :  L1World.getInstance().getAllPlayers()) {
 			if (pc.getMapId() == this.getMapId()) {
-				pc.sendPackets(new S_BlueMessage(166, "$" + nameId));
+				pc.sendPackets(new S_ShockWave());
 			}
 		}
 	}
@@ -2644,13 +2477,14 @@ public class L1HardinQuestInstance {
 		} else {
 			if (curRound != 12) {
 				Thread.sleep(7000);
-				sendMessage(MSGID + curRound
-						- (int) (1 + Math.floor(curRound / 4)), 0);
+				sendMessage("$" + (MSGID + curRound
+						- (int) (1 + Math.floor(curRound / 4))), 0);
 				Thread.sleep(2000);
 			} else {
-				sendMessage(7654, 0); // そろそろ大物が出てくる頃合じゃわい！
+				sendMessage("$7654", 0); // そろそろ大物が出てくる頃合じゃわい！
 				Thread.sleep(15000);
-				sendMessage(8714, 0); // 8717 最後の封印が破壊されました。[12/12]
+				sendMessage("$8717", 0); // 8717 最後の封印が破壊されました。[12/12]
+				sendShockWave();
 				Thread.sleep(2000);
 				_sb = new spawnBoss();
 				_sb.begin();
@@ -2661,7 +2495,7 @@ public class L1HardinQuestInstance {
 		 * 3番目の封印の解除が始まります。[3/12] 8711 5番目の封印の解除が始まります。[5/12] 8712
 		 * 6番目の封印の解除が始まります。[6/12] 8713 7番目の封印の解除が始まります。[7/12] 8714
 		 * 9番目の封印の解除が始まります。[9/12] 8715 10番目の封印の解除が始まります。[10/12] 8716
-		 * 11番目の封印の解除が始まります。[11/12]
+		 * 11番目の封印の解除が始まります。[11/12] 最後の封印が破壊されました。[12/12] 8717
 		 */
 	}
 
@@ -2673,7 +2507,9 @@ public class L1HardinQuestInstance {
 	 */
 	private void sendSubRoundMessage(int curSubRound) {
 		final int MSGID = 8689;
-		sendMessage(MSGID + curSubRound - 1, 0);
+		if (getCurRound() != 12) {
+			sendMessage("$" + (MSGID + curSubRound - 1), 0);
+		}
 	}
 
 	/*
@@ -2690,16 +2526,8 @@ public class L1HardinQuestInstance {
 	 *            踏まれた刻印番号 0=説明 1=北 2=西 3=東 4=南
 	 */
 	public void sendWisperWindow(int type) {
-		// if(_leader.isInParty()){
-		// for(L1PcInstance pc:_leader.getParty().getMembers()){
-		// pc.sendPackets(new S_ServerMessage(8720));
-		if (getMapId() == _leader.getMapId()) {
-			_leader.sendPackets(new S_ServerMessage(8720));// 8720
-			// ささやく風がオリムの耳の中に流れて行きます。
-		}
-		// }
-		// }
-
+		// 8720 ささやく風がオリムの耳の中に流れて行きます。
+		sendMessage("$8720",0);
 		/*
 		 * 西側の上の足場 南側の左の足場はを持っている。 東側の下の足場はを持っている。 北側の右の足場はを持っている
 		 * getRandomRuneEffect(type-1)*2+((type+getRandomRuneEffect(type))%2)
@@ -2711,25 +2539,23 @@ public class L1HardinQuestInstance {
 		 */
 		if (getMapId() == _leader.getMapId()) {
 			if (type == 0) {
-				_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-						"j_int00"));// 説明
+				_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_int00"));// 説明
 			} else {
 				final String[] EffectBase = { "$8681", "$8682", "$8685",
 						"$8686", "$8683", "$8684", "$8687", "$8688" };
-				final String[] EffectType = { EffectBase[(getRandomRuneEffect(type) - 1)
-						* 2 + ((type + getRandomRuneEffect(type)) % 2)] };
+						
 				if (type == 1) {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_int01", EffectType));// 北
+					final String[] EffectType = { EffectBase[(getRandomRuneEffect(1) - 1)]};
+					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_int01", EffectType));// 北
 				} else if (type == 2) {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_int02", EffectType));// 西
+					final String[] EffectType = { EffectBase[(getRandomRuneEffect(3) - 1)]};
+					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_int02", EffectType));// 西
 				} else if (type == 3) {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_int03", EffectType));// 東
+					final String[] EffectType = { EffectBase[(getRandomRuneEffect(6) - 1)]};
+					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_int03", EffectType));// 東
 				} else if (type == 4) {
-					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(),
-							"j_int04", EffectType));// 南
+					final String[] EffectType = { EffectBase[(getRandomRuneEffect(7) - 1)]};
+					_leader.sendPackets(new S_NpcTalkReturn(_leader.getId(), "j_int04", EffectType));// 南
 				}
 			}
 		}
@@ -2742,7 +2568,7 @@ public class L1HardinQuestInstance {
 	 *
 	 * @return モンスター数
 	 */
-	private int serchCountMonster() {
+	private int searchCountMonster() {
 		int mobCnt = 0;
 		for (final L1Object obj : L1World.getInstance().getVisiblePoint(
 				getLocation(), 13)) {
@@ -2762,10 +2588,10 @@ public class L1HardinQuestInstance {
 	 *            検査値
 	 * @return true=重複無し false=重複あり
 	 */
-	private boolean serchRandomRuneEffect(int value) {
+	private boolean searchRandomRuneEffect(int value, int[] tmp) {
 		boolean result = true;
-		for (int i = 0; i < 5; i++) {
-			if (value == getRandomRuneEffect(i)) {
+		for (int i = 0; i < tmp.length; i++) {
+			if (value == tmp[i]) {
 				result = false;
 				break;
 			}
@@ -2776,40 +2602,63 @@ public class L1HardinQuestInstance {
 	/**
 	 * ハーディン応答フラグを設定
 	 *
+	 * @param pc
 	 * @param actionCode
 	 */
-	public void setActionHardin(int actionCode) {
-
-		if (actionCode == 66) {// Alt+4
-			actionCode = 2;// 否定
-		} else {
-			if (actionCode == 69) {// Alt+2
-				actionCode = 1;// 肯定
+	public void setActionHardin(L1PcInstance pc, int actionCode) {
+		if(pc.getId() == _leader.getId()){
+			if (actionCode == 66) {// Alt+4
+				actionCode = 2;// 否定
 			} else {
-				return;// それ以外は無視
+				if (actionCode == 69) {// Alt+2
+					actionCode = 1;// 肯定
+				} else {
+					return;// それ以外は無視
+				}
 			}
+			_actionHardin = actionCode;
 		}
-		_actionHardin = actionCode;
 	}
 
 	/**
 	 * ケレニス応答フラグを設定
 	 *
+	 * @param pc
 	 * @param actionCode
 	 */
-	public void setActionKerenis(int actionCode) {
-
-		if (actionCode == 66) {// Alt+4
-			actionCode = 2;// 否定
-		} else {
-			if (actionCode == 69) {// Alt+2
-				actionCode = 1;// 肯定
+	public void setActionKerenis(L1PcInstance pc,int actionCode) {
+		if(pc.getId() == _leader.getId()){
+			if (actionCode == 66) {// Alt+4
+				actionCode = 2;// 否定
 			} else {
-				return;// それ以外は無視
+				if (actionCode == 69) {// Alt+2
+					actionCode = 1;// 肯定
+				} else {
+					return;// それ以外は無視
+				}
 			}
-		}
-		setReceiveAllAction(getReceiveAllAction() | true);
+			setReceiveAllAction(getReceiveAllAction() | true);
 
+			_actionKerenis = actionCode;
+		}
+
+	}
+
+	/**
+	 * ハーディン応答フラグを直接設定
+	 *
+	 * @param actionCode
+	 */
+	public void setActionHardinDirect(int actionCode) {
+		_actionHardin = actionCode;
+	}
+
+	/**
+	 * ケレニス応答フラグを直接設定
+	 *
+	 * @param actionCode
+	 */
+	public void setActionKerenisDirect(int actionCode) {
 		_actionKerenis = actionCode;
 	}
 
@@ -2984,8 +2833,8 @@ public class L1HardinQuestInstance {
 		rndPt.setX(0);
 		rndPt.setY(0);
 		final int span = 0;
-		final L1TrapInstance trap = new L1TrapInstance(IdFactory.getInstance()
-				.nextId(), trapTemp, loc, rndPt, span);
+		final L1TrapInstance trap = new L1TrapInstance(IdFactory.getInstance().nextId(),
+				trapTemp, loc, rndPt, span);
 		L1World.getInstance().addVisibleObject(trap);
 
 		L1WorldTraps.getInstance().addTrap(trap);
@@ -3017,8 +2866,7 @@ public class L1HardinQuestInstance {
 	 * @return L1NpcInstance 戻り値 : 成功=生成したインスタンス 失敗=null
 	 */
 	private L1NpcInstance spawnOne(L1Location loc, int npcid, int heading) {
-		final L1NpcInstance mob = new L1NpcInstance(NpcTable.getInstance()
-				.getTemplate(npcid));
+		final L1NpcInstance mob = new L1NpcInstance(NpcTable.getInstance().getTemplate(npcid));
 		if (mob == null) {
 			_log.warning("mob == null");
 			return mob;
@@ -3036,8 +2884,7 @@ public class L1HardinQuestInstance {
 		L1World.getInstance().addVisibleObject(mob);
 
 		final S_NpcPack S_NpcPack = new S_NpcPack(mob);
-		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(
-				mob)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(mob)) {
 			pc.addKnownObject(mob);
 			mob.addKnownObject(pc);
 			pc.sendPackets(S_NpcPack);
@@ -3059,8 +2906,7 @@ public class L1HardinQuestInstance {
 	 * @return L1MonsterInstance 戻り値 : 成功=生成したインスタンス 失敗=null
 	 */
 	private L1MonsterInstance spawnOneMob(L1Location loc, int npcid) {
-		final L1MonsterInstance mob = new L1MonsterInstance(NpcTable
-				.getInstance().getTemplate(npcid));
+		final L1MonsterInstance mob = new L1MonsterInstance(NpcTable.getInstance().getTemplate(npcid));
 		if (mob == null) {
 			_log.warning("mob == null");
 			return mob;
@@ -3080,8 +2926,7 @@ public class L1HardinQuestInstance {
 		L1World.getInstance().addVisibleObject(mob);
 
 		final S_NpcPack S_NpcPack = new S_NpcPack(mob);
-		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(
-				mob)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(mob)) {
 			pc.addKnownObject(mob);
 			mob.addKnownObject(pc);
 			pc.sendPackets(S_NpcPack);
@@ -3118,8 +2963,7 @@ public class L1HardinQuestInstance {
 	public void checkLeaveGame(L1PcInstance pc) {
 		// 帰還処理
 		if (pc.getMapId() == getMapId()) {
-			final RandomGenerator random = RandomGeneratorFactory
-					.getSharedRandom();
+			final RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
 			final int rndx = random.nextInt(4);
 			final int rndy = random.nextInt(4);
 			final int locx = 32587 + rndx;
@@ -3128,10 +2972,57 @@ public class L1HardinQuestInstance {
 			L1Teleport.teleport(pc, locx, locy, mapid, 5, false);
 		}
 	}
+}
 
-	public void moveWall() {
-		new moveWall().begin();
+class BossEndTalks extends TimerTask {// ボスのうち片方が死んだ場合に出力されるメッセージ
+	int _type;
+	L1NpcInstance _Hardin;
+	L1NpcInstance _Kerenis;
+	BossEndTalks(int type,L1NpcInstance Hardin,L1NpcInstance Kerenis){//
+		_type=type;
+		_Hardin=Hardin;
+		_Kerenis=Kerenis;
 	}
+	public void begin() {
+		final Timer timer = new Timer();
+		timer.schedule(this,0);
+	}
+
+	@Override
+	public void run() {
+		try {
+			if(_type==1){//バフォ生存
+				// まさか、本当にケレニスを倒せるとは！ 7833
+				// 蝶のように舞い、蜂のように刺すのじゃ！そうすればダメージも減る！ 7834
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7833", 0));
+				Thread.sleep(2000);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7834", 0));
+			}else if(_type==2){
+				// ご苦労だった。礼を言う。 7827
+				//
+				// これは…甘い血の香り… 7828
+				// ケレニス！どうしたんじゃ！？ 7829
+				// この音は…運命の車輪の…回る音… 7830
+				// ケレニスを倒すんじゃ！ 7831
+				// 後は任せろと言ったくせに… 7832
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7827", 0));
+				Thread.sleep(1000);
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7828", 0));
+				Thread.sleep(1800);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7829", 0));
+				Thread.sleep(1800);
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7830", 0));
+				Thread.sleep(1000);
+				_Hardin.broadcastPacket(new S_NpcChatPacket(_Hardin, "$7831", 0));
+				Thread.sleep(1500);
+				_Kerenis.broadcastPacket(new S_NpcChatPacket(_Kerenis, "$7832", 0));
+			}
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
+
 }
 
 /********************************** 出力タイミング不明メッセージ *********************************************/
@@ -3155,17 +3046,6 @@ public class L1HardinQuestInstance {
 // くぅ…ケレニスの力なしではダメなのか… 7825
 //
 // お前たち、猶予はそう多くない。がんばってくれ！ 7826
-//
-// ご苦労だった。礼を言う。 7827
-//
-// これは…甘い血の香り… 7828
-// ケレニス！どうしたんじゃ！？ 7829
-// この音は…運命の車輪の…回る音… 7830
-// ケレニスを倒すんじゃ！ 7831
-// 後は任せろと言ったくせに… 7832
-//
-// まさか、本当にケレニスを倒せるとは！ 7833
-// 蝶のように舞い、蜂のように刺すのじゃ！そうすればダメージも減る！ 7834
 //
 // 一体何が起こっているんじゃ！？ 7835
 // 洞窟が崩壊しているじゃと！？あと少しもってくれ！ 7836

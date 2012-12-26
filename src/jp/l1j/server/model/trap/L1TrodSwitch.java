@@ -207,14 +207,14 @@ class SwitchThread implements Runnable{
 					loc = new L1Location(32806,32863,mapId);
 					for(L1Object obj:L1World.getInstance().getVisiblePoint(loc,0)){
 						if(obj instanceof L1PcInstance){
-							onPlayerList[0]=obj.getId();
+							onPlayerList[1]=obj.getId();
 							onPc_cnt+=1;
 						}
 					}
 					loc.set(32808,32864,mapId);
 					for(L1Object obj:L1World.getInstance().getVisiblePoint(loc,0)){
 						if(obj instanceof L1PcInstance){
-							onPlayerList[1]=obj.getId();
+							onPlayerList[0]=obj.getId();
 							onPc_cnt+=1;
 						}
 					}

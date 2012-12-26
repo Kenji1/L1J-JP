@@ -2369,19 +2369,19 @@ public class L1NpcInstance extends L1Character {
 	 *
 	 * @param actioId ソーシャルアクションID
 	 */
-	public void receiveSocialAction(int actionId) {
+	public void receiveSocialAction(L1PcInstance pc, int actionId) {
 		// TODO Auto-generated method stub
 		if (getNpcId() == 91330) {// GFX不可 ハーディン
 			if (L1HardinQuest.getInstance().getActiveMaps(getMapId())
 					.isActive()) {
 				L1HardinQuest.getInstance().getActiveMaps(getMapId())
-						.setActionHardin(actionId);
+						.setActionHardin(pc, actionId);
 			}
 		} else if (getNpcId() == 91297) {// ケレニス
 			if (L1HardinQuest.getInstance().getActiveMaps(getMapId())
 					.isActive()) {
 				L1HardinQuest.getInstance().getActiveMaps(getMapId())
-						.setActionKerenis(actionId);
+						.setActionKerenis(pc, actionId);
 			}
 		}
 	}
@@ -2392,19 +2392,20 @@ public class L1NpcInstance extends L1Character {
 	 * @param npc
 	 */
 	private void doExecutionWhenNpcDied(L1NpcInstance npc) {
-		try {
-			// 秘譚
-			if (91265 <= npc.getNpcId() && 91268 >= npc.getNpcId()) {
-				if (!L1HardinQuest.getInstance().getActiveMaps(npc.getMapId())
-						.isDeleteTransactionNow()) {
-					L1HardinQuest.getInstance().getActiveMaps(npc.getMapId())
-							.guardmanDeath();
-				}
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+// 下記コードをL1MonstterInstanceに移設
+//		try {
+//			// 秘譚
+//			if (91265 <= npc.getNpcId() && 91268 >= npc.getNpcId()) {
+//				if (!L1HardinQuest.getInstance().getActiveMaps(npc.getMapId())
+//						.isDeleteTransactionNow()) {
+//					L1HardinQuest.getInstance().getActiveMaps(npc.getMapId())
+//							.guardmanDeath();
+//				}
+//			}
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	/**

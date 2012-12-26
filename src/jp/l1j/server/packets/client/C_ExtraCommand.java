@@ -53,7 +53,7 @@ public class C_ExtraCommand extends ClientBasePacket {
 		if(ACTION_Cheer>=actionId&&actionId>=ACTION_Think){
 			for(L1Object obj:L1World.getInstance().getVisibleObjects(pc)){
 				if(obj instanceof L1NpcInstance ){
-					((L1NpcInstance)obj).receiveSocialAction(actionId);
+					((L1NpcInstance)obj).receiveSocialAction(pc, actionId);
 				}
 			}
 		}

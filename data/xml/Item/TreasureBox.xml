@@ -1313,6 +1313,10 @@
 		<Item ItemId="21109" Count="1" Chance=" 3" />	<!-- ククルカン マスク -->
 		<Item ItemId="21110" Count="1" Chance=" 3" />	<!-- ククルカン シールド -->
 	</TreasureBox>
+	<!-- 時空の瓶 -->
+	<TreasureBox Type="SPECIFIC" ItemId="50006">
+		<Item ItemId="50007" Count="2" />
+	</TreasureBox>
 	<!-- ドルーガバック -->
 	<TreasureBox Type="RANDOM" ItemId="50500">
 		<Item ItemId="50501" Count="1" Chance="1"/>		<!-- ドラゴンキー -->

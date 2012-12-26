@@ -29,6 +29,7 @@ import jp.l1j.server.model.L1Character;
 import jp.l1j.server.model.L1DragonSlayer;
 import jp.l1j.server.model.L1HardinQuest;
 import jp.l1j.server.model.L1Location;
+import jp.l1j.server.model.L1MobGroupInfo;
 import jp.l1j.server.model.L1NpcTalkData;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1Teleport;
@@ -914,7 +915,23 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 	// スレッドにアクセス
 	private void doExecutionWhenNpcDied() throws InterruptedException {
-		if (getNpcId() == 91295) {// ブラックウィングケレニス
+		if (91265 <= getNpcId() && 91268 >= getNpcId()) {
+			L1MobGroupInfo mobGroupInfo = getMobGroupInfo();
+			if (mobGroupInfo != null) {
+				boolean flag=false;
+				for (L1NpcInstance mob : mobGroupInfo.getMembers()) {
+					if (!mob.isDead()) {
+						flag = true;
+						break;
+					}
+				}
+				if(!flag){
+					if (!L1HardinQuest.getInstance().getActiveMaps(getMapId()).isDeleteTransactionNow()) {
+						L1HardinQuest.getInstance().getActiveMaps(getMapId()).guardmanDeath();
+					}
+				}
+			}
+		} else if (getNpcId() == 91295) {// ブラックウィングケレニス
 			if (L1HardinQuest.getInstance().getActiveMaps(getMapId()) != null) {
 				if (!(L1HardinQuest.getInstance().getActiveMaps(getMapId())
 						.isDeleteTransactionNow())) {
