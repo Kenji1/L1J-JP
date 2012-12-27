@@ -26,6 +26,8 @@ import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.model.Instance.L1PcInstance;
 import jp.l1j.server.model.L1Spawn;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.NumberUtil;
@@ -35,6 +37,8 @@ import jp.l1j.server.utils.SqlUtil;
 public class SpawnTable {
 	private static Logger _log = Logger.getLogger(SpawnTable.class.getName());
 
+	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
+	
 	private static SpawnTable _instance;
 
 	private Map<Integer, L1Spawn> _spawntable = new HashMap<Integer, L1Spawn>();
@@ -109,7 +113,11 @@ public class SpawnTable {
 					spawnDat.setLocY1(rs.getInt("locy1"));
 					spawnDat.setLocX2(rs.getInt("locx2"));
 					spawnDat.setLocY2(rs.getInt("locy2"));
-					spawnDat.setHeading(rs.getInt("heading"));
+					int heading = rs.getInt("heading");
+					if (heading < 0 || heading > 7) {
+						heading = _random.nextInt(8);
+					}
+					spawnDat.setHeading(heading);
 					spawnDat.setMinRespawnDelay(rs.getInt("min_respawn_delay"));
 					spawnDat.setMaxRespawnDelay(rs.getInt("max_respawn_delay"));
 					spawnDat.setMapId(rs.getShort("mapid"));

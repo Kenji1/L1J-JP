@@ -21,12 +21,16 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.model.L1BossSpawn;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
 public class BossSpawnTable {
 	private static Logger _log = Logger.getLogger(BossSpawnTable.class.getName());
+	
+	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
 
 	private BossSpawnTable() {
 	}
@@ -69,7 +73,11 @@ public class BossSpawnTable {
 					spawnDat.setLocY1(rs.getInt("locy1"));
 					spawnDat.setLocX2(rs.getInt("locx2"));
 					spawnDat.setLocY2(rs.getInt("locy2"));
-					spawnDat.setHeading(rs.getInt("heading"));
+					int heading = rs.getInt("heading");
+					if (heading < 0 || heading > 7) {
+						heading = _random.nextInt(8);
+					}
+					spawnDat.setHeading(heading);
 					spawnDat.setMapId(rs.getShort("mapid"));
 					spawnDat.setRespawnScreen(rs.getBoolean("respawn_screen"));
 					spawnDat

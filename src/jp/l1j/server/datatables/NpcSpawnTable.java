@@ -26,6 +26,8 @@ import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.model.Instance.L1PcInstance;
 import jp.l1j.server.model.L1Spawn;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
@@ -37,6 +39,8 @@ public class NpcSpawnTable {
 
 	private static Logger _log = Logger.getLogger(NpcSpawnTable.class.getName());
 
+	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
+	
 	private static NpcSpawnTable _instance;
 
 	private Map<Integer, L1Spawn> _spawntable = new HashMap<Integer, L1Spawn>();
@@ -134,7 +138,11 @@ public class NpcSpawnTable {
 					l1spawn.setLocY1(0);
 					l1spawn.setLocX2(0);
 					l1spawn.setLocY2(0);
-					l1spawn.setHeading(rs.getInt("heading"));
+					int heading = rs.getInt("heading");
+					if (heading < 0 || heading > 7) {
+						heading = _random.nextInt(8);
+					}
+					l1spawn.setHeading(heading);
 					l1spawn.setMinRespawnDelay(rs.getInt("respawn_delay"));
 					l1spawn.setMapId(rs.getShort("mapid"));
 					l1spawn.setMovementDistance(rs.getInt("movement_distance"));
