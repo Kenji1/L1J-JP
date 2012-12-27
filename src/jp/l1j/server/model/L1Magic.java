@@ -593,10 +593,6 @@ public class L1Magic {
 			}
 		}
 
-		if (attr == 0) {
-			return calcMrDefense(dmg);
-		}
-
 		int charaIntelligence = 0;
 
 		if (_calcType == PC_PC || _calcType == PC_NPC) { // XXX

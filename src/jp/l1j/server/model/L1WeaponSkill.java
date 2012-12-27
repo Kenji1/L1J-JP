@@ -46,38 +46,34 @@ public class L1WeaponSkill {
 
 	private int _probability;
 
+	private int _probEnchant;
+
 	private int _fixDamage;
 
 	private int _randomDamage;
 
-	private int _area;
-
 	private int _skillId;
-
-	private int _skillTime;
 
 	private int _effectId;
 
-	private int _effectTarget; // エフェクトの対象 0:相手 1:自分
-
 	private boolean _isArrowType;
 
-	private int _attr;
+	private boolean _isMr;
 
-	public L1WeaponSkill(int weaponId, int probability, int fixDamage,
-			int randomDamage, int area, int skillId, int skillTime,
-			int effectId, int effectTarget, boolean isArrowType, int attr) {
+	private boolean _isAttrMr;
+
+	public L1WeaponSkill(int weaponId, int probability, int probEnchant,
+			int fixDamage, int randomDamage, int skillId,
+			boolean isArrowType, boolean isMr, boolean isAttrMr) {
 		_weaponId = weaponId;
 		_probability = probability;
+		_probEnchant = probEnchant;
 		_fixDamage = fixDamage;
 		_randomDamage = randomDamage;
-		_area = area;
 		_skillId = skillId;
-		_skillTime = skillTime;
-		_effectId = effectId;
-		_effectTarget = effectTarget;
 		_isArrowType = isArrowType;
-		_attr = attr;
+		_isMr = isMr;
+		_isAttrMr = isAttrMr;
 	}
 
 	public int getWeaponId() {
@@ -88,6 +84,10 @@ public class L1WeaponSkill {
 		return _probability;
 	}
 
+	public int getProbEnchant() {
+		return _probEnchant;
+	}
+
 	public int getFixDamage() {
 		return _fixDamage;
 	}
@@ -96,90 +96,92 @@ public class L1WeaponSkill {
 		return _randomDamage;
 	}
 
-	public int getArea() {
-		return _area;
-	}
-
 	public int getSkillId() {
 		return _skillId;
-	}
-
-	public int getSkillTime() {
-		return _skillTime;
 	}
 
 	public int getEffectId() {
 		return _effectId;
 	}
 
-	public int getEffectTarget() {
-		return _effectTarget;
-	}
-
 	public boolean isArrowType() {
 		return _isArrowType;
 	}
 
-	public int getAttr() {
-		return _attr;
+	public boolean isMr() {
+		return _isMr;
+	}
+
+	public boolean isAttrMr() {
+		return _isAttrMr;
 	}
 
 	public static double getWeaponSkillDamage(L1PcInstance pc, L1Character cha,
-			int weaponId) {
-		L1WeaponSkill weaponSkill = WeaponSkillTable.getInstance().getTemplate(
-				weaponId);
+			int weaponId, int weaponEnchant) {
+		L1WeaponSkill weaponSkill = WeaponSkillTable.getInstance().getTemplate(weaponId);
 		if (pc == null || cha == null || weaponSkill == null) {
 			return 0;
 		}
 
-		int chance = _random.nextInt(100) + 1;
-		if (weaponSkill.getProbability() < chance) {
+		if (cha.isFreeze()) {
+			return 0;
+		}
+
+		int rand = _random.nextInt(100) + 1;
+		int chance = weaponSkill.getProbability() + (weaponSkill.getProbEnchant() * weaponEnchant);
+		if (chance < rand) {
 			return 0;
 		}
 
 		int skillId = weaponSkill.getSkillId();
-		if (skillId != 0) {
-			L1Skill skill = SkillTable.getInstance().findBySkillId(skillId);
-			if (skill != null && skill.getTarget().equals("buff")) {
-				if (!isFreeze(cha)) { // 凍結状態orカウンターマジック中
-					cha.setSkillEffect(skillId,
-							weaponSkill.getSkillTime() * 1000);
-				}
-			}
+		if (skillId == 0) { // スキル未設定の場合
+			return 0;
 		}
 
-		int effectId = weaponSkill.getEffectId();
-		if (effectId != 0) {
+		L1Skill skill = SkillTable.getInstance().findBySkillId(skillId);
+		if (skill == null) { // スキルが無い
+			return 0;
+		}
+
+		// ■■■■■■■■■■■■■■■ 攻撃対象者へのエフェクト送信 ■■■■■■■■■■■■■■■
+		if (skill.getCastGfx() != 0) {
 			int chaId = 0;
-			if (weaponSkill.getEffectTarget() == 0) {
-				chaId = cha.getId();
-			} else {
+			if (skill.getTarget().equalsIgnoreCase("none")) {
 				chaId = pc.getId();
+			} else {
+				chaId = cha.getId();
 			}
 			boolean isArrowType = weaponSkill.isArrowType();
 			if (!isArrowType) {
-				pc.sendPackets(new S_SkillSound(chaId, effectId));
-				pc.broadcastPacket(new S_SkillSound(chaId, effectId));
+				pc.sendPackets(new S_SkillSound(chaId, skill.getCastGfx()));
+				pc.broadcastPacket(new S_SkillSound(chaId, skill.getCastGfx()));
 			} else {
 				S_UseAttackSkill packet = new S_UseAttackSkill(pc, cha.getId(),
-						effectId, cha.getX(), cha.getY(),
+						skill.getCastGfx(), cha.getX(), cha.getY(),
 						ActionCodes.ACTION_Attack, false);
 				pc.sendPackets(packet);
 				pc.broadcastPacket(packet);
 			}
 		}
 
-		double damage = 0;
-		int randomDamage = weaponSkill.getRandomDamage();
-		if (randomDamage != 0) {
-			damage = _random.nextInt(randomDamage);
-		}
-		damage += weaponSkill.getFixDamage();
+		// ■■■■■■■■■■■■■■■ ダメージ計算 ■■■■■■■■■■■■■■■
 
-		int area = weaponSkill.getArea();
+		double damage = 0;
+
+		L1Magic magic = new L1Magic(pc, cha);
+		if (weaponSkill.getFixDamage() != 0) { // 固定ダメージの場合
+			damage = weaponSkill.getFixDamage();
+			if (weaponSkill.getRandomDamage() != 0) {
+				damage += _random.nextInt(weaponSkill.getRandomDamage());
+			}
+			damage = magic.calcWeaponSkillDamage((int) damage, skill.getAttr());
+		} else { // INT依存の場合
+			damage = magic.calcMagicDamage(skillId);
+		}
+
+		int area = skill.getArea();
 		if (area > 0 || area == -1) { // 範囲の場合
-			for (L1Object object : L1World.getInstance().getVisibleObjects(cha,
-					area)) {
+			for (L1Object object : L1World.getInstance().getVisibleObjects(cha, area)) {
 				if (object == null) {
 					continue;
 				}
@@ -190,6 +192,9 @@ public class L1WeaponSkill {
 					continue;
 				}
 				if (object.getId() == cha.getId()) { // 攻撃対象はL1Attackで処理するため除外
+					continue;
+				}
+				if (((L1Character) object).isFreeze()) {
 					continue;
 				}
 
@@ -211,14 +216,23 @@ public class L1WeaponSkill {
 				}
 
 				if (object instanceof L1PcInstance) { // セーフティゾーンの場合は除外
-					if (((L1Character) cha).getZoneType() == 1) {
+					if (((L1Character) object).getZoneType() == 1) {
 						continue;
 					}
 				}
+				double dmg = 0;
+				if (weaponSkill.getFixDamage() != 0) {
+					dmg = weaponSkill.getFixDamage();
+					if (weaponSkill.getRandomDamage() != 0) {
+						dmg += _random.nextInt(weaponSkill.getRandomDamage());
+					}
+					dmg = new L1Magic(pc, (L1Character) object)
+									.calcWeaponSkillDamage((int) damage, skill.getAttr());
+				} else {
+					dmg = new L1Magic(pc, (L1Character) object).calcMagicDamage(skillId);
+				}
 
-				damage = calcDamageReduction(pc, (L1Character) object, damage,
-						weaponSkill.getAttr());
-				if (damage <= 0) {
+				if (dmg <= 0) {
 					continue;
 				}
 				if (object instanceof L1PcInstance) {
@@ -227,19 +241,26 @@ public class L1WeaponSkill {
 							ActionCodes.ACTION_Damage));
 					targetPc.broadcastPacket(new S_DoActionGFX(
 							targetPc.getId(), ActionCodes.ACTION_Damage));
-					targetPc.receiveDamage(pc, (int) damage, false);
+					targetPc.receiveDamage(pc, (int) dmg, true);
+					if (skill.getCastGfx2() != 0) { // 個別に表示するグラフィックがある場合
+						targetPc.sendPackets(new S_SkillSound(targetPc.getId(), skill.getCastGfx()));
+						targetPc.broadcastPacket(new S_SkillSound(targetPc.getId(), skill.getCastGfx()));
+					}
 				} else if (object instanceof L1SummonInstance
 						|| object instanceof L1PetInstance
 						|| object instanceof L1MonsterInstance) {
 					L1NpcInstance targetNpc = (L1NpcInstance) object;
 					targetNpc.broadcastPacket(new S_DoActionGFX(targetNpc
 							.getId(), ActionCodes.ACTION_Damage));
-					targetNpc.receiveDamage(pc, (int) damage);
+					targetNpc.receiveDamage(pc, (int) dmg);
+					if (skill.getCastGfx2() != 0) { // 個別に表示するグラフィックがある場合
+						targetNpc.broadcastPacket(new S_SkillSound(targetNpc.getId(), skill.getCastGfx()));
+					}
 				}
 			}
 		}
 
-		return calcDamageReduction(pc, cha, damage, weaponSkill.getAttr());
+		return damage;
 	}
 
 	public static double getBaphometStaffDamage(L1PcInstance pc, L1Character cha) {

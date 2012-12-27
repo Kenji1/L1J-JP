@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -69,18 +69,16 @@ public class WeaponSkillTable {
 		while (rs.next()) {
 			int weaponId = rs.getInt("weapon_id");
 			int probability = rs.getInt("probability");
+			int probEnchant = rs.getInt("prob_enchant");
 			int fixDamage = rs.getInt("fix_damage");
 			int randomDamage = rs.getInt("random_damage");
-			int area = rs.getInt("area");
 			int skillId = rs.getInt("skill_id");
-			int skillTime = rs.getInt("skill_time");
-			int effectId = rs.getInt("effect_id");
-			int effectTarget = rs.getInt("effect_target");
 			boolean isArrowType = rs.getBoolean("arrow_type");
-			int attr = rs.getInt("attr");
-			L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId, probability,
-					fixDamage, randomDamage, area, skillId, skillTime, effectId,
-					effectTarget, isArrowType, attr);
+			boolean isMr = rs.getBoolean("isMr");
+			boolean isAttrMr = rs.getBoolean("isAttrMr");
+			L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId,
+					probability, probEnchant, fixDamage, randomDamage,
+					skillId, isArrowType, isMr, isAttrMr);
 			_weaponIdIndex.put(weaponId, weaponSkill);
 		}
 		_log.config("武器スキルリスト " + _weaponIdIndex.size() + "件ロード");
