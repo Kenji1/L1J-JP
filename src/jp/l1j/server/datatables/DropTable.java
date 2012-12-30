@@ -217,7 +217,7 @@ public class DropTable {
 			for (int i= recipientList.size() - 1; i >= 0; i--) {
 				L1PcInstance pc = (L1PcInstance) recipientList.get(i);
 				if (pc.getInventory().checkAddItem(drop, drop.getCount()) == L1Inventory.OK) {
-					pc.getInventory().storeItem(drop.getItemId(), 1);
+					pc.getInventory().storeItem(drop.getItemId(), drop.getCount());
 					if (pc.isInParty()) {
 						pc.sendPackets(new S_ServerMessage(813, npc.getName(), drop.getLogName(), pc.getName()));
 					} else {
