@@ -36,8 +36,13 @@ public abstract class L1Poison {
 
 		L1PcInstance player = (L1PcInstance) cha;
 		// ゼニス リング装備中、バフォ メットアーマー装備中 、ベノム レジスト中
+		// アンタラス グランド プレートメイル、ローブ、レザーアーマー、スケイルメイル
 		if (player.getInventory().checkEquipped(20298)
 				|| player.getInventory().checkEquipped(20117)
+				|| player.getInventory().checkEquipped(21172)
+				|| player.getInventory().checkEquipped(21173)
+				|| player.getInventory().checkEquipped(21174)
+				|| player.getInventory().checkEquipped(21175)
 				|| player.hasSkillEffect(104)) {
 			return false;
 		}
