@@ -136,7 +136,7 @@ public class AuctionBoardTable {
 					.prepareStatement("UPDATE board_auction SET house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=? WHERE house_id=?");
 			pstm.setString(1, board.getHouseName());
 			pstm.setInt(2, board.getHouseArea());
-      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String fm = sdf.format(board.getDeadline().getTime());
 			pstm.setString(3, fm);
 			pstm.setInt(4, board.getPrice());

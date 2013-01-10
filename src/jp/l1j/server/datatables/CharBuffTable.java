@@ -89,7 +89,7 @@ public class CharBuffTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT character_buffs (char_obj_id, skill_id, remaining_time, poly_id, attr_kind) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE remaining_time = VALUES(remaining_time), poly_id = VALUES(poly_id), attr_kind = VALUES(attr_kind)");
+			pstm = con.prepareStatement("INSERT INTO character_buffs SET char_obj_id=?, skill_id=?, remaining_time=?, poly_id=?, attr_kind=?");
 			pstm.setInt(1, objId);
 			pstm.setInt(2, skillId);
 			pstm.setInt(3, time);

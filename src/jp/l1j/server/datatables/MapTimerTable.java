@@ -95,8 +95,8 @@ public class MapTimerTable {
 		return L1QueryUtil.selectFirst(new Factory(), sql, charId, areaId);
 	}
 
-	private static void insert(Connection con) {
-		String sql = "INSERT map_timer (char_id, map_id, area_id, enter_time) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE map_id = VALUES(map_id), enter_time = VALUES(enter_time)";
+	private static void store(Connection con) {
+		String sql = "INSERT INTO map_timer SET char_id=?, map_id=?, area_id=?, enter_time=?";
 		L1QueryUtil.execute(con, sql, _charId, _mapId, _areaId, _enterTime);
 	}
 
@@ -104,12 +104,18 @@ public class MapTimerTable {
 		Connection con = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			insert(con);
+			delete(con, _charId, _areaId);
+			store(con);
 		} catch (SQLException e) {
 			throw new L1SqlException(e);
 		} finally {
 			SqlUtil.close(con);
 		}
+	}
+
+	private static void delete(Connection con, int charId, int areaId) {
+		String sql = "DELETE FROM map_timer WHERE char_id = ? AND area_id = ?";
+		L1QueryUtil.execute(con, sql, charId, areaId);
 	}
 
 	private static void delete(Connection con, int areaId) {
