@@ -1,4 +1,2 @@
-@java -Xmx512m -Xincgc -jar l1jserver.jar
-@rem or you can use the following way:
-@rem @java -Xmx512m -Xincgc -cp l1jserver.jar jp.l1j.Server
+@java -XX:PermSize=256m -XX:MaxPermSize=256m -Xms1024m -Xmx1024m -jar l1jserver.jar
 @pause
