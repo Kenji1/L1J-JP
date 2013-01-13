@@ -93,7 +93,7 @@ public class L1Account {
 			final String rawPassword, final String ip, final String host) {
 		String password = encodePassword(rawPassword);
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-		String sql = "INSERT accounts SET id = ?, name = ?, password = ?, last_activated_at = ?, access_level = ?, ip = ?, host = ?, is_banned = ?, character_slot = ?";
+		String sql = "INSERT INTO accounts SET id = ?, name = ?, password = ?, last_activated_at = ?, access_level = ?, ip = ?, host = ?, is_banned = ?, character_slot = ?";
 		L1QueryUtil.execute(sql, id, name, password, currentTime, 0, ip, host,
 				false, 0);
 		_log.info("created new account for " + name);

@@ -23,7 +23,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="GameserverPort">2000</entry>
 
 <!-- LoginとPasswordは変更すべきだが、わからなければ変えない -->
-<!--  Database info -->
+<!-- settings for H2 -->
+<!-- <entry key="Driver">org.h2.Driver</entry> -->
+<!-- <entry key="URL">jdbc:h2:C:\workspace\db\l1jdb</entry> -->
+<!-- settings for MySQL -->
 <entry key="Driver">com.mysql.jdbc.Driver</entry>
 <entry key="URL">jdbc:mysql://localhost/l1jdb?useUnicode=true&amp;characterEncoding=utf8</entry>
 <entry key="Login">root</entry>
@@ -80,7 +83,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="CheckSpellInterval">True</entry>
 <!-- 不正な間隔のパケットのカウントがInjusticeCount回以上になった場合の処罰方法 -->
 <!-- PunishmentType: -->
-<!-- 0:PunishmentTime秒後に強制切断 -->
+<!-- 0:PunishmentTime秒後��強制切断 -->
 <!-- 1:PunishmentTime秒間行動停止 -->
 <!-- 2:PunishmentTime秒間PunishmentMAPへ隔離 -->
 <entry key="PunishmentType">0</entry>

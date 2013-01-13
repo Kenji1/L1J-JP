@@ -1,0 +1,19 @@
+-- ----------------------------
+-- Table structure for `SPAWNLIST_DOOR`
+-- ----------------------------
+DROP TABLE IF EXISTS `SPAWNLIST_DOOR`;
+CREATE TABLE `SPAWNLIST_DOOR` (
+  `ID` INT NOT NULL DEFAULT '0',
+  `LOCATION` VARCHAR(255) NOT NULL DEFAULT '',
+  `GFXID` INT NOT NULL DEFAULT '0',
+  `LOCX` INT NOT NULL DEFAULT '0',
+  `LOCY` INT NOT NULL DEFAULT '0',
+  `MAPID` INT NOT NULL DEFAULT '0',
+  `HP` INT NOT NULL DEFAULT '0',
+  `KEEPER` INT NOT NULL DEFAULT '0',
+  `DOOROPEN` BOOLEAN NOT NULL DEFAULT '0'
+);
+-- ----------------------------
+-- Index for `SPAWNLIST_DOOR`
+-- ----------------------------
+CREATE PRIMARY KEY `SPAWNLIST_DOOR_PK` ON `SPAWNLIST_DOOR`(`ID`);

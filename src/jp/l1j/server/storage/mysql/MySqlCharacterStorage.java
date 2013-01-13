@@ -186,7 +186,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pstm.setInt(++i, pc.getId());
 			pstm.setInt(++i, pc.getAccountId());
 			pstm.setString(++i, pc.getName());
-			pstm.setInt(++i, pc.getSimpleBirthday());
+			pstm.setTimestamp(++i, pc.getBirthday());
 			pstm.setInt(++i, pc.getLevel());
 			pstm.setInt(++i, pc.getHighLevel());
 			pstm.setInt(++i, pc.getExp());
