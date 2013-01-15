@@ -245,8 +245,8 @@ public class L1MobSkill {
 			result._areaHeight = rs.getInt("area_height");
 			result._leverage = rs.getInt("leverage");
 			result._skillId = rs.getInt("skill_id");
-			result._gfxId = rs.getInt("gfxid");
-			result._actId = rs.getInt("actid");
+			result._gfxId = rs.getInt("gfx_id");
+			result._actId = rs.getInt("act_id");
 			result._summonId = rs.getInt("summon_id");
 			result._summonMin = rs.getInt("summon_min");
 			result._summonMax = rs.getInt("summon_max");
