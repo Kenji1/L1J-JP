@@ -31,7 +31,7 @@ public class LogAcceleratorTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO log_accelerator SET account_name=?, char_id=?, name=?, clan_id=?, clan_name=?, locx=?, locy=?, mapid=?, datetime=SYSDATE()");
+			pstm = con.prepareStatement("INSERT INTO log_accelerator SET account_name=?, char_id=?, name=?, clan_id=?, clan_name=?, loc_x=?, loc_y=?, map_id=?, datetime=SYSDATE()");
 			pstm.setString(1, pc.getAccountName());
 			pstm.setInt(2, pc.getId());
 			pstm.setString(3, pc.getName());

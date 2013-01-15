@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS `log_accelerator` (
   `name` varchar(50) NOT NULL,
   `clan_id` int(10) NOT NULL,
   `clan_name` varchar(50) DEFAULT NULL,
-  `locx` int(10) NOT NULL,
-  `locy` int(10) NOT NULL,
-  `mapid` int(10) NOT NULL,
+  `loc_x` int(10) NOT NULL,
+  `loc_y` int(10) NOT NULL,
+  `map_id` int(10) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
