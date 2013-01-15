@@ -247,14 +247,14 @@ public class L1Npc extends L1Object implements Cloneable {
 		_tameable = flag;
 	}
 
-	private int _passiSpeed;
+	private int _moveSpeed;
 
-	public int getPassiSpeed() {
-		return _passiSpeed;
+	public int getMoveSpeed() {
+		return _moveSpeed;
 	}
 
-	public void setPassiSpeed(int i) {
-		_passiSpeed = i;
+	public void setMoveSpeed(int i) {
+		_moveSpeed = i;
 	}
 
 	private int _atkSpeed;

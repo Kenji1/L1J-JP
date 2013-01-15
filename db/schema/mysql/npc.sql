@@ -26,7 +26,7 @@ CREATE TABLE `npc` (
   `weak_attr` int(10) NOT NULL DEFAULT '0',
   `ranged` int(10) unsigned NOT NULL DEFAULT '0',
   `tamable` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `passi_speed` int(10) unsigned NOT NULL DEFAULT '0',
+  `move_speed` int(10) unsigned NOT NULL DEFAULT '0',
   `atk_speed` int(10) unsigned NOT NULL DEFAULT '0',
   `alt_atk_speed` int(10) unsigned NOT NULL DEFAULT '0',
   `atk_magic_speed` int(10) unsigned NOT NULL DEFAULT '0',

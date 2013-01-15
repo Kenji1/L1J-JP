@@ -400,7 +400,7 @@ public class L1NpcInstance extends L1Character {
 		_targetItem = null;
 		L1Character target = _target; // ここから先は_targetが変わると影響出るので別領域に参照確保
 		if (getAtkSpeed() == 0) { // 逃げるキャラ
-			if (getPassiSpeed() > 0 && getSkillEffectTimeSec(STATUS_HOLD) <= 0) { // 移動できるキャラ
+			if (getMoveSpeed() > 0 && getSkillEffectTimeSec(STATUS_HOLD) <= 0) { // 移動できるキャラ
 				int escapeDistance = 15;
 				if (hasSkillEffect(40) == true) {
 					escapeDistance = 1;
@@ -412,7 +412,7 @@ public class L1NpcInstance extends L1Character {
 							.getY());
 					dir = checkObject(getX(), getY(), getMapId(), dir);
 					setDirectionMove(dir);
-					setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+					setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
 				}
 			}
 		} else { // 逃げないキャラ
@@ -432,7 +432,7 @@ public class L1NpcInstance extends L1Character {
 					return;
 				}
 
-				if (getPassiSpeed() > 0 && getSkillEffectTimeSec(STATUS_HOLD) <= 0) {
+				if (getMoveSpeed() > 0 && getSkillEffectTimeSec(STATUS_HOLD) <= 0) {
 					// 移動できるキャラ
 					int distance = getLocation().getTileDistance(
 							target.getLocation());
@@ -457,9 +457,9 @@ public class L1NpcInstance extends L1Character {
 						tagertClear();
 					} else {
 						setDirectionMove(dir);
-						setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+						setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
 					}
-				} else if (getPassiSpeed() <= 0) {
+				} else if (getMoveSpeed() <= 0) {
 					// 移動できないキャラ（ターゲットから排除、ＰＴのときドロップチャンスがリセットされるけどまぁ自業自得）
 					tagertClear();
 				}
@@ -666,7 +666,7 @@ public class L1NpcInstance extends L1Character {
 				_targetItem = null;
 			} else { // ターゲットアイテムへ移動
 				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+				setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
 			}
 		}
 	}
@@ -692,7 +692,7 @@ public class L1NpcInstance extends L1Character {
 			int dir = moveDirection(_master.getX(), _master.getY());
 			if (dir != -1) {
 				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+				setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
 			} else {
 				return true;
 			}
@@ -701,7 +701,7 @@ public class L1NpcInstance extends L1Character {
 				return true; // 周りにプレイヤーがいなくなったらＡＩ処理終了
 			}
 			// 移動できるキャラはランダムに動いておく
-			if (_master == null && getPassiSpeed() > 0 && !isRest() && getSkillEffectTimeSec(STATUS_HOLD) <= 0) {
+			if (_master == null && getMoveSpeed() > 0 && !isRest() && getSkillEffectTimeSec(STATUS_HOLD) <= 0) {
 				// グループに属していないorグループに属していてリーダーの場合、ランダムに動いておく
 				L1MobGroupInfo mobGroupInfo = getMobGroupInfo();
 				if (mobGroupInfo == null || mobGroupInfo != null
@@ -725,7 +725,7 @@ public class L1NpcInstance extends L1Character {
 							_randomMoveDirection);
 					if (dir != -1) {
 						setDirectionMove(dir);
-						setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+						setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
 					}
 				} else { // リーダーを追尾
 					L1NpcInstance leader = mobGroupInfo.getLeader();
@@ -735,7 +735,7 @@ public class L1NpcInstance extends L1Character {
 							return true;
 						} else {
 							setDirectionMove(dir);
-							setSleepTime(calcSleepTime(getPassiSpeed(),
+							setSleepTime(calcSleepTime(getMoveSpeed(),
 									MOVE_SPEED));
 						}
 					}
@@ -1158,7 +1158,7 @@ public class L1NpcInstance extends L1Character {
 			addHitup((int) diff * 2);
 			addDmgup((int) diff * 2);
 		}
-		setPassiSpeed(template.getPassiSpeed());
+		setMoveSpeed(template.getMoveSpeed());
 		setAtkSpeed(template.getAtkSpeed());
 		setAgro(template.isAgro());
 		setAgroCoi(template.isAgroCoi());
@@ -1202,14 +1202,14 @@ public class L1NpcInstance extends L1Character {
 				.getMoveSpeed(getTempCharGfx(), i), type));
 	}
 
-	private int _passiSpeed;
+	private int _moveSpeed;
 
-	public int getPassiSpeed() {
-		return _passiSpeed;
+	public int getMoveSpeed() {
+		return _moveSpeed;
 	}
 
-	public void setPassiSpeed(int i) {
-		_passiSpeed = i;
+	public void setMoveSpeed(int i) {
+		_moveSpeed = i;
 	}
 
 	private int _atkSpeed;

@@ -706,7 +706,7 @@ public class L1HardinQuestInstance {
 					if (orcFighter.getLocation().getLineDistance(
 							new Point(32748, 32935)) != 0) {
 						orcFighter.setDirectionMove(orcFighter.moveDirection(32748, 32935));
-						Thread.sleep(orcFighter.getPassiSpeed());
+						Thread.sleep(orcFighter.getMoveSpeed());
 					} else {
 						break;
 					}
@@ -721,7 +721,7 @@ public class L1HardinQuestInstance {
 					if (orcArcher.getLocation().getLineDistance(
 							new Point(32748, 32935)) != 0) {
 						orcArcher.setDirectionMove(orcArcher.moveDirection(32748, 32935));
-						Thread.sleep(orcArcher.getPassiSpeed());
+						Thread.sleep(orcArcher.getMoveSpeed());
 					} else {
 						break;
 					}
@@ -736,7 +736,7 @@ public class L1HardinQuestInstance {
 					if (orc.getLocation().getLineDistance(
 							new Point(32748, 32935)) != 0) {
 						orc.setDirectionMove(orc.moveDirection(32748, 32935));
-						Thread.sleep(orc.getPassiSpeed());
+						Thread.sleep(orc.getMoveSpeed());
 					} else {
 						break;
 					}
@@ -757,7 +757,7 @@ public class L1HardinQuestInstance {
 					if (barusim.getLocation().getLineDistance(
 							new Point(32748, 32935)) != 0) {
 						barusim.setDirectionMove(barusim.moveDirection(32748, 32935));
-						Thread.sleep(barusim.getPassiSpeed());
+						Thread.sleep(barusim.getMoveSpeed());
 					} else {
 						break;
 					}

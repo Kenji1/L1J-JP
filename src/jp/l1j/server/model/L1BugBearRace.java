@@ -412,7 +412,7 @@ public class L1BugBearRace {
 		}
 
 		private int calcSleepTime(L1NpcInstance runner) {
-			int sleepTime = runner.getPassiSpeed();
+			int sleepTime = runner.getMoveSpeed();
 			if (runner.getBraveSpeed() == 1) {
 				sleepTime -= (sleepTime * 0.25);
 			}
@@ -467,7 +467,7 @@ public class L1BugBearRace {
 		mob.setY(loc.getY());
 		mob.setHomeY(loc.getY());
 		mob.setMap((short) loc.getMapId());
-		mob.setPassiSpeed(mob.getPassiSpeed() * 2);
+		mob.setMoveSpeed(mob.getMoveSpeed() * 2);
 		L1World.getInstance().storeObject(mob);
 		L1World.getInstance().addVisibleObject(mob);
 

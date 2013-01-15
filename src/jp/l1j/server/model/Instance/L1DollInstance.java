@@ -61,7 +61,7 @@ public class L1DollInstance extends L1NpcInstance {
 			int dir = moveDirection(_master.getX(), _master.getY());
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 3) {
 				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+				setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
 			} else {
 				if (sleeptime_PT == 0) {
 					broadcastPacket(new S_DoActionGFX(getId(),

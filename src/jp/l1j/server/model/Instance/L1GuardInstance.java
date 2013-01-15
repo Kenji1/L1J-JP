@@ -77,7 +77,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			int dir = moveDirection(getHomeX(), getHomeY());
 			if (dir != -1) {
 				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+				setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
 			} else // 遠すぎるor経路が見つからない場合はテレポートして帰る
 			{
 				teleport(getHomeX(), getHomeY(), 1);
