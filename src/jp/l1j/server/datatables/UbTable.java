@@ -57,13 +57,13 @@ public class UbTable {
 
 				L1UltimateBattle ub = new L1UltimateBattle();
 				ub.setUbId(rs.getInt("ub_id"));
-				ub.setMapId(rs.getShort("ub_mapid"));
+				ub.setMapId(rs.getShort("ub_map_id"));
 				ub.setLocX1(rs.getInt("ub_area_x1"));
 				ub.setLocY1(rs.getInt("ub_area_y1"));
 				ub.setLocX2(rs.getInt("ub_area_x2"));
 				ub.setLocY2(rs.getInt("ub_area_y2"));
-				ub.setMinLevel(rs.getInt("min_lvl"));
-				ub.setMaxLevel(rs.getInt("max_lvl"));
+				ub.setMinLevel(rs.getInt("min_level"));
+				ub.setMaxLevel(rs.getInt("max_level"));
 				ub.setMaxPlayer(rs.getInt("max_player"));
 				ub.setEnterRoyal(rs.getBoolean("enter_royal"));
 				ub.setEnterKnight(rs.getBoolean("enter_knight"));
