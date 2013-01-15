@@ -9,5 +9,5 @@ CREATE TABLE `npcaction` (
   `chaotic_action` varchar(45) NOT NULL DEFAULT '',
   `teleport_url` varchar(45) NOT NULL DEFAULT '',
   `teleport_urla` varchar(45) NOT NULL DEFAULT '',
-  PRIMARY KEY (`npcid`)
+  PRIMARY KEY (`npc_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

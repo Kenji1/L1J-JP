@@ -38,7 +38,7 @@ CREATE TABLE `npc` (
   `agro_sosc` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `agro_coi` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `family` varchar(20) NOT NULL DEFAULT '',
-  `agrof_amily` int(1) unsigned NOT NULL DEFAULT '0',
+  `agro_family` int(1) unsigned NOT NULL DEFAULT '0',
   `agro_gfx_id1` int(10) NOT NULL DEFAULT '-1',
   `agro_gfx_id2` int(10) NOT NULL DEFAULT '-1',
   `pickup_item` tinyint(1) unsigned NOT NULL DEFAULT '0',

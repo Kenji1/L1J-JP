@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS `inn` (
   `lodger_id` int(10) unsigned DEFAULT NULL,
   `hall` int(10) unsigned DEFAULT NULL,
   `due_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`npcid`,`room_number`)
+  PRIMARY KEY (`npc_id`,`room_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

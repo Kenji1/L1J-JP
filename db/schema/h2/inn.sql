@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS `INN` (
 -- ----------------------------
 -- Index for `INN`
 -- ----------------------------
-CREATE PRIMARY KEY IF NOT EXISTS `INN_PK` ON `INN`(`NPCID`,`ROOM_NUMBER`);
+CREATE PRIMARY KEY IF NOT EXISTS `INN_PK` ON `INN`(`NPC_ID`,`ROOM_NUMBER`);

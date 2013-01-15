@@ -136,7 +136,7 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE pets SET objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?,food=? WHERE item_obj_id=?");
+			pstm = con.prepareStatement("UPDATE pets SET obj_id=?,npc_id=?,name=?,level=?,hp=?,mp=?,exp=?,lawful=?,food=? WHERE item_obj_id=?");
 			pstm.setInt(1, pet.getObjId());
 			pstm.setInt(2, pet.getNpcId());
 			pstm.setString(3, pet.getName());
@@ -249,7 +249,7 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?,food=?");
+			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,obj_id=?,npc_id=?,name=?,level=?,hp=?,mp=?,exp=?,lawful=?,food=?");
 			pstm.setInt(1, l1pet.getItemObjId());
 			pstm.setInt(2, l1pet.getObjId());
 			pstm.setInt(3, l1pet.getNpcId());

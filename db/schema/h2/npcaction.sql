@@ -12,4 +12,4 @@ CREATE TABLE `NPCACTION` (
 -- ----------------------------
 -- Index for `NPCACTION`
 -- ----------------------------
-CREATE PRIMARY KEY `NPCACTION_PK` ON `NPCACTION`(`NPCID`);
+CREATE PRIMARY KEY `NPCACTION_PK` ON `NPCACTION`(`NPC_ID`);
