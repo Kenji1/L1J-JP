@@ -414,8 +414,8 @@ public class ItemTable {
 				armor.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				armor.setGrade(rs.getInt("grade"));
 				armor.setWeight(rs.getInt("weight"));
-				armor.setGfxId(rs.getInt("invgfx"));
-				armor.setGroundGfxId(rs.getInt("grdgfx"));
+				armor.setGfxId(rs.getInt("inv_gfx"));
+				armor.setGroundGfxId(rs.getInt("grd_gfx"));
 				armor.setItemDescId(rs.getInt("itemdesc_id"));
 				armor.setSafeEnchant(rs.getInt("safe_enchant"));
 				armor.setUseRoyal(rs.getInt("use_royal") == 0 ? false : true);
