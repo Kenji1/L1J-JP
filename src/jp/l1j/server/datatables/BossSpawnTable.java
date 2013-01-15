@@ -65,20 +65,20 @@ public class BossSpawnTable {
 					spawnDat.setCycleType(rs.getString("cycle_type"));
 					spawnDat.setAmount(rs.getInt("count"));
 					spawnDat.setGroupId(rs.getInt("group_id"));
-					spawnDat.setLocX(rs.getInt("locx"));
-					spawnDat.setLocY(rs.getInt("locy"));
-					spawnDat.setRandomx(rs.getInt("randomx"));
-					spawnDat.setRandomy(rs.getInt("randomy"));
-					spawnDat.setLocX1(rs.getInt("locx1"));
-					spawnDat.setLocY1(rs.getInt("locy1"));
-					spawnDat.setLocX2(rs.getInt("locx2"));
-					spawnDat.setLocY2(rs.getInt("locy2"));
+					spawnDat.setLocX(rs.getInt("loc_x"));
+					spawnDat.setLocY(rs.getInt("loc_y"));
+					spawnDat.setRandomx(rs.getInt("random_x"));
+					spawnDat.setRandomy(rs.getInt("random_y"));
+					spawnDat.setLocX1(rs.getInt("loc_x1"));
+					spawnDat.setLocY1(rs.getInt("loc_y1"));
+					spawnDat.setLocX2(rs.getInt("loc_x2"));
+					spawnDat.setLocY2(rs.getInt("loc_y2"));
 					int heading = rs.getInt("heading");
 					if (heading < 0 || heading > 7) {
 						heading = _random.nextInt(8);
 					}
 					spawnDat.setHeading(heading);
-					spawnDat.setMapId(rs.getShort("mapid"));
+					spawnDat.setMapId(rs.getShort("map_id"));
 					spawnDat.setRespawnScreen(rs.getBoolean("respawn_screen"));
 					spawnDat
 							.setMovementDistance(rs.getInt("movement_distance"));
