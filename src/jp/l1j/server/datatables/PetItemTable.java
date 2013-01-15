@@ -69,18 +69,18 @@ public class PetItemTable {
 		while (rs.next()) {
 			L1PetItem petItem = new L1PetItem();
 			petItem.setItemId(rs.getInt("item_id"));
-			petItem.setHitModifier(rs.getInt("hitmodifier"));
-			petItem.setDamageModifier(rs.getInt("dmgmodifier"));
+			petItem.setHitModifier(rs.getInt("hit_modifier"));
+			petItem.setDamageModifier(rs.getInt("dmg_modifier"));
 			petItem.setAddAc(rs.getInt("ac"));
-			petItem.setAddStr(rs.getInt("add_str"));
-			petItem.setAddCon(rs.getInt("add_con"));
-			petItem.setAddDex(rs.getInt("add_dex"));
-			petItem.setAddInt(rs.getInt("add_int"));
-			petItem.setAddWis(rs.getInt("add_wis"));
-			petItem.setAddHp(rs.getInt("add_hp"));
-			petItem.setAddMp(rs.getInt("add_mp"));
-			petItem.setAddSp(rs.getInt("add_sp"));
-			petItem.setAddMr(rs.getInt("m_def"));
+			petItem.setAddStr(rs.getInt("str"));
+			petItem.setAddCon(rs.getInt("con"));
+			petItem.setAddDex(rs.getInt("dex"));
+			petItem.setAddInt(rs.getInt("int"));
+			petItem.setAddWis(rs.getInt("wis"));
+			petItem.setAddHp(rs.getInt("hp"));
+			petItem.setAddMp(rs.getInt("mp"));
+			petItem.setAddSp(rs.getInt("sp"));
+			petItem.setAddMr(rs.getInt("mr"));
 			petItem.setUseType(rs.getInt("use_type"));
 			_petItemIdIndex.put(petItem.getItemId(), petItem);
 		}
