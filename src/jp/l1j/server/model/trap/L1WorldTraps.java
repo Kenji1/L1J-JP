@@ -73,9 +73,9 @@ public class L1WorldTraps {
 				int trapId = rs.getInt("trap_id");
 				L1Trap trapTemp = TrapTable.getInstance().getTemplate(trapId);
 				L1Location loc = new L1Location();
-				loc.setMap(rs.getInt("mapid"));
-				loc.setX(rs.getInt("locx"));
-				loc.setY(rs.getInt("locy"));
+				loc.setMap(rs.getInt("map_id"));
+				loc.setX(rs.getInt("loc_x"));
+				loc.setY(rs.getInt("loc_y"));
 				Point rndPt = new Point();
 				rndPt.setX(rs.getInt("loc_rnd_x"));
 				rndPt.setY(rs.getInt("loc_rnd_y"));
