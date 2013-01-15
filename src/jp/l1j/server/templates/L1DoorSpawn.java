@@ -101,15 +101,15 @@ public class L1DoorSpawn {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				int gfxId = rs.getInt("gfxid");
-				int x = rs.getInt("locx");
-				int y = rs.getInt("locy");
-				int mapId = rs.getInt("mapid");
+				int gfxId = rs.getInt("gfx_id");
+				int x = rs.getInt("loc_x");
+				int y = rs.getInt("loc_y");
+				int mapId = rs.getInt("map_id");
 				int hp = rs.getInt("hp");
 				int keeper = rs.getInt("keeper");
-				boolean DoorOpen = rs.getBoolean("DoorOpen");
+				boolean isOpen = rs.getBoolean("is_open");
 				L1DoorGfx gfx = L1DoorGfx.findByGfxId(gfxId);
-				L1DoorSpawn spawn = new L1DoorSpawn(id, gfx, x, y, mapId, hp, keeper, DoorOpen);
+				L1DoorSpawn spawn = new L1DoorSpawn(id, gfx, x, y, mapId, hp, keeper, isOpen);
 				result.add(spawn);
 			}
 
