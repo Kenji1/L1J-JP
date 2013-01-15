@@ -59,15 +59,15 @@ public class PetTypeTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				int baseNpcId = rs.getInt("base_npcid");
+				int baseNpcId = rs.getInt("base_npc_id");
 				String name = rs.getString("name");
-				int tameItemId = rs.getInt("tame_itemid");
+				int tameItemId = rs.getInt("tame_item_id");
 				int minHpUp = rs.getInt("min_hpup");
 				int maxHpUp = rs.getInt("max_hpup");
 				int minMpUp = rs.getInt("min_mpup");
 				int maxMpUp = rs.getInt("max_mpup");
-				int transformItemId = rs.getInt("transform_itemid");
-				int transformNpcId = rs.getInt("transform_npcid");
+				int transformItemId = rs.getInt("transform_item_id");
+				int transformNpcId = rs.getInt("transform_npc_id");
 				int msgIds[] = new int[5];
 				for (int i = 0; i < 5; i++) {
 					msgIds[i] = rs.getInt("message_id" + (i + 1));
