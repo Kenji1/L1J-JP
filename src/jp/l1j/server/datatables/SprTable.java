@@ -74,8 +74,8 @@ public class SprTable {
 				}
 
 				int actid = rs.getInt("act_id");
-				int frameCount = rs.getInt("framecount");
-				int frameRate = rs.getInt("framerate");
+				int frameCount = rs.getInt("frame_count");
+				int frameRate = rs.getInt("frame_rate");
 				int speed = calcActionSpeed(frameCount, frameRate);
 
 				switch (actid) {
