@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `trap` (
   `id` int(10) NOT NULL,
   `note` varchar(64) DEFAULT NULL,
   `type` varchar(64) NOT NULL,
-  `gfxid` int(10) NOT NULL,
+  `gfx_id` int(10) NOT NULL,
   `is_detectionable` tinyint(1) NOT NULL,
   `base` int(10) NOT NULL,
   `dice` int(10) NOT NULL,

@@ -27,7 +27,7 @@ public abstract class L1Trap {
 
 	public L1Trap(TrapStorage storage) {
 		_id = storage.getInt("id");
-		_gfxId = storage.getInt("gfxid");
+		_gfxId = storage.getInt("gfx_id");
 		_isDetectionable = storage.getBoolean("is_detectionable");
 	}
 
