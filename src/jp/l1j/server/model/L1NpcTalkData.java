@@ -22,7 +22,7 @@ public class L1NpcTalkData {
 
 	String normalAction;
 
-	String caoticAction;
+	String chaoticAction;
 
 	String teleportURL;
 
@@ -44,18 +44,18 @@ public class L1NpcTalkData {
 	}
 
 	/**
-	 * @return Returns the caoticAction.
+	 * @return Returns the chaoticAction.
 	 */
-	public String getCaoticAction() {
-		return caoticAction;
+	public String getChaoticAction() {
+		return chaoticAction;
 	}
 
 	/**
-	 * @param caoticAction
-	 *            The caoticAction to set.
+	 * @param chaoticAction
+	 *            The chaoticAction to set.
 	 */
-	public void setCaoticAction(String caoticAction) {
-		this.caoticAction = caoticAction;
+	public void setChaoticAction(String chaoticAction) {
+		this.chaoticAction = chaoticAction;
 	}
 
 	/**

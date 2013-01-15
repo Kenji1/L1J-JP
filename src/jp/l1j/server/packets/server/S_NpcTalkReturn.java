@@ -30,7 +30,7 @@ public class S_NpcTalkReturn extends ServerBasePacket {
 		if (action == 1) {
 			htmlid = npc.getNormalAction();
 		} else if (action == 2) {
-			htmlid = npc.getCaoticAction();
+			htmlid = npc.getChaoticAction();
 		} else {
 			throw new IllegalArgumentException();
 		}

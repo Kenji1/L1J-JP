@@ -55,7 +55,7 @@ public class NpcTalkDataTable {
 				L1NpcTalkData l1npctalkdata = new L1NpcTalkData();
 				l1npctalkdata.setNpcID(rs.getInt(1));
 				l1npctalkdata.setNormalAction(rs.getString(2));
-				l1npctalkdata.setCaoticAction(rs.getString(3));
+				l1npctalkdata.setChaoticAction(rs.getString(3));
 				l1npctalkdata.setTeleportURL(rs.getString(4));
 				l1npctalkdata.setTeleportURLA(rs.getString(5));
 				_datatable.put(new Integer(l1npctalkdata.getNpcID()),
