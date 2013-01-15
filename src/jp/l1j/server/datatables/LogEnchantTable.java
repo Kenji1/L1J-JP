@@ -24,17 +24,17 @@ import jp.l1j.server.utils.SqlUtil;
 public class LogEnchantTable {
 	private static Logger _log = Logger.getLogger(LogEnchantTable.class.getName());
 
-	public void storeLogEnchant(int char_id, int item_id, int old_enchantlvl,
-			int new_enchantlvl) {
+	public void storeLogEnchant(int char_id, int item_id,
+			int old_enchant_level, int new_enchant_level) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO log_enchant SET char_id=?, item_id=?, old_enchantlvl=?, new_enchantlvl=?");
+			pstm = con.prepareStatement("INSERT INTO log_enchant SET char_id=?, item_id=?, old_enchant_level=?, new_enchant_level=?");
 			pstm.setInt(1, char_id);
 			pstm.setInt(2, item_id);
-			pstm.setInt(3, old_enchantlvl);
-			pstm.setInt(4, new_enchantlvl);
+			pstm.setInt(3, old_enchant_level);
+			pstm.setInt(4, new_enchant_level);
 			pstm.execute();
 
 		} catch (Exception e) {
