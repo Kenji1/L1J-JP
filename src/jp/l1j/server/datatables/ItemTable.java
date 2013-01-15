@@ -330,9 +330,9 @@ public class ItemTable {
 				weapon.setIsTwohanded(rs.getBoolean("is_twohanded"));
 				weapon.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				weapon.setWeight(rs.getInt("weight"));
-				weapon.setGfxId(rs.getInt("invgfx"));
-				weapon.setGroundGfxId(rs.getInt("grdgfx"));
-				weapon.setItemDescId(rs.getInt("itemdesc_id"));
+				weapon.setGfxId(rs.getInt("inv_gfx"));
+				weapon.setGroundGfxId(rs.getInt("grd_gfx"));
+				weapon.setItemDescId(rs.getInt("item_desc_id"));
 				weapon.setDmgSmall(rs.getInt("dmg_small"));
 				weapon.setDmgLarge(rs.getInt("dmg_large"));
 				weapon.setRange(rs.getInt("range"));
