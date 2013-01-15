@@ -363,9 +363,9 @@ public class C_LoginToServer extends ClientBasePacket {
 				bookmark.setId(rs.getInt("id"));
 				bookmark.setCharId(rs.getInt("char_id"));
 				bookmark.setName(rs.getString("name"));
-				bookmark.setLocX(rs.getInt("locx"));
-				bookmark.setLocY(rs.getInt("locy"));
-				bookmark.setMapId(rs.getShort("mapid"));
+				bookmark.setLocX(rs.getInt("loc_x"));
+				bookmark.setLocY(rs.getInt("loc_y"));
+				bookmark.setMapId(rs.getShort("map_id"));
 				S_Bookmarks s_bookmarks = new S_Bookmarks(bookmark.getName(),
 						bookmark.getMapId(), bookmark.getId());
 				pc.addBookMark(bookmark);
