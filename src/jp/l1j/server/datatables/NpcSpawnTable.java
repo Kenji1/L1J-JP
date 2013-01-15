@@ -116,7 +116,7 @@ public class NpcSpawnTable {
 						continue;
 					}
 				}
-				int npcTemplateid = rs.getInt("npc_templateid");
+				int npcTemplateid = rs.getInt("npc_template_id");
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(npcTemplateid);
 				L1Spawn l1spawn;
 				if (l1npc == null) {
@@ -130,10 +130,10 @@ public class NpcSpawnTable {
 					l1spawn = new L1Spawn(l1npc);
 					l1spawn.setId(rs.getInt("id"));
 					l1spawn.setAmount(rs.getInt("count"));
-					l1spawn.setLocX(rs.getInt("locx"));
-					l1spawn.setLocY(rs.getInt("locy"));
-					l1spawn.setRandomx(rs.getInt("randomx"));
-					l1spawn.setRandomy(rs.getInt("randomy"));
+					l1spawn.setLocX(rs.getInt("loc_x"));
+					l1spawn.setLocY(rs.getInt("loc_y"));
+					l1spawn.setRandomx(rs.getInt("random_x"));
+					l1spawn.setRandomy(rs.getInt("random_y"));
 					l1spawn.setLocX1(0);
 					l1spawn.setLocY1(0);
 					l1spawn.setLocX2(0);
@@ -144,7 +144,7 @@ public class NpcSpawnTable {
 					}
 					l1spawn.setHeading(heading);
 					l1spawn.setMinRespawnDelay(rs.getInt("respawn_delay"));
-					l1spawn.setMapId(rs.getShort("mapid"));
+					l1spawn.setMapId(rs.getShort("map_id"));
 					l1spawn.setMovementDistance(rs.getInt("movement_distance"));
 					l1spawn.setName(l1npc.getName());
 					l1spawn.init();
@@ -178,7 +178,7 @@ public class NpcSpawnTable {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("INSERT INTO spawnlist_npc SET location=?,count=?,npc_templateid=?,locx=?,locy=?,heading=?,mapid=?");
+					.prepareStatement("INSERT INTO spawnlist_npc SET location=?,count=?,npc_template_id=?,loc_x=?,loc_y=?,heading=?,map_id=?");
 			pstm.setString(1, note);
 			pstm.setInt(2, count);
 			pstm.setInt(3, npc.getNpcId());
