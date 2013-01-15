@@ -109,7 +109,7 @@ public class FurnitureSpawnTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO spawnlist_furniture SET item_obj_id=?, npcid=?, locx=?, locy=?, mapid=?");
+			pstm = con.prepareStatement("INSERT INTO spawnlist_furniture SET item_obj_id=?, npc_id=?, loc_x=?, loc_y=?, map_id=?");
 			pstm.setInt(1, furniture.getItemObjId());
 			pstm.setInt(2, furniture.getNpcTemplate().getNpcId());
 			pstm.setInt(3, furniture.getX());
