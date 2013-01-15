@@ -81,7 +81,7 @@ public class SpawnTable {
 						continue;
 					}
 				}
-				int npcTemplateId = rs.getInt("npc_templateid");
+				int npcTemplateId = rs.getInt("npc_template_id");
 				template1 = NpcTable.getInstance().getTemplate(npcTemplateId);
 				int count;
 
@@ -94,7 +94,7 @@ public class SpawnTable {
 						continue;
 					}
 					double amount_rate = MapsTable.getInstance()
-							.getMonsterAmount(rs.getShort("mapid"));
+							.getMonsterAmount(rs.getShort("map_id"));
 					count = calcCount(template1, rs.getInt("count"),
 							amount_rate);
 					if (count == 0) {
@@ -105,14 +105,14 @@ public class SpawnTable {
 					spawnDat.setId(rs.getInt("id"));
 					spawnDat.setAmount(count);
 					spawnDat.setGroupId(rs.getInt("group_id"));
-					spawnDat.setLocX(rs.getInt("locx"));
-					spawnDat.setLocY(rs.getInt("locy"));
-					spawnDat.setRandomx(rs.getInt("randomx"));
-					spawnDat.setRandomy(rs.getInt("randomy"));
-					spawnDat.setLocX1(rs.getInt("locx1"));
-					spawnDat.setLocY1(rs.getInt("locy1"));
-					spawnDat.setLocX2(rs.getInt("locx2"));
-					spawnDat.setLocY2(rs.getInt("locy2"));
+					spawnDat.setLocX(rs.getInt("loc_x"));
+					spawnDat.setLocY(rs.getInt("loc_y"));
+					spawnDat.setRandomx(rs.getInt("random_x"));
+					spawnDat.setRandomy(rs.getInt("random_y"));
+					spawnDat.setLocX1(rs.getInt("loc_x1"));
+					spawnDat.setLocY1(rs.getInt("loc_y1"));
+					spawnDat.setLocX2(rs.getInt("loc_x2"));
+					spawnDat.setLocY2(rs.getInt("loc_y2"));
 					int heading = rs.getInt("heading");
 					if (heading < 0 || heading > 7) {
 						heading = _random.nextInt(8);
@@ -120,7 +120,7 @@ public class SpawnTable {
 					spawnDat.setHeading(heading);
 					spawnDat.setMinRespawnDelay(rs.getInt("min_respawn_delay"));
 					spawnDat.setMaxRespawnDelay(rs.getInt("max_respawn_delay"));
-					spawnDat.setMapId(rs.getShort("mapid"));
+					spawnDat.setMapId(rs.getShort("map_id"));
 					spawnDat.setRespawnScreen(rs.getBoolean("respawn_screen"));
 					spawnDat.setMovementDistance(rs.getInt("movement_distance"));
 					spawnDat.setRest(rs.getBoolean("rest"));
@@ -182,7 +182,7 @@ public class SpawnTable {
 			String note = npc.getName();
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO spawnlist SET location=?,count=?,npc_templateid=?,group_id=?,locx=?,locy=?,randomx=?,randomy=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,mapid=?");
+			pstm = con.prepareStatement("INSERT INTO spawnlist SET location=?,count=?,npc_template_id=?,group_id=?,loc_x=?,loc_y=?,random_x=?,random_y=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,map_id=?");
 			pstm.setString(1, note);
 			pstm.setInt(2, count);
 			pstm.setInt(3, npc.getNpcId());
