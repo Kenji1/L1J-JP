@@ -112,8 +112,8 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			 * default: // skt locX = 33080; locY = 33392; map = 4; break; } }
 			 * pc.setX(locX); pc.setY(locY); pc.setMap(map);
 			 */
-			pc.setX(rs.getInt("locx"));
-			pc.setY(rs.getInt("locy"));
+			pc.setX(rs.getInt("loc_x"));
+			pc.setY(rs.getInt("loc_y"));
 			pc.setMap(rs.getShort("map_id"));
 			pc.setFood(rs.getInt("food"));
 			pc.setLawful(rs.getInt("lawful"));
@@ -182,7 +182,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 		try {
 			int i = 0;
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO characters SET id=?,account_id=?,name=?,birthday=?,level=?,high_level=?,exp=?,max_hp=?,cur_hp=?,max_mp=?,cur_mp=?,ac=?,str=?,con=?,dex=?,cha=?,`int`=?,wis=?,status=?,class=?,sex=?,type=?,heading=?,locx=?,locy=?,map_id=?,food=?,lawful=?,title=?,clan_id=?,clan_name=?,clan_rank=?,bonus_status=?,elixir_status=?,elf_attr=?,pk_count=?,pk_count_for_elf=?,exp_res=?,partner_id=?,access_level=?,online_status=?,hometown_id=?,contribution=?,pay=?,hell_time=?,banned=?,karma=?,last_pk=?,last_pk_for_elf=?,delete_time=?,rejoin_clan_time=?,use_additional_warehouse=?,logout_time=?");
+			pstm = con.prepareStatement("INSERT INTO characters SET id=?,account_id=?,name=?,birthday=?,level=?,high_level=?,exp=?,max_hp=?,cur_hp=?,max_mp=?,cur_mp=?,ac=?,str=?,con=?,dex=?,cha=?,`int`=?,wis=?,status=?,class=?,sex=?,type=?,heading=?,loc_x=?,loc_y=?,map_id=?,food=?,lawful=?,title=?,clan_id=?,clan_name=?,clan_rank=?,bonus_status=?,elixir_status=?,elf_attr=?,pk_count=?,pk_count_for_elf=?,exp_res=?,partner_id=?,access_level=?,online_status=?,hometown_id=?,contribution=?,pay=?,hell_time=?,banned=?,karma=?,last_pk=?,last_pk_for_elf=?,delete_time=?,rejoin_clan_time=?,use_additional_warehouse=?,logout_time=?");
 			pstm.setInt(++i, pc.getId());
 			pstm.setInt(++i, pc.getAccountId());
 			pstm.setString(++i, pc.getName());
@@ -308,7 +308,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 		try {
 			int i = 0;
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE characters SET level=?,high_level=?,exp=?,max_hp=?,cur_hp=?,max_mp=?,cur_mp=?,ac=?,str=?,con=?,dex=?,cha=?,`int`=?,wis=?,status=?,class=?,sex=?,type=?,heading=?,locx=?,locy=?,map_id=?,food=?,lawful=?,title=?,clan_id=?,clan_name=?,clan_rank=?,bonus_status=?,elixir_status=?,elf_attr=?,pk_count=?,pk_count_for_elf=?,exp_res=?,partner_id=?,access_level=?,online_status=?,hometown_id=?,contribution=?,hell_time=?,banned=?,karma=?,last_pk=?,last_pk_for_elf=?,delete_time=?,rejoin_clan_time=?,use_additional_warehouse=?,logout_time=? WHERE id=?");
+			pstm = con.prepareStatement("UPDATE characters SET level=?,high_level=?,exp=?,max_hp=?,cur_hp=?,max_mp=?,cur_mp=?,ac=?,str=?,con=?,dex=?,cha=?,`int`=?,wis=?,status=?,class=?,sex=?,type=?,heading=?,loc_x=?,loc_y=?,map_id=?,food=?,lawful=?,title=?,clan_id=?,clan_name=?,clan_rank=?,bonus_status=?,elixir_status=?,elf_attr=?,pk_count=?,pk_count_for_elf=?,exp_res=?,partner_id=?,access_level=?,online_status=?,hometown_id=?,contribution=?,hell_time=?,banned=?,karma=?,last_pk=?,last_pk_for_elf=?,delete_time=?,rejoin_clan_time=?,use_additional_warehouse=?,logout_time=? WHERE id=?");
 			pstm.setInt(++i, pc.getLevel());
 			pstm.setInt(++i, pc.getHighLevel());
 			pstm.setInt(++i, pc.getExp());
