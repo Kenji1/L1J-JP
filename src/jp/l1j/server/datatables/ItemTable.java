@@ -265,9 +265,9 @@ public class ItemTable {
 				item.setType2(0);
 				item.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				item.setWeight(rs.getInt("weight"));
-				item.setGfxId(rs.getInt("invgfx"));
-				item.setGroundGfxId(rs.getInt("grdgfx"));
-				item.setItemDescId(rs.getInt("itemdesc_id"));
+				item.setGfxId(rs.getInt("inv_gfx"));
+				item.setGroundGfxId(rs.getInt("grd_gfx"));
+				item.setItemDescId(rs.getInt("item_desc_id"));
 				item.setMinLevel(rs.getInt("min_level"));
 				item.setMaxLevel(rs.getInt("max_level"));
 				item.setBless(rs.getInt("bless"));
@@ -278,8 +278,8 @@ public class ItemTable {
 				item.setDmgLarge(rs.getInt("dmg_large"));
 				item.setStackable(rs.getInt("stackable") == 1 ? true : false);
 				item.setMaxChargeCount(rs.getInt("max_charge_count"));
-				item.setLocX(rs.getInt("locx"));
-				item.setLocY(rs.getInt("locy"));
+				item.setLocX(rs.getInt("loc_x"));
+				item.setLocY(rs.getInt("loc_y"));
 				item.setMapId(rs.getShort("map_id"));
 				item.setDelayId(rs.getInt("delay_id"));
 				item.setDelayTime(rs.getInt("delay_time"));
