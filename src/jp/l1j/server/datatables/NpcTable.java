@@ -83,13 +83,13 @@ public class NpcTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1Npc npc = new L1Npc();
-				int npcId = rs.getInt("npcid");
+				int npcId = rs.getInt("npc_id");
 				npc.setNpcId(npcId);
 				npc.setName(rs.getString("name"));
-				npc.setNameId(rs.getString("nameid"));
+				npc.setNameId(rs.getString("name_id"));
 				npc.setImpl(rs.getString("impl"));
-				npc.setGfxId(rs.getInt("gfxid"));
-				npc.setLevel(rs.getInt("lvl"));
+				npc.setGfxId(rs.getInt("gfx_id"));
+				npc.setLevel(rs.getInt("level"));
 				npc.setHp(rs.getInt("hp"));
 				npc.setMp(rs.getInt("mp"));
 				npc.setAc(rs.getInt("ac"));
@@ -97,16 +97,16 @@ public class NpcTable {
 				npc.setCon(rs.getByte("con"));
 				npc.setDex(rs.getByte("dex"));
 				npc.setWis(rs.getByte("wis"));
-				npc.setInt(rs.getByte("intel"));
+				npc.setInt(rs.getByte("int"));
 				npc.setMr(rs.getInt("mr"));
 				npc.setExp(rs.getInt("exp"));
 				npc.setLawful(rs.getInt("lawful"));
 				npc.setSize(rs.getString("size"));
-				npc.setWeakAttr(rs.getInt("weakAttr"));
+				npc.setWeakAttr(rs.getInt("weak_attr"));
 				npc.setRanged(rs.getInt("ranged"));
 				npc.setTamable(rs.getBoolean("tamable"));
-				npc.setPassiSpeed(rs.getInt("passispeed"));
-				npc.setAtkSpeed(rs.getInt("atkspeed"));
+				npc.setPassiSpeed(rs.getInt("passi_speed"));
+				npc.setAtkSpeed(rs.getInt("atk_speed"));
 				npc.setAltAtkSpeed(rs.getInt("alt_atk_speed"));
 				npc.setAtkMagicSpeed(rs.getInt("atk_magic_speed"));
 				npc.setSubMagicSpeed(rs.getInt("sub_magic_speed"));
@@ -114,45 +114,45 @@ public class NpcTable {
 				npc.setPoisonAtk(rs.getInt("poison_atk"));
 				npc.setParalysIsAtk(rs.getInt("paralysis_atk"));
 				npc.setAgro(rs.getBoolean("agro"));
-				npc.setAgroSosc(rs.getBoolean("agrososc"));
-				npc.setAgroCoi(rs.getBoolean("agrocoi"));
+				npc.setAgroSosc(rs.getBoolean("agro_sosc"));
+				npc.setAgroCoi(rs.getBoolean("agro_coi"));
 				Integer family = _familyTypes.get(rs.getString("family"));
 				if (family == null) {
 					npc.setFamily(0);
 				} else {
 					npc.setFamily(family.intValue());
 				}
-				int agrofamily = rs.getInt("agrofamily");
+				int agrofamily = rs.getInt("agro_family");
 				if (npc.getFamily() == 0 && agrofamily == 1) {
 					npc.setAgroFamily(0);
 				} else {
 					npc.setAgroFamily(agrofamily);
 				}
-				npc.setAgroGfxId1(rs.getInt("agrogfxid1"));
-				npc.setAgroGfxId2(rs.getInt("agrogfxid2"));
-				npc.setPickUpItem(rs.getBoolean("picupitem"));
-				npc.setDigestItem(rs.getInt("digestitem"));
-				npc.setBraveSpeed(rs.getBoolean("bravespeed"));
-				npc.setHprInterval(rs.getInt("hprinterval"));
+				npc.setAgroGfxId1(rs.getInt("agro_gfx_id1"));
+				npc.setAgroGfxId2(rs.getInt("agro_gfx_id2"));
+				npc.setPickUpItem(rs.getBoolean("pickup_item"));
+				npc.setDigestItem(rs.getInt("digest_item"));
+				npc.setBraveSpeed(rs.getBoolean("brave_speed"));
+				npc.setHprInterval(rs.getInt("hpr_interval"));
 				npc.setHpr(rs.getInt("hpr"));
-				npc.setMprInterval(rs.getInt("mprinterval"));
+				npc.setMprInterval(rs.getInt("mpr_interval"));
 				npc.setMpr(rs.getInt("mpr"));
 				npc.setTeleport(rs.getBoolean("teleport"));
-				npc.setRandomLevel(rs.getInt("randomlevel"));
-				npc.setRandomHp(rs.getInt("randomhp"));
-				npc.setRandomMp(rs.getInt("randommp"));
-				npc.setRandomAc(rs.getInt("randomac"));
-				npc.setRandomExp(rs.getInt("randomexp"));
-				npc.setRandomLawful(rs.getInt("randomlawful"));
+				npc.setRandomLevel(rs.getInt("random_level"));
+				npc.setRandomHp(rs.getInt("random_hp"));
+				npc.setRandomMp(rs.getInt("random_mp"));
+				npc.setRandomAc(rs.getInt("random_ac"));
+				npc.setRandomExp(rs.getInt("random_exp"));
+				npc.setRandomLawful(rs.getInt("random_lawful"));
 				npc.setDamageReduction(rs.getInt("damage_reduction"));
 				npc.setHard(rs.getBoolean("hard"));
 				npc.setDoppel(rs.getBoolean("doppel"));
-				npc.setEnableTU(rs.getBoolean("enableTU"));
-				npc.setEnableErase(rs.getBoolean("enableErase"));
-				npc.setBowActId(rs.getInt("bow_actid"));
+				npc.setEnableTU(rs.getBoolean("enable_tu"));
+				npc.setEnableErase(rs.getBoolean("enable_erase"));
+				npc.setBowActId(rs.getInt("bow_act_id"));
 				npc.setKarma(rs.getInt("karma"));
 				npc.setTransformId(rs.getInt("transform_id"));
-				npc.setTransformGfxId(rs.getInt("transform_gfxid"));
+				npc.setTransformGfxId(rs.getInt("transform_gfx_id"));
 				npc.setLightSize(rs.getInt("light_size"));
 				npc.setAmountFixed(rs.getBoolean("amount_fixed"));
 				npc.setChangeHead(rs.getBoolean("change_head"));
