@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS `weapon_skill` (
   `fix_damage` int(10) unsigned NOT NULL DEFAULT '0',
   `random_damage` int(10) unsigned NOT NULL DEFAULT '0',
   `skill_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `arrow_type` int(10) unsigned NOT NULL DEFAULT '0',
-  `isMr` int(10) unsigned NOT NULL DEFAULT '1',
-  `isAttrMr` int(10) unsigned NOT NULL DEFAULT '1',
+  `arrow_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `enable_mr` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `enable_attr_mr` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`weapon_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=259 ;

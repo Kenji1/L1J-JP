@@ -74,11 +74,11 @@ public class WeaponSkillTable {
 			int randomDamage = rs.getInt("random_damage");
 			int skillId = rs.getInt("skill_id");
 			boolean isArrowType = rs.getBoolean("arrow_type");
-			boolean isMr = rs.getBoolean("isMr");
-			boolean isAttrMr = rs.getBoolean("isAttrMr");
+			boolean enableMr = rs.getBoolean("enable_mr");
+			boolean enableAttrMr = rs.getBoolean("enable_attr_mr");
 			L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId,
 					probability, probEnchant, fixDamage, randomDamage,
-					skillId, isArrowType, isMr, isAttrMr);
+					skillId, isArrowType, enableMr, enableAttrMr);
 			_weaponIdIndex.put(weaponId, weaponSkill);
 		}
 		_log.config("武器スキルリスト " + _weaponIdIndex.size() + "件ロード");
