@@ -56,8 +56,8 @@ public class GetBackRestartTable {
 				L1GetBackRestart gbr = new L1GetBackRestart();
 				int area = rs.getInt("area");
 				gbr.setArea(area);
-				gbr.setLocX(rs.getInt("locx"));
-				gbr.setLocY(rs.getInt("locy"));
+				gbr.setLocX(rs.getInt("loc_x"));
+				gbr.setLocY(rs.getInt("loc_y"));
 				gbr.setMapId(rs.getShort("map_id"));
 
 				_getbackrestart.put(new Integer(area), gbr);
