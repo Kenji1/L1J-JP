@@ -63,7 +63,7 @@ public class InnTable {
 			L1Inn l1inn;
 			int roomNumber;
 			while (rs.next()) {
-				int key = rs.getInt("npcid");
+				int key = rs.getInt("npc_id");
 				if (!_dataMap.containsKey(key)) {
 					inn = new Inn();
 					_dataMap.put(key, inn);
@@ -72,7 +72,7 @@ public class InnTable {
 				}
 
 				l1inn = new L1Inn();
-				l1inn.setInnNpcId(rs.getInt("npcid"));
+				l1inn.setInnNpcId(rs.getInt("npc_id"));
 				roomNumber = rs.getInt("room_number");
 				l1inn.setRoomNumber(roomNumber);
 				l1inn.setKeyId(rs.getInt("key_id"));
@@ -97,7 +97,7 @@ public class InnTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE inn SET key_id=?,lodger_id=?,hall=?,due_time=? WHERE npcid=? and room_number=?");
+			pstm = con.prepareStatement("UPDATE inn SET key_id=?,lodger_id=?,hall=?,due_time=? WHERE npc_id=? and room_number=?");
 
 			pstm.setInt(1, inn.getKeyId());
 			pstm.setInt(2, inn.getLodgerId());

@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `inn` (
   `name` varchar(45) DEFAULT '',
-  `npcid` int(10) unsigned NOT NULL,
+  `npc_id` int(10) unsigned NOT NULL,
   `room_number` int(10) unsigned NOT NULL,
   `key_id` int(10) unsigned DEFAULT NULL,
   `lodger_id` int(10) unsigned DEFAULT NULL,
