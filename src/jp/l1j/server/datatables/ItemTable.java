@@ -416,7 +416,7 @@ public class ItemTable {
 				armor.setWeight(rs.getInt("weight"));
 				armor.setGfxId(rs.getInt("inv_gfx"));
 				armor.setGroundGfxId(rs.getInt("grd_gfx"));
-				armor.setItemDescId(rs.getInt("itemdesc_id"));
+				armor.setItemDescId(rs.getInt("item_desc_id"));
 				armor.setSafeEnchant(rs.getInt("safe_enchant"));
 				armor.setUseRoyal(rs.getInt("use_royal") == 0 ? false : true);
 				armor.setUseKnight(rs.getInt("use_knight") == 0 ? false : true);

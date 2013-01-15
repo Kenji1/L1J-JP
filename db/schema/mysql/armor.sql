@@ -14,7 +14,7 @@ CREATE TABLE `armor` (
   `weight` int(10) unsigned NOT NULL DEFAULT '0',
   `inv_gfx` int(10) unsigned NOT NULL DEFAULT '0',
   `grd_gfx` int(10) unsigned NOT NULL DEFAULT '0',
-  `itemdesc_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `item_desc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `ac` tinyint(3) NOT NULL DEFAULT '0',
   `safe_enchant` tinyint(3) NOT NULL DEFAULT '0',
   `use_royal` tinyint(1) unsigned NOT NULL DEFAULT '0',
