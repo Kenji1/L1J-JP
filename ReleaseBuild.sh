@@ -8,7 +8,10 @@ mkdir -p release-build
 cp -ivR config release-build/config
 cp -ivR data release-build/data
 mkdir -p release-build/db
-cp -fvR db release-build/db
+mv -fvR db/templates release-build/db/templates
+mv -fv db/create_tables.sql release-build/db/create_tables.sql
+mv -fv db/update_tables.sql release-build/db/update_tables.sql
+cp -fv db/create_db.sql release-build/db/create_db.sql
 mkdir -p release-build/emblem
 cp -fvR lib release-build/lib
 mkdir -p release-build/log

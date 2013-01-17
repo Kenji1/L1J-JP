@@ -103,7 +103,6 @@ type .\records\%locale%\skills.sql >> create_tables.sql
 type .\records\%locale%\spawnlist.sql >> create_tables.sql
 type .\records\%locale%\spawnlist_boss.sql >> create_tables.sql
 type .\records\%locale%\spawnlist_door.sql >> create_tables.sql
-type .\records\%locale%\spawnlist_furniture.sql >> create_tables.sql
 type .\records\%locale%\spawnlist_light.sql >> create_tables.sql
 type .\records\%locale%\spawnlist_npc.sql >> create_tables.sql
 type .\records\%locale%\spawnlist_time.sql >> create_tables.sql

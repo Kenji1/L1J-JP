@@ -31,7 +31,6 @@ cat ./schema/$driver/skills.sql >> update_tables.sql
 cat ./schema/$driver/spawnlist.sql >> update_tables.sql
 cat ./schema/$driver/spawnlist_boss.sql >> update_tables.sql
 cat ./schema/$driver/spawnlist_door.sql >> update_tables.sql
-cat ./schema/$driver/spawnlist_furniture.sql >> update_tables.sql
 cat ./schema/$driver/spawnlist_light.sql >> update_tables.sql
 cat ./schema/$driver/spawnlist_npc.sql >> update_tables.sql
 cat ./schema/$driver/spawnlist_time.sql >> update_tables.sql
@@ -74,7 +73,6 @@ cat ./records/$locale/skills.sql >> update_tables.sql
 cat ./records/$locale/spawnlist.sql >> update_tables.sql
 cat ./records/$locale/spawnlist_boss.sql >> update_tables.sql
 cat ./records/$locale/spawnlist_door.sql >> update_tables.sql
-cat ./records/$locale/spawnlist_furniture.sql >> update_tables.sql
 cat ./records/$locale/spawnlist_light.sql >> update_tables.sql
 cat ./records/$locale/spawnlist_npc.sql >> update_tables.sql
 cat ./records/$locale/spawnlist_time.sql >> update_tables.sql
