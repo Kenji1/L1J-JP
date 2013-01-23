@@ -59,7 +59,7 @@ public class MailTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM mail");
+			pstm = con.prepareStatement("SELECT * FROM mails");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1Mail mail =  new L1Mail();
@@ -75,7 +75,7 @@ public class MailTable {
 				_allMail.add(mail);
 			}
 		} catch(SQLException e) {
-			_log.log(Level.SEVERE, "error while creating mail table", e);
+			_log.log(Level.SEVERE, "error while creating mails table", e);
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
@@ -90,10 +90,10 @@ public class MailTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			rs = con.createStatement().executeQuery(
-					"SELECT * FROM mail WHERE id=" + mailId);
+					"SELECT * FROM mails WHERE id=" + mailId);
 			if (rs != null && rs.next()) {
 				pstm = con.prepareStatement(
-					"UPDATE mail SET read_status=? WHERE id=" + mailId);
+					"UPDATE mails SET read_status=? WHERE id=" + mailId);
 				pstm.setInt(1, 1);
 				pstm.execute();
 
@@ -115,10 +115,10 @@ public class MailTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			rs = con.createStatement().executeQuery(
-					"SELECT * FROM mail WHERE id=" + mailId);
+					"SELECT * FROM mails WHERE id=" + mailId);
 			if (rs != null && rs.next()) {
 				pstm = con.prepareStatement(
-					"UPDATE mail SET type=? WHERE id=" + mailId);
+					"UPDATE mails SET type=? WHERE id=" + mailId);
 				pstm.setInt(1, type);
 				pstm.execute();
 
@@ -138,7 +138,7 @@ public class MailTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM mail WHERE id=?");
+			pstm = con.prepareStatement("DELETE FROM mails WHERE id=?");
 			pstm.setInt(1,mailId);
 			pstm.execute();
 
@@ -189,7 +189,7 @@ public class MailTable {
 		PreparedStatement pstm2 = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm2 = con.prepareStatement("INSERT INTO mail SET " +
+			pstm2 = con.prepareStatement("INSERT INTO mails SET " +
 					"id=?, type=?, sender=?, receiver=?," +
 					" date=?, read_status=?, subject=?, content=?");
 			int id = IdFactory.getInstance().nextId();

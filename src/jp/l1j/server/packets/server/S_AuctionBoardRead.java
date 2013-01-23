@@ -44,7 +44,7 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 		try {
 			int number = Integer.valueOf(house_number);
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM board_auction WHERE house_id=?");
+			pstm = con.prepareStatement("SELECT * FROM house_auction WHERE house_id=?");
 			pstm.setInt(1, number);
 			rs = pstm.executeQuery();
 			while (rs.next()) {

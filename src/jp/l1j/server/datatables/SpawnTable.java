@@ -69,7 +69,7 @@ public class SpawnTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawnlist");
+			pstm = con.prepareStatement("SELECT * FROM spawn_mobs");
 			rs = pstm.executeQuery();
 
 			L1Spawn spawnDat;
@@ -182,7 +182,7 @@ public class SpawnTable {
 			String note = npc.getName();
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO spawnlist SET location=?,count=?,npc_template_id=?,group_id=?,loc_x=?,loc_y=?,random_x=?,random_y=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,map_id=?");
+			pstm = con.prepareStatement("INSERT INTO spawn_mobs SET location=?,count=?,npc_template_id=?,group_id=?,loc_x=?,loc_y=?,random_x=?,random_y=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,map_id=?");
 			pstm.setString(1, note);
 			pstm.setInt(2, count);
 			pstm.setInt(3, npc.getNpcId());

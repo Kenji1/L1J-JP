@@ -52,11 +52,11 @@ public class PetItemTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM petitem");
+			pstm = con.prepareStatement("SELECT * FROM pet_items");
 			rs = pstm.executeQuery();
 			fillPetItemTable(rs);
 		} catch (SQLException e) {
-			_log.log(Level.SEVERE, "error while creating etcitem_petitem table",
+			_log.log(Level.SEVERE, "error while creating pet_items table",
 					e);
 		} finally {
 			SqlUtil.close(rs);

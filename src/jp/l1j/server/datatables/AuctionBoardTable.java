@@ -63,7 +63,7 @@ public class AuctionBoardTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("SELECT * FROM board_auction ORDER BY house_id");
+					.prepareStatement("SELECT * FROM house_auction ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1AuctionBoard board = new L1AuctionBoard();
@@ -103,7 +103,7 @@ public class AuctionBoardTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("INSERT INTO board_auction SET house_id=?, house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=?");
+					.prepareStatement("INSERT INTO house_auction SET house_id=?, house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=?");
 			pstm.setInt(1, board.getHouseId());
 			pstm.setString(2, board.getHouseName());
 			pstm.setInt(3, board.getHouseArea());
@@ -133,7 +133,7 @@ public class AuctionBoardTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("UPDATE board_auction SET house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=? WHERE house_id=?");
+					.prepareStatement("UPDATE house_auction SET house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=? WHERE house_id=?");
 			pstm.setString(1, board.getHouseName());
 			pstm.setInt(2, board.getHouseArea());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -161,7 +161,7 @@ public class AuctionBoardTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("DELETE FROM board_auction WHERE house_id=?");
+					.prepareStatement("DELETE FROM house_auction WHERE house_id=?");
 			pstm.setInt(1, houseId);
 			pstm.execute();
 

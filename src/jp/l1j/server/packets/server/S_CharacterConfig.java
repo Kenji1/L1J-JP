@@ -48,7 +48,7 @@ public class S_CharacterConfig extends ServerBasePacket {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("SELECT * FROM character_config WHERE object_id=?");
+					.prepareStatement("SELECT * FROM character_configs WHERE object_id=?");
 			pstm.setInt(1, objectId);
 			rs = pstm.executeQuery();
 			while (rs.next()) {

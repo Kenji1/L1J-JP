@@ -91,12 +91,12 @@ public class MapTimerTable {
 	}
 
 	public static MapTimerTable find(int charId, int areaId) {
-		String sql = "SELECT * FROM map_timer WHERE char_id = ? AND area_id = ?";
+		String sql = "SELECT * FROM map_timers WHERE char_id = ? AND area_id = ?";
 		return L1QueryUtil.selectFirst(new Factory(), sql, charId, areaId);
 	}
 
 	private static void store(Connection con) {
-		String sql = "INSERT INTO map_timer SET char_id=?, map_id=?, area_id=?, enter_time=?";
+		String sql = "INSERT INTO map_timers SET char_id=?, map_id=?, area_id=?, enter_time=?";
 		L1QueryUtil.execute(con, sql, _charId, _mapId, _areaId, _enterTime);
 	}
 
@@ -114,12 +114,12 @@ public class MapTimerTable {
 	}
 
 	private static void delete(Connection con, int charId, int areaId) {
-		String sql = "DELETE FROM map_timer WHERE char_id = ? AND area_id = ?";
+		String sql = "DELETE FROM map_timers WHERE char_id = ? AND area_id = ?";
 		L1QueryUtil.execute(con, sql, charId, areaId);
 	}
 
 	private static void delete(Connection con, int areaId) {
-		String sql = "DELETE FROM map_timer WHERE area_id = ?";
+		String sql = "DELETE FROM map_timers WHERE area_id = ?";
 		L1QueryUtil.execute(con, sql, areaId);
 	}
 

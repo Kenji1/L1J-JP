@@ -81,7 +81,7 @@ public class NpcActionTable {
 	public static void load() {
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading npcaction...");
+			System.out.print("loading npc actions...");
 			_instance = new NpcActionTable();
 			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {

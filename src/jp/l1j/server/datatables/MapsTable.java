@@ -75,7 +75,7 @@ public final class MapsTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM mapids");
+			pstm = con.prepareStatement("SELECT * FROM map_ids");
 
 			for (rs = pstm.executeQuery(); rs.next();) {
 				MapData data = new MapData();

@@ -640,7 +640,7 @@ public class L1Npc extends L1Object implements Cloneable {
 	private boolean _amountFixed;
 
 	/**
-	 * mapidsテーブルで設定されたモンスター量倍率の影響を受けるかどうかを返す。
+	 * map_idsテーブルで設定されたモンスター量倍率の影響を受けるかどうかを返す。
 	 * 
 	 * @return 影響を受けないように設定されている場合はtrueを返す。
 	 */

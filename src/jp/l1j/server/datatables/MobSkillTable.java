@@ -54,11 +54,11 @@ public class MobSkillTable {
 
 	private void load() {
 		List<Integer> npcIds = L1QueryUtil.selectAll(new NpcIdFactory(),
-				"SELECT DISTINCT mob_id FROM mobskill");
+				"SELECT DISTINCT mob_id FROM mob_skills");
 		for (int npcId : npcIds) {
 			List<L1MobSkill> skills = L1QueryUtil.selectAll(
 					new L1MobSkill.Factory(),
-					"SELECT * FROM mobskill where mob_id = ? order by act_no",
+					"SELECT * FROM mob_skills where mob_id = ? order by act_no",
 					npcId);
 			_mobskills.put(npcId, skills);
 		}

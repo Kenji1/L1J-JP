@@ -59,7 +59,7 @@ public class ShopTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT DISTINCT npc_id FROM shop");
+			pstm = con.prepareStatement("SELECT DISTINCT npc_id FROM shops");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				ids.add(rs.getInt("npc_id"));
@@ -102,7 +102,7 @@ public class ShopTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("SELECT * FROM shop WHERE npc_id=? ORDER BY order_id");
+					.prepareStatement("SELECT * FROM shops WHERE npc_id=? ORDER BY order_id");
 			for (int npcId : enumNpcIds()) {
 				pstm.setInt(1, npcId);
 				rs = pstm.executeQuery();

@@ -48,7 +48,7 @@ public class NpcTalkDataTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM npcaction");
+			pstm = con.prepareStatement("SELECT * FROM npc_actions");
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {

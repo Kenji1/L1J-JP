@@ -53,7 +53,7 @@ public class LightSpawnTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawnlist_light");
+			pstm = con.prepareStatement("SELECT * FROM spawn_lights");
 			rs = pstm.executeQuery();
 			do {
 				if (!rs.next()) {

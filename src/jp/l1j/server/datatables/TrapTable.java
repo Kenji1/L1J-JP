@@ -57,7 +57,7 @@ public class TrapTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con.prepareStatement("SELECT * FROM trap");
+			pstm = con.prepareStatement("SELECT * FROM traps");
 
 			rs = pstm.executeQuery();
 

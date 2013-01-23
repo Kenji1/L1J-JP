@@ -50,7 +50,7 @@ public class GetBackRestartTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM getback_restart");
+			pstm = con.prepareStatement("SELECT * FROM restart_locations");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1GetBackRestart gbr = new L1GetBackRestart();

@@ -57,7 +57,7 @@ public final class DropItemTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM drop_item");
+			pstm = con.prepareStatement("SELECT * FROM drop_rates");
 
 			for (rs = pstm.executeQuery(); rs.next();) {
 				dropItemData data = new dropItemData();
@@ -69,7 +69,7 @@ public final class DropItemTable {
 				_dropItem.put(new Integer(itemId), data);
 			}
 
-			_log.config("drop_item " + _dropItem.size());
+			_log.config("drop_rates " + _dropItem.size());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

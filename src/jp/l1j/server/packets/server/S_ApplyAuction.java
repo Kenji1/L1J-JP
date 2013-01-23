@@ -42,7 +42,7 @@ public class S_ApplyAuction extends ServerBasePacket {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM board_auction WHERE house_id=?");
+			pstm = con.prepareStatement("SELECT * FROM house_auction WHERE house_id=?");
 			int number = Integer.valueOf(houseNumber);
 			pstm.setInt(1, number);
 			rs = pstm.executeQuery();

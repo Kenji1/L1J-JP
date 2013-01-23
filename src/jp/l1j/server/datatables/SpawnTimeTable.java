@@ -55,7 +55,7 @@ public class SpawnTimeTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawnlist_time");
+			pstm = con.prepareStatement("SELECT * FROM spawn_times");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("spawn_id");

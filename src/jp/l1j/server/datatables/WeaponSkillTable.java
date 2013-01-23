@@ -52,11 +52,11 @@ public class WeaponSkillTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM weapon_skill");
+			pstm = con.prepareStatement("SELECT * FROM weapon_skills");
 			rs = pstm.executeQuery();
 			fillWeaponSkillTable(rs);
 		} catch (SQLException e) {
-			_log.log(Level.SEVERE, "error while creating weapon_skill table",
+			_log.log(Level.SEVERE, "error while creating weapon_skills table",
 					e);
 		} finally {
 			SqlUtil.close(rs);

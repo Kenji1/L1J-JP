@@ -54,7 +54,7 @@ public class PetTypeTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM pettypes");
+			pstm = con.prepareStatement("SELECT * FROM pet_types");
 
 			rs = pstm.executeQuery();
 

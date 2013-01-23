@@ -65,7 +65,7 @@ public class L1WorldTraps {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con.prepareStatement("SELECT * FROM spawnlist_trap");
+			pstm = con.prepareStatement("SELECT * FROM spawn_traps");
 
 			rs = pstm.executeQuery();
 

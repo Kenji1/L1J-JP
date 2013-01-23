@@ -52,11 +52,11 @@ public class ArmorSetTable {
 		
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM armor_set");
+			pstm = con.prepareStatement("SELECT * FROM armor_sets");
 			rs = pstm.executeQuery();
 			fillTable(rs);
 		} catch (SQLException e) {
-			_log.log(Level.SEVERE, "error while creating armor_set table", e);
+			_log.log(Level.SEVERE, "error while creating armor_sets table", e);
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);

@@ -51,7 +51,7 @@ public final class ResolventTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM resolvent");
+			pstm = con.prepareStatement("SELECT * FROM resolvents");
 
 			for (rs = pstm.executeQuery(); rs.next();) {
 				int itemId = rs.getInt("item_id");

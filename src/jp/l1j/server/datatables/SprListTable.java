@@ -50,7 +50,7 @@ public class SprListTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT distinct spr_id FROM spr_action order by spr_id");
+			pstm = con.prepareStatement("SELECT distinct spr_id FROM spr_actions order by spr_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int sprid = rs.getInt("spr_id");

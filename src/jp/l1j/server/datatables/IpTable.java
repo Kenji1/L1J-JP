@@ -51,7 +51,7 @@ public class IpTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO ban_ip SET ip=?, host=?, mask=?");
+			pstm = con.prepareStatement("INSERT INTO ban_ips SET ip=?, host=?, mask=?");
 			pstm.setString(1, ip);
 			pstm.setString(2, host);
 			pstm.setInt(3, 32);
@@ -90,7 +90,7 @@ public class IpTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM ban_ip");
+			pstm = con.prepareStatement("SELECT * FROM ban_ips");
 
 			rs = pstm.executeQuery();
 
@@ -119,7 +119,7 @@ public class IpTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM ban_ip WHERE ip=?");
+			pstm = con.prepareStatement("DELETE FROM ban_ips WHERE ip=?");
 			pstm.setString(1, ip);
 			pstm.execute();
 			_banip.remove(_banip.indexOf(ip));

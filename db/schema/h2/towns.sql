@@ -1,0 +1,20 @@
+-- ----------------------------
+-- Table structure for `TOWNS`
+-- ----------------------------
+DROP TABLE IF EXISTS `TOWNS`;
+CREATE TABLE `TOWNS` (
+  `TOWN_ID` INT NOT NULL DEFAULT '0',
+  `NAME` VARCHAR(255) NOT NULL DEFAULT '',
+  `LEADER_ID` INT NOT NULL DEFAULT '0',
+  `LEADER_NAME` VARCHAR(255) DEFAULT NULL,
+  `TAX_RATE` INT NOT NULL DEFAULT '0',
+  `TAX_RATE_RESERVED` INT NOT NULL DEFAULT '0',
+  `SALES_MONEY` INT NOT NULL DEFAULT '0',
+  `SALES_MONEY_YESTERDAY` INT NOT NULL DEFAULT '0',
+  `TOWN_TAX` INT NOT NULL DEFAULT '0',
+  `TOWN_FIX_TAX` INT NOT NULL DEFAULT '0'
+);
+-- ----------------------------
+-- Index for `TOWNS`
+-- ----------------------------
+CREATE PRIMARY KEY `TOWNS_PK` ON `TOWNS`(`TOWN_ID`);

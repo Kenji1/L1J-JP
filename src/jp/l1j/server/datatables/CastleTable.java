@@ -64,7 +64,7 @@ public final class CastleTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM castle");
+			pstm = con.prepareStatement("SELECT * FROM castles");
 
 			rs = pstm.executeQuery();
 
@@ -100,7 +100,7 @@ public final class CastleTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("UPDATE castle SET name=?, war_time=?, tax_rate=?, public_money=? WHERE castle_id=?");
+					.prepareStatement("UPDATE castles SET name=?, war_time=?, tax_rate=?, public_money=? WHERE castle_id=?");
 			pstm.setString(1, castle.getName());
 			String fm = DateFormat.getDateTimeInstance().format(
 					castle.getWarTime().getTime());

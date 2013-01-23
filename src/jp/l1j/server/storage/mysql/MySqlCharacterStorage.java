@@ -286,13 +286,13 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			L1QueryUtil.execute(con,
 					"DELETE FROM character_buffs WHERE char_obj_id = ?", id);
 			L1QueryUtil.execute(con,
-					"DELETE FROM character_config WHERE object_id = ?", id);
+					"DELETE FROM character_configs WHERE object_id = ?", id);
 			L1QueryUtil.execute(con,
 					"DELETE FROM character_quests WHERE char_id = ?", id);
 			L1QueryUtil.execute(con,
 					"DELETE FROM character_skills WHERE char_obj_id = ?", id);
 			L1QueryUtil.execute(con,
-					"DELETE FROM character_teleport WHERE char_id = ?", id);
+					"DELETE FROM character_bookmarks WHERE char_id = ?", id);
 			L1QueryUtil.execute(con, "DELETE FROM characters WHERE id = ?", id);
 		} catch (SQLException e) {
 			throw new L1SqlException(e);

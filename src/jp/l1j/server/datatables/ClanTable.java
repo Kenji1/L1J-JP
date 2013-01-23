@@ -56,7 +56,7 @@ public class ClanTable {
 
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con.prepareStatement("SELECT * FROM clan_data ORDER BY clan_id");
+				pstm = con.prepareStatement("SELECT * FROM clans ORDER BY clan_id");
 				rs = pstm.executeQuery();
 				
 				while (rs.next()) {
@@ -129,7 +129,7 @@ public class ClanTable {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO clan_data SET clan_id=?, clan_name=?, leader_id=?, leader_name=?, has_castle=?, has_house=?");
+			pstm = con.prepareStatement("INSERT INTO clans SET clan_id=?, clan_name=?, leader_id=?, leader_name=?, has_castle=?, has_house=?");
 			pstm.setInt(1, clan.getClanId());
 			pstm.setString(2, clan.getClanName());
 			pstm.setInt(3, clan.getLeaderId());
@@ -165,7 +165,7 @@ public class ClanTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE clan_data SET clan_id=?, leader_id=?, leader_name=?, has_castle=?, has_house=? WHERE clan_name=?");
+			pstm = con.prepareStatement("UPDATE clans SET clan_id=?, leader_id=?, leader_name=?, has_castle=?, has_house=? WHERE clan_name=?");
 			pstm.setInt(1, clan.getClanId());
 			pstm.setInt(2, clan.getLeaderId());
 			pstm.setString(3, clan.getLeaderName());
@@ -190,7 +190,7 @@ public class ClanTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM clan_data WHERE clan_name=?");
+			pstm = con.prepareStatement("DELETE FROM clans WHERE clan_name=?");
 			pstm.setString(1, clan_name);
 			pstm.execute();
 		} catch (SQLException e) {

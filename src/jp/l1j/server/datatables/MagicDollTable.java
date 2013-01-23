@@ -51,7 +51,7 @@ public class MagicDollTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM magic_doll");
+			pstm = con.prepareStatement("SELECT * FROM magic_dolls");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1MagicDoll doll = new L1MagicDoll();

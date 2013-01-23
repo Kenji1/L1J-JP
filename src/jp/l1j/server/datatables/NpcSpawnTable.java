@@ -68,7 +68,7 @@ public class NpcSpawnTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawnlist_npc");
+			pstm = con.prepareStatement("SELECT * FROM spawn_npc");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				if (Config.ALT_GMSHOP == false) {
@@ -178,7 +178,7 @@ public class NpcSpawnTable {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("INSERT INTO spawnlist_npc SET location=?,count=?,npc_template_id=?,loc_x=?,loc_y=?,heading=?,map_id=?");
+					.prepareStatement("INSERT INTO spawn_npc SET location=?,count=?,npc_template_id=?,loc_x=?,loc_y=?,heading=?,map_id=?");
 			pstm.setString(1, note);
 			pstm.setInt(2, count);
 			pstm.setInt(3, npc.getNpcId());

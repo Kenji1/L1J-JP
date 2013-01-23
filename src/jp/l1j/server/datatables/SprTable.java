@@ -53,7 +53,7 @@ public class SprTable {
 	}
 
 	/**
-	 * spr_actionテーブルをロードする。
+	 * spr_actionsテーブルをロードする。
 	 */
 	public void loadSprAction() {
 		Connection con = null;
@@ -62,7 +62,7 @@ public class SprTable {
 		Spr spr = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spr_action");
+			pstm = con.prepareStatement("SELECT * FROM spr_actions");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int key = rs.getInt("spr_id");

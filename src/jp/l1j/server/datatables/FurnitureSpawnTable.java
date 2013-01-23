@@ -53,7 +53,7 @@ public class FurnitureSpawnTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawnlist_furniture");
+			pstm = con.prepareStatement("SELECT * FROM spawn_furnitures");
 			rs = pstm.executeQuery();
 			do {
 				if (!rs.next()) {
@@ -109,7 +109,7 @@ public class FurnitureSpawnTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO spawnlist_furniture SET item_obj_id=?, npc_id=?, loc_x=?, loc_y=?, map_id=?");
+			pstm = con.prepareStatement("INSERT INTO spawn_furnitures SET item_obj_id=?, npc_id=?, loc_x=?, loc_y=?, map_id=?");
 			pstm.setInt(1, furniture.getItemObjId());
 			pstm.setInt(2, furniture.getNpcTemplate().getNpcId());
 			pstm.setInt(3, furniture.getX());
@@ -129,7 +129,7 @@ public class FurnitureSpawnTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM spawnlist_furniture WHERE item_obj_id=?");
+			pstm = con.prepareStatement("DELETE FROM spawn_furnitures WHERE item_obj_id=?");
 			pstm.setInt(1, furniture.getItemObjId());
 			pstm.execute();
 		} catch (SQLException e) {

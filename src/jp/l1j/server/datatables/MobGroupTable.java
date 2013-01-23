@@ -53,7 +53,7 @@ public class MobGroupTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM mobgroup");
+			pstm = con.prepareStatement("SELECT * FROM mob_groups");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int mobGroupId = rs.getInt("id");
@@ -72,7 +72,7 @@ public class MobGroupTable {
 			}
 			_log.config("MOBグループリスト " + _mobGroupIndex.size() + "件ロード");
 		} catch (SQLException e) {
-			_log.log(Level.SEVERE, "error while creating mobgroup table", e);
+			_log.log(Level.SEVERE, "error while creating mob_groups table", e);
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);

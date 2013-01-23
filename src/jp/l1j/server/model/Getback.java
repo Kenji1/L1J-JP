@@ -51,7 +51,7 @@ public class Getback {
 	private int _getbackTownId;
 	private int _getbackTownIdForElf;
 	private int _getbackTownIdForDarkelf;
-	private boolean _escapable; // 未使用(mapidsに持っているし、ここに来る前にチェックされている)
+	private boolean _escapable; // 未使用(map_idsに持っているし、ここに来る前にチェックされている)
 
 	private Getback() {
 	}
@@ -68,7 +68,7 @@ public class Getback {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			// 同マップでエリア指定と無指定が混在していたら、エリア指定を先に読み込む為にarea_x1 DESC
-			String sSQL = "SELECT * FROM getback ORDER BY area_map_id,area_x1 DESC ";
+			String sSQL = "SELECT * FROM return_locations ORDER BY area_map_id,area_x1 DESC ";
 			pstm = con.prepareStatement(sSQL);
 			rs = pstm.executeQuery();
 			while (rs.next()) {

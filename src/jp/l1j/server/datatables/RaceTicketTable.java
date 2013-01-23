@@ -56,7 +56,7 @@ public class RaceTicketTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM race_ticket");
+			pstm = con.prepareStatement("SELECT * FROM race_tickets");
 			int temp=0;
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -95,7 +95,7 @@ public class RaceTicketTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO race_ticket SET item_obj_id=?,round=?,allotment_percentage=?,victory=?,runner_num=?");
+			pstm = con.prepareStatement("INSERT INTO race_tickets SET item_obj_id=?,round=?,allotment_percentage=?,victory=?,runner_num=?");
 			pstm.setInt(1, ticket.getItemObjId());
 			pstm.setInt(2, ticket.getRound());
 			pstm.setDouble(3, ticket.getAllotmentPercentage());
@@ -120,7 +120,7 @@ public class RaceTicketTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=?");
+			pstm = con.prepareStatement("delete from race_tickets WHERE item_obj_id=?");
 			pstm.setInt(1, itemobjid);
 			pstm.execute();
 		} catch (Exception e) {
@@ -135,7 +135,7 @@ public class RaceTicketTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=0 and round!=?");
+			pstm = con.prepareStatement("delete from race_tickets WHERE item_obj_id=0 and round!=?");
 			pstm.setInt(1,round);
 			pstm.execute();
 		} catch (Exception e) {
@@ -157,7 +157,7 @@ public class RaceTicketTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE race_ticket SET victory=? ,allotment_percentage=? WHERE round=? and runner_num=?");	
+			pstm = con.prepareStatement("UPDATE race_tickets SET victory=? ,allotment_percentage=? WHERE round=? and runner_num=?");	
 			pstm.setInt(1,1);
 			pstm.setDouble(2,allotment_percentage);
 			pstm.setInt(3,round);

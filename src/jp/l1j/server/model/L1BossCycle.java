@@ -374,7 +374,7 @@ public class L1BossCycle {
 					_cycleMap.put(cycle.getName(), cycle);
 				}
 			}
-			// spawnlist_bossから読み込んで配置
+			// spawn_bossから読み込んで配置
 			BossSpawnTable.fillSpawnTable();
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "BossCycleを読み込めませんでした", e);

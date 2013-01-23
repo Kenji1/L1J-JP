@@ -57,7 +57,7 @@ public class InnTable {
 		Inn inn = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM inn");
+			pstm = con.prepareStatement("SELECT * FROM inns");
 
 			rs = pstm.executeQuery();
 			L1Inn l1inn;
@@ -97,7 +97,7 @@ public class InnTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE inn SET key_id=?,lodger_id=?,hall=?,due_time=? WHERE npc_id=? and room_number=?");
+			pstm = con.prepareStatement("UPDATE inns SET key_id=?,lodger_id=?,hall=?,due_time=? WHERE npc_id=? and room_number=?");
 
 			pstm.setInt(1, inn.getKeyId());
 			pstm.setInt(2, inn.getLodgerId());

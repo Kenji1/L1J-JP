@@ -54,7 +54,7 @@ public class L1BookMark {
 
 				con = L1DatabaseFactory.getInstance().getConnection();
 				pstm = con
-						.prepareStatement("DELETE FROM character_teleport WHERE id=?");
+						.prepareStatement("DELETE FROM character_bookmarks WHERE id=?");
 				pstm.setInt(1, book.getId());
 				pstm.execute();
 				player.removeBookMark(book);
@@ -98,7 +98,7 @@ public class L1BookMark {
 
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con.prepareStatement("INSERT INTO character_teleport SET id = ?, char_id = ?, name = ?, loc_x = ?, loc_y = ?, map_id = ?");
+				pstm = con.prepareStatement("INSERT INTO character_bookmarks SET id = ?, char_id = ?, name = ?, loc_x = ?, loc_y = ?, map_id = ?");
 				pstm.setInt(1, bookmark.getId());
 				pstm.setInt(2, bookmark.getCharId());
 				pstm.setString(3, bookmark.getName());

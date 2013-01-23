@@ -63,7 +63,7 @@ public class HouseTable {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM house ORDER BY house_id");
+			pstm = con.prepareStatement("SELECT * FROM houses ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1House house = new L1House();
@@ -108,7 +108,7 @@ public class HouseTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE house SET house_name=?, house_area=?, location=?, keeper_id=?, is_on_sale=?, is_purchase_basement=?, tax_deadline=? WHERE house_id=?");
+			pstm = con.prepareStatement("UPDATE houses SET house_name=?, house_area=?, location=?, keeper_id=?, is_on_sale=?, is_purchase_basement=?, tax_deadline=? WHERE house_id=?");
 			pstm.setString(1, house.getHouseName());
 			pstm.setInt(2, house.getHouseArea());
 			pstm.setString(3, house.getLocation());
@@ -137,7 +137,7 @@ public class HouseTable {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT house_id FROM house ORDER BY house_id");
+			pstm = con.prepareStatement("SELECT house_id FROM houses ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int houseId = rs.getInt("house_id");

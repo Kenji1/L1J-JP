@@ -354,7 +354,7 @@ public class C_LoginToServer extends ClientBasePacket {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("SELECT * FROM character_teleport WHERE char_id=? ORDER BY name ASC");
+					.prepareStatement("SELECT * FROM character_bookmarks WHERE char_id=? ORDER BY name ASC");
 			pstm.setInt(1, pc.getId());
 
 			rs = pstm.executeQuery();

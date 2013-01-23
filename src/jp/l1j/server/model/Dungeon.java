@@ -80,7 +80,7 @@ public class Dungeon {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con.prepareStatement("SELECT * FROM dungeon");
+			pstm = con.prepareStatement("SELECT * FROM dungeons");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int srcMapId = rs.getInt("src_map_id");

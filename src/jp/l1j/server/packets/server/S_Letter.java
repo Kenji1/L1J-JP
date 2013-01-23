@@ -35,7 +35,7 @@ public class S_Letter extends ServerBasePacket {
 /*
  * Connection con = null; PreparedStatement pstm = null; ResultSet rs = null;
  * try { con = L1DatabaseFactory.getInstance().getConnection(); pstm = con
- * .prepareStatement("SELECT * FROM letter WHERE item_object_id=?");
+ * .prepareStatement("SELECT * FROM letters WHERE item_object_id=?");
  * pstm.setInt(1, item.getId()); rs = pstm.executeQuery(); while (rs.next()) {
  * writeC(Opcodes.S_OPCODE_LETTER); writeD(item.getId()); if (item.getGfxId() ==
  * 465) { // 開く前 writeH(466); // 開いた後 } else if (item.getGfxId() == 606) {

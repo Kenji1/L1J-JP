@@ -44,7 +44,7 @@ public class BossSpawnTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawnlist_boss");
+			pstm = con.prepareStatement("SELECT * FROM spawn_boss");
 			rs = pstm.executeQuery();
 
 			L1BossSpawn spawnDat;

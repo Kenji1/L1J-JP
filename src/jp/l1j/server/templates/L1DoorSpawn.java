@@ -97,7 +97,7 @@ public class L1DoorSpawn {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawnlist_door");
+			pstm = con.prepareStatement("SELECT * FROM spawn_doors");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("id");

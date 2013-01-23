@@ -185,7 +185,7 @@ public class HomeTownTimeController {
 			pstm4.execute();
 
 			pstm5 = con
-					.prepareStatement("UPDATE town SET leader_id = ?, leader_name = ?, tax_rate = 0, tax_rate_reserved = 0, sales_money = 0, sales_money_yesterday = sales_money, town_tax = 0, town_fix_tax = 0 WHERE town_id = ?");
+					.prepareStatement("UPDATE towns SET leader_id = ?, leader_name = ?, tax_rate = 0, tax_rate_reserved = 0, sales_money = 0, sales_money_yesterday = sales_money, town_tax = 0, town_fix_tax = 0 WHERE town_id = ?");
 			pstm5.setInt(1, leaderId);
 			pstm5.setString(2, leaderName);
 			pstm5.setInt(3, townId);
