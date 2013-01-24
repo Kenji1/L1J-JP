@@ -1,4 +1,4 @@
-set driver=h2
+set driver=mysql
 set locale=ja
 type .\schema\%driver%\armors.sql > update_tables.sql
 type .\schema\%driver%\armor_sets.sql >> update_tables.sql

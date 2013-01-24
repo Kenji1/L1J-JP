@@ -1,4 +1,4 @@
-set driver=h2
+set driver=mysql
 set locale=ja
 type .\schema\%driver%\accounts.sql > create_tables.sql
 type .\schema\%driver%\armors.sql >> create_tables.sql

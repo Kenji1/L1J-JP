@@ -1,4 +1,4 @@
-set driver=h2
+set driver=mysql
 set locale=ja
 if not exist .\templates md .\templates
 type .\schema\%driver%\accounts.sql > .\templates\accounts.sql
