@@ -47,7 +47,8 @@ public class C_Chat extends ClientBasePacket {
 		int chatType = readC();
 		String chatText = readS();
 		if (pc.hasSkillEffect(SILENCE) || pc.hasSkillEffect(AREA_OF_SILENCE)
-				|| pc.hasSkillEffect(STATUS_POISON_SILENCE)) {
+				|| pc.hasSkillEffect(STATUS_POISON_SILENCE)
+				|| pc.hasSkillEffect(ELZABE_AREA_SILENCE)) {
 			return;
 		}
 		if (pc.hasSkillEffect(1005)) { // チャット禁止中

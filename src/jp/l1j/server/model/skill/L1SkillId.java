@@ -691,4 +691,16 @@ public class L1SkillId {
 	public static final int BLESS_OF_COMA2 = 11019; // コマの祝福Ｂ
 
 	public static final int BLESS_OF_SAMURAI = 11020; // 武士の心得
+
+	public static final int ICE_ERUPTION = 702; // アイスイラプション
+
+	public static final int SAND_ERUPTION = 704; // サンドイラプション
+
+	public static final int ELZABE_AREA_SILENCE = 707; // エルジャベ エリアサイレンス
+
+	public static final int ELIZABE_SAND_ERUPTION  = 711; // エリジャベ サンドイラプション
+
+	public static final int ELIZABE_AREA_POISON  = 712; // エリジャベ エリアポイズン
+
+	public static final int ELIZABE_TELEPORT  = 713; // エリジャベ テレポート
 }

@@ -373,7 +373,8 @@ public class L1SkillUse {
 			// サイレンス状態では使用不可
 			if (pc.hasSkillEffect(SILENCE)
 					|| pc.hasSkillEffect(AREA_OF_SILENCE)
-					|| pc.hasSkillEffect(STATUS_POISON_SILENCE)) {
+					|| pc.hasSkillEffect(STATUS_POISON_SILENCE)
+					|| pc.hasSkillEffect(ELZABE_AREA_SILENCE)) {
 				pc.sendPackets(new S_ServerMessage(285)); // \f1その状態では魔法を使えません。
 				return false;
 			}
@@ -2606,6 +2607,29 @@ public class L1SkillUse {
 								|| cha instanceof L1PetInstance) {
 							L1NpcInstance npc = (L1NpcInstance) cha;
 							npc.setSkillEffect(ARM_BREAKER, time);
+						}
+					}
+				} else if (_skillId == ELIZABE_AREA_POISON) {
+					L1PcInstance pc = (L1PcInstance) cha;
+					L1DamagePoison.doInfection(_user, cha, 3000, 50);
+					if (pc instanceof L1PcInstance) {
+						pc.sendPackets(new S_SkillSound(cha.getId(), 9227));
+					} else {
+						cha.broadcastPacket(new S_SkillSound(cha.getId(), 9227));
+					}
+				} else if (_skillId == ELZABE_AREA_SILENCE) {
+					L1PcInstance pc = (L1PcInstance) cha;
+					if (pc instanceof L1PcInstance) {
+						pc.sendPackets(new S_SkillSound(cha.getId(), 9753));
+					} else {
+						cha.broadcastPacket(new S_SkillSound(cha.getId(), 9753));
+					}
+				} else if (_skillId == ELIZABE_TELEPORT) {
+					if (cha instanceof L1PcInstance) {
+						L1MonsterInstance.randomTeleportByElizabe((L1PcInstance) cha, true);
+					} else {
+						if (cha instanceof L1NpcInstance) {
+							L1MonsterInstance.randomTeleportByElizabe((L1PcInstance) cha, true);
 						}
 					}
 				} else if (_skillId == AREA_POISON || _skillId == 502) { // 範囲毒（汎用）

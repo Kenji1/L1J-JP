@@ -411,7 +411,8 @@ public class L1Magic {
 				skillId == ELEMENTAL_FALL_DOWN || skillId == RETURN_TO_NATURE ||
 				skillId == ENTANGLE || skillId == ERASE_MAGIC || skillId == EARTH_BIND ||
 				skillId == AREA_OF_SILENCE || skillId == WIND_SHACKLE ||
-				skillId == STRIKER_GALE || skillId == POLLUTE_WATER) {
+				skillId == STRIKER_GALE || skillId == POLLUTE_WATER
+				|| skillId == ELZABE_AREA_SILENCE) {
 			// 成功確率は 魔法固有係数 × LV差 + 基本確率
 			probability = (int) (((l1skills.getProbabilityDice()) / 10D) * (attackLevel - defenseLevel))
 					+ l1skills.getProbabilityValue();

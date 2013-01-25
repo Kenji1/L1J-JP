@@ -43,6 +43,7 @@ import jp.l1j.server.packets.server.S_NpcTalkReturn;
 import jp.l1j.server.packets.server.S_RemoveObject;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SkillBrave;
+import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Npc;
@@ -521,6 +522,24 @@ public class L1MonsterInstance extends L1NpcInstance {
 				}
 			}
 		}
+	}
+
+	/**
+	 * PCを最大で10セル ランダムに飛ばす
+	 * @id ELIZABE_TELEPORT
+	 * @param cha
+	 * @param effectable
+	 */
+	public static void randomTeleportByElizabe(L1PcInstance pc, boolean effectable) {
+		L1Location newLocation = pc.getLocation().randomLocation(10, true);
+		int newX = newLocation.getX();
+		int newY = newLocation.getY();
+		short mapId = (short) newLocation.getMapId();
+
+		L1Teleport.teleport(pc, newX, newY, mapId, 5, effectable);
+		S_SkillSound packet = new S_SkillSound(pc.getId(),2235);
+		pc.sendPackets(packet);
+		pc.broadcastPacket(packet);
 	}
 
 	@Override
