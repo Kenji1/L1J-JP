@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `ub_settings`;
 CREATE TABLE IF NOT EXISTS `ub_settings` (
   `ub_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `ub_name` varchar(45) NOT NULL DEFAULT '',
+  `ub_name` varchar(255) NOT NULL DEFAULT '',
   `ub_map_id` int(10) unsigned NOT NULL DEFAULT '0',
   `ub_area_x1` int(10) unsigned NOT NULL DEFAULT '0',
   `ub_area_y1` int(10) unsigned NOT NULL DEFAULT '0',

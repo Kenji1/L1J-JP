@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `magic_dolls`;
 CREATE TABLE IF NOT EXISTS `magic_dolls` (
   `item_id` int(10) unsigned NOT NULL,
-  `note` varchar(45) DEFAULT '',
+  `note` varchar(255) DEFAULT '',
   `doll_id` int(10) unsigned NOT NULL,
   `ac` tinyint(3) NOT NULL DEFAULT '0',
   `str` tinyint(3) unsigned NOT NULL DEFAULT '0',

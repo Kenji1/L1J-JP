@@ -4,8 +4,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `spawn_npc`;
 CREATE TABLE `spawn_npc` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `location` varchar(19) NOT NULL DEFAULT '',
+  `id` int(10) unsigned NOT NULL,
+  `location` varchar(255) NOT NULL DEFAULT '',
   `count` int(10) unsigned NOT NULL DEFAULT '0',
   `npc_template_id` int(10) unsigned NOT NULL DEFAULT '0',
   `loc_x` int(10) unsigned NOT NULL DEFAULT '0',
@@ -17,4 +17,4 @@ CREATE TABLE `spawn_npc` (
   `map_id` int(10) unsigned NOT NULL DEFAULT '0',
   `movement_distance` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1400185 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `spawn_doors`;
 CREATE TABLE `spawn_doors` (
   `id` int(10) NOT NULL DEFAULT '0',
-  `location` varchar(25) NOT NULL DEFAULT '',
+  `location` varchar(255) NOT NULL DEFAULT '',
   `gfx_id` int(10) NOT NULL DEFAULT '0',
   `loc_x` int(10) NOT NULL DEFAULT '0',
   `loc_y` int(10) NOT NULL DEFAULT '0',

@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `pet_types`;
 CREATE TABLE IF NOT EXISTS `pet_types` (
   `base_npc_id` int(10) NOT NULL,
-  `name` varchar(45) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `tame_item_id` int(10) NOT NULL,
   `min_hpup` int(10) NOT NULL,
   `max_hpup` int(10) NOT NULL,

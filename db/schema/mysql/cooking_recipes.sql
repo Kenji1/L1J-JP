@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS `cooking_recipes` (
   `fantasy_dish_id` int(10) unsigned NOT NULL,
   `fantasy_dish_amount` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

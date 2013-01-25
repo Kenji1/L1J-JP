@@ -5,11 +5,11 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `armors`;
 CREATE TABLE `armors` (
   `item_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(70) DEFAULT NULL,
-  `unidentified_name_id` varchar(45) NOT NULL DEFAULT '',
-  `identified_name_id` varchar(45) NOT NULL DEFAULT '',
-  `type` varchar(15) NOT NULL DEFAULT '',
-  `material` varchar(45) NOT NULL DEFAULT '',
+  `name` varchar(255) DEFAULT NULL,
+  `unidentified_name_id` varchar(255) NOT NULL DEFAULT '',
+  `identified_name_id` varchar(255) NOT NULL DEFAULT '',
+  `type` varchar(255) NOT NULL DEFAULT '',
+  `material` varchar(255) NOT NULL DEFAULT '',
   `grade` tinyint(1) NOT NULL DEFAULT '-1',
   `weight` int(10) unsigned NOT NULL DEFAULT '0',
   `inv_gfx` int(10) unsigned NOT NULL DEFAULT '0',
@@ -49,7 +49,7 @@ CREATE TABLE `armors` (
   `tradable` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `deletable` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `charge_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `expiration_time` varchar(10) DEFAULT NULL,
+  `expiration_time` varchar(255) DEFAULT NULL,
   `defense_water` tinyint(3) NOT NULL DEFAULT '0',
   `defense_wind` tinyint(3) NOT NULL DEFAULT '0',
   `defense_fire` tinyint(3) NOT NULL DEFAULT '0',
@@ -61,6 +61,6 @@ CREATE TABLE `armors` (
   `resist_hold` tinyint(3) NOT NULL DEFAULT '0',
   `resist_blind` tinyint(3) NOT NULL DEFAULT '0',
   `exp_bonus` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `potion_recovery_rate` tinyint(3) NOT NULL,
+  `potion_recovery_rate` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

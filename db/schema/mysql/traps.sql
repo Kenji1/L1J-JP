@@ -5,8 +5,8 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `traps`;
 CREATE TABLE IF NOT EXISTS `traps` (
   `id` int(10) NOT NULL,
-  `note` varchar(64) DEFAULT NULL,
-  `type` varchar(64) NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `type` varchar(255) NOT NULL,
   `gfx_id` int(10) NOT NULL,
   `is_detectionable` tinyint(1) NOT NULL,
   `base` int(10) NOT NULL,

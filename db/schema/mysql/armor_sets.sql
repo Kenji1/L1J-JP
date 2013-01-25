@@ -4,8 +4,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `armor_sets`;
 CREATE TABLE IF NOT EXISTS `armor_sets` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `note` varchar(45) DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `sets` varchar(1000) NOT NULL,
   `poly_id` int(10) NOT NULL DEFAULT '-1',
   `ac` tinyint(3) NOT NULL DEFAULT '0',
@@ -39,6 +39,6 @@ CREATE TABLE IF NOT EXISTS `armor_sets` (
   `resist_blind` tinyint(3) NOT NULL DEFAULT '0',
   `is_haste` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `exp_bonus` tinyint(3) NOT NULL DEFAULT '0',
-  `potion_recovery_rate` tinyint(3) NOT NULL,
+  `potion_recovery_rate` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=65 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS `mob_skills`;
 CREATE TABLE `mob_skills` (
   `mob_id` int(10) unsigned NOT NULL DEFAULT '0',
   `act_no` int(10) unsigned NOT NULL DEFAULT '0',
-  `mob_name` varchar(45) NOT NULL DEFAULT '',
+  `mob_name` varchar(255) NOT NULL DEFAULT '',
   `type` int(10) unsigned NOT NULL DEFAULT '0',
   `tri_rnd` int(10) unsigned NOT NULL DEFAULT '0',
   `tri_hp` int(10) unsigned NOT NULL DEFAULT '0',

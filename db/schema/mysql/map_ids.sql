@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `map_ids`;
 CREATE TABLE IF NOT EXISTS `map_ids` (
   `map_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `location_name` varchar(45) DEFAULT NULL,
+  `location_name` varchar(255) DEFAULT NULL,
   `start_x` int(10) unsigned NOT NULL DEFAULT '0',
   `end_x` int(10) unsigned NOT NULL DEFAULT '0',
   `start_y` int(10) unsigned NOT NULL DEFAULT '0',

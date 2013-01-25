@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `spawn_ub` (
   `ub_id` int(10) unsigned NOT NULL DEFAULT '0',
   `pattern` int(10) unsigned NOT NULL DEFAULT '0',
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `location` varchar(19) NOT NULL DEFAULT '',
+  `location` varchar(255) NOT NULL DEFAULT '',
   `npc_template_id` int(10) unsigned NOT NULL DEFAULT '0',
   `count` int(10) unsigned NOT NULL DEFAULT '0',
   `spawn_delay` int(10) unsigned NOT NULL DEFAULT '0',

@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `restart_locations`;
 CREATE TABLE IF NOT EXISTS `restart_locations` (
   `area` int(10) unsigned NOT NULL DEFAULT '0',
-  `note` varchar(50) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `loc_x` int(10) unsigned NOT NULL DEFAULT '0',
   `loc_y` int(10) unsigned NOT NULL DEFAULT '0',
   `map_id` int(10) unsigned NOT NULL DEFAULT '0',

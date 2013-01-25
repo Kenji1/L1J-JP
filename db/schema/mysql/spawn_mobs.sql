@@ -4,8 +4,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `spawn_mobs`;
 CREATE TABLE `spawn_mobs` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `location` varchar(45) NOT NULL DEFAULT '',
+  `id` int(10) unsigned NOT NULL,
+  `location` varchar(255) NOT NULL DEFAULT '',
   `count` int(10) unsigned NOT NULL DEFAULT '0',
   `npc_template_id` int(10) unsigned NOT NULL DEFAULT '0',
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',

@@ -4,9 +4,9 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `spawn_boss`;
 CREATE TABLE `spawn_boss` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `location` varchar(45) NOT NULL DEFAULT '',
-  `cycle_type` varchar(20) NOT NULL DEFAULT '',
+  `id` int(10) unsigned NOT NULL,
+  `location` varchar(255) NOT NULL DEFAULT '',
+  `cycle_type` varchar(255) NOT NULL DEFAULT '',
   `count` int(10) unsigned NOT NULL DEFAULT '0',
   `npc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -26,4 +26,4 @@ CREATE TABLE `spawn_boss` (
   `spawn_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `percentage` tinyint(3) unsigned NOT NULL DEFAULT '100',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=396 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

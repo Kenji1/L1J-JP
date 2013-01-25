@@ -5,12 +5,12 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `etc_items`;
 CREATE TABLE `etc_items` (
   `item_id` int(10) unsigned NOT NULL,
-  `name` varchar(45) NOT NULL DEFAULT '',
-  `unidentified_name_id` varchar(45) NOT NULL DEFAULT '',
-  `identified_name_id` varchar(45) NOT NULL DEFAULT '',
-  `item_type` varchar(40) NOT NULL DEFAULT '',
-  `use_type` varchar(20) NOT NULL DEFAULT '',
-  `material` varchar(45) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `unidentified_name_id` varchar(255) NOT NULL DEFAULT '',
+  `identified_name_id` varchar(255) NOT NULL DEFAULT '',
+  `item_type` varchar(255) NOT NULL DEFAULT '',
+  `use_type` varchar(255) NOT NULL DEFAULT '',
+  `material` varchar(255) NOT NULL DEFAULT '',
   `weight` int(10) unsigned NOT NULL DEFAULT '0',
   `inv_gfx` int(10) unsigned NOT NULL DEFAULT '0',
   `grd_gfx` int(10) unsigned NOT NULL DEFAULT '0',
@@ -34,6 +34,6 @@ CREATE TABLE `etc_items` (
   `food_volume` int(10) unsigned NOT NULL DEFAULT '0',
   `save_at_once` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `charge_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `expiration_time` varchar(10) DEFAULT NULL,
+  `expiration_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

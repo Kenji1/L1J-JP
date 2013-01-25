@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `mob_groups`;
 CREATE TABLE IF NOT EXISTS `mob_groups` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL,
   `note` varchar(255) NOT NULL DEFAULT '',
   `remove_group_if_leader_die` int(10) unsigned NOT NULL DEFAULT '0',
   `leader_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -23,4 +23,4 @@ CREATE TABLE IF NOT EXISTS `mob_groups` (
   `minion7_id` int(10) unsigned NOT NULL DEFAULT '0',
   `minion7_count` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=88 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
