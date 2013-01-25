@@ -100,8 +100,10 @@ public class L1EnchantScroll {
 			}
 			pc.sendPackets(new S_ServerMessage(msg));
 			pc.getInventory().removeItem(target, 1);
+			pc.getInventory().saveItem(target);
 		} else {
 			pc.sendPackets(new S_ServerMessage(154)); // \f1スクロールが散らばります。
+			pc.getInventory().saveItem(target);
 		}
 
 		return true;
@@ -109,6 +111,7 @@ public class L1EnchantScroll {
 
 	private boolean enchantWeapon(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
 		int itemId = item.getItemId();
+		int weaponId = target.getItem().getItemId();
 
 		if (target == null || target.getItem().getType2() != 1) {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
@@ -141,7 +144,6 @@ public class L1EnchantScroll {
 				return false;
 			}
 		}
-		int weaponId = target.getItem().getItemId();
 		if (weaponId == 36 || weaponId == 183 || weaponId >= 250
 				&& weaponId <= 255) { // イリュージョン武器
 			if (itemId == 40128) { // イリュージョン武器強化スクロール
@@ -165,11 +167,14 @@ public class L1EnchantScroll {
 			if (enchant_level < -6) {
 				// -7以上はできない。
 				failureEnchant(pc, target);
+				pc.getInventory().saveItem(target);
 			} else {
 				successEnchant(pc, target, -1);
+				pc.getInventory().saveItem(target);
 			}
 		} else if (enchant_level < safe_enchant) {
 			successEnchant(pc, target, randomLevel(target, itemId));
+			pc.getInventory().saveItem(target);
 		} else {
 			int rnd = _random.nextInt(100) + 1;
 			int enchant_chance_wepon;
@@ -182,12 +187,14 @@ public class L1EnchantScroll {
 			if (rnd < enchant_chance_wepon) {
 				int randomEnchantLevel = randomLevel(target, itemId);
 				successEnchant(pc, target, randomEnchantLevel);
+				pc.getInventory().saveItem(target);
 			} else if (enchant_level >= 9
 					&& rnd < (enchant_chance_wepon * 2)) {
 				// \f1%0が%2と強烈に%1光りましたが、幸い無事にすみました。
 				pc.sendPackets(new S_ServerMessage(160, target.getLogName(), "$245", "$248"));
 			} else {
 				failureEnchant(pc, target);
+				pc.getInventory().deleteItem(target);
 			}
 		}
 		return true;
@@ -236,11 +243,14 @@ public class L1EnchantScroll {
 			if (enchant_level < -6) {
 				// -7以上はできない。
 				failureEnchant(pc, target);
+				pc.getInventory().deleteItem(target);
 			} else {
 				successEnchant(pc, target, -1);
+				pc.getInventory().saveItem(target);
 			}
 		} else if (enchant_level < safe_enchant) {
 			successEnchant(pc, target, randomLevel(target, itemId));
+			pc.getInventory().saveItem(target);
 		} else {
 			int rnd = _random.nextInt(100) + 1;
 			int enchant_chance_armor;
@@ -263,6 +273,7 @@ public class L1EnchantScroll {
 			if (rnd < enchant_chance_armor) {
 				int randomEnchantLevel = randomLevel(target, itemId);
 				successEnchant(pc, target, randomEnchantLevel);
+				pc.getInventory().saveItem(target);
 			} else if (enchant_level >= 9
 					&& rnd < (enchant_chance_armor * 2)) {
 				String item_name_id = target.getName();
@@ -278,6 +289,7 @@ public class L1EnchantScroll {
 						"$248"));
 			} else {
 				failureEnchant(pc, target);
+				pc.getInventory().deleteItem(target);
 			}
 		}
 		return true;
@@ -391,8 +403,10 @@ public class L1EnchantScroll {
 
 		if (rnd < enchant_chance_accessory) { // 成功
 			successEnchant(pc, target, 1);
+			pc.getInventory().saveItem(target);
 		} else { // 失敗
 			failureEnchant(pc, target);
+			pc.getInventory().deleteItem(target);
 		}
 		return true;
 	}
@@ -420,6 +434,7 @@ public class L1EnchantScroll {
 		int safe_enchant = target.getItem().getSafeEnchant();
 		if (target.getEnchantLevel() < safe_enchant) {
 			successEnchant(pc, target, 1);
+			pc.getInventory().saveItem(target);
 		} else {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 			return false;
@@ -452,6 +467,7 @@ public class L1EnchantScroll {
 		int safe_enchant = target.getItem().getSafeEnchant();
 		if (target.getEnchantLevel() < safe_enchant) {
 			successEnchant(pc, target, 1);
+			pc.getInventory().saveItem(target);
 		} else {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 			return false;
@@ -743,43 +759,52 @@ public class L1EnchantScroll {
 		}
 	}
 
-	private void failureEnchant(L1PcInstance pc, L1ItemInstance item) {
+	private void failureEnchant(L1PcInstance pc, L1ItemInstance target) {
 		String s = "";
 		String sa = "";
-		int itemType = item.getItem().getType2();
-		String nameId = item.getName();
+		int itemType = target.getItem().getType2();
+		String nameId = target.getName();
 		String pm = "";
 		if (itemType == 1) { // 武器
-			if (!item.isIdentified() || item.getEnchantLevel() == 0) {
+			if (!target.isIdentified() || target.getEnchantLevel() == 0) {
 				s = nameId; // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
 				sa = "$245";
+				pc.getInventory().removeItem(target, target.getCount());
+				pc.getInventory().saveItem(target);
 			} else {
-				if (item.getEnchantLevel() > 0) {
+				if (target.getEnchantLevel() > 0) {
 					pm = "+";
 				}
-				s = (new StringBuilder()).append(pm + item.getEnchantLevel())
+				s = (new StringBuilder()).append(pm + target.getEnchantLevel())
 						.append(" ").append(nameId).toString(); // \f1%0が強烈に%1
 				// 光ったあと
 				// 、蒸発してなくなります。
 				sa = "$245";
+				pc.getInventory().removeItem(target, target.getCount());
+				pc.getInventory().saveItem(target);
 			}
 		} else if (itemType == 2) { // 防具
-			if (!item.isIdentified() || item.getEnchantLevel() == 0) {
+			if (!target.isIdentified() || target.getEnchantLevel() == 0) {
 				s = nameId; // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
 				sa = " $252";
+				pc.getInventory().removeItem(target, target.getCount());
+				pc.getInventory().saveItem(target);
 			} else {
-				if (item.getEnchantLevel() > 0) {
+				if (target.getEnchantLevel() > 0) {
 					pm = "+";
 				}
-				s = (new StringBuilder()).append(pm + item.getEnchantLevel())
+				s = (new StringBuilder()).append(pm + target.getEnchantLevel())
 						.append(" ").append(nameId).toString(); // \f1%0が強烈に%1
 				// 光ったあと
 				// 、蒸発してなくなります。
 				sa = " $252";
+				pc.getInventory().removeItem(target, target.getCount());
+				pc.getInventory().saveItem(target);
 			}
 		}
 		pc.sendPackets(new S_ServerMessage(164, s, sa));
-		pc.getInventory().removeItem(item, item.getCount());
+		pc.getInventory().removeItem(target, target.getCount());
+		pc.getInventory().saveItem(target);
 	}
 
 	private int enchantChance(L1ItemInstance l1iteminstance) {
