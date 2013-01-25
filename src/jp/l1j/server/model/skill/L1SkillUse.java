@@ -1760,6 +1760,20 @@ public class L1SkillUse {
 					if (cha.hasSkillEffect(POLLUTE_WATER)) { // ポルートウォーター中は回復量1/2倍
 						dmg /= 2;
 					}
+					if (cha.hasSkillEffect(FAFURION_REDUCE_HEAL)) { // パプリオンリデュースヒール中は回復量半減
+						dmg /= 2;
+						if (cha instanceof L1PcInstance) {
+							if (_player != null && _player.isInvisble()) {
+								_player.delInvis();
+							}
+							if (cha instanceof L1SummonInstance
+									|| cha instanceof L1PetInstance) {
+								final L1NpcInstance npc = (L1NpcInstance) cha;
+								npc.broadcastPacket(new S_SkillSound(cha
+										.getId(), 7782));
+							}
+						}
+					}
 				}
 
 				// ■■■■ 個別処理のあるスキルのみ書いてください。 ■■■■
@@ -1972,6 +1986,15 @@ public class L1SkillUse {
 					cha.removeSkillEffect(WATER_LIFE);
 				} else if (_skillId == NATURES_TOUCH) {
 					_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
+				} else if (_skillId == FAFURION_DEATH_HEAL) { // パプリオンデスヒール中は回復量＝ダメージ
+					if (_player != null && _player.isInvisble()) {
+						_player.delInvis();
+					}
+					if (cha instanceof L1SummonInstance
+							|| cha instanceof L1PetInstance) {
+						final L1NpcInstance npc = (L1NpcInstance) cha;
+						npc.broadcastPacket(new S_SkillSound(cha.getId(), 7780));
+					}
 				}
 				// ★★★ 攻撃系スキル ★★★
 				// チルタッチ、バンパイアリックタッチ
@@ -3314,6 +3337,11 @@ public class L1SkillUse {
 				if ((cha instanceof L1TowerInstance || cha instanceof L1DoorInstance)
 						&& dmg < 0) { // ガーディアンタワー、ドアにヒールを使用
 					dmg = 0;
+				}
+
+				if (_skillId == FAFURION_DEATH_HEAL || _skillId == FAFURION_DEATH_PORTION) {
+					dmg *= -1; // パブリオンデスヒール及びパプリオンデスポーション中
+								//回復＝ダメージとなる。
 				}
 
 				if (dmg != 0 || drainMana != 0) {

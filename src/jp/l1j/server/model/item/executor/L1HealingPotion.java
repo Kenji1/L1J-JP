@@ -29,8 +29,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import jp.l1j.server.datatables.ItemTable;
+import jp.l1j.server.model.L1Character;
 import jp.l1j.server.model.Instance.L1ItemInstance;
+import jp.l1j.server.model.Instance.L1NpcInstance;
 import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.Instance.L1PetInstance;
+import jp.l1j.server.model.Instance.L1SummonInstance;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.skill.L1BuffUtil;
 import static jp.l1j.server.model.skill.L1SkillId.*;
@@ -190,6 +194,19 @@ public class L1HealingPotion {
 
 		if (pc.hasSkillEffect(POLLUTE_WATER)) { // ポルートウォーター中は回復量1/2倍
 			healHp /= 2;
+		}
+		if (pc.hasSkillEffect(FAFURION_DEATH_PORTION)) { // パプリオンデスポーション中はダメージに変換
+			L1Character cha = null;
+			pc.sendPackets(new S_ServerMessage(167)); // \f1肌がムズムズします。（仮で適当なものです）
+			pc.setCurrentHp(pc.getCurrentHp() - (int)healHp);
+			if (pc != null && pc.isInvisble()) {
+				pc.delInvis();
+			}
+			if (cha instanceof L1SummonInstance
+					|| cha instanceof L1PetInstance) {
+				L1NpcInstance npc = (L1NpcInstance) cha;
+				npc.broadcastPacket(new S_SkillSound(cha.getId(), 7781));
+			}
 		}
 		pc.setCurrentHp(pc.getCurrentHp() + (int)healHp);
 		

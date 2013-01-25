@@ -656,6 +656,12 @@ public class L1SkillId {
 
 	public static final int BLOODSTAIN_OF_VALAKAS = 4014; // ヴァラカスの血痕
 
+	public static final int FAFURION_DEATH_HEAL = 4015; // パプリオンデスヒール
+
+	public static final int FAFURION_REDUCE_HEAL = 4016; // パプリオンリデュースヒール
+
+	public static final int FAFURION_DEATH_PORTION = 4017; // パプリオンデスポーション
+
 	public static final int BLESS_OF_CRAY = 4056; // クレイの祝福
 
 	public static final int BLESS_OF_SAEL = 4057; // サエルの祝福
