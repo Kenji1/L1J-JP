@@ -593,7 +593,7 @@ public class L1ItemInstance extends L1Object {
 			int day = cal.get(Calendar.DATE);
 			int hour = cal.get(Calendar.HOUR_OF_DAY);
 			int minute = cal.get(Calendar.MINUTE);
-			name.append(" [" + month + "-" + day + " " + hour + ":" + minute + "]");
+			name.append("［" + month + "-" + day + " " + hour + ":" + minute + "］");
 		}
 		
 		if (getItem().getType2() == 0 && getItem().getType() == 2) { // light系アイテム
