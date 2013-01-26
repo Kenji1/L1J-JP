@@ -164,7 +164,7 @@ public class TownTable {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE town SET sales_money_yesterday = sales_money, sales_money = 0");
+			pstm = con.prepareStatement("UPDATE towns SET sales_money_yesterday = sales_money, sales_money = 0");
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
