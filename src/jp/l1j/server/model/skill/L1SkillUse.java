@@ -1299,10 +1299,13 @@ public class L1SkillUse {
 			if (castgfx == 0) {
 				// 表示するグラフィックが無い場合でも
 				// action_idに設定があればモーションは行う
-				L1PcInstance pc = (L1PcInstance) _user;
-				S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), actionId);
-				pc.sendPackets(gfx);
-				pc.broadcastPacket(gfx);
+				// トリプルアローとフォースレイヤーは対象外とする
+				if (_skillId != TRIPLE_ARROW && _skillId != FOE_SLAYER) {
+					L1PcInstance pc = (L1PcInstance) _user;
+					S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), actionId);
+					pc.sendPackets(gfx);
+					pc.broadcastPacket(gfx);
+				}
 				return;
 			}
 			if (_skillId == FIRE_WALL || _skillId == LIFE_STREAM) {
