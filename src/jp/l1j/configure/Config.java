@@ -441,6 +441,12 @@ public final class Config {
 	@Configure(file = ALT, key = "WarInterval", loader = WarTimeUnitLoader.class)
 	public static int ALT_WAR_INTERVAL_UNIT = Calendar.DATE;
 
+	@Configure(file = ALT, key = "WeatherSystem")
+	public static boolean WEATHER_SYSTEM = false;
+	
+	@Configure(file = ALT, key = "WeatherInterval")
+	public static int WEATHER_INTERVAL = 3600;
+	
 	@Configure(file = ALT, key = "SpawnHomePoint")
 	public static boolean SPAWN_HOME_POINT = true;
 

@@ -32,11 +32,12 @@ import jp.l1j.server.controller.timer.FishingTimeController;
 import jp.l1j.server.controller.timer.HomeTownTimeController;
 import jp.l1j.server.controller.timer.HouseTaxTimeController;
 import jp.l1j.server.controller.timer.LightTimeController;
-import jp.l1j.server.controller.timer.NpcChatTimeController;
 import jp.l1j.server.controller.timer.MapTimeController;
+import jp.l1j.server.controller.timer.NpcChatTimeController;
 import jp.l1j.server.controller.timer.ShutdownTimeController;
 import jp.l1j.server.controller.timer.UbTimeController;
 import jp.l1j.server.controller.timer.WarTimeController;
+import jp.l1j.server.controller.timer.WeatherTimeController;
 import jp.l1j.server.datatables.CastleTable;
 import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.ChatLogTable;
@@ -234,6 +235,12 @@ public class GameServer extends Thread {
 		WarTimeController warTimeController = WarTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(warTimeController);
 
+		// 天候タイムコントローラー
+		if (Config.WEATHER_SYSTEM) {
+			WeatherTimeController weatherTimeController = WeatherTimeController.getInstance();
+			GeneralThreadPool.getInstance().execute(weatherTimeController);
+		}
+		
 		// 精霊の石生成
 		if (Config.ELEMENTAL_STONE_AMOUNT > 0) {
 			ElementalStoneGenerator elementalStoneGenerator = ElementalStoneGenerator

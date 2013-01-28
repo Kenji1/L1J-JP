@@ -91,6 +91,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- 戦争間隔(d:日 h:時 m:分) -->
 <entry key="WarInterval">4d</entry>
 
+<!-- 天候システム ... Trueで天候を定期的に変更、Falseで晴れ固定 -->
+<entry key="WeatherSystem">False</entry>
+
+<!-- 天候を変更する間隔（単位：秒、デフォルトは1時間毎）-->
+<entry key="WeatherInterval">3600</entry>
+
 <!-- 範囲出現(spawnlistでlocx1,locy1,locx2,locy2が設定されている)モンスターのホームポイント設定 -->
 <!-- True:ホームポイントを持たせる, False:ホームポイントを持たせない -->
 <entry key="SpawnHomePoint">True</entry>
