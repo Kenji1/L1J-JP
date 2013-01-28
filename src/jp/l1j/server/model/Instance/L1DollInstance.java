@@ -31,6 +31,7 @@ import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1MagicDoll;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.IdFactory;
+import jp.l1j.server.utils.Teleportation;
 
 public class L1DollInstance extends L1NpcInstance {
 	private static final long serialVersionUID = 1L;
@@ -59,7 +60,12 @@ public class L1DollInstance extends L1NpcInstance {
 			return true;
 		} else if (_master != null && _master.getMapId() == getMapId()) {
 			int dir = moveDirection(_master.getX(), _master.getY());
-			if (getLocation().getTileLineDistance(_master.getLocation()) > 3) {
+			int distance = getLocation().getTileLineDistance(_master.getLocation());
+			if (distance > 15) {
+				// 本家仕様とは異なるが、15セル以上離れた場合は主人のもとへテレポート（引っ掛かり防止対策）
+				Teleportation.teleport(this, _master.getX(), _master.getY(),
+						_master.getMapId(), 5);
+			} else if (distance > 3) {
 				setDirectionMove(dir);
 				setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
 			} else {

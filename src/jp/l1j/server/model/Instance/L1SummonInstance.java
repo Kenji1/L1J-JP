@@ -41,6 +41,7 @@ import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.templates.L1PetType;
 import jp.l1j.server.utils.IdFactory;
+import jp.l1j.server.utils.Teleportation;
 
 public class L1SummonInstance extends L1NpcInstance {
 	private static final long serialVersionUID = 1L;
@@ -90,7 +91,12 @@ public class L1SummonInstance extends L1NpcInstance {
 			return false;
 		default:
 			if ((_master != null) && (_master.getMapId() == getMapId())) {// ●主人を追尾
-				if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
+				int distance = getLocation().getTileLineDistance(_master.getLocation());
+				if (distance > 15) {
+					// 本家仕様とは異なるが、15セル以上離れた場合は主人のもとへテレポート（引っ掛かり防止対策）
+					Teleportation.teleport(this, _master.getX(), _master.getY(),
+							_master.getMapId(), 5);
+				} else if (distance > 3) {
 					_dir = moveDirection(_master.getX(), _master.getY());
 					setDirectionMove(_dir);
 					setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));

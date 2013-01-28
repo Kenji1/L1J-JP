@@ -214,7 +214,7 @@ public class Teleportation {
 		}
 	}
 	
-	private static void teleport(L1NpcInstance npc, int x, int y, short map, int head) {
+	public static void teleport(L1NpcInstance npc, int x, int y, short map, int head) {
 		L1World.getInstance().moveVisibleObject(npc, map);
 
 		L1WorldMap.getInstance().getMap(npc.getMapId()).setPassable(npc.getX(),

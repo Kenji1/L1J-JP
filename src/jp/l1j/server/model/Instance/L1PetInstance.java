@@ -47,6 +47,7 @@ import jp.l1j.server.templates.L1Pet;
 import jp.l1j.server.templates.L1PetItem;
 import jp.l1j.server.templates.L1PetType;
 import jp.l1j.server.utils.IdFactory;
+import jp.l1j.server.utils.Teleportation;
 
 public class L1PetInstance extends L1NpcInstance {
 
@@ -108,7 +109,12 @@ public class L1PetInstance extends L1NpcInstance {
 			return false;
 		default:
 			if ((_petMaster != null) && (_petMaster.getMapId() == getMapId())) { // 主人を追尾
-				if (getLocation().getTileLineDistance(_petMaster.getLocation()) > 2) {
+				int distance = getLocation().getTileLineDistance(_master.getLocation());
+				if (distance > 15) {
+					// 本家仕様とは異なるが、15セル以上離れた場合は主人のもとへテレポート（引っ掛かり防止対策）
+					Teleportation.teleport(this, _master.getX(), _master.getY(),
+							_master.getMapId(), 5);
+				} else if (distance > 3) {
 					// 主人が離れすぎたら休憩状態に
 					_dir = moveDirection(_petMaster.getX(), _petMaster.getY());
 					setDirectionMove(_dir);
