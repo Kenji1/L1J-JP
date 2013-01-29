@@ -86,8 +86,7 @@ import jp.l1j.server.model.item.executor.L1Roulette;
 import jp.l1j.server.model.item.executor.L1ShowMessage;
 import jp.l1j.server.model.item.executor.L1SpawnWand;
 import jp.l1j.server.model.item.executor.L1SpeedUpClock;
-import jp.l1j.server.model.item.executor.L1SpellScroll;
-import jp.l1j.server.model.item.executor.L1SpellWand;
+import jp.l1j.server.model.item.executor.L1SpellItem;
 import jp.l1j.server.model.item.executor.L1TeleportAmulet;
 import jp.l1j.server.model.item.executor.L1ThirdSpeedPotion;
 import jp.l1j.server.model.item.executor.L1TreasureBox;
@@ -287,10 +286,12 @@ public class C_UseItem extends ClientBasePacket {
 						break;
 					}
 				}
-			} else if (itemId == 40007) { // エボニーワンド
-				L1SpellWand wand = L1SpellWand.get(itemId);
-				if (wand != null) {
-					wand.use(pc, item, objid, locx, locy);
+			} else if (itemId == 40007 // エボニーワンド
+					|| (itemId >= 40859 && itemId <= 40898)
+					|| (itemId >= 49281 && itemId <= 49286)) { // スペルスクロール
+				L1SpellItem spell = L1SpellItem.get(itemId);
+				if (spell != null) {
+					spell.use(pc, item, objid, locx, locy);
 				} else {
 					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
 					// \f1%0は使用できません。
@@ -518,15 +519,6 @@ public class C_UseItem extends ClientBasePacket {
 				pc.setDrink(true);
 				pc.sendPackets(new S_Liquor(pc.getId(), 1));
 				pc.getInventory().removeItem(item, 1);
-			} else if ((itemId >= 40859 && itemId <= 40898)
-					|| (itemId >= 49281 && itemId <= 49286)) { // スペルスクロール
-				L1SpellScroll spellsc = L1SpellScroll.get(itemId);
-				if (spellsc != null) {
-					spellsc.use(pc, item, objid, locx, locy);
-				} else {
-					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
-					// \f1%0は使用できません。
-				}
 			} else if (itemId >= 40901 && itemId <= 40908) { // 各種エンゲージリング
 				useEngagementRing(pc);
 			} else if (itemId == 41245) { // 溶解剤

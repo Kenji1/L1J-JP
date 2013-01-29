@@ -38,17 +38,17 @@ import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.utils.PerformanceTimer;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class L1SpellWand {
+public class L1SpellItem {
 
-	private static Logger _log = Logger.getLogger(L1SpellWand.class.getName());
+	private static Logger _log = Logger.getLogger(L1SpellItem.class.getName());
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "ItemEffectList")
-	private static class ItemEffectList implements Iterable<L1SpellWand> {
+	private static class ItemEffectList implements Iterable<L1SpellItem> {
 		@XmlElement(name = "Item")
-		private List<L1SpellWand> _list;
+		private List<L1SpellItem> _list;
 
-		public Iterator<L1SpellWand> iterator() {
+		public Iterator<L1SpellItem> iterator() {
 			return _list.iterator();
 		}
 	}
@@ -63,11 +63,11 @@ public class L1SpellWand {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/SpellWand.xml";
+	private static final String PATH = "./data/xml/Item/SpellItem.xml";
 
-	private static final HashMap<Integer, L1SpellWand> _dataMap = new HashMap<Integer, L1SpellWand>();
+	private static final HashMap<Integer, L1SpellItem> _dataMap = new HashMap<Integer, L1SpellItem>();
 
-	public static L1SpellWand get(int id) {
+	public static L1SpellItem get(int id) {
 		return _dataMap.get(id);
 	}
 
@@ -91,7 +91,7 @@ public class L1SpellWand {
 	private Effect getEffect() {
 		return _effect;
 	}
-
+	
 	private boolean init() {
 		if (ItemTable.getInstance().getTemplate(getItemId()) == null) {
 			System.out.println("アイテムID " + getItemId() + " のテンプレートが見つかりません。");
@@ -99,24 +99,24 @@ public class L1SpellWand {
 		}
 		Effect effect = getEffect();
 		if (SkillTable.getInstance().findBySkillId(effect.getSkillId()) == null) {
-			System.out.println("SkillID " + effect.getSkillId() + " が見つかりません。");
+			System.out.println("アイテムID " + effect.getSkillId() + " のテンプレートが見つかりません。");
 			return false;
 		}
 		return true;
 	}
-
+	
 	public static void load() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading spell wand...");
+		System.out.print("loading spell item...");
 		try {
-			JAXBContext context = JAXBContext.newInstance(L1SpellWand.ItemEffectList.class);
+			JAXBContext context = JAXBContext.newInstance(L1SpellItem.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
 			File file = new File(PATH);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
-			for (L1SpellWand each : list) {
+			for (L1SpellItem each : list) {
 				if (each.init()) {
 					_dataMap.put(each.getItemId(), each);
 				}
@@ -128,10 +128,9 @@ public class L1SpellWand {
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
-	public boolean use(L1PcInstance pc, L1ItemInstance item, int objid,
-			int locx, int locy) {
-		L1BuffUtil.cancelBarrier(pc); // アブソルート バリアの解除
-		
+	public boolean use(L1PcInstance pc, L1ItemInstance item, int spellsc_objid,
+			int spellsc_x, int spellsc_y) {
+
 		int maxChargeCount = item.getItem().getMaxChargeCount();
 		int chargeCount = item.getChargeCount();
 		if (maxChargeCount > 0 && chargeCount <= 0) {
@@ -139,18 +138,31 @@ public class L1SpellWand {
 			pc.sendPackets(new S_ServerMessage(79));
 			return false;
 		}
-//		
-//		L1Object targetPc = L1World.getInstance().findObject(objid);
-//		pc.sendPackets(new S_UseAttackSkill(pc, objid, 10, locx, locy,
-//				ActionCodes.ACTION_Wand));
-//		pc.broadcastPacket(new S_UseAttackSkill(pc, objid, 10, locx, locy,
-//				ActionCodes.ACTION_Wand));
-//		
+		
+		if (spellsc_objid == pc.getId()
+				&& item.getItem().getUseType() != 30) { // spell_buff
+			pc.sendPackets(new S_ServerMessage(281));
+			// \f1魔法が無効になりました。
+			return false;
+		}
+
+		if (spellsc_objid == 0
+				&& item.getItem().getUseType() != 0
+				&& item.getItem().getUseType() != 26
+				&& item.getItem().getUseType() != 27) {
+			pc.sendPackets(new S_ServerMessage(281));
+			return false;
+			// ターゲットがいない場合にhandleCommandsを送るとぬるぽになるためここでreturn
+			// handleCommandsのほうで判断＆処理すべき部分かもしれない
+		}
+		
+		L1BuffUtil.cancelBarrier(pc); // アブソルート バリアの解除
+		
 		Effect effect = getEffect();
 
 		L1SkillUse l1skilluse = new L1SkillUse();
-		l1skilluse.handleCommands(pc, effect.getSkillId(), objid,
-				locx, locy, null, 0, L1SkillUse.TYPE_SPELLSC);
+		l1skilluse.handleCommands(pc, effect.getSkillId(), spellsc_objid,
+				spellsc_x, spellsc_y, null, 0, L1SkillUse.TYPE_SPELLSC);
 		
 		if (getRemove() > 0) {
 			if (chargeCount > 0) {

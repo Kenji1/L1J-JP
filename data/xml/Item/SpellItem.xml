@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ItemEffectList>
+<!-- Spell Scrolls -->
 	<!-- スペル スクロール (ヒール) -->
 	<Item ItemId="40859" Remove="1">
 		<Effect SkillId="1" />
@@ -155,5 +156,10 @@
 	<!-- スペル スクロール (ダークネス) -->
 	<Item ItemId="40898" Remove="1">
 		<Effect SkillId="40" />
+	</Item>
+<!-- Spell Wands -->
+	<!-- エボニーワンド -->
+	<Item ItemId="40007" Remove="1">
+		<Effect SkillId="34" /> <!-- コールライトニング -->
 	</Item>
 </ItemEffectList>
