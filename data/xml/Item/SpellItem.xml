@@ -157,6 +157,166 @@
 	<Item ItemId="40898" Remove="1">
 		<Effect SkillId="40" />
 	</Item>
+	<!-- スペル スクロール (クリエイト ゾンビ) -->
+	<Item ItemId="44000" Remove="1">
+		<Effect SkillId="41" />
+	</Item>
+	<!-- スペル スクロール (フィジカル エンチャント：STR) -->
+	<Item ItemId="44001" Remove="1">
+		<Effect SkillId="42" />
+	</Item>
+	<!-- スペル スクロール (ヘイスト) -->
+	<Item ItemId="44002" Remove="1">
+		<Effect SkillId="43" />
+	</Item>
+	<!-- スペル スクロール (キャンセレーション) -->
+	<Item ItemId="44003" Remove="1">
+		<Effect SkillId="44" />
+	</Item>
+	<!-- スペル スクロール (イラプション) -->
+	<Item ItemId="44004" Remove="1">
+		<Effect SkillId="45" />
+	</Item>
+	<!-- スペル スクロール (サン バースト) -->
+	<Item ItemId="44005" Remove="1">
+		<Effect SkillId="46" />
+	</Item>
+	<!-- スペル スクロール (ウィークネス) -->
+	<Item ItemId="44006" Remove="1">
+		<Effect SkillId="47" />
+	</Item>
+	<!-- スペル スクロール (ブレス ウェポン) -->
+	<Item ItemId="44007" Remove="1">
+		<Effect SkillId="48" />
+	</Item>
+	<!-- スペル スクロール (ヒール オール) -->
+	<Item ItemId="44008" Remove="1">
+		<Effect SkillId="49" />
+	</Item>
+	<!-- スペル スクロール (アイス ランス) -->
+	<Item ItemId="44009" Remove="1">
+		<Effect SkillId="50" />
+	</Item>
+	<!-- スペル スクロール (サモン モンスター) -->
+	<Item ItemId="44010" Remove="1">
+		<Effect SkillId="51" />
+	</Item>
+	<!-- スペル スクロール (ホーリー ウォーク) -->
+	<Item ItemId="44011" Remove="1">
+		<Effect SkillId="52" />
+	</Item>
+	<!-- スペル スクロール (トルネード) -->
+	<Item ItemId="44012" Remove="1">
+		<Effect SkillId="53" />
+	</Item>
+	<!-- スペル スクロール (グレーター ヘイスト) -->
+	<Item ItemId="44013" Remove="1">
+		<Effect SkillId="54" />
+	</Item>
+	<!-- スペル スクロール (バーサーカー) -->
+	<Item ItemId="44014" Remove="1">
+		<Effect SkillId="55" />
+	</Item>
+	<!-- スペル スクロール (ディジーズ) -->
+	<Item ItemId="44015" Remove="1">
+		<Effect SkillId="56" />
+	</Item>
+	<!-- スペル スクロール (フル ヒール) -->
+	<Item ItemId="44016" Remove="1">
+		<Effect SkillId="57" />
+	</Item>
+	<!-- スペル スクロール (ファイアー ウォール) -->
+	<Item ItemId="44017" Remove="1">
+		<Effect SkillId="58" />
+	</Item>
+	<!-- スペル スクロール (ブリザード) -->
+	<Item ItemId="44018" Remove="1">
+		<Effect SkillId="59" />
+	</Item>
+	<!-- スペル スクロール (インビジビリティー) -->
+	<Item ItemId="44019" Remove="1">
+		<Effect SkillId="60" />
+	</Item>
+	<!-- スペル スクロール (リザレクション) -->
+	<Item ItemId="44020" Remove="1">
+		<Effect SkillId="61" />
+	</Item>
+	<!-- スペル スクロール (アース クエイク) -->
+	<Item ItemId="44021" Remove="1">
+		<Effect SkillId="62" />
+	</Item>
+	<!-- スペル スクロール (ライフ ストリーム) -->
+	<Item ItemId="44022" Remove="1">
+		<Effect SkillId="63" />
+	</Item>
+	<!-- スペル スクロール (サイレンス) -->
+	<Item ItemId="44023" Remove="1">
+		<Effect SkillId="64" />
+	</Item>
+	<!-- スペル スクロール (ライトニング ストーム) -->
+	<Item ItemId="44024" Remove="1">
+		<Effect SkillId="65" />
+	</Item>
+	<!-- スペル スクロール (フォグ オブ スリーピング) -->
+	<Item ItemId="44025" Remove="1">
+		<Effect SkillId="66" />
+	</Item>
+	<!-- スペル スクロール (シェイプ チェンジ) -->
+	<Item ItemId="44026" Remove="1">
+		<Effect SkillId="67" />
+	</Item>
+	<!-- スペル スクロール (イミューン トゥ ハーム) -->
+	<Item ItemId="44027" Remove="1">
+		<Effect SkillId="68" />
+	</Item>
+	<!-- スペル スクロール (マス テレポート) -->
+	<Item ItemId="44028" Remove="1">
+		<Effect SkillId="69" />
+	</Item>
+	<!-- スペル スクロール (ファイアー ストーム) -->
+	<Item ItemId="44029" Remove="1">
+		<Effect SkillId="70" />
+	</Item>
+	<!-- スペル スクロール (ディケイポーション) -->
+	<Item ItemId="44030" Remove="1">
+		<Effect SkillId="71" />
+	</Item>
+	<!-- スペル スクロール (カウンター ディテクション) -->
+	<Item ItemId="44031" Remove="1">
+		<Effect SkillId="72" />
+	</Item>
+	<!-- スペル スクロール (クリエイト マジカル ウェポン) -->
+	<Item ItemId="44032" Remove="1">
+		<Effect SkillId="73" />
+	</Item>
+	<!-- スペル スクロール (メテオ ストライク) -->
+	<Item ItemId="44033" Remove="1">
+		<Effect SkillId="74" />
+	</Item>
+	<!-- スペル スクロール (グレーター リザレクション) -->
+	<Item ItemId="44034" Remove="1">
+		<Effect SkillId="75" />
+	</Item>
+	<!-- スペル スクロール (マス スロー) -->
+	<Item ItemId="44035" Remove="1">
+		<Effect SkillId="76" />
+	</Item>
+	<!-- スペル スクロール (ディスインテグレート) -->
+	<Item ItemId="44036" Remove="1">
+		<Effect SkillId="77" />
+	</Item>
+	<!-- スペル スクロール (アブソルート バリア) -->
+	<Item ItemId="44037" Remove="1">
+		<Effect SkillId="78" />
+	</Item>
+	<!-- スペル スクロール (アドバンスド スピリッツ) -->
+	<Item ItemId="44038" Remove="1">
+		<Effect SkillId="79" />
+	</Item>
+	<!-- スペル スクロール (フリージング ブリザード) -->
+	<Item ItemId="44039" Remove="1">
+		<Effect SkillId="80" />
+	</Item>
 <!-- Spell Wands -->
 	<!-- エボニーワンド -->
 	<Item ItemId="40007" Remove="1">

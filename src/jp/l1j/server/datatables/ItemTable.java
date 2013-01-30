@@ -122,8 +122,7 @@ public class ItemTable {
 		_useTypes.put("wcard", new Integer(35));
 		_useTypes.put("wcard_w", new Integer(36));
 		_useTypes.put("belt", new Integer(37));
-		// _useTypes.put("spell_long2", new Integer(39)); // 地面 / オブジェクト選択(遠距離)
-		// 5と同じ？
+		_useTypes.put("spell_point", new Integer(39)); // 地面選択
 		_useTypes.put("earring", new Integer(40));
 		_useTypes.put("fishing_rod", new Integer(42));
 		_useTypes.put("pattern_back", new Integer(45));

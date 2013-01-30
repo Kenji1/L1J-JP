@@ -149,7 +149,8 @@ public class L1SpellItem {
 		if (spellsc_objid == 0
 				&& item.getItem().getUseType() != 0
 				&& item.getItem().getUseType() != 26
-				&& item.getItem().getUseType() != 27) {
+				&& item.getItem().getUseType() != 27
+				&& item.getItem().getUseType() != 39) {
 			pc.sendPackets(new S_ServerMessage(281));
 			return false;
 			// ターゲットがいない場合にhandleCommandsを送るとぬるぽになるためここでreturn

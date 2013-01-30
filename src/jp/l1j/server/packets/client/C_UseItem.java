@@ -202,8 +202,8 @@ public class C_UseItem extends ClientBasePacket {
 			skillid = readC();
 		} else if (use_type == 30) { // スペルスクロール(spell_buff)
 			objid = readD();
-		} else if (use_type == 5 || use_type == 17) {
-			// spell_long、spell_short
+		} else if (use_type == 5 || use_type == 17 || use_type == 39) {
+			// spell_long、spell_short、spell_point
 			objid = readD();
 			locx = readH();
 			locy = readH();
@@ -219,7 +219,8 @@ public class C_UseItem extends ClientBasePacket {
 		} else if (use_type == 53) { // 料理の本(cookbook)
 			cookStatus = readC();
 			cookNo = readC();
-		} else if (use_type == 42) { // 釣り竿(fishing_rod)
+		} else if (use_type == 42) {
+			// スペルスクロール(spell_point)、釣り竿(fishing_rod)
 			locx = readH();
 			locy = readH();
 		} else {
@@ -288,7 +289,7 @@ public class C_UseItem extends ClientBasePacket {
 				}
 			} else if (itemId == 40007 // エボニーワンド
 					|| (itemId >= 40859 && itemId <= 40898)
-					|| (itemId >= 49281 && itemId <= 49286)) { // スペルスクロール
+					|| (itemId >= 44000 && itemId <= 44039)) { // スペルスクロール
 				L1SpellItem spell = L1SpellItem.get(itemId);
 				if (spell != null) {
 					spell.use(pc, item, objid, locx, locy);

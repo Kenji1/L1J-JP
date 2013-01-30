@@ -1258,12 +1258,12 @@
 		<Item ItemId="40872" Count="10" Chance="7" />	<!--スペル スクロール (ディクリース ウェイト)-->
 		<Item ItemId="40879" Count="10" Chance="7" />	<!--スペル スクロール (ブレスド アーマー)-->
 		<Item ItemId="40884" Count="10" Chance="7" />	<!--スペル スクロール (フィジカルエンチャント：DEX)-->
-		<Item ItemId="49281" Count="10" Chance="6" />	<!--スペル スクロール (フィジカル エンチャント：STR)-->
-		<Item ItemId="49282" Count="10" Chance="6" />	<!--スペル スクロール (ブレス ウェポン)-->
-		<Item ItemId="49283" Count="10" Chance="5" />	<!--スペル スクロール (ヒール オール)-->
-		<Item ItemId="49284" Count="10" Chance="5" />	<!--スペル スクロール (ホーリー ウォーク)-->
-		<Item ItemId="49285" Count="10" Chance="5" />	<!--スペル スクロール (グレーター ヘイスト)-->
-		<Item ItemId="49286" Count="10" Chance="5" />	<!--スペル スクロール (フル ヒール)-->
+		<Item ItemId="44001" Count="10" Chance="6" />	<!--スペル スクロール (フィジカル エンチャント：STR)-->
+		<Item ItemId="44007" Count="10" Chance="6" />	<!--スペル スクロール (ブレス ウェポン)-->
+		<Item ItemId="44008" Count="10" Chance="5" />	<!--スペル スクロール (ヒール オール)-->
+		<Item ItemId="44011" Count="10" Chance="5" />	<!--スペル スクロール (ホーリー ウォーク)-->
+		<Item ItemId="44013" Count="10" Chance="5" />	<!--スペル スクロール (グレーター ヘイスト)-->
+		<Item ItemId="44016" Count="10" Chance="5" />	<!--スペル スクロール (フル ヒール)-->
 		<Item ItemId="41251" Count="1" Chance="3" />	<!--聖杯-->
 		<Item ItemId="41252" Count="1" Chance="3" />	<!--タートル-->
 		<Item ItemId="41253" Count="1" Chance="3" />	<!--スパイス-->
