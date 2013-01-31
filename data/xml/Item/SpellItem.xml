@@ -318,8 +318,324 @@
 		<Effect SkillId="80" />
 	</Item>
 <!-- Spell Wands -->
-	<!-- エボニーワンド -->
+	<!-- エボニー ワンド -->
 	<Item ItemId="40007" Remove="1">
 		<Effect SkillId="34" /> <!-- コールライトニング -->
+	</Item>
+	<!-- エボニー ワンド (ヒール) -->
+	<Item ItemId="46001" Remove="1">
+		<Effect SkillId="1" />
+	</Item>
+	<!-- エボニー ワンド (ライト) -->
+	<Item ItemId="46002" Remove="1">
+		<Effect SkillId="2" />
+	</Item>
+	<!-- エボニー ワンド (シールド) -->
+	<Item ItemId="46003" Remove="1">
+		<Effect SkillId="3" />
+	</Item>
+	<!-- エボニー ワンド (エネルギー ボルト) -->
+	<Item ItemId="46004" Remove="1">
+		<Effect SkillId="4" />
+	</Item>
+	<!-- エボニー ワンド (テレポート) -->
+	<Item ItemId="46005" Remove="1">
+		<Effect SkillId="5" />
+	</Item>
+	<!-- エボニー ワンド (アイス ダガー) -->
+	<Item ItemId="46006" Remove="1">
+		<Effect SkillId="6" />
+	</Item>
+	<!-- エボニー ワンド (ウィンド カッター) -->
+	<Item ItemId="46007" Remove="1">
+		<Effect SkillId="7" />
+	</Item>
+	<!-- エボニー ワンド (ホーリー ウェポン) -->
+	<Item ItemId="46008" Remove="1">
+		<Effect SkillId="8" />
+	</Item>
+	<!-- エボニー ワンド (キュア ポイズン) -->
+	<Item ItemId="46009" Remove="1">
+		<Effect SkillId="9" />
+	</Item>
+	<!-- エボニー ワンド (チル タッチ) -->
+	<Item ItemId="46010" Remove="1">
+		<Effect SkillId="10" />
+	</Item>
+	<!-- エボニー ワンド (カーズポイズン) -->
+	<Item ItemId="46011" Remove="1">
+		<Effect SkillId="11" />
+	</Item>
+	<!-- エボニー ワンド (エンチャント ウェポン) -->
+	<Item ItemId="46012" Remove="1">
+		<Effect SkillId="12" />
+	</Item>
+	<!-- エボニー ワンド (ディテクション) -->
+	<Item ItemId="46013" Remove="1">
+		<Effect SkillId="13" />
+	</Item>
+	<!-- エボニー ワンド (ディクリース ウェイト) -->
+	<Item ItemId="46014" Remove="1">
+		<Effect SkillId="14" />
+	</Item>
+	<!-- エボニー ワンド (ファイアー アロー) -->
+	<Item ItemId="46015" Remove="1">
+		<Effect SkillId="15" />
+	</Item>
+	<!-- エボニー ワンド (スタラック) -->
+	<Item ItemId="46016" Remove="1">
+		<Effect SkillId="16" />
+	</Item>
+	<!-- エボニー ワンド (ライトニング) -->
+	<Item ItemId="46017" Remove="1">
+		<Effect SkillId="17" />
+	</Item>
+	<!-- エボニー ワンド (ターン アンデッド) -->
+	<Item ItemId="46018" Remove="1">
+		<Effect SkillId="18" />
+	</Item>
+	<!-- エボニー ワンド (エキストラ ヒール) -->
+	<Item ItemId="46019" Remove="1">
+		<Effect SkillId="19" />
+	</Item>
+	<!-- エボニー ワンド (カーズ ブラインド) -->
+	<Item ItemId="46020" Remove="1">
+		<Effect SkillId="20" />
+	</Item>
+	<!-- エボニー ワンド (ブレスド アーマー) -->
+	<Item ItemId="46021" Remove="1">
+		<Effect SkillId="21" />
+	</Item>
+	<!-- エボニー ワンド (フローズン クラウド) -->
+	<Item ItemId="46022" Remove="1">
+		<Effect SkillId="22" />
+	</Item>
+	<!-- エボニー ワンド (ウィーク エレメンタル) -->
+	<Item ItemId="46023" Remove="1">
+		<Effect SkillId="23" />
+	</Item>
+	<!-- エボニー ワンド (ファイアー ボール) -->
+	<Item ItemId="46025" Remove="1">
+		<Effect SkillId="25" />
+	</Item>
+	<!-- エボニー ワンド (フィジカルエンチャント：DEX) -->
+	<Item ItemId="46026" Remove="1">
+		<Effect SkillId="26" />
+	</Item>
+	<!-- エボニー ワンド (ウェポン ブレイク) -->
+	<Item ItemId="46027" Remove="1">
+		<Effect SkillId="27" />
+	</Item>
+	<!-- エボニー ワンド (バンパイアリック タッチ) -->
+	<Item ItemId="46028" Remove="1">
+		<Effect SkillId="28" />
+	</Item>
+	<!-- エボニー ワンド (スロー) -->
+	<Item ItemId="46029" Remove="1">
+		<Effect SkillId="29" />
+	</Item>
+	<!-- エボニー ワンド (アース ジェイル) -->
+	<Item ItemId="46030" Remove="1">
+		<Effect SkillId="30" />
+	</Item>
+	<!-- エボニー ワンド (カウンター マジック) -->
+	<Item ItemId="46031" Remove="1">
+		<Effect SkillId="31" />
+	</Item>
+	<!-- エボニー ワンド (メディテーション) -->
+	<Item ItemId="46032" Remove="1">
+		<Effect SkillId="32" />
+	</Item>
+	<!-- エボニー ワンド (カーズ パラライズ) -->
+	<Item ItemId="46033" Remove="1">
+		<Effect SkillId="33" />
+	</Item>
+	<!-- エボニー ワンド (コール ライトニング) -->
+	<Item ItemId="46034" Remove="1">
+		<Effect SkillId="34" />
+	</Item>
+	<!-- エボニー ワンド (グレーター ヒール) -->
+	<Item ItemId="46035" Remove="1">
+		<Effect SkillId="35" />
+	</Item>
+	<!-- エボニー ワンド (テイミング モンスター) -->
+	<Item ItemId="46036" Remove="1">
+		<Effect SkillId="36" />
+	</Item>
+	<!-- エボニー ワンド (リムーブ カーズ) -->
+	<Item ItemId="46037" Remove="1">
+		<Effect SkillId="37" />
+	</Item>
+	<!-- エボニー ワンド (コーン オブ コールド) -->
+	<Item ItemId="46038" Remove="1">
+		<Effect SkillId="38" />
+	</Item>
+	<!-- エボニー ワンド (マナ ドレイン) -->
+	<Item ItemId="46039" Remove="1">
+		<Effect SkillId="39" />
+	</Item>
+	<!-- エボニー ワンド (ダークネス) -->
+	<Item ItemId="46040" Remove="1">
+		<Effect SkillId="40" />
+	</Item>
+	<!-- エボニー ワンド (クリエイト ゾンビ) -->
+	<Item ItemId="46041" Remove="1">
+		<Effect SkillId="41" />
+	</Item>
+	<!-- エボニー ワンド (フィジカル エンチャント：STR) -->
+	<Item ItemId="46042" Remove="1">
+		<Effect SkillId="42" />
+	</Item>
+	<!-- エボニー ワンド (ヘイスト) -->
+	<Item ItemId="46043" Remove="1">
+		<Effect SkillId="43" />
+	</Item>
+	<!-- エボニー ワンド (キャンセレーション) -->
+	<Item ItemId="46044" Remove="1">
+		<Effect SkillId="44" />
+	</Item>
+	<!-- エボニー ワンド (イラプション) -->
+	<Item ItemId="46045" Remove="1">
+		<Effect SkillId="45" />
+	</Item>
+	<!-- エボニー ワンド (サン バースト) -->
+	<Item ItemId="46046" Remove="1">
+		<Effect SkillId="46" />
+	</Item>
+	<!-- エボニー ワンド (ウィークネス) -->
+	<Item ItemId="46047" Remove="1">
+		<Effect SkillId="47" />
+	</Item>
+	<!-- エボニー ワンド (ブレス ウェポン) -->
+	<Item ItemId="46048" Remove="1">
+		<Effect SkillId="48" />
+	</Item>
+	<!-- エボニー ワンド (ヒール オール) -->
+	<Item ItemId="46049" Remove="1">
+		<Effect SkillId="49" />
+	</Item>
+	<!-- エボニー ワンド (アイス ランス) -->
+	<Item ItemId="46050" Remove="1">
+		<Effect SkillId="50" />
+	</Item>
+	<!-- エボニー ワンド (サモン モンスター) -->
+	<Item ItemId="46051" Remove="1">
+		<Effect SkillId="51" />
+	</Item>
+	<!-- エボニー ワンド (ホーリー ウォーク) -->
+	<Item ItemId="46052" Remove="1">
+		<Effect SkillId="52" />
+	</Item>
+	<!-- エボニー ワンド (トルネード) -->
+	<Item ItemId="46053" Remove="1">
+		<Effect SkillId="53" />
+	</Item>
+	<!-- エボニー ワンド (グレーター ヘイスト) -->
+	<Item ItemId="46054" Remove="1">
+		<Effect SkillId="54" />
+	</Item>
+	<!-- エボニー ワンド (バーサーカー) -->
+	<Item ItemId="46055" Remove="1">
+		<Effect SkillId="55" />
+	</Item>
+	<!-- エボニー ワンド (ディジーズ) -->
+	<Item ItemId="46056" Remove="1">
+		<Effect SkillId="56" />
+	</Item>
+	<!-- エボニー ワンド (フル ヒール) -->
+	<Item ItemId="46057" Remove="1">
+		<Effect SkillId="57" />
+	</Item>
+	<!-- エボニー ワンド (ファイアー ウォール) -->
+	<Item ItemId="46058" Remove="1">
+		<Effect SkillId="58" />
+	</Item>
+	<!-- エボニー ワンド (ブリザード) -->
+	<Item ItemId="46059" Remove="1">
+		<Effect SkillId="59" />
+	</Item>
+	<!-- エボニー ワンド (インビジビリティー) -->
+	<Item ItemId="46060" Remove="1">
+		<Effect SkillId="60" />
+	</Item>
+	<!-- エボニー ワンド (リザレクション) -->
+	<Item ItemId="46061" Remove="1">
+		<Effect SkillId="61" />
+	</Item>
+	<!-- エボニー ワンド (アース クエイク) -->
+	<Item ItemId="46062" Remove="1">
+		<Effect SkillId="62" />
+	</Item>
+	<!-- エボニー ワンド (ライフ ストリーム) -->
+	<Item ItemId="46063" Remove="1">
+		<Effect SkillId="63" />
+	</Item>
+	<!-- エボニー ワンド (サイレンス) -->
+	<Item ItemId="46064" Remove="1">
+		<Effect SkillId="64" />
+	</Item>
+	<!-- エボニー ワンド (ライトニング ストーム) -->
+	<Item ItemId="46065" Remove="1">
+		<Effect SkillId="65" />
+	</Item>
+	<!-- エボニー ワンド (フォグ オブ スリーピング) -->
+	<Item ItemId="46066" Remove="1">
+		<Effect SkillId="66" />
+	</Item>
+	<!-- エボニー ワンド (シェイプ チェンジ) -->
+	<Item ItemId="46067" Remove="1">
+		<Effect SkillId="67" />
+	</Item>
+	<!-- エボニー ワンド (イミューン トゥ ハーム) -->
+	<Item ItemId="46068" Remove="1">
+		<Effect SkillId="68" />
+	</Item>
+	<!-- エボニー ワンド (マス テレポート) -->
+	<Item ItemId="46069" Remove="1">
+		<Effect SkillId="69" />
+	</Item>
+	<!-- エボニー ワンド (ファイアー ストーム) -->
+	<Item ItemId="46070" Remove="1">
+		<Effect SkillId="70" />
+	</Item>
+	<!-- エボニー ワンド (ディケイポーション) -->
+	<Item ItemId="46071" Remove="1">
+		<Effect SkillId="71" />
+	</Item>
+	<!-- エボニー ワンド (カウンター ディテクション) -->
+	<Item ItemId="46072" Remove="1">
+		<Effect SkillId="72" />
+	</Item>
+	<!-- エボニー ワンド (クリエイト マジカル ウェポン) -->
+	<Item ItemId="46073" Remove="1">
+		<Effect SkillId="73" />
+	</Item>
+	<!-- エボニー ワンド (メテオ ストライク) -->
+	<Item ItemId="46074" Remove="1">
+		<Effect SkillId="74" />
+	</Item>
+	<!-- エボニー ワンド (グレーター リザレクション) -->
+	<Item ItemId="46075" Remove="1">
+		<Effect SkillId="75" />
+	</Item>
+	<!-- エボニー ワンド (マス スロー) -->
+	<Item ItemId="46076" Remove="1">
+		<Effect SkillId="76" />
+	</Item>
+	<!-- エボニー ワンド (ディスインテグレート) -->
+	<Item ItemId="46077" Remove="1">
+		<Effect SkillId="77" />
+	</Item>
+	<!-- エボニー ワンド (アブソルート バリア) -->
+	<Item ItemId="46078" Remove="1">
+		<Effect SkillId="78" />
+	</Item>
+	<!-- エボニー ワンド (アドバンスド スピリッツ) -->
+	<Item ItemId="46079" Remove="1">
+		<Effect SkillId="79" />
+	</Item>
+	<!-- エボニー ワンド (フリージング ブリザード) -->
+	<Item ItemId="46080" Remove="1">
+		<Effect SkillId="80" />
 	</Item>
 </ItemEffectList>

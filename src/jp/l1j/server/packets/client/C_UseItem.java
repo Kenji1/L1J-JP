@@ -288,6 +288,7 @@ public class C_UseItem extends ClientBasePacket {
 					}
 				}
 			} else if (itemId == 40007 // エボニーワンド
+					|| (itemId >= 46001 && itemId <= 46080) // エボニーワンド（一般魔法）
 					|| (itemId >= 40859 && itemId <= 40898)
 					|| (itemId >= 44000 && itemId <= 44039)) { // スペルスクロール
 				L1SpellItem spell = L1SpellItem.get(itemId);
