@@ -21,12 +21,15 @@ import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.item.L1ItemId;
+import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.model.npc.L1NpcHtml;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import org.w3c.dom.Element;
 
 public class L1NpcTeleportAction extends L1NpcXmlAction {
 	private final L1Location _loc;
+	private final int _x;
+	private final int _y;
 	private final int _heading;
 	private final int _price;
 	private final boolean _effect;
@@ -36,6 +39,8 @@ public class L1NpcTeleportAction extends L1NpcXmlAction {
 
 		int x = L1NpcXmlParser.getIntAttribute(element, "X", -1);
 		int y = L1NpcXmlParser.getIntAttribute(element, "Y", -1);
+		_x = L1NpcXmlParser.getIntAttribute(element, "RandomX", 0);
+		_y = L1NpcXmlParser.getIntAttribute(element, "RandomY", 0);
 		int mapId = L1NpcXmlParser.getIntAttribute(element, "Map", -1);
 		_loc = new L1Location(x, y, mapId);
 
@@ -77,8 +82,17 @@ public class L1NpcTeleportAction extends L1NpcXmlAction {
 		if (!collectFee(pc, npc.getNpcId())) {
 			return L1NpcHtml.HTML_CLOSE;
 		}
-		L1Teleport.teleport(pc, _loc.getX(), _loc.getY(), (short) _loc
-				.getMapId(), _heading, _effect);
+
+		L1Map map = _loc.getMap();
+		int x = (_loc.getX() + ((int) (Math.random() * _x) - (int) (Math.random() * _x)));
+		int y = (_loc.getY() + ((int) (Math.random() * _y) - (int) (Math.random() * _y)));
+		
+		if (!(map.isInMap(x, y) && map.isPassable(x, y))) {
+			x = _loc.getX() - 1;
+			y = _loc.getY() - 1;
+		}
+		
+		L1Teleport.teleport(pc, x, y, (short) _loc.getMapId(), _heading, _effect);
 		return null;
 	}
 

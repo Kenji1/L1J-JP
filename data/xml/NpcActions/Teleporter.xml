@@ -1146,68 +1146,68 @@
 	</Action>
 	<!-- 精霊の墓(北)⇒精霊の墓(東/南東/南/西) -->
 	<Action Name="teleport elegrave-obe2" NpcId="50076">
-		<Teleport X="32911" Y="32918" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32909" Y="32916" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe3" NpcId="50076">
-		<Teleport X="32823" Y="32959" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32821" Y="32957" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe4" NpcId="50076">
-		<Teleport X="32777" Y="32926" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32775" Y="32924" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe5" NpcId="50076">
-		<Teleport X="32813" Y="32809" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32811" Y="32807" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<!-- 精霊の墓(東)⇒精霊の墓(北/南東/南/西) -->
 	<Action Name="teleport elegrave-obe1" NpcId="50085">
-		<Teleport X="32924" Y="32801" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32922" Y="32798" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe3" NpcId="50085">
-		<Teleport X="32823" Y="32959" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32821" Y="32957" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe4" NpcId="50085">
-		<Teleport X="32777" Y="32926" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32775" Y="32924" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe5" NpcId="50085">
-		<Teleport X="32813" Y="32809" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32811" Y="32807" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<!-- 精霊の墓(南東)⇒精霊の墓(北/東/南/西) -->
 	<Action Name="teleport elegrave-obe1" NpcId="50086">
-		<Teleport X="32924" Y="32801" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32922" Y="32798" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe2" NpcId="50086">
-		<Teleport X="32911" Y="32918" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32909" Y="32916" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe4" NpcId="50086">
-		<Teleport X="32777" Y="32926" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32775" Y="32924" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe5" NpcId="50086">
-		<Teleport X="32813" Y="32809" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32811" Y="32807" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<!-- 精霊の墓(南)⇒精霊の墓(北/東/南東/西) -->
 	<Action Name="teleport elegrave-obe1" NpcId="50087">
-		<Teleport X="32924" Y="32801" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32922" Y="32798" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe2" NpcId="50087">
-		<Teleport X="32911" Y="32918" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32909" Y="32916" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe3" NpcId="50087">
-		<Teleport X="32823" Y="32959" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32821" Y="32957" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe5" NpcId="50087">
-		<Teleport X="32813" Y="32809" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32811" Y="32807" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<!-- 精霊の墓(西)⇒精霊の墓(北/東/南東/南) -->
 	<Action Name="teleport elegrave-obe1" NpcId="50088">
-		<Teleport X="32924" Y="32801" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32922" Y="32798" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe2" NpcId="50088">
-		<Teleport X="32911" Y="32918" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32909" Y="32916" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe3" NpcId="50088">
-		<Teleport X="32823" Y="32959" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32821" Y="32957" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<Action Name="teleport elegrave-obe4" NpcId="50088">
-		<Teleport X="32777" Y="32926" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32775" Y="32924" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<!-- 精霊の墓(北)⇒地底湖、海賊島 -->
 	<Action Name="teleport elegrave-abysslake" NpcId="50076">
@@ -1218,11 +1218,11 @@
 	</Action>
 	<!-- 地底湖⇒精霊の墓(北) -->
 	<Action Name="teleport abysslake-elegrave" NpcId="50077">
-		<Teleport X="32924" Y="32801" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32922" Y="32798" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<!-- 海賊島ダンジョン4階⇒精霊の墓(北) -->
 	<Action Name="teleport piratedungeon-elementaltomb" NpcId="50078">
-		<Teleport X="32924" Y="32801" Map="430" Heading="5" Price="0"/>
+		<Teleport X="32922" Y="32798" RandomX="5" RandomY="5" Map="430" Heading="5" Price="0"/>
 	</Action>
 	<!-- 火田民村⇒グルーディオ -->
 	<Action Name="teleport orcfortress-gludio" NpcId="50079">
