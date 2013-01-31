@@ -173,4 +173,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- デスマッチ参加最小人数 *2未満は本鯖基準 -->
 <entry key="DeathMatchMinPlayer">2</entry>
 
+<!-- +6以上の装飾品強化時の追加ボーナスを、+7以降の強化にも適用するか -->
+<!-- std - 本家同様、ボーナスは+6になった1回のみとする -->
+<!-- ext - +7以降も強化毎にボーナス値を上昇させる -->
+<entry key="AccessoryEnchantBonus">ext</entry>
+
 </properties>

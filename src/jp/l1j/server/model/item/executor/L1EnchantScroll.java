@@ -638,7 +638,13 @@ public class L1EnchantScroll {
 				item.setDefenseFire(item.getDefenseFire() + 1);
 				item.setDefenseWind(item.getDefenseWind() + 1);
 				// +6以上の強化時のボーナス
-				if (newEnchantLvl >= 6) {
+				if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
+						&& oldEnchantLvl < 6 && newEnchantLvl >= 6) {
+					item.setHpr(item.getHpr() + 1);
+					item.setMpr(item.getMpr() + 1);
+				}
+				else if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
+						&& newEnchantLvl >= 6) {
 					item.setHpr(item.getHpr() + 1);
 					item.setMpr(item.getMpr() + 1);
 				}
@@ -646,14 +652,24 @@ public class L1EnchantScroll {
 				// +1毎の強化効果
 				item.setHp(item.getHp() + 2);
 				// +6以上の強化時のボーナス
-				if (newEnchantLvl >= 6) {
+				if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
+						&& oldEnchantLvl < 6 && newEnchantLvl >= 6) {
 					item.setMr(item.getMr() + 1);
 				}
-			} else if (grade == 2) { // 初級
+				else if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
+						&& newEnchantLvl >= 6) {
+					item.setMr(item.getMr() + 1);
+				}
+			} else if (grade == 2) { // 下級
 				// +1毎の強化効果
 				item.setMp(item.getMp() + 1);
 				// +6以上の強化時のボーナス
-				if (newEnchantLvl >= 6) {
+				if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
+						&& oldEnchantLvl < 6 && newEnchantLvl >= 6) {
+					item.setSp(item.getSp() + 1);
+				}
+				else if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
+						&& newEnchantLvl >= 6) {
 					item.setSp(item.getSp() + 1);
 				}
 			//} else if (grade == 3) { // 特級は未実装
