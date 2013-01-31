@@ -172,7 +172,7 @@ public class L1EnchantScroll {
 				successEnchant(pc, target, -1);
 				pc.getInventory().saveItem(target);
 			}
-		} else if (enchant_level < safe_enchant) {
+		} else if (enchant_level < safe_enchant && safe_enchant > 0) {
 			successEnchant(pc, target, randomLevel(target, itemId));
 			pc.getInventory().saveItem(target);
 		} else {
@@ -919,9 +919,61 @@ public class L1EnchantScroll {
 	}
 
 	private int randomLevel(L1ItemInstance item, int itemId) {
+		int safe_enchant = item.getItem().getSafeEnchant();
+		
 		if (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_ARMOR
-				|| itemId == L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON
-				|| itemId == 140129 || itemId == 140130) {
+				|| itemId == 140129) {
+			if (safe_enchant == 0) {
+				return 1;
+			} else if (item.getEnchantLevel() <= -6) {
+				int j = _random.nextInt(100) + 1;
+				if (j < 20) {
+					return 1;
+				} else if (j >= 21 && j <= 40) {
+					return 2;
+				} else if (j >= 41 && j <= 60) {
+					return 3;
+				} else if (j >= 61 && j <= 80) {
+					return 4;
+				} else if (j >= 81 && j <= 100) {
+					return 5;
+				}
+			} else if (item.getEnchantLevel() >= -5
+					&& item.getEnchantLevel() <= -3) {
+				int j = _random.nextInt(100) + 1;
+				if (j < 25) {
+					return 1;
+				} else if (j >= 26 && j <= 50) {
+					return 2;
+				} else if (j >= 51 && j <= 75) {
+					return 3;
+				} else if (j >= 76 && j <= 100) {
+					return 4;
+				}
+			} else if (item.getEnchantLevel() <= 2) {
+				int j = _random.nextInt(100) + 1;
+				if (j < 32) {
+					return 1;
+				} else if (j >= 33 && j <= 76) {
+					return 2;
+				} else if (j >= 77 && j <= 100) {
+					return 3;
+				}
+			} else if (item.getEnchantLevel() >= 3
+					&& item.getEnchantLevel() <= 5) {
+				int j = _random.nextInt(100) + 1;
+				if (j < 50) {
+					return 2;
+				} else {
+					return 1;
+				}
+			}
+			{
+				return 1;
+			}
+		}
+		else if (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON
+				||  itemId == 140130) {
 			if (item.getEnchantLevel() <= 2) {
 				int j = _random.nextInt(100) + 1;
 				if (j < 32) {
