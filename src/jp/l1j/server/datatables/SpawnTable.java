@@ -54,7 +54,7 @@ public class SpawnTable {
 
 	private SpawnTable() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("spawning mob...");
+		System.out.print("loading mob...");
 		fillSpawnTable();
 		_log.config("モンスター配置リスト " + _spawntable.size() + "件ロード");
 		System.out.println("OK! " + timer.elapsedTimeMillis() + " ms");

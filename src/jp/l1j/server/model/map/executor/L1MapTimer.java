@@ -126,7 +126,7 @@ public class L1MapTimer implements Runnable  {
 
 	public static void load() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading Map Timer...");
+		System.out.print("loading map timer...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1MapTimer.MapTimerList.class);
 

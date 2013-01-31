@@ -115,7 +115,7 @@ public class L1BeginnerItem {
 	
 	public static void load() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading beginner items...");
+		System.out.print("loading beginner item...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1BeginnerItem.ItemList.class);
 
