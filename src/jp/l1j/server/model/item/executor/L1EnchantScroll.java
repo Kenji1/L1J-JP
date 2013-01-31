@@ -164,7 +164,7 @@ public class L1EnchantScroll {
 		int enchant_level = target.getEnchantLevel();
 
 		if (itemId == C_SCROLL_OF_ENCHANT_WEAPON) { // c-dai
-			if (enchant_level < -6) {
+			if (enchant_level <= -6) {
 				// -7以上はできない。
 				failureEnchant(pc, target);
 				pc.getInventory().saveItem(target);
@@ -240,7 +240,7 @@ public class L1EnchantScroll {
 
 		int enchant_level = target.getEnchantLevel();
 		if (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_ARMOR) { // c-zel
-			if (enchant_level < -6) {
+			if (enchant_level <= -6) {
 				// -7以上はできない。
 				failureEnchant(pc, target);
 				pc.getInventory().deleteItem(target);
