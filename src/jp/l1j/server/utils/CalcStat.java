@@ -77,10 +77,22 @@ public class CalcStat {
 			mrBonus = 37;
 		} else if (wis == 23) {
 			mrBonus = 47;
-		} else if (wis == 24) {
+		} else if (wis >= 24 && wis <= 29) {
 			mrBonus = 50;
+		} else if (wis >= 30 && wis <= 34) {
+			mrBonus = 52;
+		} else if (wis >= 35 && wis <= 39) {
+			mrBonus = 55;
+		} else if (wis >= 40 && wis <= 43) {
+			mrBonus = 59;
+		} else if (wis >= 44 && wis <= 46) {
+			mrBonus = 62;
+		} else if (wis >= 47 && wis <= 49) {
+			mrBonus = 64;
+		} else if (wis == 50) {
+			mrBonus = 65;
 		} else {
-			mrBonus = 50;
+			mrBonus = 65;
 		}
 		return mrBonus;
 	}
