@@ -1497,7 +1497,7 @@ public class L1Character extends L1Object {
 		} else if (i <= 50) {
 			return 13;
 		} else {
-			return i - 25;
+			return i - 37;
 		}
 	}
 
