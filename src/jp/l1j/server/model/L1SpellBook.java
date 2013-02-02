@@ -17,12 +17,16 @@ package jp.l1j.server.model;
 import static jp.l1j.server.model.L1MessageId.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
+import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.packets.server.S_AddSkill;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SkillSound;
@@ -89,6 +93,29 @@ public class L1SpellBook {
 		ITEMID_LEVEL_RANGES.add(new IntRange(40210, 40217)); // Lv9
 		ITEMID_LEVEL_RANGES.add(new IntRange(40218, 40225)); // Lv10
 	}
+
+	private static final HashMap<Integer, Integer> _iconMap = new HashMap<Integer, Integer>() {{
+		put(45000, 47001); put(45001, 47002); put(45002, 47003); put(45003, 47004);
+		put(45004, 47005); put(45005, 47006); put(45006, 47007); put(45007, 47008);
+		put(45008, 47009); put(45009, 47010); put(45010, 47011); put(45011, 47012);
+		put(45012, 47013); put(45013, 47014); put(45014, 47015); put(45015, 47016);
+		put(45016, 47017); put(45017, 47018); put(45018, 47019); put(45019, 47020);
+		put(45020, 47021); put(45021, 47022); put(45022, 47023);
+		put(40170, 47025); put(40171, 47026); put(40172, 47027); put(40173, 47028);
+		put(40174, 47029); put(40175, 47030); put(40176, 47031); put(40177, 47032);
+		put(40178, 47033); put(40179, 47034); put(40180, 47035); put(40181, 47036);
+		put(40182, 47037); put(40183, 47038); put(40184, 47039); put(40185, 47040);
+		put(40186, 47041); put(40187, 47042); put(40188, 47043); put(40189, 47044);
+		put(40190, 47045); put(40191, 47046); put(40192, 47047); put(40193, 47048);
+		put(40194, 47049); put(40195, 47050); put(40196, 47051); put(40197, 47052);
+		put(40198, 47053); put(40199, 47054); put(40200, 47055); put(40201, 47056);
+		put(40202, 47057); put(40203, 47058); put(40204, 47059); put(40205, 47060);
+		put(40206, 47061); put(40207, 47062); put(40208, 47063); put(40209, 47064);
+		put(40210, 47065); put(40211, 47066); put(40212, 47067); put(40213, 47068);
+		put(40214, 47069); put(40215, 47070); put(40216, 47071); put(40217, 47072);
+		put(40218, 47073); put(40219, 47074); put(40220, 47075); put(40221, 47076);
+		put(40222, 47077); put(40223, 47078); put(40224, 47079); put(40225, 47080);
+	}};
 
 	private static int getSpellLevel(int itemId) {
 		for (int i = 0; i < ITEMID_LEVEL_RANGES.size(); i++) {
@@ -167,7 +194,30 @@ public class L1SpellBook {
 		}
 	}
 
-	private static void learnSpell(L1PcInstance pc, L1ItemInstance item) {
+	private static void learnSpell(L1PcInstance pc, L1ItemInstance item) {	
+		int itemId = item.getItem().getItemId();
+		int spellLevel = getSpellLevel(itemId);
+		
+		if ((pc.isCrown() || pc.isElf()) && spellLevel > 6) {
+			createSpellIcon(pc, item);
+			return;
+		}
+		
+		if (pc.isKnight() && spellLevel > 1) {
+			createSpellIcon(pc, item);
+			return;
+		}
+		
+		if (pc.isDarkelf() && spellLevel > 2) {
+			createSpellIcon(pc, item);
+			return;
+		}
+		
+		if (pc.isDragonKnight() || pc.isIllusionist()) {
+			createSpellIcon(pc, item);
+			return;
+		}
+		
 		pc.getInventory().removeItem(item, 1);
 		L1Skill skill = SkillTable.getInstance().findByItemName(
 				item.getItem().getName());
@@ -176,6 +226,18 @@ public class L1SpellBook {
 				skill.getName(), 0, 0);
 	}
 
+	private static void createSpellIcon(L1PcInstance pc, L1ItemInstance item) {
+		int itemId = _iconMap.get(item.getItem().getItemId());
+		L1ItemInstance icon = ItemTable.getInstance().createItem(itemId);
+		L1Inventory inventory = pc.getInventory();
+		
+		if(inventory.checkAddItem(icon, 1) == L1Inventory.OK) {
+			icon.setIdentified(true);
+			inventory.storeItem(icon);
+			inventory.removeItem(item, 1);
+		}
+	}
+	
 	/*------------------------------ ここから未整理 ------------------------------*/
 	public static void useElfSpellBook(L1PcInstance pc, L1ItemInstance item,
 			int itemId) {
