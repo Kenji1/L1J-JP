@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.datatables.NpcSpawnTable;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.SpawnTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.L1SpawnUtil;

@@ -23,7 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.Instance.L1FieldObjectInstance;
+import jp.l1j.server.model.instance.L1FieldObjectInstance;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.IdFactory;
@@ -64,7 +64,7 @@ public class LightSpawnTable {
 				if (l1npc != null) {
 					String s = l1npc.getImpl();
 					Constructor constructor = Class.forName(
-							"jp.l1j.server.model.Instance." + s
+							"jp.l1j.server.model.instance." + s
 									+ "Instance").getConstructors()[0];
 					Object parameters[] = { l1npc };
 					L1FieldObjectInstance field =

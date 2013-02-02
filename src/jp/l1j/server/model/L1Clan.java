@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import jp.l1j.server.datatables.CharacterTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1WarehouseInventory;
 import jp.l1j.server.templates.L1InventoryItem;
 

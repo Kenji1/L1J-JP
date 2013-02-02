@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.model.map.L1WorldMap;
 import jp.l1j.server.storage.CharacterStorage;

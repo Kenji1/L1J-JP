@@ -17,7 +17,7 @@ package jp.l1j.server.model;
 
 import java.io.Serializable;
 
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.model.map.L1WorldMap;
 

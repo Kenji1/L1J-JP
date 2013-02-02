@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.GeneralThreadPool;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.templates.L1EtcItem;
 
 // Referenced classes of package jp.l1j.server.model:

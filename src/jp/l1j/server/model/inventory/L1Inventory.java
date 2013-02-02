@@ -28,7 +28,7 @@ import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.InnKeyTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.RaceTicketTable;
-import jp.l1j.server.model.Instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.random.RandomGenerator;

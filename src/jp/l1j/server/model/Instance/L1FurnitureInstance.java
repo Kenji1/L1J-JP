@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jp.l1j.server.model.Instance;
+package jp.l1j.server.model.instance;
 
 import java.util.logging.Logger;
 import jp.l1j.server.model.L1World;

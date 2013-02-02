@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.npc.action.L1NpcAction;
 import jp.l1j.server.model.npc.action.L1NpcXmlParser;

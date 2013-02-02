@@ -27,8 +27,8 @@ import java.util.logging.Logger;
 
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.datatables.InnTable;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
 import jp.l1j.server.model.skill.L1BuffUtil;
 import jp.l1j.server.packets.server.S_SystemMessage;

@@ -16,7 +16,7 @@ package jp.l1j.server.packets.server;
 
 import java.util.logging.Logger;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class S_CharVisualUpdate extends ServerBasePacket {
 	private static final String _S__0B_S_CharVisualUpdate = "[C] S_CharVisualUpdate";

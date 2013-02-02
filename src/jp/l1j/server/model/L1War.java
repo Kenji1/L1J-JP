@@ -22,7 +22,7 @@ import jp.l1j.configure.Config;
 import jp.l1j.server.GeneralThreadPool;
 import jp.l1j.server.controller.timer.WarTimeController;
 import jp.l1j.server.datatables.CastleTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_War;
 import jp.l1j.server.templates.L1Castle;

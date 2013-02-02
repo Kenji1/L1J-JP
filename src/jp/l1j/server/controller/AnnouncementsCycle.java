@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import jp.l1j.configure.Config;
 import jp.l1j.server.GeneralThreadPool;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.packets.server.S_SystemMessage;
 

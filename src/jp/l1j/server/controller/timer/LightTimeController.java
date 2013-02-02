@@ -17,7 +17,7 @@ package jp.l1j.server.controller.timer;
 
 import java.util.logging.Logger;
 import jp.l1j.server.datatables.LightSpawnTable;
-import jp.l1j.server.model.Instance.L1FieldObjectInstance;
+import jp.l1j.server.model.instance.L1FieldObjectInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTimeClock;

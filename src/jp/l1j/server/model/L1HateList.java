@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import jp.l1j.server.model.Instance.L1NpcInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class L1HateList {
 	private final Map<L1Character, Integer> _hateMap;

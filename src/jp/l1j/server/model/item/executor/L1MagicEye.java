@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.utils.PerformanceTimer;

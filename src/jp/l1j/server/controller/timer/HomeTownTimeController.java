@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.datatables.TownTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTime;
 import jp.l1j.server.model.gametime.L1GameTimeAdapter;

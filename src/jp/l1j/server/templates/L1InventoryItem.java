@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import jp.l1j.server.datatables.InnKeyTable;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.model.Instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.L1QueryUtil;
 import jp.l1j.server.utils.L1QueryUtil.EntityFactory;

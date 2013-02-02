@@ -17,7 +17,7 @@ package jp.l1j.server.model.shop;
 
 import java.util.ArrayList;
 import java.util.List;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 class L1ShopSellOrder {
 	private final L1AssessedItem _item;

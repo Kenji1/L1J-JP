@@ -21,7 +21,7 @@ import java.util.TimeZone;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.NpcChatTable;
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.templates.L1NpcChat;

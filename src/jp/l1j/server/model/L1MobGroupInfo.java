@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import jp.l1j.server.model.L1Spawn;
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 
 // Referenced classes of package jp.l1j.server.model:
 // L1MobGroupInfo

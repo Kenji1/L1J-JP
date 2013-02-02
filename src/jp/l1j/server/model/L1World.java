@@ -24,9 +24,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 import jp.l1j.configure.Config;
-import jp.l1j.server.model.Instance.L1PcInstance;
-import jp.l1j.server.model.Instance.L1PetInstance;
-import jp.l1j.server.model.Instance.L1SummonInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.inventory.L1GroundInventory;
 import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.packets.server.S_SystemMessage;

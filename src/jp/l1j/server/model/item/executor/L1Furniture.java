@@ -32,9 +32,9 @@ import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.datatables.FurnitureSpawnTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.NpcTable;
-import jp.l1j.server.model.Instance.L1FurnitureInstance;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1FurnitureInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1HouseLocation;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
@@ -169,7 +169,7 @@ public class L1Furniture {
 					try {
 						String s = l1npc.getImpl();
 						Constructor constructor = Class.forName(
-								"jp.l1j.server.model.Instance." + s
+								"jp.l1j.server.model.instance." + s
 										+ "Instance").getConstructors()[0];
 						Object aobj[] = { l1npc };
 						furniture = (L1FurnitureInstance) constructor.newInstance(aobj);

@@ -18,7 +18,7 @@ package jp.l1j.server.packets.client;
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.L1ItemId;
 import jp.l1j.server.packets.server.S_AddSkill;
 import jp.l1j.server.packets.server.S_ServerMessage;

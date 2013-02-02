@@ -17,10 +17,10 @@ package jp.l1j.server.packets.client;
 
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.model.Instance.L1DollInstance;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
-import jp.l1j.server.model.Instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1DollInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
 import jp.l1j.server.model.L1ItemCheck;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.packets.server.S_ServerMessage;

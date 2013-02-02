@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.codes.ActionCodes;
-import jp.l1j.server.model.Instance.L1DoorInstance;
+import jp.l1j.server.model.instance.L1DoorInstance;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.templates.L1DoorGfx;

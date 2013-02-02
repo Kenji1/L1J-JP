@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jp.l1j.server.model.Instance;
+package jp.l1j.server.model.instance;
 
 import java.util.logging.Logger;
 import jp.l1j.server.GeneralThreadPool;
@@ -1019,6 +1019,6 @@ public class L1TeleporterInstance extends L1NpcInstance {
 
 	private boolean _isNowDely = false;
 	private static Logger _log = Logger
-			.getLogger(jp.l1j.server.model.Instance.L1TeleporterInstance.class
+			.getLogger(jp.l1j.server.model.instance.L1TeleporterInstance.class
 					.getName());
 }

@@ -15,7 +15,7 @@
 
 package jp.l1j.server.model.skill.executor;
 
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Character;
 
 public class L1Insight extends L1BuffSkillExecutorImpl {

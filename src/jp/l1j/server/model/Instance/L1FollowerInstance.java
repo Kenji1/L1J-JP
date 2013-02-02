@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jp.l1j.server.model.Instance;
+package jp.l1j.server.model.instance;
 
 import java.lang.reflect.Constructor;
 import java.util.logging.Logger;
@@ -259,7 +259,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 			try {
 				String implementationName = l1npc.getImpl();
 				Constructor _constructor = Class.forName((new StringBuilder())
-						.append("jp.l1j.server.model.Instance.")
+						.append("jp.l1j.server.model.instance.")
 						.append(implementationName).append("Instance")
 						.toString()).getConstructors()[0];
 				mob = (L1NpcInstance) _constructor.newInstance(new Object[] { l1npc });

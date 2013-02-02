@@ -16,7 +16,7 @@ package jp.l1j.server.packets.server;
 
 import java.util.logging.Logger;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 
 public class S_NpcChatPacket extends ServerBasePacket {
 	private static final String S_NPC_CHAT_PACKET = "[S] S_NpcChatPacket";

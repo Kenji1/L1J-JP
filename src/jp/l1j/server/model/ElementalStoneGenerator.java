@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.model.Instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.inventory.L1GroundInventory;
 import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.model.map.L1WorldMap;

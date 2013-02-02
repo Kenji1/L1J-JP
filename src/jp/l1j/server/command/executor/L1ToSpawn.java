@@ -21,7 +21,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Logger;
 import jp.l1j.server.datatables.NpcSpawnTable;
 import jp.l1j.server.datatables.SpawnTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Spawn;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.packets.server.S_SystemMessage;

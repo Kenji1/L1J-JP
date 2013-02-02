@@ -15,7 +15,7 @@
 package jp.l1j.server.packets.server;
 
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 /**
  * @category 初期ステータスボーナス表示

@@ -16,10 +16,10 @@ package jp.l1j.server.model;
 
 import java.util.logging.Logger;
 import java.util.TimerTask;
-import jp.l1j.server.model.Instance.L1DollInstance;
+import jp.l1j.server.model.instance.L1DollInstance;
 
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.packets.server.S_SkillIconGFX;

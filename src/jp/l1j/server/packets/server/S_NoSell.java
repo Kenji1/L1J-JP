@@ -15,7 +15,7 @@
 package jp.l1j.server.packets.server;
 
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 
 public class S_NoSell extends ServerBasePacket {
 	private static final String _S__25_NoSell = "[S] _S__25_NoSell";

@@ -20,8 +20,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import jp.l1j.server.model.L1Object;
-import jp.l1j.server.model.Instance.L1DoorInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1DoorInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.L1SkillId;
 import jp.l1j.server.model.skill.L1SkillUse;
 import jp.l1j.server.packets.server.S_ServerMessage;

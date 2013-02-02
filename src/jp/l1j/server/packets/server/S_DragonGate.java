@@ -15,7 +15,7 @@
 package jp.l1j.server.packets.server;
 
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class S_DragonGate extends ServerBasePacket {
 	private static final String S_DRAGON_GATE = "[S] S_DragonGate";

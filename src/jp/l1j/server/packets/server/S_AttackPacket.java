@@ -16,7 +16,7 @@ package jp.l1j.server.packets.server;
 
 import java.util.logging.Logger;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class S_AttackPacket extends ServerBasePacket {
 	private static final String S_ATTACK_PACKET = "[S] S_AttackPacket";

@@ -17,7 +17,7 @@ package jp.l1j.server.packets.client;
 
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1HouseLocation;
 import jp.l1j.server.model.L1Location;

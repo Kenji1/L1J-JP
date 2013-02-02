@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.datatables.NpcTable;
-import jp.l1j.server.model.Instance.L1NpcInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_NpcPack;
 import jp.l1j.server.templates.L1Npc;
 
@@ -109,7 +109,7 @@ public class L1WarSpawn {
 				String s = l1npc.getImpl();
 				_constructor = Class.forName(
 						(new StringBuilder()).append(
-								"jp.l1j.server.model.Instance.").append(s)
+								"jp.l1j.server.model.instance.").append(s)
 								.append("Instance").toString())
 						.getConstructors()[0];
 				Object aobj[] = { l1npc };

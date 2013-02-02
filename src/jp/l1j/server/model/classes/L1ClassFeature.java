@@ -14,7 +14,7 @@
  */
 package jp.l1j.server.model.classes;
 
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public abstract class L1ClassFeature {
 	public static L1ClassFeature newClassFeature(int classId) {

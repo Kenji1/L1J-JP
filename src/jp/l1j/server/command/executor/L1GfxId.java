@@ -19,8 +19,8 @@ import java.lang.reflect.Constructor;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 import jp.l1j.server.datatables.NpcTable;
-import jp.l1j.server.model.Instance.L1NpcInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Npc;
@@ -47,7 +47,7 @@ public class L1GfxId implements L1CommandExecutor {
 				if (l1npc != null) {
 					String s = l1npc.getImpl();
 					Constructor constructor = Class.forName(
-							"jp.l1j.server.model.Instance." + s
+							"jp.l1j.server.model.instance." + s
 									+ "Instance").getConstructors()[0];
 					Object aobj[] = { l1npc };
 					L1NpcInstance npc = (L1NpcInstance) constructor.newInstance(aobj);

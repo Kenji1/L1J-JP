@@ -17,7 +17,7 @@ package jp.l1j.server.model.trap;
 
 //import jp.l1j.server.IdFactory;
 import jp.l1j.server.GeneralThreadPool;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1HardinQuest;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1Object;

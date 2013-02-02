@@ -17,7 +17,7 @@ package jp.l1j.server.packets.server;
 
 import java.io.IOException;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 
 public class S_HowManyKey extends ServerBasePacket {
 

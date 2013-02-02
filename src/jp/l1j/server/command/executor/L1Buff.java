@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.skill.L1SkillUse;
 import jp.l1j.server.packets.server.S_SystemMessage;

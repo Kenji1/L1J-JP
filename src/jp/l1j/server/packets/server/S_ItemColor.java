@@ -16,7 +16,7 @@ package jp.l1j.server.packets.server;
 
 import java.util.logging.Logger;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
 
 public class S_ItemColor extends ServerBasePacket {
 

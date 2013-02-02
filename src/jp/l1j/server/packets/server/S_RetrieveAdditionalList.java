@@ -16,8 +16,8 @@ package jp.l1j.server.packets.server;
 
 import java.io.IOException;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class S_RetrieveAdditionalList extends ServerBasePacket {
 	public S_RetrieveAdditionalList(int objid, L1PcInstance pc) {

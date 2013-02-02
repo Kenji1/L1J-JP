@@ -19,7 +19,7 @@ import java.util.TimerTask;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.PetTable;
 import jp.l1j.server.datatables.PetTypeTable;
-import jp.l1j.server.model.Instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
 import jp.l1j.server.packets.server.S_NpcChatPacket;
 import jp.l1j.server.templates.L1PetType;
 import jp.l1j.server.utils.IntRange;

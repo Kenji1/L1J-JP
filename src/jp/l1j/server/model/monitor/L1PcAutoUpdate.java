@@ -15,7 +15,7 @@
 
 package jp.l1j.server.model.monitor;
 
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class L1PcAutoUpdate extends L1PcMonitor {
 

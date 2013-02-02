@@ -76,7 +76,7 @@ import jp.l1j.server.datatables.WeaponSkillTable;
 import jp.l1j.server.model.Dungeon;
 import jp.l1j.server.model.ElementalStoneGenerator;
 import jp.l1j.server.model.Getback;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.L1BugBearRace;
 import jp.l1j.server.model.L1CastleLocation;

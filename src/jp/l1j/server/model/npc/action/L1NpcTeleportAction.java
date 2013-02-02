@@ -14,8 +14,8 @@
  */
 package jp.l1j.server.model.npc.action;
 
-import jp.l1j.server.model.Instance.L1NpcInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1Object;

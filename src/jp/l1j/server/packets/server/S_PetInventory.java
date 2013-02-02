@@ -17,8 +17,8 @@ package jp.l1j.server.packets.server;
 
 import java.util.List;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 
 // Referenced classes of package jp.l1j.server.serverpackets:
 // ServerBasePacket

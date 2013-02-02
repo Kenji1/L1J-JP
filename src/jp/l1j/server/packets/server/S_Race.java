@@ -16,7 +16,7 @@ package jp.l1j.server.packets.server;
 
 import java.util.List;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class S_Race extends ServerBasePacket {
 	private static final String S_RACE = "[S] S_Race";

@@ -16,7 +16,7 @@
 package jp.l1j.server.packets.server;
 
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
 
 public class S_PetEquipment extends ServerBasePacket {
 	private static final String S_PET_EQUIPMENT = "[S] S_PetEquipment";

@@ -16,11 +16,11 @@
 package jp.l1j.server.utils;
 
 import java.util.HashSet;
-import jp.l1j.server.model.Instance.L1DollInstance;
-import jp.l1j.server.model.Instance.L1NpcInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
-import jp.l1j.server.model.Instance.L1PetInstance;
-import jp.l1j.server.model.Instance.L1SummonInstance;
+import jp.l1j.server.model.instance.L1DollInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1DragonSlayer;
 import jp.l1j.server.model.L1Location;

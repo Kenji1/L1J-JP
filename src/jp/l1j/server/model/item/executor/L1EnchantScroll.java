@@ -16,8 +16,8 @@ package jp.l1j.server.model.item.executor;
 
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.LogEnchantTable;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.item.L1ItemId;

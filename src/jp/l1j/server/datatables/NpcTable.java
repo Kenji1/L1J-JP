@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
@@ -56,7 +56,7 @@ public class NpcTable {
 
 	private Constructor<?> getConstructor(String implName) {
 		try {
-			String implFullName = "jp.l1j.server.model.Instance."
+			String implFullName = "jp.l1j.server.model.instance."
 					+ implName + "Instance";
 			Constructor<?> con = Class.forName(implFullName).getConstructors()[0];
 			return con;

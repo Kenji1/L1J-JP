@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.UbTable;
-import jp.l1j.server.model.Instance.L1MonsterInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1MonsterInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_NpcPack;
 
 public class L1UbSpawn implements Comparable<L1UbSpawn> {

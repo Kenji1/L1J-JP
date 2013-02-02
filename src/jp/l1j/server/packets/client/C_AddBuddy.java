@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.BuddyTable;
 import jp.l1j.server.datatables.CharacterTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Buddy;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.templates.L1CharName;

@@ -19,8 +19,8 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import jp.l1j.server.model.Instance.L1DollInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1DollInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.templates.L1MagicDoll;
 

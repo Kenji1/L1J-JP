@@ -15,7 +15,7 @@
 
 package jp.l1j.server.model.monitor;
 
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Karma;
 import jp.l1j.server.packets.server.S_Lawful;
 // import jp.l1j.server.utils.IntRange;

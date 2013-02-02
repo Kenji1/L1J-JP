@@ -15,7 +15,7 @@
 
 package jp.l1j.server.command.executor;
 
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1DropLog implements L1CommandExecutor {

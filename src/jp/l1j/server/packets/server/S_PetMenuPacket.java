@@ -15,9 +15,9 @@
 package jp.l1j.server.packets.server;
 
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1NpcInstance;
-import jp.l1j.server.model.Instance.L1PetInstance;
-import jp.l1j.server.model.Instance.L1SummonInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1SummonInstance;
 
 public class S_PetMenuPacket extends ServerBasePacket {
 

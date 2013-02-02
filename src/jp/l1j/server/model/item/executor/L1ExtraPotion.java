@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.skill.L1BuffUtil;
 import static jp.l1j.server.model.skill.L1SkillId.*;

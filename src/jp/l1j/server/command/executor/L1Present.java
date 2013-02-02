@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Account;
 import jp.l1j.server.templates.L1InventoryItem;

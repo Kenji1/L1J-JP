@@ -21,9 +21,9 @@ import java.util.Map;
 
 import jp.l1j.server.datatables.CookingRecipeTable;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.Instance.L1EffectInstance;
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1EffectInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.executor.L1BuffSkillExecutor;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;

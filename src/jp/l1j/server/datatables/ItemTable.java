@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.Instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.templates.L1Armor;
 import jp.l1j.server.templates.L1EtcItem;

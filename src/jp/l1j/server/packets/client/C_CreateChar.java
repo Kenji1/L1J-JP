@@ -25,7 +25,7 @@ import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.BadNamesTable;
 import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_AddSkill;
 import jp.l1j.server.packets.server.S_CharCreateStatus;
 import jp.l1j.server.packets.server.S_NewCharPacket;

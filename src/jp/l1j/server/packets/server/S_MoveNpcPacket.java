@@ -17,7 +17,7 @@ package jp.l1j.server.packets.server;
 
 import java.util.logging.Logger;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.Instance.L1MonsterInstance;
+import jp.l1j.server.model.instance.L1MonsterInstance;
 
 public class S_MoveNpcPacket extends ServerBasePacket {
 	private static final String _S__1F_S_MOVENPCPACKET = "[S] S_MoveNpcPacket";

@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.SprTable;
 import jp.l1j.server.datatables.LogAcceleratorTable;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Disconnect;
 import jp.l1j.server.packets.server.S_Paralysis;
 import jp.l1j.server.packets.server.S_ServerMessage;

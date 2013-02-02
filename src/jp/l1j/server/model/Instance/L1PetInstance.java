@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jp.l1j.server.model.Instance;
+package jp.l1j.server.model.instance;
 
 import java.util.Arrays;
 import java.util.List;

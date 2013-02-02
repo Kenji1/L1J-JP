@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.controller.timer.WarTimeController;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1War;

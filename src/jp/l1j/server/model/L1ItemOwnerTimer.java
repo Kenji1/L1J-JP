@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import jp.l1j.server.model.Instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
 
 public class L1ItemOwnerTimer extends TimerTask {
 	private static Logger _log = Logger.getLogger(L1ItemOwnerTimer.class

@@ -15,8 +15,8 @@
 package jp.l1j.server.model;
 
 import jp.l1j.server.GeneralThreadPool;
-import jp.l1j.server.model.Instance.L1MonsterInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1MonsterInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.L1SkillId;
 import jp.l1j.server.packets.server.S_Paralysis;
 import jp.l1j.server.packets.server.S_ServerMessage;

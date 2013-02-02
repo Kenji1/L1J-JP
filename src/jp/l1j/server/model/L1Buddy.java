@@ -18,7 +18,7 @@ package jp.l1j.server.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class L1Buddy {
 	private final int _charId;

@@ -17,8 +17,8 @@ package jp.l1j.server.model.poison;
 
 import java.util.logging.Logger;
 import jp.l1j.server.GeneralThreadPool;
-import jp.l1j.server.model.Instance.L1MonsterInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1MonsterInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Character;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 

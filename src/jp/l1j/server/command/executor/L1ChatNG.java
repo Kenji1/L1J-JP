@@ -17,7 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_ServerMessage;

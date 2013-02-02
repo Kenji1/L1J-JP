@@ -22,8 +22,8 @@ import java.util.logging.Logger;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.Instance.L1EffectInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1EffectInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.model.map.L1WorldMap;
 import jp.l1j.server.model.skill.L1SkillId;
@@ -83,7 +83,7 @@ public class L1EffectSpawn {
 		}
 
 		String className = (new StringBuilder()).append(
-				"jp.l1j.server.model.Instance.").append(
+				"jp.l1j.server.model.instance.").append(
 				template.getImpl()).append("Instance").toString();
 
 		try {

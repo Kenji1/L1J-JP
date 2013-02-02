@@ -16,8 +16,8 @@ package jp.l1j.server.model;
 
 import java.util.List;
 
-import jp.l1j.server.model.Instance.L1ItemInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_TradeAddItem;
 import jp.l1j.server.packets.server.S_TradeStatus;
 

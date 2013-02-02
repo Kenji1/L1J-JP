@@ -19,7 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import jp.l1j.server.codes.ActionCodes;
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.packets.server.S_DoActionGFX;
 
 public class L1NpcDeleteTimer extends TimerTask {

@@ -15,7 +15,7 @@
 
 package jp.l1j.server.storage;
 
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public interface CharacterStorage {
 	public void createCharacter(L1PcInstance pc) throws Exception;

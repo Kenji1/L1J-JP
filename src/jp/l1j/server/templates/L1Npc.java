@@ -15,7 +15,7 @@
 
 package jp.l1j.server.templates;
 
-import jp.l1j.server.model.Instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.utils.ReflectionUtil;
 
@@ -699,7 +699,7 @@ public class L1Npc extends L1Object implements Cloneable {
 	 * このNPCテンプレートを元にNPCをインスタンス化します。
 	 */
 	public <T extends L1NpcInstance> T newInstance() {
-		String className = "jp.l1j.server.model.Instance." + _impl
+		String className = "jp.l1j.server.model.instance." + _impl
 				+ "Instance";
 		return ReflectionUtil.<T, L1Npc> newInstance(className, L1Npc.class,
 				this);

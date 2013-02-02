@@ -17,8 +17,8 @@ package jp.l1j.server.templates;
 
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.MagicDollTable;
-import jp.l1j.server.model.Instance.L1DollInstance;
-import jp.l1j.server.model.Instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1DollInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Character;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.random.RandomGenerator;
