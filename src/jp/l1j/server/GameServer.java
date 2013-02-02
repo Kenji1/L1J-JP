@@ -108,6 +108,7 @@ import jp.l1j.server.model.item.executor.L1Roulette;
 import jp.l1j.server.model.item.executor.L1ShowMessage;
 import jp.l1j.server.model.item.executor.L1SpawnWand;
 import jp.l1j.server.model.item.executor.L1SpeedUpClock;
+import jp.l1j.server.model.item.executor.L1SpellIcon;
 import jp.l1j.server.model.item.executor.L1SpellItem;
 import jp.l1j.server.model.item.executor.L1TeleportAmulet;
 import jp.l1j.server.model.item.executor.L1ThirdSpeedPotion;
@@ -351,6 +352,7 @@ public class GameServer extends Thread {
 		L1ShowMessage.load();
 		L1SpawnWand.load();
 		L1SpeedUpClock.load();
+		L1SpellIcon.load();
 		L1SpellItem.load();
 		L1TeleportAmulet.load();
 		L1ThirdSpeedPotion.load();

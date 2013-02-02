@@ -36,6 +36,7 @@ import jp.l1j.server.model.L1ItemOwnerTimer;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import static jp.l1j.server.model.item.L1ItemOptionId.*;
+import jp.l1j.server.model.item.executor.L1SpellIcon;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.packets.server.S_ServerMessage;
@@ -715,6 +716,12 @@ public class L1ItemInstance extends L1Object {
 			}
 			if (getItem().getChargeTime() > 0 && getItem().getType2() != 0) { // 武器防具で使用時間制限あり
 				name.append(" [" + getChargeTime() + "]");
+			}
+			if (getItem().getType2() == 0 && getItem().getType() == 20) { // スペルアイコン
+				L1SpellIcon spell = L1SpellIcon.get(getItem().getItemId());
+				if (spell != null) {
+					name.append(spell.getAppendName());
+				}
 			}
 		}
 

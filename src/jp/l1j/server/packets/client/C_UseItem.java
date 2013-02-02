@@ -86,6 +86,7 @@ import jp.l1j.server.model.item.executor.L1Roulette;
 import jp.l1j.server.model.item.executor.L1ShowMessage;
 import jp.l1j.server.model.item.executor.L1SpawnWand;
 import jp.l1j.server.model.item.executor.L1SpeedUpClock;
+import jp.l1j.server.model.item.executor.L1SpellIcon;
 import jp.l1j.server.model.item.executor.L1SpellItem;
 import jp.l1j.server.model.item.executor.L1TeleportAmulet;
 import jp.l1j.server.model.item.executor.L1ThirdSpeedPotion;
@@ -286,17 +287,6 @@ public class C_UseItem extends ClientBasePacket {
 						pc.getInventory().removeItem(item, 1);
 						break;
 					}
-				}
-			} else if (itemId == 40007 // エボニーワンド
-					|| (itemId >= 46001 && itemId <= 46080) // エボニーワンド（一般魔法）
-					|| (itemId >= 40859 && itemId <= 40898)
-					|| (itemId >= 44000 && itemId <= 44039)) { // スペルスクロール
-				L1SpellItem spell = L1SpellItem.get(itemId);
-				if (spell != null) {
-					spell.use(pc, item, objid, locx, locy);
-				} else {
-					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
-					// \f1%0は使用できません。
 				}
 			} else if (itemId == 40008 || itemId == 40410 || itemId == 140008) {
 				// メイプルワンド、ブラックエントの表皮
@@ -663,17 +653,6 @@ public class C_UseItem extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(79));
 					// \f1何も起きませんでした。
 				}
-			} else if (itemId == 42501) { // ストームウォーク
-				if (pc.getCurrentMp() < 10) {
-					pc.sendPackets(new S_ServerMessage(278));
-					// \f1MPが不足していて魔法を使うことができません。
-					return;
-				}
-				pc.setCurrentMp(pc.getCurrentMp() - 10);
-				// テレポート後に移動不可能になる場合がある
-				// pc.sendPackets(new S_CantMove());
-				L1Teleport.teleport(pc, locx, locy, pc.getMapId(),
-						pc.getHeading(), true, L1Teleport.CHANGE_POSITION);
 			} else if (itemId == 43001) { // 男女変更スクロール(オリジナルアイテム)
 				HashMap<Integer, Integer> maleToFemale = new HashMap<Integer, Integer>();
 				maleToFemale.put(0, 1);
@@ -809,6 +788,24 @@ public class C_UseItem extends ClientBasePacket {
 				pc.getInventory().setSting(item.getItem().getItemId());
 				pc.sendPackets(new S_ServerMessage(452, item.getLogName()));
 				// %0が選択されました。
+			} else if (item.getItem().getType() == 20) { // スペルアイコン
+				L1SpellIcon spell = L1SpellIcon.get(itemId);
+				if (spell != null) {
+					spell.use(pc, item, objid, locx, locy);
+				} else {
+					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
+					// \f1%0は使用できません。
+				}
+			} else if (item.getItem().getType() == 18 // スペルスクロール
+					|| item.getItem().getType() == 19 // エボニーワンド
+					) {
+				L1SpellItem spell = L1SpellItem.get(itemId);
+				if (spell != null) {
+					spell.use(pc, item, objid, locx, locy);
+				} else {
+					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
+					// \f1%0は使用できません。
+				}
 			} else if (item.getItem().getType() == 2) { // light系アイテム
 				useLight(pc, item);
 			} else if (item.getItem().getType() == 7) { // 食べ物(food)

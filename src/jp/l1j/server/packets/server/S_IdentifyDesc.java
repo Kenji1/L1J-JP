@@ -74,7 +74,8 @@ public class S_IdentifyDesc extends ServerBasePacket {
 			}
 
 		} else if (item.getItem().getType2() == 0) { // etcitem
-			if (item.getItem().getType() == 1) { // wand
+			if (item.getItem().getType() == 1 // wand
+					|| item.getItem().getType() == 19) {// spellwand
 				writeH(137); // \f1%0：使用可能回数%1［重さ%2］
 				writeC(3);
 				writeS(name.toString());

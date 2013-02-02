@@ -101,7 +101,8 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 *         0:arrow, 1:wand, 2:light, 3:gem, 4:totem, 5:firecracker,
 	 *         6:potion, 7:food, 8:scroll, 9:questitem, 10:spellbook,
 	 *         11:petitem, 12:other, 13:material, 14:event, 15:sting,
-	 *		   16:treasure_box, 17:magic_doll
+	 *		   16:treasure_box, 17:magic_doll, 18:spellscroll, 19:spellwand,
+	 *         20:spellicon
 	 *         </p>
 	 *         <p>
 	 *         [weapon]<br>
