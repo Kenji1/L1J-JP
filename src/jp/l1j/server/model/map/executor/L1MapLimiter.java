@@ -38,21 +38,21 @@ import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.utils.PerformanceTimer;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class L1MapTimer implements Runnable  {
+public class L1MapLimiter implements Runnable  {
 
-	private static Logger _log = Logger.getLogger(L1MapTimer.class.getName());
+	private static Logger _log = Logger.getLogger(L1MapLimiter.class.getName());
 
 	private static L1PcInstance _pc = null;
 	
 	private static MapTimerTable _mapTimerTable = null;
 	
 	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlRootElement(name = "MapTimerList")
-	private static class MapTimerList implements Iterable<L1MapTimer> {
-		@XmlElement(name = "MapTimer")
-		private List<L1MapTimer> _list;
+	@XmlRootElement(name = "MapLimiterList")
+	private static class MapLimiterList implements Iterable<L1MapLimiter> {
+		@XmlElement(name = "MapLimiter")
+		private List<L1MapLimiter> _list;
 
-		public Iterator<L1MapTimer> iterator() {
+		public Iterator<L1MapLimiter> iterator() {
 			return _list.iterator();
 		}
 	}
@@ -66,6 +66,20 @@ public class L1MapTimer implements Runnable  {
 			return _time;
 		}
 
+		@XmlAttribute(name = "MinLevel")
+		private int _minLevel;
+		
+		public int getMinLevel() {
+			return _minLevel;
+		}
+
+		@XmlAttribute(name = "MaxLevel")
+		private int _maxLevel;
+		
+		public int getMaxLevel() {
+			return _maxLevel;
+		}
+		
 		@XmlAttribute(name = "Delay")
 		private int _delay;
 
@@ -95,11 +109,11 @@ public class L1MapTimer implements Runnable  {
 		}
 	}
 
-	private static final String PATH = "./data/xml/etc/MapTimer.xml";
+	private static final String PATH = "./data/xml/etc/MapLimiter.xml";
 
-	private static final HashMap<Integer, L1MapTimer> _dataMap = new HashMap<Integer, L1MapTimer>();
+	private static final HashMap<Integer, L1MapLimiter> _dataMap = new HashMap<Integer, L1MapLimiter>();
 
-	public static L1MapTimer get(int _mapId) {
+	public static L1MapLimiter get(int _mapId) {
 		return _dataMap.get(_mapId);
 	}
 
@@ -126,16 +140,16 @@ public class L1MapTimer implements Runnable  {
 
 	public static void load() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading map timer...");
+		System.out.print("loading map limiter...");
 		try {
-			JAXBContext context = JAXBContext.newInstance(L1MapTimer.MapTimerList.class);
+			JAXBContext context = JAXBContext.newInstance(L1MapLimiter.MapLimiterList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
 			File file = new File(PATH);
-			MapTimerList list = (MapTimerList) um.unmarshal(file);
+			MapLimiterList list = (MapLimiterList) um.unmarshal(file);
 
-			for (L1MapTimer each : list) {
+			for (L1MapLimiter each : list) {
 				if (MapsTable.getInstance().locationname(each.getMapId()) == null) {
 					System.out.println("マップID " + each.getMapId() + " のテンプレートが見つかりません。");
 				} else {
@@ -153,7 +167,7 @@ public class L1MapTimer implements Runnable  {
 		_pc = pc;
 		_mapTimerTable = MapTimerTable.find(pc.getId(), getAreaId());
 		if (_mapTimerTable == null) {
-			int time = pc.getMapTimer().getEffect().getTime();
+			int time = pc.getMapLimiter().getEffect().getTime();
 			_mapTimerTable = new MapTimerTable(pc.getId(), getMapId(), getAreaId(), time);
 		}
 	}
@@ -161,33 +175,48 @@ public class L1MapTimer implements Runnable  {
 	@Override
 	public void run() {
 		try {
+			Effect effect = getEffect();
 			int enterTime = _mapTimerTable.getEnterTime();
-			if ((enterTime - 1) >= 0) {
-				int h = enterTime / 3600;
-				int m = (enterTime % 3600) / 60;
-				if (enterTime <= getEffect().getDelay()) { // ディレイ秒以下は毎秒
-					_pc.sendPackets(new S_ServerMessage(1528, String.valueOf(enterTime)));
-					// ダンジョン滞在期限の残りは%0秒です。
-				} else if ((enterTime == getEffect().getTime()) // 初回入場時
-					|| (enterTime % 1800 == 0) // 30分毎
-					|| ((enterTime <= 600) && (enterTime % 60 == 0))) { // 残り10分以下は1分毎
-					if (h > 0) {
-						if (m > 0) {
-							_pc.sendPackets(new S_ServerMessage(1525, String.valueOf(h), String.valueOf(m)));
-							// ダンジョン滞在期限の残りは%0時間%1分です。
-						} else {
-							_pc.sendPackets(new S_ServerMessage(1526, String.valueOf(h)));
-							// ダンジョン滞在期限の残りは%0時間です。
-						}
-					} else {
-						_pc.sendPackets(new S_ServerMessage(1527, String.valueOf(m)));
-						// ダンジョン滞在期限の残りは%0分です。
-					}
+			if ((effect.getTime() > 0 && (enterTime - 1) >= 0) || effect.getTime() <= 0){
+				if (effect.getMinLevel() > 0 && _pc.getLevel() < effect.getMinLevel()) {
+					_pc.sendPackets(new S_ServerMessage(1287));
+					// 今のレベルでは入れません。
+					teleport();
 				}
-				_mapTimerTable.setEnterTime(enterTime - 1);
+				
+				if (effect.getMaxLevel() > 0 && _pc.getLevel() > effect.getMaxLevel()) {
+					_pc.sendPackets(new S_ServerMessage(1287));
+					// 今のレベルでは入れません。
+					teleport();
+				}
+				
+				if (effect.getTime() > 0) {
+					int h = enterTime / 3600;
+					int m = (enterTime % 3600) / 60;
+					if (enterTime <= effect.getDelay()) { // ディレイ秒以下は毎秒
+						_pc.sendPackets(new S_ServerMessage(1528, String.valueOf(enterTime)));
+						// ダンジョン滞在期限の残りは%0秒です。
+					} else if ((enterTime == effect.getTime()) // 初回入場時
+						|| (enterTime % 1800 == 0) // 30分毎
+						|| ((enterTime <= 600) && (enterTime % 60 == 0))) { // 残り10分以下は1分毎
+						if (h > 0) {
+							if (m > 0) {
+								_pc.sendPackets(new S_ServerMessage(1525, String.valueOf(h), String.valueOf(m)));
+								// ダンジョン滞在期限の残りは%0時間%1分です。
+							} else {
+								_pc.sendPackets(new S_ServerMessage(1526, String.valueOf(h)));
+								// ダンジョン滞在期限の残りは%0時間です。
+							}
+						} else {
+							_pc.sendPackets(new S_ServerMessage(1527, String.valueOf(m)));
+							// ダンジョン滞在期限の残りは%0分です。
+						}
+					}
+					_mapTimerTable.setEnterTime(enterTime - 1);
+				}
 			} else {
-				int h = getEffect().getTime() / 3600;
-				int m = (getEffect().getTime() % 3600) / 60;
+				int h = effect.getTime() / 3600;
+				int m = (effect.getTime() % 3600) / 60;
 				if (h > 0) {
 					if (m > 0) {
 						_pc.sendPackets(new S_ServerMessage(1524, String.valueOf(h), String.valueOf(m)));
@@ -200,17 +229,22 @@ public class L1MapTimer implements Runnable  {
 					_pc.sendPackets(new S_ServerMessage(1523, String.valueOf(m)));
 					// ダンジョン滞在期限%0分を過ぎました。
 				}
-				RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
-				int rndx = random.nextInt(3);
-				int rndy = random.nextInt(3);
-				int locx = getEffect().getX() + rndx;
-				int locy = getEffect().getY() + rndy;
-				short mapid = getEffect().getBackMapId();
-				L1Teleport.teleport(_pc, locx, locy, mapid, 5, true);
+				teleport();
 			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
+	}
+
+	private void teleport() {
+		Effect effect = getEffect();
+		RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
+		int rndx = random.nextInt(3);
+		int rndy = random.nextInt(3);
+		int locx = effect.getX() + rndx;
+		int locy = effect.getY() + rndy;
+		short mapid = effect.getBackMapId();
+		L1Teleport.teleport(_pc, locx, locy, mapid, 5, true);
 	}
 	
 	public void save() {

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MapLimiterList>
+	<!-- ギランプリズンダンジョン1F -->
+	<MapLimiter MapId="53" AreaId="53">
+		<Effect Time="5400" Delay="10" X="33429" Y="32774" BackMapId="4" />
+	</MapLimiter>
+	<!-- ギランプリズンダンジョン2F -->
+	<MapLimiter MapId="54" AreaId="53">
+		<Effect Time="5400" Delay="10" X="33429" Y="32774" BackMapId="4" />
+	</MapLimiter>
+	<!-- ギランプリズンダンジョン3F -->
+	<MapLimiter MapId="55" AreaId="53">
+		<Effect Time="5400" Delay="10" X="33429" Y="32774" BackMapId="4" />
+	</MapLimiter>
+	<!-- ギランプリズンダンジョン4F -->
+	<MapLimiter MapId="56" AreaId="53">
+		<Effect Time="5400" Delay="10" X="33429" Y="32774" BackMapId="4" />
+	</MapLimiter>
+	<!-- 象牙の塔4F -->
+	<MapLimiter MapId="78" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapLimiter>
+	<!-- 象牙の塔5F -->
+	<MapLimiter MapId="79" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapLimiter>
+	<!-- 象牙の塔6F -->
+	<MapLimiter MapId="80" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapLimiter>
+	<!-- 象牙の塔7F -->
+	<MapLimiter MapId="81" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapLimiter>
+	<!-- 象牙の塔8F -->
+	<MapLimiter MapId="82" AreaId="78">
+		<Effect Time="5400" Delay="10" X="34053" Y="32284" BackMapId="4" />
+	</MapLimiter>
+	<!-- 影の神殿 -->
+	<MapLimiter MapId="777" AreaId="777">
+		<Effect MaxLevel="51" X="34043" Y="32184" BackMapId="4" />
+	</MapLimiter>
+	<!-- 見捨てられた者の地 -->
+	<MapLimiter MapId="778" AreaId="778">
+		<Effect MaxLevel="51" X="32608" Y="33178" BackMapId="4" />
+	</MapLimiter>
+	<!-- 欲望の洞窟 -->
+	<MapLimiter MapId="779" AreaId="778">
+		<Effect MaxLevel="51" X="32608" Y="33178" BackMapId="4" />
+	</MapLimiter>
+	<!-- 新隠された渓谷 -->
+	<MapLimiter MapId="2005" AreaId="2005">
+		<Effect MaxLevel="12" X="33084" Y="33391" BackMapId="4" />
+	</MapLimiter>
+	<!-- 旧隠された渓谷 -->
+	<MapLimiter MapId="69" AreaId="2005">
+		<Effect MaxLevel="12" X="33084" Y="33391" BackMapId="4" />
+	</MapLimiter>
+	<!-- 隠された渓谷ダンジョン -->
+	<MapLimiter MapId="86" AreaId="2005">
+		<Effect MaxLevel="12" X="33084" Y="33391" BackMapId="4" />
+	</MapLimiter>
+	
+</MapLimiterList>

@@ -137,16 +137,16 @@ public class MapTimerTable {
 
 	public static void reset(int areaId) {
 		for(L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-			if (pc.getMapTimer().getAreaId() == areaId) {
-				pc.stopMapTimer();
+			if (pc.getMapLimiter().getAreaId() == areaId) {
+				pc.stopMapLimiter();
 			}
 		}
 		
 		remove(areaId);
 		
 		for(L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-			if (pc.getMapTimer() == null) {
-				pc.startMapTimer();
+			if (pc.getMapLimiter() == null) {
+				pc.startMapLimiter();
 			}
 		}
 	}

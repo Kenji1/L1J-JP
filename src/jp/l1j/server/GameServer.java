@@ -116,7 +116,7 @@ import jp.l1j.server.model.item.executor.L1TreasureBox;
 import jp.l1j.server.model.item.executor.L1UnknownMaliceWeapon;
 import jp.l1j.server.model.item.executor.L1WisdomPotion;
 import jp.l1j.server.model.map.L1WorldMap;
-import jp.l1j.server.model.map.executor.L1MapTimer;
+import jp.l1j.server.model.map.executor.L1MapLimiter;
 import jp.l1j.server.model.trap.L1WorldTraps;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.utils.SystemUtil;
@@ -342,7 +342,7 @@ public class GameServer extends Thread {
 		L1HealingPotion.load();
 		L1MagicEye.load();
 		L1MagicPotion.load();
-		L1MapTimer.load();
+		L1MapLimiter.load();
 		L1Material.load();
 		L1MaterialChoice.load();
 		L1PolyPotion.load();

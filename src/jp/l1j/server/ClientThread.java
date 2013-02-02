@@ -644,8 +644,8 @@ public class ClientThread implements Runnable, PacketOutput {
 		CharBuffTable.save(pc);
 		pc.clearSkillEffectTimer();
 
-		// 時間制限付きマップのタイマーを停止する
-		pc.stopMapTimer();
+		// マップリミッターを停止する
+		pc.stopMapLimiter();
 
 		// pcのモニターをstopする。
 		pc.stopEtcMonitor();

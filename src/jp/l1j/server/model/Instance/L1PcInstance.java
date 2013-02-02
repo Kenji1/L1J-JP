@@ -69,7 +69,7 @@ import jp.l1j.server.model.gametime.L1GameTimeCarrier;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.inventory.L1WarehouseInventory;
-import jp.l1j.server.model.map.executor.L1MapTimer;
+import jp.l1j.server.model.map.executor.L1MapLimiter;
 import jp.l1j.server.model.monitor.L1PcAutoUpdate;
 import jp.l1j.server.model.monitor.L1PcExpMonitor;
 import jp.l1j.server.model.monitor.L1PcGhostMonitor;
@@ -373,37 +373,37 @@ public class L1PcInstance extends L1Character {
 	}
 
 	// 時間制限付きマップのタイマー
-	private static ScheduledFuture<?> _mapTimerFuture;
-	private static L1MapTimer _mapTimer = null;
-	public L1MapTimer getMapTimer() {
-		return _mapTimer;
+	private static ScheduledFuture<?> _mapLimiterFuture;
+	private static L1MapLimiter _mapLimiter = null;
+	public L1MapLimiter getMapLimiter() {
+		return _mapLimiter;
 	}
 	
-	public void setMapTimer(L1MapTimer mapTimer) {
-		_mapTimer = mapTimer;
+	public void setMapLimiter(L1MapLimiter mapLimiter) {
+		_mapLimiter = mapLimiter;
 	}
 
-	public void startMapTimer() {
-		if (getMapTimer() != null) {
-			stopMapTimer();
+	public void startMapLimiter() {
+		if (getMapLimiter() != null) {
+			stopMapLimiter();
 		}
 
-		setMapTimer(L1MapTimer.get(getMapId()));
-		if (getMapTimer() != null) {
-			getMapTimer().execute(this);
+		setMapLimiter(L1MapLimiter.get(getMapId()));
+		if (getMapLimiter() != null) {
+			getMapLimiter().execute(this);
 			ScheduledExecutorService schedule =
 					Executors.newSingleThreadScheduledExecutor();
-			_mapTimerFuture = schedule.scheduleAtFixedRate(getMapTimer(), 0,
+			_mapLimiterFuture = schedule.scheduleAtFixedRate(getMapLimiter(), 0,
 					1000, TimeUnit.MILLISECONDS);
 		}
 	}
 
-	public void stopMapTimer() {
-		if (getMapTimer() != null) {
-			getMapTimer().save();
-			setMapTimer(null);
-			_mapTimerFuture.cancel(true);
-			_mapTimerFuture = null;
+	public void stopMapLimiter() {
+		if (getMapLimiter() != null) {
+			getMapLimiter().save();
+			setMapLimiter(null);
+			_mapLimiterFuture.cancel(true);
+			_mapLimiterFuture = null;
 		}
 	}
 
@@ -2797,22 +2797,6 @@ public class L1PcInstance extends L1Character {
 			}
 		}
 		sendPackets(new S_OwnCharStatus(this));
-
-		if ((getMapId() == 2005 || getMapId() == 86)) {// 隠された渓谷・ダンジョン
-			if (getLevel() >= 13) {
-				// if (getQuest().getStep(L1Quest.QUEST_TUTOR) != 255) {
-				// getQuest().setStep(L1Quest.QUEST_TUTOR, 255);
-				// }
-				L1Teleport.teleport(this, 33084, 33391, (short) 4, 5, true); // SKT
-			}
-		} else if (getLevel() >= 52) { // 指定レベル
-			if (getMapId() == 777) { // 見捨てられた者たちの地(影の神殿)
-				L1Teleport.teleport(this, 34043, 32184, (short) 4, 5, true); // 象牙の塔前
-			} else if (getMapId() == 778 || getMapId() == 779) {
-				// 見捨てられた者たちの地、欲望の洞窟)
-				L1Teleport.teleport(this, 32608, 33178, (short) 4, 5, true); // WB
-			}
-		}
 	}
 
 	private void levelDown(int gap) {

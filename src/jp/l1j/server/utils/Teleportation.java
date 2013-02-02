@@ -187,8 +187,8 @@ public class Teleportation {
 
 		pc.setTeleport(false);
 		
-		// マップタイマーを開始
-		pc.startMapTimer();
+		// マップリミッターを開始
+		pc.startMapLimiter();
 		
 		// TODO ブラッドラスト消失対応　start
 		if (pc.hasSkillEffect(BLOODLUST)) {

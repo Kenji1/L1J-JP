@@ -335,7 +335,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 		
 		pc.startExpirationTimer(); // 有効期限付きアイテムのタイマーを開始
-		pc.startMapTimer(); // 時間制限付きマップのタイマーを開始
+		pc.startMapLimiter(); // マップリミッターを開始
 	}
 
 	private void items(L1PcInstance pc) {
