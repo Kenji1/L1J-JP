@@ -130,6 +130,9 @@ public class DropTable {
 		}
 		double uniqueRateOfMapId = MapsTable.getInstance().getUniqueRate(
 				npc.getMap().getBaseMapId());
+		if (uniqueRateOfMapId <= 0) {
+			uniqueRateOfMapId = 0;
+		}
 
 		int itemId;
 		int itemCount;
