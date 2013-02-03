@@ -135,11 +135,6 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 		if (uniqueMakeRate <= 0) {
 			uniqueMakeRate = 0;
 		}
-		double uniqueRateOfMapId = MapsTable.getInstance().getUniqueRate(
-				pc.getMap().getBaseMapId());
-		if (uniqueRateOfMapId <= 0) {
-			uniqueRateOfMapId = 0;
-		}
 		
 		for (L1ObjectAmount<Integer> makingItem : _items) {
 			L1ItemInstance item = null;
@@ -152,7 +147,7 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 					if (item != null) {
 						// ユニークオプションを付加
 						double uniqueRateOfItem = DropItemTable.getInstance().getUniqueRate(item.getItemId());
-						double uniqueRate = uniqueMakeRate * uniqueRateOfMapId * uniqueRateOfItem;
+						double uniqueRate = uniqueMakeRate * uniqueRateOfItem;
 						item.setUniqueOptions(uniqueRate);
 					}
 				}
