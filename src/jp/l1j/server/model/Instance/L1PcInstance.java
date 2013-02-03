@@ -389,7 +389,7 @@ public class L1PcInstance extends L1Character {
 		}
 
 		setMapLimiter(L1MapLimiter.get(getMapId()));
-		if (getMapLimiter() != null) {
+		if (isGm() == false && getMapLimiter() != null) {
 			getMapLimiter().execute(this);
 			ScheduledExecutorService schedule =
 					Executors.newSingleThreadScheduledExecutor();
