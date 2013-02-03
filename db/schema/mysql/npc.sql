@@ -42,7 +42,7 @@ CREATE TABLE `npc` (
   `agro_gfx_id1` int(10) NOT NULL DEFAULT '-1',
   `agro_gfx_id2` int(10) NOT NULL DEFAULT '-1',
   `pickup_item` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `digest_item` int(1) unsigned NOT NULL DEFAULT '0',
+  `digest_item` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `brave_speed` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `hpr_interval` int(10) unsigned NOT NULL DEFAULT '0',
   `hpr` int(10) unsigned NOT NULL DEFAULT '0',
