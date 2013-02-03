@@ -137,7 +137,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			int mapId = getMapId();
 			if (mapId == 88 || mapId == 98 || mapId == 92 || mapId == 91
 					|| mapId == 95) {
-				if (!pc.isInvisble() || getNpcTemplate().isAgroCoi()) { // インビジチェック
+				if (!pc.isInvisble() || !pc.isGmInvis() || getNpcTemplate().isAgroCoi()) { // インビジチェック
 					distance = getLocation().getTileLineDistance(pc.getLocation());
 					if (minDistance > distance) {
 						minDistance = distance;
@@ -190,7 +190,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				continue;
 			}
 
-			if (!pc.isInvisble() || getNpcTemplate().isAgroCoi()) { // インビジチェック
+			if (!pc.isInvisble() || !pc.isGmInvis() || getNpcTemplate().isAgroCoi()) { // インビジチェック
 				if (pc.hasSkillEffect(67)) { // 変身してる
 					if (getNpcTemplate().isAgroSosc()) { // 変身に対してアクティブ
 						distance = getLocation().getTileLineDistance(pc.getLocation());
