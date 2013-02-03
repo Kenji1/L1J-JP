@@ -136,31 +136,18 @@ public class L1MagicEye {
 
 		// 他の魔眼と重複しない
 		if (pc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)) {
-			pc.addResistHold(-5);
 			pc.removeSkillEffect(MAGIC_EYE_OF_ANTHARAS);
 		} else if (pc.hasSkillEffect(MAGIC_EYE_OF_FAFURION)) {
-			pc.addResistFreeze(-5);
 			pc.removeSkillEffect(MAGIC_EYE_OF_FAFURION);
 		} else if (pc.hasSkillEffect(MAGIC_EYE_OF_LINDVIOR)) {
-			pc.addResistSleep(-5);
 			pc.removeSkillEffect(MAGIC_EYE_OF_LINDVIOR);
 		} else if (pc.hasSkillEffect(MAGIC_EYE_OF_VALAKAS)) {
-			pc.addResistStun(-5);
 			pc.removeSkillEffect(MAGIC_EYE_OF_VALAKAS);
 		} else if (pc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)) {
-			pc.addResistHold(-5);
-			pc.addResistFreeze(-5);
 			pc.removeSkillEffect(MAGIC_EYE_OF_BIRTH);
 		} else if (pc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)) {
-			pc.addResistHold(-5);
-			pc.addResistFreeze(-5);
-			pc.addResistSleep(-5);
 			pc.removeSkillEffect(MAGIC_EYE_OF_SHAPE);
 		} else if (pc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
-			pc.addResistHold(-5);
-			pc.addResistFreeze(-5);
-			pc.addResistSleep(-5);
-			pc.addResistStun(-5);
 			pc.removeSkillEffect(MAGIC_EYE_OF_LIFE);
 		}
 
