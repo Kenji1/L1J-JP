@@ -423,6 +423,10 @@ public class C_LoginToServer extends ClientBasePacket {
 		for (L1CharacterBuff buff : CharBuffTable.findByCharacterId(pc.getId())) {
 			int skillId = buff.getSkillId();
 			int remainingTime = buff.getRemainingTime();
+			long logoutTime = pc.getLogoutTime().getTime();
+			long loginTime = new Timestamp(System.currentTimeMillis()).getTime();
+			int differenceTime = (int)(loginTime - logoutTime) / 1000;
+			
 			if (buffByExecutor(pc, buff)) {
 				continue;
 			}
@@ -633,9 +637,15 @@ public class C_LoginToServer extends ClientBasePacket {
 				exe.addEffect(null, pc, remainingTime);
 				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else if (skillId == BLOODSTAIN_OF_ANTHARAS) { // アンタラスの血痕
-				L1BuffUtil.bloodstain(pc, (byte) 0, remainingTime / 60, false);
+				if (remainingTime - differenceTime > 0) {
+					L1BuffUtil.bloodstain(pc, (byte) 0,
+							(remainingTime - differenceTime) / 60, false);
+				}
 			} else if (skillId == BLOODSTAIN_OF_FAFURION) { // パプリオンの血痕
-				L1BuffUtil.bloodstain(pc, (byte) 1, remainingTime / 60, false);
+				if (remainingTime - differenceTime > 0) {
+					L1BuffUtil.bloodstain(pc, (byte) 1,
+							(remainingTime - differenceTime) / 60, false);
+				}
 //			} else if (skillId == BLOODSTAIN_OF_LINDVIOR) { // リンドビオルの血痕(未実装)
 //				L1BuffUtil.bloodstain(pc, (byte) 2, remainingTime / 60, false);
 //			} else if (skillId == BLOODSTAIN_OF_VALAKAS) { // ヴァラカスの血痕(未実装)
