@@ -629,6 +629,27 @@ public final class Config {
 	@Configure(file = CHARACTER, key = "LearnAllElfSkills")
 	public static boolean LEARN_ALL_ELF_SKILLS = false;
 
+	@Configure(file = CHARACTER, key = "ElixirMaxUse")
+	public static int ELIXIR_MAX_USE = 5;
+
+	@Configure(file = CHARACTER, key = "ElixirMaxStr")
+	public static int ELIXIR_MAX_STR = 35;
+
+	@Configure(file = CHARACTER, key = "ElixirMaxCon")
+	public static int ELIXIR_MAX_CON = 35;
+
+	@Configure(file = CHARACTER, key = "ElixirMaxDex")
+	public static int ELIXIR_MAX_DEX = 35;
+
+	@Configure(file = CHARACTER, key = "ElixirMaxInt")
+	public static int ELIXIR_MAX_INT = 35;
+
+	@Configure(file = CHARACTER, key = "ElixirMaxWis")
+	public static int ELIXIR_MAX_WIS = 35;
+
+	@Configure(file = CHARACTER, key = "ElixirMaxCha")
+	public static int ELIXIR_MAX_CHA = 35;
+
 	@Configure(file = CHARACTER, key = "Lv50Exp")
 	public static int LV50_EXP = 1;
 

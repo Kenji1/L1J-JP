@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -160,49 +161,49 @@ public class L1Elixir {
 			return false;
 		}
 
-		if (pc.getElixirStats() >= 5) {
+		if (pc.getElixirStats() >= Config.ELIXIR_MAX_USE) {
 			pc.sendPackets(new S_ServerMessage(481)); // \f1一つの能力値の最大値は35です。他の能力値を選択してください。
 			return false;
 		}
 		
 		Effect effect = getEffect();
 		if (effect.getStr() > 0) {
-			if (pc.getBaseStr() >= 35) {
+			if (pc.getBaseStr() >= Config.ELIXIR_MAX_STR) {
 				pc.sendPackets(new S_ServerMessage(481)); // \f1一つの能力値の最大値は35です。他の能力値を選択してください。
 				return false;
 			}
 			pc.addBaseStr((byte) effect.getStr()); // 素のSTR値
 			pc.setElixirStats(pc.getElixirStats() + effect.getStr());
 		} else if (effect.getCon() > 0) {
-			if (pc.getBaseCon() >= 35) {
+			if (pc.getBaseCon() >= Config.ELIXIR_MAX_CON) {
 				pc.sendPackets(new S_ServerMessage(481)); // \f1一つの能力値の最大値は35です。他の能力値を選択してください。
 				return false;
 			}
 			pc.addBaseCon((byte) effect.getCon()); // 素のCON値
 			pc.setElixirStats(pc.getElixirStats() + effect.getCon());
 		} else if (effect.getDex() > 0) {
-			if (pc.getBaseDex() >= 35) {
+			if (pc.getBaseDex() >= Config.ELIXIR_MAX_DEX) {
 				pc.sendPackets(new S_ServerMessage(481)); // \f1一つの能力値の最大値は35です。他の能力値を選択してください。
 				return false;
 			}
 			pc.addBaseDex((byte) effect.getDex()); // 素のDex値
 			pc.setElixirStats(pc.getElixirStats() + effect.getDex());
 		} else if (effect.getInt() > 0) {
-			if (pc.getBaseInt() >= 35) {
+			if (pc.getBaseInt() >= Config.ELIXIR_MAX_INT) {
 				pc.sendPackets(new S_ServerMessage(481)); // \f1一つの能力値の最大値は35です。他の能力値を選択してください。
 				return false;
 			}
 			pc.addBaseInt((byte) effect.getInt()); // 素のINT値
 			pc.setElixirStats(pc.getElixirStats() + effect.getInt());
 		} else if (effect.getWis() > 0) {
-			if (pc.getBaseWis() >= 35) {
+			if (pc.getBaseWis() >= Config.ELIXIR_MAX_WIS) {
 				pc.sendPackets(new S_ServerMessage(481)); // \f1一つの能力値の最大値は35です。他の能力値を選択してください。
 				return false;
 			}
 			pc.addBaseWis((byte) effect.getWis()); // 素のWIS値
 			pc.setElixirStats(pc.getElixirStats() + effect.getWis());
 		} else if (effect.getCha() > 0) {
-			if (pc.getBaseCha() >= 35) {
+			if (pc.getBaseCha() >= Config.ELIXIR_MAX_CHA) {
 				pc.sendPackets(new S_ServerMessage(481)); // \f1一つの能力値の最大値は35です。他の能力値を選択してください。
 				return false;
 			}

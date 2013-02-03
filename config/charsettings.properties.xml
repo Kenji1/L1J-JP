@@ -51,6 +51,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- 全ての精霊魔法を習得可能か(エルフのみ) -->
 <entry key="LearnAllElfSkills">False</entry>
 
+<!-- エリクサーの使用制限 -->
+<entry key="ElixirMaxUse">5</entry>
+<entry key="ElixirMaxStr">35</entry>
+<entry key="ElixirMaxCon">35</entry>
+<entry key="ElixirMaxDex">35</entry>
+<entry key="ElixirMaxInt">35</entry>
+<entry key="ElixirMaxWis">35</entry>
+<entry key="ElixirMaxCha">35</entry>
+
 <!-- LEVEL50以降のEXP倍率を指定 1-2147483647 -->
 <!-- 取得EXPが、1を指定すれば1/1、2を指定すれば1/2、3を指定すれば1/3、･･･となる -->
 <entry key="Lv50Exp">1</entry>
