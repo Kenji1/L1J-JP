@@ -118,7 +118,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 	// ターゲットを探す
 	public static int[][] _classGfxId = { { 0, 1 }, { 48, 61 }, { 37, 138 },
-			{ 734, 1186 }, { 2786, 2796 } };
+			{ 734, 1186 }, { 2786, 2796 }, { 6658, 6661 }, { 6671, 6650 } };
 
 	@Override
 	public void searchTarget() {
@@ -211,7 +211,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 				// 特定のクラスorグラフィックＩＤにアクティブ
 				if (getNpcTemplate().isAgroGfxId1() >= 0
-						&& getNpcTemplate().isAgroGfxId1() <= 4) { // クラス指定
+						&& getNpcTemplate().isAgroGfxId1() <= 6) { // クラス指定
 					if (_classGfxId[getNpcTemplate().isAgroGfxId1()][0] == pc
 							.getTempCharGfx()
 							|| _classGfxId[getNpcTemplate().isAgroGfxId1()][1] == pc
@@ -229,7 +229,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				}
 
 				if (getNpcTemplate().isAgroGfxId2() >= 0
-						&& getNpcTemplate().isAgroGfxId2() <= 4) { // クラス指定
+						&& getNpcTemplate().isAgroGfxId2() <= 6) { // クラス指定
 					if (_classGfxId[getNpcTemplate().isAgroGfxId2()][0] == pc.getTempCharGfx()
 							|| _classGfxId[getNpcTemplate().isAgroGfxId2()][1] == pc.getTempCharGfx()) {
 						distance = getLocation().getTileLineDistance(pc.getLocation());
