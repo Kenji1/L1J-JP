@@ -614,72 +614,15 @@ public class L1EnchantScroll {
 		int safe_enchant = item.getItem().getSafeEnchant();
 		int oldEnchantLvl = item.getEnchantLevel();
 		int newEnchantLvl = oldEnchantLvl + i;
-		int itemId = item.getItem().getItemId();
-		if (itemId == 20011 || itemId == 20110 || itemId == 21108
-				|| itemId == 21194 || itemId == 120011) {
-			// マジックヘルム、マジックチェーンメイル、キャラクター名の魔法抵抗のＴシャツ
-			// タラスブーツ
-			item.setMr(item.getMr() + i);
-		}
-		if (itemId == 20056 || itemId == 120056 || itemId == 220056) { // マジック クローク
-			item.setMr(item.getMr() + i * 2);
-		}
-		if (itemId == 20465 || itemId == 21235 || itemId == 21236) { // フィアバンパイアマント、ホノオノ外套、コオリノ外套
-			item.setMr(item.getMr() + i * 3);
-		}
-
 		int grade = item.getItem().getGrade();
-		if (item.getItem().getType2() == 2 && item.getItem().getType() >= 10
-				&& item.getItem().getType() <= 13) { // アクセサリー
-			if (grade == 0) { // 上級
-				// +1毎の強化効果
-				item.setDefenseEarth(item.getDefenseEarth() + 1);
-				item.setDefenseWater(item.getDefenseWater() + 1);
-				item.setDefenseFire(item.getDefenseFire() + 1);
-				item.setDefenseWind(item.getDefenseWind() + 1);
-				// +6以上の強化時のボーナス
-				if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
-						&& oldEnchantLvl < 6 && newEnchantLvl >= 6) {
-					item.setHpr(item.getHpr() + 1);
-					item.setMpr(item.getMpr() + 1);
-				}
-				else if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
-						&& newEnchantLvl >= 6) {
-					item.setHpr(item.getHpr() + 1);
-					item.setMpr(item.getMpr() + 1);
-				}
-			} else if (grade == 1) { // 中級
-				// +1毎の強化効果
-				item.setHp(item.getHp() + 2);
-				// +6以上の強化時のボーナス
-				if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
-						&& oldEnchantLvl < 6 && newEnchantLvl >= 6) {
-					item.setMr(item.getMr() + 1);
-				}
-				else if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
-						&& newEnchantLvl >= 6) {
-					item.setMr(item.getMr() + 1);
-				}
-			} else if (grade == 2) { // 下級
-				// +1毎の強化効果
-				item.setMp(item.getMp() + 1);
-				// +6以上の強化時のボーナス
-				if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
-						&& oldEnchantLvl < 6 && newEnchantLvl >= 6) {
-					item.setSp(item.getSp() + 1);
-				}
-				else if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
-						&& newEnchantLvl >= 6) {
-					item.setSp(item.getSp() + 1);
-				}
-			//} else if (grade == 3) { // 特級は未実装
-			}
-		}
+		
 		item.setEnchantLevel(newEnchantLvl);
 		pc.getInventory().updateItem(item, L1PcInventory.COL_ENCHANTLVL);
+		
 		if (newEnchantLvl > safe_enchant) {
 			pc.getInventory().saveItem(item);
 		}
+		
 		if (item.getItem().getType2() == 1
 				&& Config.LOGGING_WEAPON_ENCHANT != 0) {
 			if (safe_enchant == 0
@@ -687,6 +630,7 @@ public class L1EnchantScroll {
 				loggingEnchant(pc, item, oldEnchantLvl, newEnchantLvl);
 			}
 		}
+		
 		if (item.getItem().getType2() == 2 && item.getItem().getType() < 10
 				&& Config.LOGGING_ARMOR_ENCHANT != 0) {
 			if (safe_enchant == 0
@@ -694,6 +638,7 @@ public class L1EnchantScroll {
 				loggingEnchant(pc, item, oldEnchantLvl, newEnchantLvl);
 			}
 		}
+		
 		if (item.getItem().getType2() == 2 && item.getItem().getType() >= 10
 				&& item.getItem().getType() <= 13
 				&& Config.LOGGING_ACCESSORY_ENCHANT != 0) {
@@ -702,6 +647,7 @@ public class L1EnchantScroll {
 				loggingEnchant(pc, item, oldEnchantLvl, newEnchantLvl);
 			}
 		}
+		
 		if (item.getItem().getType2() == 1
 				&& Config.ANNOUNCE_WEAPON_ENCHANT != 0) {
 			if (safe_enchant == 0
@@ -709,6 +655,7 @@ public class L1EnchantScroll {
 				announceEnchant(pc, item);
 			}
 		}
+		
 		if (item.getItem().getType2() == 2 && item.getItem().getType() < 10
 				&& Config.ANNOUNCE_ARMOR_ENCHANT != 0) {
 			if (safe_enchant == 0
@@ -716,6 +663,7 @@ public class L1EnchantScroll {
 				announceEnchant(pc, item);
 			}
 		}
+		
 		if (item.getItem().getType2() == 2 && item.getItem().getType() >= 10
 				&& item.getItem().getType() <= 13
 				&& Config.ANNOUNCE_ACCESSORY_ENCHANT != 0) {
@@ -724,6 +672,7 @@ public class L1EnchantScroll {
 				announceEnchant(pc, item);
 			}
 		}
+
 		if (item.isEquipped()) { // 装備中
 			if (item.getItem().getType2() == 2
 					&& item.getItem().getType() < 10) { // 防具
@@ -754,19 +703,30 @@ public class L1EnchantScroll {
 					pc.addEarth(1);
 					pc.addWind(1);
 					pc.sendPackets(new S_OwnCharStatus(pc));
-					if (newEnchantLvl >= 6) {
+					if ((Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
+							&& oldEnchantLvl < 6 && newEnchantLvl >= 6)
+						|| (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
+							&& newEnchantLvl >= 6)) {
 						pc.addHpr(1);
 						pc.addMpr(1);
 					}
 				} else if (grade == 1) { // 中級
 					pc.addMaxHp(2);
-					if (newEnchantLvl >= 6) {
+					pc.sendPackets(new S_OwnCharStatus(pc));
+					if ((Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
+							&& oldEnchantLvl < 6 && newEnchantLvl >= 6)
+						|| (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
+							&& newEnchantLvl >= 6)) {
 						pc.addMr(1);
 						pc.sendPackets(new S_SpMr(pc));
 					}
 				} else if (grade == 2) { // 初級
 					pc.addMaxMp(1);
-					if (newEnchantLvl >= 6) {
+					pc.sendPackets(new S_OwnCharStatus(pc));
+					if ((Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")
+							&& oldEnchantLvl < 6 && newEnchantLvl >= 6)
+						|| (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("ext")
+							&& newEnchantLvl >= 6)) {
 						pc.addSp(1);
 						pc.sendPackets(new S_SpMr(pc));
 					}

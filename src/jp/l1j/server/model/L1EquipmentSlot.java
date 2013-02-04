@@ -195,26 +195,26 @@ public class L1EquipmentSlot {
 		}
 		_owner.addCha(item.getCha() + equipment.getCha());
 
-		_owner.addMaxHp(item.getHp() + equipment.getHp());
-		_owner.addMaxMp(item.getMp() + equipment.getMp());
-		_owner.addHpr(item.getHpr() + equipment.getHpr());
-		_owner.addMpr(item.getMpr() + equipment.getMpr());
+		_owner.addMaxHp(equipment.getHp());
+		_owner.addMaxMp(equipment.getMp());
+		_owner.addHpr(equipment.getHpr());
+		_owner.addMpr(equipment.getMpr());
 
 		int addMr = 0;
-		addMr += item.getMr() + equipment.getMr();
+		addMr += equipment.getMr();
 		if (item.getItemId() == 20236 && _owner.isElf()) {
 			addMr += 5;
 		}
 
 		_owner.addMr(addMr);
 		_owner.sendPackets(new S_SpMr(_owner));
-		_owner.addSp(item.getSp() + equipment.getSp());
+		_owner.addSp(equipment.getSp());
 		_owner.sendPackets(new S_SpMr(_owner));
 
-		_owner.addEarth(item.getDefenseEarth() + equipment.getDefenseEarth());
-		_owner.addWind(item.getDefenseWind() + equipment.getDefenseWind());
-		_owner.addWater(item.getDefenseWater() + equipment.getDefenseWater());
-		_owner.addFire(item.getDefenseFire() + equipment.getDefenseFire());
+		_owner.addEarth(equipment.getDefenseEarth());
+		_owner.addWind(equipment.getDefenseWind());
+		_owner.addWater(equipment.getDefenseWater());
+		_owner.addFire(equipment.getDefenseFire());
 
 		_owner.addResistStun(item.getResistStun() + equipment.getResistStun());
 		_owner.addResistStone(item.getResistStone() + equipment.getResistStone());
@@ -269,26 +269,26 @@ public class L1EquipmentSlot {
 		}
 		_owner.addCha(-(item.getCha() + equipment.getCha()));
 
-		_owner.addMaxHp(-(item.getHp() + equipment.getHp()));
-		_owner.addMaxMp(-(item.getMp() + equipment.getMp()));
-		_owner.addHpr(-(item.getHpr() + equipment.getHpr()));
-		_owner.addMpr(-(item.getMpr() + equipment.getMpr()));
+		_owner.addMaxHp(-(equipment.getHp()));
+		_owner.addMaxMp(-(equipment.getMp()));
+		_owner.addHpr(-(equipment.getHpr()));
+		_owner.addMpr(-(equipment.getMpr()));
 
 		int addMr = 0;
-		addMr -= item.getMr() + equipment.getMr();
+		addMr -= equipment.getMr();
 		if (item.getItemId() == 20236 && _owner.isElf()) {
 			addMr -= 5;
 		}
 
 		_owner.addMr(addMr);
 		_owner.sendPackets(new S_SpMr(_owner));
-		_owner.addSp(-(item.getSp() + equipment.getSp()));
+		_owner.addSp(-(equipment.getSp()));
 		_owner.sendPackets(new S_SpMr(_owner));
 
-		_owner.addEarth(-(item.getDefenseEarth() + equipment.getDefenseEarth()));
-		_owner.addWind(-(item.getDefenseWind() + equipment.getDefenseWind()));
-		_owner.addWater(-(item.getDefenseWater() + equipment.getDefenseWater()));
-		_owner.addFire(-(item.getDefenseFire() + equipment.getDefenseFire()));
+		_owner.addEarth(-(equipment.getDefenseEarth()));
+		_owner.addWind(-(equipment.getDefenseWind()));
+		_owner.addWater(-(equipment.getDefenseWater()));
+		_owner.addFire(-(equipment.getDefenseFire()));
 
 		_owner.addResistStun(-(item.getResistStun() + equipment.getResistStun()));
 		_owner.addResistStone(-(item.getResistStone() + equipment.getResistStone()));

@@ -351,7 +351,15 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getHp() {
-		return _inventoryItem.getHp();
+		int result = _item.getHp() + _inventoryItem.getHp();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 1) {
+			// アクセサリー中級
+			result += getEnchantLevel() * 2;
+		}
+
+		return result;
 	}
 	
 	public void setHp(int _hp) {
@@ -359,7 +367,20 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getHpr() {
-		return _inventoryItem.getHpr();
+		int result = _item.getHpr() + _inventoryItem.getHpr();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 0
+				&& getEnchantLevel() >= 6) {
+			// アクセサリー上級 +6以上
+			if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")) {
+				result += 1;
+			} else { // L1J-JP オリジナル仕様
+				result += getEnchantLevel() - 5;
+			}
+		}
+
+		return result;
 	}
 	
 	public void setHpr(int _hpr) {
@@ -367,7 +388,15 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getMp() {
-		return _inventoryItem.getMp();
+		int result = _item.getMp() + _inventoryItem.getMp();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 2) {
+			// アクセサリー下級
+			result += getEnchantLevel();
+		}
+
+		return result;
 	}
 	
 	public void setMp(int _mp) {
@@ -375,7 +404,20 @@ public class L1ItemInstance extends L1Object {
 	}
 		
 	public int getMpr() {
-		return _inventoryItem.getMpr();
+		int result = _item.getHpr() + _inventoryItem.getHpr();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 0
+				&& getEnchantLevel() >= 6) {
+			// アクセサリー上級 +6以上
+			if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")) {
+				result += 1;
+			} else { // L1J-JP オリジナル仕様
+				result += getEnchantLevel() - 5;
+			}
+		}
+
+		return result;
 	}
 	
 	public void setMpr(int _mpr) {
@@ -383,7 +425,20 @@ public class L1ItemInstance extends L1Object {
 	}
 				
 	public int getSp() {
-		return _inventoryItem.getSp();
+		int result = _item.getSp() + _inventoryItem.getSp();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 2
+				&& getEnchantLevel() >= 6) {
+			// アクセサリー下級 +6以上
+			if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")) {
+				result += 1;
+			} else { // L1J-JP オリジナル仕様
+				result += getEnchantLevel() - 5;
+			}
+		}
+
+		return result;
 	}
 	
 	public void setSp(int _sp) {
@@ -391,7 +446,37 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getMr() {
-		return _inventoryItem.getMr();
+		int result = _item.getMr() + _inventoryItem.getMr();
+		
+		if (getItemId() == 20011 || getItemId() == 20110 || getItemId() == 21108
+				|| getItemId() == 21194 || getItemId() == 120011) {
+			// マジックヘルム、マジックチェーンメイル、キャラクター名の魔法抵抗のＴシャツ
+			// タラスブーツ
+			result += getEnchantLevel();
+		}
+		
+		if (getItemId() == 20056 || getItemId() == 120056 || getItemId() == 220056) {
+			// マジック クローク
+			result += getEnchantLevel() * 2;
+		}
+		
+		if (getItemId() == 20465 || getItemId() == 21235 || getItemId() == 21236) {
+			// フィアバンパイアマント、ホノオノ外套、コオリノ外套
+			result += getEnchantLevel() * 3;
+		}
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 1
+				&& getEnchantLevel() >= 6) {
+			// アクセサリー中級 +6以上
+			if (Config.ACCESSORY_ENCHANT_BONUS.equalsIgnoreCase("std")) {
+				result += 1;
+			} else { // L1J-JP オリジナル仕様
+				result += getEnchantLevel() - 5;
+			}
+		}
+
+		return result;
 	}
 	
 	public void setMr(int _mr) {
@@ -431,7 +516,15 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getDefenseEarth() {
-		return _inventoryItem.getDefenseEarth();
+		int result = _item.getDefenseEarth() + _inventoryItem.getDefenseEarth();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 0) {
+			// アクセサリー上級
+			result += getEnchantLevel();
+		}
+
+		return result;
 	}
 	
 	public void setDefenseEarth(int _defenseEarth) {
@@ -439,7 +532,15 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getDefenseWater() {
-		return _inventoryItem.getDefenseWater();
+		int result = _item.getDefenseWater() + _inventoryItem.getDefenseWater();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 0) {
+			// アクセサリー上級
+			result += getEnchantLevel();
+		}
+
+		return result;
 	}
 	
 	public void setDefenseWater(int _defenseWater) {
@@ -447,7 +548,15 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getDefenseFire() {
-		return _inventoryItem.getDefenseFire();
+		int result = _item.getDefenseFire() + _inventoryItem.getDefenseFire();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 0) {
+			// アクセサリー上級
+			result += getEnchantLevel();
+		}
+
+		return result;
 	}
 	
 	public void setDefenseFire(int _defenseFire) {
@@ -455,7 +564,15 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getDefenseWind() {
-		return _inventoryItem.getDefenseWind();
+		int result = _item.getDefenseWind() + _inventoryItem.getDefenseWind();
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 0) {
+			// アクセサリー上級
+			result += getEnchantLevel();
+		}
+
+		return result;
 	}
 	
 	public void setDefenseWind(int _defenseWind) {
@@ -918,16 +1035,16 @@ public class L1ItemInstance extends L1Object {
 			// HP, MP
 			if (getItem().getHp() != 0 || getHp() != 0) {
 				os.writeC(14);
-				os.writeH(getItem().getHp() + getHp());
+				os.writeH(getHp());
 			}
 			if (getItem().getMp() != 0 || getMp() != 0) {
 				os.writeC(32);
-				os.writeC(getItem().getMp() + getMp());
+				os.writeC(getMp());
 			}
 			// SP(魔力)
 			if (getItem().getSp() != 0 || getSp() != 0) {
 				os.writeC(17);
-				os.writeC(getItem().getSp() + getSp());
+				os.writeC(getSp());
 			}
 			// ヘイスト
 			if (isHaste()) {
@@ -936,22 +1053,22 @@ public class L1ItemInstance extends L1Object {
 			// 火の属性
 			if (getItem().getDefenseFire() != 0 || getDefenseFire() != 0) {
 				os.writeC(27);
-				os.writeC(getItem().getDefenseFire() + getDefenseFire());
+				os.writeC(getDefenseFire());
 			}
 			// 水の属性
 			if (getItem().getDefenseWater() != 0 || getDefenseWater() != 0) {
 				os.writeC(28);
-				os.writeC(getItem().getDefenseWater() + getDefenseWater());
+				os.writeC(getDefenseWater());
 			}
 			// 風の属性
 			if (getItem().getDefenseWind() != 0 || getDefenseWind() != 0) {
 				os.writeC(29);
-				os.writeC(getItem().getDefenseWind() + getDefenseWind());
+				os.writeC(getDefenseWind());
 			}
 			// 地の属性
 			if (getItem().getDefenseEarth() != 0 || getDefenseEarth() != 0) {
 				os.writeC(30);
-				os.writeC(getItem().getDefenseEarth() + getDefenseEarth());
+				os.writeC(getDefenseEarth());
 			}
 			// 凍結耐性
 			if (getItem().getResistFreeze() != 0 || getResistFreeze() != 0) {
@@ -998,7 +1115,7 @@ public class L1ItemInstance extends L1Object {
 			// MR
 			if (getItem().getMr() != 0 || getMr() != 0) {
 				os.writeC(15);
-				os.writeH(getItem().getMr() + getMr());
+				os.writeH(getMr());
 			}
 			// 経験値ボーナス
 			if (getItem().getExpBonus() != 0 || getExpBonus() != 0) {
@@ -1008,12 +1125,12 @@ public class L1ItemInstance extends L1Object {
 			// HP自然回復
 			if (getItem().getHpr() != 0 || getHpr() != 0) {
 				os.writeC(37);
-				os.writeC(getItem().getHpr() + getHpr());
+				os.writeC(getHpr());
 			}
 			// MP自然回復
 			if (getItem().getMpr() != 0 || getMpr() != 0) {
 				os.writeC(38);
-				os.writeC(getItem().getMpr() + getMpr());
+				os.writeC(getMpr());
 			}
 			// 幸運
 			// if (getItem.getLuck() != 0) {

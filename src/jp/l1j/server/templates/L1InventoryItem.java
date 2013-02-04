@@ -62,8 +62,8 @@ public class L1InventoryItem {
 	private int _hpr;
 	private int _mp;
 	private int _mpr;
-	private int _sp;
 	private int _mr;
+	private int _sp;
 	private int _hitModifier;
 	private int _dmgModifier;
 	private int _bowHitModifier;
@@ -310,20 +310,20 @@ public class L1InventoryItem {
 		this._mpr = _mpr;
 	}
 	
-	public int getSp() {
-		return _sp;
-	}
-
-	public void setSp(int _sp) {
-		this._sp = _sp;
-	}
-	
 	public int getMr() {
 		return _mr;
 	}
 
 	public void setMr(int _mr) {
 		this._mr = _mr;
+	}
+	
+	public int getSp() {
+		return _sp;
+	}
+
+	public void setSp(int _sp) {
+		this._sp = _sp;
 	}
 
 	public int getHitModifier() {
@@ -581,8 +581,8 @@ public class L1InventoryItem {
 		qb.addColumn("hpr", _hpr);
 		qb.addColumn("mp", _mp);
 		qb.addColumn("mpr", _mpr);
-		qb.addColumn("sp", _sp);
 		qb.addColumn("mr", _mr);
+		qb.addColumn("sp", _sp);
 		qb.addColumn("hit_modifier", _hitModifier);
 		qb.addColumn("dmg_modifier", _dmgModifier);
 		qb.addColumn("bow_hit_modifier", _bowHitModifier);
@@ -612,7 +612,7 @@ public class L1InventoryItem {
 				_itemCount, _isEquipped, _enchantLevel, _isIdentified,
 				_durability, _chargeCount, _chargeTime, _expirationTime, _lastUsed,
 				_isSealed, _attrEnchantKind, _attrEnchantLevel, _ac, _str, _con,
-				_dex, _wis, _cha, _int, _hp, _hpr, _mp, _mpr, _sp, _mr,
+				_dex, _wis, _cha, _int, _hp, _hpr, _mp, _mpr, _mr, _sp,
 				_hitModifier, _dmgModifier, _bowHitModifier, _bowDmgModifier,
 				_defenseEarth, _defenseWater, _defenseFire, _defenseWind,
 				_resistStun, _resistStone, _resistSleep, _resistFreeze,
