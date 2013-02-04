@@ -166,9 +166,11 @@ public class L1WisdomPotion {
 			return false;
 		}
 				
-		if (!pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
-			pc.addSp(2);
+		if (pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
+			pc.removeSkillEffect(STATUS_WISDOM_POTION);
 		}
+		
+		pc.addSp(2);
 		
 		Effect effect = getEffect();
 		pc.sendPackets(new S_SkillIconWisdomPotion((effect.getTime() / 4)));

@@ -460,6 +460,7 @@ public class C_LoginToServer extends ClientBasePacket {
 				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else if (skillId == STATUS_WISDOM_POTION) { // ウィズダムポーション
 				pc.sendPackets(new S_SkillIconWisdomPotion(remainingTime / 4));
+				pc.addSp(2);
 				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else if (skillId == STATUS_CHAT_PROHIBITED) { // チャット禁止
 				pc.sendPackets(new S_SkillIconGFX(36, remainingTime));
