@@ -68,6 +68,7 @@ import jp.l1j.server.model.item.executor.L1BluePotion;
 import jp.l1j.server.model.item.executor.L1BravePotion;
 import jp.l1j.server.model.item.executor.L1CurePotion;
 import jp.l1j.server.model.item.executor.L1Elixir;
+import jp.l1j.server.model.item.executor.L1EnchantProtectScroll;
 import jp.l1j.server.model.item.executor.L1EnchantScroll;
 import jp.l1j.server.model.item.executor.L1ExtraPotion;
 import jp.l1j.server.model.item.executor.L1FireCracker;
@@ -839,6 +840,15 @@ public class C_UseItem extends ClientBasePacket {
 				L1FireCracker fireCracker = L1FireCracker.get(itemId);
 				if (fireCracker != null) {
 					fireCracker.use(pc, item);
+				} else {
+					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
+					// \f1%0は使用できません。
+				}
+			} else if (item.getItem().getType() == 21) { // 蒸発保護スクロール
+				L1ItemInstance target = pc.getInventory().getItem(objid);
+				L1EnchantProtectScroll scroll = L1EnchantProtectScroll.get(item.getItemId());
+				if (scroll != null) {
+					scroll.use(pc, item, target);
 				} else {
 					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
 					// \f1%0は使用できません。

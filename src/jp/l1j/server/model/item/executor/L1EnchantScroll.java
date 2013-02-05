@@ -193,8 +193,13 @@ public class L1EnchantScroll {
 				// \f1%0が%2と強烈に%1光りましたが、幸い無事にすみました。
 				pc.sendPackets(new S_ServerMessage(160, target.getLogName(), "$245", "$248"));
 			} else {
-				failureEnchant(pc, target);
-				pc.getInventory().deleteItem(target);
+				if (target.isProtected()) { // 保護中
+					protectEnchant(pc, item, target);
+					pc.getInventory().saveItem(target);
+				} else { // 失敗
+					failureEnchant(pc, target);
+					pc.getInventory().deleteItem(target);
+				}
 			}
 		}
 		return true;
@@ -288,8 +293,13 @@ public class L1EnchantScroll {
 				pc.sendPackets(new S_ServerMessage(160, msg, "$252",
 						"$248"));
 			} else {
-				failureEnchant(pc, target);
-				pc.getInventory().deleteItem(target);
+				if (target.isProtected()) { // 保護中
+					protectEnchant(pc, item, target);
+					pc.getInventory().saveItem(target);
+				} else { // 失敗
+					failureEnchant(pc, target);
+					pc.getInventory().deleteItem(target);
+				}
 			}
 		}
 		return true;
@@ -403,6 +413,9 @@ public class L1EnchantScroll {
 
 		if (rnd < enchant_chance_accessory) { // 成功
 			successEnchant(pc, target, 1);
+			pc.getInventory().saveItem(target);
+		} else if (target.isProtected()) { // 保護中
+			protectEnchant(pc, item, target);
 			pc.getInventory().saveItem(target);
 		} else { // 失敗
 			failureEnchant(pc, target);
@@ -617,6 +630,7 @@ public class L1EnchantScroll {
 		int grade = item.getItem().getGrade();
 		
 		item.setEnchantLevel(newEnchantLvl);
+		item.setProtected(false);
 		pc.getInventory().updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 		
 		if (newEnchantLvl > safe_enchant) {
@@ -774,6 +788,20 @@ public class L1EnchantScroll {
 		pc.getInventory().saveItem(target);
 	}
 
+	private void protectEnchant(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		L1EnchantProtectScroll scroll = L1EnchantProtectScroll.get(item.getItemId());
+		
+		if (scroll != null) {
+			target.setEnchantLevel(target.getEnchantLevel()
+					- scroll.getDownLevel(target.getItemId()));
+		}
+		
+		pc.sendPackets(new S_ServerMessage(1310));
+		// 強烈な光りを放ちましたが、装備が蒸発しませんでした。
+		target.setProtected(false);
+		pc.getInventory().updateItem(target, L1PcInventory.COL_ENCHANTLVL);
+	}
+	
 	private int enchantChance(L1ItemInstance l1iteminstance) {
 		byte byte0 = 0;
 		int i = l1iteminstance.getEnchantLevel();

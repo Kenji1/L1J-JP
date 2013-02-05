@@ -136,6 +136,23 @@ public class L1ItemInstance extends L1Object {
 		_inventoryItem.setSealed(isSealed);
 	}
 
+	/**
+	 * @return true アイテムは保護中<br>
+	 *         false アイテムは通常
+	 */
+	public boolean isProtected() {
+		return _inventoryItem.isProtected();
+	}
+
+	/**
+	 * @param isProtected
+	 *            true アイテムは保護中<br>
+	 *            false アイテムは通常
+	 */
+	public void setProtected(boolean isProtected) {
+		_inventoryItem.setProtected(isProtected);
+	}
+
 	public String getName() {
 		return _item.getName();
 	}
@@ -714,6 +731,10 @@ public class L1ItemInstance extends L1Object {
 			}
 		}
 
+		if (isProtected()) {
+			name.append(" ($5904)"); // 保護中
+		}
+		
 		if (isEquipped()) {
 			if (itemType2 == 1) {
 				name.append(" ($9)"); // 装備(Armed)

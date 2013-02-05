@@ -91,6 +91,7 @@ import jp.l1j.server.model.item.executor.L1BluePotion;
 import jp.l1j.server.model.item.executor.L1BravePotion;
 import jp.l1j.server.model.item.executor.L1CurePotion;
 import jp.l1j.server.model.item.executor.L1Elixir;
+import jp.l1j.server.model.item.executor.L1EnchantProtectScroll;
 import jp.l1j.server.model.item.executor.L1ExtraPotion;
 import jp.l1j.server.model.item.executor.L1FireCracker;
 import jp.l1j.server.model.item.executor.L1FloraPotion;
@@ -335,6 +336,7 @@ public class GameServer extends Thread {
 		L1BravePotion.load();
 		L1CurePotion.load();
 		L1Elixir.load();
+		L1EnchantProtectScroll.load();
 		L1ExtraPotion.load();
 		L1FireCracker.load();
 		L1FloraPotion.load();
