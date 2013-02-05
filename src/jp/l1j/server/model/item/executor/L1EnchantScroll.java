@@ -16,9 +16,9 @@ package jp.l1j.server.model.item.executor;
 
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.LogEnchantTable;
+import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.item.L1ItemId;
 import static jp.l1j.server.model.item.L1ItemId.*;
@@ -677,24 +677,15 @@ public class L1EnchantScroll {
 			if (item.getItem().getType2() == 2
 					&& item.getItem().getType() < 10) { // 防具
 				pc.addAc(-i);
-				int i2 = item.getItem().getItemId();
-				if (i2 == 20011 || i2 == 20110 || i2 == 21108
-						|| i2 == 21194 || i2 == 120011) {
-					// マジックヘルム、マジックチェーンメイル、キャラクター名の魔法抵抗のＴシャツ
-					// タラスブーツ
-					pc.addMr(i);
-					pc.sendPackets(new S_SpMr(pc));
-				}
-				if (i2 == 20056 || i2 == 120056 || i2 == 220056) { // マジック クローク
-					pc.addMr(i * 2);
-					pc.sendPackets(new S_SpMr(pc));
-				}
-				if (i2 == 20465 || i2 == 21235 || i2 == 21236) { // フィアバンパイアマント、ホノオノ外套、コオリノ外套
-					pc.addMr(i * 3);
-					pc.sendPackets(new S_SpMr(pc));
-				}
-				pc.sendPackets(new S_OwnCharStatus(pc));
-			} else if (item.getItem().getType2() == 2
+			}
+			
+			L1MagicResistItem mrItem = L1MagicResistItem.get(item.getItem().getItemId());
+			if (mrItem != null) {
+				pc.addMr(i * mrItem.getMr());
+				pc.sendPackets(new S_SpMr(pc));
+			}
+			
+			if (item.getItem().getType2() == 2
 					&& item.getItem().getType() >= 10
 					&& item.getItem().getType() <= 13) { // アクセサリー
 				if (grade == 0) { // 上級

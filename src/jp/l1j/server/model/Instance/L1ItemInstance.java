@@ -36,6 +36,7 @@ import jp.l1j.server.model.L1ItemOwnerTimer;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import static jp.l1j.server.model.item.L1ItemOptionId.*;
+import jp.l1j.server.model.item.executor.L1MagicResistItem;
 import jp.l1j.server.model.item.executor.L1SpellIcon;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
@@ -448,21 +449,9 @@ public class L1ItemInstance extends L1Object {
 	public int getMr() {
 		int result = _item.getMr() + _inventoryItem.getMr();
 		
-		if (getItemId() == 20011 || getItemId() == 20110 || getItemId() == 21108
-				|| getItemId() == 21194 || getItemId() == 120011) {
-			// マジックヘルム、マジックチェーンメイル、キャラクター名の魔法抵抗のＴシャツ
-			// タラスブーツ
-			result += getEnchantLevel();
-		}
-		
-		if (getItemId() == 20056 || getItemId() == 120056 || getItemId() == 220056) {
-			// マジック クローク
-			result += getEnchantLevel() * 2;
-		}
-		
-		if (getItemId() == 20465 || getItemId() == 21235 || getItemId() == 21236) {
-			// フィアバンパイアマント、ホノオノ外套、コオリノ外套
-			result += getEnchantLevel() * 3;
+		L1MagicResistItem mrItem = L1MagicResistItem.get(getItemId());
+		if (mrItem != null) {
+			result += getEnchantLevel() * mrItem.getMr();
 		}
 		
 		if (_item.getType2() == 2 && _item.getType() >= 10
