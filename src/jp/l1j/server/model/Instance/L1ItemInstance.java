@@ -422,7 +422,7 @@ public class L1ItemInstance extends L1Object {
 	}
 		
 	public int getMpr() {
-		int result = _item.getHpr() + _inventoryItem.getHpr();
+		int result = _item.getMpr() + _inventoryItem.getMpr();
 		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 0
