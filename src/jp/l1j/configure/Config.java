@@ -266,6 +266,9 @@ public final class Config {
 	@Configure(file = RATE, key = "RateMakeUniqueItems")
 	public static int RATE_MAKE_UNIQUE_ITEMS = 0;
 
+	@Configure(file = RATE, key = "CanUseUniqueScrollWithinSafety")
+	public static boolean CAN_USE_UNIQUE_SCROLL_WITHIN_SAFETY = true;
+
 	@Configure(file = RATE, key = "UniqueMaxOptions")
 	public static int UNIQUE_MAX_OPTIONS = 3;
 	

@@ -683,6 +683,21 @@ public class C_UseItem extends ClientBasePacket {
 				pc.save();
 				L1PolyMorph.doPoly(pc, pc.getClassId(), 0, L1PolyMorph.MORPH_BY_ITEMMAGIC);
 				pc.getInventory().removeItem(item, 1);
+			} else if (itemId == 43002) { // ユニーク強化スクロール
+				L1ItemInstance target = pc.getInventory().getItem(objid);
+				if ((Config.CAN_USE_UNIQUE_SCROLL_WITHIN_SAFETY
+						&& target.getEnchantLevel() <= target.getItem().getSafeEnchant())
+					|| !Config.CAN_USE_UNIQUE_SCROLL_WITHIN_SAFETY) {
+					target.setUniqueOptions(Config.RATE_MAKE_UNIQUE_ITEMS);
+					pc.getInventory().updateItem(target, L1PcInventory.COL_EQUIPPED);
+					pc.getInventory().saveItem(target);
+					pc.getInventory().removeItem(item, 1);
+					pc.sendPackets(new S_SpMr(pc));
+					pc.sendPackets(new S_OwnCharStatus(pc));
+				} else {
+					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
+					// \f1%0は使用できません。
+				}
 			} else if (itemId == 49168) { // 破壊の秘薬　
 				pc.setSkillEffect(STATUS_DESTRUCTION_NOSTRUM, 600 * 1000);
 				pc.sendPackets(new S_SkillIconAura(221, 600, 6));

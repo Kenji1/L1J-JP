@@ -505,8 +505,8 @@ public abstract class L1Item implements Cloneable, Serializable {
 		return _mr;
 	}
 
-	public void setMr(int i) {
-		this._mr = i;
+	public void setMr(int addMr) {
+		_mr = addMr;
 	}
 
 	private boolean _isHaste = false; // ● ヘイスト効果の有無

@@ -1306,11 +1306,19 @@ public class L1ItemInstance extends L1Object {
 			return;
 		}
 
+		if(_pc == null) {
+			_pc = (L1PcInstance) L1World.getInstance().findObject(getOwnerId());
+		}
+		
+		if (isUnique()) {
+			resetUniqueOptions();
+		}
+		
 		ArrayList<Integer> options = new ArrayList<Integer>() {
 			{
 				add(OPT_STR); add(OPT_CON); add(OPT_DEX); add(OPT_WIS);
 				add(OPT_INT); add(OPT_CHA); add(OPT_HP); add(OPT_HPR);
-				add(OPT_MP); add(OPT_MPR); add(OPT_SP); add(OPT_MR);
+				add(OPT_MP); add(OPT_MPR); add(OPT_MR);
 				add(OPT_DEF_EARTH); add(OPT_DEF_WATER); add(OPT_DEF_FIRE);
 				add(OPT_DEF_WIND); add(OPT_RES_STUN); add(OPT_RES_STONE);
 				add(OPT_RES_SLEEP); add(OPT_RES_FREEZE); add(OPT_RES_HOLD);
@@ -1320,6 +1328,7 @@ public class L1ItemInstance extends L1Object {
 		};
 		
 		if (getItem().getType2() == 1) { // 武器
+			options.add(OPT_SP);
 			options.add(OPT_CAN_DMG);
 		} else { // 防具
 			options.add(OPT_AC);
@@ -1338,138 +1347,207 @@ public class L1ItemInstance extends L1Object {
 				res = calcUniqueOption(Config.UNIQUE_MAX_STR, uniqueRate);
 				if (res > 0) {
 					setStr(res);
+					if (isEquipped()) {
+						_pc.addStr(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_CON) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_CON, uniqueRate);
 				if (res > 0) {
 					setCon(res);
+					if (isEquipped()) {
+						_pc.addCon(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_DEX) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_DEX, uniqueRate);
 				if (res > 0) {
 					setDex(res);
+					if (isEquipped()) {
+						_pc.addDex(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_WIS) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_WIS, uniqueRate);
 				if (res > 0) {
 					setWis(res);
+					if (isEquipped()) {
+						_pc.addWis(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_INT) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_INT, uniqueRate);
 				if (res > 0) {
 					setInt(res);
+					if (isEquipped()) {
+						_pc.addInt(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_CHA) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_CHA, uniqueRate);
 				if (res > 0) {
 					setCha(res);
+					if (isEquipped()) {
+						_pc.addCha(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_HP) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_HP, uniqueRate);
 				if (res > 0) {
 					setHp(res);
+					if (isEquipped()) {
+						_pc.addMaxHp(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_HPR) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_HPR, uniqueRate);
 				if (res > 0) {
 					setHpr(res);
+					if (isEquipped()) {
+						_pc.addHpr(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_MP) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_MP, uniqueRate);
 				if (res > 0) {
 					setMp(res);
+					if (isEquipped()) {
+						_pc.addMaxMp(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_MPR) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_MPR, uniqueRate);
 				if (res > 0) {
 					setMpr(res);
+					if (isEquipped()) {
+						_pc.addMpr(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_SP) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_SP, uniqueRate);
 				if (res > 0) {
 					setSp(res);
+					if (isEquipped()) {
+						_pc.addSp(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_MR) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_MR, uniqueRate);
 				if (res > 0) {
 					setMr(res);
+					if (isEquipped()) {
+						_pc.addMr(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_DEF_EARTH) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_DEFENSE_EARTH, uniqueRate);
 				if (res > 0) {
 					setDefenseEarth(res);
+					if (isEquipped()) {
+						_pc.addEarth(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_DEF_WATER) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_DEFENSE_WATER, uniqueRate);
 				if (res > 0) {
 					setDefenseWater(res);
+					if (isEquipped()) {
+						_pc.addWater(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_DEF_FIRE) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_DEFENSE_FIRE, uniqueRate);
 				if (res > 0) {
 					setDefenseFire(res);
+					if (isEquipped()) {
+						_pc.addFire(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_DEF_WIND) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_DEFENSE_WIND, uniqueRate);
 				if (res > 0) {
 					setDefenseWind(res);
+					if (isEquipped()) {
+						_pc.addWind(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_RES_STUN) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_STUN, uniqueRate);
 				if (res > 0) {
 					setResistStun(res);
+					if (isEquipped()) {
+						_pc.addResistStun(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_RES_STONE) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_STONE, uniqueRate);
 				if (res > 0) {
 					setResistStone(res);
+					if (isEquipped()) {
+						_pc.addResistStone(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_RES_SLEEP) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_SLEEP, uniqueRate);
 				if (res > 0) {
 					setResistSleep(res);
+					if (isEquipped()) {
+						_pc.addResistSleep(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_RES_FREEZE) {	
 				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_FREEZE, uniqueRate);
 				if (res > 0) {
 					setResistFreeze(res);
+					if (isEquipped()) {
+						_pc.addResistFreeze(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_RES_HOLD) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_HOLD, uniqueRate);
 				if (res > 0) {
 					setResistHold(res);
+					if (isEquipped()) {
+						_pc.addResistHold(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_RES_BLIND) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_RESIST_BLIND, uniqueRate);
 				if (res > 0) {
 					setResistBlind(res);
+					if (isEquipped()) {
+						_pc.addResistBlind(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_EXP_BONUS) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_EXP_BONUS, uniqueRate);
 				if (res > 0) {
 					setExpBonus(res);
+					if (isEquipped()) {
+						_pc.addExpBonusPct(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_HASTE) {
@@ -1480,6 +1558,9 @@ public class L1ItemInstance extends L1Object {
 				}
 				if (res > 0) {
 					setIsHaste(true);
+					if (isEquipped()) {
+						_pc.setMoveSpeed(res);
+					}
 					if (getItem().isHaste() == false) {
 						isUnique = true;
 					}
@@ -1490,24 +1571,36 @@ public class L1ItemInstance extends L1Object {
 				res = calcUniqueOption(Config.UNIQUE_MAX_HIT_MODIFIER, uniqueRate);
 				if (res > 0) {
 					setHitModifier(res);
+					if (isEquipped()) {
+						_pc.addHitModifierByArmor(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_DMG_MOD) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_DMG_MODIFIER, uniqueRate);
 				if (res > 0) {
 					setDmgModifier(res);
+					if (isEquipped()) {
+						_pc.addDmgModifierByArmor(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_BOW_HIT_MOD) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_BOW_HIT_MODIFIER, uniqueRate);
 				if (res > 0) {
 					setBowHitModifier(res);
+					if (isEquipped()) {
+						_pc.addBowHitModifierByArmor(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_BOW_DMG_MOD) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_BOW_DMG_MODIFIER, uniqueRate);
 				if (res > 0) {
 					setBowDmgModifier(res);
+					if (isEquipped()) {
+						_pc.addBowDmgModifierByArmor(res);
+					}
 					isUnique = true;
 				}
 			} else if (option == OPT_CAN_DMG) {
@@ -1528,6 +1621,9 @@ public class L1ItemInstance extends L1Object {
 				res = calcUniqueOption(Config.UNIQUE_MAX_AC, uniqueRate);
 				if (res > 0) {
 					setAc(res);
+					if (isEquipped()) {
+						_pc.addAc(res);
+					}
 					isUnique = true;
 				}
 			}
@@ -1535,6 +1631,214 @@ public class L1ItemInstance extends L1Object {
 		setIsUnique(isUnique);
 	}
 
+	private void resetUniqueOptions() {
+
+		if (getAc() > 0) {
+			if (isEquipped()) {
+				_pc.addAc(-getAc());
+			}
+			setAc(0);
+		}
+		
+		if (getStr() > 0) {
+			if (isEquipped()) {
+				_pc.addStr(-getStr());
+			}
+			setStr(0);
+		}
+		
+		if (getCon() > 0) {
+			if (isEquipped()) {
+				_pc.addCon(-getCon());
+			}
+			setCon(0);
+		}
+		
+		if (getDex() > 0) {
+			if (isEquipped()) {
+				_pc.addDex(-getDex());
+			}
+			setDex(0);
+		}
+		
+		if (getWis() > 0) {
+			if (isEquipped()) {
+				_pc.addWis(-getWis());
+			}
+			setWis(0);
+		}
+		
+		if (getCha() > 0) {
+			if (isEquipped()) {
+				_pc.addCha(-getCha());
+			}
+			setCha(0);
+		}
+		
+		if (getInt() > 0) {
+			if (isEquipped()) {
+				_pc.addInt(-getInt());
+			}
+			setInt(0);
+		}
+		
+		if (getHp() > 0) {
+			if (isEquipped()) {
+				_pc.addMaxHp(-getHp());
+			}
+			setHp(0);
+		}
+		
+		if (getHpr() > 0) {
+			if (isEquipped()) {
+				_pc.addHpr(-getHpr());
+			}
+			setHpr(0);
+		}
+		
+		if (getMp() > 0) {
+			if (isEquipped()) {
+				_pc.addMaxMp(-getMp());
+			}
+			setMp(0);
+		}
+		
+		if (getMpr() > 0) {
+			if (isEquipped()) {
+				_pc.addMpr(-getMpr());
+			}
+			setMpr(0);
+		}
+		
+		if (getMr() > 0) {
+			if (isEquipped()) {
+				_pc.addMr(-getMr());
+			}
+			setMr(0);
+		}
+		
+		if (getSp() > 0) {
+			if (isEquipped()) {
+				_pc.addSp(-getSp());
+			}
+			setSp(0);
+		}
+		
+		if (getHitModifier() > 0) {
+			if (isEquipped()) {
+				_pc.addHitModifierByArmor(-getHitModifier());
+			}
+			setHitModifier(0);
+		}
+		
+		if (getDmgModifier() > 0) {
+			if (isEquipped()) {
+				_pc.addDmgModifierByArmor(-getDmgModifier());
+			}
+			setDmgModifier(0);
+		}
+		if (getBowHitModifier() > 0) {
+			if (isEquipped()) {
+				_pc.addBowHitModifierByArmor(-getBowHitModifier());
+			}
+			setBowHitModifier(0);
+		}
+		
+		if (getBowDmgModifier() > 0) {
+			if (isEquipped()) {
+				_pc.addBowDmgModifierByArmor(-getBowDmgModifier());
+			}
+			setBowDmgModifier(0);
+		}
+		
+		if (getDefenseEarth() > 0) {
+			if (isEquipped()) {
+				_pc.addEarth(-getDefenseEarth());
+			}
+			setDefenseEarth(0);
+		}
+		
+		if (getDefenseWater() > 0) {
+			if (isEquipped()) {
+				_pc.addWater(-getDefenseWater());
+			}
+			setDefenseWater(0);
+		}
+		
+		if (getDefenseFire() > 0) {
+			if (isEquipped()) {
+				_pc.addFire(-getDefenseFire());
+			}
+			setDefenseFire(0);
+		}
+		
+		if (getDefenseWind() > 0) {
+			if (isEquipped()) {
+				_pc.addWind(-getDefenseWind());
+			}
+			setDefenseWind(0);
+		}
+		
+		if (getResistStun() > 0) {
+			if (isEquipped()) {
+				_pc.addResistStun(-getResistStun());
+			}
+			setResistStun(0);
+		}
+		
+		if (getResistStone() > 0) {
+			if (isEquipped()) {
+				_pc.addResistStone(-getResistStone());
+			}
+			setResistStone(0);
+		}
+		
+		if (getResistSleep() > 0) {
+			if (isEquipped()) {
+				_pc.addResistSleep(-getResistSleep());
+			}
+			setResistSleep(0);
+		}
+		
+		if (getResistFreeze() > 0) {
+			if (isEquipped()) {
+				_pc.addResistFreeze(-getResistFreeze());
+			}
+			setResistFreeze(0);
+		}
+		
+		if (getResistHold() > 0) {
+			if (isEquipped()) {
+				_pc.addResistHold(-getResistHold());
+			}
+			setResistHold(0);
+		}
+		
+		if (getResistBlind() > 0) {
+			if (isEquipped()) {
+				_pc.addResistBlind(-getResistBlind());
+			}
+			setResistBlind(0);
+		}
+		
+		if (getExpBonus() > 0) {
+			if (isEquipped()) {
+				_pc.addExpBonusPct(-getExpBonus());
+			}
+			setExpBonus(0);
+		}
+	
+		if (isHaste()) {
+			if (isEquipped()) {
+				_pc.setMoveSpeed(0);
+			}
+			setIsHaste(false);
+		}
+		
+		setCanBeDmg(false);
+		setIsUnique(false);
+	}
+	
 	private int calcUniqueOption(int n, double ratePct) {
 		int chance = random.nextInt(100) + 1 ;
 		

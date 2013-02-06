@@ -402,8 +402,10 @@ public class L1PcInstance extends L1Character {
 		if (getMapLimiter() != null) {
 			getMapLimiter().save();
 			setMapLimiter(null);
-			_mapLimiterFuture.cancel(true);
-			_mapLimiterFuture = null;
+			if (_mapLimiterFuture != null) {
+				_mapLimiterFuture.cancel(true);
+				_mapLimiterFuture = null;
+			}
 		}
 	}
 
