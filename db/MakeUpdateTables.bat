@@ -12,6 +12,7 @@ type .\schema\%driver%\drop_items.sql >> update_tables.sql
 type .\schema\%driver%\dungeons.sql >> update_tables.sql
 type .\schema\%driver%\dungeon_random.sql >> update_tables.sql
 type .\schema\%driver%\etc_items.sql >> update_tables.sql
+type .\schema\%driver%\item_rates.sql >> update_tables.sql
 type .\schema\%driver%\return_locations.sql >> update_tables.sql
 type .\schema\%driver%\restart_locations.sql >> update_tables.sql
 type .\schema\%driver%\magic_dolls.sql >> update_tables.sql
@@ -54,6 +55,7 @@ type .\records\%locale%\drop_items.sql >> update_tables.sql
 type .\records\%locale%\dungeons.sql >> update_tables.sql
 type .\records\%locale%\dungeon_random.sql >> update_tables.sql
 type .\records\%locale%\etc_items.sql >> update_tables.sql
+type .\records\%locale%\item_ratess.sql >> update_tables.sql
 type .\records\%locale%\return_locations.sql >> update_tables.sql
 type .\records\%locale%\restart_locations.sql >> update_tables.sql
 type .\records\%locale%\magic_dolls.sql >> update_tables.sql

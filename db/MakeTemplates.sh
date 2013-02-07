@@ -33,6 +33,7 @@ type ./schema/$driver/houses.sql > ./templates/houses.sql
 type ./schema/$driver/inns.sql > ./templates/inns.sql
 type ./schema/$driver/inn_keys.sql > ./templates/inn_keys.sql
 type ./schema/$driver/inventory_items.sql > ./templates/inventory_items.sql
+type ./schema/$driver/item_rates.sql > ./templates/item_rates.sql
 type ./schema/$driver/letters.sql > ./templates/letters.sql
 type ./schema/$driver/log_accelerator.sql > ./templates/log_accelerator.sql
 type ./schema/$driver/log_chat.sql > ./templates/log_chat.sql
@@ -89,6 +90,7 @@ type ./records/$locale/return_locations.sql >> ./templates/return_locations.sql
 type ./records/$locale/restart_locations.sql >> ./templates/restart_locations.sql
 type ./records/$locale/houses.sql >> ./templates/houses.sql
 type ./records/$locale/inns.sql >> ./templates/inns.sql
+type ./records/$locale/item_rates.sql >> ./templates/item_rates.sql
 type ./records/$locale/magic_dolls.sql >> ./templates/magic_dolls.sql
 type ./records/$locale/map_ids.sql >> ./templates/map_ids.sql
 type ./records/$locale/mob_groups.sql >> ./templates/mob_groups.sql

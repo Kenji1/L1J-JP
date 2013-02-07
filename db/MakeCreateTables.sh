@@ -32,6 +32,7 @@ cat ./schema/$driver/houses.sql >> create_tables.sql
 cat ./schema/$driver/inns.sql >> create_tables.sql
 cat ./schema/$driver/inn_keys.sql >> create_tables.sql
 cat ./schema/$driver/inventory_items.sql >> create_tables.sql
+cat ./schema/$driver/item_rates.sql >> create_tables.sql
 cat ./schema/$driver/letters.sql >> create_tables.sql
 cat ./schema/$driver/log_accelerator.sql >> create_tables.sql
 cat ./schema/$driver/log_chat.sql >> create_tables.sql
@@ -88,6 +89,7 @@ cat ./records/$locale/return_locations.sql >> create_tables.sql
 cat ./records/$locale/restart_locations.sql >> create_tables.sql
 cat ./records/$locale/houses.sql >> create_tables.sql
 cat ./records/$locale/inns.sql >> create_tables.sql
+cat ./records/$locale/item_rates.sql >> create_tables.sql
 cat ./records/$locale/magic_dolls.sql >> create_tables.sql
 cat ./records/$locale/map_ids.sql >> create_tables.sql
 cat ./records/$locale/mob_groups.sql >> create_tables.sql
