@@ -2621,7 +2621,7 @@ public class C_NpcAction extends ClientBasePacket {
 				if (town_id > 0) {
 					if (pc.getHomeTownId() > 0) {
 						if (pc.getHomeTownId() == town_id) {
-							pc.setHomeTownId(-1);
+							pc.setHomeTownId(0);
 							pc.setContribution(0); // 貢献度クリア
 							pc.save();
 						} else {

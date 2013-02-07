@@ -166,7 +166,7 @@ public class HomeTownTimeController {
 
 			double townFixTax = 0;
 			pstm3 = con
-					.prepareStatement("SELECT town_fix_tax FROM town WHERE town_id = ?");
+					.prepareStatement("SELECT town_fix_tax FROM towns WHERE town_id = ?");
 			pstm3.setInt(1, townId);
 			rs3 = pstm3.executeQuery();
 			if (rs3.next()) {
