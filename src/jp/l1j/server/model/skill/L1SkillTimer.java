@@ -481,7 +481,8 @@ class L1SkillStop {
 		} else if (skillId == STATUS_WISDOM_POTION) { // ウィズダム ポーション
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				cha.addSp(-2);
+				pc.addSp(-2);
+				pc.addMpr(-2);
 				pc.sendPackets(new S_SkillIconWisdomPotion(0));
 			}
 		} else if (skillId == STATUS_CHAT_PROHIBITED) { // チャット禁止

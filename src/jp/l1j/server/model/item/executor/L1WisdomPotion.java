@@ -171,6 +171,7 @@ public class L1WisdomPotion {
 		}
 		
 		pc.addSp(2);
+		pc.addMpr(2);
 		
 		Effect effect = getEffect();
 		pc.sendPackets(new S_SkillIconWisdomPotion((effect.getTime() / 4)));

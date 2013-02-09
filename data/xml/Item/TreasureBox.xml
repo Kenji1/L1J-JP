@@ -1321,11 +1321,11 @@
 	<TreasureBox Type="RANDOM" ItemId="50500">
 		<Item ItemId="50501" Count="1" Chance="1"/>		<!-- ドラゴンキー -->
 		<Item ItemId="40524" Count="2" Chance="2"/>		<!-- 黒い血痕 -->
-		<Item ItemId="120322" Count="1" Chance="4"/>	<!-- Bドワ盾 -->
-		<Item ItemId="120323" Count="1" Chance="4"/>	<!-- Bドワヘル -->
-		<Item ItemId="120324" Count="1" Chance="4"/>	<!-- Bドワマント -->
-		<Item ItemId="100213" Count="1" Chance="4"/>	<!-- Bドワ剣 -->
-		<Item ItemId="100214" Count="1" Chance="4"/>	<!-- Bドワ斧 -->
+		<Item ItemId="120223" Count="1" Chance="4"/>	<!-- Bドワ盾 -->
+		<Item ItemId="120007" Count="1" Chance="4"/>	<!-- Bドワヘル -->
+		<Item ItemId="120052" Count="1" Chance="4"/>	<!-- Bドワマント -->
+		<Item ItemId="100026" Count="1" Chance="4"/>	<!-- Bドワ剣 -->
+		<Item ItemId="100144" Count="1" Chance="4"/>	<!-- Bドワ斧 -->
 		<Item ItemId="50520" Count="1" Chance="0.5"/>	<!-- 地竜の乾いた涙 -->
 		<Item ItemId="50521" Count="1" Chance="0.5"/>	<!-- 火竜の乾いた涙 -->
 		<Item ItemId="50522" Count="1" Chance="0.5"/>	<!-- 水竜の乾いた涙 -->

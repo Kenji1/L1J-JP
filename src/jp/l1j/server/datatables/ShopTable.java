@@ -101,8 +101,7 @@ public class ShopTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM shops WHERE npc_id=? ORDER BY order_id");
+			pstm = con.prepareStatement("SELECT npc_id, shops.item_id, order_id, selling_price, pack_count, purchasing_price FROM shops LEFT OUTER JOIN item_rates ON (shops.item_id = item_rates.item_id) WHERE npc_id=? ORDER BY order_id");
 			for (int npcId : enumNpcIds()) {
 				pstm.setInt(1, npcId);
 				rs = pstm.executeQuery();
