@@ -100,7 +100,7 @@ import jp.l1j.server.model.item.executor.L1GreenPotion;
 import jp.l1j.server.model.item.executor.L1HealingPotion;
 import jp.l1j.server.model.item.executor.L1MagicEye;
 import jp.l1j.server.model.item.executor.L1MagicPotion;
-import jp.l1j.server.model.item.executor.L1MagicResistItem;
+import jp.l1j.server.model.item.executor.L1EnchantBonus;
 import jp.l1j.server.model.item.executor.L1Material;
 import jp.l1j.server.model.item.executor.L1MaterialChoice;
 import jp.l1j.server.model.item.executor.L1PolyPotion;
@@ -345,7 +345,7 @@ public class GameServer extends Thread {
 		L1HealingPotion.load();
 		L1MagicEye.load();
 		L1MagicPotion.load();
-		L1MagicResistItem.load();
+		L1EnchantBonus.load();
 		L1MapLimiter.load();
 		L1Material.load();
 		L1MaterialChoice.load();

@@ -76,8 +76,8 @@ public class L1EquipmentSlot {
 				&& armor.getItem().getType() <= 18) { // アクセサリー、文様、タリスマン
 			_owner.addAc(item.getAc() + armor.getAc() - armor.getAcByMagic());
 		}
-		_owner.addDamageReductionByArmor(item.getDamageReduction());
-		_owner.addWeightReduction(item.getWeightReduction());
+		_owner.addDamageReductionByArmor(item.getDamageReduction() + armor.getDamageReduction());
+		_owner.addWeightReduction(item.getWeightReduction() + armor.getWeightReduction());
 		_owner.addHitModifierByArmor(item.getHitModifierByArmor() + armor.getHitModifier());
 		_owner.addDmgModifierByArmor(item.getDmgModifierByArmor() + armor.getDmgModifier());
 		_owner.addBowHitModifierByArmor(item.getBowHitModifierByArmor() + armor.getBowHitModifier());
@@ -150,8 +150,8 @@ public class L1EquipmentSlot {
 				&& armor.getItem().getType() <= 18) { // アクセサリー、文様、タリスマン
 			_owner.addAc(-(item.getAc() + armor.getAc() - armor.getAcByMagic()));
 		}
-		_owner.addDamageReductionByArmor(-item.getDamageReduction());
-		_owner.addWeightReduction(-item.getWeightReduction());
+		_owner.addDamageReductionByArmor(-(item.getDamageReduction() + armor.getDamageReduction()));
+		_owner.addWeightReduction(-(item.getWeightReduction() + armor.getWeightReduction()));
 		_owner.addHitModifierByArmor(-(item.getHitModifierByArmor() + armor.getHitModifier()));
 		_owner.addDmgModifierByArmor(-(item.getDmgModifierByArmor() + armor.getDmgModifier()));
 		_owner.addBowHitModifierByArmor(-(item.getBowHitModifierByArmor() + armor.getBowHitModifier()));

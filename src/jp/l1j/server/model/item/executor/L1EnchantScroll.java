@@ -693,9 +693,39 @@ public class L1EnchantScroll {
 				pc.addAc(-i);
 			}
 			
-			L1MagicResistItem mrItem = L1MagicResistItem.get(item.getItem().getItemId());
-			if (mrItem != null) {
-				pc.addMr(i * mrItem.getMr());
+			L1EnchantBonus bonusItem = L1EnchantBonus.get(item.getItem().getItemId());
+			if (bonusItem != null) {
+				pc.addAc(bonusItem.getAc(i));
+				pc.addStr(bonusItem.getStr(i));
+				pc.addDex(bonusItem.getDex(i));
+				pc.addCon(bonusItem.getCon(i));
+				pc.addInt(bonusItem.getInt(i));
+				pc.addWis(bonusItem.getWis(i));
+				pc.addCha(bonusItem.getCha(i));
+				pc.addMaxHp(bonusItem.getHp(i));
+				pc.addHpr(bonusItem.getHpr(i));
+				pc.addMaxMp(bonusItem.getMp(i));
+				pc.addMpr(bonusItem.getMpr(i));
+				pc.addMr(bonusItem.getMr(i));
+				pc.addSp(bonusItem.getSp(i));
+				pc.addHitModifierByArmor(bonusItem.getHitModifier(i));
+				pc.addDmgModifierByArmor(bonusItem.getDmgModifier(i));
+				pc.addBowHitModifierByArmor(bonusItem.getBowHitModifier(i));
+				pc.addBowDmgModifierByArmor(bonusItem.getBowDmgModifier(i));
+				pc.addWeightReduction(bonusItem.getWeightReduction(i));
+				pc.addDamageReductionByArmor(bonusItem.getDamageReduction(i));
+				pc.addEarth(bonusItem.getDefenseEarth(i));
+				pc.addWater(bonusItem.getDefenseWater(i));
+				pc.addFire(bonusItem.getDefenseFire(i));
+				pc.addWind(bonusItem.getDefenseWind(i));
+				pc.addResistStun(bonusItem.getResistStun(i));
+				pc.addResistStone(bonusItem.getResistStone(i));
+				pc.addResistSleep(bonusItem.getResistSleep(i));
+				pc.addResistFreeze(bonusItem.getResistFreeze(i));
+				pc.addResistBlind(bonusItem.getResistBlind(i));
+				pc.addExpBonusPct(bonusItem.getExpBonus(i));
+				pc.addPotionRecoveryRatePct(bonusItem.getPotionRecoveryRate(i));
+				pc.sendPackets(new S_OwnCharStatus(pc));
 				pc.sendPackets(new S_SpMr(pc));
 			}
 			

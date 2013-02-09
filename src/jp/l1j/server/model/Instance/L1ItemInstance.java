@@ -36,7 +36,7 @@ import jp.l1j.server.model.L1ItemOwnerTimer;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import static jp.l1j.server.model.item.L1ItemOptionId.*;
-import jp.l1j.server.model.item.executor.L1MagicResistItem;
+import jp.l1j.server.model.item.executor.L1EnchantBonus;
 import jp.l1j.server.model.item.executor.L1SpellIcon;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
@@ -313,7 +313,14 @@ public class L1ItemInstance extends L1Object {
 	}
 
 	public int getAc() {
-		return _inventoryItem.getAc();
+		int result = _inventoryItem.getAc();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getAc(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setAc(int _ac) {
@@ -321,7 +328,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getStr() {
-		return _inventoryItem.getStr();
+		int result = _inventoryItem.getStr();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getStr(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setStr(int _str) {
@@ -329,7 +343,14 @@ public class L1ItemInstance extends L1Object {
 	}
 		
 	public int getCon() {
-		return _inventoryItem.getCon();
+		int result = _inventoryItem.getCon();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getCon(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setCon(int _con) {
@@ -337,7 +358,14 @@ public class L1ItemInstance extends L1Object {
 	}
 		
 	public int getDex() {
-		return _inventoryItem.getDex();
+		int result = _inventoryItem.getDex();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getDex(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setDex(int _dex) {
@@ -345,7 +373,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getWis() {
-		return _inventoryItem.getWis();
+		int result = _inventoryItem.getWis();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getWis(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setWis(int _wis) {
@@ -353,7 +388,14 @@ public class L1ItemInstance extends L1Object {
 	}
 		
 	public int getCha() {
-		return _inventoryItem.getCha();
+		int result = _inventoryItem.getCha();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getCha(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setCha(int _cha) {
@@ -361,7 +403,14 @@ public class L1ItemInstance extends L1Object {
 	}
 		
 	public int getInt() {
-		return _inventoryItem.getInt();
+		int result = _inventoryItem.getInt();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getInt(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setInt(int _int) {
@@ -370,6 +419,11 @@ public class L1ItemInstance extends L1Object {
 	
 	public int getHp() {
 		int result = _item.getHp() + _inventoryItem.getHp();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getHp(getEnchantLevel());
+		}
 		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 1) {
@@ -386,6 +440,11 @@ public class L1ItemInstance extends L1Object {
 	
 	public int getHpr() {
 		int result = _item.getHpr() + _inventoryItem.getHpr();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getHpr(getEnchantLevel());
+		}
 		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 0
@@ -408,6 +467,11 @@ public class L1ItemInstance extends L1Object {
 	public int getMp() {
 		int result = _item.getMp() + _inventoryItem.getMp();
 		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getMp(getEnchantLevel());
+		}
+		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 2) {
 			// アクセサリー下級
@@ -423,6 +487,11 @@ public class L1ItemInstance extends L1Object {
 		
 	public int getMpr() {
 		int result = _item.getMpr() + _inventoryItem.getMpr();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getMpr(getEnchantLevel());
+		}
 		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 0
@@ -445,6 +514,11 @@ public class L1ItemInstance extends L1Object {
 	public int getSp() {
 		int result = _item.getSp() + _inventoryItem.getSp();
 		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getSp(getEnchantLevel());
+		}
+		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 2
 				&& getEnchantLevel() >= 6) {
@@ -466,9 +540,9 @@ public class L1ItemInstance extends L1Object {
 	public int getMr() {
 		int result = _item.getMr() + _inventoryItem.getMr();
 		
-		L1MagicResistItem mrItem = L1MagicResistItem.get(getItemId());
-		if (mrItem != null) {
-			result += getEnchantLevel() * mrItem.getMr();
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getMr(getEnchantLevel());
 		}
 		
 		if (_item.getType2() == 2 && _item.getType() >= 10
@@ -490,7 +564,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getHitModifier() {
-		return _inventoryItem.getHitModifier();
+		int result = _inventoryItem.getHitModifier();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getHitModifier(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setHitModifier(int _hitModifier) {
@@ -498,7 +579,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getDmgModifier() {
-		return _inventoryItem.getDmgModifier();
+		int result = _inventoryItem.getDmgModifier();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getDmgModifier(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setDmgModifier(int _dmgModifier) {
@@ -506,7 +594,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getBowHitModifier() {
-		return _inventoryItem.getBowHitModifier();
+		int result = _inventoryItem.getBowHitModifier();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getBowHitModifier(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setBowHitModifier(int _hitModifier) {
@@ -514,15 +609,49 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getBowDmgModifier() {
-		return _inventoryItem.getBowDmgModifier();
+		int result = _inventoryItem.getBowDmgModifier();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getBowDmgModifier(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setBowDmgModifier(int _dmgModifier) {
 		_inventoryItem.setBowDmgModifier(_dmgModifier);
 	}
 	
+	public int getWeightReduction() {
+		int result = 0;
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getWeightReduction(getEnchantLevel());
+		}
+		
+		return result;
+	}
+	
+	public int getDamageReduction() {
+		int result = 0;
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getDamageReduction(getEnchantLevel());
+		}
+		
+		return result;
+	}
+	
 	public int getDefenseEarth() {
 		int result = _item.getDefenseEarth() + _inventoryItem.getDefenseEarth();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getDefenseEarth(getEnchantLevel());
+		}
 		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 0) {
@@ -540,6 +669,11 @@ public class L1ItemInstance extends L1Object {
 	public int getDefenseWater() {
 		int result = _item.getDefenseWater() + _inventoryItem.getDefenseWater();
 		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getDefenseWater(getEnchantLevel());
+		}
+		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 0) {
 			// アクセサリー上級
@@ -555,6 +689,11 @@ public class L1ItemInstance extends L1Object {
 	
 	public int getDefenseFire() {
 		int result = _item.getDefenseFire() + _inventoryItem.getDefenseFire();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getDefenseFire(getEnchantLevel());
+		}
 		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 0) {
@@ -572,6 +711,11 @@ public class L1ItemInstance extends L1Object {
 	public int getDefenseWind() {
 		int result = _item.getDefenseWind() + _inventoryItem.getDefenseWind();
 		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getDefenseWind(getEnchantLevel());
+		}
+		
 		if (_item.getType2() == 2 && _item.getType() >= 10
 				&& _item.getType() <= 13 && _item.getGrade() == 0) {
 			// アクセサリー上級
@@ -586,7 +730,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getResistStun() {
-		return _inventoryItem.getResistStun();
+		int result = _inventoryItem.getResistStun();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getResistStun(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setResistStun(int _resistStun) {
@@ -594,7 +745,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getResistStone() {
-		return _inventoryItem.getResistStone();
+		int result = _inventoryItem.getResistStone();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getResistStone(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setResistStone(int _resistStone) {
@@ -602,7 +760,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getResistSleep() {
-		return _inventoryItem.getResistSleep();
+		int result = _inventoryItem.getResistSleep();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getResistSleep(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setResistSleep(int _resistSleep) {
@@ -610,7 +775,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getResistFreeze() {
-		return _inventoryItem.getResistFreeze();
+		int result = _inventoryItem.getResistFreeze();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getResistFreeze(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setResistFreeze(int _resistFreeze) {
@@ -618,7 +790,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getResistHold() {
-		return _inventoryItem.getResistHold();
+		int result = _inventoryItem.getResistHold();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getResistHold(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setResistHold(int _resistHold) {
@@ -626,7 +805,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getResistBlind() {
-		return _inventoryItem.getResistBlind();
+		int result = _inventoryItem.getResistBlind();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getResistBlind(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setResistBlind(int _resistBlind) {
@@ -634,7 +820,14 @@ public class L1ItemInstance extends L1Object {
 	}
 
 	public int getExpBonus() {
-		return _inventoryItem.getExpBonus();
+		int result = _inventoryItem.getExpBonus();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getExpBonus(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setExpBonus(int _expBonus) {
@@ -670,7 +863,14 @@ public class L1ItemInstance extends L1Object {
 	}
 	
 	public int getPotionRecoveryRate() {
-		return _inventoryItem.getPotionRecoveryRate();
+		int result = _inventoryItem.getPotionRecoveryRate();
+		
+		L1EnchantBonus bonusItem = L1EnchantBonus.get(getItemId());
+		if (bonusItem != null) {
+			result += bonusItem.getPotionRecoveryRate(getEnchantLevel());
+		}
+		
+		return result;
 	}
 	
 	public void setPotionRecoveryRate(int _potionRecoveryRate) {
