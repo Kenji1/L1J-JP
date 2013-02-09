@@ -57,6 +57,8 @@ public class L1EnchantScroll {
 			result = enchantAttrWeapon(pc, item, target);
 		} else if (itemId == 49148) { // 装飾品強化スクロール
 			result = enchantAccessory(pc, item, target);
+		} else if (itemId == 50633) { // 10周年記念リング専用強化スクロール
+			result = enchant10thAnniversaryRing(pc, item, target);
 		} else if (itemId == 50541) { // 旅人の防具強化スクロール
 			result = enchantBeginnerArmor(pc, item, target);
 		} else if (itemId == 50542) { // 旅人の武器強化スクロール
@@ -488,6 +490,55 @@ public class L1EnchantScroll {
 		return true;
 	}
 
+	private boolean enchant10thAnniversaryRing(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		if (target == null
+				|| target.getItem().getType2() != 2
+				|| target.getItem().getType() < 10
+				|| target.getItem().getType() > 13) {
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		if (target.isSealed()) { // 封印された装備強化不可
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int ringId = target.getItem().getItemId();
+		if (ringId != 21285 && ringId != 21286 && ringId != 21287
+				&& ringId != 21288 && ringId != 21289) { // 10周年記念リング以外
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int enchant_level = target.getEnchantLevel();
+		if (enchant_level >= 3) { // 強化上限 +3
+			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			return false;
+		}
+
+		int rnd = _random.nextInt(100) + 1;
+		int enchant_chance_accessory;
+		if (enchant_level < 0) {
+			enchant_chance_accessory = 100;
+		} else {
+			enchant_chance_accessory =
+					(100 + 2 * Config.ENCHANT_CHANCE_ACCESSORY) / 2;
+		}
+
+		if (rnd < enchant_chance_accessory) { // 成功
+			successEnchant(pc, target, 1);
+			pc.getInventory().saveItem(target);
+		} else if (target.isProtected()) { // 保護中
+			protectEnchant(pc, item, target);
+			pc.getInventory().saveItem(target);
+		} else { // 失敗
+			failureEnchant(pc, target);
+			pc.getInventory().deleteItem(target);
+		}
+		return true;
+	}
+
 	private void successEnchant(L1PcInstance pc, L1ItemInstance item, int i) {
 		String s = "";
 		String sa = "";
@@ -765,6 +816,15 @@ public class L1EnchantScroll {
 						pc.addSp(1);
 						pc.sendPackets(new S_SpMr(pc));
 					}
+				} else if (grade == 3) { // 特級
+					if (oldEnchantLvl == 0 && newEnchantLvl == 1) {
+						pc.addMaxHp(15);
+					}
+					if (newEnchantLvl >= 2) {
+						pc.addMaxHp(i * 5);
+						pc.addAc(-i);
+					}
+					pc.sendPackets(new S_OwnCharStatus(pc));
 				}
 			}
 		}

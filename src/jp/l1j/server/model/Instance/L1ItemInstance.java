@@ -320,6 +320,14 @@ public class L1ItemInstance extends L1Object {
 			result += bonusItem.getAc(getEnchantLevel());
 		}
 		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 3) {
+			// アクセサリー特級
+			if (_inventoryItem.getEnchantLevel() > 1) {
+				result -= _inventoryItem.getEnchantLevel() - 1;
+			}
+		}
+		
 		return result;
 	}
 	
@@ -429,6 +437,14 @@ public class L1ItemInstance extends L1Object {
 				&& _item.getType() <= 13 && _item.getGrade() == 1) {
 			// アクセサリー中級
 			result += getEnchantLevel() * 2;
+		}
+		
+		if (_item.getType2() == 2 && _item.getType() >= 10
+				&& _item.getType() <= 13 && _item.getGrade() == 3) {
+			// アクセサリー特級
+			if (_inventoryItem.getEnchantLevel() > 0) {
+				result += getEnchantLevel() * 5 + 10;
+			}
 		}
 
 		return result;
