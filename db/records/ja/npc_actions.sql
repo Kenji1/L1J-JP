@@ -1078,6 +1078,8 @@ INSERT INTO `npc_actions` VALUES ('81249', 'wcorpse7', 'wcorpse7', '', '');
 INSERT INTO `npc_actions` VALUES ('81250', 'wa_earth1', 'wa_earth1', '', '');
 INSERT INTO `npc_actions` VALUES ('81251', 'wa_acidw1', 'wa_acidw1', '', '');
 INSERT INTO `npc_actions` VALUES ('81252', 'wa_egg1', 'wa_egg1', '', '');
+INSERT INTO `npc_actions` VALUES ('81253', 'cold1', 'cold1', '', '');
+INSERT INTO `npc_actions` VALUES ('81254', 'cold1', 'cold1', '', '');
 INSERT INTO `npc_actions` VALUES ('81352', 'bs_01', 'bs_01', '', '');
 INSERT INTO `npc_actions` VALUES ('81353', 'bs_01', 'bs_01', '', '');
 INSERT INTO `npc_actions` VALUES ('81354', 'bs_01', 'bs_01', '', '');
