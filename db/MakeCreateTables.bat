@@ -31,7 +31,7 @@ type .\schema\%driver%\houses.sql >> create_tables.sql
 type .\schema\%driver%\inns.sql >> create_tables.sql
 type .\schema\%driver%\inn_keys.sql >> create_tables.sql
 type .\schema\%driver%\inventory_items.sql >> create_tables.sql
-type .\schema\%driver%\item_ratess.sql >> create_tables.sql
+type .\schema\%driver%\item_rates.sql >> create_tables.sql
 type .\schema\%driver%\letters.sql >> create_tables.sql
 type .\schema\%driver%\log_accelerator.sql >> create_tables.sql
 type .\schema\%driver%\log_chat.sql >> create_tables.sql
