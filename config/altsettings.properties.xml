@@ -178,4 +178,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- ext - +7以降も強化毎にボーナス値を上昇させる -->
 <entry key="AccessoryEnchantBonus">ext</entry>
 
+<!-- リサイクルシステム -->
+<!-- True ... ゴミ箱にアイテムを捨てた時、買取価格が設定されているアイテムはアデナに換金 -->
+<!-- False ... 従来どおりアイテムを削除 -->
+<entry key="RecycleSystem">False</entry>
+
 </properties>

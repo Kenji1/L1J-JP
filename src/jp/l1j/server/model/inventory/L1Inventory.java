@@ -26,11 +26,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.InnKeyTable;
+import jp.l1j.server.datatables.ItemRateTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.RaceTicketTable;
-import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.item.L1ItemId;
+import jp.l1j.server.model.item.L1ItemRate;
+import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1InventoryItem;
@@ -41,6 +46,8 @@ import jp.l1j.server.utils.IdFactory;
 public class L1Inventory extends L1Object {
 	private static Logger _log = Logger.getLogger(L1Inventory.class.getName());
 
+	private static final ItemRateTable _itemRates = ItemRateTable.getInstance();
+	
 	private static final long serialVersionUID = 1L;
 
 	protected List<L1ItemInstance> _items = new CopyOnWriteArrayList<L1ItemInstance>();
@@ -340,20 +347,16 @@ public class L1Inventory extends L1Object {
 
 	public int removeItem(L1ItemInstance item, int count) {
 		if (item == null) {
-			_log
-					.log(Level.INFO, "Item is null",
-							new IllegalArgumentException());
+			_log.log(Level.INFO, "Item is null", new IllegalArgumentException());
 			return 0;
 		}
 		if (item.getCount() <= 0 || count <= 0) {
-			_log.log(Level.INFO, "Invalid item count",
-					new IllegalArgumentException());
+			_log.log(Level.INFO, "Invalid item count", new IllegalArgumentException());
 			return 0;
 		}
 		if (item.getCount() < count) {
 			count = item.getCount();
-			_log.log(Level.INFO, "Invalid item count",
-					new IllegalArgumentException());
+			_log.log(Level.INFO, "Invalid item count", new IllegalArgumentException());
 		}
 
 		if (item.getCount() == count) {
@@ -363,6 +366,49 @@ public class L1Inventory extends L1Object {
 			item.setCount(item.getCount() - count);
 			updateItem(item);
 		}
+		return count;
+	}
+
+	
+	// ゴミ箱に捨てられたアイテムをアデナに換金（価格設定されていないアイテムは削除）
+	public int recycleItem(L1PcInstance pc, L1ItemInstance item) {
+		int count = 0;
+		
+		if (item == null) {
+			_log.log(Level.INFO, "Item is null", new IllegalArgumentException());
+			return count;
+		}
+		if (item.getCount() <= 0 || item.getCount() <= 0) {
+			_log.log(Level.INFO, "Invalid item count", new IllegalArgumentException());
+			return count;
+		}
+
+		L1ItemRate rate = _itemRates.get(item.getItemId());
+		if (rate.getSellingPrice() > 0) {
+			count = rate.getSellingPrice() * item.getCount();
+			
+			if (count > MAX_AMOUNT) {
+				count = MAX_AMOUNT;
+			}
+			
+			L1ItemInstance adena = ItemTable.getInstance().createItem(L1ItemId.ADENA);
+			adena.setCount(count);
+			
+			if (checkAddItem(adena, count) == OK) {
+				storeItem(adena);
+				pc.sendPackets(new S_ServerMessage(143, "ゴミ箱", adena.getLogName()));
+				// f1%0が%1をくれました。
+			} else {
+				L1Inventory ground = L1World.getInstance().getInventory(
+						pc.getX(), pc.getY(), pc.getMapId());
+				tradeItem(adena, count, ground);
+				// 持てないので足元に落とす
+			}
+		}
+		
+		deleteItem(item);
+		L1World.getInstance().removeObject(item);
+		
 		return count;
 	}
 

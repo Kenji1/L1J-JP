@@ -16,6 +16,7 @@
 package jp.l1j.server.packets.client;
 
 import java.util.logging.Logger;
+import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -72,7 +73,11 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 			return;
 		}
 
-		pc.getInventory().removeItem(item, item.getCount());
+		if (Config.RECYCLE_SYSTEM) {
+			pc.getInventory().recycleItem(pc, item); // ゴミをアデナに換金
+		} else {
+			pc.getInventory().removeItem(item, item.getCount());
+		}
 		pc.updateLight();
 	}
 

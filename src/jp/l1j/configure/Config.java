@@ -524,6 +524,9 @@ public final class Config {
 
 	@Configure(file = ALT, key = "AccessoryEnchantBonus")
 	public static String ACCESSORY_ENCHANT_BONUS = "std";
+	
+	@Configure(file = ALT, key = "RecycleSystem")
+	public static boolean RECYCLE_SYSTEM = false;
 
 	/** Events control */
 	@Configure(file = EVENT, key = "HinomotoUpdate1")
