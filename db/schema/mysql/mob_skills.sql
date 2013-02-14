@@ -19,7 +19,7 @@ CREATE TABLE `mob_skills` (
   `area_height` int(10) unsigned NOT NULL DEFAULT '0',
   `leverage` int(10) unsigned NOT NULL DEFAULT '0',
   `skill_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `gfx_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `gfx_id` int(10) NOT NULL DEFAULT '-1',
   `act_id` int(10) unsigned NOT NULL DEFAULT '0',
   `summon_id` int(10) unsigned NOT NULL DEFAULT '0',
   `summon_min` int(10) NOT NULL DEFAULT '0',

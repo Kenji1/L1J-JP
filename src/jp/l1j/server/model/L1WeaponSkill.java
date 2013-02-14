@@ -144,7 +144,7 @@ public class L1WeaponSkill {
 		}
 
 		// ■■■■■■■■■■■■■■■ 攻撃対象者へのエフェクト送信 ■■■■■■■■■■■■■■■
-		if (skill.getCastGfx() != 0) {
+		if (skill.getCastGfx() != -1) {
 			int chaId = 0;
 			if (skill.getTarget().equalsIgnoreCase("none")) {
 				chaId = pc.getId();
@@ -242,7 +242,7 @@ public class L1WeaponSkill {
 					targetPc.broadcastPacket(new S_DoActionGFX(
 							targetPc.getId(), ActionCodes.ACTION_Damage));
 					targetPc.receiveDamage(pc, (int) dmg, true);
-					if (skill.getCastGfx2() != 0) { // 個別に表示するグラフィックがある場合
+					if (skill.getCastGfx2() != -1) { // 個別に表示するグラフィックがある場合
 						targetPc.sendPackets(new S_SkillSound(targetPc.getId(), skill.getCastGfx()));
 						targetPc.broadcastPacket(new S_SkillSound(targetPc.getId(), skill.getCastGfx()));
 					}
@@ -253,7 +253,7 @@ public class L1WeaponSkill {
 					targetNpc.broadcastPacket(new S_DoActionGFX(targetNpc
 							.getId(), ActionCodes.ACTION_Damage));
 					targetNpc.receiveDamage(pc, (int) dmg);
-					if (skill.getCastGfx2() != 0) { // 個別に表示するグラフィックがある場合
+					if (skill.getCastGfx2() != -1) { // 個別に表示するグラフィックがある場合
 						targetNpc.broadcastPacket(new S_SkillSound(targetNpc.getId(), skill.getCastGfx()));
 					}
 				}

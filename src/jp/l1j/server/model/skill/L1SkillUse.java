@@ -1296,7 +1296,7 @@ public class L1SkillUse {
 		int[] data = null;
 
 		if (_user instanceof L1PcInstance) {
-			if (castgfx == 0) {
+			if (castgfx == -1) {
 				// 表示するグラフィックが無い場合でも
 				// action_idに設定があればモーションは行う
 				// トリプルアローとフォースレイヤーは対象外とする
