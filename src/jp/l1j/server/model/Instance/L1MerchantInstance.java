@@ -3238,11 +3238,10 @@ public class L1MerchantInstance extends L1NpcInstance {
 
 	private static String talkToTownadviser(L1PcInstance pc, int town_id) {
 		String htmlid;
-		if (pc.getHomeTownId() == town_id
-				&& TownTable.getInstance().isLeader(pc, town_id)) {
-			htmlid = "secretary1";
+		if (pc.getHomeTownId() == town_id) {
+			htmlid = "artisan1";
 		} else {
-			htmlid = "secretary2";
+			htmlid = "artisan2";
 		}
 
 		return htmlid;

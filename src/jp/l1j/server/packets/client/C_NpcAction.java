@@ -63,6 +63,7 @@ import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1TownLocation;
 import jp.l1j.server.model.L1UltimateBattle;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.item.L1ItemId;
 import jp.l1j.server.model.item.executor.L1BeginnerItem;
@@ -354,9 +355,8 @@ public class C_NpcAction extends ClientBasePacket {
 				// f1%0が%1をくれました。
 				pc.getQuest().setEnd(L1Quest.QUEST_OILSKINMANT);
 				htmlid = ""; // ウィンドウを消す
-			}
 			// タウンマスター：報酬をもらう
-			else if (npcId == 70528 || npcId == 70546 || npcId == 70567
+			} else if (npcId == 70528 || npcId == 70546 || npcId == 70567
 					|| npcId == 70594 || npcId == 70654 || npcId == 70748
 					|| npcId == 70774 || npcId == 70799 || npcId == 70815
 					|| npcId == 70860) {
@@ -401,21 +401,20 @@ public class C_NpcAction extends ClientBasePacket {
 						pc.setPay(0);
 					}
 				}
-			} else if (s.equalsIgnoreCase("townscore")) {// 貢献度確認
-				// L1NpcInstance npc = (L1NpcInstance) obj;
-				// int npcId = npc.getNpcTemplate().getNpcId();
-				if ((npcId == 70528) || (npcId == 70546) || (npcId == 70567)
-						|| (npcId == 70594) || (npcId == 70654)
-						|| (npcId == 70748) || (npcId == 70774)
-						|| (npcId == 70799) || (npcId == 70815)
-						|| (npcId == 70860)) {
-					if (pc.getHomeTownId() > 0) {
-						pc.sendPackets(new S_ServerMessage(1569, String
-								.valueOf(pc.getContribution())));
-					}
+			}
+		} else if (s.equalsIgnoreCase("townscore")) {// 貢献度確認
+			L1NpcInstance npc = (L1NpcInstance) obj;
+			int npcId = npc.getNpcTemplate().getNpcId();
+			if ((npcId == 70528) || (npcId == 70546) || (npcId == 70567)
+					|| (npcId == 70594) || (npcId == 70654)
+					|| (npcId == 70748) || (npcId == 70774)
+					|| (npcId == 70799) || (npcId == 70815)
+					|| (npcId == 70860)) {
+				if (pc.getHomeTownId() > 0) {
+					pc.sendPackets(new S_ServerMessage(1569, String
+							.valueOf(pc.getContribution())));
 				}
 			}
-
 		} else if (s.equalsIgnoreCase("fix")) { // 武器を修理する
 		} else if (s.equalsIgnoreCase("room")) { // 部屋を借りる
 			L1NpcInstance npc = (L1NpcInstance) obj;
@@ -2338,22 +2337,27 @@ public class C_NpcAction extends ClientBasePacket {
 				|| ((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 70806
 				|| ((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 70830
 				|| ((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 70876) {
-			// タウンアドバイザー（収入に関する報告）
-			if (s.equalsIgnoreCase("r")) {
-				if (obj instanceof L1NpcInstance) {
-					int npcid = ((L1NpcInstance) obj).getNpcTemplate()
-							.getNpcId();
-					int town_id = L1TownLocation.getTownIdByNpcid(npcid);
-				}
+			L1ItemInstance item = null;
+			if (s.equalsIgnoreCase("0")) { // 村人のブレイブポーションを作る
+				getTownItem(pc, (L1NpcInstance) obj, 41480, 3, 1000);
+			} else if (s.equalsIgnoreCase("1")) { // 村人の集中ポーションを作る
+				getTownItem(pc, (L1NpcInstance) obj, 41479, 3, 1000);
+			} else if (s.equalsIgnoreCase("2")) { // 村人のウィズダムポーションを作る
+				getTownItem(pc, (L1NpcInstance) obj, 41482, 3, 500);
+			} else if (s.equalsIgnoreCase("3")) { // 村人の魔力ポーションを作る
+				getTownItem(pc, (L1NpcInstance) obj, 41481, 3, 1000);
+			} else if (s.equalsIgnoreCase("4")) { // 村人のヘイストポーションを作る
+				getTownItem(pc, (L1NpcInstance) obj, 41477, 3, 500);
+			} else if (s.equalsIgnoreCase("5")) { // 村人の呼吸ポーションを作る
+				getTownItem(pc, (L1NpcInstance) obj, 41478, 3, 500);
+			} else if (s.equalsIgnoreCase("6")) { // 村人の変身ポーションを作る
+				getTownItem(pc, (L1NpcInstance) obj, 41483, 3, 1000);
+			} else if (s.equalsIgnoreCase("a")) { // 村人の帰還スクロールを購入する
+				int[] ids = {41467, 41472, 41468, 41471, 41470, 41469, 41473,
+					41474, 41476, 41475};
+				getTownItem(pc, (L1NpcInstance) obj, ids[pc.getHomeTownId() - 1], 1, 400);
 			}
-			// タウンアドバイザー（税率変更）
-			else if (s.equalsIgnoreCase("t")) {
-
-			}
-			// タウンアドバイザー（報酬をもらう）
-			else if (s.equalsIgnoreCase("c")) {
-
-			}
+			htmlid = "";
 		}
 		// ドロモンド
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 70997) {
@@ -6710,6 +6714,21 @@ public class C_NpcAction extends ClientBasePacket {
 		}
 		
 		return htmlid;
+	}
+	
+	private void getTownItem(L1PcInstance pc, L1NpcInstance npc, int itemId, int count, int price) {
+		L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
+		
+		if (pc.getInventory().checkItem(40308, price)) {
+			if (pc.getInventory().checkAddItem(item, count, true) == L1Inventory.OK) {
+				pc.getInventory().consumeItem(40308, price);
+				pc.addContribution(price / 100); // 貢献度
+				TownTable.getInstance().addSalesMoney(pc.getHomeTownId(), price); // 町の売上
+				pc.getInventory().storeItem(itemId, count);
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().getName(),
+						item.getItem().getName())); // \f1%0が%1をくれました。
+			}
+		}
 	}
 	
 	private String teleportToi(L1PcInstance pc, String s) {

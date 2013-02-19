@@ -96,12 +96,12 @@ public class CalcExp {
 
 		if (l1object != null && !(npc instanceof L1PetInstance)
 				&& !(npc instanceof L1SummonInstance)) {
-			// int exp = npc.getExp();
-			if (!L1World.getInstance().isProcessingContributionTotal()
-					&& l1pcinstance.getHomeTownId() > 0) {
-				int contribution = npc.getLevel() / 10;
-				l1pcinstance.addContribution(contribution);
-			}
+			// ホームタウンシステムリニューアルの為、狩りによる貢献度を廃止
+			//if (!L1World.getInstance().isProcessingContributionTotal()
+			//		&& l1pcinstance.getHomeTownId() > 0) {
+			//	int contribution = npc.getLevel() / 10;
+			//	l1pcinstance.addContribution(contribution);
+			//}
 			int lawful = npc.getLawful();
 
 			if (l1pcinstance.isInParty()) { // パーティー中

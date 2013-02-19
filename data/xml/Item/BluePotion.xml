@@ -12,6 +12,10 @@
 	<Item ItemId="41142" Remove="1">
 		<Effect Time="300" />
 	</Item>
+	<!-- 村人の魔力ポーション -->
+	<Item ItemId="41481" Remove="1">
+		<Effect Time="2400" />
+	</Item>
 	<!-- 祝福されたブルーポーション -->
 	<Item ItemId="140015" Remove="1">
 		<Effect Time="700" />

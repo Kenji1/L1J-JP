@@ -12,4 +12,8 @@
 	<Item ItemId="41344" Remove="1">
 		<Effect Time="2100" GfxId="190" />
 	</Item>
+	<!-- 村人の呼吸ポーション -->
+	<Item ItemId="41478" Remove="1">
+		<Effect Time="7200" GfxId="190" />
+	</Item>
 </ItemEffectList>

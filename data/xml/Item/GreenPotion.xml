@@ -56,6 +56,10 @@
 	<Item ItemId="41342" Remove="1">
 		<Effect Time="1800" GfxId="191" />
 	</Item>
+	<!-- 村人のヘイスト ポーション -->
+	<Item ItemId="41477" Remove="1">
+		<Effect Time="1200" GfxId="191" />
+	</Item>
 	<!-- 祝福されたグリーンポーション -->
 	<Item ItemId="140013" Remove="1">
 		<Effect Time="350" GfxId="191" />

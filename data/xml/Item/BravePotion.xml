@@ -20,6 +20,14 @@
 	<Item ItemId="41415" Remove="1">
 		<Effect Time="1800" GfxId="751" GfxId2="1" ClassInitial="K" />
 	</Item>
+	<!-- 村人の集中ポーション -->
+	<Item ItemId="41479" Remove="1">
+		<Effect Time="1920" GfxId="751" GfxId2="3" ClassInitial="E" />
+	</Item>
+	<!-- 村人のブレイブ ポーション -->
+	<Item ItemId="41480" Remove="1">
+		<Effect Time="1200" GfxId="751" GfxId2="1" ClassInitial="K" />
+	</Item>
 	<!-- ユグドラの実 -->
 	<Item ItemId="49158" Remove="1">
 		<Effect Time="480" GfxId="7110" GfxId2="0" ClassInitial="I" />
