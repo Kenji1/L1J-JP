@@ -1248,323 +1248,47 @@ public class C_NpcAction extends ClientBasePacket {
 		}
 		// テレポーター マエノブ
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46197) {
-			if (s.equalsIgnoreCase("J")) { // 傲慢の塔6階
-				if (pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 33805, 32864, (short) 106, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("A")) { // 傲慢の塔16階
-				if (pc.getInventory().checkItem(40104, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40104, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32781, 32864, (short) 116, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // 傲慢の塔26階
-				if (pc.getInventory().checkItem(40105, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40105, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32781, 32864, (short) 126, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("C")) { // 傲慢の塔36階
-				if (pc.getInventory().checkItem(40106, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40106, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32781, 32864, (short) 136, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("D")) { // 傲慢の塔46階
-				if (pc.getInventory().checkItem(40107, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40107, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32781, 32864, (short) 146, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("E")) { // 傲慢の塔56階
-				if (pc.getInventory().checkItem(40108, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40108, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32783, 32799, (short) 156, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("F")) { // 傲慢の塔66階
-				if (pc.getInventory().checkItem(40109, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40109, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32783, 32799, (short) 166, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("G")) { // 傲慢の塔76階
-				if (pc.getInventory().checkItem(40110, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40110, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32783, 32799, (short) 176, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("H")) { // 傲慢の塔86階
-				if (pc.getInventory().checkItem(40111, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40111, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32783, 32799, (short) 186, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("I")) { // 傲慢の塔96階
-				if (pc.getInventory().checkItem(40112, 2)
-						&& pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40112, 2);
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32783, 32799, (short) 196, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s);
 		}
 		// テレポーター マエノブの炎 傲慢の塔6F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46198) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(10階)
-				if (pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32800, 32800, (short) 110, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(1階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32724, 32799, (short) 101, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 0);
 		}
 		// テレポーター マエノブの炎 傲慢の塔16F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46199) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(20階)
-				if (pc.getInventory().checkItem(40104, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40104, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32800, 32800, (short) 120, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(11階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32631, 32935, (short) 111, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 1);
 		}
 		// テレポーター マエノブの炎 傲慢の塔26F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46200) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(30階)
-				if (pc.getInventory().checkItem(40105, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40105, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32800, 32800, (short) 130, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(21階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32631, 32935, (short) 121, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 2);
 		}
 		// テレポーター マエノブの炎 傲慢の塔36F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46201) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(40階)
-				if (pc.getInventory().checkItem(40106, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40106, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32800, 32800, (short) 140, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(31階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32631, 32935, (short) 131, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 3);
 		}
 		// テレポーター マエノブの炎 傲慢の塔46F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46202) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(50階)
-				if (pc.getInventory().checkItem(40107, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40107, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32796, 32796, (short) 150, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(41階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32631, 32935, (short) 141, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 4);
 		}
 		// テレポーター マエノブの炎 傲慢の塔56F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46203) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(60階)
-				if (pc.getInventory().checkItem(40108, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40108, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32720, 32821, (short) 160, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(51階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32669, 32814, (short) 151, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 5);
 		}
 		// テレポーター マエノブの炎 傲慢の塔66F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46204) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(70階)
-				if (pc.getInventory().checkItem(40109, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40109, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32720, 32821, (short) 170, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(61階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32669, 32814, (short) 161, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 6);
 		}
 		// テレポーター マエノブの炎 傲慢の塔76F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46205) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(80階)
-				if (pc.getInventory().checkItem(40110, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40110, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32724, 32822, (short) 180, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(71階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32669, 32814, (short) 171, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 7);
 		}
 		// テレポーター マエノブの炎 傲慢の塔86F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46206) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(90階)
-				if (pc.getInventory().checkItem(40111, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40111, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32722, 32827, (short) 190, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(81階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32669, 32814, (short) 181, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 8);
 		}
 		// テレポーター マエノブの炎 傲慢の塔96F
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46207) {
-			if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる(100階)
-				if (pc.getInventory().checkItem(40112, 2)
-						&& pc.getInventory().checkItem(40308, 2400)) {
-					pc.getInventory().consumeItem(40112, 2);
-					pc.getInventory().consumeItem(40308, 2400);
-					L1Teleport.teleport(pc, 32731, 32856, (short) 200, 6, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる(91階)
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
-					L1Teleport.teleport(pc, 32669, 32814, (short) 191, 2, true);
-					htmlid = "";
-				} else {
-					htmlid = "maetnob2";
-				}
-			}
+			htmlid = teleportToi(pc, s, 9);
 		}
 		// 錬金術師
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 46280
@@ -6987,7 +6711,147 @@ public class C_NpcAction extends ClientBasePacket {
 		
 		return htmlid;
 	}
-				
+	
+	private String teleportToi(L1PcInstance pc, String s) {
+		String htmlid = "";
+
+		if (s.equalsIgnoreCase("J")) { // 傲慢の塔6階
+			if (pc.getInventory().checkItem(40308, 2400)) {
+				pc.getInventory().consumeItem(40308, 2400);
+				L1Teleport.teleport(pc, 33805, 32864, (short) 106, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("A")) { // 傲慢の塔16階
+			if (pc.getInventory().checkItem(40104, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40104, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32781, 32864, (short) 116, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("B")) { // 傲慢の塔26階
+			if (pc.getInventory().checkItem(40105, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40105, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32781, 32864, (short) 126, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("C")) { // 傲慢の塔36階
+			if (pc.getInventory().checkItem(40106, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40106, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32781, 32864, (short) 136, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("D")) { // 傲慢の塔46階
+			if (pc.getInventory().checkItem(40107, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40107, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32781, 32864, (short) 146, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("E")) { // 傲慢の塔56階
+			if (pc.getInventory().checkItem(40108, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40108, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32783, 32799, (short) 156, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("F")) { // 傲慢の塔66階
+			if (pc.getInventory().checkItem(40109, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40109, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32783, 32799, (short) 166, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("G")) { // 傲慢の塔76階
+			if (pc.getInventory().checkItem(40110, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40110, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32783, 32799, (short) 176, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("H")) { // 傲慢の塔86階
+			if (pc.getInventory().checkItem(40111, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40111, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32783, 32799, (short) 186, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("I")) { // 傲慢の塔96階
+			if (pc.getInventory().checkItem(40112, 2)
+					&& pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40112, 2);
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, 32783, 32799, (short) 196, 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		}
+
+		return htmlid;
+	}
+
+	private String teleportToi(L1PcInstance pc, String s, int n) {
+		// TOIテレポートスクロール 無し, 11F, 21F, 31F, 41F, 51F, 61F, 71F, 81F, 91F
+		int[] itemid = {0, 40104, 40105, 40106, 40107, 40108, 40109, 40110, 40111, 40112};
+		
+		// TOI 10F, 20F, 30F, 40F, 50F, 60F, 70F, 80F, 90F, 100F
+		int[] x1 = {32800, 32800, 32800, 32800, 32796, 32720, 32720, 32724, 32722, 32731};
+		int[] y1 = {32800, 32800, 32800, 32800, 32796, 32821, 32821, 32822, 32827, 32856};
+		short[] m1 = {110, 120, 130, 140, 150, 160, 170, 180, 190, 200};
+		
+		// TOI 1F, 11F, 21F, 31F, 41F, 51F, 61F, 71F, 81F, 91F
+		int[] x2 = {32724, 32631, 32631, 32631, 32631, 32669, 32669, 32669, 32669, 32669};
+		int[] y2 = {32799, 32935, 32935, 32935, 32935, 32814, 32814, 32814, 32814, 32814};
+		short[] m2 = {101, 111, 121, 131, 141, 151, 161, 171, 181, 191};
+					
+		String htmlid = "";
+		
+		if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる
+			boolean flag = false;
+			
+			if (n == 0) {
+				flag = true;
+			} else if (n > 0 && pc.getInventory().checkItem(itemid[n], 2)) {
+				flag = true;
+			}
+			
+			if (flag && pc.getInventory().checkItem(40308, 2400)) {
+				pc.getInventory().consumeItem(itemid[n], 2);
+				pc.getInventory().consumeItem(40308, 2400);
+				L1Teleport.teleport(pc, x1[n], y1[n], m1[n], 6, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		} else if (s.equalsIgnoreCase("B")) { // ここの一番下の階に降りる
+			if (pc.getInventory().checkItem(40308, 300)) {
+				pc.getInventory().consumeItem(40308, 300);
+				L1Teleport.teleport(pc, x2[n], y2[n], m2[n], 2, true);
+			} else {
+				htmlid = "maetnob2";
+			}
+		}
+
+		return htmlid;
+	}
+
 	@Override
 	public String getType() {
 		return C_NPC_ACTION;
