@@ -1173,54 +1173,7 @@ public class C_NpcAction extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(1290)); // ステータス初期化に必要なアイテムがありません。
 					return;
 				}
-				// マジックドールを召喚解除
-				L1DollInstance doll = null;
-				Object[] dollList = pc.getDollList().values().toArray();
-				for (Object dollObject : dollList) {
-					doll = (L1DollInstance) dollObject;
-					pc.sendPackets(new S_SkillSound(doll.getId(), 5936));
-					pc.broadcastPacket(new S_SkillSound(doll.getId(), 5936));
-					if (doll.isChargeDoll()) { // 課金マジックドールのタイマーを停止
-						L1ItemInstance item = pc.getInventory().getItem(doll.getItemObjId());
-						item.stopChargeTimer();
-					}
-					doll.deleteDoll();
-					pc.sendPackets(new S_SkillIconGFX(56, 0));
-					pc.sendPackets(new S_OwnCharStatus(pc));
-					break;
-				}
-
-				L1SkillUse l1skilluse = new L1SkillUse();
-				l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(),
-						pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
-				pc.getInventory().takeoffEquip(945); // 牛のpolyIdで装備を全部外す。
-				L1Teleport.teleport(pc, 32737, 32789, (short) 997, 4, false);
-				int initStatusPoint = 75 + pc.getElixirStats();
-				int pcStatusPoint = pc.getBaseStr() + pc.getBaseInt()
-						+ pc.getBaseWis() + pc.getBaseDex() + pc.getBaseCon()
-						+ pc.getBaseCha();
-				if (pc.getLevel() > 50) {
-					pcStatusPoint += (pc.getLevel() - 50 - pc.getBonusStats());
-				}
-				int diff = pcStatusPoint - initStatusPoint;
-				/**
-				 * [50級以上]
-				 *
-				 * 目前點數 - 初始點數 = 人物應有等級 - 50 -> 人物應有等級 = 50 + (目前點數 - 初始點數)
-				 */
-				int maxLevel = 1;
-
-				if (diff > 0) {
-					// 最高到99級:也就是?不支援轉生
-					maxLevel = Math.min(50 + diff, 99);
-				} else {
-					maxLevel = pc.getLevel();
-				}
-
-				pc.setTempMaxLevel(maxLevel);
-				pc.setTempLevel(1);
-				pc.setInCharReset(true);
-				pc.sendPackets(new S_CharReset(pc));
+				pc.resetStatus();
 			} else {
 				htmlid = enterUb(pc, npcId);
 			}

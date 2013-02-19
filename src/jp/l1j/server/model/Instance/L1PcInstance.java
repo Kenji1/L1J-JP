@@ -82,6 +82,7 @@ import jp.l1j.server.packets.server.S_BlueMessage;
 import jp.l1j.server.packets.server.S_BonusStats;
 import jp.l1j.server.packets.server.S_CastleMaster;
 import jp.l1j.server.packets.server.S_ChangeShape;
+import jp.l1j.server.packets.server.S_CharReset;
 import jp.l1j.server.packets.server.S_CharVisualUpdate;
 import jp.l1j.server.packets.server.S_Disconnect;
 import jp.l1j.server.packets.server.S_DoActionGFX;
@@ -3408,6 +3409,59 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
+	/**
+	 * ステータスを初期化（希望のロウソク）
+	 */
+	public void resetStatus() {
+		// マジックドールを召喚解除
+		L1DollInstance doll = null;
+		Object[] dollList = getDollList().values().toArray();
+		for (Object dollObject : dollList) {
+			doll = (L1DollInstance) dollObject;
+			sendPackets(new S_SkillSound(doll.getId(), 5936));
+			broadcastPacket(new S_SkillSound(doll.getId(), 5936));
+			if (doll.isChargeDoll()) { // 課金マジックドールのタイマーを停止
+				L1ItemInstance item = getInventory().getItem(doll.getItemObjId());
+				item.stopChargeTimer();
+			}
+			doll.deleteDoll();
+			sendPackets(new S_SkillIconGFX(56, 0));
+			sendPackets(new S_OwnCharStatus(this));
+			break;
+		}
+
+		L1SkillUse l1skilluse = new L1SkillUse();
+		l1skilluse.handleCommands(this, CANCELLATION, getId(), getX(), getY(),
+				null, 0, L1SkillUse.TYPE_LOGIN);
+		getInventory().takeoffEquip(945); // 牛のpolyIdで装備を全部外す。
+		L1Teleport.teleport(this, 32737, 32789, (short) 997, 4, false);
+		int initStatusPoint = 75 + getElixirStats();
+		int pcStatusPoint = getBaseStr() + getBaseInt() + getBaseWis()
+				+ getBaseDex() + getBaseCon() + getBaseCha();
+		if (getLevel() > 50) {
+			pcStatusPoint += (getLevel() - 50 - getBonusStats());
+		}
+		int diff = pcStatusPoint - initStatusPoint;
+		/**
+		 * [50級以上]
+		 *
+		 * 目前點數 - 初始點數 = 人物應有等級 - 50 -> 人物應有等級 = 50 + (目前點數 - 初始點數)
+		 */
+		int maxLevel = 1;
+
+		if (diff > 0) {
+			// 最高到99級:也就是?不支援轉生
+			maxLevel = Math.min(50 + diff, 99);
+		} else {
+			maxLevel = getLevel();
+		}
+
+		setTempMaxLevel(maxLevel);
+		setTempLevel(1);
+		setInCharReset(true);
+		sendPackets(new S_CharReset(this));
+	}
+	
 	/**
 	 * 初期ステータスから現在のボーナスを再計算して設定する 初期設定時、再配分時に呼び出す
 	 */

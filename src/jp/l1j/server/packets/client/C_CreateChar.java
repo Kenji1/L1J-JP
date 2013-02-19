@@ -243,7 +243,6 @@ public class C_CreateChar extends ClientBasePacket {
 		CharacterTable.getInstance().storeNewCharacter(pc);
 		S_NewCharPacket s_newcharpacket = new S_NewCharPacket(pc);
 		client.sendPacket(s_newcharpacket);
-		CharacterTable.saveCharStatus(pc);
 		pc.refresh();
 	}
 

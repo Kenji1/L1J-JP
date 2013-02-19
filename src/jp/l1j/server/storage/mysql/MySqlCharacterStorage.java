@@ -308,7 +308,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 		try {
 			int i = 0;
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE characters SET level=?,high_level=?,exp=?,max_hp=?,cur_hp=?,max_mp=?,cur_mp=?,ac=?,str=?,con=?,dex=?,cha=?,`int`=?,wis=?,status=?,class=?,sex=?,type=?,heading=?,loc_x=?,loc_y=?,map_id=?,food=?,lawful=?,title=?,clan_id=?,clan_name=?,clan_rank=?,bonus_status=?,elixir_status=?,elf_attr=?,pk_count=?,pk_count_for_elf=?,exp_res=?,partner_id=?,access_level=?,online_status=?,hometown_id=?,contribution=?,hell_time=?,banned=?,karma=?,last_pk=?,last_pk_for_elf=?,delete_time=?,rejoin_clan_time=?,use_additional_warehouse=?,logout_time=? WHERE id=?");
+			pstm = con.prepareStatement("UPDATE characters SET level=?,high_level=?,exp=?,max_hp=?,cur_hp=?,max_mp=?,cur_mp=?,ac=?,str=?,con=?,dex=?,cha=?,`int`=?,wis=?,status=?,class=?,sex=?,type=?,heading=?,loc_x=?,loc_y=?,map_id=?,food=?,lawful=?,title=?,clan_id=?,clan_name=?,clan_rank=?,bonus_status=?,elixir_status=?,elf_attr=?,pk_count=?,pk_count_for_elf=?,exp_res=?,partner_id=?,access_level=?,online_status=?,hometown_id=?,contribution=?,hell_time=?,banned=?,karma=?,last_pk=?,last_pk_for_elf=?,delete_time=?,rejoin_clan_time=?,original_str=?,original_con=?,original_dex=?,original_cha=?,original_int=?,original_wis=?,use_additional_warehouse=?,logout_time=? WHERE id=?");
 			pstm.setInt(++i, pc.getLevel());
 			pstm.setInt(++i, pc.getHighLevel());
 			pstm.setInt(++i, pc.getExp());
@@ -359,6 +359,12 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pstm.setTimestamp(++i, pc.getLastPkForElf());
 			pstm.setTimestamp(++i, pc.getDeleteTime());
 			pstm.setTimestamp(++i, pc.getRejoinClanTime());
+			pstm.setInt(++i, pc.getOriginalStr());
+			pstm.setInt(++i, pc.getOriginalCon());
+			pstm.setInt(++i, pc.getOriginalDex());
+			pstm.setInt(++i, pc.getOriginalCha());
+			pstm.setInt(++i, pc.getOriginalInt());
+			pstm.setInt(++i, pc.getOriginalWis());
 			pstm.setBoolean(++i, pc.getUseAdditionalWarehouse());
 			pstm.setTimestamp(++i, pc.getLogoutTime());
 			pstm.setInt(++i, pc.getId());

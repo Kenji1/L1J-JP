@@ -169,30 +169,6 @@ public class CharacterTable {
 		}
 	}
 
-	public static void saveCharStatus(L1PcInstance pc) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE characters SET original_str= ?"
-					+ ", original_con= ?, original_dex= ?, original_cha= ?"
-					+ ", original_int= ?, original_wis= ?" + " WHERE id=?");
-			pstm.setInt(1, pc.getBaseStr());
-			pstm.setInt(2, pc.getBaseCon());
-			pstm.setInt(3, pc.getBaseDex());
-			pstm.setInt(4, pc.getBaseCha());
-			pstm.setInt(5, pc.getBaseInt());
-			pstm.setInt(6, pc.getBaseWis());
-			pstm.setInt(7, pc.getId());
-			pstm.execute();
-		} catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
-		}
-	}
-
 	public void restoreInventory(L1PcInstance pc) {
 		pc.getInventory().loadItems();
 		pc.getWarehouseInventory().loadItems();

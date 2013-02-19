@@ -24,6 +24,7 @@ import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.packets.server.S_CharReset;
+import jp.l1j.server.packets.server.S_InitialAbilityGrowth;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.utils.CalcInitHpMp;
 import jp.l1j.server.utils.CalcStat;
@@ -64,7 +65,6 @@ public class C_CharReset extends ClientBasePacket {
 			pc.sendPackets(new S_CharReset(pc, 1, hp, mp, 10, str, intel, wis,
 					dex, con, cha));
 			initCharStatus(pc, hp, mp, str, intel, wis, dex, con, cha);
-			CharacterTable.getInstance().saveCharStatus(pc);
 		} else if (stage == 0x02) { // 0x02:ステータス再分配
 			int type2 = readC();
 			if (type2 == 0x00) { // 0x00:Lv1UP
@@ -151,6 +151,9 @@ public class C_CharReset extends ClientBasePacket {
 			pc.setBonusStats(0);
 		}
 		pc.sendPackets(new S_OwnCharStatus(pc));
+		S_InitialAbilityGrowth AbilityGrowth = new S_InitialAbilityGrowth(pc);
+		pc.sendPackets(AbilityGrowth);
+		
 		L1ItemInstance item = pc.getInventory().findItemId(49142); // 希望のロウソク
 		if (item != null) {
 			try {
@@ -173,6 +176,12 @@ public class C_CharReset extends ClientBasePacket {
 		pc.addBaseDex((byte)(dex - pc.getBaseDex()));
 		pc.addBaseCon((byte)(con - pc.getBaseCon()));
 		pc.addBaseCha((byte)(cha - pc.getBaseCha()));
+		pc.setOriginalStr(pc.getBaseStr());
+		pc.setOriginalInt(pc.getBaseInt());
+		pc.setOriginalWis(pc.getBaseWis());
+		pc.setOriginalDex(pc.getBaseDex());
+		pc.setOriginalCon(pc.getBaseCon());
+		pc.setOriginalCha(pc.getBaseCha());
 		pc.addMr(0 - pc.getMr());
     	pc.addDmgup(0 - pc.getDmgup());
     	pc.addHitup(0 - pc.getHitup());
