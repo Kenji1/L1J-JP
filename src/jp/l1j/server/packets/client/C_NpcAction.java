@@ -37,7 +37,6 @@ import jp.l1j.server.datatables.PolyTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.datatables.TownTable;
 import jp.l1j.server.datatables.UbTable;
-import jp.l1j.server.model.instance.L1DollInstance;
 import jp.l1j.server.model.instance.L1DoorInstance;
 import jp.l1j.server.model.instance.L1HousekeeperInstance;
 import jp.l1j.server.model.instance.L1ItemInstance;
@@ -74,7 +73,6 @@ import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.model.skill.L1SkillUse;
 import jp.l1j.server.packets.server.S_ApplyAuction;
 import jp.l1j.server.packets.server.S_AuctionBoardRead;
-import jp.l1j.server.packets.server.S_CharReset;
 import jp.l1j.server.packets.server.S_CloseList;
 import jp.l1j.server.packets.server.S_DelSkill;
 import jp.l1j.server.packets.server.S_Deposit;
@@ -87,7 +85,6 @@ import jp.l1j.server.packets.server.S_Lawful;
 import jp.l1j.server.packets.server.S_MessageYN;
 import jp.l1j.server.packets.server.S_MpUpdate;
 import jp.l1j.server.packets.server.S_NpcTalkReturn;
-import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.packets.server.S_PetCtrlMenu;
 import jp.l1j.server.packets.server.S_PetList;
 import jp.l1j.server.packets.server.S_RetrieveAdditionalList;
@@ -1837,7 +1834,8 @@ public class C_NpcAction extends ClientBasePacket {
 				} else if (pc.getLevel() > 54) {
 					htmlid = "jp_takesif2";
 				} else {
-					if (pc.getInventory().checkItem(42104, 1)) { // 武士の心得
+					if (pc.getInventory().checkItem(42104, 1)
+							|| pc.getAdditionalWarehouseInventory().checkItem(42104, 1)) { // 武士の心得
 						htmlid = "jp_takesiff";
 					} else {
 						if (pc.getInventory().checkItem(42103, 100)) { //封印された妖怪の魂
@@ -1865,7 +1863,8 @@ public class C_NpcAction extends ClientBasePacket {
 				} else if (pc.getLevel() > 54) {
 					htmlid = "jp_kazukif2";
 				} else {
-					if (pc.getInventory().checkItem(42105, 1)) { // 癒毒の巻物
+					if (pc.getInventory().checkItem(42105, 1)
+							|| pc.getAdditionalWarehouseInventory().checkItem(42105, 1)) { // 癒毒の巻物
 						htmlid = "jp_kazukiff";
 					} else {
 						if (pc.getInventory().checkItem(42102, 1)) { //牛鬼の毒
@@ -3104,7 +3103,9 @@ public class C_NpcAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 71198) {
 			if (s.equalsIgnoreCase("A")) {
 				if (pc.getQuest().getStep(71198) != 0
-						|| pc.getInventory().checkItem(21059, 1)) {
+						|| pc.getInventory().checkItem(21059, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21059, 1)) {
+					// ポイズンサーペントクローク
 					return;
 				}
 				if (pc.getInventory().consumeItem(41339, 5)) { // 亡者のメモ
@@ -3126,7 +3127,9 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 			} else if (s.equalsIgnoreCase("B")) {
 				if (pc.getQuest().getStep(71198) != 1
-						|| pc.getInventory().checkItem(21059, 1)) {
+						|| pc.getInventory().checkItem(21059, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21059, 1)) {
+					// ポイズンサーペントクローク
 					return;
 				}
 				if (pc.getInventory().consumeItem(41341, 1)) { // ジェロンの教本
@@ -3137,7 +3140,9 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 			} else if (s.equalsIgnoreCase("C")) {
 				if (pc.getQuest().getStep(71198) != 2
-						|| pc.getInventory().checkItem(21059, 1)) {
+						|| pc.getInventory().checkItem(21059, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21059, 1)) {
+					// ポイズンサーペントクローク
 					return;
 				}
 				if (pc.getInventory().consumeItem(41343, 1)) { // パプリオンの血痕
@@ -3159,7 +3164,9 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 			} else if (s.equalsIgnoreCase("D")) {
 				if (pc.getQuest().getStep(71198) != 3
-						|| pc.getInventory().checkItem(21059, 1)) {
+						|| pc.getInventory().checkItem(21059, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21059, 1)) {
+					// ポイズンサーペントクローク
 					return;
 				}
 				if (pc.getInventory().consumeItem(41344, 1)) { // 水の精粋
@@ -3182,7 +3189,9 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 			} else if (s.equalsIgnoreCase("E")) {
 				if (pc.getQuest().getStep(71198) != 4
-						|| pc.getInventory().checkItem(21059, 1)) {
+						|| pc.getInventory().checkItem(21059, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21059, 1)) {
+					// ポイズンサーペントクローク
 					return;
 				}
 				if (pc.getInventory().consumeItem(41345, 1)) { // 酸性の乳液
@@ -3210,7 +3219,9 @@ public class C_NpcAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 71199) {
 			if (s.equalsIgnoreCase("A")) {
 				if (pc.getQuest().getStep(71199) != 0
-						|| pc.getInventory().checkItem(21059, 1)) {
+						|| pc.getInventory().checkItem(21059, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21059, 1)) {
+					// ポイズンサーペントクローク
 					return;
 				}
 				if (pc.getInventory().checkItem(41340, 1)) { // 傭兵団長 ティオンの紹介状
@@ -3221,7 +3232,9 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 			} else if (s.equalsIgnoreCase("B")) {
 				if (pc.getQuest().getStep(71199) != 1
-						|| pc.getInventory().checkItem(21059, 1)) {
+						|| pc.getInventory().checkItem(21059, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21059, 1)) {
+					// ポイズンサーペントクローク
 					return;
 				}
 				if (pc.getInventory().consumeItem(40308, 1000000)) {
@@ -3244,7 +3257,9 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 			} else if (s.equalsIgnoreCase("C")) {
 				if (pc.getQuest().getStep(71199) != 1
-						|| pc.getInventory().checkItem(21059, 1)) {
+						|| pc.getInventory().checkItem(21059, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21059, 1)) {
+					// ポイズンサーペントクローク
 					return;
 				}
 				if (pc.getInventory().consumeItem(41342, 1)) { // メデューサの血
@@ -3271,7 +3286,8 @@ public class C_NpcAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80079) {
 			// ケプリシャと魂の契約を結ぶ
 			if (s.equalsIgnoreCase("0")) {
-				if (!pc.getInventory().checkItem(41312)) { // 占星術師の壺
+				if (!pc.getInventory().checkItem(41312)
+						&& !pc.getAdditionalWarehouseInventory().checkItem(41312)) { // 占星術師の壺
 					L1ItemInstance item = pc.getInventory().storeItem(41312, 1);
 					if (item != null) {
 						pc.sendPackets(new S_ServerMessage(143,
@@ -3286,7 +3302,8 @@ public class C_NpcAction extends ClientBasePacket {
 			}
 			// 援助金を出して運勢を見る
 			else if (s.equalsIgnoreCase("1")) {
-				if (!pc.getInventory().checkItem(41314)) { // 占星術師のお守り
+				if (!pc.getInventory().checkItem(41314)
+						&& !pc.getAdditionalWarehouseInventory().checkItem(41314)) { // 占星術師のお守り
 					if (pc.getInventory().checkItem(L1ItemId.ADENA, 1000)) {
 						materials = new int[] { L1ItemId.ADENA, 41313 };
 						// アデナ、占星術師の玉
@@ -3363,17 +3380,30 @@ public class C_NpcAction extends ClientBasePacket {
 			// 壺を割って契約を破棄する
 			else if (s.equalsIgnoreCase("3")) {
 				if (pc.getInventory().checkItem(41312)) { // 占星術師の壺
-					pc.getInventory().consumeItem(41312, 1);
-					htmlid = "";
+					L1ItemInstance item = pc.getInventory().findItemId(41312);
+					item.delete();
 				}
 				if (pc.getInventory().checkItem(41313)) { // 占星術師の玉
-					pc.getInventory().consumeItem(41313, 1);
-					htmlid = "";
+					L1ItemInstance item = pc.getInventory().findItemId(41313);
+					item.delete();
 				}
 				if (pc.getInventory().checkItem(41314)) { // 占星術師のお守り
-					pc.getInventory().consumeItem(41314, 1);
-					htmlid = "";
+					L1ItemInstance item = pc.getInventory().findItemId(41314);
+					item.delete();
 				}
+				if (pc.getAdditionalWarehouseInventory().checkItem(41312)) { // 占星術師の壺
+					L1ItemInstance item = pc.getAdditionalWarehouseInventory().findItemId(41312);
+					item.delete();
+				}
+				if (pc.getAdditionalWarehouseInventory().checkItem(41313)) { // 占星術師の玉
+					L1ItemInstance item = pc.getAdditionalWarehouseInventory().findItemId(41313);
+					item.delete();
+				}
+				if (pc.getAdditionalWarehouseInventory().checkItem(41314)) { // 占星術師のお守り
+					L1ItemInstance item = pc.getAdditionalWarehouseInventory().findItemId(41314);
+					item.delete();
+				}
+				htmlid = "";
 			}
 		}
 		// 釣りっ子(IN)
@@ -4871,7 +4901,8 @@ public class C_NpcAction extends ClientBasePacket {
 		}// 話せる島-ユリエ//XXX
 		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91327) {
 			if (s.equalsIgnoreCase("c")) {
-				if (!pc.getInventory().checkItem(50006)) { // 時空の瓶
+				if (!pc.getInventory().checkItem(50006)
+						&& !pc.getAdditionalWarehouseInventory().checkItem(50006)) { // 時空の瓶
 					L1ItemInstance item = pc.getInventory().storeItem(50006, 1);
 					if (item != null) {
 						pc.sendPackets(new S_ServerMessage(143,
@@ -5320,7 +5351,8 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 			} else if (s.equalsIgnoreCase("c")) { // チャージしたいです
 				if (pc.getInventory().checkItem(40308, 1000)) {
-					if (pc.getInventory().checkItem(50571, 1)) { // 領収証
+					if (pc.getInventory().checkItem(50571, 1)
+							|| pc.getAdditionalWarehouseInventory().checkItem(50571, 1)) { // 領収証
 						htmlid = "jeff5"; // 前回購入から24時間経過していない
 					} else {
 						pc.getInventory().storeItem(50560, 1); // 1時間のマジックチャージ
@@ -5731,10 +5763,13 @@ public class C_NpcAction extends ClientBasePacket {
 		// キルトン
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80263) {
 			if (s.equalsIgnoreCase("0")) { // タイガーの狩りを依頼する
-				if (pc.getInventory().checkItem(50565, 1)) { // キルトンの契約書
+				if (pc.getInventory().checkItem(50565, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(50565, 1)) { // キルトンの契約書
 					htmlid = "killton2";
-				} else if (pc.getInventory().checkItem(50567) // 配送員ミミックの笛：タイガー飼育場
-						|| pc.getInventory().checkItem(50569)) { // タイガー飼育場
+				} else if (pc.getInventory().checkItem(50567)
+						|| pc.getAdditionalWarehouseInventory().checkItem(50567) // 配送員ミミックの笛：タイガー飼育場
+						|| pc.getInventory().checkItem(50569)
+						|| pc.getAdditionalWarehouseInventory().checkItem(50569)) { // タイガー飼育場
 					htmlid = "killton4";
 				} else if (pc.getInventory().checkItem(40308, 500000)) {
 					pc.getInventory().consumeItem(40308, 500000);
@@ -5748,10 +5783,13 @@ public class C_NpcAction extends ClientBasePacket {
 		// メーリン
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80264) {
 			if (s.equalsIgnoreCase("0")) { // 紀州犬の子犬を引き取る
-				if (pc.getInventory().checkItem(50566, 1)) { // メーリンの契約書
+				if (pc.getInventory().checkItem(50566, 1)
+						|| pc.getAdditionalWarehouseInventory().checkItem(50566, 1)) { // メーリンの契約書
 					htmlid = "merin2";
-				} else if (pc.getInventory().checkItem(50568) // 配送員ミミックの笛：紀州犬のかご
-						|| pc.getInventory().checkItem(50570)) { // 紀州犬のかご
+				} else if (pc.getInventory().checkItem(50568)
+						|| pc.getAdditionalWarehouseInventory().checkItem(50568) // 配送員ミミックの笛：紀州犬のかご
+						|| pc.getInventory().checkItem(50570)
+						|| pc.getAdditionalWarehouseInventory().checkItem(50570)) { // 紀州犬のかご
 					htmlid = "merin4";
 				} else if (pc.getInventory().checkItem(40308, 500000)) {
 					pc.getInventory().consumeItem(40308, 500000);
@@ -5765,101 +5803,17 @@ public class C_NpcAction extends ClientBasePacket {
 		// 特産物管理人 モポ
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80266) {
 			if (s.equalsIgnoreCase("a")) { // ドワーフブドウジュース100個契約
-				if (pc.getInventory().checkItem(50579, 1)
-						|| pc.getInventory().checkItem(50580, 1)
-						|| pc.getInventory().checkItem(50581, 1)
-						|| pc.getInventory().checkItem(50587, 1)
-						|| pc.getInventory().checkItem(50588, 1)
-						|| pc.getInventory().checkItem(50589, 1)) {
-					htmlid = "mopo4";
-				} else if (pc.getInventory().checkItem(40308, 3000)) {
-					pc.getInventory().consumeItem(40308, 3000);
-					L1ItemInstance item = pc.getInventory().storeItem(50579, 1);
-					item.startExpirationTimer(pc);
-					htmlid = "";
-				} else {
-					htmlid = "mopo5";
-				}
+				htmlid = getDwarfPotion(pc, 50579, 3000);
 			} else if (s.equalsIgnoreCase("b")) { // ドワーフブドウジュース200個契約
-				if (pc.getInventory().checkItem(50579, 1)
-						|| pc.getInventory().checkItem(50580, 1)
-						|| pc.getInventory().checkItem(50581, 1)
-						|| pc.getInventory().checkItem(50587, 1)
-						|| pc.getInventory().checkItem(50588, 1)
-						|| pc.getInventory().checkItem(50589, 1)) {
-					htmlid = "mopo4";
-				} else if (pc.getInventory().checkItem(40308, 6000)) {
-					pc.getInventory().consumeItem(40308, 6000);
-					L1ItemInstance item = pc.getInventory().storeItem(50580, 1);
-					item.startExpirationTimer(pc);
-					htmlid = "";
-				} else {
-					htmlid = "mopo5";
-				}
+				htmlid = getDwarfPotion(pc, 50580, 6000);
 			} else if (s.equalsIgnoreCase("c")) { // ドワーフブドウジュース300個契約
-				if (pc.getInventory().checkItem(50579, 1)
-						|| pc.getInventory().checkItem(50580, 1)
-						|| pc.getInventory().checkItem(50581, 1)
-						|| pc.getInventory().checkItem(50587, 1)
-						|| pc.getInventory().checkItem(50588, 1)
-						|| pc.getInventory().checkItem(50589, 1)) {
-					htmlid = "mopo4";
-				} else if (pc.getInventory().checkItem(40308, 9000)) {
-					pc.getInventory().consumeItem(40308, 9000);
-					L1ItemInstance item = pc.getInventory().storeItem(50581, 1);
-					item.startExpirationTimer(pc);
-					htmlid = "";
-				} else {
-					htmlid = "mopo5";
-				}
+				htmlid = getDwarfPotion(pc, 50581, 9000);
 			} else if (s.equalsIgnoreCase("d")) { // モポの契約書：エキス100本契約
-				if (pc.getInventory().checkItem(50582, 1)
-						|| pc.getInventory().checkItem(50583, 1)
-						|| pc.getInventory().checkItem(50584, 1)
-						|| pc.getInventory().checkItem(50590, 1)
-						|| pc.getInventory().checkItem(50591, 1)
-						|| pc.getInventory().checkItem(50592, 1)) {
-					htmlid = "mopo4";
-				} else if (pc.getInventory().checkItem(40308, 3000)) {
-					pc.getInventory().consumeItem(40308, 3000);
-					L1ItemInstance item = pc.getInventory().storeItem(50582, 1);
-					item.startExpirationTimer(pc);
-					htmlid = "";
-				} else {
-					htmlid = "mopo5";
-				}
+				htmlid = getDwarfPotion(pc, 50582, 3000);
 			} else if (s.equalsIgnoreCase("e")) { // モポの契約書：エキス200本契約
-				if (pc.getInventory().checkItem(50582, 1)
-						|| pc.getInventory().checkItem(50583, 1)
-						|| pc.getInventory().checkItem(50584, 1)
-						|| pc.getInventory().checkItem(50590, 1)
-						|| pc.getInventory().checkItem(50591, 1)
-						|| pc.getInventory().checkItem(50592, 1)) {
-					htmlid = "mopo4";
-				} else if (pc.getInventory().checkItem(40308, 6000)) {
-					pc.getInventory().consumeItem(40308, 6000);
-					L1ItemInstance item = pc.getInventory().storeItem(50583, 1);
-					item.startExpirationTimer(pc);
-					htmlid = "";
-				} else {
-					htmlid = "mopo5";
-				}
+				htmlid = getDwarfPotion(pc, 50583, 6000);
 			} else if (s.equalsIgnoreCase("f")) { // モポの契約書：エキス300本契約
-				if (pc.getInventory().checkItem(50582, 1)
-						|| pc.getInventory().checkItem(50583, 1)
-						|| pc.getInventory().checkItem(50584, 1)
-						|| pc.getInventory().checkItem(50590, 1)
-						|| pc.getInventory().checkItem(50591, 1)
-						|| pc.getInventory().checkItem(50592, 1)) {
-					htmlid = "mopo4";
-				} else if (pc.getInventory().checkItem(40308, 9000)) {
-					pc.getInventory().consumeItem(40308, 9000);
-					L1ItemInstance item = pc.getInventory().storeItem(50584, 1);
-					item.startExpirationTimer(pc);
-					htmlid = "";
-				} else {
-					htmlid = "mopo5";
-				}
+				htmlid = getDwarfPotion(pc, 50584, 9000);
 			}
 		// 強化ウィザード
 		} else if ((((L1NpcInstance) obj).getNpcTemplate().getNpcId() >= 81352)
@@ -6659,6 +6613,9 @@ public class C_NpcAction extends ClientBasePacket {
 				if (pc.getInventory().checkItem(id)) {
 					pc.getInventory().consumeItem(id, 1);
 				}
+				if (pc.getAdditionalWarehouseInventory().checkItem(id)) {
+					pc.getAdditionalWarehouseInventory().consumeItem(id, 1);
+				}
 			}
 			htmlid = "";
 		}
@@ -6700,6 +6657,9 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 				if (pc.getInventory().checkItem(id)) {
 					pc.getInventory().consumeItem(id, 1);
+				}
+				if (pc.getAdditionalWarehouseInventory().checkItem(id)) {
+					pc.getAdditionalWarehouseInventory().consumeItem(id, 1);
 				}
 			}
 			htmlid = "";
@@ -7000,7 +6960,34 @@ public class C_NpcAction extends ClientBasePacket {
 
 		return result;
 	}
-
+	
+	private String getDwarfPotion(L1PcInstance pc, int itemId, int price) {
+		String htmlid = "";
+		
+		if (pc.getInventory().checkItem(50579, 1)
+				|| pc.getInventory().checkItem(50580, 1)
+				|| pc.getInventory().checkItem(50581, 1)
+				|| pc.getInventory().checkItem(50587, 1)
+				|| pc.getInventory().checkItem(50588, 1)
+				|| pc.getInventory().checkItem(50589, 1)
+				|| pc.getAdditionalWarehouseInventory().checkItem(50579, 1)
+				|| pc.getAdditionalWarehouseInventory().checkItem(50580, 1)
+				|| pc.getAdditionalWarehouseInventory().checkItem(50581, 1)
+				|| pc.getAdditionalWarehouseInventory().checkItem(50587, 1)
+				|| pc.getAdditionalWarehouseInventory().checkItem(50588, 1)
+				|| pc.getAdditionalWarehouseInventory().checkItem(50589, 1)) {
+			htmlid = "mopo4";
+		} else if (pc.getInventory().checkItem(40308, price)) {
+			pc.getInventory().consumeItem(40308, price);
+			L1ItemInstance item = pc.getInventory().storeItem(itemId, 1);
+			item.startExpirationTimer(pc);
+		} else {
+			htmlid = "mopo5";
+		}
+		
+		return htmlid;
+	}
+				
 	@Override
 	public String getType() {
 		return C_NPC_ACTION;

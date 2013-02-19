@@ -1209,21 +1209,29 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			} else if (npcid == 80055) { // ヤヒの補佐官
 				int amuletLevel = 0;
-				if (pc.getInventory().checkItem(20358)) { // 奴隷のアミュレット
+				if (pc.getInventory().checkItem(20358)
+						|| pc.getAdditionalWarehouseInventory().checkItem(20358)) { // 奴隷のアミュレット
 					amuletLevel = 1;
-				} else if (pc.getInventory().checkItem(20359)) { // 約束のアミュレット
+				} else if (pc.getInventory().checkItem(20359)
+						|| pc.getAdditionalWarehouseInventory().checkItem(20359)) { // 約束のアミュレット
 					amuletLevel = 2;
-				} else if (pc.getInventory().checkItem(20360)) { // 解放のアミュレット
+				} else if (pc.getInventory().checkItem(20360)
+						|| pc.getAdditionalWarehouseInventory().checkItem(20360)) { // 解放のアミュレット
 					amuletLevel = 3;
-				} else if (pc.getInventory().checkItem(20361)) { // 猟犬のアミュレット
+				} else if (pc.getInventory().checkItem(20361)
+						|| pc.getAdditionalWarehouseInventory().checkItem(20361)) { // 猟犬のアミュレット
 					amuletLevel = 4;
-				} else if (pc.getInventory().checkItem(20362)) { // 魔族のアミュレット
+				} else if (pc.getInventory().checkItem(20362)
+						|| pc.getAdditionalWarehouseInventory().checkItem(20362)) { // 魔族のアミュレット
 					amuletLevel = 5;
-				} else if (pc.getInventory().checkItem(20363)) { // 勇士のアミュレット
+				} else if (pc.getInventory().checkItem(20363)
+						|| pc.getAdditionalWarehouseInventory().checkItem(20363)) { // 勇士のアミュレット
 					amuletLevel = 6;
-				} else if (pc.getInventory().checkItem(20364)) { // 将軍のアミュレット
+				} else if (pc.getInventory().checkItem(20364)
+						|| pc.getAdditionalWarehouseInventory().checkItem(20364)) { // 将軍のアミュレット
 					amuletLevel = 7;
-				} else if (pc.getInventory().checkItem(20365)) { // 大将軍のアミュレット
+				} else if (pc.getInventory().checkItem(20365)
+						|| pc.getAdditionalWarehouseInventory().checkItem(20365)) { // 大将軍のアミュレット
 					amuletLevel = 8;
 				}
 				if (pc.getKarmaLevel() == -1) {
@@ -1297,21 +1305,29 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			} else if (npcid == 80071) { // バルログの補佐官
 				int earringLevel = 0;
-				if (pc.getInventory().checkItem(21020)) { // 踊躍のイアリング
+				if (pc.getInventory().checkItem(21020)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21020)) { // 踊躍のイアリング
 					earringLevel = 1;
-				} else if (pc.getInventory().checkItem(21021)) { // 双子のイアリング
+				} else if (pc.getInventory().checkItem(21021)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21021)) { // 双子のイアリング
 					earringLevel = 2;
-				} else if (pc.getInventory().checkItem(21022)) { // 友好のイアリング
+				} else if (pc.getInventory().checkItem(21022)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21022)) { // 友好のイアリング
 					earringLevel = 3;
-				} else if (pc.getInventory().checkItem(21023)) { // 極知のイアリング
+				} else if (pc.getInventory().checkItem(21023)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21023)) { // 極知のイアリング
 					earringLevel = 4;
-				} else if (pc.getInventory().checkItem(21024)) { // 暴走のイアリング
+				} else if (pc.getInventory().checkItem(21024)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21024)) { // 暴走のイアリング
 					earringLevel = 5;
-				} else if (pc.getInventory().checkItem(21025)) { // 従魔のイアリング
+				} else if (pc.getInventory().checkItem(21025)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21025)) { // 従魔のイアリング
 					earringLevel = 6;
-				} else if (pc.getInventory().checkItem(21026)) { // 血族のイアリング
+				} else if (pc.getInventory().checkItem(21026)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21026)) { // 血族のイアリング
 					earringLevel = 7;
-				} else if (pc.getInventory().checkItem(21027)) { // 奴隷のイアリング
+				} else if (pc.getInventory().checkItem(21027)
+						|| pc.getAdditionalWarehouseInventory().checkItem(21027)) { // 奴隷のイアリング
 					earringLevel = 8;
 				}
 				if (pc.getKarmaLevel() == 1) {
