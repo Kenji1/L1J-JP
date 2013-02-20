@@ -14,6 +14,7 @@
  */
 package jp.l1j.server.model.npc.action;
 
+import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1CastleLocation;
@@ -32,6 +33,7 @@ public class L1NpcTeleportAction extends L1NpcXmlAction {
 	private final int _y;
 	private final int _heading;
 	private final int _price;
+	private final int _itemId;
 	private final boolean _effect;
 
 	public L1NpcTeleportAction(Element element) {
@@ -47,6 +49,7 @@ public class L1NpcTeleportAction extends L1NpcXmlAction {
 		_heading = L1NpcXmlParser.getIntAttribute(element, "Heading", 5);
 
 		_price = L1NpcXmlParser.getIntAttribute(element, "Price", 0);
+		_itemId = L1NpcXmlParser.getIntAttribute(element, "ItemId", 40308);
 		_effect = L1NpcXmlParser.getBoolAttribute(element, "Effect", true);
 	}
 
@@ -57,12 +60,20 @@ public class L1NpcTeleportAction extends L1NpcXmlAction {
 			return true;
 		}
 
-		if (!customer.getInventory().checkItem(L1ItemId.ADENA, price)) {
-			customer.sendPackets(new S_ServerMessage(337, "$4")); // アデナが不足しています。
+		if (!customer.getInventory().checkItem(_itemId, price)) {
+			if (_itemId == L1ItemId.ADENA) {
+			customer.sendPackets(new S_ServerMessage(189)); // アデナが不足しています。
+			} else {
+				int itemCount = price - customer.getInventory()
+						.countItems(_itemId);
+				customer.sendPackets(new S_ServerMessage(337,ItemTable
+						.getInstance().getTemplate(_itemId).getName()
+						+ "(" + itemCount + ")")); // \f1%0が不足しています。
+			}
 			return false;
 		}
 
-		customer.getInventory().consumeItem(L1ItemId.ADENA, price);
+		customer.getInventory().consumeItem(_itemId, price);
 		return true;
 	}
 
