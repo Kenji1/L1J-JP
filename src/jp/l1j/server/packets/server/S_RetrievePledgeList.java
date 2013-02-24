@@ -37,13 +37,13 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 
 		if (pc.getInventory().getSize() < 180) {
 			int size = clan.getWarehouse().getSize();
+			if (size > 0) {
 				clan.setWarehouseUsingChar(pc.getId()); // クラン倉庫をロック
 				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
 				writeD(objid);
 				writeH(size);
 				writeC(5); // 血盟倉庫
-				for (Object itemObject : clan.getWarehouse()
-						.getItems()) {
+				for (Object itemObject : clan.getWarehouse().getItems()) {
 					L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
 					writeC(0);
@@ -53,7 +53,16 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
-				writeH(0x001e);
+				writeH(0x001e); // TODO 3.52C
+				
+				// TODO 3.53C 個人倉庫領取金額異常
+				// writeD(30); // アデナ30
+				// writeD(0x00000000);
+				// writeH(0x00);
+				// TODO 3.53C 個人倉庫領取金額異常
+			} else {
+				pc.sendPackets(new S_ServerMessage(1625));
+			}
 		} else {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一人のキャラクターが持って歩けるアイテムは最大180個までです。
 		}

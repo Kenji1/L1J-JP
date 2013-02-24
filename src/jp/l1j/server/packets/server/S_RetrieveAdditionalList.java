@@ -23,21 +23,31 @@ public class S_RetrieveAdditionalList extends ServerBasePacket {
 	public S_RetrieveAdditionalList(int objid, L1PcInstance pc) {
 		if (pc.getInventory().getSize() < 180) {
 			int size = pc.getAdditionalWarehouseInventory().getSize();
-			writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
-			writeD(objid);
-			writeH(size);
-			writeC(3); // 追加倉庫
-			for (Object itemObject : pc.getAdditionalWarehouseInventory().getItems()) {
-				L1ItemInstance item = (L1ItemInstance) itemObject;
-				writeD(item.getId());
-				writeC(0);
-				writeH(item.getGfxId());
-				writeC(item.getStatusForPacket());
-				writeD(item.getCount());
-				writeC(item.isIdentified() ? 1 : 0);
-				writeS(item.getViewName());
+			if (size > 0) {
+				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
+				writeD(objid);
+				writeH(size);
+				writeC(3); // 追加倉庫
+				for (Object itemObject : pc.getAdditionalWarehouseInventory().getItems()) {
+					L1ItemInstance item = (L1ItemInstance) itemObject;
+					writeD(item.getId());
+					writeC(0);
+					writeH(item.getGfxId());
+					writeC(item.getStatusForPacket());
+					writeD(item.getCount());
+					writeC(item.isIdentified() ? 1 : 0);
+					writeS(item.getViewName());
+				}
+				writeH(0x001e); // 3.52C
+				
+				// TODO 3.53C 個人倉庫領取金額異常
+				// writeD(30); // アデナ30
+				// writeD(0x00000000);
+				// writeH(0x00);
+				// TODO 3.53C 個人倉庫領取金額異常
+			} else {
+				pc.sendPackets(new S_ServerMessage(1625));
 			}
-			writeH(0x001e);
 		} else {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一人のキャラクターが持って歩けるアイテムは最大180個までです。
 		}

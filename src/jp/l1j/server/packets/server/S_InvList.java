@@ -38,6 +38,7 @@ public class S_InvList extends ServerBasePacket {
 
 		for (L1ItemInstance item : items) {
 			writeD(item.getId());
+			writeH(item.getItem().getItemDescId()); // TODO 3.53C
 			writeC(item.getItem().getUseType());
 			writeC(0);
 			writeH(item.getGfxId());
@@ -55,6 +56,12 @@ public class S_InvList extends ServerBasePacket {
 					writeC(b);
 				}
 			}
+			// TODO 3.53C start
+			writeC(10);
+			writeD(0);
+			writeD(0);
+			writeH(0);
+			// TODO 3.53C end
 		}
 	}
 

@@ -59,6 +59,11 @@ public class S_NewCharPacket extends ServerBasePacket {
 		// }
 		
 		writeD(pc.getSimpleBirthday());
+		
+		// 3.53c start
+		int code = pc.getLevel() ^ pc.getStr() ^ pc.getDex() ^ pc.getCon() ^ pc.getWis() ^ pc.getCha() ^ pc.getInt();
+		writeC(code & 0xFF);
+		// 3.53c end
 	}
 
 	@Override

@@ -34,6 +34,7 @@ public class S_AddItem extends ServerBasePacket {
 	public S_AddItem(L1ItemInstance item) {
 		writeC(Opcodes.S_OPCODE_ADDITEM);
 		writeD(item.getId());
+		writeH(item.getItem().getItemDescId()); // TODO 3.53C
 		writeC(item.getItem().getUseType());
 		writeC(0);
 		writeH(item.getGfxId());
@@ -51,6 +52,12 @@ public class S_AddItem extends ServerBasePacket {
 				writeC(b);
 			}
 		}
+		// TODO 3.53C start
+		writeC(10);
+		writeD(0);
+		writeD(0);
+		writeH(0);
+		// TODO 3.53C end
 	}
 
 	@Override

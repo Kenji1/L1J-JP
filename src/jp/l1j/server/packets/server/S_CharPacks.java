@@ -58,6 +58,11 @@ public class S_CharPacks extends ServerBasePacket {
 		// }
 		
 		writeD(birthday);
+		
+		// 3.53c start
+		int code = lv ^ str ^ dex ^ con ^ wis ^ cha ^ intel;
+		writeC(code & 0xFF);
+		// 3.53c end
 	}
 
 	@Override

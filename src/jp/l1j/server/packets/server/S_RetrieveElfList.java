@@ -23,21 +23,25 @@ public class S_RetrieveElfList extends ServerBasePacket {
 	public S_RetrieveElfList(int objid, L1PcInstance pc) {
 		if (pc.getInventory().getSize() < 180) {
 			int size = pc.getElfWarehouseInventory().getSize();
-			writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
-			writeD(objid);
-			writeH(size);
-			writeC(9); // エルフ倉庫
-			for (Object itemObject : pc.getElfWarehouseInventory().getItems()) {
-				L1ItemInstance item = (L1ItemInstance) itemObject;
-				writeD(item.getId());
-				writeC(0);
-				writeH(item.getGfxId());
-				writeC(item.getStatusForPacket());
-				writeD(item.getCount());
-				writeC(item.isIdentified() ? 1 : 0);
-				writeS(item.getViewName());
+			if (size > 0) {
+				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
+				writeD(objid);
+				writeH(size);
+				writeC(9); // エルフ倉庫
+				for (Object itemObject : pc.getElfWarehouseInventory().getItems()) {
+					L1ItemInstance item = (L1ItemInstance) itemObject;
+					writeD(item.getId());
+					writeC(0);
+					writeH(item.getGfxId());
+					writeC(item.getStatusForPacket());
+					writeD(item.getCount());
+					writeC(item.isIdentified() ? 1 : 0);
+					writeS(item.getViewName());
+				}
+				writeH(0x001e); // TODO 3.52C
+			} else {
+				pc.sendPackets(new S_ServerMessage(1625));
 			}
-			writeH(0x001e);
 		} else {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一人のキャラクターが持って歩けるアイテムは最大180個までです。
 		}

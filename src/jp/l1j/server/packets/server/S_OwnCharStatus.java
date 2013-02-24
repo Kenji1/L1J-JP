@@ -17,8 +17,8 @@ package jp.l1j.server.packets.server;
 
 import java.util.logging.Logger;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 // Referenced classes of package jp.l1j.server.serverpackets:
 // ServerBasePacket
@@ -67,6 +67,8 @@ public class S_OwnCharStatus extends ServerBasePacket {
 		writeC(pc.getWater());
 		writeC(pc.getWind());
 		writeC(pc.getEarth());
+		// writeD(pc.getMonsterKill()); // TODO 3.53C モンスター討伐数（未実装）
+		writeD(0); // とりあえず0を送信
 	}
 
 	@Override
