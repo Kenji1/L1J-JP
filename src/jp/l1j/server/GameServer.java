@@ -180,7 +180,7 @@ public class GameServer extends Thread {
 			puts("サーバーセッティング: サーバーソケット生成");
 
 			puts("┌───────────────────────────────┐");
-			puts("│                 L1J-JP 3.52C  For All User\t\t        │");
+			puts("│                 L1J-JP 3.60C  For All User\t\t        │");
 			puts("└───────────────────────────────┘" + "\n");
 
 			puts("  ■■■■〈サーバー設定〉■■■■");

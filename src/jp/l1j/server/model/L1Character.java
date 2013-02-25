@@ -1765,9 +1765,6 @@ public class L1Character extends L1Object {
 		if (hasSkillEffect(FREEZING_BLIZZARD)) {
 			return true;
 		}
-		if (hasSkillEffect(FREEZING_BREATH)) {
-			return true;
-		}
 		if (hasSkillEffect(EARTH_BIND)) {
 			return true;
 		}

@@ -1958,14 +1958,14 @@ public class L1PcInstance extends L1Character {
 		int er = 0;
 		if (isKnight()) {
 			er = getLevel() / 4; // ナイト
-		} else if (isCrown() || isElf()) {
-			er = getLevel() / 8; // 君主・エルフ
-		} else if (isDarkelf()) {
-			er = getLevel() / 6; // ダークエルフ
+		} else if (isElf()) {
+			er = getLevel() / 8; // エルフ
+		} else if (isCrown() || isDarkelf()) {
+			er = getLevel() / 6; // 君主・ダークエルフ
 		} else if (isWizard()) {
 			er = getLevel() / 10; // ウィザード
 		} else if (isDragonKnight()) {
-			er = getLevel() / 7; // ドラゴンナイト
+			er = getLevel() / 5; // ドラゴンナイト
 		} else if (isIllusionist()) {
 			er = getLevel() / 9; // イリュージョニスト
 		}
@@ -3341,8 +3341,8 @@ public class L1PcInstance extends L1Character {
 		int newBaseHitup = 0;
 		int newBaseBowHitup = 0;
 		if (isCrown()) { // プリ
-			newBaseHitup = getLevel() / 5;
-			newBaseBowHitup = getLevel() / 5;
+			newBaseHitup = getLevel() / 4;
+			newBaseBowHitup = getLevel() / 4;
 		} else if (isKnight()) { // ナイト
 			newBaseHitup = getLevel() / 3;
 			newBaseBowHitup = getLevel() / 3;
@@ -3358,6 +3358,9 @@ public class L1PcInstance extends L1Character {
 		} else if (isIllusionist()) { // イリュージョニスト
 			newBaseHitup = getLevel() / 5;
 			newBaseBowHitup = getLevel() / 5;
+		} else if (isWizard()) { // ウィザード
+			newBaseHitup = getLevel() / 8;
+			newBaseBowHitup = getLevel() / 8;
 		}
 		addHitup(newBaseHitup - _baseHitup);
 		addBowHitup(newBaseBowHitup - _baseBowHitup);
@@ -3445,12 +3448,12 @@ public class L1PcInstance extends L1Character {
 		/**
 		 * [50級以上]
 		 *
-		 * 目前點數 - 初始點數 = 人物應有等級 - 50 -> 人物應有等級 = 50 + (目前點數 - 初始點數)
+		 * 現在のレベル-最初のポイント=レベル-50->レベル=50+（現在のレベル-最初のポイント）
 		 */
 		int maxLevel = 1;
 
 		if (diff > 0) {
-			// 最高到99級:也就是?不支援轉生
+			// レベル99まで：転生はサポートしていません
 			maxLevel = Math.min(50 + diff, 99);
 		} else {
 			maxLevel = getLevel();

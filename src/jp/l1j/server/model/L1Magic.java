@@ -364,14 +364,14 @@ public class L1Magic {
 						|| skillId == WIND_SHACKLE || skillId == STRIKER_GALE
 						|| skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN
 						|| skillId == FOG_OF_SLEEPING || skillId == ICE_LANCE
-						|| skillId == FREEZING_BLIZZARD
-						|| skillId == FREEZING_BREATH
-						|| skillId == POLLUTE_WATER
-						|| skillId == ELEMENTAL_FALL_DOWN
-						|| skillId == RETURN_TO_NATURE || skillId == BONE_BREAK
+						|| skillId == FREEZING_BLIZZARD || skillId == POLLUTE_WATER
+						|| skillId == ELEMENTAL_FALL_DOWN || skillId == RETURN_TO_NATURE 
+						|| skillId == SHADOW_SLIP || skillId == FINAL_BURN
+						|| skillId == ARMOR_BREAK || skillId == BONE_BREAK
 						|| skillId == CONFUSION || skillId == MIND_BREAK
 						|| skillId == JOY_OF_PAIN || skillId == CURSE_POISON
 						|| skillId == CURSE_BLIND || skillId == GUARD_BRAKE
+						|| skillId == MAGMA_ARROW
 						|| skillId == RESIST_FEAR || skillId == HORROR_OF_DEATH
 						|| skillId == PHANTASM || skillId == PANIC) {
 					return false;
@@ -530,8 +530,8 @@ public class L1Magic {
 			if (_calcType == PC_PC || _calcType == NPC_PC) {
 				probability -= _targetPc.getResistHold();
 			}
-		} else if (skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN) {
-			// || skillId == BONE_BREAK) {
+		} else if (skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN
+			|| skillId == SHADOW_SLIP || skillId == BONE_BREAK) {
 			if (_calcType == PC_PC || _calcType == NPC_PC) {
 				probability -= 2 * _targetPc.getResistStun();
 			}
@@ -543,13 +543,11 @@ public class L1Magic {
 			if (_calcType == PC_PC || _calcType == NPC_PC) {
 				probability -= _targetPc.getResistSleep();
 			}
-		} else if (skillId == ICE_LANCE || skillId == FREEZING_BLIZZARD
-				|| skillId == FREEZING_BREATH) {
+		} else if (skillId == ICE_LANCE || skillId == FREEZING_BLIZZARD) {
 			if (_calcType == PC_PC || _calcType == NPC_PC) {
 				probability -= _targetPc.getResistFreeze();
 			}
-		} else if (skillId == CURSE_BLIND || skillId == DARKNESS
-				|| skillId == DARK_BLIND) {
+		} else if (skillId == CURSE_BLIND || skillId == DARKNESS) {
 			if (_calcType == PC_PC || _calcType == NPC_PC) {
 				probability -= _targetPc.getResistBlind();
 			}
@@ -693,7 +691,8 @@ public class L1Magic {
 		}
 		if (_targetPc.hasSkillEffect(DRAGON_SKIN)) {
 			//dmg -= 2;
-			dmg -= 3; // リニューアル後
+			//dmg -= 3;  リニューアル後
+			dmg -= 5; // キャラクターケアアップデート
 		}
 
 		if (_targetPc.hasSkillEffect(PATIENCE)) {

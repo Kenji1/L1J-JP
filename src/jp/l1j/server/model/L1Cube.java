@@ -93,9 +93,6 @@ public class L1Cube extends TimerTask {
 			if (_cha.hasSkillEffect(FREEZING_BLIZZARD)) {
 				return;
 			}
-			if (_cha.hasSkillEffect(FREEZING_BREATH)) {
-				return;
-			}
 			if (_cha.hasSkillEffect(EARTH_BIND)) {
 				return;
 			}
@@ -127,9 +124,6 @@ public class L1Cube extends TimerTask {
 				return;
 			}
 			if (_cha.hasSkillEffect(FREEZING_BLIZZARD)) {
-				return;
-			}
-			if (_cha.hasSkillEffect(FREEZING_BREATH)) {
 				return;
 			}
 			if (_cha.hasSkillEffect(EARTH_BIND)) {

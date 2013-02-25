@@ -305,24 +305,27 @@ class L1SkillStop {
 				pc.addDmgup(-10);
 				pc.addBowDmgup(-10);
 			}
-		} else if (skillId == INSIGHT) {//TODO 実装インサイト
+		} else if (skillId == INSIGHT) { // インサイト
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addStr(-1);//TODO 力量
-				pc.addCon(-1);//TODO 體質
-				pc.addDex(-1);//TODO 敏捷
-				pc.addWis(-1);//TODO 精神
-				pc.addInt(-1);//TODO 智力
+				pc.addStr(-1);
+				pc.addCon(-1);
+				pc.addDex(-1);
+				pc.addWis(-1);
+				pc.addInt(-1);
 			}
-		} else if (skillId == PANIC) {//TODO 実装パニック
+		} else if (skillId == PANIC) { // パニック
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addStr(1);//TODO 力量
-				pc.addCon(1);//TODO 體質
-				pc.addDex(1);//TODO 敏捷
-				pc.addWis(1);//TODO 精神
-				pc.addInt(1);//TODO 智力
+				pc.addStr(1);
+				pc.addCon(1);
+				pc.addDex(1);
+				pc.addWis(1);
+				pc.addInt(1);
 			}
+		} else if (skillId == BOUNCE_ATTACK) { // バウンスアタック
+			L1PcInstance pc = (L1PcInstance) cha;
+			pc.addHitup(-6);
 		}
 
 		// ****** 状態変化が解けた場合
@@ -341,7 +344,7 @@ class L1SkillStop {
 			}
 		} else if (skillId == ICE_LANCE // アイスランス
 				|| skillId == FREEZING_BLIZZARD // フリージングブリザード
-				|| skillId == FREEZING_BREATH) { // フリージングブレス
+				|| skillId == 90518) { // ゼブ レクイ雄 フリージングブレス
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Poison(pc.getId(), 0));
@@ -367,8 +370,9 @@ class L1SkillStop {
 				npc.broadcastPacket(new S_Poison(npc.getId(), 0));
 				npc.setParalyzed(false);
 			}
-		} else if (skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN) { // ショック
-			// スタン
+		} else if (skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN
+				|| skillId == SHADOW_SLIP || skillId == BONE_BREAK) {
+			// ショックスタン、シャドウスリップ、ボーンブレイク
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, false));

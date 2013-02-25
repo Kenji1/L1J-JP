@@ -24,6 +24,7 @@ import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.instance.L1PetInstance;
 import jp.l1j.server.model.instance.L1SummonInstance;
+import jp.l1j.server.model.poison.L1DamagePoison;
 import jp.l1j.server.model.skill.L1SkillUse;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
@@ -733,6 +734,26 @@ public class L1WeaponSkill {
 		}
 	}
 
+	public static double getVenomBlazeDamage(L1PcInstance pc, L1Character cha, L1ItemInstance weapon) {
+		// ベノムブレイズ
+		double dmg = 0;
+		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
+		int dex = pc.getDex();
+		int intel = pc.getInt();
+		int sp = pc.getSp();
+		if (_random.nextInt(100) + 1 <= chance) {
+			double bsk = 0;
+			if (pc.hasSkillEffect(BERSERKERS)) {
+				bsk = 0.2;
+			}
+			dmg = (intel + sp) * (2 + bsk) + _random.nextInt(intel + sp) * 2;
+			L1DamagePoison.doInfection(pc, cha, 3000, 5);
+			pc.sendPackets(new S_SkillSound(cha.getId(), 9359));
+			pc.broadcastPacket(new S_SkillSound(cha.getId(), 9359));
+		}
+	return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_EARTH);
+	}
+
 	public static void giveFettersEffect(L1PcInstance pc, L1Character cha) {
 		int fettersTime = 8000;
 		if (isFreeze(cha)) { // 凍結状態orカウンターマジック中
@@ -816,9 +837,6 @@ public class L1WeaponSkill {
 			return true;
 		}
 		if (cha.hasSkillEffect(FREEZING_BLIZZARD)) {
-			return true;
-		}
-		if (cha.hasSkillEffect(FREEZING_BREATH)) {
 			return true;
 		}
 		if (cha.hasSkillEffect(EARTH_BIND)) {
