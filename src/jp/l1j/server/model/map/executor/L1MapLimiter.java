@@ -58,7 +58,7 @@ public class L1MapLimiter implements Runnable  {
 	}
 
 	@XmlAccessorType(XmlAccessType.FIELD)
-	private static class Effect {
+	public static class Effect {
 		@XmlAttribute(name = "Time")
 		private int _time;
 
@@ -138,6 +138,10 @@ public class L1MapLimiter implements Runnable  {
 		return _effect;
 	}
 
+	public int getEnterTime() {
+		return _mapTimerTable.getEnterTime();
+	}
+	
 	public static void load() {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("loading map limiter...");

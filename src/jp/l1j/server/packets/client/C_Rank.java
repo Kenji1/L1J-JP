@@ -141,8 +141,10 @@ public class C_Rank extends ClientBasePacket {
 		} else if (data == 4) {
 			pc.sendPackets(new S_ServerMessage(74, "同盟脱退"));
 		} else if (data == 0x09){ // マップタイマーの残り時間を表示
-			pc.sendPackets(new S_PacketBox(S_PacketBox.DISPLAY_MAP_TIME , 180, 60, 120)); //未完成
-			// 左から順に、ギラン監獄、象牙の塔、ラスタバドダンジョンの残り時間
+			pc.sendPackets(new S_PacketBox(S_PacketBox.DISPLAY_MAP_TIME ,
+					pc.getEnterTime(53), // ギラン監獄
+					pc.getEnterTime(78), // 象牙の塔
+					pc.getEnterTime(451))); // ラスタバドダンジョン
 		} else {
 		}
 	}

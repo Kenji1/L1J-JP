@@ -18,6 +18,7 @@ package jp.l1j.server.model.instance;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Executors;
@@ -36,6 +37,7 @@ import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.DeathPenaltyTable;
 import jp.l1j.server.datatables.ExpTable;
 import jp.l1j.server.datatables.ItemTable;
+import jp.l1j.server.datatables.MapTimerTable;
 import jp.l1j.server.model.AcceleratorChecker;
 import jp.l1j.server.model.FafurionHydroEffect;
 import jp.l1j.server.model.HpRegeneration;
@@ -408,6 +410,26 @@ public class L1PcInstance extends L1Character {
 				_mapLimiterFuture = null;
 			}
 		}
+	}
+
+	// 時間制限付きマップの残り時間を取得
+	public int getEnterTime(int mapid) {
+		int time = 0;
+		L1MapLimiter limiter = getMapLimiter();
+		if (limiter != null && limiter.getMapId() == mapid) {
+			time = limiter.getEnterTime() / 60;
+		} else {
+			limiter = L1MapLimiter.get(mapid);
+			if (limiter != null) {	
+				MapTimerTable timer = MapTimerTable.find(getId(), limiter.getAreaId());
+				if (timer != null) {
+					time = timer.getEnterTime() / 60;
+				} else {
+					time = limiter.getEffect().getTime() / 60;
+				}
+			}
+		}
+		return time;
 	}
 
 	private static final long INTERVAL_AUTO_UPDATE = 300;
