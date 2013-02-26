@@ -67,8 +67,7 @@ public class S_OwnCharStatus extends ServerBasePacket {
 		writeC(pc.getWater());
 		writeC(pc.getWind());
 		writeC(pc.getEarth());
-		// writeD(pc.getMonsterKill()); // TODO 3.53C モンスター討伐数（未実装）
-		writeD(0); // とりあえず0を送信
+		writeD(pc.getMonsterKill()); // TODO 3.53C モンスター討伐数
 	}
 
 	@Override

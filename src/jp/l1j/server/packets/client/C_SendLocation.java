@@ -127,6 +127,14 @@ public class C_SendLocation extends ClientBasePacket {
 				}
 			}
 		}
+		// TODO 3.53C start
+		else if (type == 0x13) { // web center
+			// not yet
+		} else if (type == 0x2C) { // モンスター討伐数をリセット
+			L1PcInstance pc = client.getActiveChar();
+			pc.setMonsterKill(0);
+		}
+		// TODO 3.53C end
 	}
 
 	@Override

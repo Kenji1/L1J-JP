@@ -371,6 +371,7 @@ public class CalcExp {
 		}
 		pc.addLawful((int) (-lawful * Config.RATE_LA));
 		pc.addExp((int) (exp * blessOfAinBonus * calcExpBonusRate(pc)));
+		pc.addMonsterKill(1); // モンスター討伐数をインクリメント
 	}
 
 	private static void addExpPet(L1PetInstance pet, int exp) {

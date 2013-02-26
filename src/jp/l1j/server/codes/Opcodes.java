@@ -33,6 +33,8 @@ public class Opcodes {
 	public static final int C_OPCODE_CHANGEHEADING = 5;
 	/** 要求角色攻擊 */
 	public static final int C_OPCODE_ATTACK = 6;
+	/** TODO Add cash and items to warehouse */
+	public static final int C_OPCODE_OPTIONAL_WAREHOUSE = 8;
 	/** 要求查詢PK次數 */
 	public static final int C_OPCODE_CHECKPK = 10;
 	/** 要求使用廣播聊天頻道 */
