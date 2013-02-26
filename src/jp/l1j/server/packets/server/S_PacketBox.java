@@ -186,6 +186,9 @@ public class S_PacketBox extends ServerBasePacket {
 	/** アインハザードの祝福 **/
 	public static final int BLESS_OF_AIN = 82;
 	
+	/** マップタイマーの残り時間を表示 **/
+	public static final int DISPLAY_MAP_TIME = 159;
+	
 	public S_PacketBox(int subCode) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
@@ -342,7 +345,30 @@ public class S_PacketBox extends ServerBasePacket {
 			break;
 		}
 	}
-
+	
+	// TODO マップタイマーの残り時間を表示 start
+	public S_PacketBox(int subCode, int time1, int time2, int time3) {
+		   writeC(Opcodes.S_OPCODE_PACKETBOX);
+		   writeC(subCode);
+		   switch (subCode) {
+		   case DISPLAY_MAP_TIME :
+		    writeD(3);
+		    writeD(1);
+		    writeS("$12125"); // ギラン監獄
+		    writeD(time1);
+		    writeD(2);
+		    writeS("$6081"); // 象牙の塔
+		    writeD(time2);
+		    writeD(3);
+		    writeS("$12126"); // ラスタバド ダンジョン
+		    writeD(time3);
+		    break;
+		   default:
+		    break;
+		   }
+		  }
+	// TODO マップタイマーの残り時間を表示 end
+	
 	private void callSomething() {
 		Iterator<L1PcInstance> itr = L1World.getInstance().getAllPlayers().iterator();
 

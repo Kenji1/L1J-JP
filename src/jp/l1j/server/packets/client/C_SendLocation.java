@@ -21,6 +21,7 @@ import jp.l1j.server.ClientThread;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1DragonSlayer;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_SendLocation;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.utils.L1SpawnUtil;
@@ -128,7 +129,11 @@ public class C_SendLocation extends ClientBasePacket {
 			}
 		}
 		// TODO 3.53C start
-		else if (type == 0x13) { // web center
+		else if (type == 0x09){ // マップタイマーの残り時間を表示
+			L1PcInstance pc = client.getActiveChar();
+			pc.sendPackets(new S_PacketBox(S_PacketBox.DISPLAY_MAP_TIME , 180, 60, 120));// 未完成
+			// 左から順に、ギラン監獄、象牙の塔、ラスタバドダンジョンの残り時間
+		} else if (type == 0x13) { // web center
 			// not yet
 		} else if (type == 0x2C) { // モンスター討伐数をリセット
 			L1PcInstance pc = client.getActiveChar();
