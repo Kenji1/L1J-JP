@@ -19,9 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.CharacterTable;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_ServerMessage;
 
@@ -140,6 +140,9 @@ public class C_Rank extends ClientBasePacket {
 			pc.sendPackets(new S_ServerMessage(74, "同盟加入"));
 		} else if (data == 4) {
 			pc.sendPackets(new S_ServerMessage(74, "同盟脱退"));
+		} else if (data == 0x09){ // マップタイマーの残り時間を表示
+			pc.sendPackets(new S_PacketBox(S_PacketBox.DISPLAY_MAP_TIME , 180, 60, 120)); //未完成
+			// 左から順に、ギラン監獄、象牙の塔、ラスタバドダンジョンの残り時間
 		} else {
 		}
 	}

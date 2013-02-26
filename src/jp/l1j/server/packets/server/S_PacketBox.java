@@ -20,8 +20,8 @@ import java.util.TimeZone;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.templates.L1Account;
 
 /**
@@ -187,6 +187,7 @@ public class S_PacketBox extends ServerBasePacket {
 	public static final int BLESS_OF_AIN = 82;
 	
 	/** マップタイマーの残り時間を表示 **/
+	public static final int MAP_TIMER = 153;
 	public static final int DISPLAY_MAP_TIME = 159;
 	
 	public S_PacketBox(int subCode) {
@@ -218,6 +219,7 @@ public class S_PacketBox extends ServerBasePacket {
 		case ICON_CHATBAN:
 		case ICON_I2H:
 		case ICON_POLYMORPH:
+		case MAP_TIMER: // TODO 3.53C マップタイマー
 			writeH(value); // time
 			break;
 		case MSG_WAR_BEGIN:
@@ -348,25 +350,25 @@ public class S_PacketBox extends ServerBasePacket {
 	
 	// TODO マップタイマーの残り時間を表示 start
 	public S_PacketBox(int subCode, int time1, int time2, int time3) {
-		   writeC(Opcodes.S_OPCODE_PACKETBOX);
-		   writeC(subCode);
-		   switch (subCode) {
-		   case DISPLAY_MAP_TIME :
-		    writeD(3);
-		    writeD(1);
-		    writeS("$12125"); // ギラン監獄
-		    writeD(time1);
-		    writeD(2);
-		    writeS("$6081"); // 象牙の塔
-		    writeD(time2);
-		    writeD(3);
-		    writeS("$12126"); // ラスタバド ダンジョン
-		    writeD(time3);
-		    break;
-		   default:
-		    break;
-		   }
-		  }
+		writeC(Opcodes.S_OPCODE_PACKETBOX);
+		writeC(subCode);
+		switch (subCode) {
+		case DISPLAY_MAP_TIME :
+			writeD(3);
+			writeD(1);
+			writeS("$12125"); // ギラン監獄
+			writeD(time1);
+			writeD(2);
+			writeS("$6081"); // 象牙の塔
+			writeD(time2);
+			writeD(3);
+			writeS("$12126"); // ラスタバド ダンジョン
+			writeD(time3);
+			break;
+		default:
+			break;
+		}
+	}
 	// TODO マップタイマーの残り時間を表示 end
 	
 	private void callSomething() {
