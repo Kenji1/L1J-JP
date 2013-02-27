@@ -1,5 +1,5 @@
 /*
- * mapids.sql 作成スクリプト
+ * map_ids.sql 作成スクリプト
  */
 
 // Shellオブジェクトを作成
@@ -21,8 +21,8 @@ var zoneFile = fso.OpenTextFile(path + "\\zone3-j.tbl", ForReading);
 // info.java.txtファイルを取得
 var infoFile = fso.OpenTextFile(path + "\\info.java.txt", ForReading);
 
-// mapids.sqlファイルを取得
-var sqlFile = fso.OpenTextFile(path + "\\mapids.sql", ForWriting, TristateDefault);
+// map_ids.sqlファイルを取得
+var sqlFile = fso.OpenTextFile(path + "\\map_ids.sql", ForWriting, TristateDefault);
 
 // zoneファイルを読込
 var zone = WScript.CreateObject("Scripting.Dictionary");
@@ -38,8 +38,8 @@ while(!zoneFile.AtEndOfStream){
 	}
 }
 
-// mapids.sqlファイルを作成
-var format = "INSERT INTO `mapids` VALUES({0}, '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19});";
+// map_ids.sqlファイルを作成
+var format = "INSERT INTO `map_ids` VALUES({0}, '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19});";
 infoFile.SkipLine();
 while(!infoFile.AtEndOfStream){
 	var data = convert(infoFile.ReadLine()).split(" ");
