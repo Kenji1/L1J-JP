@@ -42,13 +42,27 @@ public class L1Awake {
 			return;
 		} else {
 			if (skillId == AWAKEN_ANTHARAS) { // 覚醒：アンタラス
-				pc.addResistBlind(10);
-				pc.addAc(3);
+				pc.addMaxHp(35);
+				pc.sendPackets(new S_HpUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+				if (pc.isInParty()) { // パーティー中
+					pc.getParty().updateMiniHP(pc);
+				}
+				pc.addAc(-8);
 			} else if (skillId == AWAKEN_FAFURION) { // 覚醒：パプリオン
-				pc.addResistFreeze(10);
+				pc.addMr(25);
+				pc.sendPackets(new S_SpMr(pc));
+				pc.addWind(15);
+				pc.addWater(15);
+				pc.addFire(15);
+				pc.addEarth(15);
+				pc.sendPackets(new S_OwnCharAttrDef(pc));
 			} else if (skillId == AWAKEN_VALAKAS) { // 覚醒：ヴァラカス
-				pc.addResistStun(10);
-				pc.addHitup(5);
+				pc.addStr(3);
+				pc.addCon(3);
+				pc.addDex(3);
+				pc.addCha(3);
+				pc.addInt(3);
+				pc.addWis(3);
 			}
 			pc.sendPackets(new S_OwnCharStatus(pc));
 			pc.setAwakeSkillId(skillId);
@@ -60,13 +74,27 @@ public class L1Awake {
 	public static void stop(L1PcInstance pc) {
 		int skillId = pc.getAwakeSkillId();
 		if (skillId == AWAKEN_ANTHARAS) { // 覚醒：アンタラス
-			pc.addResistBlind(-10);
-			pc.addAc(-3);
+			pc.addMaxHp(-35);
+			pc.sendPackets(new S_HpUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+			if (pc.isInParty()) { // パーティー中
+				pc.getParty().updateMiniHP(pc);
+			}
+			pc.addAc(8);
 		} else if (skillId == AWAKEN_FAFURION) { // 覚醒：パプリオン
-			pc.addResistFreeze(-10);
+			pc.addMr(-25);
+			pc.sendPackets(new S_SpMr(pc));
+			pc.addWind(-15);
+			pc.addWater(-15);
+			pc.addFire(-15);
+			pc.addEarth(-15);
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
 		} else if (skillId == AWAKEN_VALAKAS) { // 覚醒：ヴァラカス
-			pc.addResistStun(-10);
-			pc.addHitup(-5);
+			pc.addStr(-3);
+			pc.addCon(-3);
+			pc.addDex(-3);
+			pc.addCha(-3);
+			pc.addInt(-3);
+			pc.addWis(-3);
 		}
 		pc.sendPackets(new S_OwnCharStatus(pc));
 		pc.setAwakeSkillId(0);

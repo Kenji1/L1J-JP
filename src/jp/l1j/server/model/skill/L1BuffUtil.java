@@ -3,19 +3,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package jp.l1j.server.model.skill;
 
 import java.util.logging.Logger;
-
 import jp.l1j.server.model.instance.L1PcInstance;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_HpUpdate;
@@ -23,7 +22,6 @@ import jp.l1j.server.packets.server.S_Liquor;
 import jp.l1j.server.packets.server.S_MpUpdate;
 import jp.l1j.server.packets.server.S_OwnCharAttrDef;
 import jp.l1j.server.packets.server.S_OwnCharStatus2;
-import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SkillBrave;
 import jp.l1j.server.packets.server.S_SkillHaste;
 import jp.l1j.server.packets.server.S_SkillIconBloodstain;
@@ -80,17 +78,6 @@ public class L1BuffUtil {
 			pc.broadcastPacket(new S_SkillBrave(pc.getId(), 0, 0));
 			pc.setBraveSpeed(0);
 		}
-		if ((pc.hasSkillEffect(SHOCK_STUN )) || (pc.hasSkillEffect(MASS_SHOCK_STUN ))
-			|| (pc.hasSkillEffect(SHADOW_SLIP )) || (pc.hasSkillEffect(SMASH_ENERGY )))
-		{ // スタン系スキルは全て重複しない
-			pc.killSkillEffectTimer(SHOCK_STUN);
-			pc.killSkillEffectTimer(MASS_SHOCK_STUN);
-			pc.killSkillEffectTimer(SHADOW_SLIP);
-			pc.killSkillEffectTimer(SMASH_ENERGY);
-			pc.sendPackets(new S_SkillBrave(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillBrave(pc.getId(), 0, 0));
-			pc.setBraveSpeed(0);
-		}
 
 		pc.setSkillEffect(STATUS_BRAVE, timeMillis);
 
@@ -101,7 +88,7 @@ public class L1BuffUtil {
 		pc.broadcastPacket(new S_SkillSound(objId, 751));
 		pc.setBraveSpeed(1);
 	}
-
+	
 	public static void barrier(L1PcInstance pc, int timeMillis) {
 		pc.setSkillEffect(ABSOLUTE_BARRIER, timeMillis);
 		pc.stopHpRegeneration();
@@ -109,7 +96,7 @@ public class L1BuffUtil {
 		pc.stopHpRegenerationByDoll();
 		pc.stopMpRegenerationByDoll();
 	}
-
+	
 	public static void cancelBarrier(L1PcInstance pc) {
 		pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
 		pc.startHpRegeneration();
@@ -117,7 +104,7 @@ public class L1BuffUtil {
 		pc.startHpRegenerationByDoll();
 		pc.startMpRegenerationByDoll();
 	}
-
+	
 	public static void thirdSpeed(L1PcInstance pc) {
 		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
 			pc.killSkillEffectTimer(STATUS_THIRD_SPEED);
@@ -127,7 +114,7 @@ public class L1BuffUtil {
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), 8031));
 		pc.sendPackets(new S_Liquor(pc.getId(), 8));
 		pc.broadcastPacket(new S_Liquor(pc.getId(), 8));
-		pc.sendPackets(new S_ServerMessage(1065));
+		//pc.sendPackets(new S_ServerMessage(1065));
 	}
 
 	public static void bloodstain(L1PcInstance pc, byte type, int time,

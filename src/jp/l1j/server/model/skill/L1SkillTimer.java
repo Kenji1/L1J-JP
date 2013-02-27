@@ -323,9 +323,6 @@ class L1SkillStop {
 				pc.addWis(1);
 				pc.addInt(1);
 			}
-		} else if (skillId == BOUNCE_ATTACK) { // バウンスアタック
-			L1PcInstance pc = (L1PcInstance) cha;
-			pc.addHitup(-6);
 		}
 
 		// ****** 状態変化が解けた場合
@@ -344,7 +341,7 @@ class L1SkillStop {
 			}
 		} else if (skillId == ICE_LANCE // アイスランス
 				|| skillId == FREEZING_BLIZZARD // フリージングブリザード
-				|| skillId == 90518) { // ゼブ レクイ雄 フリージングブレス
+				|| skillId == FREEZING_BREATH) { // フリージングブレス
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Poison(pc.getId(), 0));
@@ -370,9 +367,8 @@ class L1SkillStop {
 				npc.broadcastPacket(new S_Poison(npc.getId(), 0));
 				npc.setParalyzed(false);
 			}
-		} else if (skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN
-				|| skillId == SHADOW_SLIP || skillId == BONE_BREAK) {
-			// ショックスタン、シャドウスリップ、ボーンブレイク
+		} else if (skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN) { // ショック
+			// スタン
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, false));

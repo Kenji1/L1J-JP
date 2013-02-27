@@ -991,6 +991,8 @@ public class L1Attack {
 			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
+		} else if (_weaponId == 707) { //破壊のロングボウ
+			L1WeaponSkill.getVenomBlazeDamage(_pc, _targetPc, _arrow);
 		} else if (_weaponType2 != 14) { // キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
 		}
@@ -1006,7 +1008,7 @@ public class L1Attack {
 		}
 
 		if (_weaponType2 != 14
-				&& (_skillId == BONE_BREAK || _skillId == SMASH_ENERGY)) {
+				&& (_skillId == BONE_BREAK || _skillId == SMASH || _skillId == ARM_BREAKER)) {
 			dmg += _skillDamage;
 		}
 
@@ -1053,6 +1055,14 @@ public class L1Attack {
 			}
 		}
 
+		if (_pc.hasSkillEffect(ARM_BREAKER)) { // ＰＣがアームブレイカ—中。
+			dmg -= 5;
+		}
+
+		if (_pc.hasSkillEffect(ARM_BREAKER)) { // ＰＣがアームブレイカ—中。
+			dmg -= 5;
+		}
+
 		dmg -= _targetPc.getDamageReductionByArmor(); // 防具によるダメージ軽減
 
 		// TODO マジックドール效果 - ダメージリダクション
@@ -1074,12 +1084,7 @@ public class L1Attack {
 			}
 			dmg -= (targetPcLvl - 50) / 5 + 1;
 		}
-		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
-			boolean isJudgment = _magic.calcProbabilityMagic(ARMOR_BREAK);
-			if (isJudgment) {
-				dmg *= 1.53; // 対象の被ダメージ53%増加
-			}
-		}
+
 		if (_targetPc.hasSkillEffect(DRAGON_SKIN)) {
 			//dmg -= 2;
 			//dmg -= 3;  リニューアル後
@@ -1256,6 +1261,8 @@ public class L1Attack {
 			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
+		} else if (_weaponId == 707) { //破壊のロングボウ
+			L1WeaponSkill.getVenomBlazeDamage(_pc, _targetPc, _arrow);
 		} else if (_weaponType2 != 14) { // キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
 		}
@@ -1271,7 +1278,7 @@ public class L1Attack {
 		}
 
 		if (_weaponType2 != 14
-				&& (_skillId == BONE_BREAK || _skillId == SMASH_ENERGY)) {
+				&& (_skillId == BONE_BREAK || _skillId == SMASH || _skillId == ARM_BREAKER)) {
 			dmg += _skillDamage;
 		}
 
@@ -1316,6 +1323,10 @@ public class L1Attack {
 			if (_damageChance <= 10) {
 				dmg += 2;
 			}
+		}
+
+		if (_pc.hasSkillEffect(ARM_BREAKER)) { // ＰＣがアームブレイカ—中。
+			dmg -= 5;
 		}
 
 		dmg -= calcNpcDamageReduction();
@@ -1412,6 +1423,10 @@ public class L1Attack {
 			dmg /= 2;
 		}
 
+		if (_npc.hasSkillEffect(ARM_BREAKER)) { // ＮＰＣがアームブレイカ—中。
+			dmg -= 5;
+		}
+
 		dmg -= _targetPc.getDamageReductionByArmor(); // 防具によるダメージ軽減
 
 		// TODO マジックドール效果 - ダメージリダクション
@@ -1433,12 +1448,7 @@ public class L1Attack {
 			}
 			dmg -= (targetPcLvl - 50) / 5 + 1;
 		}
-		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
-			boolean isJudgment = _magic.calcProbabilityMagic(ARMOR_BREAK);
-			if (isJudgment) {
-				dmg *= 1.53; // 対象の被ダメージ53%増加
-			}
-		}
+
 		if (_targetPc.hasSkillEffect(DRAGON_SKIN)) {
 			//dmg -= 2;
 			//dmg -= 3;  リニューアル後
@@ -1506,11 +1516,8 @@ public class L1Attack {
 		if (_npc.isWeaponBreaked()) { // ＮＰＣがウェポンブレイク中。
 			dmg /= 2;
 		}
-		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
-			boolean isJudgment = _magic.calcProbabilityMagic(ARMOR_BREAK);
-			if (isJudgment) {
-				dmg *= 1.53; // 対象の被ダメージ53%増加
-			}
+		if (_npc.hasSkillEffect(ARM_BREAKER)) { // ＮＰＣがアームブレイカ—中。
+			dmg -= 5;
 		}
 
 		addNpcPoisonAttack(_npc, _targetNpc);
