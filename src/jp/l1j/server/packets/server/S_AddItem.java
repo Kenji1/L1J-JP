@@ -34,9 +34,47 @@ public class S_AddItem extends ServerBasePacket {
 	public S_AddItem(L1ItemInstance item) {
 		writeC(Opcodes.S_OPCODE_ADDITEM);
 		writeD(item.getId());
-		writeH(item.getItem().getItemDescId()); // TODO 3.53C
-		writeC(item.getItem().getUseType());
-		writeC(0);
+		//writeH(item.getItem().getItemDescId()); // TODO 3.53C
+		//writeC(item.getItem().getUseType());
+		//writeC(0);
+		switch (item.getItem().getItemId()) {
+		  case 40318: // 魔力の石
+		   writeH(166); // 材料によるアイコンパッケージ
+		   break;
+		  case 40319: // 精霊の玉
+		   writeH(569);
+		   break;
+		  case 40321: // ダーク ストーン
+		   writeH(837);
+		   break;
+		  case 49158: // ユグドラの実
+		   writeH(3674);
+		   break;
+		  case 49157: // 刻印のボーンピース
+		   writeH(3605);
+		   break;
+		  case 49156: // 属性石
+		   writeH(3606);
+		   break;
+		  default:
+		   writeH(0); // 3.53c
+		   break;
+		  }
+		  int type = item.getItem().getUseType();
+		  if (type < 0){
+		   type = 0;}
+		  if (type == 96 || type >= 98){
+		   writeC(26);
+		  } else if (type == 97){
+		   writeC(27);
+		  } else {
+		   writeC(type);
+		  }
+		  if (item.getChargeCount() > 0) {
+		   writeC(item.getChargeCount());
+		  } else {
+		   writeC(0x00);
+		  }
 		writeH(item.getGfxId());
 		writeC(item.getStatusForPacket());
 		writeD(item.getCount());
