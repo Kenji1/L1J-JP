@@ -522,7 +522,22 @@ public class L1NpcInstance extends L1Character {
 		}
 
 		boolean isCounterBarrier = false;
+		boolean isStormBarrier = false;
+		L1PcInstance pc = _pc;
 		L1Attack attack = new L1Attack(this, target);
+		if (target instanceof L1PcInstance) {
+			int rnd = _random.nextInt(100) + 1;
+			if (target.getInventory().checkEquipped(21180)	// リンドビオルストームシリーズ
+				|| target.getInventory().checkEquipped(21181)
+				|| target.getInventory().checkEquipped(21182)
+				|| target.getInventory().checkEquipped(21183)) {
+				boolean isStormProbability = (rnd <= 8); // 8%の確率
+				boolean isLongDistance = attack.isLongDistance();
+				if (isStormProbability && isLongDistance) {
+					isStormBarrier = true;
+				}
+			}
+		}
 		if (attack.calcHit()) {
 			if (target.hasSkillEffect(COUNTER_BARRIER)) {
 				L1Magic magic = new L1Magic(target, this);
@@ -533,8 +548,10 @@ public class L1NpcInstance extends L1Character {
 					isCounterBarrier = true;
 				}
 			}
-			if (!isCounterBarrier) {
+			if (!isCounterBarrier || !isStormBarrier) {
 				attack.calcDamage();
+			} else {
+					attack.calcDamage();
 			}
 			// 目標-案山子
 			if (target instanceof L1ScarecrowInstance) {
@@ -549,6 +566,10 @@ public class L1NpcInstance extends L1Character {
 		if (isCounterBarrier) {
 			attack.actionCounterBarrier();
 			attack.commitCounterBarrier();
+		}
+		if (isStormBarrier) {
+			attack.actionStormBarrier();
+			attack.commitStormBarrier();
 		} else {
 			attack.action();
 			attack.commit();

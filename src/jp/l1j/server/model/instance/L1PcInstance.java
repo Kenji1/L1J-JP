@@ -1100,30 +1100,44 @@ public class L1PcInstance extends L1Character {
 			attacker.delInvis();
 
 			boolean isCounterBarrier = false;
-			L1Attack attack = new L1Attack(attacker, this, skillId);
-			if (attack.calcHit()) {
-				if (hasSkillEffect(COUNTER_BARRIER)) {
-					L1Magic magic = new L1Magic(this, attacker);
-					boolean isProbability = magic
-							.calcProbabilityMagic(COUNTER_BARRIER);
-					boolean isShortDistance = attack.isShortDistance();
-					if (isProbability && isShortDistance) {
-						isCounterBarrier = true;
+			boolean isStormBarrier = false;
+			int rnd = _random.nextInt(100) + 1;
+			L1Attack attack = new L1Attack(attacker, this);
+				if (this.getInventory().checkEquipped(21180) // リンドビオルストームシリーズ
+					|| this.getInventory().checkEquipped(21181)
+					|| this.getInventory().checkEquipped(21182)
+					|| this.getInventory().checkEquipped(21183)) {
+					boolean isStormProbability = (rnd <= 8); // 8%の確率
+					boolean isLongDistance = attack.isLongDistance();
+					if (isStormProbability && isLongDistance) {
+						isStormBarrier = true;
 					}
 				}
-				if (!isCounterBarrier) {
-					attacker.setPetTarget(this);
-
-					attack.calcDamage();
-					attack.calcStaffOfMana();
-					attack.addPcPoisonAttack(attacker, this);
-					attack.addChaserAttack();
-					attack.addEvilAttack();
-				}
-			}
+				if (attack.calcHit()) {
+					if (hasSkillEffect(COUNTER_BARRIER)) {
+						L1Magic magic = new L1Magic(this, attacker);
+						boolean isProbability = magic
+								.calcProbabilityMagic(COUNTER_BARRIER);
+						boolean isShortDistance = attack.isShortDistance();
+						if (isProbability && isShortDistance) {
+							isCounterBarrier = true;
+						}
+					}
+					if (!isCounterBarrier || !isStormBarrier) {
+						attacker.setPetTarget(this);
+						attack.calcDamage();
+						attack.calcStaffOfMana();
+						attack.addPcPoisonAttack(attacker, this);
+						attack.addChaserAttack();
+						attack.addEvilAttack();
+					}
 			if (isCounterBarrier) {
 				attack.actionCounterBarrier();
 				attack.commitCounterBarrier();
+			}
+			if (isStormBarrier) {
+				attack.actionStormBarrier();
+				attack.commitStormBarrier();
 			} else {
 				attack.action();
 				attack.commit();
