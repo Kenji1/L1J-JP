@@ -487,8 +487,7 @@ public class L1Attack {
 		}
 
 		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理による追加命中
-				|| _pc.hasSkillEffect(COOKING_2_0_S)
-				|| _pc.hasSkillEffect(NEW_COOKING_4_1)) {
+				|| _pc.hasSkillEffect(COOKING_2_0_S)) {
 			if (_weaponType != 20 && _weaponType != 62) {
 				_hitRate += 1;
 			}
@@ -502,8 +501,7 @@ public class L1Attack {
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理による追加命中
 				|| _pc.hasSkillEffect(COOKING_2_3_S)
 				|| _pc.hasSkillEffect(COOKING_3_0_N)
-				|| _pc.hasSkillEffect(COOKING_3_0_S)
-				|| _pc.hasSkillEffect(NEW_COOKING_4_2)) {
+				|| _pc.hasSkillEffect(COOKING_3_0_S)) {
 			if (_weaponType == 20 || _weaponType == 62) {
 				_hitRate += 1;
 			}
@@ -666,8 +664,7 @@ public class L1Attack {
 		}
 
 		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理による追加命中
-				|| _pc.hasSkillEffect(COOKING_2_0_S)
-				|| _pc.hasSkillEffect(NEW_COOKING_4_1)) {
+				|| _pc.hasSkillEffect(COOKING_2_0_S)) {
 			if (_weaponType != 20 && _weaponType != 62) {
 				_hitRate += 1;
 			}
@@ -681,8 +678,7 @@ public class L1Attack {
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理による追加命中
 				|| _pc.hasSkillEffect(COOKING_2_3_S)
 				|| _pc.hasSkillEffect(COOKING_3_0_N)
-				|| _pc.hasSkillEffect(COOKING_3_0_S)
-				|| _pc.hasSkillEffect(NEW_COOKING_4_2)) {
+				|| _pc.hasSkillEffect(COOKING_3_0_S)) {
 			if (_weaponType == 20 || _weaponType == 62) {
 				_hitRate += 1;
 			}
@@ -936,7 +932,6 @@ public class L1Attack {
 			_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 3398));
 		}
 
-		weaponTotalDamage += calcPcPcAttrDamage(); // 属性強化ダメージボーナス
 		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
 				&& (_weaponType == 54 || _weaponType == 58)) {
 			if ((_random.nextInt(100) + 1) <= 33) {
@@ -944,18 +939,7 @@ public class L1Attack {
 			}
 		}
 
-		if (_weaponId == 262 || _weaponId == 312 || _weaponId == 712  && _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率
-			// (暫定)75%
-			weaponTotalDamage += calcDestruction(weaponTotalDamage);
-		}
-
-		if (_weaponId == 702  && _random.nextInt(100) + 1 <= 70) {
-			// 極寒のチェーンソード装備かつ成功確率 (暫定)70%
-			weaponTotalDamage += calcDestruction(weaponTotalDamage);
-		}
-
-		if (_weaponId == 100501 ||_weaponId == 100502 ||_weaponId == 100503 && _random.nextInt(100) + 1 <= 75) {
-			// オリジナルアルティメット武器の装備かつ成功確率
+		if (_weaponId == 262 && _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率
 			// (暫定)75%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
@@ -990,43 +974,25 @@ public class L1Attack {
 		dmg = calcBuffDamage(dmg);
 
 		if (_weaponId == 124) { // バフォメットスタッフ
-			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _targetPc);
+			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		} else if (_weaponId == 2 || _weaponId == 200002) { // ダイスダガー
 			dmg = L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
 		} else if (_weaponId == 204 || _weaponId == 100204) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetPc);
-		} else if (_weaponId == 260) { // レイジングウィンド
-			dmg += L1WeaponSkill.getRagingWindDamage(_pc, _targetPc, weapon);
 		} else if (_weaponId == 264) { // ライトニングエッジ
-			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _targetPc, weapon);
-		} else if (_weaponId == 263) { // フリージングランサー
-			dmg += L1WeaponSkill.getFreezingLancerDamage(_pc, _targetPc, weapon);
-		} else if (_weaponId == 261) { // エンジェルスタッフ
-			L1WeaponSkill.giveAngelStaffTurnUndead(_pc, _targetPc, weapon);
+			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target);
+		} else if (_weaponId == 260 || _weaponId == 263) { // レイジングウィンド、フリージングランサー
+			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
+					_weaponId);
+		} else if (_weaponId == 261) { // アークメイジスタッフ
+			L1WeaponSkill.giveArkMageDiseaseEffect(_pc, _target);
 		} else if (_weaponId == 276 || _weaponId == 277 || _weaponId == 278
 				|| _weaponId == 279 || _weaponId == 280 || _weaponId == 281) { // マリスエレメント武器
-			L1WeaponSkill.getMaliceWeaponDamage(_pc, _targetPc, weapon);
-		} else {
-			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
-		}
-		if ((_weaponId == 701 || _weaponId == 702)) { //極寒シリーズ
-			L1WeaponSkill.getIceWeaponDamage(_pc, _targetPc, weapon);
-		} else if (_weaponId == 121 || _weaponId == 703) { //アイスクイーンスタッフ
-			L1WeaponSkill.getIceQueenStaffDamage(_pc, _targetPc, weapon);
-		} else if (_weaponId == 704) { //2012リニューアルウェポン
-			L1WeaponSkill.getAngelSlayerWeaponDamage(_pc, _targetPc, weapon);
+			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
 		} else if (_weaponId == 707) { //破壊のロングボウ
 			L1WeaponSkill.getVenomBlazeDamage(_pc, _targetPc, _arrow);
-		} else if (_weaponId >= 712 && _weaponId <=719 ) { // 英雄シリーズ
-			L1WeaponSkill.getHeroicWeaponDamage(_pc, _target, weapon);
-		} else if (_weaponId >= 721 && _weaponId <= 727) { //2012Halloween武器
-			L1WeaponSkill.getHalloweenWeaponDamage(_pc, _targetPc, weapon);
-		} else if (_weaponId == 15) { //カーツソード リニューアル
-			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
-		} else if (_weaponId == 203) { // バルログのツーハンド ソード
-			L1WeaponSkill.getBarlogTwoHandSwordDamage(_pc, _target, weapon);
 		} else if (_weaponType2 != 14) {
 			// キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
@@ -1073,24 +1039,12 @@ public class L1Attack {
 			}
 		}
 
-		if (_pc.hasSkillEffect(NEW_COOKING_4_1)) { // 料理による追加ダメージ
-			if (_weaponType != 20 && _weaponType != 62) {
-				dmg += 2;
-			}
-		}
-
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理による追加ダメージ
 				|| _pc.hasSkillEffect(COOKING_2_3_S)
 				|| _pc.hasSkillEffect(COOKING_3_0_N)
 				|| _pc.hasSkillEffect(COOKING_3_0_S)) {
 			if (_weaponType == 20 || _weaponType == 62) {
 				dmg += 1;
-			}
-		}
-
-		if (_pc.hasSkillEffect(NEW_COOKING_4_2)) { // 料理による追加ダメージ
-			if (_weaponType == 20 && _weaponType == 62) {
-				dmg += 2;
 			}
 		}
 
@@ -1113,10 +1067,6 @@ public class L1Attack {
 
 		if (_targetPc.isCookingReduction()) { // 幻想料理によるダメージ軽減
 			dmg -= 5;
-		}
-
-		if (_targetPc.isCookingReduction2()) { // リニューアル幻想料理によるダメージ軽減
-			dmg -= 2;
 		}
 
 		if (_targetPc.hasSkillEffect(COOKING_1_7_S) // デザートによるダメージ軽減
@@ -1187,111 +1137,8 @@ public class L1Attack {
 				_targetPc.receiveDamage(_pc, damage, false);
 				_pc.setCurrentHp(_pc.getCurrentHp() + damage);
 		}
-		if (L1MagicDoll.getEffectByDoll(_pc, BLUEREG_WATER) == BLUEREG_WATER) {
-			L1Skill l1skills = SkillTable.getInstance().findBySkillId(
-					BLUEREG_WATER); // ブルレグ水属性攻撃
-			L1Magic magic = new L1Magic(_pc, _targetPc);
 
-			_pc.sendPackets(new S_SkillSound(_targetPc.getId(), l1skills
-					.getCastGfx()));
-			_pc.broadcastPacket(new S_SkillSound(_targetPc.getId(), l1skills
-					.getCastGfx()));
-
-			int damage = magic.calcMagicDamage(l1skills.getSkillId());
-			_targetPc.sendPackets(new S_DoActionGFX(_targetPc.getId(),
-					ActionCodes.ACTION_Damage));
-			_targetPc.broadcastPacket(new S_DoActionGFX(
-					_targetPc.getId(), ActionCodes.ACTION_Damage));
-			_targetPc.removeSkillEffect(ERASE_MAGIC); // イレースマジック中なら、攻撃魔法で解除
-			_targetPc.receiveDamage(_pc, damage, false);
-			_pc.setCurrentHp(_pc.getCurrentHp() + damage);
-		}
-		if (L1MagicDoll.getEffectByDoll(_pc, REDEG_FIRE) == REDEG_FIRE) {
-			L1Skill l1skills = SkillTable.getInstance().findBySkillId(
-					REDEG_FIRE); // レディグ火属性攻撃
-			L1Magic magic = new L1Magic(_pc, _targetPc);
-
-			_pc.sendPackets(new S_SkillSound(_targetPc.getId(), l1skills
-					.getCastGfx()));
-			_pc.broadcastPacket(new S_SkillSound(_targetPc.getId(), l1skills
-					.getCastGfx()));
-
-			int damage = magic.calcMagicDamage(l1skills.getSkillId());
-			_targetPc.sendPackets(new S_DoActionGFX(_targetPc.getId(),
-					ActionCodes.ACTION_Damage));
-			_targetPc.broadcastPacket(new S_DoActionGFX(
-					_targetPc.getId(), ActionCodes.ACTION_Damage));
-			_targetPc.removeSkillEffect(ERASE_MAGIC); // イレースマジック中なら、攻撃魔法で解除
-			_targetPc.receiveDamage(_pc, damage, false);
-			_pc.setCurrentHp(_pc.getCurrentHp() + damage);
-		}
-		if (L1MagicDoll.getEffectByDoll(_pc, YELLREG_EARTH) == YELLREG_EARTH) {
-			L1Skill l1skills = SkillTable.getInstance().findBySkillId(
-					YELLREG_EARTH); // エルレグ水属性攻撃
-			L1Magic magic = new L1Magic(_pc, _targetPc);
-
-			_pc.sendPackets(new S_SkillSound(_targetPc.getId(), l1skills
-					.getCastGfx()));
-			_pc.broadcastPacket(new S_SkillSound(_targetPc.getId(), l1skills
-					.getCastGfx()));
-
-			int damage = magic.calcMagicDamage(l1skills.getSkillId());
-			_targetPc.sendPackets(new S_DoActionGFX(_targetPc.getId(),
-					ActionCodes.ACTION_Damage));
-			_targetPc.broadcastPacket(new S_DoActionGFX(
-					_targetPc.getId(), ActionCodes.ACTION_Damage));
-			_targetPc.removeSkillEffect(ERASE_MAGIC); // イレースマジック中なら、攻撃魔法で解除
-			_targetPc.receiveDamage(_pc, damage, false);
-			_pc.setCurrentHp(_pc.getCurrentHp() + damage);
-		}
-		if (L1MagicDoll.getEffectByDoll(_pc, GREREG_WIND) == GREREG_WIND) {
-			L1Skill l1skills = SkillTable.getInstance().findBySkillId(
-					GREREG_WIND); // グレッグ風属性攻撃
-			L1Magic magic = new L1Magic(_pc, _targetPc);
-
-			_pc.sendPackets(new S_SkillSound(_targetPc.getId(), l1skills
-					.getCastGfx()));
-			_pc.broadcastPacket(new S_SkillSound(_targetPc.getId(), l1skills
-					.getCastGfx()));
-
-			int damage = magic.calcMagicDamage(l1skills.getSkillId());
-			_targetPc.sendPackets(new S_DoActionGFX(_targetPc.getId(),
-					ActionCodes.ACTION_Damage));
-			_targetPc.broadcastPacket(new S_DoActionGFX(
-					_targetPc.getId(), ActionCodes.ACTION_Damage));
-			_targetPc.removeSkillEffect(ERASE_MAGIC); // イレースマジック中なら、攻撃魔法で解除
-			_targetPc.receiveDamage(_pc, damage, false);
-			_pc.setCurrentHp(_pc.getCurrentHp() + damage);
-		}
 		return (int) dmg;
-	}
-	private int calcPcPcAttrDamage() {
-
-		int weaponAttrDamage = 0;
-
-		calcAttrEnchantDmg(); // 属性強化ダメージボーナス
-		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
-				&& (_weaponType == 54 || _weaponType == 58)) {
-			if ((_random.nextInt(100) + 1) <= 33) {
-				weaponAttrDamage *= 2;
-			}
-		}
-
-		double dmg = 0;
-		dmg = calcBuffDamage(dmg);
-
-		if ((_weaponAttrEnchantKind == 1) && (_weaponAttrEnchantLevel == 5)) { // 属性強化5段階（地）
-			L1WeaponSkill.getElementEarthDamage(_pc, _targetPc);
-		} else if ((_weaponAttrEnchantKind == 2) && (_weaponAttrEnchantLevel == 5)) { // 属性強化5段階（火）
-			L1WeaponSkill.getElementFireDamage(_pc, _targetPc);
-		} else if ((_weaponAttrEnchantKind == 4) && (_weaponAttrEnchantLevel == 5)) { // 属性強化5段階（水）
-			L1WeaponSkill.getElementWaterDamage(_pc, _targetPc);
-		} else if ((_weaponAttrEnchantKind == 8) && (_weaponAttrEnchantLevel == 5)) { // 属性強化5段階（風）
-			L1WeaponSkill.getElementWindDamage(_pc, _targetPc);
-		} else {
-			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
-			}
-		return weaponAttrDamage;
 	}
 
 	// ●●●● プレイヤー から ＮＰＣ へのダメージ算出 ●●●●
@@ -1337,8 +1184,6 @@ public class L1Attack {
 
 		int weaponTotalDamage = weaponDamage + _weaponAddDmg + _weaponEnchant;
 
-		weaponTotalDamage += calcPcNpcAttrDamage(); // 属性強化ダメージ
-
 		weaponTotalDamage += calcMaterialBlessDmg(); // 銀祝福ダメージボーナス
 		if (_weaponType == 54
 				&& (_random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // ダブルヒット
@@ -1355,20 +1200,8 @@ public class L1Attack {
 			}
 		}
 
-		if (_weaponId == 262 || _weaponId == 312 ||
-			_weaponId == 729 || _weaponId == 712 && _random.nextInt(100) + 1 <= 75) {
+		if (_weaponId == 262 && _random.nextInt(100) + 1 <= 75) {
 			// ディストラクション装備かつ成功確率 (暫定)75%
-			weaponTotalDamage += calcDestruction(weaponTotalDamage);
-		}
-
-		if (_weaponId == 702  && _random.nextInt(100) + 1 <= 70) {
-			// 極寒のチェーンソード装備かつ成功確率 (暫定)70%
-			weaponTotalDamage += calcDestruction(weaponTotalDamage);
-		}
-
-		if (_weaponId == 100501 || _weaponId == 100502 || _weaponId == 100503 && _random.nextInt(100) + 1 <= 75) {
-			// オリジナルアルティメット武器の装備かつ成功確率
-			// (暫定)75%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
@@ -1420,35 +1253,21 @@ public class L1Attack {
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		} else if (_weaponId == 204 || _weaponId == 100204) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetNpc);
-		} else if (_weaponId == 260) { // レイジングウィンド
-			dmg += L1WeaponSkill.getRagingWindDamage(_pc, _target, weapon);
 		} else if (_weaponId == 264) { // ライトニングエッジ
-			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target, weapon);
-		} else if (_weaponId == 263) { // フリージングランサー
-			dmg += L1WeaponSkill.getFreezingLancerDamage(_pc, _target, weapon);
-		} else if (_weaponId == 261) { // エンジェルスタッフ
-			L1WeaponSkill.giveAngelStaffTurnUndead(_pc, _target, weapon);
+			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target);
+		} else if (_weaponId == 260 || _weaponId == 263) { // レイジングウィンド、フリージングランサー
+			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
+					_weaponId);
+		} else if (_weaponId == 261) { // アークメイジスタッフ
+			L1WeaponSkill.giveArkMageDiseaseEffect(_pc, _target);
 		} else if (_weaponId == 276 || _weaponId == 277 || _weaponId == 278
 				|| _weaponId == 279 || _weaponId == 280 || _weaponId == 281) { // マリスエレメント武器
 			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
-		} else if ((_weaponId == 701) || (_weaponId == 702)) { //極寒シリーズ
-			dmg += L1WeaponSkill.getIceWeaponDamage(_pc, _target, weapon);
-		} else if (_weaponId == 121 || _weaponId == 703) { //アイスクイーンスタッフ
-			dmg += L1WeaponSkill.getIceQueenStaffDamage(_pc, _target, weapon);
-		} else if ((_weaponId == 704) || (_weaponId == 191)) { // 2012リニューアルウェポン エンジェルスレイヤー
-			dmg += L1WeaponSkill.getAngelSlayerWeaponDamage(_pc, _target, weapon);
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
 		} else if (_weaponId == 707) { //破壊のロングボウ
 			L1WeaponSkill.getVenomBlazeDamage(_pc, _target, _arrow);
-		} else if (_weaponId >= 712 && _weaponId <=719 ) { // 英雄シリーズ
-			L1WeaponSkill.getHeroicWeaponDamage(_pc, _target, weapon);
-		} else if (_weaponId >= 721 && _weaponId <= 727) { //2012Halloween武器
-			L1WeaponSkill.getHalloweenWeaponDamage(_pc, _target, weapon);
-		} else if (_weaponId == 15) { //カーツソード リニューアル
-			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
-		} else if (_weaponId == 203) { // バルログのツーハンド ソード
-			L1WeaponSkill.getBarlogTwoHandSwordDamage(_pc, _target, weapon);
+
 		} else if (_weaponType2 != 14) { // キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
 		}
@@ -1576,99 +1395,9 @@ public class L1Attack {
 				_targetNpc.receiveDamage(_pc, damage);
 				_pc.setCurrentHp(_pc.getCurrentHp() + damage);
 		}
-		if (L1MagicDoll.getEffectByDoll(_pc, BLUEREG_WATER) == BLUEREG_WATER) {
-			L1Skill l1skills = SkillTable.getInstance().findBySkillId(
-					BLUEREG_WATER); // ブルレグ水属性攻撃
-			L1Magic magic = new L1Magic(_pc, _targetNpc);
 
-			_pc.sendPackets(new S_SkillSound(_targetNpc.getId(), l1skills
-					.getCastGfx()));
-			_pc.broadcastPacket(new S_SkillSound(_targetNpc.getId(), l1skills
-					.getCastGfx()));
-
-			int damage = magic.calcMagicDamage(l1skills.getSkillId());
-			_targetNpc.broadcastPacket(new S_DoActionGFX(
-					_targetNpc.getId(), ActionCodes.ACTION_Damage));
-			_targetNpc.receiveDamage(_pc, damage);
-			_pc.setCurrentHp(_pc.getCurrentHp() + damage);
-		}
-		if (L1MagicDoll.getEffectByDoll(_pc, REDEG_FIRE) == REDEG_FIRE) {
-			L1Skill l1skills = SkillTable.getInstance().findBySkillId(
-					REDEG_FIRE); // レディグ火属性攻撃
-			L1Magic magic = new L1Magic(_pc, _targetNpc);
-
-			_pc.sendPackets(new S_SkillSound(_targetNpc.getId(), l1skills
-					.getCastGfx()));
-			_pc.broadcastPacket(new S_SkillSound(_targetNpc.getId(), l1skills
-					.getCastGfx()));
-
-			int damage = magic.calcMagicDamage(l1skills.getSkillId());
-			_targetNpc.broadcastPacket(new S_DoActionGFX(
-					_targetNpc.getId(), ActionCodes.ACTION_Damage));
-			_targetNpc.receiveDamage(_pc, damage);
-			_pc.setCurrentHp(_pc.getCurrentHp() + damage);
-		}
-		if (L1MagicDoll.getEffectByDoll(_pc, YELLREG_EARTH) == YELLREG_EARTH) {
-			L1Skill l1skills = SkillTable.getInstance().findBySkillId(
-					YELLREG_EARTH); // エルレグ地属性攻撃
-			L1Magic magic = new L1Magic(_pc, _targetNpc);
-
-			_pc.sendPackets(new S_SkillSound(_targetNpc.getId(), l1skills
-					.getCastGfx()));
-			_pc.broadcastPacket(new S_SkillSound(_targetNpc.getId(), l1skills
-					.getCastGfx()));
-
-			int damage = magic.calcMagicDamage(l1skills.getSkillId());
-			_targetNpc.broadcastPacket(new S_DoActionGFX(
-					_targetNpc.getId(), ActionCodes.ACTION_Damage));
-			_targetNpc.receiveDamage(_pc, damage);
-			_pc.setCurrentHp(_pc.getCurrentHp() + damage);
-		}
-		if (L1MagicDoll.getEffectByDoll(_pc, GREREG_WIND) == GREREG_WIND) {
-			L1Skill l1skills = SkillTable.getInstance().findBySkillId(
-					GREREG_WIND); // グレッグ風属性攻撃
-
-			_pc.sendPackets(new S_SkillSound(_targetNpc.getId(), l1skills
-					.getCastGfx()));
-			_pc.broadcastPacket(new S_SkillSound(_targetNpc.getId(), l1skills
-					.getCastGfx()));
-
-			_pc.sendPackets(new S_DoActionGFX(_targetNpc.getId(),
-					ActionCodes.ACTION_Damage));
-			_pc.broadcastPacket(new S_DoActionGFX(
-					_targetNpc.getId(), ActionCodes.ACTION_Damage));
-		}
 
 		return (int) dmg;
-	}
-
-	private int calcPcNpcAttrDamage() {
-
-		int weaponAttrDamage = 0;
-
-		calcAttrEnchantDmg(); // 属性強化ダメージボーナス
-		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
-				&& (_weaponType == 54 || _weaponType == 58)) {
-			if ((_random.nextInt(100) + 1) <= 33) {
-				weaponAttrDamage *= 2;
-			}
-		}
-
-		double dmg = 0;
-		dmg = calcBuffDamage(dmg);
-
-		if ((_weaponAttrEnchantKind == 1) && (_weaponAttrEnchantLevel == 5)) { // 属性強化5段階（地）
-			L1WeaponSkill.getElementEarthDamage(_pc, _target);
-		} else if ((_weaponAttrEnchantKind == 2) && (_weaponAttrEnchantLevel == 5)) { // 属性強化5段階（火）
-			L1WeaponSkill.getElementFireDamage(_pc, _target);
-		} else if ((_weaponAttrEnchantKind == 4) && (_weaponAttrEnchantLevel == 5)) { // 属性強化5段階（水）
-			L1WeaponSkill.getElementWaterDamage(_pc, _target);
-		} else if ((_weaponAttrEnchantKind == 8) && (_weaponAttrEnchantLevel == 5)) { // 属性強化5段階（風）
-			L1WeaponSkill.getElementWindDamage(_pc, _target);
-		} else {
-			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
-			}
-		return weaponAttrDamage;
 	}
 
 	// ●●●● ＮＰＣ から プレイヤー へのダメージ算出 ●●●●
@@ -1940,11 +1669,7 @@ public class L1Attack {
 			damage = 3;
 		} else if (_weaponAttrEnchantLevel == 3) {
 			damage = 5;
-		} else if (_weaponAttrEnchantLevel == 4) {
-			damage = 8;
-		} else if (_weaponAttrEnchantLevel == 5) {
-			damage = 12;
-	}
+		}
 
 		// 耐性処理は本来、耐性合計値ではなく、各値を個別に処理して総和する。
 		int resist = 0;
@@ -2049,15 +1774,6 @@ public class L1Attack {
 		return _drainHp;
 	}
 
-	// ■■■■ ディストラクションByDollのHP吸収量算出 ■■■■
-	private int calcDestructionByDoll(final int dmg) {
-		_drainHp = (dmg) + 1;
-		if (_drainHp <= 0) {
-			_drainHp = 1;
-		}
-		return _drainHp;
-	}
-
 	// ■■■■ ＰＣの毒攻撃を付加 ■■■■
 	public void addPcPoisonAttack(L1Character attacker, L1Character target) {
 		int chance = _random.nextInt(100) + 1;
@@ -2079,9 +1795,7 @@ public class L1Attack {
 	public void addChaserAttack() {
 		if (5 > _random.nextInt(100) + 1) {
 			if (_weaponId == 265 || _weaponId == 266 || _weaponId == 267
-					|| _weaponId == 268
-					|| _weaponId == 100265 || _weaponId == 100266 || _weaponId == 100267
-					|| _weaponId == 100268) {
+					|| _weaponId == 268) {
 				// テーベ武器
 				L1Chaser chaser = new L1Chaser(_pc, _target,
 						L1Skill.ATTR_EARTH, 7025);
@@ -2413,18 +2127,6 @@ public class L1Attack {
 		if (_calcType == PC_PC) {
 			if (_weaponType == 20 || _weaponType == 62 || _weaponType2 == 14) { // 弓、ガントレット、キーリンク
 				isShortDistance = false;
-			boolean isMiddleDistance = ((_weaponType == 24 || // 2セル系武器
-					_weaponType2 == 6 || _weaponType2 == 13) // 槍、チェーンソード
-					&& (_npc.getLocation().getTileLineDistance(
-					new Point(_targetX, _targetY)) == 2)); // 2セル攻撃時
-			int rnd = _random.nextInt(100) + 1;
-				if (isMiddleDistance) {
-					if (rnd < 25) { // CB有効率1/4
-						isShortDistance = true;
-					} else {
-						isShortDistance = false;
-					}
-				}
 			}
 		} else if (_calcType == NPC_PC) {
 			boolean isLongRange = (_npc.getLocation().getTileLineDistance(

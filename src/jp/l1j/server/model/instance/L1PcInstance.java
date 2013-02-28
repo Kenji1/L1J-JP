@@ -1131,6 +1131,7 @@ public class L1PcInstance extends L1Character {
 						attack.addChaserAttack();
 						attack.addEvilAttack();
 					}
+				}
 			if (isCounterBarrier) {
 				attack.actionCounterBarrier();
 				attack.commitCounterBarrier();
@@ -1400,7 +1401,7 @@ public class L1PcInstance extends L1Character {
 					|| getInventory().checkEquipped(21178)
 					|| getInventory().checkEquipped(21179)) {
 				int rnd = _random.nextInt(100) + 1;
-				if (damage > 0 && rnd <= 5) { // 5%の確立で回復
+				if (damage > 0 && rnd <= 5) { // 5%の確率で回復
 					sendPackets(new S_SkillSound(getId(), 2187));
 					broadcastPacket(new S_SkillSound(getId(), 2187));
 					healHp = _random.nextInt(60) + 60;

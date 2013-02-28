@@ -44,8 +44,18 @@ import jp.l1j.server.model.L1NpcRegenerationTimer;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1Spawn;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1GuardInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1MerchantInstance;
+import jp.l1j.server.model.instance.L1MonsterInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1ScarecrowInstance;
+import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.inventory.L1GroundInventory;
 import jp.l1j.server.model.inventory.L1Inventory;
+import jp.l1j.server.model.inventory.L1PcInventory;
 import static jp.l1j.server.model.item.L1ItemId.*;
 import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.model.map.L1WorldMap;
@@ -87,7 +97,7 @@ public class L1NpcInstance extends L1Character {
 	private static Logger _log = Logger
 			.getLogger(L1NpcInstance.class.getName());
 	private L1Npc _npcTemplate;
-
+	private L1PcInstance _pc;
 	private L1Spawn _spawn;
 	private int _spawnNumber; // L1Spawnで管理されているナンバー
 

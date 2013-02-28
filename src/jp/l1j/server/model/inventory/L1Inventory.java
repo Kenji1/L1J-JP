@@ -734,4 +734,18 @@ public class L1Inventory extends L1Object {
 		return L1InventoryItem.LOC_NONE;
 	}
 
+	/**
+	 *  NpcInstanceでのチェック用
+	 * @param id
+	 * @return
+	 */
+	public boolean checkEquipped(int id) {
+		for (Object itemObject : _items) {
+			L1ItemInstance item = (L1ItemInstance) itemObject;
+			if (item.getItem().getItemId() == id && item.isEquipped()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
