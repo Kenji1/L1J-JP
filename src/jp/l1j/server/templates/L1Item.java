@@ -600,6 +600,36 @@ public abstract class L1Item implements Cloneable, Serializable {
 		}
 	}
 
+	/**
+	 * 魔法触媒の種類を返す。
+	 */
+	public int getMagicCatalystType() {
+		int type = 0;
+		
+		switch (getItemId()) {
+		case 40318: // 魔力の石
+			type = 166; // 材料によるアイコンパッケージ
+			break;
+		case 40319: // 精霊の玉
+			type = 569;
+			break;
+		case 40321: // ダーク ストーン
+			type = 837;
+			break;
+		case 49158: // ユグドラの実
+			type = 3674;
+			break;
+		case 49157: // 刻印のボーンピース
+			type = 3605;
+			break;
+		case 49156: // 属性石
+			type = 3606;
+			break;
+		}
+		
+		return type;
+	}
+	
 	// ■■■■■■ L1EtcItem でオーバーライドする項目 ■■■■■■
 	public boolean isStackable() {
 		return false;
