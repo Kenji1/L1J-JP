@@ -1128,3 +1128,6 @@ INSERT INTO `npc_actions` VALUES ('91328', 'id0', 'id0', '', '');
 INSERT INTO `npc_actions` VALUES ('91500', 'shamansael2', 'shamansael2', '', '');
 INSERT INTO `npc_actions` VALUES ('91501', 'beasamoo', 'beasamoo', '', '');
 INSERT INTO `npc_actions` VALUES ('91502', 'kymsamoo', 'kymsamoo', '', '');
+INSERT INTO `npc_actions` VALUES ('91600', 'gunterdg1', 'gunterdg1', '', '');
+INSERT INTO `npc_actions` VALUES ('91601', 'sibilre', 'sibilre', '', '');
+INSERT INTO `npc_actions` VALUES ('91602', 'fredi', 'fredi', '', '');

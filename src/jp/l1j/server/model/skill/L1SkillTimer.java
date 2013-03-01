@@ -689,18 +689,24 @@ class L1SkillStop {
 		else if (skillId == BLOODSTAIN_OF_FAFURION) { // パプリオンの血痕
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addHpr(-3);
+				pc.addMpr(-1);
 				pc.addWind(-50);
 				pc.sendPackets(new S_SkillIconBloodstain(85, 0));
 			}
 		}
-		//else if (skillId == BLOODSTAIN_OF_LINDVIOR) { // リンドビオルの血痕(未実装)
-		//	if (cha instanceof L1PcInstance) {
-		//		L1PcInstance pc = (L1PcInstance) cha;
-		//	}
-		//}
+		else if (skillId == BLOODSTAIN_OF_LINDVIOR) { // リンドビオルの血痕
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addFire(-50);
+				pc.sendPackets(new S_SkillIconBloodstain(88, 0));
+			}
+		}
 		//else if (skillId == BLOODSTAIN_OF_VALAKAS) { // ヴァラカスの血痕(未実装)
 		//	if (cha instanceof L1PcInstance) {
 		//		L1PcInstance pc = (L1PcInstance) cha;
+		//		pc.addEarth(-50);
+		//		pc.sendPackets(new S_SkillIconBloodstain(91, 0));
 		//	}
 		//}
 		else if (skillId == BLESS_OF_CRAY) { // クレイの祝福
@@ -732,6 +738,24 @@ class L1SkillStop {
 				pc.addHitup(-5);
 				pc.addWeightReduction(-40);
 				pc.addWater(-30);
+				pc.sendPackets(new S_HpUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+				if (pc.isInParty()) {
+					pc.getParty().updateMiniHP(pc);
+				}
+				pc.sendPackets(new S_MpUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+			}
+		}
+		else if (skillId == BLESS_OF_GUNTER) { // グンターの助言
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addMaxHp(-100);
+				pc.addMaxMp(-50);
+				pc.addHpr(-3);
+				pc.addMpr(-3);
+				pc.addDmgup(-1);
+				pc.addHitup(-5);
+				pc.addWeightReduction(-40);
+				pc.addWind(-30);
 				pc.sendPackets(new S_HpUpdate(pc.getCurrentHp(), pc.getMaxHp()));
 				if (pc.isInParty()) {
 					pc.getParty().updateMiniHP(pc);

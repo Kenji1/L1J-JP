@@ -5684,6 +5684,13 @@ public class C_NpcAction extends ClientBasePacket {
 						2400, 7680); // サエルの祝福
 				htmlid = "";
 			}
+		// グンター
+		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91600) {
+			if (s.equalsIgnoreCase("a")) {
+				L1BuffUtil.effectBlessOfDragonSlayer(pc, BLESS_OF_GUNTER,
+						2400, 7680); // グンターの助言
+				htmlid = "gunterdg2";
+			}
 		// コマ
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80194) {
 			if (s.equalsIgnoreCase("A")) {

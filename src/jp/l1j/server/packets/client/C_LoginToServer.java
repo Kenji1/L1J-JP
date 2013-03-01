@@ -648,14 +648,20 @@ public class C_LoginToServer extends ClientBasePacket {
 					L1BuffUtil.bloodstain(pc, (byte) 1,
 							(remainingTime - differenceTime) / 60, false);
 				}
-//			} else if (skillId == BLOODSTAIN_OF_LINDVIOR) { // リンドビオルの血痕(未実装)
-//				L1BuffUtil.bloodstain(pc, (byte) 2, remainingTime / 60, false);
-//			} else if (skillId == BLOODSTAIN_OF_VALAKAS) { // ヴァラカスの血痕(未実装)
-//				L1BuffUtil.bloodstain(pc, (byte) 3, remainingTime / 60, false);
+			} else if (skillId == BLOODSTAIN_OF_LINDVIOR) { // リンドビオルの血痕
+				if (remainingTime - differenceTime > 0) {	
+					L1BuffUtil.bloodstain(pc, (byte) 2, remainingTime / 60, false);
+				}
+			//} else if (skillId == BLOODSTAIN_OF_VALAKAS) { // ヴァラカスの血痕(未実装)
+			//	if (remainingTime - differenceTime > 0) {	
+			//		L1BuffUtil.bloodstain(pc, (byte) 3, remainingTime / 60, false);
+			//	}
 			} else if (skillId == BLESS_OF_CRAY) { // クレイの祝福
 				L1BuffUtil.effectBlessOfDragonSlayer(pc, skillId, 2400, 7681);
 			} else if (skillId == BLESS_OF_SAEL) { // サエルの祝福
 				L1BuffUtil.effectBlessOfDragonSlayer(pc, skillId, 2400, 7680);
+			} else if (skillId == BLESS_OF_GUNTER) { // グンターの助言
+				L1BuffUtil.effectBlessOfDragonSlayer(pc, skillId, 2400, 7683);
 			} else if (skillId == MAGIC_EYE_OF_ANTHARAS) { // 地竜の魔眼
 				pc.addResistHold(5);
 				pc.setSkillEffect(skillId, remainingTime * 1000);

@@ -665,6 +665,8 @@ public class L1SkillId {
 	public static final int BLESS_OF_CRAY = 4056; // クレイの祝福
 
 	public static final int BLESS_OF_SAEL = 4057; // サエルの祝福
+	
+	public static final int BLESS_OF_GUNTER = 4058; // グンターの助言
 
 	public static final int MAGIC_EYE_OF_ANTHARAS = 4060; // 地竜の魔眼
 

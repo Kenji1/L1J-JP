@@ -22,7 +22,7 @@ public class S_SkillIconBloodstain extends ServerBasePacket {
 	public S_SkillIconBloodstain(int i, int j) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x64);
-		writeC(i); // 82:アンタラスの血痕 85:パプリオンの血痕 88:　91:
+		writeC(i); // 82:アンタラスの血痕 85:パプリオンの血痕 88:リンドビオルの血痕　91:ヴァラカスの血痕
 		writeH(j); // 分
 	}
 

@@ -19,8 +19,7 @@ import jp.l1j.server.datatables.NpcTalkDataTable;
 import jp.l1j.server.model.L1DragonSlayer;
 import jp.l1j.server.model.L1NpcTalkData;
 import jp.l1j.server.model.L1Teleport;
-import static jp.l1j.server.model.skill.L1SkillId.BLOODSTAIN_OF_ANTHARAS;
-import static jp.l1j.server.model.skill.L1SkillId.BLOODSTAIN_OF_FAFURION;
+import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_NpcTalkReturn;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.templates.L1Npc;
@@ -73,10 +72,20 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 					}
 					X = 32927;
 					Y = 32741;
-				//} else if (portalNumber < 18) { // ドラゴンポータル(風)
-				//	X = ;
-				//	Y = ;
-				//} else if (portalNumber < 24) { // ドラゴンポータル(火)
+				} else if (portalNumber < 18) { // ドラゴンポータル(風)
+					if (pc.hasSkillEffect(BLOODSTAIN_OF_LINDVIOR)) {
+						pc.sendPackets(new S_ServerMessage(1626));
+						// 全身からドラゴンの血の匂いが漂っています。それが消えるまでは、ドラゴンポータルに入場できません。
+						return;
+					}
+					X = 32673;
+					Y = 32926;
+				//} else if (portalNumber < 24) { // ドラゴンポータル(火)(未実装)
+				//	if (pc.hasSkillEffect(BLOODSTAIN_OF_VALAKAS)) {
+				//		pc.sendPackets(new S_ServerMessage(1626));
+				//		// 全身からドラゴンの血の匂いが漂っています。それが消えるまでは、ドラゴンポータルに入場できません。
+				//		return;
+				//	}
 				//	X = ;
 				//	Y = ;
 				}

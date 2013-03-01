@@ -124,26 +124,43 @@ public class L1BuffUtil {
 			pc.broadcastPacket(new S_SkillSound(pc.getId(), 7783));
 		}
 
-		int skillId = BLOODSTAIN_OF_ANTHARAS;
+		int skillId = 0;
 		int iconType = 0;
-		if (type == 0) {
+		if (type == 0) { // アンタラスの血痕
+			skillId = BLOODSTAIN_OF_ANTHARAS;
 			if (!pc.hasSkillEffect(skillId)) {
 				pc.addAc(-2);
 				pc.addWater(50);
 			}
-			iconType = 82; // アンタラスの血痕
-		} else if (type == 1) {
+			iconType = 82;
+		} else if (type == 1) { // パプリオンの血痕
 			skillId = BLOODSTAIN_OF_FAFURION;
 			if (!pc.hasSkillEffect(skillId)) {
 				pc.addHpr(3);
 				pc.addMpr(1);
 				pc.addWind(50);
 			}
-			iconType = 85; // パプリオンの血痕
+			iconType = 85;
+		} else if (type == 2) { // リンドビオルの血痕
+			skillId = BLOODSTAIN_OF_LINDVIOR;
+			if (!pc.hasSkillEffect(skillId)) {
+				// TODO そのほかの効果について不明
+				pc.addFire(50);
+			}
+			iconType = 88;
+		//} else if (type == 3) { // ヴァラカスの血痕(未実装)
+		//	skillId = BLOODSTAIN_OF_VALAKAS;
+		//	if (!pc.hasSkillEffect(skillId)) {
+		//		// TODO そのほかの効果について不明
+		//		pc.addEarth(50);
+		//	}
+		//	iconType = 91;
 		}
-		pc.sendPackets(new S_OwnCharAttrDef(pc));
-		pc.sendPackets(new S_SkillIconBloodstain(iconType, time));
-		pc.setSkillEffect(skillId, (time * 60 * 1000));
+		if (skillId > 0) {
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+			pc.sendPackets(new S_SkillIconBloodstain(iconType, time));
+			pc.setSkillEffect(skillId, (time * 60 * 1000));
+		}
 	}
 
 	public static void effectBlessOfDragonSlayer(L1PcInstance pc, int skillId,
@@ -156,8 +173,12 @@ public class L1BuffUtil {
 		if (!pc.hasSkillEffect(skillId)) {
 			switch (skillId) {
 			case BLESS_OF_CRAY: // クレイの祝福
-				if (pc.hasSkillEffect(BLESS_OF_SAEL)) {
+				// 他の祝福と重複しない
+				if (pc.hasSkillEffect(BLESS_OF_SAEL)) { // サエルの祝福
 					pc.removeSkillEffect(BLESS_OF_SAEL);
+				}
+				if (pc.hasSkillEffect(BLESS_OF_GUNTER)) { // グンターの助言
+					pc.removeSkillEffect(BLESS_OF_GUNTER);
 				}
 				pc.addMaxHp(100);
 				pc.addMaxMp(50);
@@ -169,8 +190,12 @@ public class L1BuffUtil {
 				pc.addEarth(30);
 				break;
 			case BLESS_OF_SAEL: // サエルの祝福
-				if (pc.hasSkillEffect(BLESS_OF_CRAY)) {
+				// 他の祝福と重複しない
+				if (pc.hasSkillEffect(BLESS_OF_CRAY)) { // クレイの祝福
 					pc.removeSkillEffect(BLESS_OF_CRAY);
+				}
+				if (pc.hasSkillEffect(BLESS_OF_GUNTER)) { // グンターの助言
+					pc.removeSkillEffect(BLESS_OF_GUNTER);
 				}
 				pc.addMaxHp(100);
 				pc.addMaxMp(50);
@@ -180,6 +205,23 @@ public class L1BuffUtil {
 				pc.addHitup(5);
 				pc.addWeightReduction(40);
 				pc.addWater(30);
+				break;
+			case BLESS_OF_GUNTER: // グンターの助言
+				// 他の祝福と重複しない
+				if (pc.hasSkillEffect(BLESS_OF_CRAY)) { // クレイの祝福
+					pc.removeSkillEffect(BLESS_OF_CRAY);
+				}
+				if (pc.hasSkillEffect(BLESS_OF_SAEL)) { // サエルの祝福
+					pc.removeSkillEffect(BLESS_OF_SAEL);
+				}
+				pc.addMaxHp(100);
+				pc.addMaxMp(50);
+				pc.addHpr(3);
+				pc.addMpr(3);
+				pc.addDmgup(1);
+				pc.addHitup(5);
+				pc.addWeightReduction(40);
+				pc.addWind(30);
 				break;
 			}
 			pc.sendPackets(new S_HpUpdate(pc.getCurrentHp(), pc.getMaxHp()));
