@@ -42,21 +42,21 @@ public class S_AddItem extends ServerBasePacket {
 		
 		// TODO 3.53C start
 		int type = item.getItem().getUseType();
-		if (type < 0){
+		if (type < 0) {
 			type = 0;
 		}
-		if (type == 96 || type >= 98){ // unknown type
-			writeC(26);
-		} else if (type == 97){ // unknown type
-			writeC(27);
-		} else {
-			writeC(type);
+		//if (type == 96 || type >= 98){ // unknown type (tw only)
+		//	writeC(26);
+		//} else if (type == 97){ // unknown type (tw only)
+		//	writeC(27);
+		//} else {
+		writeC(type);
+		//}
+		int count = item.getChargeCount();
+		if (count < 0) {
+			count = 0;
 		}
-		if (item.getChargeCount() > 0) {
-			writeC(item.getChargeCount());
-		} else {
-			writeC(0x00);
-		}
+		writeC(count);
 		// TODO 3.53C end
 		
 		writeH(item.getGfxId());
