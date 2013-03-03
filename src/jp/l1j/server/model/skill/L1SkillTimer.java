@@ -698,6 +698,8 @@ class L1SkillStop {
 		else if (skillId == BLOODSTAIN_OF_LINDVIOR) { // リンドビオルの血痕
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addSp(-1);
+				// 魔法クリティカル+1%は、L1Magicで対応
 				pc.addFire(-50);
 				pc.sendPackets(new S_SkillIconBloodstain(88, 0));
 			}
@@ -705,6 +707,10 @@ class L1SkillStop {
 		//else if (skillId == BLOODSTAIN_OF_VALAKAS) { // ヴァラカスの血痕(未実装)
 		//	if (cha instanceof L1PcInstance) {
 		//		L1PcInstance pc = (L1PcInstance) cha;
+		//		pc.addDmgup(-1);
+		//		pc.addHitup(-1);
+		//		pc.addBowDmgup(-1);
+		//		pc.addBowHitup(-1);
 		//		pc.addEarth(-50);
 		//		pc.sendPackets(new S_SkillIconBloodstain(91, 0));
 		//	}

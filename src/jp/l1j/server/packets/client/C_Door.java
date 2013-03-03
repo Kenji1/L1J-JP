@@ -211,6 +211,8 @@ public class C_Door extends ClientBasePacket {
 				door.open();
 			}
 		}
+		// リンドビオル洞窟(未実装)
+		// ヴァラカス洞窟(未実装)
 	}
 
 	private boolean isExistKeeper(L1PcInstance pc, int keeperId) {

@@ -104,9 +104,9 @@ public class L1DragonSlayer {
 		_checkDragonPortal[0] = false; // アンタラス
 		_checkDragonPortal[1] = false; // パプリオン
 		_checkDragonPortal[2] = false; // リンドビオル
-		_checkDragonPortal[3] = false; // ヴァラカス
+		_checkDragonPortal[3] = false; // ヴァラカス(未実装)
 
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 18; i++) {
 			if (!getPortalNumber()[i]) {
 				if (i < 6) { // アンタラス
 					_checkDragonPortal[0] = true;
@@ -114,7 +114,7 @@ public class L1DragonSlayer {
 					_checkDragonPortal[1] = true;
 				} else if (i < 18) { // リンドビオル
 					_checkDragonPortal[2] = true;
-				} else if (i < 24) { // ヴァラカス
+				} else if (i < 24) { // ヴァラカス(未実装)
 					_checkDragonPortal[3] = true;
 				}
 			}
@@ -203,8 +203,9 @@ public class L1DragonSlayer {
 			} else if (portalNum < 12) {
 				sendMessage(portalNum, 1661, null);
 				// パプリオン：笑わせるな！あいつらがお前と共にあの世をさまようことになる、俺の生贄か！
-			// } else if (portalNum < 18) {
-			// リンドビオル(未実装)
+			} else if (portalNum < 18) {
+				sendMessage(portalNum, 1759, null);
+				// リンドビオル：笑わせるな！自分たちの愚かさを骨身にしみるまで思い知らせてやる！
 			// } else if (portalNum < 24) {
 			// ヴァラカス(未実装)
 			}
@@ -222,8 +223,9 @@ public class L1DragonSlayer {
 			} else if (portalNum < 12) {
 				sendMessage(portalNum, 1665, null);
 				// 巫女サエル：パプリオンの力がかなり落ちたようです！勇士たちよ！もうちょっとです！
-			// } else if (portalNum < 18) {
-			// リンドビオル(未実装)
+			} else if (portalNum < 18) {
+				sendMessage(portalNum, 1769, null);
+				// 雲の大精霊：雲の精霊よ！僕に力を！
 			// } else if (portalNum < 24) {
 			// ヴァラカス(未実装)
 			}
@@ -267,11 +269,38 @@ public class L1DragonSlayer {
 			int[] msg = new int[9];
 			if (_num < 6) {
 				msg = new int[] { 1570, 1571, 1572, 1574, 1575, 1576, 1578, 1579, 1581 };
-			} else if (_num <= 12) {
+				// アンタラス：誰だ、私を眠りから覚ましたのは。
+				// クレイ：アンタラス！お前を追ってこの漆黒の闇までやって来た！
+				// アンタラス：笑止千万！クレイ！もう一度あの世へ送ってやる！
+				// クレイ：勇士たちよ！君たちの剣にアデンの運命がかかっている。アンタラスの黒い息遣いを止めることができるのは君たちだけだ！
+				// アンタラス：そんなガラクタで俺に勝てるとでも思ってるのか！グハハハ！
+				// アンタラス：そろそろうまいめしにありつけそうだな。おまえらの血のにおい、うーんたまらん！
+				// アンタラス：生意気なやつらめ！死にたいのか！
+				// アンタラス：許さん！すぐに父上がお出ましになるだろう。
+				// クレイ：おお…最強の勇士であることを示してみせた最高のナイトよ！試練に打ち勝ってアンタラスをしとめたのだな。恨みは解けるだろう。ウハハハ！
+			} else if (_num < 12) {
 				msg = new int[] { 1657, 1658, 1659, 1662, 1663, 1664, 1666, 1667, 1669 };
-			// } else if (_num <= 18) {
-			// リンドビオル(未実装) 
-			// } else if (_num <= 24) {
+				// パプリオン：俺の領域を侵すとは…その勇気は高く買おう。
+				// 巫女サエル：この卑劣なパプリオンめ！私を騙した代償を払わせてやる！
+				// パプリオン：封印を解く時にはお前が助けになったが…俺に二回目の慈悲はない…
+				// 巫女サエル：勇士たちよ！あの邪悪なパプリオンを倒して、エヴァ王国にかけられた血の呪いを解いてください！
+				// パプリオン：手頃なおもちゃだな！ハハハ！
+				// パプリオン：骨の髄まで凍りつくほどの恐怖を味わせてやろう！
+				// パプリオン：おまえの言うところの希望なるものが、虚構であることを教えてやろう！
+				// パプリオン：サエルの味方をしたことを後悔させてやろう！この愚か者めが！
+				// 巫女サエル：ありがとうございます。あなたがたはアデン最高の勇士です。これでエヴァ王国にかけられた長年の呪いも解けるでしょう。
+			} else if (_num < 18) {
+				msg = new int[] { 1755, 1760, 1758, 1763, 1767, 1768, 1770, 1771, 1772};
+				// リンドビオル：俺の安眠を邪魔するのは誰だ！
+				// 雲の大精霊：リンドビオル様の聖所に忍び込んだクセモノは誰だ！
+				// リンドビオル：このリンドビオルを怒らせた代償を払ってもらおうか。
+				// 雲の大精霊：ウウウ…リンドビオル様のご機嫌を損ねるとは！
+				// リンドビオル：このこざかしいやつらめ！俺を試そうというのか！
+				// リンドビオル：あがけ！もっとあがいてみろ！
+				// リンドビオル：自分たちの愚かさを嘆いても手遅れだ！
+				// リンドビオル：もう許さん！もう一度かかってこい！
+				// リンドビオル：グアアアッ！こんなはずが！お前たちをナメてかかった俺がバカだった…
+			// } else if (_num < 24) {
 			// ヴァラカス(未実装)
 			}
 			switch (_status) {
@@ -281,6 +310,7 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[0], null);
 					// アンタラス：誰だ、私を眠りから覚ましたのは。
 					// パプリオン：俺の領域を侵すとは…その勇気は高く買おう。
+					// リンドビオル：俺の安眠を邪魔するのは誰だ！
 					DragonSlayerTimer timer_1rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_2RD, 10000);
 					timer_1rd.begin();
 					break;
@@ -289,6 +319,7 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[1], null);
 					// クレイ：アンタラス！お前を追ってこの漆黒の闇までやって来た！
 					// 巫女サエル：この卑劣なパプリオンめ！私を騙した代償を払わせてやる！
+					// 雲の大精霊：リンドビオル様の聖所に忍び込んだクセモノは誰だ！
 					DragonSlayerTimer timer_2rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_3RD, 10000);
 					timer_2rd.begin();
 					break;
@@ -297,15 +328,20 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[2], null);
 					// アンタラス：笑止千万！クレイ！もう一度あの世へ送ってやる！
 					// パプリオン：封印を解く時にはお前が助けになったが…俺に二回目の慈悲はない…
+					// リンドビオル：このリンドビオルを怒らせた代償を払ってもらおうか。
 					DragonSlayerTimer timer_3rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_4RD, 10000);
 					timer_3rd.begin();
 					break;
 				case STATUS_DRAGONSLAYER_READY_4RD:
 					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_1RD);
-					if (_num >= 0 && _num <= 5) {
+					if (_num < 6) {
 						spawn(91200, _num, 32783, 32693, mapId, 10, 0); // アンタラスLv1
-					} else {
+					} else if (_num < 12) {
 						spawn(91514, _num, 32955, 32839, mapId, 10, 0); // パプリオンLv1
+					} else if (_num < 18) {
+						spawn(91603, _num, 32857, 32869, mapId, 10, 0); // リンドビオルLv1
+					//} else if (_num < 24) {
+					// ヴァラカスLv1(未実装)
 					}
 					break;
 				// 第2ステージ
@@ -314,6 +350,7 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[3], null);
 					// クレイ：勇士たちよ！君たちの剣にアデンの運命がかかっている。アンタラスの黒い息遣いを止めることができるのは君たちだけだ！
 					// 巫女サエル：勇士たちよ！あの邪悪なパプリオンを倒して、エヴァ王国にかけられた血の呪いを解いてください！
+					// 雲の大精霊：ウウウ…リンドビオル様のご機嫌を損ねるとは！
 					DragonSlayerTimer timer_4rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_1, 10000);
 					timer_4rd.begin();
 					break;
@@ -322,6 +359,7 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[4], null);
 					// アンタラス：そんなガラクタで俺に勝てるとでも思ってるのか！グハハハ！
 					// パプリオン：手頃なおもちゃだな！ハハハ！
+					// リンドビオル：このこざかしいやつらめ！俺を試そうというのか！
 					DragonSlayerTimer timer_5rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_2, 30000);
 					timer_5rd.begin();
 					break;
@@ -330,15 +368,20 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[5], null);
 					// アンタラス：そろそろうまいめしにありつけそうだな。おまえらの血のにおい、うーんたまらん！
 					// パプリオン：骨の髄まで凍りつくほどの恐怖を味わせてやろう！
+					// リンドビオル：あがけ！もっとあがいてみろ！
 					DragonSlayerTimer timer_6rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_3, 10000);
 					timer_6rd.begin();
 					break;
 				case STATUS_DRAGONSLAYER_START_2RD_3:
 					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_4);
-					if (_num >= 0 && _num <= 5) {
+					if (_num < 6) {
 						spawn(91201, _num, 32783, 32693, mapId, 10, 0); // アンタラスLv2
-					} else {
+					} else if (_num < 12) {
 						spawn(91515, _num, 32955, 32839, mapId, 10, 0); // パプリオンLv2
+					} else if (_num < 18) {
+						spawn(91604, _num, 32857, 32869, mapId, 10, 0); // リンドビオルLv2
+					//} else if (_num < 24) {
+					// ヴァラカスLv2(未実装)
 					}
 					break;
 				// 第3ステージ
@@ -347,6 +390,7 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[6], null);
 					// アンタラス：生意気なやつらめ！死にたいのか！
 					// パプリオン：おまえの言うところの希望なるものが、虚構であることを教えてやろう！
+					// リンドビオル：自分たちの愚かさを嘆いても手遅れだ！
 					DragonSlayerTimer timer_7rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_3RD_1, 40000);
 					timer_7rd.begin();
 					break;
@@ -355,15 +399,20 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[7], null);
 					// アンタラス：許さん！すぐに父上がお出ましになるだろう。
 					// パプリオン：サエルの味方をしたことを後悔させてやろう！この愚か者めが！
+					// リンドビオル：もう許さん！もう一度かかってこい！
 					DragonSlayerTimer timer_8rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_3RD_2, 10000);
 					timer_8rd.begin();
 					break;
 				case STATUS_DRAGONSLAYER_START_3RD_2:
 					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_3);
-					if (_num >= 0 && _num <= 5) {
+					if (_num < 6) {
 						spawn(91202, _num, 32783, 32693, mapId, 10, 0); // アンタラスLv3
-					} else {
+					} else if (_num < 12) {
 						spawn(91516, _num, 32955, 32839, mapId, 10, 0); // パプリオンLv3
+					} else if (_num < 18) {
+						spawn(91605, _num, 32857, 32869, mapId, 10, 0); // リンドビオルLv3
+					//} else if (_num < 24) {
+					// ヴァラカスLv3(未実装)
 					}
 					break;
 				case STATUS_DRAGONSLAYER_END_1:
@@ -371,11 +420,12 @@ public class L1DragonSlayer {
 					sendMessage(_num, msg[8], null);
 					// クレイ：おお…最強の勇士であることを示してみせた最高のナイトよ！試練に打ち勝ってアンタラスをしとめたのだな。恨みは解けるだろう。ウハハハ！
 					// 巫女サエル：ありがとうございます。あなたがたはアデン最高の勇士です。これでエヴァ王国にかけられた長年の呪いも解けるでしょう。
-					if (checkHiddenDragonValleyStatus() == STATUS_NONE) { // 準備開啟隱匿的巨龍谷入口
+					// リンドビオル：グアアアッ！こんなはずが！お前たちをナメてかかった俺がバカだった…
+					if (checkHiddenDragonValleyStatus() == STATUS_NONE) {
 						setHiddenDragonValleyStatus(STATUS_READY_SPAWN);
 						DragonSlayerTimer timer_9rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_2, 10000);
 						timer_9rd.begin();
-					} else { // 直接結束
+					} else {
 						if (getDragonSlayerStatus()[_num] != STATUS_DRAGONSLAYER_END_5) {
 							setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_5);
 							DragonSlayerTimer timer = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_5, 5000);
@@ -429,28 +479,9 @@ public class L1DragonSlayer {
 	}
 
 	public void sendMessage(int portalNum, int type, String msg) {
-		short mapId = (short) (1005 + portalNum);
 		L1PcInstance[] players = getPlayersArray(portalNum);
 		for (L1PcInstance pc : players) {
-			if (pc.getMapId() == mapId
-					&& portalNum >= 0 && portalNum <= 5 // アンタラスレア
-					&& pc.getX() >= 32744 && pc.getX() <= 32812
-					&& pc.getY() >= 32659 && pc.getY() <= 32723) {
-				pc.sendPackets(new S_ServerMessage(type, msg));
-			} else if (pc.getMapId() == mapId
-					&& portalNum >= 6 && portalNum <= 11 // パプリオンレア
-					&& pc.getX() >= 32928 && pc.getX() <= 32993
-					&& pc.getY() >= 32812 && pc.getY() <= 32860) {
-				pc.sendPackets(new S_ServerMessage(type, msg));
-			} else if (pc.getMapId() == mapId
-					&& portalNum >= 12 && portalNum <= 17 // リンドビオルレア
-					&& pc.getX() >= 32830 && pc.getX() <= 32863
-					&& pc.getY() >= 32861 && pc.getY() <= 32898) {
-				pc.sendPackets(new S_ServerMessage(type, msg));
-			} else if (pc.getMapId() == mapId
-					&& portalNum >= 18 && portalNum <= 23 // ヴァラカスレア
-					&& pc.getX() >= 32808 && pc.getX() <= 32863
-					&& pc.getY() >= 32748 && pc.getY() <= 32792) {
+			if (isDragonSlayer(portalNum, pc)) {
 				pc.sendPackets(new S_ServerMessage(type, msg));
 			}
 		}
@@ -471,14 +502,14 @@ public class L1DragonSlayer {
 			isDragonSlayer = true;
 		} else if (pc.getMapId() == mapId
 				&& portalNum >= 12 && portalNum <= 17 // リンドビオルレア
-				&& pc.getX() >= 32830 && pc.getX() <= 32863
-				&& pc.getY() >= 32861 && pc.getY() <= 32898) {
+				&& pc.getX() >= 32828 && pc.getX() <= 32880
+				&& pc.getY() >= 32845 && pc.getY() <= 32897) {
 			isDragonSlayer = true;
-		} else if (pc.getMapId() == mapId
-				&& portalNum >= 18 && portalNum <= 23 // ヴァラカスレア
-				&& pc.getX() >= 32808 && pc.getX() <= 32863
-				&& pc.getY() >= 32748 && pc.getY() <= 32792) {
-			isDragonSlayer = true;
+		//} else if (pc.getMapId() == mapId
+		//		&& portalNum >= 18 && portalNum <= 23 // ヴァラカスレア(未実装)
+		//		&& pc.getX() >= 32808 && pc.getX() <= 32863
+		//		&& pc.getY() >= 32748 && pc.getY() <= 32792) {
+		//	isDragonSlayer = true;
 		}
 		return isDragonSlayer;
 	}
@@ -490,9 +521,18 @@ public class L1DragonSlayer {
 	
 	public void dropRewardItem(int portalNum, int npcId) {
 		short mapId = (short) (1005 + portalNum);
-		int dragon[] = new int[] { 91200, 91201, 91202, // アンタラス
-			91514, 91515, 91516 }; //  パプリオン
-		int reward[] = new int[] { 50553, 50553, 50556, 50553, 50553, 50557 };
+		int dragon[] = new int[] {
+			91200, 91201, 91202, // アンタラス
+			91514, 91515, 91516, // パプリオン
+			91603, 91604, 91605  // リンドビオル
+			// ヴァラカス(未実装)
+		};
+		int reward[] = new int[] {
+			50553, 50553, 50556, // 逃げたドラゴンの痕跡、逃げたドラゴンの痕跡、地竜の証
+			50553, 50553, 50557, // 逃げたドラゴンの痕跡、逃げたドラゴンの痕跡、地竜の証
+			50553, 50553, 50558  // 逃げたドラゴンの痕跡、逃げたドラゴンの痕跡、風竜の証
+			// 50553, 50553, 50559 // 逃げたドラゴンの痕跡、逃げたドラゴンの痕跡、火竜の証(未実装)
+		};
 		int i = Arrays.binarySearch(dragon, npcId);
 		L1PcInstance[] players = getPlayersArray(portalNum);
 		for (L1PcInstance pc : players) {
@@ -500,7 +540,8 @@ public class L1DragonSlayer {
 				L1ItemInstance item = pc.getInventory().storeItem(reward[i], 1);
 				String npcName = getDragonName(npcId);
 				String itemName = item.getItem().getName();
-				pc.sendPackets(new S_ServerMessage(143, npcName, itemName));			
+				pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
+				// \F2%0%sが%1%oをくれました。
 			}
 		}
 	}
@@ -525,7 +566,9 @@ public class L1DragonSlayer {
 			} else if (obj instanceof L1NpcInstance) {
 				L1NpcInstance npc = (L1NpcInstance) obj;
 				if ((npc.getMaster() == null)
-						&& (npc.getNpcTemplate().getNpcId() < 81301 && npc.getNpcTemplate().getNpcId() > 81306)) {
+						&& (npc.getNpcTemplate().getNpcId() < 81301
+						&& npc.getNpcTemplate().getNpcId() > 81306)) {
+					// TODO 3.52 81301～81306に該当するNPCが存在しない（unknown npc）
 					npc.deleteMe();
 				}
 			} else if (obj instanceof L1Inventory) {
@@ -603,10 +646,24 @@ public class L1DragonSlayer {
 			L1World.getInstance().storeObject(npc);
 			L1World.getInstance().addVisibleObject(npc);
 
-			if (npc.getGfxId() == 7548 || npc.getGfxId() == 7550 || npc.getGfxId() == 7552
-					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585
-					|| npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
-					|| npc.getGfxId() == 7864 || npc.getGfxId() == 7869 || npc.getGfxId() == 7870) {
+			if (npc.getGfxId() == 7585 // ドラゴンポータル(隠された竜の地)
+					|| npc.getGfxId() == 7554 // ドラゴンポータル(地)
+					|| npc.getGfxId() == 7548 // ドラゴンポータル(水)
+					|| npc.getGfxId() == 7552 // ドラゴンポータル(風)
+					|| npc.getGfxId() == 7550 // ドラゴンポータル(火)
+					|| npc.getGfxId() == 7557 // アンタラスLv1
+					|| npc.getGfxId() == 7539 // アンタラスLv2
+					|| npc.getGfxId() == 7558 // アンタラスLv3
+					|| npc.getGfxId() == 7864 // パプリオンLv1
+					|| npc.getGfxId() == 7869 // パプリオンLv2
+					|| npc.getGfxId() == 7870 // パプリオンLv3
+					|| npc.getGfxId() == 8036 // リンドビオルLv1
+					|| npc.getGfxId() == 8054 // リンドビオルLv2
+					|| npc.getGfxId() == 8055 // リンドビオルLv3
+					// ヴァラカスLv1(未実装)
+					// ヴァラカスLv2(未実装)
+					// ヴァラカスLv3(未実装)
+					) {
 				npc.setDelayTime(ActionCodes.ACTION_AxeWalk, L1NpcInstance.ATTACK_SPEED);
 				for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc)) {
 					npc.onPerceive(pc);

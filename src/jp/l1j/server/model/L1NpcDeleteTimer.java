@@ -34,10 +34,13 @@ public class L1NpcDeleteTimer extends TimerTask {
 	@Override
 	public void run() {
 		if (_npc != null) {
-			if (_npc.getNpcId() == 91051 || _npc.getNpcId() == 91052
-					|| _npc.getNpcId() == 91053 || _npc.getNpcId() == 91054
-					|| _npc.getNpcId() == 81277) {
-				if (_npc.getNpcId() == 91066) { // 隠された竜の地
+			if (_npc.getNpcId() == 91051 // ドラゴンポータル(地)
+				|| _npc.getNpcId() == 91052 // ドラゴンポータル(水)
+				|| _npc.getNpcId() == 91053 // ドラゴンポータル(風)
+				|| _npc.getNpcId() == 91054 // ドラゴンポータル(火)
+				//|| _npc.getNpcId() == 81277 // TODO 3.52C unknown npc
+			) {
+				if (_npc.getNpcId() == 91066) { // ドラゴンポータル(隠された竜の地)
 					L1DragonSlayer.getInstance().setHiddenDragonValleyStatus(0);
 				}
 				L1DragonSlayer.getInstance().setPortalPack(_npc.getPortalNumber(), null);

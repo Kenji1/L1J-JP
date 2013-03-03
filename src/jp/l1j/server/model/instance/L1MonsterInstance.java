@@ -376,13 +376,14 @@ public class L1MonsterInstance extends L1NpcInstance {
 			}
 
 			// 血痕によるダメージ増加
-			if ((getNpcTemplate().getNpcId() == 91514
-					|| getNpcTemplate().getNpcId() == 91515
-					|| getNpcTemplate().getNpcId() == 91516) // パプリオン
+			int npcid = getNpcTemplate().getNpcId();
+			if ((npcid == 91514 || npcid == 91515 || npcid == 91516) // パプリオン
 					&& (attacker.hasSkillEffect(BLOODSTAIN_OF_ANTHARAS))) { //  アンタラスの血痕
 				damage *= 1.5;
+			} else if ((npcid == 91603 || npcid == 91604 || npcid == 91605) // リンドビオル
+					&& (attacker.hasSkillEffect(BLOODSTAIN_OF_FAFURION))) { // パプリオンの血痕
+				damage *= 1.5;
 			}
-			// リンドビオル(未実装)
 			// ヴァラカス(未実装)
 			// アンタラス(未実装)
 
@@ -406,13 +407,25 @@ public class L1MonsterInstance extends L1NpcInstance {
 					if (getPortalNumber() != -1) {
 						L1DragonSlayer.getInstance().dropRewardItem(
 								getPortalNumber(), npcId);
-						if (npcId == 91200 || npcId == 91514) {
+						if (npcId == 91200 // アンタラスLv1
+								|| npcId == 91514 // パプリオンLv1
+								|| npcId == 91603 // リンドビオルLv1
+								// ヴァラカスLv1(未実装)
+								) {
 							L1DragonSlayer.getInstance().startDragonSlayer2rd(
 									getPortalNumber());
-						} else if (npcId == 91201 || npcId == 91515) {
+						} else if (npcId == 91201 // アンタラスLv2
+								|| npcId == 91515 // パプリオンLv2
+								|| npcId == 91604 // リンドビオルLv2
+								// ヴァラカスLv2(未実装)
+								) {
 							L1DragonSlayer.getInstance().startDragonSlayer3rd(
 									getPortalNumber());
-						} else if (npcId == 91202 || npcId == 91516) {
+						} else if (npcId == 91202 // アンタラスLv3
+								|| npcId == 91516 // パプリオンLv3
+								|| npcId == 91605 // リンドビオルLv3
+								// ヴァラカスLv3(未実装)
+								) {
 							bloodstain();
 							L1DragonSlayer.getInstance().endDragonSlayer(
 									getPortalNumber());
@@ -420,10 +433,15 @@ public class L1MonsterInstance extends L1NpcInstance {
 					}
 
 					if (getPortalNumber() == -1
-							&& (getNpcTemplate().getNpcId() == 91200
-									|| getNpcTemplate().getNpcId() == 91201
-									|| getNpcTemplate().getNpcId() == 91514
-									|| getNpcTemplate().getNpcId() == 91515)) {
+						&& (getNpcTemplate().getNpcId() == 91200 // アンタラスLv1
+						|| getNpcTemplate().getNpcId() == 91201 // アンタラスLv2
+						|| getNpcTemplate().getNpcId() == 91514 // パプリオンLv1
+						|| getNpcTemplate().getNpcId() == 91515 // パプリオンLv2
+						|| getNpcTemplate().getNpcId() == 91603 // リンドビオルLv1
+						|| getNpcTemplate().getNpcId() == 91604 // リンドビオルLv2
+						// ヴァラカスLv1(未実装)
+						// ヴァラカスLv2(未実装)
+						)) {
 						doNextDragonStep(attacker, getNpcTemplate().getNpcId());
 					}
 
@@ -1007,16 +1025,37 @@ public class L1MonsterInstance extends L1NpcInstance {
 				pc.sendPackets(new S_ServerMessage(1668));
 				// パプリオン：サエルめ…シーレンよ！母上よ！お救いください…
 				L1BuffUtil.bloodstain(pc, (byte) 1, 4320, true); // パプリオンの血痕
+			} else if (getNpcTemplate().getNpcId() == 91605) {
+				pc.sendPackets(new S_ServerMessage(1773));
+				// リンドビオル：ああっ！母なるシーレンよ！お助けください！
+				L1BuffUtil.bloodstain(pc, (byte) 2, 4320, true); // リンドビオルの血痕
 			}
-			// リンドビオルの血痕(未実装)
 			// ヴァラカスの血痕(未実装)
 		}
 	}
 
 	private void doNextDragonStep(L1Character attacker, int npcid) {
 		if (!isNextDragonStepRunning()) {
-			int[] dragonId = { 91200, 91201, 91514, 91515 };
-			int[] nextStepId = { 91201, 91202, 91515, 91516 };
+			int[] dragonId = {
+				91200, // アンタラスLv1
+				91201, // アンタラスLv2
+				91514, // パプリオンLv1
+				91515, // パプリオンLV2
+				91603, // リンドビオルLv1
+				91604 // リンドビオルLv2
+				// ヴァラカスLv1(未実装)
+				// ヴァラカスLv2(未実装)
+			};
+			int[] nextStepId = {
+				91201, // アンタラスLv2
+				91202, // アンタラスLv3
+				91515, // パプリオンLv2
+				91516, // パプリオンLv3
+				91604, // リンドビオルLv2
+				91605 // リンドビオルLv3
+				// ヴァラカスLv2(未実装)
+				// ヴァラカスLv3(未実装)
+			};
 			int nextSpawnId = 0;
 			for (int i = 0; i < dragonId.length; i++) {
 				if (npcid == dragonId[i]) {

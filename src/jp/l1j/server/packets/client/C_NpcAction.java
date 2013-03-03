@@ -5688,9 +5688,10 @@ public class C_NpcAction extends ClientBasePacket {
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91600) {
 			if (s.equalsIgnoreCase("a")) {
 				L1BuffUtil.effectBlessOfDragonSlayer(pc, BLESS_OF_GUNTER,
-						2400, 7680); // グンターの助言
+						2400, 7683); // グンターの助言
 				htmlid = "gunterdg2";
 			}
+		// ヴァラカス(未実装) gfx 7682
 		// コマ
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80194) {
 			if (s.equalsIgnoreCase("A")) {

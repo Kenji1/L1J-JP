@@ -154,6 +154,14 @@ public class L1Magic {
 		return magicBonus;
 	}
 
+	private int getMagicCritical() {
+		int critical = _pc.getOriginalMagicCritical();
+		if (_pc.hasSkillEffect(BLOODSTAIN_OF_LINDVIOR)) { // リンドビオルの血痕
+			critical += 1; // クリティカル+1%
+		}
+		return critical;
+	}
+	
 	private int getLawful() {
 		int lawful = 0;
 		if (_calcType == PC_PC || _calcType == PC_NPC) {
@@ -945,7 +953,7 @@ public class L1Magic {
 		int rnd = _random.nextInt(100) + 1;
 		if (_calcType == PC_PC || _calcType == PC_NPC) {
 			if (l1skills.getSkillLevel() <= 6) {
-				if (rnd <= (10 + _pc.getOriginalMagicCritical())) {
+				if (rnd <= (10 + getMagicCritical())) {
 					magicDamage *= criticalCoefficient;
 				}
 			}

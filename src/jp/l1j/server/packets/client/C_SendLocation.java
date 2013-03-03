@@ -18,9 +18,9 @@ package jp.l1j.server.packets.client;
 import java.util.Calendar;
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1DragonSlayer;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_SendLocation;
 import jp.l1j.server.packets.server.S_ServerMessage;
@@ -62,7 +62,7 @@ public class C_SendLocation extends ClientBasePacket {
 		} else if (type == 0x06) {
 			int objectId = readD();
 			int gate = readD();
-			int dragonGate[] = { 91051, 91052, 91053, 91054 };
+			int dragonGate[] = {91051, 91052, 91053, 91054 };
 			L1PcInstance pc = client.getActiveChar();
 			if (gate >= 0 && gate <= 3) {
 				Calendar nowTime = Calendar.getInstance();
@@ -99,7 +99,7 @@ public class C_SendLocation extends ClientBasePacket {
 						}
 						break;
 					case 3: // ヴァラカス
-						for (int i = 12; i < 18; i++) {
+						for (int i = 18; i < 24; i++) {
 							if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
 								limit = false;
 								break;

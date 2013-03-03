@@ -62,7 +62,8 @@ public class Dungeon {
 		GIRAN_HOTEL,
 		OREN_HOTEL,
 		LAIR_OF_ANTHARAS,
-		LAIR_OF_FAFURION
+		LAIR_OF_FAFURION,
+		LAIR_OF_LINDVIOR
 	};
 
 	public static Dungeon getInstance() {
@@ -157,7 +158,11 @@ public class Dungeon {
 				} else if ((srcX == 32941) && (srcY == 32672)
 					&& (srcMapId >= 1011 || srcMapId <= 1016)) {
 					dungeonType = DungeonType.LAIR_OF_FAFURION; // パプリオンレア
+				} else if ((srcX == 32736) && (srcY == 32846)
+					&& (srcMapId >= 1017 || srcMapId <= 1022)) {
+					dungeonType = DungeonType.LAIR_OF_LINDVIOR; // リンドビオルレア
 				}
+				// ヴァラカスレア(未実装)
 				NewDungeon newDungeon = new NewDungeon(newX, newY,
 						(short) newMapId, heading, dungeonType);
 				if (_dungeonMap.containsKey(key)) {
@@ -210,7 +215,8 @@ public class Dungeon {
 			if (dungeonType == DungeonType.NONE) {
 				teleportable = true;
 			} else if (dungeonType == DungeonType.LAIR_OF_ANTHARAS
-					|| dungeonType == DungeonType.LAIR_OF_FAFURION){
+					|| dungeonType == DungeonType.LAIR_OF_FAFURION
+					|| dungeonType == DungeonType.LAIR_OF_LINDVIOR){
 				L1DragonSlayer.getInstance().startDragonSlayer(pc.getPortalNumber());
 				// デバッグ用なのでコメントアウト
 				//pc.sendPackets(new S_SystemMessage("まもなくレイドが開始します。"));

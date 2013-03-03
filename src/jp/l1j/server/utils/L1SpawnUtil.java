@@ -84,18 +84,20 @@ public class L1SpawnUtil {
 						break;
 					}
 				}
-			} else if (npc.getNpcId() == 91052) { // ドラゴンポータル(火)
+			} else if (npc.getNpcId() == 91053) { // ドラゴンポータル(風)
 				for (int i = 12; i < 18; i++) {
 					if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
+						L1DragonSlayer.getInstance().setPortalNumber(i, true);
 						L1DragonSlayer.getInstance().resetDragonSlayer(i);
 						npc.setPortalNumber(i);
 						L1DragonSlayer.getInstance().portalPack()[i] = npc;
 						break;
 					}
 				}
-			} else if (npc.getNpcId() == 91052) { // ドラゴンポータル(風)
+			} else if (npc.getNpcId() == 91054) { // ドラゴンポータル(火)
 				for (int i = 18; i < 24; i++) {
 					if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
+						L1DragonSlayer.getInstance().setPortalNumber(i, true);
 						L1DragonSlayer.getInstance().resetDragonSlayer(i);
 						npc.setPortalNumber(i);
 						L1DragonSlayer.getInstance().portalPack()[i] = npc;

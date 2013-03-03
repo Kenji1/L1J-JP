@@ -144,14 +144,18 @@ public class L1BuffUtil {
 		} else if (type == 2) { // リンドビオルの血痕
 			skillId = BLOODSTAIN_OF_LINDVIOR;
 			if (!pc.hasSkillEffect(skillId)) {
-				// TODO そのほかの効果について不明
+				pc.addSp(1);
+				// 魔法クリティカル+1%は、L1Magicで対応
 				pc.addFire(50);
 			}
 			iconType = 88;
 		//} else if (type == 3) { // ヴァラカスの血痕(未実装)
 		//	skillId = BLOODSTAIN_OF_VALAKAS;
 		//	if (!pc.hasSkillEffect(skillId)) {
-		//		// TODO そのほかの効果について不明
+		//		pc.addDmgup(1);
+		//		pc.addHitup(1);
+		//		pc.addBowDmgup(1);
+		//		pc.addBowHitup(1);
 		//		pc.addEarth(50);
 		//	}
 		//	iconType = 91;

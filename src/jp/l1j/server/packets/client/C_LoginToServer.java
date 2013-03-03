@@ -649,12 +649,14 @@ public class C_LoginToServer extends ClientBasePacket {
 							(remainingTime - differenceTime) / 60, false);
 				}
 			} else if (skillId == BLOODSTAIN_OF_LINDVIOR) { // リンドビオルの血痕
-				if (remainingTime - differenceTime > 0) {	
-					L1BuffUtil.bloodstain(pc, (byte) 2, remainingTime / 60, false);
+				if (remainingTime - differenceTime > 0) {
+					L1BuffUtil.bloodstain(pc, (byte) 2,
+							(remainingTime - differenceTime) / 60, false);
 				}
 			//} else if (skillId == BLOODSTAIN_OF_VALAKAS) { // ヴァラカスの血痕(未実装)
-			//	if (remainingTime - differenceTime > 0) {	
-			//		L1BuffUtil.bloodstain(pc, (byte) 3, remainingTime / 60, false);
+			//	if (remainingTime - differenceTime > 0) {
+			//		L1BuffUtil.bloodstain(pc, (byte) 3,
+			//				(remainingTime - differenceTime) / 60, false);
 			//	}
 			} else if (skillId == BLESS_OF_CRAY) { // クレイの祝福
 				L1BuffUtil.effectBlessOfDragonSlayer(pc, skillId, 2400, 7681);
