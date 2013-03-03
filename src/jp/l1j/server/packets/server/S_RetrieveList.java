@@ -38,13 +38,13 @@ public class S_RetrieveList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
-				writeH(0x001e); // TODO 3.52C
+				// writeH(0x001e); // TODO 3.52C
 				
-				// TODO 3.53C 個人倉庫領取金額異常
-				// writeD(30); // アデナ30
-				// writeD(0x00000000);
-				// writeH(0x00);
-				// TODO 3.53C 個人倉庫領取金額異常
+				// TODO 3.53C start
+				writeD(30); // アデナ30
+				writeD(0x00000000);
+				writeH(0x00);
+				// TODO 3.53C end
 			} else {
 				pc.sendPackets(new S_ServerMessage(1625));
 			}

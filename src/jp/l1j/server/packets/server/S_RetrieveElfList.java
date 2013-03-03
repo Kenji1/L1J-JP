@@ -38,7 +38,7 @@ public class S_RetrieveElfList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
-				writeH(0x001e); // TODO 3.52C
+				// writeH(0x001e); // TODO 3.52C
 			} else {
 				pc.sendPackets(new S_ServerMessage(1625));
 			}
