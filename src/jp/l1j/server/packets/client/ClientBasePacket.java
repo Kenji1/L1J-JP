@@ -82,10 +82,12 @@ public abstract class ClientBasePacket {
 	public String readS() {
 		String s = null;
 		try {
-			s = new String(_decrypt, _off, _decrypt.length - _off,
-					CLIENT_LANGUAGE_CODE);
-			s = s.substring(0, s.indexOf('\0'));
-			_off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
+			if (_decrypt != null) {
+				s = new String(_decrypt, _off, _decrypt.length - _off,
+						CLIENT_LANGUAGE_CODE);
+				s = s.substring(0, s.indexOf('\0'));
+				_off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
+			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
 		}
