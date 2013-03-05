@@ -82,12 +82,11 @@ public abstract class ClientBasePacket {
 	public String readS() {
 		String s = null;
 		try {
-			if (_decrypt != null) {
-				s = new String(_decrypt, _off, _decrypt.length - _off,
-						CLIENT_LANGUAGE_CODE);
-				s = s.substring(0, s.indexOf('\0'));
-				_off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
-			}
+			s = new String(_decrypt, _off, _decrypt.length - _off, CLIENT_LANGUAGE_CODE);
+			s = s.substring(0, s.indexOf('\0'));
+			_off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
+		} catch (StringIndexOutOfBoundsException e) {
+			// TODO 生存の叫び(Ctrl+E)時、87行目でエラーが発生する。
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
 		}
