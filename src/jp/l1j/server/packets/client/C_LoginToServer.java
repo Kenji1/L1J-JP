@@ -33,8 +33,6 @@ import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.GetBackRestartTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.model.Getback;
-import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1Cube;
@@ -42,6 +40,8 @@ import jp.l1j.server.model.L1CurseParalysis;
 import jp.l1j.server.model.L1PolyMorph;
 import jp.l1j.server.model.L1War;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.item.executor.L1ExtraPotion;
 import jp.l1j.server.model.item.executor.L1FloraPotion;
 import jp.l1j.server.model.poison.L1DamagePoison;
@@ -79,7 +79,6 @@ import jp.l1j.server.packets.server.S_SkillIconBlessOfEva;
 import jp.l1j.server.packets.server.S_SkillIconGFX;
 import jp.l1j.server.packets.server.S_SkillIconThirdSpeed;
 import jp.l1j.server.packets.server.S_SkillIconWisdomPotion;
-import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.packets.server.S_SpMr;
 import jp.l1j.server.packets.server.S_Strup;
 import jp.l1j.server.packets.server.S_SummonPack;
@@ -240,6 +239,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		skills(pc);
 		buff(client, pc);
 		buffBlessOfAin(pc); // アインハザードの祝福
+		pc.setServivalScream(); // TODO 生存の叫び
 
 		pc.sendPackets(new S_ActiveSpells(pc));
 
@@ -250,7 +250,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			pc.setDead(true);
 			pc.setStatus(ActionCodes.ACTION_Die);
 		}
-
+		
 		if (pc.getLevel() >= 51 && pc.getLevel() - 50 > pc.getBonusStats()) {
 			if ((pc.getBaseStr() + pc.getBaseDex() + pc.getBaseCon()
 					+ pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < 210) {

@@ -15,6 +15,7 @@
 
 package jp.l1j.server.packets.client;
 
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
@@ -24,6 +25,9 @@ import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_ServerMessage;
+import jp.l1j.server.packets.server.S_SkillSound;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
 
 // Referenced classes of package jp.l1j.server.clientpackets:
 // ClientBasePacket
@@ -32,6 +36,8 @@ public class C_Rank extends ClientBasePacket {
 
 	private static final String C_RANK = "[C] C_Rank";
 	private static Logger _log = Logger.getLogger(C_Rank.class.getName());
+	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
+	private static Calendar _cal = Calendar.getInstance();
 
 	public C_Rank(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
@@ -140,12 +146,99 @@ public class C_Rank extends ClientBasePacket {
 			pc.sendPackets(new S_ServerMessage(74, "同盟加入"));
 		} else if (data == 4) {
 			pc.sendPackets(new S_ServerMessage(74, "同盟脱退"));
-		} else if (data == 0x09){ // マップタイマーの残り時間を表示
+		} else if (data == 5) { // TODO 生存の叫び(CTRL+E)
+			if (pc.getWeapon() == null) {
+				pc.sendPackets(new S_ServerMessage(1973));
+				// TODO \F2武器を装着すると使用できます。
+				return;
+			}
+			if (pc.getCurrentHp() >= pc.getMaxHp()) {
+				pc.sendPackets(new S_ServerMessage(1974));
+				// TODO 生存の叫びは、まだ使用できません。。 
+				return;
+			}
+			if (pc.getFood() >= 225) { // 満腹時
+				int addHp = 0;
+				int gfxId1 = 8907; // TODO 本来のsprが不明（要調査）
+				int gfxId2 = 8683;
+				long time = pc.getServivalScream();
+				long curTime = _cal.getTimeInMillis() / 1000; // 秒
+				int n = (int) ((curTime - time) / 60); // 分
+				if (n <= 0) {
+					pc.sendPackets(new S_ServerMessage(1974));
+					// 生存の叫びは、まだ使用できません。
+					return;
+				} else if (n >= 1 && n <= 29) {
+					addHp = (int) (pc.getMaxHp() * (n / 100.0D));
+					// 1分につき、1%のHP回復
+				} else if (n >= 30) {
+					int lv = pc.getWeapon().getEnchantLevel();
+					if (lv <= 6) { // TODO マイナス強化の場合、本来の動作が不明
+						gfxId1 = 8907;
+						gfxId2 = 8684;
+						addHp = (int) (pc.getMaxHp() * ((20 + _random.nextInt(20)) / 100.0D));
+						// 20%～40%のHP回復
+					} else if (lv == 7 || lv == 8){
+						gfxId1 = 8909;
+						gfxId2 = 8685;
+						addHp = (int) (pc.getMaxHp() * ((30 + _random.nextInt(20)) / 100.0D));
+						// 30%～50%のHP回復
+					} else if (lv == 9 || lv == 10) {
+						gfxId1 = 8910;
+						gfxId2 = 8773; // TODO 本来のsprが不明（要調査）
+						addHp = (int) (pc.getMaxHp() * ((50 + _random.nextInt(10)) / 100.0D));
+						// 50%～60%の回復
+					} else if (lv  >= 11) {
+						gfxId1 = 8908;
+						gfxId2 = 8686;
+						addHp = (int) (pc.getMaxHp() * (0.7));
+						// 70%のHP回復
+					}
+					
+					S_SkillSound spr1 = new S_SkillSound(pc.getId(), gfxId1);
+					S_SkillSound spr2 = new S_SkillSound(pc.getId(), gfxId2);
+					pc.sendPackets(spr1);
+					pc.broadcastPacket(spr1);
+					pc.sendPackets(spr2);
+					pc.broadcastPacket(spr2);
+				}
+				
+				if (addHp != 0) {
+					pc.setFood(0);
+					pc.sendPackets(new S_PacketBox(S_PacketBox.FOOD, (short) 0));
+					pc.setCurrentHp(pc.getCurrentHp() + addHp);
+				}
+			}
+		} else if (data == 6) { // TODO 生存の叫び(Alt+0)
+			int gfx = 8683;
+			long time = pc.getServivalScream();
+			long curTime = _cal.getTimeInMillis() / 1000; // 秒
+			int n = (int) ((curTime - time) / 60); // 分	
+			if (pc.getWeapon() == null) {
+				pc.sendPackets(new S_ServerMessage(1973));
+				// TODO \F2武器を装着すると使用できます。  
+				return;
+			}
+			if (n >= 30) {
+				int lv = pc.getWeapon().getEnchantLevel();
+				if (lv <= 6) { // TODO マイナス強化の場合、本来の動作が不明
+					gfx = 8684;
+				} else if (lv >= 7 && lv <= 8){
+					gfx = 8685;
+				} else if (lv >= 9 && lv <= 10) {
+					gfx = 8686; // TODO 本来のsprが不明（要調査）
+				} else if (lv  >= 11) {
+					gfx = 8686;
+				}
+			}
+			S_SkillSound spr = new S_SkillSound(pc.getId(), gfx);
+			pc.sendPackets(spr);
+			pc.broadcastPacket(spr);
+		} else if (data == 9){ // マップタイマーの残り時間を表示
 			pc.sendPackets(new S_PacketBox(S_PacketBox.DISPLAY_MAP_TIME ,
 					pc.getEnterTime(53), // ギラン監獄
 					pc.getEnterTime(78), // 象牙の塔
 					pc.getEnterTime(451))); // ラスタバドダンジョン
-		} else {
 		}
 	}
 

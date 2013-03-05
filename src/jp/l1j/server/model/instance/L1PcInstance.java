@@ -18,6 +18,7 @@ package jp.l1j.server.model.instance;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -2628,6 +2629,7 @@ public class L1PcInstance extends L1Character {
 	@Override
 	public void setFood(int i) {
 		_food = i;
+		setServivalScream(); // TODO 生存の叫び
 	}
 
 	public L1EquipmentSlot getEquipSlot() {
@@ -3160,6 +3162,7 @@ public class L1PcInstance extends L1Character {
 		_safecount = i;
 	}
 
+	// アインハザードの祝福
 	private int _blessOfAin;
 
 	public void setBlessOfAin(int i) {
@@ -3178,6 +3181,26 @@ public class L1PcInstance extends L1Character {
 		return _blessOfAin;
 	}
 
+	// TODO 生存の叫び start
+	private long _servivalScream;
+
+	public long getServivalScream() {
+		return _servivalScream;
+	}
+
+	public void setServivalScream() {
+		if (getFood() >= 225) { // 満腹
+			final Calendar cal = Calendar.getInstance();
+			long time = cal.getTimeInMillis() / 1000;
+			setServivalScream(time);
+		}
+	}
+	
+	public void setServivalScream(long time) {
+		_servivalScream = time;
+	}
+	// TODO 生存の叫び end
+	
 	@Override
 	public int getMagicLevel() {
 		return getClassFeature().getMagicLevel(getLevel());
