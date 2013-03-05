@@ -159,7 +159,7 @@ public class C_Rank extends ClientBasePacket {
 			}
 			if (pc.getFood() >= 225) { // 満腹時
 				int addHp = 0;
-				int gfxId1 = 8907; // TODO 本来のsprが不明（要調査）
+				int gfxId1 = 744;
 				int gfxId2 = 8683;
 				long time = pc.getServivalScream();
 				long curTime = _cal.getTimeInMillis() / 1000; // 秒
@@ -185,7 +185,7 @@ public class C_Rank extends ClientBasePacket {
 						// 30%～50%のHP回復
 					} else if (lv == 9 || lv == 10) {
 						gfxId1 = 8910;
-						gfxId2 = 8773; // TODO 本来のsprが不明（要調査）
+						gfxId2 = 8773;
 						addHp = (int) (pc.getMaxHp() * ((50 + _random.nextInt(10)) / 100.0D));
 						// 50%～60%の回復
 					} else if (lv  >= 11) {
@@ -226,7 +226,7 @@ public class C_Rank extends ClientBasePacket {
 				} else if (lv >= 7 && lv <= 8){
 					gfx = 8685;
 				} else if (lv >= 9 && lv <= 10) {
-					gfx = 8686; // TODO 本来のsprが不明（要調査）
+					gfx = 8773;
 				} else if (lv  >= 11) {
 					gfx = 8686;
 				}
