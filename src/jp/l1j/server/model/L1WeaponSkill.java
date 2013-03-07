@@ -395,7 +395,7 @@ public class L1WeaponSkill {
 		return calcDamageReduction(pc, cha, dmg, 0);
 	}
 
-	public static double getAreaSkillWeaponDamage(L1PcInstance pc,
+/*	public static double getAreaSkillWeaponDamage(L1PcInstance pc,
 			L1Character cha, int weaponId) {
 		double dmg = 0;
 		int probability = 0;
@@ -500,38 +500,7 @@ public class L1WeaponSkill {
 		}
 		return calcDamageReduction(pc, cha, dmg, attr);
 	}
-
-	public static double getLightningEdgeDamage(L1PcInstance pc, L1Character cha) {
-		double dmg = 0;
-		int chance = _random.nextInt(100) + 1;
-		if (4 >= chance) {
-			int sp = pc.getSp();
-			int intel = pc.getInt();
-			double bsk = 0;
-			if (pc.hasSkillEffect(BERSERKERS)) {
-				bsk = 0.2;
-			}
-			dmg = (intel + sp) * (2 + bsk) + _random.nextInt(intel + sp) * 2;
-
-			pc.sendPackets(new S_SkillSound(cha.getId(), 10));
-			pc.broadcastPacket(new S_SkillSound(cha.getId(), 10));
-		}
-		return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WIND);
-	}
-
-	public static void giveArkMageDiseaseEffect(L1PcInstance pc, L1Character cha) {
-		int chance = _random.nextInt(1000) + 1;
-		int probability = (5 - ((cha.getMr() / 10) * 5)) * 10;
-		if (probability == 0) {
-			probability = 10;
-		}
-		if (probability >= chance) {
-			L1SkillUse l1skilluse = new L1SkillUse();
-			l1skilluse.handleCommands(pc, 56, cha.getId(), cha.getX(), cha
-					.getY(), null, 0, L1SkillUse.TYPE_GMBUFF);
-		}
-	}
-
+*/
 	public static void getMaliceWeaponDamage(L1PcInstance pc, L1Character cha,
 			L1ItemInstance weapon) {
 		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
@@ -734,11 +703,190 @@ public class L1WeaponSkill {
 		}
 	}
 
+	//* 2012魔法武器リニューアル
+	public static double getRagingWindDamage(L1PcInstance pc, L1Character cha, L1ItemInstance weapon) {
+		// 2012リニューアル対応 レイジングウィンド
+		double dmg = 0;
+		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
+		int intel = pc.getInt();
+		int sp = pc.getSp();
+		if (_random.nextInt(100) + 1 <= chance) {
+			double bsk = 0;
+			if (pc.hasSkillEffect(BERSERKERS)) {
+				bsk = 0.2;
+			}
+			dmg = (intel + sp) * (2 + bsk) + _random.nextInt(intel + sp) * 2;
+
+			pc.sendPackets(new S_SkillSound(cha.getId(), 5524));
+			pc.broadcastPacket(new S_SkillSound(cha.getId(), 5524));
+		}
+	return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WIND);
+	}
+
+	public static double getFreezingLancerDamage(L1PcInstance pc, L1Character cha, L1ItemInstance weapon) {
+		// 2012リニューアル対応 フリージングランサー
+		double dmg = 0;
+		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
+		int intel = pc.getInt();
+		int sp = pc.getSp();
+		if (_random.nextInt(100) + 1 <= chance) {
+			double bsk = 0;
+			if (pc.hasSkillEffect(BERSERKERS)) {
+				bsk = 0.2;
+			}
+			dmg = (intel + sp) * (2 + bsk) + _random.nextInt(intel + sp) * 2;
+
+			pc.sendPackets(new S_SkillSound(cha.getId(), 6012));
+			pc.broadcastPacket(new S_SkillSound(cha.getId(), 6012));
+		}
+	return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WATER);
+	}
+
+	public static double getLightningEdgeDamage(L1PcInstance pc, L1Character cha, L1ItemInstance weapon) {
+		// 2012リニューアル対応 ライトニングエッジ
+		double dmg = 0;
+		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
+		int intel = pc.getInt();
+		int sp = pc.getSp();
+		if (_random.nextInt(100) + 1 <= chance) {
+			double bsk = 0;
+			if (pc.hasSkillEffect(BERSERKERS)) {
+				bsk = 0.2;
+			}
+			dmg = (intel + sp) * (2 + bsk) + _random.nextInt(intel + sp) * 2;
+
+			pc.sendPackets(new S_SkillSound(cha.getId(), 3940));
+			pc.broadcastPacket(new S_SkillSound(cha.getId(), 3940));
+		}
+	return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WIND);
+	}
+
+	public static void giveAngelStaffTurnUndead(L1PcInstance pc, L1Character cha, // 2012リニューアル対応
+			L1ItemInstance weapon) {
+		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
+		if (_random.nextInt(100) + 1 <= chance) {
+			if (weapon.getItemId() == 261) { // エンジェルスタッフ（旧アークメイジスタッフ）
+				L1SkillUse l1skilluse = new L1SkillUse();
+				l1skilluse.handleCommands(pc,
+						TURN_UNDEAD, // ターンアンデッド
+						cha.getId(), cha.getX(), cha.getY(), null, 0,
+						L1SkillUse.TYPE_GMBUFF);
+			}
+		}
+	}
+	public static double getAngelSlayerWeaponDamage(L1PcInstance pc, L1Character cha,
+			L1ItemInstance weapon) {
+		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
+				double dmg = 0;
+				int dex = pc.getDex();
+				int intel = pc.getInt();
+				int sp = pc.getSp();
+		if (_random.nextInt(100) + 1 <= chance) {
+			if (weapon.getItemId() == 704) { // エンジェルスレイヤー
+				dmg = (dex) + _random.nextInt(intel + sp) * 2;
+			}
+				pc.sendPackets(new S_SkillSound(cha.getId(), 9361));
+				pc.broadcastPacket(new S_SkillSound(cha.getId(), 9361));
+			}
+		return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WIND);
+	}
+
+	public static double getIceWeaponDamage(L1PcInstance pc, L1Character cha,
+			L1ItemInstance weapon) {
+		double dmg = 0;
+		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
+
+		if (_random.nextInt(100) + 1 <= chance) {
+			if (weapon.getItemId() == 701) { // 極寒のキーリンク
+				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
+						MIND_BREAK); // マインドブレイク
+				L1Magic magic = new L1Magic(pc, cha);
+
+				pc.sendPackets(new S_SkillSound(cha.getId(), l1skills
+						.getCastGfx()));
+				pc.broadcastPacket(new S_SkillSound(cha.getId(), l1skills
+						.getCastGfx()));
+
+				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+
+				if (cha instanceof L1PcInstance) {
+					L1PcInstance targetPc = (L1PcInstance) cha;
+					targetPc.receiveDamage(pc, damage, false);
+				} else if (cha instanceof L1NpcInstance) {
+					L1NpcInstance targetNpc = (L1NpcInstance) cha;
+					targetNpc.receiveDamage(pc, damage);
+				}
+
+			} else if (weapon.getItemId() == 702) { // 極寒のチェーンソード
+				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
+						ICE_ERUPTION); // アイスイラプション
+				L1Magic magic = new L1Magic(pc, cha);
+
+				pc.sendPackets(new S_SkillSound(cha.getId(), l1skills
+						.getCastGfx()));
+				pc.broadcastPacket(new S_SkillSound(cha.getId(), l1skills
+						.getCastGfx()));
+
+				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+
+				if (cha instanceof L1PcInstance) {
+					L1PcInstance targetPc = (L1PcInstance) cha;
+					targetPc.receiveDamage(pc, damage, false);
+				} else if (cha instanceof L1NpcInstance) {
+					L1NpcInstance targetNpc = (L1NpcInstance) cha;
+					targetNpc.receiveDamage(pc, damage);
+				}
+			}
+		}
+		return   calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WATER);
+	}
+
+	public static double getIceQueenStaffDamage(L1PcInstance pc, L1Character cha,
+			L1ItemInstance weapon) {
+		double dmg = 0;
+		int chance = weapon.getEnchantLevel() + 2; // 発動確率は2+強化数%
+
+		if (_random.nextInt(100) + 1 <= chance) {
+			if (weapon.getItemId() == 703 || weapon.getItemId() == 121) { // アイスクーンスタッフ（リニューアル）
+				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
+						CONE_OF_COLD); // コーンオブコールド
+				L1Magic magic = new L1Magic(pc, cha);
+
+				pc.sendPackets(new S_SkillSound(cha.getId(), 1810));
+				pc.broadcastPacket(new S_SkillSound(cha.getId(), (1810)));
+
+				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+
+				if (cha instanceof L1PcInstance) {
+					L1PcInstance targetPc = (L1PcInstance) cha;
+					targetPc.receiveDamage(pc, damage, false);
+				} else if (cha instanceof L1NpcInstance) {
+					L1NpcInstance targetNpc = (L1NpcInstance) cha;
+					targetNpc.receiveDamage(pc, damage);
+				}
+
+			}
+		}
+		return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WATER);
+	}
+
+	public static void giveArkMageDiseaseEffect(L1PcInstance pc, L1Character cha) {
+		int chance = _random.nextInt(1000) + 1;
+		int probability = (5 - ((cha.getMr() / 10) * 5)) * 10;
+		if (probability == 0) {
+			probability = 10;
+		}
+		if (probability >= chance) {
+			L1SkillUse l1skilluse = new L1SkillUse();
+			l1skilluse.handleCommands(pc, 56, cha.getId(), cha.getX(), cha
+					.getY(), null, 0, L1SkillUse.TYPE_GMBUFF);
+		}
+	}
+
 	public static double getVenomBlazeDamage(L1PcInstance pc, L1Character cha, L1ItemInstance weapon) {
 		// ベノムブレイズ
 		double dmg = 0;
 		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
-		int dex = pc.getDex();
 		int intel = pc.getInt();
 		int sp = pc.getSp();
 		if (_random.nextInt(100) + 1 <= chance) {
@@ -778,6 +926,34 @@ public class L1WeaponSkill {
 				npc.broadcastPacket(new S_SkillSound(npc.getId(), 4184));
 			}
 		}
+	}
+
+	public static double getKurtzWeaponDamage(L1PcInstance pc, L1Character cha,
+			L1ItemInstance weapon) {
+		double dmg = 0;
+		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
+
+		if (_random.nextInt(100) + 1 <= chance) {
+			if (weapon.getItemId() == 15) { // カーツソード（リニューアル）
+				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
+						CALL_LIGHTNING); // コールライトニング
+				L1Magic magic = new L1Magic(pc, cha);
+
+				pc.sendPackets(new S_SkillSound(cha.getId(), 10));
+				pc.broadcastPacket(new S_SkillSound(cha.getId(), (10)));
+
+				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+
+				if (cha instanceof L1PcInstance) {
+					L1PcInstance targetPc = (L1PcInstance) cha;
+					targetPc.receiveDamage(pc, damage, false);
+				} else if (cha instanceof L1NpcInstance) {
+					L1NpcInstance targetNpc = (L1NpcInstance) cha;
+					targetNpc.receiveDamage(pc, damage);
+				}
+			}
+		}
+		return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WATER);
 	}
 
 	public static double calcDamageReduction(L1PcInstance pc, L1Character cha,

@@ -932,6 +932,8 @@ public class L1Attack {
 			_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 3398));
 		}
 
+		weaponTotalDamage += calcPcPcAttrDamage(); // 属性強化ダメージボーナス
+
 		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
 				&& (_weaponType == 54 || _weaponType == 58)) {
 			if ((_random.nextInt(100) + 1) <= 33) {
@@ -941,6 +943,11 @@ public class L1Attack {
 
 		if (_weaponId == 262 && _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率
 			// (暫定)75%
+			weaponTotalDamage += calcDestruction(weaponTotalDamage);
+		}
+
+		if (_weaponId == 702  && _random.nextInt(100) + 1 <= 70) {
+			// 極寒のチェーンソード装備かつ成功確率 (暫定)70%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
@@ -974,25 +981,37 @@ public class L1Attack {
 		dmg = calcBuffDamage(dmg);
 
 		if (_weaponId == 124) { // バフォメットスタッフ
-			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
+			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _targetPc);
 		} else if (_weaponId == 2 || _weaponId == 200002) { // ダイスダガー
 			dmg = L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
 		} else if (_weaponId == 204 || _weaponId == 100204) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetPc);
+		} else if (_weaponId == 260) { // レイジングウィンド
+			dmg += L1WeaponSkill.getRagingWindDamage(_pc, _targetPc, weapon);
 		} else if (_weaponId == 264) { // ライトニングエッジ
-			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target);
-		} else if (_weaponId == 260 || _weaponId == 263) { // レイジングウィンド、フリージングランサー
-			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
-					_weaponId);
-		} else if (_weaponId == 261) { // アークメイジスタッフ
-			L1WeaponSkill.giveArkMageDiseaseEffect(_pc, _target);
+			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _targetPc, weapon);
+		} else if (_weaponId == 263) { // フリージングランサー
+			dmg += L1WeaponSkill.getFreezingLancerDamage(_pc, _targetPc, weapon);
+		} else if (_weaponId == 261) { // エンジェルスタッフ
+			L1WeaponSkill.giveAngelStaffTurnUndead(_pc, _targetPc, weapon);
+		} else if ((_weaponId == 704) || (_weaponId == 191)) { // エンジェルスレイヤー
+			dmg += L1WeaponSkill.getAngelSlayerWeaponDamage(_pc, _target, weapon);
 		} else if (_weaponId == 276 || _weaponId == 277 || _weaponId == 278
 				|| _weaponId == 279 || _weaponId == 280 || _weaponId == 281) { // マリスエレメント武器
-			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
+			L1WeaponSkill.getMaliceWeaponDamage(_pc, _targetPc, weapon);
+		} else {
+			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
+		}
+		if ((_weaponId == 701 || _weaponId == 702)) { //極寒シリーズ
+			L1WeaponSkill.getIceWeaponDamage(_pc, _targetPc, weapon);
+		} else if (_weaponId == 121 || _weaponId == 703) { //アイスクイーンスタッフ
+			L1WeaponSkill.getIceQueenStaffDamage(_pc, _targetPc, weapon);
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
 		} else if (_weaponId == 707) { //破壊のロングボウ
 			L1WeaponSkill.getVenomBlazeDamage(_pc, _targetPc, _arrow);
+		} else if (_weaponId == 15) { //カーツソード リニューアル
+			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
 		} else if (_weaponType2 != 14) {
 			// キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
@@ -1141,6 +1160,27 @@ public class L1Attack {
 		return (int) dmg;
 	}
 
+	private int calcPcPcAttrDamage() {
+
+		int weaponAttrDamage = 0;
+
+		calcAttrEnchantDmg(); // 属性強化ダメージボーナス
+		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
+				&& (_weaponType == 54 || _weaponType == 58)) {
+			if ((_random.nextInt(100) + 1) <= 33) {
+				weaponAttrDamage *= 2;
+			}
+		}
+
+		double dmg = 0;
+		dmg = calcBuffDamage(dmg);
+
+
+			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
+
+		return weaponAttrDamage;
+	}
+
 	// ●●●● プレイヤー から ＮＰＣ へのダメージ算出 ●●●●
 	private int calcPcNpcDamage() {
 
@@ -1184,6 +1224,8 @@ public class L1Attack {
 
 		int weaponTotalDamage = weaponDamage + _weaponAddDmg + _weaponEnchant;
 
+		weaponTotalDamage += calcPcNpcAttrDamage(); // 属性強化ダメージ
+
 		weaponTotalDamage += calcMaterialBlessDmg(); // 銀祝福ダメージボーナス
 		if (_weaponType == 54
 				&& (_random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // ダブルヒット
@@ -1202,6 +1244,11 @@ public class L1Attack {
 
 		if (_weaponId == 262 && _random.nextInt(100) + 1 <= 75) {
 			// ディストラクション装備かつ成功確率 (暫定)75%
+			weaponTotalDamage += calcDestruction(weaponTotalDamage);
+		}
+
+		if (_weaponId == 702  && _random.nextInt(100) + 1 <= 70) {
+			// 極寒のチェーンソード装備かつ成功確率 (暫定)70%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
@@ -1251,24 +1298,38 @@ public class L1Attack {
 
 		if (_weaponId == 124) { // バフォメットスタッフ
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
+		} else if (_weaponId == 2 || _weaponId == 200002) { // ダイスダガー
+			dmg = L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
 		} else if (_weaponId == 204 || _weaponId == 100204) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetNpc);
+		} else if (_weaponId == 260) { // レイジングウィンド
+			dmg += L1WeaponSkill.getRagingWindDamage(_pc, _target, weapon);
 		} else if (_weaponId == 264) { // ライトニングエッジ
-			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target);
-		} else if (_weaponId == 260 || _weaponId == 263) { // レイジングウィンド、フリージングランサー
-			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
-					_weaponId);
-		} else if (_weaponId == 261) { // アークメイジスタッフ
-			L1WeaponSkill.giveArkMageDiseaseEffect(_pc, _target);
+			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target, weapon);
+		} else if (_weaponId == 263) { // フリージングランサー
+			dmg += L1WeaponSkill.getFreezingLancerDamage(_pc, _target, weapon);
+		} else if (_weaponId == 261) { // エンジェルスタッフ
+			L1WeaponSkill.giveAngelStaffTurnUndead(_pc, _target, weapon);
+		} else if ((_weaponId == 704) || (_weaponId == 191)) { // エンジェルスレイヤー
+			dmg += L1WeaponSkill.getAngelSlayerWeaponDamage(_pc, _target, weapon);
 		} else if (_weaponId == 276 || _weaponId == 277 || _weaponId == 278
 				|| _weaponId == 279 || _weaponId == 280 || _weaponId == 281) { // マリスエレメント武器
 			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
+		} else {
+			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
+		}
+		if ((_weaponId == 701 || _weaponId == 702)) { //極寒シリーズ
+			L1WeaponSkill.getIceWeaponDamage(_pc, _target, weapon);
+		} else if (_weaponId == 121 || _weaponId == 703) { //アイスクイーンスタッフ
+			L1WeaponSkill.getIceQueenStaffDamage(_pc, _target, weapon);
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
 		} else if (_weaponId == 707) { //破壊のロングボウ
 			L1WeaponSkill.getVenomBlazeDamage(_pc, _target, _arrow);
-
-		} else if (_weaponType2 != 14) { // キーリング以外の武器にＤＢでスキルが設定されている場合
+		} else if (_weaponId == 15) { //カーツソード リニューアル
+			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
+		} else if (_weaponType2 != 14) {
+			// キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
 		}
 
@@ -1398,6 +1459,24 @@ public class L1Attack {
 
 
 		return (int) dmg;
+	}
+
+	private int calcPcNpcAttrDamage() {
+
+		int weaponAttrDamage = 0;
+
+		calcAttrEnchantDmg(); // 属性強化ダメージボーナス
+		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
+				&& (_weaponType == 54 || _weaponType == 58)) {
+			if ((_random.nextInt(100) + 1) <= 33) {
+				weaponAttrDamage *= 2;
+			}
+		}
+
+		double dmg = 0;
+		dmg = calcBuffDamage(dmg);
+
+		return weaponAttrDamage;
 	}
 
 	// ●●●● ＮＰＣ から プレイヤー へのダメージ算出 ●●●●
