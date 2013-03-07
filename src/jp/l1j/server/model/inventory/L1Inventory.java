@@ -712,6 +712,64 @@ public class L1Inventory extends L1Object {
 		return null;
 	}
 
+	/**
+	 * エンチャント済みのアイテムを供給
+	 * @param id
+	 * @param enchant
+	 * @param count
+	 * @return
+	 */
+	public final boolean getEnchantItem(L1PcInstance pc, final int id, final int enchant, final int count) {
+
+		L1Item temp = ItemTable.getInstance().getTemplate(id);
+		int isId = 0;
+
+		if (temp != null) {
+			if (temp.isStackable()) {
+				L1ItemInstance item = ItemTable.getInstance().createItem(
+						id);
+				item.setEnchantLevel(0);
+				item.setCount(count);
+				if (isId == 1) {
+					item.setIdentified(true);
+				}
+				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
+					pc.getInventory().storeItem(item);
+					pc.sendPackets(new S_ServerMessage(403, // %0を手に入れました。
+							item.getLogName()));
+				}
+			} else {
+				L1ItemInstance item = null;
+				int createCount;
+				for (createCount = 0; createCount < count; createCount++) {
+					item = ItemTable.getInstance().createItem(id);
+					item.setEnchantLevel(enchant);
+					if (isId == 1) {
+						item.setIdentified(true);
+					}
+					if (pc.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {
+						pc.getInventory().storeItem(item);
+						if (item.getItem().getType2() == 1
+								|| item.getItem().getType2() == 2) {
+							item.setIsHaste(item.getItem().isHaste());
+							if (item.getItem().getType2() == 1) {
+								item.setCanBeDmg(item.getItem().getCanbeDmg());
+							}
+							item.save();
+						}
+					} else {
+						break;
+					}
+				}
+				if (createCount > 0) {
+					pc.sendPackets(new S_ServerMessage(403, // %0を手に入れました。
+							item.getLogName()));
+				}
+			}
+		}
+		return false;
+	}
+
 	// オーバーライド用
 	public void loadItems() {
 	}

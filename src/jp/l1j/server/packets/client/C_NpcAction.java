@@ -5744,7 +5744,532 @@ public class C_NpcAction extends ClientBasePacket {
 				}
 			}
 		}
+/* // 武器交換NPCの前準備
+		// ゾウのラヴァゴーレム
+		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 99267) {
 
+			L1ItemInstance item = null;
+			int createJoeItem = 0;
+			int createJoeCount = 0;
+
+
+			if (s.equalsIgnoreCase("A8")) { // +8マナバゼラート
+				if ((pc.getInventory().checkEnchantItem(37,9,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,9,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,9,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,9,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,9,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,9,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,9,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 259, 8, 1); // マナバゼラート
+					if (pc.getInventory().consumeEnchantItem(37,9,1)
+					||pc.getInventory().consumeEnchantItem(42,9,1)
+					||pc.getInventory().consumeEnchantItem(41,9,1)
+					||pc.getInventory().consumeEnchantItem(52,9,1)
+					||pc.getInventory().consumeEnchantItem(180,9,1)
+					||pc.getInventory().consumeEnchantItem(181,9,1)
+					||pc.getInventory().consumeEnchantItem(131,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					htmlid = "joegolem9";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("A7")) { // +7マナバゼラート
+				if ((pc.getInventory().checkEnchantItem(37,8,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,8,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,8,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,8,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,8,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,8,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,8,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 259, 7, 1); // マナバゼラート
+					if (pc.getInventory().consumeEnchantItem(37,8,1)
+					||pc.getInventory().consumeEnchantItem(42,8,1)
+					||pc.getInventory().consumeEnchantItem(41,8,1)
+					||pc.getInventory().consumeEnchantItem(52,8,1)
+					||pc.getInventory().consumeEnchantItem(180,8,1)
+					||pc.getInventory().consumeEnchantItem(181,8,1)
+					||pc.getInventory().consumeEnchantItem(131,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					htmlid = "joegolem9";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("B8")) { // +8レイジングウィンド
+				if ((pc.getInventory().checkEnchantItem(37,9,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,9,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,9,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,9,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,9,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,9,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,9,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 260, 8, 1); // レイジングウィンド
+					if (pc.getInventory().consumeEnchantItem(37,9,1)
+					||pc.getInventory().consumeEnchantItem(42,9,1)
+					||pc.getInventory().consumeEnchantItem(41,9,1)
+					||pc.getInventory().consumeEnchantItem(52,9,1)
+					||pc.getInventory().consumeEnchantItem(180,9,1)
+					||pc.getInventory().consumeEnchantItem(181,9,1)
+					||pc.getInventory().consumeEnchantItem(131,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					htmlid = "joegolem10";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("B7")) { // +7レイジングウィンド
+				if ((pc.getInventory().checkEnchantItem(37,8,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,8,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,8,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,8,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,8,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,8,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,8,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 260, 7, 1); // レイジングウィンド
+					if (pc.getInventory().consumeEnchantItem(37,8,1)
+					||pc.getInventory().consumeEnchantItem(42,8,1)
+					||pc.getInventory().consumeEnchantItem(41,8,1)
+					||pc.getInventory().consumeEnchantItem(52,8,1)
+					||pc.getInventory().consumeEnchantItem(180,8,1)
+					||pc.getInventory().consumeEnchantItem(181,8,1)
+					||pc.getInventory().consumeEnchantItem(131,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					htmlid = "joegolem10";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("C8")) { // +8ディストラクション
+				if ((pc.getInventory().checkEnchantItem(37,9,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,9,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,9,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,9,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,9,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,9,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,9,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 262, 8, 1); // ディストラクション
+					if (pc.getInventory().consumeEnchantItem(37,9,1)
+					||pc.getInventory().consumeEnchantItem(42,9,1)
+					||pc.getInventory().consumeEnchantItem(41,9,1)
+					||pc.getInventory().consumeEnchantItem(52,9,1)
+					||pc.getInventory().consumeEnchantItem(180,9,1)
+					||pc.getInventory().consumeEnchantItem(181,9,1)
+					||pc.getInventory().consumeEnchantItem(131,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					htmlid = "joegolem11";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("C7")) { // +7ディストラクション
+				if ((pc.getInventory().checkEnchantItem(37,8,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,8,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,8,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,8,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,8,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,8,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,8,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 262, 7, 1); // ディストラクション
+					if (pc.getInventory().consumeEnchantItem(37,8,1)
+					||pc.getInventory().consumeEnchantItem(42,8,1)
+					||pc.getInventory().consumeEnchantItem(41,8,1)
+					||pc.getInventory().consumeEnchantItem(52,8,1)
+					||pc.getInventory().consumeEnchantItem(180,8,1)
+					||pc.getInventory().consumeEnchantItem(181,8,1)
+					||pc.getInventory().consumeEnchantItem(131,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					htmlid = "joegolem11";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("D8")) { // +8エンジェルスタッフ
+				if ((pc.getInventory().checkEnchantItem(37,9,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,9,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,9,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,9,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,9,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,9,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,9,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 261, 8, 1); // エンジェルスタッフ
+					if (pc.getInventory().consumeEnchantItem(37,9,1)
+					||pc.getInventory().consumeEnchantItem(42,9,1)
+					||pc.getInventory().consumeEnchantItem(41,9,1)
+					||pc.getInventory().consumeEnchantItem(52,9,1)
+					||pc.getInventory().consumeEnchantItem(180,9,1)
+					||pc.getInventory().consumeEnchantItem(181,9,1)
+					||pc.getInventory().consumeEnchantItem(131,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					htmlid = "joegolem12";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("D7")) { // +7エンジェルスタッフ
+				if ((pc.getInventory().checkEnchantItem(37,8,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,8,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,8,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,8,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,8,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,8,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,8,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					if (pc.getInventory().consumeEnchantItem(37,9,1)
+					||pc.getInventory().consumeEnchantItem(42,9,1)
+					||pc.getInventory().consumeEnchantItem(41,9,1)
+					||pc.getInventory().consumeEnchantItem(52,9,1)
+					||pc.getInventory().consumeEnchantItem(180,9,1)
+					||pc.getInventory().consumeEnchantItem(181,9,1)
+					||pc.getInventory().consumeEnchantItem(131,9,1)) {
+						;
+					}
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 261, 7, 1); // エンジェルスタッフ
+					if (pc.getInventory().consumeEnchantItem(37,8,1)
+					||pc.getInventory().consumeEnchantItem(42,8,1)
+					||pc.getInventory().consumeEnchantItem(41,8,1)
+					||pc.getInventory().consumeEnchantItem(52,8,1)
+					||pc.getInventory().consumeEnchantItem(180,8,1)
+					||pc.getInventory().consumeEnchantItem(181,8,1)
+					||pc.getInventory().consumeEnchantItem(131,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					htmlid = "joegolem12";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("E8")) { // +8フリージングランサー
+				if ((pc.getInventory().checkEnchantItem(37,9,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,9,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,9,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,9,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,9,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,9,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,9,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 263, 8, 1); // フリージングランサー
+					if (pc.getInventory().consumeEnchantItem(37,9,1)
+					||pc.getInventory().consumeEnchantItem(42,9,1)
+					||pc.getInventory().consumeEnchantItem(41,9,1)
+					||pc.getInventory().consumeEnchantItem(52,9,1)
+					||pc.getInventory().consumeEnchantItem(180,9,1)
+					||pc.getInventory().consumeEnchantItem(181,9,1)
+					||pc.getInventory().consumeEnchantItem(131,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					htmlid = "joegolem13";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("E7")) { // +7フリージングランサー
+				if ((pc.getInventory().checkEnchantItem(37,8,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,8,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,8,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,8,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,8,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,8,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,8,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 263, 7, 1); // フリージングランサー
+					if (pc.getInventory().consumeEnchantItem(37,8,1)
+					||pc.getInventory().consumeEnchantItem(42,8,1)
+					||pc.getInventory().consumeEnchantItem(41,8,1)
+					||pc.getInventory().consumeEnchantItem(52,8,1)
+					||pc.getInventory().consumeEnchantItem(180,8,1)
+					||pc.getInventory().consumeEnchantItem(181,8,1)
+					||pc.getInventory().consumeEnchantItem(131,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					htmlid = "joegolem13";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("F8")) { // +8ライトニングエッジ
+				if ((pc.getInventory().checkEnchantItem(37,9,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,9,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,9,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,9,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,9,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,9,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,9,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 264, 8, 1); // ライトニングエッジ
+					if (pc.getInventory().consumeEnchantItem(37,9,1)
+					||pc.getInventory().consumeEnchantItem(42,9,1)
+					||pc.getInventory().consumeEnchantItem(41,9,1)
+					||pc.getInventory().consumeEnchantItem(52,9,1)
+					||pc.getInventory().consumeEnchantItem(180,9,1)
+					||pc.getInventory().consumeEnchantItem(181,9,1)
+					||pc.getInventory().consumeEnchantItem(131,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					htmlid = "joegolem14";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("F7")) { // +7ライトニングエッジ
+				if ((pc.getInventory().checkEnchantItem(37,8,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,8,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,8,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,8,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,8,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,8,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,8,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 264, 7, 1); // ライトニングエッジ
+					if (pc.getInventory().consumeEnchantItem(37,8,1)
+					||pc.getInventory().consumeEnchantItem(42,8,1)
+					||pc.getInventory().consumeEnchantItem(41,8,1)
+					||pc.getInventory().consumeEnchantItem(52,8,1)
+					||pc.getInventory().consumeEnchantItem(180,8,1)
+					||pc.getInventory().consumeEnchantItem(181,8,1)
+					||pc.getInventory().consumeEnchantItem(131,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					htmlid = "joegolem14";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("G8")) { // +8エンジェルスレイヤー
+				if ((pc.getInventory().checkEnchantItem(37,9,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,9,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,9,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,9,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,9,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,9,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,9,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 704, 8, 1); // エンジェルスレイヤー
+					if (pc.getInventory().consumeEnchantItem(37,9,1)
+					||pc.getInventory().consumeEnchantItem(42,9,1)
+					||pc.getInventory().consumeEnchantItem(41,9,1)
+					||pc.getInventory().consumeEnchantItem(52,9,1)
+					||pc.getInventory().consumeEnchantItem(180,9,1)
+					||pc.getInventory().consumeEnchantItem(181,9,1)
+					||pc.getInventory().consumeEnchantItem(131,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					htmlid = "joegolem31";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+			if (s.equalsIgnoreCase("G7")) { // +7エンジェルスレイヤー
+				if ((pc.getInventory().checkEnchantItem(37,8,1) // ダマスカス ソード
+						|| pc.getInventory().checkEnchantItem(42,8,1) // レイピア
+						|| pc.getInventory().checkEnchantItem(41,8,1) // 刀
+						|| pc.getInventory().checkEnchantItem(52,8,1) // ツーハンド ソード
+						|| pc.getInventory().checkEnchantItem(180,8,1) // クロス ボウ
+						|| pc.getInventory().checkEnchantItem(181,8,1) // ロング ボウ
+						|| pc.getInventory().checkEnchantItem(131,8,1)) //フォース スタッフ
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					materials = new int[] { 37|42|41|52|180|181|131 , 40308 };
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 704, 7, 1); // エンジェルスレイヤー
+					if (pc.getInventory().consumeEnchantItem(37,8,1)
+					||pc.getInventory().consumeEnchantItem(42,8,1)
+					||pc.getInventory().consumeEnchantItem(41,8,1)
+					||pc.getInventory().consumeEnchantItem(52,8,1)
+					||pc.getInventory().consumeEnchantItem(180,8,1)
+					||pc.getInventory().consumeEnchantItem(181,8,1)
+					||pc.getInventory().consumeEnchantItem(131,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					htmlid = "joegolem31";
+					}
+				return;
+			} else {
+				htmlid = "joegolem15";
+			}
+		}
+
+		// ピアス
+		else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 70908) {
+
+			if (s.equalsIgnoreCase("A8")) { // +8破壊のデュアルブレード
+				if ((pc.getInventory().checkEnchantItem(81,9,1) // ブラインド デュアルブレード
+						|| pc.getInventory().checkEnchantItem(162,9,1) // ブラインド クロウ
+						|| pc.getInventory().checkEnchantItem(177,9,1) // ブラインド クロスボウ
+						|| pc.getInventory().checkEnchantItem(194,9,1) // 真ガントレット
+						|| pc.getInventory().checkEnchantItem(13,9,1)) // フィンガー オブ デス
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 81|162|177|194|13 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 705, 8, 1); // 破壊のデュアルブレード
+					if (pc.getInventory().consumeEnchantItem(81,9,1)
+					||pc.getInventory().consumeEnchantItem(162,9,1)
+					||pc.getInventory().consumeEnchantItem(177,9,1)
+					||pc.getInventory().consumeEnchantItem(194,9,1)
+					||pc.getInventory().consumeEnchantItem(13,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					}
+				htmlid = "pears7";
+			} else {
+				htmlid = "pears9";
+			}
+			if (s.equalsIgnoreCase("A7")) { // +7破壊のデュアルブレード
+				if ((pc.getInventory().checkEnchantItem(81,8,1) // ブラインド デュアルブレード
+						|| pc.getInventory().checkEnchantItem(162,8,1) // ブラインド クロウ
+						|| pc.getInventory().checkEnchantItem(177,8,1) // ブラインド クロスボウ
+						|| pc.getInventory().checkEnchantItem(194,8,1) // 真ガントレット
+						|| pc.getInventory().checkEnchantItem(13,8,1)) // フィンガー オブ デス
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					materials = new int[] { 81|162|177|194|13 , 40308 };
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 705, 7, 1); // 破壊のデュアルブレード
+					if (pc.getInventory().consumeEnchantItem(81,8,1)
+					||pc.getInventory().consumeEnchantItem(162,8,1)
+					||pc.getInventory().consumeEnchantItem(177,8,1)
+					||pc.getInventory().consumeEnchantItem(194,8,1)
+					||pc.getInventory().consumeEnchantItem(13,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					}
+				htmlid = "pears7";
+			} else {
+				htmlid = "pears9";
+			}
+			if (s.equalsIgnoreCase("B8")) { // +8破壊のクロウ
+				if ((pc.getInventory().checkEnchantItem(81,9,1) // ブラインド デュアルブレード
+						|| pc.getInventory().checkEnchantItem(162,9,1) // ブラインド クロウ
+						|| pc.getInventory().checkEnchantItem(177,9,1) // ブラインド クロスボウ
+						|| pc.getInventory().checkEnchantItem(194,9,1) // 真ガントレット
+						|| pc.getInventory().checkEnchantItem(13,9,1)) // フィンガー オブ デス
+						&& pc.getInventory().checkItem(40308,10000000))	{ // アデナ
+					materials = new int[] { 81|162|177|194|13 , 40308 };
+					counts = new int[] { 1 , 10000000 };
+
+					pc.getInventory().getEnchantItem(pc, 706, 8, 1); // 破壊のクロウ
+					if (pc.getInventory().consumeEnchantItem(81,9,1)
+					||pc.getInventory().consumeEnchantItem(162,9,1)
+					||pc.getInventory().consumeEnchantItem(177,9,1)
+					||pc.getInventory().consumeEnchantItem(194,9,1)
+					||pc.getInventory().consumeEnchantItem(13,9,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 10000000);
+					}
+				htmlid = "pears7";
+			} else {
+				htmlid = "pears9";
+			}
+			if (s.equalsIgnoreCase("B7")) { // +7破壊のクロウ
+				if ((pc.getInventory().checkEnchantItem(81,8,1) // ブラインド デュアルブレード
+						|| pc.getInventory().checkEnchantItem(162,8,1) // ブラインド クロウ
+						|| pc.getInventory().checkEnchantItem(177,8,1) // ブラインド クロスボウ
+						|| pc.getInventory().checkEnchantItem(194,8,1) // 真ガントレット
+						|| pc.getInventory().checkEnchantItem(13,8,1)) // フィンガー オブ デス
+						&& pc.getInventory().checkItem(40308,5000000))	{ // アデナ
+					materials = new int[] { 81|162|177|194|13 , 40308 };
+					counts = new int[] { 1 , 5000000 };
+
+					pc.getInventory().getEnchantItem(pc, 706, 7, 1); // 破壊のクロウ
+					if (pc.getInventory().consumeEnchantItem(81,8,1)
+					||pc.getInventory().consumeEnchantItem(162,8,1)
+					||pc.getInventory().consumeEnchantItem(177,8,1)
+					||pc.getInventory().consumeEnchantItem(194,8,1)
+					||pc.getInventory().consumeEnchantItem(13,8,1)) {
+						;
+					}
+					pc.getInventory().consumeItem(40308, 5000000);
+					}
+				htmlid = "pears7";
+			} else {
+				htmlid = "pears9";
+			}
+		}
+*/
 		// else System.out.println("C_NpcAction: " + s);
 		if (htmlid != null && htmlid.equalsIgnoreCase("colos2")) {
 			htmldata = makeUbInfoStrings(((L1NpcInstance) obj).getNpcTemplate()
