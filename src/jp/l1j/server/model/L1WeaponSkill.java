@@ -870,19 +870,6 @@ public class L1WeaponSkill {
 		return calcDamageReduction(pc, cha, dmg, L1Skill.ATTR_WATER);
 	}
 
-	public static void giveArkMageDiseaseEffect(L1PcInstance pc, L1Character cha) {
-		int chance = _random.nextInt(1000) + 1;
-		int probability = (5 - ((cha.getMr() / 10) * 5)) * 10;
-		if (probability == 0) {
-			probability = 10;
-		}
-		if (probability >= chance) {
-			L1SkillUse l1skilluse = new L1SkillUse();
-			l1skilluse.handleCommands(pc, 56, cha.getId(), cha.getX(), cha
-					.getY(), null, 0, L1SkillUse.TYPE_GMBUFF);
-		}
-	}
-
 	public static double getVenomBlazeDamage(L1PcInstance pc, L1Character cha, L1ItemInstance weapon) {
 		// ベノムブレイズ
 		double dmg = 0;
