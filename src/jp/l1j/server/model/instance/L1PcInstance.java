@@ -1144,6 +1144,9 @@ public class L1PcInstance extends L1Character {
 				attack.action();
 				attack.commit();
 			}
+			if (getAttackLog() == true) {// ATTACKLOG判定　
+				attack.commitAttackLog();
+			}
 		}
 	}
 
@@ -4793,6 +4796,16 @@ public class L1PcInstance extends L1Character {
 
 	public boolean isShapeChange() {
 		return _isShapeChange;
+	}
+
+	private boolean _Attacklog = false;
+
+	public void setAttackLog(boolean i) {
+		_Attacklog = i;
+	}
+
+	public boolean getAttackLog() {
+		return _Attacklog;
 	}
 
 	private boolean _Potlog = true;

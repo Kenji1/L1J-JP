@@ -479,6 +479,7 @@ public class L1NpcInstance extends L1Character {
 
 	// 目標を指定のスキルで攻撃
 	public void attackTarget(L1Character target) {
+
 		if (target instanceof L1PcInstance) {
 			L1PcInstance player = (L1PcInstance) target;
 			if (player.isTeleport()) { // テレポート処理中

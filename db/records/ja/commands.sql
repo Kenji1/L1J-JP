@@ -64,3 +64,4 @@ INSERT INTO `commands` VALUES ('add_instancemap', '200', 'L1AddInstanceMap');
 INSERT INTO `commands` VALUES ('reload', '200', 'L1Reload');
 INSERT INTO `commands` VALUES ('pcbuff', '200', 'L1PcBuff');
 INSERT INTO `commands` VALUES ('config', '200', 'L1CheckConfig');
+INSERT INTO `commands` VALUES ('atklog', '200', 'L1AttackLog');

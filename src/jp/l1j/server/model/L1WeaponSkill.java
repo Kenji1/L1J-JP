@@ -793,11 +793,11 @@ public class L1WeaponSkill {
 
 	public static double getIceWeaponDamage(L1PcInstance pc, L1Character cha,
 			L1ItemInstance weapon) {
-		double dmg = 0;
+		int dmg = 0;
 		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
 
 		if (_random.nextInt(100) + 1 <= chance) {
-			if (weapon.getItemId() == 701) { // 極寒のキーリンク
+			if (weapon.getItemId() == 701) { // 冷寒のキーリンク
 				L1Skill l1skills = SkillTable.getInstance().findBySkillId(
 						MIND_BREAK); // マインドブレイク
 				L1Magic magic = new L1Magic(pc, cha);
@@ -807,14 +807,14 @@ public class L1WeaponSkill {
 				pc.broadcastPacket(new S_SkillSound(cha.getId(), l1skills
 						.getCastGfx()));
 
-				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+				dmg = magic.calcMagicDamage(l1skills.getSkillId());
 
 				if (cha instanceof L1PcInstance) {
 					L1PcInstance targetPc = (L1PcInstance) cha;
-					targetPc.receiveDamage(pc, damage, false);
+					targetPc.receiveDamage(pc, dmg, false);
 				} else if (cha instanceof L1NpcInstance) {
 					L1NpcInstance targetNpc = (L1NpcInstance) cha;
-					targetNpc.receiveDamage(pc, damage);
+					targetNpc.receiveDamage(pc, dmg);
 				}
 
 			} else if (weapon.getItemId() == 702) { // 極寒のチェーンソード
@@ -827,14 +827,14 @@ public class L1WeaponSkill {
 				pc.broadcastPacket(new S_SkillSound(cha.getId(), l1skills
 						.getCastGfx()));
 
-				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+				dmg = magic.calcMagicDamage(l1skills.getSkillId());
 
 				if (cha instanceof L1PcInstance) {
 					L1PcInstance targetPc = (L1PcInstance) cha;
-					targetPc.receiveDamage(pc, damage, false);
+					targetPc.receiveDamage(pc, dmg, false);
 				} else if (cha instanceof L1NpcInstance) {
 					L1NpcInstance targetNpc = (L1NpcInstance) cha;
-					targetNpc.receiveDamage(pc, damage);
+					targetNpc.receiveDamage(pc, dmg);
 				}
 			}
 		}
@@ -843,7 +843,7 @@ public class L1WeaponSkill {
 
 	public static double getIceQueenStaffDamage(L1PcInstance pc, L1Character cha,
 			L1ItemInstance weapon) {
-		double dmg = 0;
+		int dmg = 0;
 		int chance = weapon.getEnchantLevel() + 2; // 発動確率は2+強化数%
 
 		if (_random.nextInt(100) + 1 <= chance) {
@@ -855,14 +855,14 @@ public class L1WeaponSkill {
 				pc.sendPackets(new S_SkillSound(cha.getId(), 1810));
 				pc.broadcastPacket(new S_SkillSound(cha.getId(), (1810)));
 
-				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+				dmg = magic.calcMagicDamage(l1skills.getSkillId());
 
 				if (cha instanceof L1PcInstance) {
 					L1PcInstance targetPc = (L1PcInstance) cha;
-					targetPc.receiveDamage(pc, damage, false);
+					targetPc.receiveDamage(pc, dmg, true);
 				} else if (cha instanceof L1NpcInstance) {
 					L1NpcInstance targetNpc = (L1NpcInstance) cha;
-					targetNpc.receiveDamage(pc, damage);
+					targetNpc.receiveDamage(pc, dmg);
 				}
 
 			}
@@ -917,7 +917,7 @@ public class L1WeaponSkill {
 
 	public static double getKurtzWeaponDamage(L1PcInstance pc, L1Character cha,
 			L1ItemInstance weapon) {
-		double dmg = 0;
+		int dmg = 0;
 		int chance = weapon.getEnchantLevel() + 1; // 発動確率は1+強化数%
 
 		if (_random.nextInt(100) + 1 <= chance) {
@@ -929,14 +929,14 @@ public class L1WeaponSkill {
 				pc.sendPackets(new S_SkillSound(cha.getId(), 10));
 				pc.broadcastPacket(new S_SkillSound(cha.getId(), (10)));
 
-				int damage = magic.calcMagicDamage(l1skills.getSkillId());
+				dmg = magic.calcMagicDamage(l1skills.getSkillId());
 
 				if (cha instanceof L1PcInstance) {
 					L1PcInstance targetPc = (L1PcInstance) cha;
-					targetPc.receiveDamage(pc, damage, false);
+					targetPc.receiveDamage(pc, dmg, true);
 				} else if (cha instanceof L1NpcInstance) {
 					L1NpcInstance targetNpc = (L1NpcInstance) cha;
-					targetNpc.receiveDamage(pc, damage);
+					targetNpc.receiveDamage(pc, dmg);
 				}
 			}
 		}

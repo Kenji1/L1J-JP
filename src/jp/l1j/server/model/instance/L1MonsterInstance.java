@@ -324,8 +324,13 @@ public class L1MonsterInstance extends L1NpcInstance {
 				attack.addChaserAttack();
 				attack.addEvilAttack();
 			}
-			attack.action();
-			attack.commit();
+			if (player.getAttackLog() == true) {// ATTACKLOG判定　
+				attack.action();
+				attack.commitAttackLog();
+			} else {
+				attack.action();
+				attack.commit();
+			}
 		}
 	}
 

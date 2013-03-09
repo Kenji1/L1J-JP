@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 import jp.l1j.server.model.L1Attack;
 import jp.l1j.server.model.L1Character;
 import jp.l1j.server.packets.server.S_ChangeHeading;
+import jp.l1j.server.packets.server.S_ServerMessage;
+import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.CalcExp;
 
@@ -41,15 +43,16 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 	@Override
 	public void onAction(L1PcInstance pc, int skillId) {
 		L1Attack attack = new L1Attack(pc, this, skillId);
+
 		if (attack.calcHit()) {
 			attack.calcDamage();
 			attack.calcStaffOfMana();
 			attack.addPcPoisonAttack(pc, this);
 			attack.addChaserAttack();
 			attack.addEvilAttack();
+
 			if (pc.getLevel() < 5) { // ＬＶ制限もうける場合はここを変更
 				ArrayList<L1Character> targetList = new ArrayList<L1Character>();
-
 				targetList.add(pc);
 				ArrayList<Integer> hateList = new ArrayList<Integer>();
 				hateList.add(1);
@@ -62,8 +65,14 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 			}
 			broadcastPacket(new S_ChangeHeading(this)); // 向きの変更
 		}
-		attack.action();
-		attack.commit();
+
+		if (pc.getAttackLog() == true) {// ATTACKLOG判定　
+			attack.action();
+			attack.commitAttackLog();
+		} else {
+			attack.action();
+			attack.commit();
+		}
 	}
 
 	@Override

@@ -60,6 +60,10 @@ public class L1DwarfInstance extends L1NpcInstance {
 		attack.calcStaffOfMana();
 		attack.addPcPoisonAttack(pc, this);
 		attack.commit();
+
+		if (pc.getAttackLog() == true) {// ATTACKLOG判定　
+			attack.commitAttackLog();
+		}
 	}
 
 	@Override

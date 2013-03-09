@@ -1182,7 +1182,7 @@ public class L1Attack {
 	}
 
 	// ●●●● プレイヤー から ＮＰＣ へのダメージ算出 ●●●●
-	private int calcPcNpcDamage() {
+	public int calcPcNpcDamage() {
 
 		int weaponMaxDamage = 0;
 		if (_targetNpc.getNpcTemplate().getSize().equalsIgnoreCase("small")
@@ -2117,6 +2117,45 @@ public class L1Attack {
 		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
 			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2,
 					msg3, msg4)); // \f1%0が%4%1%3 %2
+		}
+	}
+
+	public void commitAttackLog() {
+		if (_isHit) {
+			if (_calcType == PC_PC) {
+				commitPc();
+			} else if (_calcType == PC_NPC) {
+				commitNpc();
+			}
+		}
+
+		// ダメージ値及び命中率確認用メッセージ
+		if (_pc.getAttackLog() == false) {
+			return;
+		}
+		if (_pc.getAttackLog() == true) {
+			if ((_calcType == PC_PC || _calcType == PC_NPC) && !_pc.isGm()) {
+				return;
+			}
+		}
+		String msg0 = "";
+		String msg1 = "に";
+		String msg2 = "";
+		String msg3 = "";
+		String msg4 = "";
+		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
+			msg0 = _pc.getName();
+		}
+		if (_calcType == PC_PC) { // ターゲットがＰＣの場合
+			msg4 = _targetPc.getName();
+		} else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
+			msg4 = _targetNpc.getName();
+		}
+		msg3 = _isHit ? _damage + "のダメージを与えました。" : "攻撃をミスしました。";
+
+		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
+			_pc.sendPackets(new S_ServerMessage(166, msg0, msg4, msg3, msg1));
+			// \f1%0が%4%1%3 %2
 		}
 	}
 
