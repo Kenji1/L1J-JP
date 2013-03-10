@@ -14,6 +14,7 @@
  */
 package jp.l1j.server.model.item.executor;
 
+import java.util.Arrays;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.LogEnchantTable;
 import jp.l1j.server.model.L1World;
@@ -458,6 +459,13 @@ public class L1EnchantScroll {
 	}
 
 	private boolean enchantBeginnerArmor(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
+		final int armorId[] = new int[] {
+			20028, 20082, 20126, 20173, 20206, 20232, 21168, // 象牙の塔装備（旧）
+			21051, 21052, 21053, 21054, 21055, 21056, 21170, 21171, // 濡れた装備
+			21211, 21212, 21213, 21214, 21215, 21216, 21217, 21218, 21219,
+			21220, 21221, 21222 // 象牙の塔装備（新）
+		};
+		
 		if (target == null
 				|| target.getItem().getType2() != 2) {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
@@ -469,12 +477,8 @@ public class L1EnchantScroll {
 			return false;
 		}
 
-		int armorId = target.getItem().getItemId();
-		if (armorId != 20028 && armorId != 20082 && armorId != 20126 && armorId != 20173
-				&& armorId != 20206 && armorId != 20232 && armorId != 21168
-				&& armorId != 21051 && armorId != 21052 && armorId != 21053
-				&& armorId != 21054 && armorId != 21055 && armorId != 21056
-				&& armorId != 21170 && armorId != 21171) { // 象牙の塔装備、濡れた装備以外
+		if (Arrays.binarySearch(armorId, target.getItem().getItemId()) >= 0) {
+			// 象牙の塔装備、濡れた装備以外
 			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 			return false;
 		}

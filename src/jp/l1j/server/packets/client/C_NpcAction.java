@@ -5299,6 +5299,7 @@ public class C_NpcAction extends ClientBasePacket {
 					materials = new int[] { 50546 };
 					counts = new int[] { 1 };
 					createitem = new int[] { 21141, 40029, 50546 };
+					// 象牙の塔の防御の紋様, 象牙の塔の体力回復剤, お菓子のかご
 					createcount = new int[] { 1, 50, 1 };
 					htmlid = "j_nb11";
 				} else if (level < 15 && quest_step <= 2) {
@@ -5306,6 +5307,7 @@ public class C_NpcAction extends ClientBasePacket {
 					materials = new int[] { 50546 };
 					counts = new int[] { 1 };
 					createitem = new int[] { 21138, 21144, 40029, 50546 };
+					// 象牙の塔の魔法の紋様, 象牙の塔の生命の紋様, 象牙の塔の体力回復剤, お菓子のかご
 					createcount = new int[] { 1, 1, 50, 1 };
 					htmlid = "j_nb11";
 				} else if (level < 20 && quest_step <= 3) {
@@ -5313,6 +5315,8 @@ public class C_NpcAction extends ClientBasePacket {
 					materials = new int[] { 50546 };
 					counts = new int[] { 1 };
 					createitem = new int[] { 21121, 21124, 21127, 21130, 21133, 40029, 50546 };
+					// 象牙の塔の腕力の紋様, 象牙の塔の精神の紋様, 象牙の塔の知力の紋様,
+					// 象牙の塔の機敏の紋様, 象牙の塔の体力の紋様, 象牙の塔の体力回復剤, お菓子のかご
 					createcount = new int[] { 1, 1, 1, 1, 1, 50, 1 };
 					htmlid = "j_nb11";
 				} else if (level < 22 && quest_step <= 4) {
@@ -5320,39 +5324,40 @@ public class C_NpcAction extends ClientBasePacket {
 					materials = new int[] { 50546 };
 					counts = new int[] { 1 };
 					createitem = new int[] { 21113, 40029, 50546 };
+					// 象牙の塔の祈りの紋様, 象牙の塔の体力回復剤, お菓子のかご
 					createcount = new int[] { 1, 50, 1 };
 					htmlid = "j_nb11";
 				} else if (level < 24 && quest_step <= 5) {
 					pc.getQuest().setStep(L1Quest.QUEST_NEWBIE, 6);
 					materials = new int[] { 50546 };
 					counts = new int[] { 1 };
-					// TODO 憤怒のポーション、集中のポーションは未実装
-					createitem = new int[] { 40029, 50546 };
-					createcount = new int[] { 50, 1 };
+					createitem = new int[] { 40029, 50546, 50630, 50631 };
+					// 象牙の塔の体力回復剤, お菓子のかご, 憤怒のポーション, 集中のポーション
+					createcount = new int[] { 50, 1, 3, 3 };
 					htmlid = "j_nb11";
 				} else if (level < 26 && quest_step <= 6) {
 					pc.getQuest().setStep(L1Quest.QUEST_NEWBIE, 7);
 					materials = new int[] { 50546 };
 					counts = new int[] { 1 };
-					// TODO 腕力,機敏,体力,知力,精神のポーションは未実装
-					createitem = new int[] { 40029, 50546 };
-					createcount = new int[] { 50, 1 };
+					createitem = new int[] { 40029, 50546, 50625, 50626, 50627, 50628, 50629 };
+					// 象牙の塔の体力回復剤, お菓子のかご, 腕力, 機敏, 体力, 知力, 精神のポーション
+					createcount = new int[] { 50, 1, 3, 3, 3, 3, 3 };
 					htmlid = "j_nb11";
 				} else if (level < 28 && quest_step <= 7) {
 					pc.getQuest().setStep(L1Quest.QUEST_NEWBIE, 8);
 					materials = new int[] { 50546 };
 					counts = new int[] { 1 };
-					// TODO 治癒のポーション、瞑想のポーションは未実装
-					createitem = new int[] { 40029, 50546 };
-					createcount = new int[] { 50, 1 };
+					createitem = new int[] { 40029, 50546, 50620, 50621 };
+					// 象牙の塔の体力回復剤, お菓子のかご, 治癒のポーション, 瞑想のポーション
+					createcount = new int[] { 50, 1, 3, 3 };
 					htmlid = "j_nb11";
 				} else if (level < 28 && quest_step <= 8) {
 					pc.getQuest().setStep(L1Quest.QUEST_NEWBIE, 9);
 					materials = new int[] { 50546 };
 					counts = new int[] { 1 };
-					// TODO 生命,魔法,魔法抵抗のポーションは未実装
-					createitem = new int[] { 40029, 50546 };
-					createcount = new int[] { 50, 1 };
+					createitem = new int[] { 40029, 50546, 50622, 50623, 50624 };
+					// 象牙の塔の体力回復剤, お菓子のかご, 生命, 魔法, 魔法抵抗のポーション
+					createcount = new int[] { 50, 1, 3, 3, 3 };
 					htmlid = "j_nb11";
 				} else if (level < 31 && quest_step <= 9) {
 					pc.getQuest().setStep(L1Quest.QUEST_NEWBIE, 10);
@@ -5413,8 +5418,10 @@ public class C_NpcAction extends ClientBasePacket {
 					htmlid = "";
 				} else if (s.equalsIgnoreCase("K")) { // 象牙の塔のアクセサリー
 					if ((level > 34)) {
-						createitem = new int[] { 20282, 21169 };
-						createcount = new int[] { 0, 0 };
+						createitem = new int[] { 21155, 21169, 21223, 21224, 21225 };
+						// 象牙の塔のタリスマン, 象牙の塔のイアリング, 修行者のアミュレット,
+						// 修行者のリング, 修行者のベルト
+						createcount = new int[] { 1, 1, 1, 2, 1 };
 						boolean isOK = false;
 						for (int i = 0; i < createitem.length; i++) {
 							if (!pc.getInventory().checkItem(createitem[i], 1)) {
