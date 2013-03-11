@@ -159,7 +159,6 @@ public class C_LoginToServer extends ClientBasePacket {
 		 */
 		pc.sendPackets(new S_LoginGame()); // 3.3c
 		pc.sendPackets(new S_Karma(pc)); // カルマ値を表示
-		bookmarks(pc);
 
 		// ミニゲーム実行中判定
 		if (pc.getMapId() == 5143) {
@@ -336,6 +335,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		
 		pc.startExpirationTimer(); // 有効期限付きアイテムのタイマーを開始
 		pc.startMapLimiter(); // マップリミッターを開始
+		bookmarks(pc);
 	}
 
 	private void items(L1PcInstance pc) {
