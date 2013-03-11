@@ -146,7 +146,7 @@ INSERT INTO `resolvents` VALUES(120043, 'ヘルム', 20);
 INSERT INTO `resolvents` VALUES(220043, 'ヘルム', 20);
 INSERT INTO `resolvents` VALUES(20383, '騎馬用ヘルム', 100000);
 INSERT INTO `resolvents` VALUES(20089, 'レザー アーマー', 10);
-INSERT INTO `resolvents` VALUES(20099, 'デーモン アーマー', 4200);ｓ
+INSERT INTO `resolvents` VALUES(20099, 'デーモン アーマー', 4200);
 INSERT INTO `resolvents` VALUES(20102, 'ラスタバド レザーアーマー', 150);
 INSERT INTO `resolvents` VALUES(20103, 'ラスタバド ローブ', 1500);
 INSERT INTO `resolvents` VALUES(20104, 'ラスタバド スタデッド レザーアーマー', 200);
