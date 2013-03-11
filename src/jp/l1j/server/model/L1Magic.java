@@ -313,14 +313,11 @@ public class L1Magic {
 		if (!Config.ALT_ATKMSG) {
 			return isSuccess;
 		}
-		if (Config.ALT_ATKMSG) {
-			if ((_calcType == PC_PC || _calcType == PC_NPC) && !_pc.isGm()) {
-				return isSuccess;
-			}
-			if ((_calcType == PC_PC || _calcType == NPC_PC)
-					&& !_targetPc.isGm()) {
-				return isSuccess;
-			}
+		if ((_calcType == PC_PC || _calcType == PC_NPC) && !_pc.getAttackLog()) {
+			return isSuccess;
+		}
+		if ((_calcType == PC_PC || _calcType == NPC_PC) && !_targetPc.getAttackLog()) {
+			return isSuccess;
 		}
 
 		String msg0 = "";
@@ -355,41 +352,7 @@ public class L1Magic {
 			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2,
 					msg3, msg4)); // \f1%0が%4%1%3 %2
 		}
-
-		// 確率系魔法アタックログ
-		if (_pc.getAttackLog() == true) {
-			return isSuccess;
-		}
-		if (_pc.getAttackLog() == true) {
-			if ((_calcType == PC_PC || _calcType == PC_NPC) && !_pc.isGm()) {
-				return isSuccess;
-			}
-		}
-
-		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
-			msg0 = _pc.getName();
-		}
-
-		if (_calcType == PC_PC) { // ターゲットがＰＣの場合
-			msg4 = _targetPc.getName();
-		} else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
-			msg4 = _targetNpc.getName();
-		}
-		if (isSuccess == true) {
-			msg3 = "成功";
-		} else {
-			msg3 = "失敗";
-		}
-
-		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
-			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3,
-					msg4)); // \f1%0が%4%1%3 %2
-		}
-		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
-			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2,
-					msg3, msg4)); // \f1%0が%4%1%3 %2
-		}
-
+		
 		return isSuccess;
 	}
 
@@ -1190,14 +1153,11 @@ public class L1Magic {
 		if (!Config.ALT_ATKMSG) {
 			return;
 		}
-		if (Config.ALT_ATKMSG) {
-			if ((_calcType == PC_PC || _calcType == PC_NPC) && !_pc.isGm()) {
-				return;
-			}
-			if ((_calcType == PC_PC || _calcType == NPC_PC)
-					&& !_targetPc.isGm()) {
-				return;
-			}
+		if ((_calcType == PC_PC || _calcType == PC_NPC) && !_pc.getAttackLog()) {
+			return;
+		}
+		if ((_calcType == PC_PC || _calcType == NPC_PC) && !_targetPc.getAttackLog()) {
+			return;
 		}
 
 		String msg0 = "";
@@ -1220,7 +1180,7 @@ public class L1Magic {
 			msg2 = "THp" + _targetNpc.getCurrentHp();
 		}
 
-		msg3 = damage + "与えた";
+		msg3 = damage + "のスキルダメージを与えました。";
 
 		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
 			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3,
@@ -1229,47 +1189,6 @@ public class L1Magic {
 		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
 			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2,
 					msg3, msg4)); // \f1%0が%4%1%3 %2
-		}
-	}
-
-	public void commitAttackLog(int damage, int drainMana) {
-		if (_calcType == PC_PC) {
-			commitPc(damage, drainMana);
-		} else if (_calcType == PC_NPC) {
-			commitNpc(damage, drainMana);
-		}
-
-		// ダメージ値及び命中率確認用メッセージ
-		if (_pc.getAttackLog() == false) {
-			return;
-		}
-		if (_pc.getAttackLog() == true) {
-			if ((_calcType == PC_PC || _calcType == PC_NPC) && !_pc.isGm()) {
-				return;
-			}
-		}
-
-		String msg0 = "";
-		String msg1 = "に";
-		String msg2 = "";
-		String msg3 = "";
-		String msg4 = "";
-
-		if (_calcType == PC_PC || _calcType == PC_NPC) {// アタッカーがＰＣの場合
-			msg0 = _pc.getName();
-		}
-
-		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
-			msg4 = _targetPc.getName();
-		} else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
-			msg4 = _targetNpc.getName();
-		}
-
-		msg3 = damage + "のスキルダメージを与えました。";
-
-		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
-			_pc.sendPackets(new S_ServerMessage(166, msg0, msg4, msg3, msg1));
-			// \f1%0が%4%1%3 %2
 		}
 	}
 

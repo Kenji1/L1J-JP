@@ -3379,7 +3379,6 @@ public class L1SkillUse {
 
 				if (dmg != 0 || drainMana != 0) {
 					_magic.commit(dmg, drainMana); // ダメージ系、回復系の値をターゲットにコミットする。
-					_magic.commitAttackLog(dmg, drainMana); // アタックログ用コミット
 				}
 
 				// ヒール系の他に、別途回復した場合（V-Tなど）

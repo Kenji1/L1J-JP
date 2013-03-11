@@ -1144,9 +1144,6 @@ public class L1PcInstance extends L1Character {
 				attack.action();
 				attack.commit();
 			}
-			if (getAttackLog() == true) {// ATTACKLOG判定　
-				attack.commitAttackLog();
-			}
 		}
 	}
 

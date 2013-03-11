@@ -65,14 +65,8 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 			}
 			broadcastPacket(new S_ChangeHeading(this)); // 向きの変更
 		}
-
-		if (pc.getAttackLog() == true) {// ATTACKLOG判定　
-			attack.action();
-			attack.commitAttackLog();
-		} else {
-			attack.action();
-			attack.commit();
-		}
+		attack.action();
+		attack.commit();
 	}
 
 	@Override
