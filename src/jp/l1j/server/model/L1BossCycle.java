@@ -86,6 +86,7 @@ public class L1BossCycle {
 			return _period;
 		}
 
+		@SuppressWarnings("unused")
 		public void setPeriod(String period) {
 			this._period = period;
 		}
@@ -94,6 +95,7 @@ public class L1BossCycle {
 			return _start;
 		}
 
+		@SuppressWarnings("unused")
 		public void setStart(String start) {
 			_start = start;
 		}
@@ -102,6 +104,7 @@ public class L1BossCycle {
 			return _end;
 		}
 
+		@SuppressWarnings("unused")
 		public void setEnd(String end) {
 			_end = end;
 		}
@@ -122,7 +125,7 @@ public class L1BossCycle {
 			"yyyy/MM/dd HH:mm");
 	private static Date _initDate = new Date();
 	private static String _initTime = "0:00";
-	private  final Calendar START_UP = Calendar.getInstance();
+	private final Calendar START_UP = Calendar.getInstance();
 
 	public final void init() throws Exception {
 		// 基準日時の設定
@@ -178,7 +181,7 @@ public class L1BossCycle {
 		}
 		// start補正
 		if (_startTime < 0 || _period < _startTime) { // 補正
-			_startTime = 0;
+			_startTime += (_period * 30);
 		}
 		// end補正
 		if (_endTime < 0 || _period < _endTime || end == null) { // 補正
@@ -187,10 +190,10 @@ public class L1BossCycle {
 		if (_startTime > _endTime) {
 			_startTime = _endTime;
 		}
-		// start,endの相関補正(最低でも30分の間をあける)
+		// start,endの相関補正(最低でも1分の間をあける)
 		// start==endという指定でも、出現時間が次の周期に被らないようにするため
 		if (_startTime == _endTime) {
-			if (_endTime == _period * 30) {
+			if (_endTime == (_period * 30)) {
 				_startTime--;
 			} else {
 				_endTime++;
@@ -210,6 +213,7 @@ public class L1BossCycle {
 	 * 指定日時を含む周期(の開始時間)を返す ex.周期が2時間の場合 target base 戻り値 4:59 7:00 3:00 5:00 7:00
 	 * 5:00 5:01 7:00 5:00 6:00 7:00 5:00 6:59 7:00 5:00 7:00 7:00 7:00 7:01
 	 * 7:00 7:00 9:00 7:00 9:00 9:01 7:00 9:00
+	 * @return
 	 */
 	private Calendar getBaseCycleOnTarget(final Calendar target) {
 		// 基準日時取得
@@ -242,7 +246,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現タイミングを算出する。
-	 *
+	 * @param 現在時刻
 	 * @return 出現する時間
 	 */
 	public final Calendar calcSpawnTime(final Calendar now) {
@@ -259,7 +263,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現開始時間を算出する。
-	 *
+	 * @param 現在時刻
 	 * @return 周期の出現開始時間
 	 */
 	public final Calendar getSpawnStartTime(final Calendar now) {
@@ -272,7 +276,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現終了時間を算出する。
-	 *
+	 * @param 現在時刻
 	 * @return 周期の出現終了時間
 	 */
 	public final Calendar getSpawnEndTime(final Calendar now) {
@@ -285,7 +289,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、次の周期の出現タイミングを算出する。
-	 *
+	 * @param 現在時刻
 	 * @return 次の周期の出現する時間
 	 */
 	public final Calendar nextSpawnTime(final Calendar now) {
@@ -299,7 +303,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時に対して、最近の出現開始時間を返却する。
-	 *
+	 * @param 現在時刻
 	 * @return 最近の出現開始時間
 	 */
 	public final Calendar getLatestStartTime(final Calendar now) {
