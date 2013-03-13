@@ -187,10 +187,10 @@ public class L1BossCycle {
 		if (_startTime > _endTime) {
 			_startTime = _endTime;
 		}
-		// start,endの相関補正(最低でも1分の間をあける)
+		// start,endの相関補正(最低でも30分の間をあける)
 		// start==endという指定でも、出現時間が次の周期に被らないようにするため
 		if (_startTime == _endTime) {
-			if (_endTime == _period) {
+			if (_endTime == _period * 30) {
 				_startTime--;
 			} else {
 				_endTime++;
