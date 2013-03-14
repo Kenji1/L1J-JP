@@ -218,6 +218,9 @@ public final class Config {
 	@Configure(file = RATE, key = "RateDropItems")
 	public static double RATE_DROP_ITEMS = 1.0;
 
+	@Configure(file = RATE, key = "RateFishingExp")
+	public static int RATE_FISHING_EXP = 200;
+
 	@Configure(file = RATE, key = "EnchantChanceWeapon")
 	public static int ENCHANT_CHANCE_WEAPON = 68;
 

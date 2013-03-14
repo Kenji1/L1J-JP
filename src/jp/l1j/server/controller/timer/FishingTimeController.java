@@ -127,7 +127,7 @@ public class FishingTimeController implements Runnable {
 		L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
 		if (item != null) {
 			pc.sendPackets(new S_ServerMessage(403, item.getItem().getName()));
-			pc.addExp((int) (2 * Config.RATE_XP));
+			pc.addExp(Config.RATE_FISHING_EXP);
 			pc.sendPackets(new S_OwnCharStatus(pc));
 			item.setCount(1);
 			if (pc.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {

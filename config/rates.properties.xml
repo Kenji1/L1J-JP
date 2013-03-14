@@ -38,6 +38,9 @@ NORMAL RATES
 <!-- RateDropItems ... 0.0-32767.0 -->
 <entry key="RateDropItems">1.0</entry>
 
+<!-- 釣り成功時の経験値 -->
+<entry key="RateFishingExp">200</entry>
+
 <!-- エンチャント成功率 %で指定 -->
 <entry key="EnchantChanceWeapon">0</entry>
 <entry key="EnchantChanceArmor">0</entry>
