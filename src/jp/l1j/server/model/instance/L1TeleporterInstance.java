@@ -892,6 +892,9 @@ public class L1TeleporterInstance extends L1NpcInstance {
 				price = new String[] { "" };
 			}
 			pc.sendPackets(new S_NpcTalkReturn(objid, html, price));
+		} else if(action.equalsIgnoreCase("teleportURLL")) { // TODO SKTテレポーター メット
+			String html = "guidestart";
+			pc.sendPackets(new S_NpcTalkReturn(objid, html));
 		}
 		if (action.startsWith("teleport ")) {
 			_log.finest((new StringBuilder()).append("Setting action to : ")
