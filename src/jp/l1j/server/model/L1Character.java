@@ -15,14 +15,11 @@
 
 package jp.l1j.server.model;
 
-import static jp.l1j.server.model.skill.L1SkillId.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
-
 import jp.l1j.server.model.instance.L1DollInstance;
 import jp.l1j.server.model.instance.L1FollowerInstance;
 import jp.l1j.server.model.instance.L1ItemInstance;
@@ -32,6 +29,7 @@ import jp.l1j.server.model.instance.L1PetInstance;
 import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.model.poison.L1Poison;
+import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.model.skill.L1SkillTimer;
 import jp.l1j.server.model.skill.L1SkillTimerCreator;
 import jp.l1j.server.packets.server.S_Light;
@@ -39,6 +37,8 @@ import jp.l1j.server.packets.server.S_PetCtrlMenu;
 import jp.l1j.server.packets.server.S_Poison;
 import jp.l1j.server.packets.server.S_RemoveObject;
 import jp.l1j.server.packets.server.ServerBasePacket;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1MagicDoll;
 import jp.l1j.server.types.Point;
 import jp.l1j.server.utils.IntRange;
@@ -51,8 +51,9 @@ public class L1Character extends L1Object {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger _log = Logger.getLogger(L1Character.class
-			.getName());
+	private static Logger _log = Logger.getLogger(L1Character.class.getName());
+	
+	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
 
 	private L1Poison _poison = null;
 	private boolean _paralyzed;
@@ -806,7 +807,11 @@ public class L1Character extends L1Object {
 	 * @return 経験値。
 	 */
 	public int getExp() {
-		return _exp;
+		if (_exp >= 0) {
+			return _exp;
+		} else {
+			return _level * _level + _random.nextInt(_level);
+		}
 	}
 
 	/**
