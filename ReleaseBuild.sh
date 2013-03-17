@@ -14,6 +14,7 @@ mv -fv db/update_tables.sql release-build/db/update_tables.sql
 cp -fv db/create_db.sql release-build/db/create_db.sql
 mkdir -p release-build/emblem
 cp -fvR lib release-build/lib
+cp -fvR locale release-build/locale
 mkdir -p release-build/log
 cp -fvR maps release-build/maps
 cp -fv l1jserver.jar release-build/l1jserver.jar

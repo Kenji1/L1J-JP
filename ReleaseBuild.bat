@@ -13,6 +13,7 @@ move /Y .\db\update_tables.sql .\release-build\db\update_tables.sql
 copy .\db\create_db.sql .\release-build\db\create_db.sql /Y
 xcopy .\emblem .\release-build\emblem /D /E /I /Y
 xcopy .\lib .\release-build\lib /D /E /I /Y
+xcopy .\locale .\release-build\locale /D /E /I /Y
 xcopy .\log .\release-build\log /D /E /I /Y
 xcopy .\maps .\release-build\maps /D /E /I /Y
 copy .\l1jserver.jar .\release-build\l1jserver.jar /Y

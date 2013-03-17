@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!--
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<properties>
+<comment>Default locale</comment>
+<!-- jp/l1j/server/GameServer.java -->
+<!-- run() -->
+<entry key="MemoryUsage">Memory usage: %sMB</entry>
+<entry key="WaittingForClient">Waiting for client connections...</entry>
+<entry key="TryingToConnection">Trying to connection: %s</entry>
+<entry key="BannedIP">Banned IP(%s)</entry>
+<!-- printStartupMessage() -->
+<entry key="GenerateServerSocket">Generate a server socket</entry>
+<entry key="ServerSettings">■■■■ Server Settings ■■■■</entry>
+<entry key="Exp">Exp: x%s</entry>
+<entry key="Lawful">Lawful: x%s</entry>
+<entry key="Karma">Karma: x%s</entry>
+<entry key="ItemDrop">Item Drop: x%s</entry>
+<entry key="AdenaDrop">Adena Drop: x%s</entry>
+<entry key="EnchantWeapon">Enchant Weapon: %s%%</entry>
+<entry key="EnchantArmor">Enchant Armor: %s%%</entry>
+<entry key="EnchantAttribute">Enchant Attribute: %s%%</entry>
+<entry key="GlobalChat">Global Chat: Lv%s</entry>
+<entry key="PvP">PvP: OK</entry>
+<entry key="NonPvP">PvP: NG(Non-PvP)</entry>
+<entry key="MaxUsers">Max Users: %d users</entry>
+<!-- initialize -->
+<entry key="LoadingComplete">Loading Complete</entry>
+<!-- ServerShutdownThread -->
+<entry key="ShutdownTheServer">Shutdown the server.</entry>
+<entry key="PleaseLogout">Please logout in safe area.</entry>
+<entry key="ShutdownAfterFewMinutes">Server will be shutdown after %d minutes.</entry>
+<entry key="ShutdownAfterFewSeconds">Server will be shutdown after %d seconds. Please logout as soon as possible.</entry>
+<entry key="ShutdownAbort">Shutdown abort. The server is running normally.</entry>
+</properties>

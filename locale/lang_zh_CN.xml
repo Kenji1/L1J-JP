@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!--
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<properties>
+<comment>Simplified Chinese locale</comment>
+<!-- jp/l1j/server/GameServer.java -->
+<!-- run() -->
+<entry key="MemoryUsage">内存使用量: %sMB</entry>
+<entry key="WaittingForClient">正在等待用户连接...</entry>
+<entry key="TryingToConnection">正在尝试连线: %s</entry>
+<entry key="BannedIP">禁止IP: %s</entry>
+<!-- printStartupMessage() -->
+<entry key="GenerateServerSocket">生成服务器套接字</entry>
+<entry key="ServerSettings">■■■■ 服务器设置 ■■■■</entry>
+<entry key="Exp">经验: %s倍</entry>
+<entry key="Lawful">倾向: %s倍</entry>
+<entry key="Karma">因果: %s倍</entry>
+<entry key="ItemDrop">物品掉落率: %s倍</entry>
+<entry key="AdenaDrop">金钱掉落率: %s倍</entry>
+<entry key="EnchantWeapon">附魔武器成功率: %s％</entry>
+<entry key="EnchantArmor">附魔铠甲成功率: %s％</entry>
+<entry key="EnchantAttribute">附魔属性成功率: %s％</entry>
+<entry key="GlobalChat">全球聊天: Lv%s</entry>
+<entry key="PvP">PvP: 是</entry>
+<entry key="NonPvP">PvP: 無(Non-PvP)</entry>
+<entry key="MaxUsers">最大用户: %d用户</entry>
+<!-- initialize -->
+<entry key="LoadingComplete">加载完成</entry>
+<!-- ServerShutdownThread -->
+<entry key="ShutdownTheServer">关闭服务器。</entry>
+<entry key="PleaseLogout">请在安全区注销。</entry>
+<entry key="ShutdownAfterFewMinutes">服务器将在%d分后关闭。</entry>
+<entry key="ShutdownAfterFewSeconds">服务器将在%d秒后关闭。请注销尽快。</entry>
+<entry key="ShutdownAbort">关机中止。服务器正常运行。</entry>
+</properties>

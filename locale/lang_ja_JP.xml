@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!--
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<properties>
+<comment>Japanese locale</comment>
+<!--
+jp/l1j/server/GameServer.java
+-->
+<!-- run -->
+<entry key="MemoryUsage">メモリ使用量: %sMB</entry>
+<entry key="WaittingForClient">接続待機中...</entry>
+<entry key="TryingToConnection">接続試行中: %s</entry>
+<entry key="BannedIP">禁止IP: %s</entry>
+<!-- printStartupMessage -->
+<entry key="GenerateServerSocket">サーバーソケットを生成</entry>
+<entry key="ServerSettings">■■■■ サーバー設定 ■■■■</entry>
+<entry key="Exp">経験値: %s倍</entry>
+<entry key="Lawful">ロウフル: %s倍</entry>
+<entry key="Karma">カルマ: %s倍</entry>
+<entry key="ItemDrop">アイテムドロップ率: %s倍</entry>
+<entry key="AdenaDrop">アデナドロップ率: %s倍</entry>
+<entry key="EnchantWeapon">武器強化成功率: %s％</entry>
+<entry key="EnchantArmor">防具強化成功率: %s％</entry>
+<entry key="EnchantAttribute">属性強化成功率: %s％</entry>
+<entry key="GlobalChat">全体チャット: Lv%s</entry>
+<entry key="PvP">PvP: 有り</entry>
+<entry key="NonPvP">PvP: 無し(Non-PvP)</entry>
+<entry key="MaxUsers">最大ユーザー: %d名</entry>
+<!-- initialize -->
+<entry key="LoadingComplete">ローディング完了</entry>
+<!-- ServerShutdownThread -->
+<entry key="ShutdownTheServer">サーバーをシャットダウンします。</entry>
+<entry key="PleaseLogout">安全な場所でログアウトしてください。</entry>
+<entry key="ShutdownAfterFewMinutes">サーバーが%d分後にシャットダウンします。</entry>
+<entry key="ShutdownAfterFewSeconds">サーバーが%d秒後にシャットダウンします。速やかにログアウトしてください。</entry>
+<entry key="ShutdownAbort">シャットダウンが中断されました。サーバーは正常に稼働中です。</entry>
+</properties>

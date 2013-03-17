@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!--
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<properties>
+<comment>Korean locale</comment>
+<!-- jp/l1j/server/GameServer.java -->
+<!-- run() -->
+<entry key="MemoryUsage">메모리 사용량: %s MB</entry>
+<entry key="WaittingForClient">클라이언트 연결을 기다리는 중 ...</entry>
+<entry key="TryingToConnection">연결 시도 중: %s</entry>
+<entry key="BannedIP">금지 IP: %s</entry>
+<!-- printStartupMessage() -->
+<entry key="GenerateServerSocket">서버 소켓을 생성</entry>
+<entry key="ServerSettings">■■■■ 서버 설정 ■■■■</entry>
+<entry key="Exp">경험: %s 배</entry>
+<entry key="Lawful">성향: %s 배</entry>
+<entry key="Karma">업: %s 배</entry>
+<entry key="ItemDrop">항목 드롭 속도: %s 배</entry>
+<entry key="AdenaDrop">아데나 드롭 속도: %s 배</entry>
+<entry key="EnchantWeapon">무기의 강화 성공률: %s %%</entry>
+<entry key="EnchantArmor">갑옷의 강화 성공률: %s %%</entry>
+<entry key="EnchantAttribute">갑옷의 속성 성공률: %s %%</entry>
+<entry key="GlobalChat">글로벌 채팅: Lv %s</entry>
+<entry key="PvP">PvP: OK</entry>
+<entry key="NonPvP">PvP: NG(Non-PvP)</entry>
+<entry key="MaxUsers">최대 사용자: %d 명</entry>
+<!-- initialize -->
+<entry key="LoadingComplete">로드가 완료</entry>
+<!-- ServerShutdownThread -->
+<entry key="ShutdownTheServer">종료 서버를.</entry>
+<entry key="PleaseLogout">안전한 지역에 로그 아웃하시기 바랍니다.</entry>
+<entry key="ShutdownAfterFewMinutes">서버는 %d 분 후에 종료됩니다.</entry>
+<entry key="ShutdownAfterFewSeconds">서버가 %d 초 후에 종료됩니다. 가능한 한 빨리 로그 아웃하시기 바랍니다.</entry>
+<entry key="ShutdownAborted">종료가 중단되었습니다. 서버가 정상적으로 실행되고 있습니다.</entry>
+</properties>

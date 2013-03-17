@@ -22,6 +22,7 @@ import java.net.Socket;
 import java.util.Collection;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.command.GMCommandsConfig;
 import jp.l1j.server.controller.Announcements;
 import jp.l1j.server.controller.AnnouncementsCycle;
@@ -76,7 +77,6 @@ import jp.l1j.server.datatables.WeaponSkillTable;
 import jp.l1j.server.model.Dungeon;
 import jp.l1j.server.model.ElementalStoneGenerator;
 import jp.l1j.server.model.Getback;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.L1BugBearRace;
 import jp.l1j.server.model.L1CastleLocation;
@@ -84,6 +84,7 @@ import jp.l1j.server.model.L1DeleteItemOnGround;
 import jp.l1j.server.model.L1NpcRegenerationTimer;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.executor.L1BeginnerItem;
 import jp.l1j.server.model.item.executor.L1BlankScroll;
 import jp.l1j.server.model.item.executor.L1BlessOfEva;
@@ -91,6 +92,7 @@ import jp.l1j.server.model.item.executor.L1BluePotion;
 import jp.l1j.server.model.item.executor.L1BravePotion;
 import jp.l1j.server.model.item.executor.L1CurePotion;
 import jp.l1j.server.model.item.executor.L1Elixir;
+import jp.l1j.server.model.item.executor.L1EnchantBonus;
 import jp.l1j.server.model.item.executor.L1EnchantProtectScroll;
 import jp.l1j.server.model.item.executor.L1ExtraPotion;
 import jp.l1j.server.model.item.executor.L1FireCracker;
@@ -100,7 +102,6 @@ import jp.l1j.server.model.item.executor.L1GreenPotion;
 import jp.l1j.server.model.item.executor.L1HealingPotion;
 import jp.l1j.server.model.item.executor.L1MagicEye;
 import jp.l1j.server.model.item.executor.L1MagicPotion;
-import jp.l1j.server.model.item.executor.L1EnchantBonus;
 import jp.l1j.server.model.item.executor.L1Material;
 import jp.l1j.server.model.item.executor.L1MaterialChoice;
 import jp.l1j.server.model.item.executor.L1PolyPotion;
@@ -139,15 +140,15 @@ public class GameServer extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("利用メモリ: " + SystemUtil.getUsedMemoryMB() + "MB");
-		System.out.println("クライアント接続待機中...");
+		System.out.println(String.format(I18N_MEMORY_USEAGE, SystemUtil.getUsedMemoryMB()));
+		System.out.println(I18N_WAITING_FOR_CLIENT);
 		while (true) {
 			try {
 				Socket socket = _serverSocket.accept();
-				System.out.println("接続試行中IP " + socket.getInetAddress());
+				System.out.println(String.format(I18N_TRYING_TO_CONNECTION, socket.getInetAddress()));
 				String host = socket.getInetAddress().getHostAddress();
 				if (IpTable.getInstance().isBannedIp(host)) {
-					_log.info("banned IP(" + host + ")");
+					_log.info(String.format(I18N_BANNED_IP, host));
 				} else {
 					ClientThread client = new ClientThread(socket);
 					GeneralThreadPool.getInstance().execute(client);
@@ -177,29 +178,29 @@ public class GameServer extends Thread {
 	}
 
 	private void printStartupMessage() {
-			puts("サーバーセッティング: サーバーソケット生成");
-
+			puts(I18N_GENERATE_SERVER_SOCKET);
 			puts("┌───────────────────────────────┐");
 			puts("│                 L1J-JP 3.60C  For All User\t\t        │");
-			puts("└───────────────────────────────┘" + "\n");
-
-			puts("  ■■■■〈サーバー設定〉■■■■");
+			puts("└───────────────────────────────┘");
 			puts("");
-			puts("  ┌「経験値」: %s【倍】", Config.RATE_XP);
-			puts("  ├「アライメント」: %s【倍】", Config.RATE_LA);
-			puts("  ├「カルマ」: %s【倍】", Config.RATE_KARMA);
-			puts("  ├「ドロップ率」: %s【倍】", Config.RATE_DROP_ITEMS);
-			puts("  ├「取得アデナ」: %s【倍】", Config.RATE_DROP_ADENA);
-			puts("  ├「武器エンチャント成功率」: %s【%%】", Config.ENCHANT_CHANCE_WEAPON);
-			puts("  ├「防具エンチャント成功率」: %s【%%】", Config.ENCHANT_CHANCE_ARMOR);
-			puts("  ├「属性強化成功率」: %s【%%】", Config.ATTR_ENCHANT_CHANCE);
-			puts("  ├「全体チャット可能Lv」: %s", Config.GLOBAL_CHAT_LEVEL);
-			puts("  ├「Non-PvP設定」: %s", Config.ALT_NONPVP ? "無効（PvP可能）" : "有効（PvP不可）");
-			puts("  └「接続人数制限」： 最大%d人", Config.MAX_ONLINE_USERS);
+			puts(I18N_SERVER_SETTINGS);
+			puts("");
+			puts(I18N_EXP, Config.RATE_XP);
+			puts(I18N_LAWFUL, Config.RATE_LA);
+			puts(I18N_KARMA, Config.RATE_KARMA);
+			puts(I18N_ITEM_DROP, Config.RATE_DROP_ITEMS);
+			puts(I18N_ADENA_DROP, Config.RATE_DROP_ADENA);
+			puts(I18N_ENCHANT_WEAPON, Config.ENCHANT_CHANCE_WEAPON);
+			puts(I18N_ENCHANT_ARMOR, Config.ENCHANT_CHANCE_ARMOR);
+			puts(I18N_ENCHANT_ATTRIBUTE, Config.ATTR_ENCHANT_CHANCE);
+			puts(I18N_GLOBAL_CHAT, Config.GLOBAL_CHAT_LEVEL);
+			puts(Config.ALT_NONPVP ? I18N_PVP : I18N_NON_PVP);
+			puts(I18N_MAX_USERS, Config.MAX_ONLINE_USERS);
 			puts("");
 			puts("┌───────────────────────────────┐");
 			puts("│    by L1J-JP MMORPG Game Server Emulation Java Project\t│");
-			puts("└───────────────────────────────┘" + "\n");
+			puts("└───────────────────────────────┘");
+			puts("");
 		}
 
 	public void initialize() throws Exception {
@@ -374,7 +375,7 @@ public class GameServer extends Thread {
 		InnTable.getInstance();
 		MagicDollTable.getInstance();
 		CookingRecipeTable.initialize();
-		System.out.println("ローディング完了");
+		System.out.println(I18N_LOADING_COMPLETE);
 		Runtime.getRuntime().addShutdownHook(ShutdownController.getInstance());
 
 		this.start();
@@ -409,16 +410,14 @@ public class GameServer extends Thread {
 			L1World world = L1World.getInstance();
 			try {
 				int secondsCount = _secondsCount;
-				world.broadcastServerMessage("ただいまより、サーバーをシャットダウンします。");
-				world.broadcastServerMessage("安全な場所でログアウトしてください");
+				world.broadcastServerMessage(I18N_SHUTDOWN_THE_SERVER);
+				world.broadcastServerMessage(I18N_PLEASE_LOGOUT);
 				while (0 < secondsCount) {
 					if (secondsCount <= 30) {
-						world.broadcastServerMessage("ゲームが" + secondsCount
-								+ "秒後にシャットダウンします。ゲームを中断してください。");
+						world.broadcastServerMessage(String.format(I18N_SHUTDOWN_AFTER_FEW_SECONDS, secondsCount));
 					} else {
 						if (secondsCount % 60 == 0) {
-							world.broadcastServerMessage("ゲームが" + secondsCount
-									/ 60 + "分後にシャットダウンします。");
+							world.broadcastServerMessage(String.format(I18N_SHUTDOWN_AFTER_FEW_MINUTES, secondsCount / 60));
 						}
 					}
 					Thread.sleep(1000);
@@ -426,7 +425,7 @@ public class GameServer extends Thread {
 				}
 				shutdown();
 			} catch (InterruptedException e) {
-				world.broadcastServerMessage("シャットダウンが中断されました。サーバーは通常稼動中です。");
+				world.broadcastServerMessage(I18N_SHUTDOWN_ABORT);
 				return;
 			}
 		}
