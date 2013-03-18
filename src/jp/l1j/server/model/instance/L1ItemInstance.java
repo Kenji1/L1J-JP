@@ -1168,7 +1168,14 @@ public class L1ItemInstance extends L1Object {
 			// 強化数
 			if (getEnchantLevel() != 0) {
 				os.writeC(2);
-				os.writeC(getEnchantLevel());
+				if (getItem().getType2() == 2
+						&& getItem().getType() >= 10
+						&& getItem().getType() <= 13) {
+					// TODO 装飾品の場合、インベントリ内での表示でACに加算されるのを防ぐ為
+					os.writeC(0);
+				} else {
+					os.writeC(getEnchantLevel());
+				}
 			}
 			// 損傷度
 			if (getDurability() != 0) {
