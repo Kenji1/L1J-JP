@@ -17,12 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <properties>
 <comment>Englisth(US) locale</comment>
 <!-- jp/l1j/server/GameServer.java -->
-<!-- run() -->
+<!-- run -->
 <entry key="MemoryUsage">Memory usage: %sMB</entry>
 <entry key="WaittingForClient">Waiting for client connections...</entry>
 <entry key="TryingToConnection">Trying to connection: %s</entry>
 <entry key="BannedIP">Banned IP(%s)</entry>
-<!-- printStartupMessage() -->
+<!-- printStartupMessage -->
 <entry key="GenerateServerSocket">Generate a server socket</entry>
 <entry key="ServerSettings">■■■■ Server Settings ■■■■</entry>
 <entry key="Exp">Exp: x%s</entry>

@@ -17,32 +17,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <properties>
 <comment>Simplified Chinese locale</comment>
 <!-- jp/l1j/server/GameServer.java -->
-<!-- run() -->
+<!-- run -->
 <entry key="MemoryUsage">内存使用量: %sMB</entry>
 <entry key="WaittingForClient">正在等待用户连接...</entry>
 <entry key="TryingToConnection">正在尝试连线: %s</entry>
-<entry key="BannedIP">禁止IP: %s</entry>
-<!-- printStartupMessage() -->
-<entry key="GenerateServerSocket">生成服务器套接字</entry>
-<entry key="ServerSettings">■■■■ 服务器设置 ■■■■</entry>
-<entry key="Exp">经验: %s倍</entry>
-<entry key="Lawful">倾向: %s倍</entry>
-<entry key="Karma">因果: %s倍</entry>
+<entry key="BannedIP">被封锁的IP: %s</entry>
+<!-- printStartupMessage -->
+<entry key="GenerateServerSocket">正在建立伺服端通讯</entry>
+<entry key="ServerSettings">■■■■ 伺服端设置 ■■■■</entry>
+<entry key="Exp">经验值: %s倍</entry>
+<entry key="Lawful">正义值: %s倍</entry>
+<entry key="Karma">友好度: %s倍</entry>
 <entry key="ItemDrop">物品掉落率: %s倍</entry>
 <entry key="AdenaDrop">金钱掉落率: %s倍</entry>
 <entry key="EnchantWeapon">附魔武器成功率: %s％</entry>
 <entry key="EnchantArmor">附魔铠甲成功率: %s％</entry>
 <entry key="EnchantAttribute">附魔属性成功率: %s％</entry>
-<entry key="GlobalChat">全球聊天: Lv%s</entry>
+<entry key="GlobalChat">全域聊天等级: Lv%s</entry>
 <entry key="PvP">PvP: 是</entry>
 <entry key="NonPvP">PvP: 無(Non-PvP)</entry>
-<entry key="MaxUsers">最大用户: %d用户</entry>
+<entry key="MaxUsers">用户端上限: %d人</entry>
 <!-- initialize -->
 <entry key="LoadingComplete">加载完成</entry>
 <!-- ServerShutdownThread -->
 <entry key="ShutdownTheServer">关闭服务器。</entry>
-<entry key="PleaseLogout">请在安全区注销。</entry>
-<entry key="ShutdownAfterFewMinutes">服务器将在%d分后关闭。</entry>
-<entry key="ShutdownAfterFewSeconds">服务器将在%d秒后关闭。请注销尽快。</entry>
-<entry key="ShutdownAbort">关机中止。服务器正常运行。</entry>
+<entry key="PleaseLogout">请在安全区登出。</entry>
+<entry key="ShutdownAfterFewMinutes">伺服端将在%d分后关闭。</entry>
+<entry key="ShutdownAfterFewSeconds">服务器将在%d秒后关闭。请尽快登出。</entry>
+<entry key="ShutdownAbort">关机中止。伺服端持续运行。</entry>
 </properties>

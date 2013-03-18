@@ -17,12 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <properties>
 <comment>Korean locale</comment>
 <!-- jp/l1j/server/GameServer.java -->
-<!-- run() -->
+<!-- run -->
 <entry key="MemoryUsage">메모리 사용량: %s MB</entry>
 <entry key="WaittingForClient">클라이언트 연결을 기다리는 중 ...</entry>
 <entry key="TryingToConnection">연결 시도 중: %s</entry>
 <entry key="BannedIP">금지 IP: %s</entry>
-<!-- printStartupMessage() -->
+<!-- printStartupMessage -->
 <entry key="GenerateServerSocket">서버 소켓을 생성</entry>
 <entry key="ServerSettings">■■■■ 서버 설정 ■■■■</entry>
 <entry key="Exp">경험: %s 배</entry>

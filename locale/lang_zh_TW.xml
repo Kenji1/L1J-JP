@@ -17,32 +17,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <properties>
 <comment>Traditional Chinese locale</comment>
 <!-- jp/l1j/server/GameServer.java -->
-<!-- run() -->
+<!-- run -->
 <entry key="MemoryUsage">記憶體使用量: %sMB</entry>
 <entry key="WaittingForClient">正在等待用戶端連線...</entry>
 <entry key="TryingToConnection">正在嘗試連線: %s</entry>
 <entry key="BannedIP">禁止IP: %s</entry>
-<!-- printStartupMessage() -->
-<entry key="GenerateServerSocket">生成服務器套接字</entry>
-<entry key="ServerSettings">■■■■ 服務器設置 ■■■■</entry>
-<entry key="Exp">經驗: %s倍</entry>
-<entry key="Lawful">傾向: %s倍</entry>
-<entry key="Karma">因果: %s倍</entry>
+<!-- printStartupMessage -->
+<entry key="GenerateServerSocket">正在建立伺服器連線</entry>
+<entry key="ServerSettings">■■■■ 伺服器設定 ■■■■</entry>
+<entry key="Exp">經驗值: %s倍</entry>
+<entry key="Lawful">正義值: %s倍</entry>
+<entry key="Karma">友好度: %s倍</entry>
 <entry key="ItemDrop">物品掉落率: %s倍</entry>
 <entry key="AdenaDrop">金錢掉落率: %s倍</entry>
 <entry key="EnchantWeapon">附魔武器成功率: %s％</entry>
 <entry key="EnchantArmor">附魔鎧甲成功率: %s％</entry>
 <entry key="EnchantAttribute">附魔屬性成功率: %s％</entry>
-<entry key="GlobalChat">全球聊天: Lv%s</entry>
-<entry key="PvP">PvP: 是</entry>
-<entry key="NonPvP">PvP: 無(Non-PvP)</entry>
-<entry key="MaxUsers">最大用戶: %d用戶</entry>
+<entry key="GlobalChat">公共聊天頻道等級: Lv%s</entry>
+<entry key="PvP">PvP: 可</entry>
+<entry key="NonPvP">PvP: 不可(Non-PvP)</entry>
+<entry key="MaxUsers">用戶端上限: %d 人</entry>
 <!-- initialize -->
-<entry key="LoadingComplete">加載完成</entry>
+<entry key="LoadingComplete">讀取完成</entry>
 <!-- ServerShutdownThread -->
-<entry key="ShutdownTheServer">關閉服務器。</entry>
-<entry key="PleaseLogout">請在安全區註銷。</entry>
-<entry key="ShutdownAfterFewMinutes">服務器將在%d分後關閉。</entry>
-<entry key="ShutdownAfterFewSeconds">服務器將在%d秒後關閉。請註銷盡快。</entry>
-<entry key="ShutdownAbort">關機中止。服務器正常運行。</entry>
+<entry key="ShutdownTheServer">關閉伺服器。</entry>
+<entry key="PleaseLogout">請在安全區登出。</entry>
+<entry key="ShutdownAfterFewMinutes">伺服器將在%d分後關閉。</entry>
+<entry key="ShutdownAfterFewSeconds">伺服器將在%d秒後關閉。請盡快登出。</entry>
+<entry key="ShutdownAbort">取消關機，伺服器繼續執行。</entry>
 </properties>

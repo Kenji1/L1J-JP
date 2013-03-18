@@ -35,9 +35,9 @@ jp/l1j/server/GameServer.java
 <entry key="EnchantWeapon">武器強化成功率: %s％</entry>
 <entry key="EnchantArmor">防具強化成功率: %s％</entry>
 <entry key="EnchantAttribute">属性強化成功率: %s％</entry>
-<entry key="GlobalChat">全体チャット: Lv%s</entry>
-<entry key="PvP">PvP: 有り</entry>
-<entry key="NonPvP">PvP: 無し(Non-PvP)</entry>
+<entry key="GlobalChat">全体チャット可能レベル: Lv%s</entry>
+<entry key="PvP">PvP: 可能</entry>
+<entry key="NonPvP">PvP: 不可(Non-PvP)</entry>
 <entry key="MaxUsers">最大ユーザー: %d名</entry>
 <!-- initialize -->
 <entry key="LoadingComplete">ローディング完了</entry>
