@@ -2729,7 +2729,8 @@ public class L1PcInstance extends L1Character {
 	}
 
 	public boolean isWindShackle() { // ウィンドシャックル　攻撃速度1/2
-		return hasSkillEffect(WIND_SHACKLE);
+		return hasSkillEffect(WIND_SHACKLE)
+				||hasSkillEffect(AREA_WIND_SHACKLE);
 	}
 
 	public boolean isBrave() {

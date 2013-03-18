@@ -2157,7 +2157,12 @@ public class L1NpcInstance extends L1Character {
 				sleepTime += (sleepTime * 2);// 0.25
 			}
 		}
-		return sleepTime;
+		if (hasSkillEffect(AREA_WIND_SHACKLE)) {
+			if (type == ATTACK_SPEED || type == MAGIC_SPEED) {
+				sleepTime += (sleepTime * 2);// 0.25
+			}
+		}
+		return sleepTime;		
 	}
 
 	protected void setAiRunning(boolean aiRunning) {

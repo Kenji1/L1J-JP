@@ -158,7 +158,7 @@ public class Dungeon {
 				} else if ((srcX == 32941) && (srcY == 32672)
 					&& (srcMapId >= 1011 || srcMapId <= 1016)) {
 					dungeonType = DungeonType.LAIR_OF_FAFURION; // パプリオンレア
-				} else if ((srcX == 32736) && (srcY == 32846)
+				} else if ((srcX == 32748) && (srcY == 32868)
 					&& (srcMapId >= 1017 || srcMapId <= 1022)) {
 					dungeonType = DungeonType.LAIR_OF_LINDVIOR; // リンドビオルレア
 				}
@@ -219,7 +219,7 @@ public class Dungeon {
 					|| dungeonType == DungeonType.LAIR_OF_LINDVIOR){
 				L1DragonSlayer.getInstance().startDragonSlayer(pc.getPortalNumber());
 				// デバッグ用なのでコメントアウト
-				//pc.sendPackets(new S_SystemMessage("まもなくレイドが開始します。"));
+				//pc.sendPackets(new S_SystemMessage("まもなくレイドが開始されます。"));
 				teleportable = true;
 			} else {
 				if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL

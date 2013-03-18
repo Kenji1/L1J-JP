@@ -200,7 +200,11 @@ public class Teleportation {
 		if (pc.hasSkillEffect(WIND_SHACKLE)) {
 			pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), pc.getSkillEffectTimeSec(WIND_SHACKLE)));
 		}
-		
+
+		if (pc.hasSkillEffect(AREA_WIND_SHACKLE)) {
+			pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), pc.getSkillEffectTimeSec(AREA_WIND_SHACKLE)));
+		}		
+
 		// ドラゴンポータルのキーId判定
 		if (pc.getPortalNumber() != -1
 				&& (pc.getMapId() !=  (1005 + pc.getPortalNumber()))) {

@@ -496,12 +496,16 @@ public class L1MonsterInstance extends L1NpcInstance {
 			}
 		}
 	}
-
+	/**
+	 * 指定されたMOBが死亡した場合に開くドアforクリスタルケイブ
+	 * 
+	 * @param npc
+	 */
 	private static void openDoorWhenNpcDied(L1NpcInstance npc) {
 		int[] npcId = { 46143, 46144, 46145, 46146, 46147, 46148, 46149, 46150,
-				46151, 46152 };
+				46151, 46152};
 		int[] doorId = { 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009,
-				5010 };
+				5010};
 
 		for (int i = 0; i < npcId.length; i++) {
 			if (npc.getNpcTemplate().getNpcId() == npcId[i]) {
@@ -843,6 +847,18 @@ public class L1MonsterInstance extends L1NpcInstance {
 					broadcastPacket(new S_NpcPack(this));
 				}
 			}
+/*		} else if (npcid == 91603 || npcid == 91604 || npcid == 91605) { // リンドビオルレイド
+			if (getMaxHp() / 3 > getCurrentHp()) {
+				int rnd = _random.nextInt(50);
+				if (1 > rnd) {
+					allTargetClear();
+					setHiddenStatus(HIDDEN_STATUS_FLY);
+					broadcastPacket(new S_DoActionGFX(getId(),
+							ActionCodes.ACTION_Moveup));
+					setStatus(13);
+					broadcastPacket(new S_NpcPack(this));
+				}
+			}*/
 		}
 	}
 

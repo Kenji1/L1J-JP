@@ -139,3 +139,5 @@ INSERT INTO `door_gfxs` VALUES ('7536', 'Hardin Quest', '0', '0', '0');
 INSERT INTO `door_gfxs` VALUES ('7556', 'アンタラス洞窟1', '1', '-2', '2');
 INSERT INTO `door_gfxs` VALUES ('7858', 'パプリオン洞窟1', '0', '-2', '2');
 INSERT INTO `door_gfxs` VALUES ('7859', 'パプリオン洞窟2', '1', '-2', '2');
+INSERT INTO `door_gfxs` VALUES ('8044', 'リンドピオル洞窟L', '1', '-2', '2');
+INSERT INTO `door_gfxs` VALUES ('8038', 'リンドピオル洞窟R', '0', '-2', '2');

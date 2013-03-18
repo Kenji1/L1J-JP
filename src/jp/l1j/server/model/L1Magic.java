@@ -365,7 +365,7 @@ public class L1Magic {
 						|| skillId == DISEASE || skillId == DECAY_POTION
 						|| skillId == MASS_SLOW || skillId == ENTANGLE
 						|| skillId == ERASE_MAGIC || skillId == EARTH_BIND
-						|| skillId == AREA_OF_SILENCE
+						|| skillId == AREA_OF_SILENCE || skillId == AREA_WIND_SHACKLE
 						|| skillId == WIND_SHACKLE || skillId == STRIKER_GALE
 						|| skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN
 						|| skillId == FOG_OF_SLEEPING || skillId == ICE_LANCE
@@ -415,7 +415,7 @@ public class L1Magic {
 				skillId == COUNTER_BARRIER ||
 				skillId == ELEMENTAL_FALL_DOWN || skillId == RETURN_TO_NATURE ||
 				skillId == ENTANGLE || skillId == ERASE_MAGIC || skillId == EARTH_BIND ||
-				skillId == AREA_OF_SILENCE || skillId == WIND_SHACKLE ||
+				skillId == AREA_OF_SILENCE || skillId == WIND_SHACKLE || skillId == AREA_WIND_SHACKLE ||
 				skillId == STRIKER_GALE || skillId == POLLUTE_WATER
 				|| skillId == ELZABE_AREA_SILENCE) {
 			// 成功確率は 魔法固有係数 × LV差 + 基本確率

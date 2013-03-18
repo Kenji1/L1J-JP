@@ -2215,7 +2215,8 @@ public class L1SkillUse {
 						npc.setParalyzed(true);
 						npc.setParalysisTime(_shockStunDuration);
 					}
-				} else if (_skillId == WIND_SHACKLE) { // ウィンド シャックル
+				} else if (_skillId == WIND_SHACKLE // ウィンド シャックル
+						|| _skillId == AREA_WIND_SHACKLE) { // 範囲ウィンドシャックル
 					_skill.newBuffSkillExecutor().addEffect(_user, cha,
 							buffIconDuration);
 				} else if (_skillId == CANCELLATION) {
@@ -3558,7 +3559,8 @@ public class L1SkillUse {
 				|| (_skillId == TURN_UNDEAD && enableTU == false)
 				|| ((_skillId == ERASE_MAGIC || _skillId == SLOW
 				|| _skillId == MANA_DRAIN || _skillId == MASS_SLOW
-				|| _skillId == ENTANGLE || _skillId == WIND_SHACKLE) && enableErase == false)
+				|| _skillId == ENTANGLE || _skillId == WIND_SHACKLE
+				|| _skillId == AREA_WIND_SHACKLE) && enableErase == false)
 				|| (_skillId == MANA_DRAIN && enableManaDrain == false)) {
 			return true;
 		}

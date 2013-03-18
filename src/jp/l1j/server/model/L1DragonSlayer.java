@@ -23,10 +23,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import jp.l1j.server.codes.ActionCodes;
+import jp.l1j.server.types.Point;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.model.instance.L1DoorInstance;
 import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1MonsterInstance;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
@@ -35,6 +37,7 @@ import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.packets.server.S_CharVisualUpdate;
 import jp.l1j.server.packets.server.S_DoActionGFX;
 import jp.l1j.server.packets.server.S_MapID;
+import jp.l1j.server.packets.server.S_NpcPack;
 import jp.l1j.server.packets.server.S_OtherCharPacks;
 import jp.l1j.server.packets.server.S_OwnCharPack;
 import jp.l1j.server.packets.server.S_RemoveObject;
@@ -96,6 +99,13 @@ public class L1DragonSlayer {
 
 	public void setPortalNumber(int number, boolean i) {
 		_portalNumber[number] = i;
+	}
+
+	private L1Location _location;
+	L1Location loc = new L1Location();
+
+	L1Location getLocation() {
+		return _location;
 	}
 
 	private boolean[] _checkDragonPortal = new boolean[4];
@@ -266,9 +276,9 @@ public class L1DragonSlayer {
 		@Override
 		public void run() {
 			short mapId = (short) (1005 + _num);
-			int[] msg = new int[9];
+			int[] msg = new int[10];
 			if (_num < 6) {
-				msg = new int[] { 1570, 1571, 1572, 1574, 1575, 1576, 1578, 1579, 1581 };
+				msg = new int[] { 1570, 1571, 1572, 1574, 1575, 1576, 1578, 1579, 1581, 1593};
 				// アンタラス：誰だ、私を眠りから覚ましたのは。
 				// クレイ：アンタラス！お前を追ってこの漆黒の闇までやって来た！
 				// アンタラス：笑止千万！クレイ！もう一度あの世へ送ってやる！
@@ -278,19 +288,22 @@ public class L1DragonSlayer {
 				// アンタラス：生意気なやつらめ！死にたいのか！
 				// アンタラス：許さん！すぐに父上がお出ましになるだろう。
 				// クレイ：おお…最強の勇士であることを示してみせた最高のナイトよ！試練に打ち勝ってアンタラスをしとめたのだな。恨みは解けるだろう。ウハハハ！
+				// ドワーフの叫び：アンタラスの黒い息遣いを止めた勇者が誕生しました！
 			} else if (_num < 12) {
-				msg = new int[] { 1657, 1658, 1659, 1662, 1663, 1664, 1666, 1667, 1669 };
+				msg = new int[] { 1657, 1658, 1659, 1662, 1663, 1664, 1666, 1667, 1669, 1682};
 				// パプリオン：俺の領域を侵すとは…その勇気は高く買おう。
 				// 巫女サエル：この卑劣なパプリオンめ！私を騙した代償を払わせてやる！
 				// パプリオン：封印を解く時にはお前が助けになったが…俺に二回目の慈悲はない…
 				// 巫女サエル：勇士たちよ！あの邪悪なパプリオンを倒して、エヴァ王国にかけられた血の呪いを解いてください！
 				// パプリオン：手頃なおもちゃだな！ハハハ！
 				// パプリオン：骨の髄まで凍りつくほどの恐怖を味わせてやろう！
+				// 巫女サエル：パプリオンの力がかなり落ちたようです！勇士たちよ！もうちょっとです！
 				// パプリオン：おまえの言うところの希望なるものが、虚構であることを教えてやろう！
 				// パプリオン：サエルの味方をしたことを後悔させてやろう！この愚か者めが！
 				// 巫女サエル：ありがとうございます。あなたがたはアデン最高の勇士です。これでエヴァ王国にかけられた長年の呪いも解けるでしょう。
+				// カイムサムの叫び：パプリオンの黒い息遣いを止めた勇者が誕生しました！
 			} else if (_num < 18) {
-				msg = new int[] { 1755, 1760, 1758, 1763, 1767, 1768, 1770, 1771, 1772};
+				msg = new int[] { 1755, 1760, 1758, 1763, 1767, 1768, 1770, 1771, 1772, 1754};
 				// リンドビオル：俺の安眠を邪魔するのは誰だ！
 				// 雲の大精霊：リンドビオル様の聖所に忍び込んだクセモノは誰だ！
 				// リンドビオル：このリンドビオルを怒らせた代償を払ってもらおうか。
@@ -300,6 +313,7 @@ public class L1DragonSlayer {
 				// リンドビオル：自分たちの愚かさを嘆いても手遅れだ！
 				// リンドビオル：もう許さん！もう一度かかってこい！
 				// リンドビオル：グアアアッ！こんなはずが！お前たちをナメてかかった俺がバカだった…
+				// ドワーフの叫び：リンドビオルの翼を折った勇者が誕生しました！
 			// } else if (_num < 24) {
 			// ヴァラカス(未実装)
 			}
@@ -339,7 +353,7 @@ public class L1DragonSlayer {
 					} else if (_num < 12) {
 						spawn(91514, _num, 32955, 32839, mapId, 10, 0); // パプリオンLv1
 					} else if (_num < 18) {
-						spawn(91603, _num, 32857, 32869, mapId, 10, 0); // リンドビオルLv1
+						spawn(91603, _num, 32848, 32879, mapId, 10, 0); // リンドビオルLv1
 					//} else if (_num < 24) {
 					// ヴァラカスLv1(未実装)
 					}
@@ -379,7 +393,7 @@ public class L1DragonSlayer {
 					} else if (_num < 12) {
 						spawn(91515, _num, 32955, 32839, mapId, 10, 0); // パプリオンLv2
 					} else if (_num < 18) {
-						spawn(91604, _num, 32857, 32869, mapId, 10, 0); // リンドビオルLv2
+						spawn(91604, _num, 32863, 32861, mapId, 0, 0); // リンドビオルLv2
 					//} else if (_num < 24) {
 					// ヴァラカスLv2(未実装)
 					}
@@ -410,7 +424,7 @@ public class L1DragonSlayer {
 					} else if (_num < 12) {
 						spawn(91516, _num, 32955, 32839, mapId, 10, 0); // パプリオンLv3
 					} else if (_num < 18) {
-						spawn(91605, _num, 32857, 32869, mapId, 10, 0); // リンドビオルLv3
+						spawn(91605, _num, 32848, 32879, mapId, 10, 0); // リンドビオルLv3
 					//} else if (_num < 24) {
 					// ヴァラカスLv3(未実装)
 					}
@@ -432,6 +446,10 @@ public class L1DragonSlayer {
 							timer.begin();
 						}
 					}
+						sendMessage(_num, msg[9], null);
+						// ドワーフの叫び：アンタラスの黒い息遣いを止めた勇者が誕生しました！
+						// カイムサムの叫び：パプリオンの黒い息遣いを止めた勇者が誕生しました！
+						// ドワーフの叫び：リンドビオルの翼を折った勇者が誕生しました！
 					break;
 				case STATUS_DRAGONSLAYER_END_2:
 					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_3);
@@ -658,7 +676,7 @@ public class L1DragonSlayer {
 					|| npc.getGfxId() == 7869 // パプリオンLv2
 					|| npc.getGfxId() == 7870 // パプリオンLv3
 					|| npc.getGfxId() == 8036 // リンドビオルLv1
-					|| npc.getGfxId() == 8054 // リンドビオルLv2
+					|| npc.getGfxId() == 8056 // リンドビオルLv2
 					|| npc.getGfxId() == 8055 // リンドビオルLv3
 					// ヴァラカスLv1(未実装)
 					// ヴァラカスLv2(未実装)
@@ -685,4 +703,68 @@ public class L1DragonSlayer {
 		}
 	}
 
+/*	*//**
+	 * 指定されたロケーションに任意のモンスターを指定数生成する。
+	 *
+	 * @param loc
+	 *            出現位置
+	 * @param npcid
+	 *            任意のNpcId
+	 * @param mobCount
+	 *            出現数
+	 * @return L1MonsterInstance 戻り値 : 成功=生成したインスタンス 失敗=null
+	 *//*
+	@SuppressWarnings("unused")
+	private L1MonsterInstance spawnMob(L1Location loc, int npcid, int mobCount) {
+		final L1MonsterInstance mob = new L1MonsterInstance(NpcTable.getInstance().getTemplate(npcid));
+		if (mob == null) {
+			_log.warning("mob == null");
+			return mob;
+		}
+
+		mob.setId(IdFactory.getInstance().nextId());
+		mob.setHeading(_random.nextInt(8));
+		mob.setX(loc.getX());
+		mob.setHomeX(loc.getX());
+		mob.setY(loc.getY());
+		mob.setHomeY(loc.getY());
+		mob.setMap((short) loc.getMapId());
+		mob.setStoreDroped(false);
+		mob.setUbSealCount(mobCount);
+
+		L1World.getInstance().storeObject(mob);
+		L1World.getInstance().addVisibleObject(mob);
+
+		final S_NpcPack S_NpcPack = new S_NpcPack(mob);
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(mob)) {
+			pc.addKnownObject(mob);
+			mob.addKnownObject(pc);
+			pc.sendPackets(S_NpcPack);
+		}
+		// モンスターのＡＩを開始
+		mob.onNpcAI();
+		mob.updateLight();
+		// mob.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // チャット開始
+		return mob;
+	}
+
+	*//**
+	 * モンスターをカウントする
+	 *
+	 * @param mobCnt 討伐MOB数
+	 *
+	 * @return 討伐MOB数
+	 *//*
+	private int countMonster() {
+		int mobCnt = 0;
+		for (final L1Object obj : L1World.getInstance().getVisiblePoint(
+				getLocation(), 15)) {
+			if (obj instanceof L1MonsterInstance) {
+				if (!((L1MonsterInstance) obj).isDead()) {
+					mobCnt++;
+				}
+			}
+		}
+		return mobCnt;
+	}*/
 }

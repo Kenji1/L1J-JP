@@ -419,6 +419,8 @@ public class L1SkillId {
 
 	public static final int AREA_POISON = 502; // 範囲毒攻撃（汎用）
 
+	public static final int AREA_WIND_SHACKLE = 503; // 範囲ウィンドシャックル
+
 	/*
 	 * Status
 	 */
