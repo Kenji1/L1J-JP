@@ -34,8 +34,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="EnchantArmor">Enchant Armor: %s%%</entry>
 <entry key="EnchantAttribute">Enchant Attribute: %s%%</entry>
 <entry key="GlobalChat">Global Chat: Lv%s</entry>
-<entry key="PvP">PvP: OK</entry>
-<entry key="NonPvP">PvP: NG(Non-PvP)</entry>
+<entry key="PvP">PvP: possible</entry>
+<entry key="NonPvP">PvP: impossible(Non-PvP)</entry>
 <entry key="MaxUsers">Max Users: %d users</entry>
 <!-- initialize -->
 <entry key="LoadingComplete">Loading Complete</entry>
@@ -45,4 +45,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="ShutdownAfterFewMinutes">Server will be shutdown after %d minutes.</entry>
 <entry key="ShutdownAfterFewSeconds">Server will be shutdown after %d seconds. Please logout as soon as possible.</entry>
 <entry key="ShutdownAbort">Shutdown abort. The server is running normally.</entry>
+
+<!-- jp/l1j/server/ClientThread.java -->
+<!-- run -->
+<entry key="ConnectToTheServer">%s has connected to the server.</entry>
+<entry key="TerminatedTheConnection">Terminated the connection with %s</entry>
+<!-- ClientThreadObserver -->
+<entry key="KilledTheConnection">Because no response for a period of time, killed the connection with %s</entry>
+
 </properties>

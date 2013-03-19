@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.Socket;
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Queue;
 import java.util.Timer;
@@ -31,21 +30,22 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.codes.Opcodes;
 import jp.l1j.server.controller.LoginController;
 import jp.l1j.server.datatables.CharBuffTable;
 import jp.l1j.server.model.Getback;
+import jp.l1j.server.model.L1DeathMatch;
+import jp.l1j.server.model.L1DragonSlayer;
+import jp.l1j.server.model.L1HardinQuest;
+import jp.l1j.server.model.L1Trade;
+import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1DollInstance;
 import jp.l1j.server.model.instance.L1FollowerInstance;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.instance.L1PetInstance;
 import jp.l1j.server.model.instance.L1SummonInstance;
-import jp.l1j.server.model.L1DeathMatch;
-import jp.l1j.server.model.L1DragonSlayer;
-import jp.l1j.server.model.L1HardinQuest;
-import jp.l1j.server.model.L1Trade;
-import jp.l1j.server.model.L1World;
 import jp.l1j.server.packets.PacketHandler;
 import jp.l1j.server.packets.PacketOutput;
 import jp.l1j.server.packets.server.S_Disconnect;
@@ -87,28 +87,6 @@ public class ClientThread implements Runnable, PacketOutput {
 
 	private int _loginStatus = 0;
 
-	// private static final byte[] FIRST_PACKET = { 10, 0, 38, 58, -37, 112, 46,
-	// 90, 120, 0 }; // for Episode5
-	// private static final byte[] FIRST_PACKET =
-	// { (byte) 0x12, (byte) 0x00, (byte) 0x14, (byte) 0x1D,
-	// (byte) 0x82,
-	// (byte) 0xF1,
-	// (byte) 0x0C, // = 0x0cf1821d
-	// (byte) 0x87, (byte) 0x7D, (byte) 0x75, (byte) 0x7D,
-	// (byte) 0xA1, (byte) 0x3B, (byte) 0x62, (byte) 0x2C,
-	// (byte) 0x5E, (byte) 0x3E, (byte) 0x9F }; // for Episode 6
-	// private static final byte[] FIRST_PACKET = { 2.70C
-	// (byte) 0xb1, (byte) 0x3c, (byte) 0x2c, (byte) 0x28,
-	// (byte) 0xf6, (byte) 0x65, (byte) 0x1d, (byte) 0xdd,
-	// (byte) 0x56, (byte) 0xe3, (byte) 0xef };
-	// private static final byte[] FIRST_PACKET = { // 3.0c
-	// (byte) 0xec, (byte) 0x64, (byte) 0x3e, (byte) 0x0d,
-	// (byte) 0xc0, (byte) 0x82, (byte) 0x00, (byte) 0x00,
-	// (byte) 0x02, (byte) 0x08, (byte) 0x00 };
-	// private static final byte[] FIRST_PACKET = { // 3.3C
-	// (byte) 0x65, (byte) 0xb6, (byte) 0xbd, (byte) 0x65, (byte) 0xcc,
-	// (byte) 0xd0, (byte) 0x7e, (byte) 0x53, (byte) 0x2e, (byte) 0xfa,
-	// (byte) 0xc1 };
 	private static final byte[] FIRST_PACKET = { // 3.5C
 	// (byte) 0xf4, (byte) 0x0a, (byte) 0x8d, (byte) 0x23, (byte) 0x6f,
 	// (byte) 0x7f, (byte) 0x04, (byte) 0x00, (byte) 0x05, (byte) 0x08,
@@ -188,8 +166,7 @@ public class ClientThread implements Runnable, PacketOutput {
 			}
 
 			if (readSize != dataLength) {
-				_log
-						.warning("Incomplete Packet is sent to the server, closing connection.");
+				_log.warning("Incomplete Packet is sent to the server, closing connection.");
 				throw new RuntimeException();
 			}
 			// listspr変更対策
@@ -239,9 +216,9 @@ public class ClientThread implements Runnable, PacketOutput {
 
 	@Override
 	public void run() {
-		_log.info("(" + _hostname + ")がサーバーに接続しました。");
-		System.out.println("利用メモリ: " + SystemUtil.getUsedMemoryMB() + "MB");
-		System.out.println("クライアント接続待機中...");
+		_log.info(String.format(I18N_CONNECTED_TO_THE_SERVER, _hostname));
+		System.out.println(String.format(I18N_MEMORY_USEAGE, SystemUtil.getUsedMemoryMB()));
+		System.out.println(I18N_WAITING_FOR_CLIENT);
 
 		/*
 		 * クライアントからのパケットをある程度制限する。 理由：不正の誤検出が多発する恐れがあるため
@@ -383,10 +360,9 @@ public class ClientThread implements Runnable, PacketOutput {
 		_csocket = null;
 		_log.fine("Server thread[C] stopped");
 		if (_kick < 1) {
-			_log.info("(" + getAccountName() + ":" + _hostname
-					+ ")との接続を終了しました。");
-			System.out.println("利用メモリ: " + SystemUtil.getUsedMemoryMB() + "MB");
-			System.out.println("クライアント接続待機中...");
+			_log.info(String.format(I18N_TERMINATED_THE_CONNECTION, _hostname));
+			System.out.println(String.format(I18N_MEMORY_USEAGE, SystemUtil.getUsedMemoryMB()));
+			System.out.println(I18N_WAITING_FOR_CLIENT);
 		}
 		return;
 	}
@@ -484,8 +460,7 @@ public class ClientThread implements Runnable, PacketOutput {
 				if (_activeChar == null // キャラクター選択前
 						|| _activeChar != null && !_activeChar.isPrivateShop() && !_activeChar.isGm()) { // 個人商店中とGMは除外
 					kick();
-					_log.warning("一定時間応答が得られなかった為(" + _hostname
-							+ ")との接続を強制切断しました。");
+					_log.warning(String.format(I18N_KILLED_THE_CONNECTION, _hostname));
 					cancel();
 					return;
 				}

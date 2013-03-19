@@ -47,4 +47,12 @@ jp/l1j/server/GameServer.java
 <entry key="ShutdownAfterFewMinutes">サーバーが%d分後にシャットダウンします。</entry>
 <entry key="ShutdownAfterFewSeconds">サーバーが%d秒後にシャットダウンします。速やかにログアウトしてください。</entry>
 <entry key="ShutdownAbort">シャットダウンが中断されました。サーバーは正常に稼働中です。</entry>
+
+<!-- jp/l1j/server/ClientThread.java -->
+<!-- run -->
+<entry key="ConnectToTheServer">%sがサーバーに接続しました。</entry>
+<entry key="TerminatedTheConnection">%sとの接続を終了しました。</entry>
+<!-- ClientThreadObserver -->
+<entry key="KilledTheConnection">一定時間応答がないので、%sとの接続を強制終了しました。</entry>
+
 </properties>

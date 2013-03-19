@@ -49,5 +49,12 @@ public class I18N {
 	public static final String I18N_SHUTDOWN_AFTER_FEW_MINUTES = bundle.getString("ShutdownAfterFewMinutes");
 	public static final String I18N_SHUTDOWN_AFTER_FEW_SECONDS = bundle.getString("ShutdownAfterFewSeconds");
 	public static final String I18N_SHUTDOWN_ABORT = bundle.getString("ShutdownAbort");
-		
+
+	/*
+	 * jp.l1j.server.ClientThread.java
+	 */
+	public static final String I18N_CONNECTED_TO_THE_SERVER = bundle.getString("ConnectedToTheServer");
+	public static final String I18N_TERMINATED_THE_CONNECTION = bundle.getString("TerminatedTheConnection");
+	public static final String I18N_KILLED_THE_CONNECTION = bundle.getString("KilledTheConnection");
+	
 }

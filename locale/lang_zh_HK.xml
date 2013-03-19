@@ -45,4 +45,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="ShutdownAfterFewMinutes">伺服器將在%d分後關閉。</entry>
 <entry key="ShutdownAfterFewSeconds">伺服器將在%d秒後關閉。請盡快登出。</entry>
 <entry key="ShutdownAbort">取消關機，伺服器繼續執行。</entry>
+
+<!-- jp/l1j/server/ClientThread.java -->
+<!-- run -->
+<entry key="ConnectToTheServer">%s連接到服務器。</entry>
+<entry key="TerminatedTheConnection">終止連接%s</entry>
+<!-- ClientThreadObserver -->
+<entry key="KilledTheConnection">因為在一段時間內沒有響應，殺死了連接%s</entry>
+
 </properties>
