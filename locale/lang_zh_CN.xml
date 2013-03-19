@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- run -->
 <entry key="ConnectToTheServer">%s连接到服务器。</entry>
 <entry key="TerminatedTheConnection">终止连接与%s</entry>
-<!-- ClientThreadObserver -->
-<entry key="KilledTheConnection">因为在一段时间内没有响应，杀死了连接与%s</entry>
+<!-- ClientThreadObserver -->\
+<entry key="KilledTheConnection">因为不能在一定间内回应，强制中断连线%s</entry>
 
 </properties>

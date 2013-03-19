@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- NpcAIの実装タイプの選択。値の意味はスキルタイマーと同じ。-->
 <entry key="NpcAIImplType">2</entry>
 
-<!-- クライアントの言語 0.US 3.Taiwan 4.Janpan 5.China -->
+<!-- クライアントの言語 0.US 1.Korea 2.Unknown 3.Taiwan 4.Janpan 5.China ?.HongKong -->
 <entry key="ClientLanguage">4</entry>
 
 <!-- タイムゾーンの設定 JST:日本標準時 -->

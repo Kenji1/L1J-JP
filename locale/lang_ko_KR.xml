@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="ServerSettings">■■■■ 서버 설정 ■■■■</entry>
 <entry key="Exp">경험치: %s 배</entry>
 <entry key="Lawful">라우풀: %s 배</entry>
-<entry key="Karma">카오틱: %s 배</entry>
+<entry key="Karma">우호도: %s 배</entry>
 <entry key="ItemDrop">아이템 드랍률: %s 배</entry>
 <entry key="AdenaDrop">아데나 드랍률: %s 배</entry>
 <entry key="EnchantWeapon">무기 강화 성공률: %s %%</entry>

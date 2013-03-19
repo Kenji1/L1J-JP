@@ -51,6 +51,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="ConnectToTheServer">%s連接到服務器。</entry>
 <entry key="TerminatedTheConnection">終止連接%s</entry>
 <!-- ClientThreadObserver -->
-<entry key="KilledTheConnection">因為在一段時間內沒有響應，殺死了連接%s</entry>
+<entry key="KilledTheConnection">因為不能在一定間內回應，強制中斷連線%s</entry>
 
 </properties>
