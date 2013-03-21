@@ -25,8 +25,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1ItemInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.templates.L1Armor;
 import jp.l1j.server.templates.L1EtcItem;
 import jp.l1j.server.templates.L1Item;
@@ -63,7 +64,6 @@ public class ItemTable {
 	private final Map<Integer, L1Weapon> _weapons;
 
 	static {
-
 		_etcItemTypes.put("arrow", new Integer(0));
 		_etcItemTypes.put("wand", new Integer(1));
 		_etcItemTypes.put("light", new Integer(2));
@@ -246,7 +246,6 @@ public class ItemTable {
 
 	private Map<Integer, L1EtcItem> allEtcItem() {
 		Map<Integer, L1EtcItem> result = new HashMap<Integer, L1EtcItem>();
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -254,7 +253,6 @@ public class ItemTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("select * from etc_items");
-
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				item = new L1EtcItem();
@@ -291,13 +289,10 @@ public class ItemTable {
 				item.setToBeSavedAtOnce((rs.getInt("save_at_once") == 1) ? true : false);
 				item.setChargeTime(rs.getInt("charge_time"));
 				item.setExpirationTime(rs.getString("expiration_time"));
-
 				result.put(new Integer(item.getItemId()), item);
 			}
 		} catch (NullPointerException e) {
-			_log.log(Level.SEVERE, new StringBuilder().append(item.getName())
-					.append("(" + item.getItemId() + ")").append(
-							"の読み込みに失敗しました。").toString());
+			_log.log(Level.SEVERE, String.format(I18N_LOAD_ITEM_FAILED, item.getName(), item.getItemId()));
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -310,7 +305,6 @@ public class ItemTable {
 
 	private Map<Integer, L1Weapon> allWeapon() {
 		Map<Integer, L1Weapon> result = new HashMap<Integer, L1Weapon>();
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -318,7 +312,6 @@ public class ItemTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("select * from weapons");
-
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				weapon = new L1Weapon();
@@ -373,21 +366,16 @@ public class ItemTable {
 				weapon.setIsHaste(rs.getBoolean("is_haste"));
 				weapon.setChargeTime(rs.getInt("charge_time"));
 				weapon.setExpirationTime(rs.getString("expiration_time"));
-
 				result.put(new Integer(weapon.getItemId()), weapon);
 			}
 		} catch (NullPointerException e) {
-			_log.log(Level.SEVERE, new StringBuilder().append(weapon.getName())
-					.append("(" + weapon.getItemId() + ")").append(
-							"の読み込みに失敗しました。").toString());
+			_log.log(Level.SEVERE, String.format(I18N_LOAD_ITEM_FAILED, weapon.getName(), weapon.getItemId()));
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 		return result;
 	}
@@ -401,7 +389,6 @@ public class ItemTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("select * from armors");
-
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				armor = new L1Armor();
@@ -467,66 +454,53 @@ public class ItemTable {
 				armor.setIsHaste(rs.getInt("is_haste") == 0 ? false : true);
 				armor.setExpBonus(rs.getInt("exp_bonus"));
 				armor.setPotionRecoveryRate(rs.getInt("potion_recovery_rate"));
-
 				result.put(new Integer(armor.getItemId()), armor);
 			}
 		} catch (NullPointerException e) {
-			_log.log(Level.SEVERE, new StringBuilder().append(armor.getName())
-					.append("(" + armor.getItemId() + ")").append(
-							"の読み込みに失敗しました。").toString());
+			_log.log(Level.SEVERE, String.format(I18N_LOAD_ITEM_FAILED, armor.getName(), armor.getItemId()));
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 		return result;
 	}
 
 	private void buildFastLookupTable() {
 		int highestId = 0;
-
 		Collection<L1EtcItem> items = _etcitems.values();
 		for (L1EtcItem item : items) {
 			if (item.getItemId() > highestId) {
 				highestId = item.getItemId();
 			}
 		}
-
 		Collection<L1Weapon> weapons = _weapons.values();
 		for (L1Weapon weapon : weapons) {
 			if (weapon.getItemId() > highestId) {
 				highestId = weapon.getItemId();
 			}
 		}
-
 		Collection<L1Armor> armors = _armors.values();
 		for (L1Armor armor : armors) {
 			if (armor.getItemId() > highestId) {
 				highestId = armor.getItemId();
 			}
 		}
-
 		_allTemplates = new L1Item[highestId + 1];
-
-		for (Iterator<Integer> iter = _etcitems.keySet().iterator(); iter
-				.hasNext();) {
+		for (Iterator<Integer> iter = _etcitems.keySet().iterator(); iter.hasNext();) {
 			Integer id = iter.next();
 			L1EtcItem item = _etcitems.get(id);
 			_allTemplates[id.intValue()] = item;
 		}
-
-		for (Iterator<Integer> iter = _weapons.keySet().iterator(); iter
-				.hasNext();) {
+		for (Iterator<Integer> iter = _weapons.keySet().iterator(); iter.hasNext();) {
 			Integer id = iter.next();
 			L1Weapon item = _weapons.get(id);
 			_allTemplates[id.intValue()] = item;
 		}
 
-		for (Iterator<Integer> iter = _armors.keySet().iterator(); iter
-				.hasNext();) {
+		for (Iterator<Integer> iter = _armors.keySet().iterator(); iter.hasNext();) {
 			Integer id = iter.next();
 			L1Armor item = _armors.get(id);
 			_allTemplates[id.intValue()] = item;

@@ -23,18 +23,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// IdFactory
-
 public class ClanTable {
-
 	private static Logger _log = Logger.getLogger(ClanTable.class.getName());
 
 	private final HashMap<Integer, L1Clan> _clans = new HashMap<Integer, L1Clan>();
@@ -53,12 +49,10 @@ public class ClanTable {
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
-
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
 				pstm = con.prepareStatement("SELECT * FROM clans ORDER BY clan_id");
-				rs = pstm.executeQuery();
-				
+				rs = pstm.executeQuery();			
 				while (rs.next()) {
 					int clan_id = rs.getInt(1);
 					L1Clan clan = new L1Clan(clan_id);
@@ -68,11 +62,9 @@ public class ClanTable {
 					clan.setLeaderName(rs.getString(4));
 					clan.setCastleId(rs.getInt(5));
 					clan.setHouseId(rs.getInt(6));
-
 					L1World.getInstance().storeClan(clan);
 					_clans.put(clan_id, clan);
 				}
-
 			} catch (SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
@@ -87,13 +79,11 @@ public class ClanTable {
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
-
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
 				pstm = con.prepareStatement("SELECT name FROM characters WHERE clan_id = ?");
 				pstm.setInt(1, clan.getClanId());
 				rs = pstm.executeQuery();
-
 				while (rs.next()) {
 					clan.addMemberName(rs.getString(1));
 				}
@@ -123,10 +113,8 @@ public class ClanTable {
 		clan.setLeaderName(player.getName());
 		clan.setCastleId(0);
 		clan.setHouseId(0);
-
 		Connection con = null;
 		PreparedStatement pstm = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO clans SET clan_id=?, clan_name=?, leader_id=?, leader_name=?, has_castle=?, has_house=?");
@@ -143,10 +131,8 @@ public class ClanTable {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-
 		L1World.getInstance().storeClan(clan);
 		_clans.put(clan.getClanId(), clan);
-
 		player.setClanid(clan.getClanId());
 		player.setClanname(clan.getClanName());
 		player.setClanRank(L1Clan.CLAN_RANK_LEADER);
@@ -201,7 +187,6 @@ public class ClanTable {
 		}
 		clan.getWarehouse().clearItems();
 		clan.getWarehouse().deleteAllItems();
-
 		L1World.getInstance().removeClan(clan);
 		_clans.remove(clan.getClanId());
 	}
@@ -209,5 +194,4 @@ public class ClanTable {
 	public L1Clan getTemplate(int clan_id) {
 		return _clans.get(clan_id);
 	}
-
 }

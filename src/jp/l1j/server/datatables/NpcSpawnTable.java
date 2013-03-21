@@ -24,19 +24,15 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Spawn;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// MobTable, IdFactory
-
 public class NpcSpawnTable {
-
 	private static Logger _log = Logger.getLogger(NpcSpawnTable.class.getName());
 
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
@@ -59,22 +55,18 @@ public class NpcSpawnTable {
 	}
 
 	private void fillNpcSpawnTable() {
-
 		int spawnCount = 0;
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM spawn_npc");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				if (Config.ALT_GMSHOP == false) {
 					int npcid = rs.getInt(1);
-					if (npcid >= Config.ALT_GMSHOP_MIN_ID
-							&& npcid <= Config.ALT_GMSHOP_MAX_ID) {
+					if (npcid >= Config.ALT_GMSHOP_MIN_ID && npcid <= Config.ALT_GMSHOP_MAX_ID) {
 						continue;
 					}
 				}
@@ -149,7 +141,6 @@ public class NpcSpawnTable {
 					l1spawn.setName(l1npc.getName());
 					l1spawn.init();
 					spawnCount += l1spawn.getAmount();
-
 					_spawntable.put(new Integer(l1spawn.getId()), l1spawn);
 					if (l1spawn.getId() > _highestId) {
 						_highestId = l1spawn.getId();
@@ -163,22 +154,17 @@ public class NpcSpawnTable {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-
-		_log.config("NPC配置リスト " + _spawntable.size() + "件ロード");
-		_log.fine("総NPC数 " + spawnCount + "件");
+		_log.fine("loaded npc: " + _spawntable.size() + " records");
 	}
 
 	public void storeSpawn(L1PcInstance pc, L1Npc npc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
-
 		try {
 			int count = 1;
 			String note = npc.getName();
-
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO spawn_npc SET location=?,count=?,npc_template_id=?,loc_x=?,loc_y=?,heading=?,map_id=?");
+			pstm = con.prepareStatement("INSERT INTO spawn_npc SET location=?,count=?,npc_template_id=?,loc_x=?,loc_y=?,heading=?,map_id=?");
 			pstm.setString(1, note);
 			pstm.setInt(2, count);
 			pstm.setInt(3, npc.getNpcId());
@@ -189,7 +175,6 @@ public class NpcSpawnTable {
 			pstm.execute();
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
@@ -205,5 +190,4 @@ public class NpcSpawnTable {
 		l1spawn.setId(_highestId);
 		_spawntable.put(l1spawn.getId(), l1spawn);
 	}
-
 }

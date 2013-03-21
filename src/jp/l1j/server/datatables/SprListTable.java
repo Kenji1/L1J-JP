@@ -48,7 +48,6 @@ public class SprListTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT distinct spr_id FROM spr_actions order by spr_id");
 			rs = pstm.executeQuery();
@@ -68,5 +67,4 @@ public class SprListTable {
 	public ArrayList<Integer> getTemplate() {
 		return _sprList;
 	}
-
 }

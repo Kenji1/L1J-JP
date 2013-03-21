@@ -31,11 +31,7 @@ import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.L1QueryUtil;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// IdFactory
-
 public class PetTable {
-
 	private static Logger _log = Logger.getLogger(PetTable.class.getName());
 
 	private static PetTable _instance;
@@ -62,7 +58,6 @@ public class PetTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM pets");
-
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1Pet pet = new L1Pet();
@@ -77,7 +72,6 @@ public class PetTable {
 				pet.setExp(rs.getInt(8));
 				pet.setLawful(rs.getInt(9));
 				pet.setFood(rs.getInt(10));
-
 				_pets.put(new Integer(itemobjid), pet);
 			}
 		} catch (SQLException e) {
@@ -86,7 +80,6 @@ public class PetTable {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
 
@@ -104,7 +97,6 @@ public class PetTable {
 		l1pet.setLawful(0);
 		l1pet.setFood(50);
 		_pets.put(new Integer(itemobjid), l1pet);
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -123,11 +115,9 @@ public class PetTable {
 			pstm.execute();
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
 
@@ -158,8 +148,7 @@ public class PetTable {
 
 	/** ペット空腹度更新 */
 	public void storePetFood(int itemObjId, int food) {
-		L1QueryUtil.execute("UPDATE pets SET food = ? WHERE item_obj_id = ?",
-				food, itemObjId);
+		L1QueryUtil.execute("UPDATE pets SET food = ? WHERE item_obj_id = ?", food, itemObjId);
 	}
 
 	public void deletePet(int itemobjid) {
@@ -172,7 +161,6 @@ public class PetTable {
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
@@ -220,8 +208,7 @@ public class PetTable {
 	/**
 	 * ペット購入
 	 */
-	public void buyNewPet(int petNpcId, int objid, int itemobjid, int upLv,
-			int lvExp) {
+	public void buyNewPet(int petNpcId, int objid, int itemobjid, int upLv, int lvExp) {
 		L1PetType petType = PetTypeTable.getInstance().get(petNpcId);
 		L1Pet l1pet = new L1Pet();
 		l1pet.setItemObjId(itemobjid);
@@ -263,11 +250,9 @@ public class PetTable {
 			pstm.execute();
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
 

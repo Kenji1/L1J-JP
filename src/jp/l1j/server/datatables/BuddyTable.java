@@ -27,11 +27,7 @@ import jp.l1j.server.model.L1Buddy;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// IdFactory
-
 public class BuddyTable {
-
 	private static Logger _log = Logger.getLogger(BuddyTable.class.getName());
 
 	private static BuddyTable _instance;
@@ -52,27 +48,20 @@ public class BuddyTable {
 		ResultSet charIdRS = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			charIdPS = con
-					.prepareStatement("SELECT distinct(char_id) as char_id FROM character_buddys");
-
+			charIdPS = con.prepareStatement("SELECT distinct(char_id) as char_id FROM character_buddys");
 			charIdRS = charIdPS.executeQuery();
 			while (charIdRS.next()) {
 				PreparedStatement buddysPS = null;
 				ResultSet buddysRS = null;
-
 				try {
-					buddysPS = con
-							.prepareStatement("SELECT buddy_id, buddy_name FROM character_buddys WHERE char_id = ?");
+					buddysPS = con.prepareStatement("SELECT buddy_id, buddy_name FROM character_buddys WHERE char_id = ?");
 					int charId = charIdRS.getInt("char_id");
 					buddysPS.setInt(1, charId);
 					L1Buddy buddy = new L1Buddy(charId);
-
 					buddysRS = buddysPS.executeQuery();
 					while (buddysRS.next()) {
-						buddy.add(buddysRS.getInt("buddy_id"), buddysRS
-								.getString("buddy_name"));
+						buddy.add(buddysRS.getInt("buddy_id"), buddysRS.getString("buddy_name"));
 					}
-
 					_buddys.put(buddy.getCharId(), buddy);
 				} catch (Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -81,7 +70,7 @@ public class BuddyTable {
 					SqlUtil.close(buddysPS);
 				}
 			}
-			_log.config("loaded " + _buddys.size() + " character's buddylists");
+			_log.fine("loaded buddy: " + _buddys.size() + " records");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -104,10 +93,8 @@ public class BuddyTable {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO character_buddys SET char_id=?, buddy_id=?, buddy_name=?");
+			pstm = con.prepareStatement("INSERT INTO character_buddys SET char_id=?, buddy_id=?, buddy_name=?");
 			pstm.setInt(1, charId);
 			pstm.setInt(2, objId);
 			pstm.setString(3, name);
@@ -127,15 +114,12 @@ public class BuddyTable {
 		if (!buddy.containsName(buddyName)) {
 			return;
 		}
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM character_buddys WHERE char_id=? AND buddy_name=?");
+			pstm = con.prepareStatement("DELETE FROM character_buddys WHERE char_id=? AND buddy_name=?");
 			pstm.setInt(1, charId);
 			pstm.setString(2, buddyName);
 			pstm.execute();
-
 			buddy.remove(buddyName);
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

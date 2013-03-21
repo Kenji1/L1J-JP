@@ -24,8 +24,9 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1Object;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.npc.action.L1NpcAction;
 import jp.l1j.server.model.npc.action.L1NpcXmlParser;
 import jp.l1j.server.utils.FileUtil;
@@ -35,17 +36,18 @@ import org.xml.sax.SAXException;
 
 public class NpcActionTable {
 	private static Logger _log = Logger.getLogger(NpcActionTable.class.getName());
+	
 	private static NpcActionTable _instance;
+	
 	private final List<L1NpcAction> _actions = new ArrayList<L1NpcAction>();
+	
 	private final List<L1NpcAction> _talkActions = new ArrayList<L1NpcAction>();
 
 	private List<L1NpcAction> loadAction(File file, String nodeName)
 
 	throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-				.newDocumentBuilder();
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document doc = builder.parse(file);
-
 		if (!doc.getDocumentElement().getNodeName().equalsIgnoreCase(nodeName)) {
 			return new ArrayList<L1NpcAction>();
 		}
@@ -85,7 +87,7 @@ public class NpcActionTable {
 			_instance = new NpcActionTable();
 			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, "NpcActionを読み込めませんでした", e);
+			_log.log(Level.SEVERE, String.format(I18N_LOAD_FAILED, "NpcAction"), e);
 			System.exit(0);
 		}
 	}

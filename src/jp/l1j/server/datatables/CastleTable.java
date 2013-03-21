@@ -30,11 +30,7 @@ import jp.l1j.server.templates.L1Castle;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// IdFactory
-
 public final class CastleTable {
-
 	private static Logger _log = Logger.getLogger(CastleTable.class.getName());
 
 	private static CastleTable _instance;
@@ -65,16 +61,12 @@ public final class CastleTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM castles");
-
 			rs = pstm.executeQuery();
-
 			while (rs.next()) {
 				L1Castle castle = new L1Castle(rs.getInt(1), rs.getString(2));
-				castle.setWarTime(timestampToCalendar((Timestamp) rs
-						.getObject(3)));
+				castle.setWarTime(timestampToCalendar((Timestamp) rs.getObject(3)));
 				castle.setTaxRate(rs.getInt(4));
 				castle.setPublicMoney(rs.getInt(5));
-
 				_castles.put(castle.getId(), castle);
 			}
 		} catch (SQLException e) {
@@ -99,17 +91,14 @@ public final class CastleTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE castles SET name=?, war_time=?, tax_rate=?, public_money=? WHERE castle_id=?");
+			pstm = con.prepareStatement("UPDATE castles SET name=?, war_time=?, tax_rate=?, public_money=? WHERE castle_id=?");
 			pstm.setString(1, castle.getName());
-			String fm = DateFormat.getDateTimeInstance().format(
-					castle.getWarTime().getTime());
+			String fm = DateFormat.getDateTimeInstance().format(castle.getWarTime().getTime());
 			pstm.setString(2, fm);
 			pstm.setInt(3, castle.getTaxRate());
 			pstm.setInt(4, castle.getPublicMoney());
 			pstm.setInt(5, castle.getId());
 			pstm.execute();
-
 			_castles.put(castle.getId(), castle);
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -118,5 +107,4 @@ public final class CastleTable {
 			SqlUtil.close(con);
 		}
 	}
-
 }

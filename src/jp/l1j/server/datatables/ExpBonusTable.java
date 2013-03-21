@@ -57,14 +57,10 @@ public final class ExpBonusTable {
 			Config.LV97_EXP_BONUS, Config.LV98_EXP_BONUS, Config.LV99_EXP_BONUS};
 	
 	public static int getExpBonusRate(int level) {
-		
 		int expBonus = 0;
-		
 		if (level >= 1 && level <= 99) {
 			expBonus = _expBonus[level - 1];
 		}
-		
 		return expBonus;
 	}
-
 }

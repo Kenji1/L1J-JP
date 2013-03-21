@@ -12,6 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.datatables;
 
 import java.io.BufferedReader;
@@ -21,6 +22,7 @@ import java.io.FileReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.utils.StreamUtil;
 
@@ -40,23 +42,18 @@ public class BadNamesTable {
 
 	private BadNamesTable() {
 		LineNumberReader lnr = null;
-
 		try {
 			File mobDataFile = new File("data/badnames.txt");
-			lnr = new LineNumberReader(new BufferedReader(new FileReader(
-					mobDataFile)));
-
+			lnr = new LineNumberReader(new BufferedReader(new FileReader(mobDataFile)));
 			String line = null;
 			while ((line = lnr.readLine()) != null) {
 				if (line.trim().length() == 0 || line.startsWith("#")) {
 					continue;
 				}
 				StringTokenizer st = new StringTokenizer(line, ";");
-
 				_nameList.add(st.nextToken());
 			}
-
-			_log.config("loaded " + _nameList.size() + " bad names");
+			_log.fine("loaded bad names: " + _nameList.size() + " records");
 		} catch (FileNotFoundException e) {
 			_log.warning("badnames.txt is missing in data folder");
 		} catch (Exception e) {

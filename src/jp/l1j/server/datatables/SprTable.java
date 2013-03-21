@@ -72,12 +72,10 @@ public class SprTable {
 				} else {
 					spr = _dataMap.get(key);
 				}
-
 				int actid = rs.getInt("act_id");
 				int frameCount = rs.getInt("frame_count");
 				int frameRate = rs.getInt("frame_rate");
 				int speed = calcActionSpeed(frameCount, frameRate);
-
 				switch (actid) {
 				case ACTION_Walk:
 				case ACTION_SwordWalk:
@@ -121,7 +119,7 @@ public class SprTable {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-		_log.config("SPRデータ " + _dataMap.size() + "件ロード");
+		_log.fine("loaded spr: " + _dataMap.size() + " records");
 	}
 	
 	/**

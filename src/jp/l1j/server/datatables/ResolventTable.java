@@ -31,8 +31,7 @@ public final class ResolventTable {
 
 	private static ResolventTable _instance;
 
-	private final Map<Integer, Integer> _resolvent
-			= new HashMap<Integer, Integer>();
+	private final Map<Integer, Integer> _resolvent = new HashMap<Integer, Integer>();
 
 	public static ResolventTable getInstance() {
 		if (_instance == null) {
@@ -52,14 +51,11 @@ public final class ResolventTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM resolvents");
-
 			for (rs = pstm.executeQuery(); rs.next();) {
 				int itemId = rs.getInt("item_id");
 				int crystalCount = rs.getInt("crystal_count");
-
 				_resolvent.put(new Integer(itemId), crystalCount);
 			}
-
 			_log.config("resolvent " + _resolvent.size());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -77,5 +73,4 @@ public final class ResolventTable {
 		}
 		return crystalCount;
 	}
-
 }

@@ -31,8 +31,7 @@ public class ArmorSetTable {
 
 	private static ArmorSetTable _instance;
 
-	private final ArrayList<L1ArmorSets> _armorSetList
-			= new ArrayList<L1ArmorSets>();
+	private final ArrayList<L1ArmorSets> _armorSetList = new ArrayList<L1ArmorSets>();
 
 	public static ArmorSetTable getInstance() {
 		if (_instance == null) {
@@ -48,8 +47,7 @@ public class ArmorSetTable {
 	private void load() {
 		Connection con = null;
 		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		
+		ResultSet rs = null;	
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM armor_sets");
@@ -101,8 +99,7 @@ public class ArmorSetTable {
 			as.setResistBlind(rs.getInt("resist_blind"));
 			as.setIsHaste(rs.getBoolean("is_haste"));
 			as.setExpBonus(rs.getInt("exp_bonus"));
-			as.setPotionRecoveryRate(rs.getInt("potion_recovery_rate"));
-			
+			as.setPotionRecoveryRate(rs.getInt("potion_recovery_rate"));			
 			_armorSetList.add(as);
 		}
 	}
@@ -110,5 +107,4 @@ public class ArmorSetTable {
 	public L1ArmorSets[] getAllList() {
 		return _armorSetList.toArray(new L1ArmorSets[_armorSetList.size()]);
 	}
-
 }

@@ -32,6 +32,7 @@ public class PolyTable {
 	private static PolyTable _instance;
 
 	private final HashMap<String, L1PolyMorph> _polymorphs = new HashMap<String, L1PolyMorph>();
+	
 	private final HashMap<Integer, L1PolyMorph> _polyIdIndex = new HashMap<Integer, L1PolyMorph>();
 
 	public static PolyTable getInstance() {
@@ -73,15 +74,12 @@ public class PolyTable {
 			int armorEquipFlg = rs.getInt("armor_equip");
 			boolean canUseSkill = rs.getBoolean("can_use_skill");
 			int causeFlg = rs.getInt("cause");
-
 			L1PolyMorph poly = new L1PolyMorph(id, name, polyId, minLevel,
 					weaponEquipFlg, armorEquipFlg, canUseSkill, causeFlg);
-
 			_polymorphs.put(name, poly);
 			_polyIdIndex.put(polyId, poly);
 		}
-
-		_log.config("変身リスト " + _polymorphs.size() + "件ロード");
+		_log.fine("loaded poly: " + _polymorphs.size() + " records");
 	}
 
 	public L1PolyMorph getTemplate(String name) {
@@ -91,5 +89,4 @@ public class PolyTable {
 	public L1PolyMorph getTemplate(int polyId) {
 		return _polyIdIndex.get(polyId);
 	}
-
 }

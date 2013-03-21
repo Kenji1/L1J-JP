@@ -27,7 +27,6 @@ import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
 public class MagicDollTable {
-
 	private static Logger _log = Logger.getLogger(MagicDollTable.class.getName());
 
 	private static MagicDollTable _instance;
@@ -91,7 +90,6 @@ public class MagicDollTable {
 				doll.setMakeItemId(rs.getInt("make_item_id"));
 				doll.setSkillId(rs.getByte("skill_id"));
 				doll.setSkillChance(rs.getByte("skill_chance"));
-
 				_dolls.put(new Integer(itemId), doll);
 			}
 		} catch (SQLException e) {
@@ -100,7 +98,6 @@ public class MagicDollTable {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
 
@@ -110,5 +107,4 @@ public class MagicDollTable {
 		}
 		return null;
 	}
-
 }

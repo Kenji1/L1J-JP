@@ -62,7 +62,6 @@ public final class ExpTable {
 	 * @return 求められたレベル
 	 */
 	public static int getLevelByExp(int exp) {
-
 		int level;
 		for (level = 1; level < _expTable.length; level++) {
 			// トリッキーかもしれない・・・
@@ -90,7 +89,6 @@ public final class ExpTable {
 		}
 		double expPenalty = 1.0;
 		expPenalty = 1.0 / _expPenalty[level - 50];
-
 		return expPenalty;
 	}
 
@@ -102,8 +100,7 @@ public final class ExpTable {
 	 * @return 求められた経験値のレート
 	 */
 	public static int getExpRate(int level) {
-		level = level - 50 < 0 ? 0 : level - 50;
-		
+		level = level - 50 < 0 ? 0 : level - 50;	
 		return _expPenalty[level];
 	}
 
@@ -127,7 +124,8 @@ public final class ExpTable {
 			0x4e9071de, 0x50b6c122, 0x52dd1066, 0x55035faa, 0x5729aeee,
 			0x594ffe32, 0x5b764d76, 0x5d9c9cba, 0x5fc2ebfe, 0x61e93b42,
 			0x640f8a86, 0x6635d9ca, 0x685c290e, 0x6a827852, 0x6ca8c796,
-			0x6ecf16da, };
+			0x6ecf16da
+	};
 
 	/**
 	 * 死亡時経験値ペナルティテーブル
@@ -145,5 +143,6 @@ public final class ExpTable {
 			Config.LV87_EXP, Config.LV88_EXP, Config.LV89_EXP, Config.LV90_EXP,
 			Config.LV91_EXP, Config.LV92_EXP, Config.LV93_EXP, Config.LV94_EXP,
 			Config.LV95_EXP, Config.LV96_EXP, Config.LV97_EXP, Config.LV98_EXP,
-			Config.LV99_EXP };
+			Config.LV99_EXP
+	};
 }

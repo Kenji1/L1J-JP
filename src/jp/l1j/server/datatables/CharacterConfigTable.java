@@ -24,11 +24,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// IdFactory
-
 public class CharacterConfigTable {
-
 	private static Logger _log = Logger.getLogger(CharacterConfigTable.class.getName());
 
 	private static CharacterConfigTable _instance;
@@ -117,5 +113,4 @@ public class CharacterConfigTable {
 		}
 		return result;
 	}
-
 }

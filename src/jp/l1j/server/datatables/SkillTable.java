@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.templates.L1Skill;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
@@ -32,7 +32,6 @@ import jp.l1j.server.utils.collections.Lists;
 import jp.l1j.server.utils.collections.Maps;
 
 public class SkillTable {
-
 	private static Logger _log = Logger.getLogger(SkillTable.class.getName());
 
 	private static SkillTable _instance;
@@ -43,8 +42,7 @@ public class SkillTable {
 
 	public static void initialize() {
 		if (_instance != null) {
-			throw new IllegalStateException(
-					"Already SkillTable has been initialized.");
+			throw new IllegalStateException("Already SkillTable has been initialized.");
 		}
 		_instance = new SkillTable();
 	}
@@ -70,7 +68,6 @@ public class SkillTable {
 				L1Skill skill = L1Skill.fromResultSet(rs);
 				_skills.put(skill.getSkillId(), skill);
 			}
-
 		} catch (SQLException e) {
 			throw new RuntimeException("Unable to load SkillTable.", e);
 		} finally {
@@ -90,21 +87,17 @@ public class SkillTable {
 		return result;
 	}
 
-	public void spellMastery(int playerobjid, int skillid, String skillname,
-			int active, int time) {
+	public void spellMastery(int playerobjid, int skillid, String skillname, int active, int time) {
 		if (spellCheck(playerobjid, skillid)) {
 			return;
 		}
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(
-				playerobjid);
+		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
 		if (pc != null) {
 			pc.setSkillMastery(skillid);
 		}
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO character_skills SET char_obj_id=?, skill_id=?, skill_name=?, is_active=?, active_time_left=?");
 			pstm.setInt(1, playerobjid);
@@ -115,7 +108,6 @@ public class SkillTable {
 			pstm.execute();
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
@@ -123,16 +115,13 @@ public class SkillTable {
 	}
 
 	public void spellLost(int playerobjid, int skillid) {
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(
-				playerobjid);
+		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
 		if (pc != null) {
 			pc.removeSkillMastery(skillid);
 		}
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("DELETE FROM character_skills WHERE char_obj_id=? AND skill_id=?");
 			pstm.setInt(1, playerobjid);
@@ -140,7 +129,6 @@ public class SkillTable {
 			pstm.execute();
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
@@ -152,7 +140,6 @@ public class SkillTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=? AND skill_id=?");
 			pstm.setInt(1, playerobjid);
@@ -163,7 +150,6 @@ public class SkillTable {
 			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);

@@ -73,8 +73,7 @@ public class CharacterTable {
 		}
 	}
 
-	public void deleteCharacter(int accountId, String charName)
-			throws Exception {
+	public void deleteCharacter(int accountId, String charName) throws Exception {
 		// 多分、同期は必要ない
 		_charStorage.deleteCharacter(accountId, charName);
 		if (_charNameList.containsKey(charName)) {
@@ -92,16 +91,13 @@ public class CharacterTable {
 		L1PcInstance pc = null;
 		try {
 			pc = restoreCharacter(charName);
-
 			// マップの範囲外ならSKTに移動させる
 			L1Map map = L1WorldMap.getInstance().getMap(pc.getMapId());
-
 			if (!map.isInMap(pc.getX(), pc.getY())) {
 				pc.setX(33087);
 				pc.setY(33396);
 				pc.setMap((short) 4);
 			}
-
 			/*
 			 * if(l1pcinstance.getClanid() != 0) { L1Clan clan = new L1Clan();
 			 * ClanTable clantable = new ClanTable(); clan =
@@ -113,7 +109,6 @@ public class CharacterTable {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return pc;
-
 	}
 
 	public static void clearOnlineStatus() {
@@ -223,8 +218,6 @@ public class CharacterTable {
 	}
 
 	public L1CharName[] getCharNameList() {
-		return _charNameList.values().toArray(
-				new L1CharName[_charNameList.size()]);
+		return _charNameList.values().toArray(new L1CharName[_charNameList.size()]);
 	}
-
 }

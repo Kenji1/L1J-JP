@@ -260,4 +260,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="WeatherSystemRain">天候システム: 雨</entry>
 <entry key="WeatherSystemSnow">天候システム: 雪</entry>
 
+<!-- jp/l1j/server/datatables/ItemTable.java -->
+<entry key="LoadItemFailed">%s(%s) の読み込みに失敗しました。</entry>
+
 </properties>

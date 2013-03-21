@@ -28,7 +28,6 @@ import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
 public class InnTable {
-
 	private static Logger _log = Logger.getLogger(InnTable.class.getName());
 
 	private static class Inn {
@@ -58,7 +57,6 @@ public class InnTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM inns");
-
 			rs = pstm.executeQuery();
 			L1Inn l1inn;
 			int roomNumber;
@@ -70,7 +68,6 @@ public class InnTable {
 				} else {
 					inn = _dataMap.get(key);
 				}
-
 				l1inn = new L1Inn();
 				l1inn.setInnNpcId(rs.getInt("npc_id"));
 				roomNumber = rs.getInt("room_number");
@@ -79,7 +76,6 @@ public class InnTable {
 				l1inn.setLodgerId(rs.getInt("lodger_id"));
 				l1inn.setHall(rs.getBoolean("hall"));
 				l1inn.setDueTime(rs.getTimestamp("due_time"));
-
 				inn._inn.put(Integer.valueOf(roomNumber), l1inn);
 			}
 		} catch (SQLException e) {
@@ -88,7 +84,6 @@ public class InnTable {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
 
@@ -98,7 +93,6 @@ public class InnTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("UPDATE inns SET key_id=?,lodger_id=?,hall=?,due_time=? WHERE npc_id=? and room_number=?");
-
 			pstm.setInt(1, inn.getKeyId());
 			pstm.setInt(2, inn.getLodgerId());
 			pstm.setBoolean(3, inn.isHall());

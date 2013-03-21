@@ -31,8 +31,7 @@ public class PetItemTable {
 
 	private static PetItemTable _instance;
 
-	private final HashMap<Integer, L1PetItem> _petItemIdIndex
-			= new HashMap<Integer, L1PetItem>();
+	private final HashMap<Integer, L1PetItem> _petItemIdIndex = new HashMap<Integer, L1PetItem>();
 
 	public static PetItemTable getInstance() {
 		if (_instance == null) {
@@ -50,14 +49,12 @@ public class PetItemTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM pet_items");
 			rs = pstm.executeQuery();
 			fillPetItemTable(rs);
 		} catch (SQLException e) {
-			_log.log(Level.SEVERE, "error while creating pet_items table",
-					e);
+			_log.log(Level.SEVERE, "error while creating pet_items table", e);
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
@@ -89,5 +86,4 @@ public class PetItemTable {
 	public L1PetItem getTemplate(int itemId) {
 		return _petItemIdIndex.get(itemId);
 	}
-
 }

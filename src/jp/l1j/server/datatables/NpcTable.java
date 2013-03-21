@@ -35,6 +35,7 @@ public class NpcTable {
 	private static NpcTable _instance;
 
 	private final HashMap<Integer, L1Npc> _npcs = new HashMap<Integer, L1Npc>();
+	
 	private final HashMap<String, Constructor<?>> _constructorCache = new HashMap<String, Constructor<?>>();
 
 	private final Map<String, Integer> _familyTypes = buildFamily();
@@ -56,8 +57,7 @@ public class NpcTable {
 
 	private Constructor<?> getConstructor(String implName) {
 		try {
-			String implFullName = "jp.l1j.server.model.instance."
-					+ implName + "Instance";
+			String implFullName = "jp.l1j.server.model.instance." + implName + "Instance";
 			Constructor<?> con = Class.forName(implFullName).getConstructors()[0];
 			return con;
 		} catch (ClassNotFoundException e) {
@@ -159,7 +159,6 @@ public class NpcTable {
 				npc.setCantResurrect(rs.getBoolean("cant_resurrect"));
 				npc.setEqualityDrop(rs.getBoolean("is_equality_drop"));
 				npc.setBoss(rs.getBoolean("boss")); // TODO boss_endlog用
-
 				registerConstructorCache(npc.getImpl());
 				_npcs.put(npcId, npc);
 			}
@@ -179,8 +178,7 @@ public class NpcTable {
 	public L1NpcInstance newNpcInstance(int id) {
 		L1Npc npcTemp = getTemplate(id);
 		if (npcTemp == null) {
-			throw new IllegalArgumentException(String.format(
-					"NpcTemplate: %d not found", id));
+			throw new IllegalArgumentException(String.format("NpcTemplate: %d not found", id));
 		}
 		return newNpcInstance(npcTemp);
 	}
@@ -202,8 +200,7 @@ public class NpcTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("select distinct(family) as family from npc WHERE NOT trim(family) =''");
+			pstm = con.prepareStatement("select distinct(family) as family from npc WHERE NOT trim(family) =''");
 			rs = pstm.executeQuery();
 			int id = 1;
 			while (rs.next()) {

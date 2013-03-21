@@ -32,9 +32,6 @@ import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// IdFactory
-
 public class MailTable {
 	private static Logger _log = Logger.getLogger(MailTable.class.getName());
 
@@ -71,7 +68,6 @@ public class MailTable {
 				mail.setReadStatus(rs.getInt("read_status"));
 				mail.setSubject(rs.getBytes("subject"));
 				mail.setContent(rs.getBytes("content"));
-
 				_allMail.add(mail);
 			}
 		} catch(SQLException e) {
@@ -89,14 +85,11 @@ public class MailTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			rs = con.createStatement().executeQuery(
-					"SELECT * FROM mails WHERE id=" + mailId);
+			rs = con.createStatement().executeQuery("SELECT * FROM mails WHERE id=" + mailId);
 			if (rs != null && rs.next()) {
-				pstm = con.prepareStatement(
-					"UPDATE mails SET read_status=? WHERE id=" + mailId);
+				pstm = con.prepareStatement("UPDATE mails SET read_status=? WHERE id=" + mailId);
 				pstm.setInt(1, 1);
 				pstm.execute();
-
 				changeMailStatus(mailId);
 			}
 		} catch (SQLException e) {
@@ -114,14 +107,11 @@ public class MailTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			rs = con.createStatement().executeQuery(
-					"SELECT * FROM mails WHERE id=" + mailId);
+			rs = con.createStatement().executeQuery("SELECT * FROM mails WHERE id=" + mailId);
 			if (rs != null && rs.next()) {
-				pstm = con.prepareStatement(
-					"UPDATE mails SET type=? WHERE id=" + mailId);
+				pstm = con.prepareStatement("UPDATE mails SET type=? WHERE id=" + mailId);
 				pstm.setInt(1, type);
 				pstm.execute();
-
 				changeMailType(mailId, type);
 			}
 		} catch (SQLException e) {
@@ -141,7 +131,6 @@ public class MailTable {
 			pstm = con.prepareStatement("DELETE FROM mails WHERE id=?");
 			pstm.setInt(1,mailId);
 			pstm.execute();
-
 			delMail(mailId);
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -149,17 +138,13 @@ public class MailTable {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-		
 	}
 
-	public void writeMail(int type, String receiver, L1PcInstance writer,
-			byte[] text) {
+	public void writeMail(int type, String receiver, L1PcInstance writer, byte[] text) {
 		int readStatus = 0;
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
 		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
 		String date = sdf.format(Calendar.getInstance(tz).getTime());
-
 		// subjectとcontentの区切り(0x00 0x00)位置を見つける
 		int spacePosition1 = 0;
 		int spacePosition2 = 0;
@@ -173,7 +158,6 @@ public class MailTable {
 				}
 			}
 		}
-
 		// mailテーブルに書き込む
 		int subjectLength = spacePosition1 + 2;
 		int contentLength = spacePosition2 - spacePosition1;
@@ -184,14 +168,11 @@ public class MailTable {
 		byte[] content = new byte[contentLength];
 		System.arraycopy(text, 0, subject, 0, subjectLength);
 		System.arraycopy(text, subjectLength, content, 0, contentLength);
-
 		Connection con = null;
 		PreparedStatement pstm2 = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm2 = con.prepareStatement("INSERT INTO mails SET " +
-					"id=?, type=?, sender=?, receiver=?," +
-					" date=?, read_status=?, subject=?, content=?");
+			pstm2 = con.prepareStatement("INSERT INTO mails SET id=?, type=?, sender=?, receiver=?, date=?, read_status=?, subject=?, content=?");
 			int id = IdFactory.getInstance().nextId();
 			pstm2.setInt(1, id);
 			pstm2.setInt(2, type);
@@ -202,7 +183,6 @@ public class MailTable {
 			pstm2.setBytes(7, subject);
 			pstm2.setBytes(8, content);
 			pstm2.execute();
-
 			L1Mail mail =  new L1Mail();
 			mail.setId(id);
 			mail.setType(type);
@@ -212,7 +192,6 @@ public class MailTable {
 			mail.setSubject(subject);
 			mail.setContent(content);
 			mail.setReadStatus(readStatus);
-
 			_allMail.add(mail);
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -240,7 +219,6 @@ public class MailTable {
 			if (mail.getId() == mailId) {
 				L1Mail newMail = mail;
 				newMail.setReadStatus(1);
-
 				_allMail.remove(mail);
 				_allMail.add(newMail);
 				break;
@@ -253,7 +231,6 @@ public class MailTable {
 			if (mail.getId() == mailId) {
 				L1Mail newMail = mail;
 				newMail.setType(type);
-
 				_allMail.remove(mail);
 				_allMail.add(newMail);
 				break;
@@ -269,5 +246,4 @@ public class MailTable {
 			}
 		}
 	}
-
 }

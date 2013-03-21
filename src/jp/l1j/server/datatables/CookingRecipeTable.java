@@ -34,7 +34,6 @@ public class CookingRecipeTable {
 
 	private static Map<Integer, L1CookingRecipe> load() {
 		Map<Integer, L1CookingRecipe> result = Maps.newHashMap();
-
 		for (L1CookingRecipe recipe : L1CookingRecipe.all()) {
 			result.put(recipe.getId(), recipe);
 		}

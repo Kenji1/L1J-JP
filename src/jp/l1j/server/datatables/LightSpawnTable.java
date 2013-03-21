@@ -23,8 +23,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1FieldObjectInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1FieldObjectInstance;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.utils.L1DatabaseFactory;
@@ -51,7 +51,6 @@ public class LightSpawnTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM spawn_lights");
 			rs = pstm.executeQuery();
@@ -59,13 +58,11 @@ public class LightSpawnTable {
 				if (!rs.next()) {
 					break;
 				}
-
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(rs.getInt(2));
 				if (l1npc != null) {
 					String s = l1npc.getImpl();
-					Constructor constructor = Class.forName(
-							"jp.l1j.server.model.instance." + s
-									+ "Instance").getConstructors()[0];
+					Constructor constructor =
+						Class.forName("jp.l1j.server.model.instance." + s + "Instance").getConstructors()[0];
 					Object parameters[] = { l1npc };
 					L1FieldObjectInstance field =
 							(L1FieldObjectInstance) constructor.newInstance(parameters);
@@ -101,5 +98,4 @@ public class LightSpawnTable {
 			SqlUtil.close(con);
 		}
 	}
-
 }

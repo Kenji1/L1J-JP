@@ -31,7 +31,6 @@ import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
 public class ShopTable {
-
 	private static final long serialVersionUID = 1L;
 
 	private static Logger _log = Logger.getLogger(ShopTable.class.getName());
@@ -53,7 +52,6 @@ public class ShopTable {
 
 	private ArrayList<Integer> enumNpcIds() {
 		ArrayList<Integer> ids = new ArrayList<Integer>();
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -82,13 +80,11 @@ public class ShopTable {
 			int packCount = rs.getInt("pack_count");
 			packCount = packCount == 0 ? 1 : packCount;
 			if (0 <= sellingPrice) {
-				L1ShopItem item = new L1ShopItem(itemId, sellingPrice,
-						packCount);
+				L1ShopItem item = new L1ShopItem(itemId, sellingPrice, packCount);
 				sellingList.add(item);
 			}
 			if (0 <= purchasingPrice) {
-				L1ShopItem item = new L1ShopItem(itemId, purchasingPrice,
-						packCount);
+				L1ShopItem item = new L1ShopItem(itemId, purchasingPrice, packCount);
 				purchasingList.add(item);
 			}
 		}

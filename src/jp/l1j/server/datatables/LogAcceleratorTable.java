@@ -26,7 +26,6 @@ public class LogAcceleratorTable {
 	private static Logger _log = Logger.getLogger(LogAcceleratorTable.class.getName());
 
 	public void storeLogAccelerator(L1PcInstance pc) {
-		
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -41,14 +40,11 @@ public class LogAcceleratorTable {
 			pstm.setInt(7, pc.getY());
 			pstm.setInt(8, pc.getMapId());
 			pstm.execute();
-
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
-
 }

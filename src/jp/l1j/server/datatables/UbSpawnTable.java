@@ -46,23 +46,18 @@ public class UbSpawnTable {
 	}
 
 	private void loadSpawnTable() {
-
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM spawn_ub");
 			rs = pstm.executeQuery();
-
 			while (rs.next()) {
-				L1Npc npcTemp = NpcTable.getInstance()
-						.getTemplate(rs.getInt(6));
+				L1Npc npcTemp = NpcTable.getInstance().getTemplate(rs.getInt(6));
 				if (npcTemp == null) {
 					continue;
 				}
-
 				L1UbSpawn spawnDat = new L1UbSpawn();
 				spawnDat.setId(rs.getInt(1));
 				spawnDat.setUbId(rs.getInt(2));
@@ -73,7 +68,6 @@ public class UbSpawnTable {
 				spawnDat.setAmount(rs.getInt(7));
 				spawnDat.setSpawnDelay(rs.getInt(8));
 				spawnDat.setSealCount(rs.getInt(9));
-
 				_spawnTable.put(spawnDat.getId(), spawnDat);
 			}
 		} catch (SQLException e) {
@@ -84,7 +78,7 @@ public class UbSpawnTable {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-		_log.config("UBモンスター配置リスト " + _spawnTable.size() + "件ロード");
+		_log.fine("loaded ub mob: " + _spawnTable.size() + " records");
 	}
 
 	public L1UbSpawn getSpawn(int spawnId) {
@@ -103,11 +97,9 @@ public class UbSpawnTable {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT MAX(pattern) FROM spawn_ub WHERE ub_id=?");
+			pstm = con.prepareStatement("SELECT MAX(pattern) FROM spawn_ub WHERE ub_id=?");
 			pstm.setInt(1, ubId);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
@@ -131,7 +123,6 @@ public class UbSpawnTable {
 			}
 		}
 		pattern.freeze();
-
 		return pattern;
 	}
 }

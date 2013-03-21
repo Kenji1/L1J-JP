@@ -35,8 +35,7 @@ public class CharBuffTable {
 	private CharBuffTable() {
 	}
 
-	private static Logger _log = Logger
-			.getLogger(CharBuffTable.class.getName());
+	private static Logger _log = Logger.getLogger(CharBuffTable.class.getName());
 
 	private static final int[] BUFF_SKILL_IDS = {
 		STATUS_BRAVE, STATUS_HASTE, STATUS_BLUE_POTION, STATUS_UNDERWATER_BREATH,
@@ -83,8 +82,7 @@ public class CharBuffTable {
 		return result;
 	}
 
-	private static void store(int objId, int skillId, int time, int polyId,
-			int attrKind) {
+	private static void store(int objId, int skillId, int time, int polyId, int attrKind) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -117,7 +115,6 @@ public class CharBuffTable {
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
 
@@ -130,12 +127,10 @@ public class CharBuffTable {
 		if (exe == null) {
 			return false;
 		}
-
 		L1CharacterBuff buff = exe.getCharacterBuff(pc);
 		if (buff == null) {
 			return false;
 		}
-
 		store(buff.getCharcterId(), buff.getSkillId(), buff.getRemainingTime(),
 				buff.getPolyId(), buff.getAttrKind());
 		return true;
@@ -157,20 +152,17 @@ public class CharBuffTable {
 		}
 	}
 
-	private static L1CharacterBuff fromResultSet(ResultSet rs)
-			throws SQLException {
+	private static L1CharacterBuff fromResultSet(ResultSet rs) throws SQLException {
 		int charcterId = rs.getInt("char_obj_id");
 		int skillId = rs.getInt("skill_id");
 		int remainingTime = rs.getInt("remaining_time");
 		int polyId = rs.getInt("poly_id");
 		int attrKind = rs.getInt("attr_kind");
-		return new L1CharacterBuff(charcterId, skillId, remainingTime, polyId,
-				attrKind);
+		return new L1CharacterBuff(charcterId, skillId, remainingTime, polyId, attrKind);
 	}
 
 	public static List<L1CharacterBuff> findByCharacterId(int id) {
 		List<L1CharacterBuff> result = Lists.newArrayList();
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

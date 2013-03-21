@@ -26,11 +26,7 @@ import jp.l1j.server.templates.L1RaceTicket;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// IdFactory
-
 public class RaceTicketTable {
-
 	private static Logger _log = Logger.getLogger(PetTable.class.getName());
 
 	private static RaceTicketTable _instance;
@@ -80,7 +76,6 @@ public class RaceTicketTable {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
 
@@ -90,7 +85,6 @@ public class RaceTicketTable {
 		if(ticket.getItemObjId()!=0){
 			_tickets.put(new Integer(ticket.getItemObjId()), ticket);
 		}
-		
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -104,11 +98,9 @@ public class RaceTicketTable {
 			pstm.execute();
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
 	public void deleteTicket(int itemobjid) {

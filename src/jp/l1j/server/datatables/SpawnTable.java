@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Spawn;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Npc;
@@ -56,22 +56,19 @@ public class SpawnTable {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("loading mob...");
 		fillSpawnTable();
-		_log.config("モンスター配置リスト " + _spawntable.size() + "件ロード");
+		_log.fine("loaded mob: " + _spawntable.size() + " records");
 		System.out.println("OK! " + timer.elapsedTimeMillis() + " ms");
 	}
 
 	private void fillSpawnTable() {
-
 		int spawnCount = 0;
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM spawn_mobs");
 			rs = pstm.executeQuery();
-
 			L1Spawn spawnDat;
 			L1Npc template1;
 			while (rs.next()) {
@@ -84,10 +81,8 @@ public class SpawnTable {
 				int npcTemplateId = rs.getInt("npc_template_id");
 				template1 = NpcTable.getInstance().getTemplate(npcTemplateId);
 				int count;
-
 				if (template1 == null) {
-					_log.warning("mob data for id:" + npcTemplateId
-							+ " missing in npc table");
+					_log.warning("mob data for id:" + npcTemplateId + " missing in npc table");
 					spawnDat = null;
 				} else {
 					if (rs.getInt("count") == 0) {
@@ -100,7 +95,6 @@ public class SpawnTable {
 					if (count == 0) {
 						continue;
 					}
-
 					spawnDat = new L1Spawn(template1);
 					spawnDat.setId(rs.getInt("id"));
 					spawnDat.setAmount(count);
@@ -125,11 +119,8 @@ public class SpawnTable {
 					spawnDat.setMovementDistance(rs.getInt("movement_distance"));
 					spawnDat.setRest(rs.getBoolean("rest"));
 					spawnDat.setSpawnType(rs.getInt("near_spawn"));
-					spawnDat.setTime(SpawnTimeTable.getInstance().get(
-							spawnDat.getId()));
-
+					spawnDat.setTime(SpawnTimeTable.getInstance().get(spawnDat.getId()));
 					spawnDat.setName(template1.getName());
-
 					if (count > 1 && spawnDat.getLocX1() == 0) {
 						// 複数かつ固定spawnの場合は、個体数 * 6 の範囲spawnに変える。
 						// ただし範囲が30を超えないようにする
@@ -139,18 +130,15 @@ public class SpawnTable {
 						spawnDat.setLocX2(spawnDat.getLocX() + range);
 						spawnDat.setLocY2(spawnDat.getLocY() + range);
 					}
-
 					// start the spawning
 					spawnDat.init();
 					spawnCount += spawnDat.getAmount();
 				}
-
 				_spawntable.put(new Integer(spawnDat.getId()), spawnDat);
 				if (spawnDat.getId() > _highestId) {
 					_highestId = spawnDat.getId();
 				}
 			}
-
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -158,7 +146,7 @@ public class SpawnTable {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-		_log.fine("総モンスター数 " + spawnCount + "匹");
+		_log.fine("loaded all mob: " + spawnCount + " records");
 	}
 
 	public L1Spawn getTemplate(int Id) {
@@ -180,9 +168,11 @@ public class SpawnTable {
 			int minRespawnDelay = 60;
 			int maxRespawnDelay = 120;
 			String note = npc.getName();
-
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO spawn_mobs SET location=?,count=?,npc_template_id=?,group_id=?,loc_x=?,loc_y=?,random_x=?,random_y=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,map_id=?");
+			pstm = con.prepareStatement(String.format("INSERT INTO spawn_mobs SET ",
+				"location=?", "count=?", "npc_template_id=?", "group_id=?",
+				"loc_x=?", "loc_y=?", "random_x=?", "random_y=?", "heading=?",
+				"min_respawn_delay=?", "max_respawn_delay=?", "map_id=?"));
 			pstm.setString(1, note);
 			pstm.setInt(2, count);
 			pstm.setInt(3, npc.getNpcId());
@@ -196,7 +186,6 @@ public class SpawnTable {
 			pstm.setInt(11, maxRespawnDelay);
 			pstm.setInt(12, pc.getMapId());
 			pstm.execute();
-
 		} catch (Exception e) {
 			NpcTable._log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -214,6 +203,5 @@ public class SpawnTable {
 		} else {
 			return NumberUtil.randomRound((count * rate));
 		}
-
 	}
 }

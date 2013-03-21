@@ -43,18 +43,14 @@ public class UbTable {
 	}
 
 	private void loadTable() {
-
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM ub_settings");
 			rs = pstm.executeQuery();
-
 			while (rs.next()) {
-
 				L1UltimateBattle ub = new L1UltimateBattle();
 				ub.setUbId(rs.getInt("ub_id"));
 				ub.setMapId(rs.getShort("ub_map_id"));
@@ -78,7 +74,6 @@ public class UbTable {
 				ub.setHpr(rs.getInt("hpr_bonus"));
 				ub.setMpr(rs.getInt("mpr_bonus"));
 				ub.resetLoc();
-
 				_ub.put(ub.getUbId(), ub);
 			}
 		} catch (SQLException e) {
@@ -87,12 +82,10 @@ public class UbTable {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
 		}
-
 		// ub_managers load
 		try {
 			pstm = con.prepareStatement("SELECT * FROM ub_managers");
 			rs = pstm.executeQuery();
-
 			while (rs.next()) {
 				L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
 				if (ub != null) {
@@ -105,12 +98,10 @@ public class UbTable {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
 		}
-
 		// ub_times load
 		try {
 			pstm = con.prepareStatement("SELECT * FROM ub_times");
 			rs = pstm.executeQuery();
-
 			while (rs.next()) {
 				L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
 				if (ub != null) {
@@ -122,7 +113,7 @@ public class UbTable {
 		} finally {
 			SqlUtil.close(rs, pstm, con);
 		}
-		_log.config("UBリスト " + _ub.size() + "件ロード");
+		_log.fine("loaded ub: " + _ub.size() + " records");
 	}
 
 	public L1UltimateBattle getUb(int ubId) {
@@ -154,11 +145,9 @@ public class UbTable {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT MAX(pattern) FROM spawn_ub WHERE ub_id=?");
+			pstm = con.prepareStatement("SELECT MAX(pattern) FROM spawn_ub WHERE ub_id=?");
 			pstm.setInt(1, ubId);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
@@ -173,5 +162,4 @@ public class UbTable {
 		}
 		return n;
 	}
-
 }

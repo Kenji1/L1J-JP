@@ -36,26 +36,21 @@ public class BossSpawnTable {
 	}
 
 	public static void fillSpawnTable() {
-
 		int spawnCount = 0;
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM spawn_boss");
 			rs = pstm.executeQuery();
-
 			L1BossSpawn spawnDat;
 			L1Npc template1;
 			while (rs.next()) {
 				int npcTemplateId = rs.getInt("npc_id");
 				template1 = NpcTable.getInstance().getTemplate(npcTemplateId);
-
 				if (template1 == null) {
-					_log.warning("mob data for id:" + npcTemplateId
-							+ " missing in npc table");
+					_log.warning("mob data for id:" + npcTemplateId + " missing in npc table");
 					spawnDat = null;
 				} else {
 					spawnDat = new L1BossSpawn(template1);
@@ -80,20 +75,16 @@ public class BossSpawnTable {
 					spawnDat.setHeading(heading);
 					spawnDat.setMapId(rs.getShort("map_id"));
 					spawnDat.setRespawnScreen(rs.getBoolean("respawn_screen"));
-					spawnDat
-							.setMovementDistance(rs.getInt("movement_distance"));
+					spawnDat.setMovementDistance(rs.getInt("movement_distance"));
 					spawnDat.setRest(rs.getBoolean("rest"));
 					spawnDat.setSpawnType(rs.getInt("spawn_type"));
 					spawnDat.setPercentage(rs.getInt("percentage"));
-
 					spawnDat.setName(template1.getName());
 
 					// start the spawning
 					spawnDat.init();
 					spawnCount += spawnDat.getAmount();
-
 				}
-
 			}
 
 		} catch (SQLException e) {
@@ -103,6 +94,6 @@ public class BossSpawnTable {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-		_log.log(Level.FINE, "総ボスモンスター数 " + spawnCount + "匹");
+		_log.fine("loaded boss: " + spawnCount + " records");
 	}
 }

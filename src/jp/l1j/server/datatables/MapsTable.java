@@ -76,7 +76,6 @@ public final class MapsTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM map_ids");
-
 			for (rs = pstm.executeQuery(); rs.next();) {
 				MapData data = new MapData();
 				int mapId = rs.getInt("map_id");
@@ -100,10 +99,8 @@ public final class MapsTable {
 				data.isRecallPets = rs.getBoolean("recall_pets");
 				data.isUsableItem = rs.getBoolean("usable_item");
 				data.isUsableSkill = rs.getBoolean("usable_skill");
-
 				_maps.put(new Integer(mapId), data);
 			}
-
 			_log.config("Maps " + _maps.size());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -425,5 +422,4 @@ public final class MapsTable {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
-
 }

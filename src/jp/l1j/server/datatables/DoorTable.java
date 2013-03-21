@@ -20,9 +20,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.codes.ActionCodes;
-import jp.l1j.server.model.instance.L1DoorInstance;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1DoorInstance;
 import jp.l1j.server.templates.L1DoorGfx;
 import jp.l1j.server.templates.L1DoorSpawn;
 import jp.l1j.server.utils.IdFactory;
@@ -31,9 +31,11 @@ import jp.l1j.server.utils.collections.Maps;
 
 public class DoorTable {
 	private static Logger _log = Logger.getLogger(DoorTable.class.getName());
+	
 	private static DoorTable _instance;
 
 	private final Map<L1Location, L1DoorInstance> _doors = Maps.newConcurrentHashMap();
+	
 	private final Map<L1Location, L1DoorInstance> _doorDirections = Maps.newConcurrentHashMap();
 
 	public static void initialize() {
@@ -52,8 +54,7 @@ public class DoorTable {
 		for (L1DoorSpawn spawn : L1DoorSpawn.all()) {
 			L1Location loc = spawn.getLocation();
 			if (_doors.containsKey(loc)) {
-				_log.log(Level.WARNING, String.format(
-						"Duplicate door location: id = %d", spawn.getId()));
+				_log.log(Level.WARNING, String.format("Duplicate door location: id = %d", spawn.getId()));
 				continue;
 			}
 			createDoor(spawn.getId(), spawn.getGfx(), loc, spawn.getHp(),
@@ -95,12 +96,9 @@ public class DoorTable {
 			return null;
 		}
 		L1DoorInstance door = new L1DoorInstance(doorId, gfx, loc, hp, keeper, Open);
-
 		door.setId(IdFactory.getInstance().nextId());
-
 		L1World.getInstance().storeObject(door);
 		L1World.getInstance().addVisibleObject(door);
-
 		_doors.put(door.getLocation(), door);
 		putDirections(door);
 		return door;

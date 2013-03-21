@@ -23,7 +23,6 @@ import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
 public class NpcTalkDataTable {
-
 	private static Logger _log = Logger.getLogger(NpcTalkDataTable.class.getName());
 
 	private static NpcTalkDataTable _instance;
@@ -46,10 +45,8 @@ public class NpcTalkDataTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM npc_actions");
-
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1NpcTalkData l1npctalkdata = new L1NpcTalkData();
@@ -58,10 +55,9 @@ public class NpcTalkDataTable {
 				l1npctalkdata.setChaoticAction(rs.getString(3));
 				l1npctalkdata.setTeleportURL(rs.getString(4));
 				l1npctalkdata.setTeleportURLA(rs.getString(5));
-				_datatable.put(new Integer(l1npctalkdata.getNpcID()),
-						l1npctalkdata);
+				_datatable.put(new Integer(l1npctalkdata.getNpcID()), l1npctalkdata);
 			}
-			_log.config("NPCアクションリスト " + _datatable.size() + "件ロード");
+			_log.fine("loaded npc action: " + _datatable.size() + " records");
 		} catch (SQLException e) {
 			_log.warning("error while creating npc action table " + e);
 		} finally {
@@ -74,5 +70,4 @@ public class NpcTalkDataTable {
 	public L1NpcTalkData getTemplate(int i) {
 		return _datatable.get(new Integer(i));
 	}
-
 }

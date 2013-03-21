@@ -56,15 +56,11 @@ public final class DeathPenaltyTable {
 			Config.LV94_DEATH_PENALTY, Config.LV95_DEATH_PENALTY, Config.LV96_DEATH_PENALTY,
 			Config.LV97_DEATH_PENALTY, Config.LV98_DEATH_PENALTY, Config.LV99_DEATH_PENALTY};
 	
-	public static int getDeathPenaltyRate(int level) {
-		
+	public static int getDeathPenaltyRate(int level) {	
 		int deathPenalty = 100;
-		
 		if (level >= 1 && level <= 99) {
 			deathPenalty = _deathPenalty[level - 1];
 		}
-		
 		return deathPenalty;
 	}
-
 }

@@ -356,4 +356,9 @@ public class I18N {
 	public static final String I18N_WEATHER_SYS_RAIN = bundle.getString("WeatherSystemRain");
 	public static final String I18N_WEATHER_SYS_SNOW = bundle.getString("WeatherSystemSnow");
 	
+	/*
+	 * jp.l1j.server.datatables.ItemTable.java
+	 */
+	public static final String I18N_LOAD_ITEM_FAILED = bundle.getString("LoadItemFailed");
+	
 }

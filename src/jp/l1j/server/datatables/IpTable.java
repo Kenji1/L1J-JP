@@ -27,6 +27,17 @@ import jp.l1j.server.utils.NetAddressUtil;
 import jp.l1j.server.utils.SqlUtil;
 
 public class IpTable {
+	private static Logger _log = Logger.getLogger(IpTable.class.getName());
+
+	private static ArrayList<String> _banip;
+	
+	private static ArrayList<String> _host;
+
+	private static ArrayList<Integer> _mask;
+
+	public static boolean isInitialized;
+
+	private static IpTable _instance;
 
 	public static IpTable getInstance() {
 		if (_instance == null) {
@@ -47,9 +58,7 @@ public class IpTable {
 	public void banIp(String ip, String host) {
 		Connection con = null;
 		PreparedStatement pstm = null;
-
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO ban_ips SET ip=?, host=?, mask=?");
 			pstm.setString(1, ip);
@@ -79,7 +88,6 @@ public class IpTable {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -88,20 +96,15 @@ public class IpTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM ban_ips");
-
 			rs = pstm.executeQuery();
-
 			while (rs.next()) {
 				_banip.add(rs.getString(1));
 				_host.add(rs.getString(2));
 				_mask.add(rs.getInt(3));
 			}
-
 			isInitialized = true;
-
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -115,9 +118,7 @@ public class IpTable {
 		boolean ret = false;
 		Connection con = null;
 		PreparedStatement pstm = null;
-
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("DELETE FROM ban_ips WHERE ip=?");
 			pstm.setString(1, ip);
@@ -134,17 +135,4 @@ public class IpTable {
 		}
 		return ret;
 	}
-
-	private static Logger _log = Logger.getLogger(IpTable.class.getName());
-
-	private static ArrayList<String> _banip;
-	
-	private static ArrayList<String> _host;
-
-	private static ArrayList<Integer> _mask;
-
-	public static boolean isInitialized;
-
-	private static IpTable _instance;
-
 }

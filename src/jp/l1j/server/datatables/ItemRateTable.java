@@ -28,7 +28,6 @@ import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
 public class ItemRateTable {
-
 	private static final long serialVersionUID = 1L;
 
 	private static Logger _log = Logger.getLogger(ItemRateTable.class.getName());
@@ -54,8 +53,7 @@ public class ItemRateTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT item_id, selling_price, purchasing_price FROM item_rates ORDER BY item_id");
-			
+			pstm = con.prepareStatement("SELECT item_id, selling_price, purchasing_price FROM item_rates ORDER BY item_id");		
 			for (rs = pstm.executeQuery(); rs.next();) {
 				L1ItemRate rate = new L1ItemRate(
 					rs.getInt("item_id"),
@@ -74,5 +72,4 @@ public class ItemRateTable {
 	public L1ItemRate get(int itemId) {
 		return _itemRates.get(itemId);
 	}
-	
 }

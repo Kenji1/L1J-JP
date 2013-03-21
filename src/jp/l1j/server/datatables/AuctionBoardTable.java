@@ -62,16 +62,14 @@ public class AuctionBoardTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM house_auction ORDER BY house_id");
+			pstm = con.prepareStatement("SELECT * FROM house_auction ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1AuctionBoard board = new L1AuctionBoard();
 				board.setHouseId(rs.getInt(1));
 				board.setHouseName(rs.getString(2));
 				board.setHouseArea(rs.getInt(3));
-				board.setDeadline(timestampToCalendar((Timestamp) rs
-						.getObject(4)));
+				board.setDeadline(timestampToCalendar((Timestamp) rs.getObject(4)));
 				board.setPrice(rs.getInt(5));
 				board.setLocation(rs.getString(6));
 				board.setOldOwner(rs.getString(7));
@@ -102,13 +100,13 @@ public class AuctionBoardTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO house_auction SET house_id=?, house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=?");
+			pstm = con.prepareStatement(String.format("INSERT INTO house_auction SET %s, %s, %s, %s, %s, %s, %s, %s, %s, %s",
+				"house_id=?", "house_name=?", "house_area=?", "deadline=?", "price=?",
+				"location=?", "old_owner=?", "old_owner_id=?", "bidder=?", "bidder_id=?"));
 			pstm.setInt(1, board.getHouseId());
 			pstm.setString(2, board.getHouseName());
 			pstm.setInt(3, board.getHouseArea());
-			String fm = DateFormat.getDateTimeInstance().format(
-					board.getDeadline().getTime());
+			String fm = DateFormat.getDateTimeInstance().format(board.getDeadline().getTime());
 			pstm.setString(4, fm);
 			pstm.setInt(5, board.getPrice());
 			pstm.setString(6, board.getLocation());
@@ -117,7 +115,6 @@ public class AuctionBoardTable {
 			pstm.setString(9, board.getBidder());
 			pstm.setInt(10, board.getBidderId());
 			pstm.execute();
-
 			_boards.put(board.getHouseId(), board);
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -132,8 +129,9 @@ public class AuctionBoardTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE house_auction SET house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=? WHERE house_id=?");
+			pstm = con.prepareStatement(String.format("UPDATE house_auction SET %s, %s, %s, %s, %s, %s, %s, %s, %s WHERE house_id=?",
+				"house_name=?", "house_area=?", "deadline=?", "price=?", "location=?",
+				"old_owner=?", "old_owner_id=?", "bidder=?", "bidder_id=?"));
 			pstm.setString(1, board.getHouseName());
 			pstm.setInt(2, board.getHouseArea());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -160,11 +158,9 @@ public class AuctionBoardTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM house_auction WHERE house_id=?");
+			pstm = con.prepareStatement("DELETE FROM house_auction WHERE house_id=?");
 			pstm.setInt(1, houseId);
 			pstm.execute();
-
 			_boards.remove(houseId);
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -173,5 +169,4 @@ public class AuctionBoardTable {
 			SqlUtil.close(con);
 		}
 	}
-
 }

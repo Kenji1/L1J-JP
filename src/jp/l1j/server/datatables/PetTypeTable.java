@@ -32,8 +32,11 @@ import jp.l1j.server.utils.SqlUtil;
 
 public class PetTypeTable {
 	private static PetTypeTable _instance;
+	
 	private static Logger _log = Logger.getLogger(PetTypeTable.class.getName());
+	
 	private Map<Integer, L1PetType> _types = new HashMap<Integer, L1PetType>();
+	
 	private Set<String> _defaultNames = new HashSet<String>();
 
 	public static void load() {
@@ -55,9 +58,7 @@ public class PetTypeTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM pet_types");
-
 			rs = pstm.executeQuery();
-
 			while (rs.next()) {
 				int baseNpcId = rs.getInt("base_npc_id");
 				String name = rs.getString("name");

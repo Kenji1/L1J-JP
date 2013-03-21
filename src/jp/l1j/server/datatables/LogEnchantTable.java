@@ -24,8 +24,7 @@ import jp.l1j.server.utils.SqlUtil;
 public class LogEnchantTable {
 	private static Logger _log = Logger.getLogger(LogEnchantTable.class.getName());
 
-	public void storeLogEnchant(int char_id, int item_id,
-			int old_enchant_level, int new_enchant_level) {
+	public void storeLogEnchant(int char_id, int item_id, int old_enchant_level, int new_enchant_level) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -36,14 +35,11 @@ public class LogEnchantTable {
 			pstm.setInt(3, old_enchant_level);
 			pstm.setInt(4, new_enchant_level);
 			pstm.execute();
-
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
-
 		}
 	}
-
 }

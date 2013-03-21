@@ -31,8 +31,7 @@ public class WeaponSkillTable {
 
 	private static WeaponSkillTable _instance;
 
-	private final HashMap<Integer, L1WeaponSkill> _weaponIdIndex
-			= new HashMap<Integer, L1WeaponSkill>();
+	private final HashMap<Integer, L1WeaponSkill> _weaponIdIndex = new HashMap<Integer, L1WeaponSkill>();
 
 	public static WeaponSkillTable getInstance() {
 		if (_instance == null) {
@@ -50,14 +49,12 @@ public class WeaponSkillTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM weapon_skills");
 			rs = pstm.executeQuery();
 			fillWeaponSkillTable(rs);
 		} catch (SQLException e) {
-			_log.log(Level.SEVERE, "error while creating weapon_skills table",
-					e);
+			_log.log(Level.SEVERE, "error while creating weapon_skills table", e);
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
@@ -81,11 +78,10 @@ public class WeaponSkillTable {
 					skillId, isArrowType, enableMr, enableAttrMr);
 			_weaponIdIndex.put(weaponId, weaponSkill);
 		}
-		_log.config("武器スキルリスト " + _weaponIdIndex.size() + "件ロード");
+		_log.fine("Loaded weapon skill: " + _weaponIdIndex.size() + "records");
 	}
 
 	public L1WeaponSkill getTemplate(int weaponId) {
 		return _weaponIdIndex.get(weaponId);
 	}
-
 }

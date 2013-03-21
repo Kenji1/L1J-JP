@@ -37,8 +37,7 @@ public final class DropItemTable {
 
 	private static DropItemTable _instance;
 
-	private final Map<Integer, dropItemData> _dropItem
-			= new HashMap<Integer, dropItemData>();
+	private final Map<Integer, dropItemData> _dropItem = new HashMap<Integer, dropItemData>();
 
 	public static DropItemTable getInstance() {
 		if (_instance == null) {
@@ -58,17 +57,14 @@ public final class DropItemTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM drop_rates");
-
 			for (rs = pstm.executeQuery(); rs.next();) {
 				dropItemData data = new dropItemData();
 				int itemId = rs.getInt("item_id");
 				data.dropRate = rs.getDouble("drop_rate");
 				data.dropAmount = rs.getDouble("drop_amount");
 				data.uniqueRate = rs.getDouble("unique_rate");
-
 				_dropItem.put(new Integer(itemId), data);
 			}
-
 			_log.config("drop_rates " + _dropItem.size());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -102,5 +98,4 @@ public final class DropItemTable {
 		}
 		return data.uniqueRate;
 	}
-
 }

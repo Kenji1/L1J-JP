@@ -26,11 +26,7 @@ import jp.l1j.server.templates.L1GetBackRestart;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server:
-// IdFactory
-
 public class GetBackRestartTable {
-
 	private static Logger _log = Logger.getLogger(GetBackRestartTable.class.getName());
 
 	private static GetBackRestartTable _instance;
@@ -59,7 +55,6 @@ public class GetBackRestartTable {
 				gbr.setLocX(rs.getInt("loc_x"));
 				gbr.setLocY(rs.getInt("loc_y"));
 				gbr.setMapId(rs.getShort("map_id"));
-
 				_getbackrestart.put(new Integer(area), gbr);
 			}
 		} catch (SQLException e) {
@@ -72,8 +67,6 @@ public class GetBackRestartTable {
 	}
 
 	public L1GetBackRestart[] getGetBackRestartTableList() {
-		return _getbackrestart.values().toArray(
-				new L1GetBackRestart[_getbackrestart.size()]);
+		return _getbackrestart.values().toArray(new L1GetBackRestart[_getbackrestart.size()]);
 	}
-
 }

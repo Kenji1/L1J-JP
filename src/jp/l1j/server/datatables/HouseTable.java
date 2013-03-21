@@ -36,7 +36,6 @@ import jp.l1j.server.utils.SqlUtil;
 // IdFactory
 
 public class HouseTable {
-
 	private static Logger _log = Logger.getLogger(HouseTable.class.getName());
 
 	private static HouseTable _instance;
@@ -60,7 +59,6 @@ public class HouseTable {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM houses ORDER BY house_id");
@@ -108,15 +106,16 @@ public class HouseTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE houses SET house_name=?, house_area=?, location=?, keeper_id=?, is_on_sale=?, is_purchase_basement=?, tax_deadline=? WHERE house_id=?");
+			pstm = con.prepareStatement(String.format("UPDATE houses SET %s, %s, %s, %s, %s, %s, %s WHERE house_id=?",
+				"house_name=?", "house_area=?", "location=?", "keeper_id=?",
+				"is_on_sale=?", "is_purchase_basement=?", "tax_deadline=?"));
 			pstm.setString(1, house.getHouseName());
 			pstm.setInt(2, house.getHouseArea());
 			pstm.setString(3, house.getLocation());
 			pstm.setInt(4, house.getKeeperId());
 			pstm.setInt(5, house.isOnSale() == true ? 1 : 0);
 			pstm.setInt(6, house.isPurchaseBasement() == true ? 1 : 0);
-			String fm = DateFormat.getDateTimeInstance().format(
-					house.getTaxDeadline().getTime());
+			String fm = DateFormat.getDateTimeInstance().format(house.getTaxDeadline().getTime());
 			pstm.setString(7, fm);
 			pstm.setInt(8, house.getHouseId());
 			pstm.execute();
@@ -130,11 +129,9 @@ public class HouseTable {
 
 	public static List<Integer> getHouseIdList() {
 		List<Integer> houseIdList = new ArrayList<Integer>();
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT house_id FROM houses ORDER BY house_id");
@@ -150,7 +147,6 @@ public class HouseTable {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-
 		return houseIdList;
 	}
 }

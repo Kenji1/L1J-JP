@@ -57,8 +57,7 @@ public class MobGroupTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int mobGroupId = rs.getInt("id");
-				boolean isRemoveGroup = (rs
-						.getBoolean("remove_group_if_leader_die"));
+				boolean isRemoveGroup = (rs.getBoolean("remove_group_if_leader_die"));
 				int leaderId = rs.getInt("leader_id");
 				List<L1NpcCount> minions = Lists.newArrayList();
 				for (int i = 1; i <= 7; i++) {
@@ -70,7 +69,7 @@ public class MobGroupTable {
 						minions, isRemoveGroup);
 				_mobGroupIndex.put(mobGroupId, mobGroup);
 			}
-			_log.config("MOBグループリスト " + _mobGroupIndex.size() + "件ロード");
+			_log.config("Mob Groups: " + _mobGroupIndex.size() + "groups");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating mob_groups table", e);
 		} finally {
@@ -83,5 +82,4 @@ public class MobGroupTable {
 	public L1MobGroup getTemplate(int mobGroupId) {
 		return _mobGroupIndex.get(mobGroupId);
 	}
-
 }

@@ -19,8 +19,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.L1QueryUtil;
 import jp.l1j.server.utils.L1SqlException;
@@ -30,12 +30,14 @@ public class MapTimerTable {
 	private static Logger _log = Logger.getLogger(MapTimerTable.class.getName());
 
 	private static int _charId;
+	
 	private static int _mapId;
+	
 	private static int _areaId;
+	
 	private static int _enterTime;
 
 	public MapTimerTable() {
-		
 	}
 
 	public MapTimerTable(int charId, int mapId, int areaId, int enterTime) {
@@ -77,8 +79,7 @@ public class MapTimerTable {
 		_enterTime = enterTime;
 	}
 	
-	private static class Factory implements 
-			L1QueryUtil.EntityFactory<MapTimerTable> {
+	private static class Factory implements L1QueryUtil.EntityFactory<MapTimerTable> {
 		@Override
 		public MapTimerTable fromResultSet(ResultSet rs) throws SQLException {
 			MapTimerTable result = new MapTimerTable();
@@ -141,14 +142,11 @@ public class MapTimerTable {
 				pc.stopMapLimiter();
 			}
 		}
-		
 		remove(areaId);
-		
 		for(L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
 			if (pc.getMapLimiter() == null) {
 				pc.startMapLimiter();
 			}
 		}
 	}
-
 }
