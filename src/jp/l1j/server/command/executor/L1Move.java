@@ -17,8 +17,10 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1Teleport;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.map.L1WorldMap;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1Move implements L1CommandExecutor {
@@ -44,11 +46,13 @@ public class L1Move implements L1CommandExecutor {
 				mapid = pc.getMapId();
 			}
 			L1Teleport.teleport(pc, locx, locy, mapid, 5, false);
-			pc.sendPackets(new S_SystemMessage("座標 " + locx + ", " + locy
-					+ ", " + mapid + "に移動しました。"));
+			int tile = L1WorldMap.getInstance().getMap(mapid).getOriginalTile(locx, locy);
+			String msg = String.format(I18N_MOVED_TO_LOC, locx, locy, mapid, tile);
+			// 座標 (%d, %d, %d) %d に移動しました。
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " X座標 Y座標 [マップID] と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_3,
+					cmdName, I18N_AXIS_X, I18N_AXIS_Y, "["+I18N_MAP_ID+"]")));
+			// .%s %s %s %s の形式で入力してください。
 		}
 	}
 }

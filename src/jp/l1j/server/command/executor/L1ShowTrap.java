@@ -16,9 +16,10 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
+import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.instance.L1TrapInstance;
-import jp.l1j.server.model.L1Object;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_RemoveObject;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -39,7 +40,6 @@ public class L1ShowTrap implements L1CommandExecutor {
 			pc.setSkillEffect(GMSTATUS_SHOWTRAPS, 0);
 		} else if (arg.equalsIgnoreCase("off")) {
 			pc.removeSkillEffect(GMSTATUS_SHOWTRAPS);
-
 			for (L1Object obj : pc.getKnownObjects()) {
 				if (obj instanceof L1TrapInstance) {
 					pc.removeKnownObject(obj);
@@ -47,7 +47,9 @@ public class L1ShowTrap implements L1CommandExecutor {
 				}
 			}
 		} else {
-			pc.sendPackets(new S_SystemMessage(cmdName + " on|off と入力してください。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, "on|off")));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

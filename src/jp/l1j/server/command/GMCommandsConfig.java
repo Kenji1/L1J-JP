@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.templates.L1ItemSetItem;
 import jp.l1j.server.utils.IterableElementList;
@@ -112,12 +113,12 @@ public class GMCommandsConfig {
 	}
 
 	public static HashMap<String, L1Location> ROOMS = new HashMap<String, L1Location>();
-	public static HashMap<String, List<L1ItemSetItem>> ITEM_SETS = new HashMap<String, List<L1ItemSetItem>>();
+	public static HashMap<String, List<L1ItemSetItem>> ITEM_SETS =
+			new HashMap<String, List<L1ItemSetItem>>();
 
 	private static Document loadXml(String file)
 			throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-				.newDocumentBuilder();
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		return builder.parse(file);
 	}
 
@@ -126,14 +127,14 @@ public class GMCommandsConfig {
 			Document doc = loadXml("./data/xml/GmCommands/GMCommands.xml");
 			NodeList nodes = doc.getDocumentElement().getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {
-				ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName()
-						.toLowerCase());
+				ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName().toLowerCase());
 				if (loader != null) {
 					loader.load((Element) nodes.item(i));
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, "GMCommands.xmlの読み込みに失敗", e);
+			_log.log(Level.SEVERE, String.format(I18N_LOAD_FAILED, "GMCommands.xml"), e);
+			// %s の読み込みに失敗しました。
 		}
 	}
 }

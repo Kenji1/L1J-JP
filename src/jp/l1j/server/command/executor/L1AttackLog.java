@@ -15,12 +15,11 @@
 
 package jp.l1j.server.command.executor;
 
-
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1AttackLog implements L1CommandExecutor {
-
 
 	private L1AttackLog() {
 	}
@@ -33,17 +32,19 @@ public class L1AttackLog implements L1CommandExecutor {
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		if (arg.equalsIgnoreCase("on")) {
 			pc.setAttackLog(true);
-			pc.sendPackets(new S_SystemMessage("ターゲットへのダメージを表示に変更しました。"));
+			pc.sendPackets(new S_SystemMessage(I18N_CHANGED_TO_DISPLAY_THE_DAMAGE));
+			// ターゲットへのダメージを表示に変更しました。
 		} else if (arg.equalsIgnoreCase("off")) {
 			pc.setAttackLog(false);
-			pc.sendPackets(new S_SystemMessage("ターゲットへのダメージを非表示に変更しました"));
+			pc.sendPackets(new S_SystemMessage(I18N_CHANGED_TO_HIDE_THE_DAMAGE));
+			// ターゲットへのダメージを非表示に変更しました。
 		} else {
-			if (pc.getAttackLog() == false) {
-				pc.sendPackets(new S_SystemMessage(cmdName
-						+ " on|off と入力してください。現在はoffです。"));
+			if (pc.getAttackLog()) {
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_ON, cmdName)));
+				// .%s on|off と入力してください。現在はONです。
 			} else {
-				pc.sendPackets(new S_SystemMessage(cmdName
-						+ " on|off と入力してください。現在はonです。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_OFF, cmdName)));
+				// .%s on|off と入力してください。現在はOFFです。
 			}
 		}
 	}

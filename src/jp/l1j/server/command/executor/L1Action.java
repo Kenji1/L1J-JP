@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_DoActionGFX;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -37,8 +38,10 @@ public class L1Action implements L1CommandExecutor {
 			StringTokenizer st = new StringTokenizer(arg);
 			int actId = Integer.parseInt(st.nextToken(), 10);
 			pc.sendPackets(new S_DoActionGFX(pc.getId(), actId));
-		} catch (Exception exception) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " actid と入力して下さい。"));
+		} catch (Exception e) {
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, I18N_ACT_ID)));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

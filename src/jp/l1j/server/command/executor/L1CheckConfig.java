@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
@@ -33,26 +34,27 @@ public class L1CheckConfig implements L1CommandExecutor {
 	@Override
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		try {
-			pc.sendPackets(new S_SystemMessage("*** このサーバーの現在の設定 ***"));
+			pc.sendPackets(new S_SystemMessage(I18N_SERVER_SETTINGS));
 
 			StringBuilder msg = new StringBuilder();
 
-			msg.append("経験値倍率：" + Config.RATE_XP  + "倍 / ");
-			msg.append("アライメント倍率：" + Config.RATE_LA + "倍 / ");
-			msg.append("カルマ倍率：" + Config.RATE_KARMA + "倍 / ");
-			msg.append("ドロップ倍率：" + Config.RATE_DROP_ITEMS + "倍 / ");
-			msg.append("取得アデナ倍率：" + Config.RATE_DROP_ADENA + "倍 / ");
-			msg.append("武器エンチャント成功率：" + Config.ENCHANT_CHANCE_WEAPON + "％ / ");
-			msg.append("防具エンチャント成功率：" + Config.ENCHANT_CHANCE_ARMOR + "％ / ");
-			msg.append("属性強化成功率：" + Config.ATTR_ENCHANT_CHANCE + "％ / ");
-			msg.append("装飾品強化成功率：" + Config.ENCHANT_CHANCE_ACCESSORY + "％ / ");
-			msg.append("MD強化成功率：" + Config.ENCHANT_CHANCE_DOLL + "％ / ");
-			msg.append("重量軽減倍率：" + Config.RATE_WEIGHT_LIMIT + "倍 / ");
-			msg.append("接続人数制限：最大 " + Config.MAX_ONLINE_USERS + "人 / ");
+			msg.append(String.format(I18N_EXP, Config.RATE_XP) + " / ");
+			msg.append(String.format(I18N_LAWFUL, Config.RATE_LA) + " / ");
+			msg.append(String.format(I18N_KARMA, Config.RATE_KARMA) + " / ");
+			msg.append(String.format(I18N_ITEM_DROP, Config.RATE_DROP_ITEMS) + " / ");
+			msg.append(String.format(I18N_ADENA_DROP, Config.RATE_DROP_ADENA) + " / ");
+			msg.append(String.format(I18N_ENCHANT_WEAPON, Config.ENCHANT_CHANCE_WEAPON) + " / ");
+			msg.append(String.format(I18N_ENCHANT_ARMOR, Config.ENCHANT_CHANCE_ARMOR) + " / ");
+			msg.append(String.format(I18N_ENCHANT_ATTRIBUTE, Config.ATTR_ENCHANT_CHANCE) + " / ");
+			msg.append(String.format(I18N_ENCHANT_ACCESSORY, Config.ENCHANT_CHANCE_ACCESSORY) + " / ");
+			msg.append(String.format(I18N_ENCHANT_DOLL, Config.ENCHANT_CHANCE_DOLL) + " / ");
+			msg.append(String.format(I18N_WEIGHT_REDUCTION, Config.RATE_WEIGHT_LIMIT) + " / ");
+			msg.append(String.format(I18N_MAX_USERS, Config.MAX_ONLINE_USERS) + " / ");
 
 			pc.sendPackets(new S_SystemMessage(msg.toString()));
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " コマンドエラー"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_ERROR, cmdName)));
+			// .%s コマンドエラー
 		}
 	}
 }

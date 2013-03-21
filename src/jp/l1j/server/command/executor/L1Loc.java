@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.map.L1WorldMap;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -37,10 +38,9 @@ public class L1Loc implements L1CommandExecutor {
 			int locx = pc.getX();
 			int locy = pc.getY();
 			short mapid = pc.getMapId();
-			int gab = L1WorldMap.getInstance().getMap(mapid).getOriginalTile(
-					locx, locy);
-			String msg = String.format("座標 (%d, %d, %d) %d", locx, locy, mapid,
-					gab);
+			int tile = L1WorldMap.getInstance().getMap(mapid).getOriginalTile(locx, locy);
+			String msg = String.format(I18N_LOCATION, locx, locy, mapid, tile);
+			// 座標 (%d, %d, %d) %d
 			pc.sendPackets(new S_SystemMessage(msg));
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

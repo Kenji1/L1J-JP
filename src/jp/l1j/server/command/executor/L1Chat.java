@@ -17,8 +17,9 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1Chat implements L1CommandExecutor {
@@ -40,10 +41,12 @@ public class L1Chat implements L1CommandExecutor {
 				String msg;
 				if (flag.compareToIgnoreCase("on") == 0) {
 					L1World.getInstance().setWorldChatElabled(true);
-					msg = "ワールドチャットを有効にしました。";
+					msg = I18N_ENABLED_THE_GLOBAL_CHAT;
+					// グローバルチャットを可能にしました。
 				} else if (flag.compareToIgnoreCase("off") == 0) {
 					L1World.getInstance().setWorldChatElabled(false);
-					msg = "ワールドチャットを停止しました。";
+					msg = I18N_DISABLED_THE_GLOBAL_CHAT;
+					// グローバルチャットを不可にしました。
 				} else {
 					throw new Exception();
 				}
@@ -51,14 +54,18 @@ public class L1Chat implements L1CommandExecutor {
 			} else {
 				String msg;
 				if (L1World.getInstance().isWorldChatElabled()) {
-					msg = "現在ワールドチャットは有効です。.chat off で停止できます。";
+					msg = I18N_GLOBAL_CHAT_IS_POSSIBLE;
+					// グローバルチャットは可能です。無効にするには .chat off を入力してください。
 				} else {
-					msg = "現在ワールドチャットは停止しています。.chat on で有効にできます。";
+					msg = I18N_GLOBAL_CHAT_IS_IMPOSSIBLE;
+					// グローバルチャットは不可です。有効にするには .chat on を入力してください。
 				}
 				pc.sendPackets(new S_SystemMessage(msg));
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " [on|off]"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, "[on|off]")));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

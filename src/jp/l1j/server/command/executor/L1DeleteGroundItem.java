@@ -17,19 +17,19 @@ package jp.l1j.server.command.executor;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.FurnitureSpawnTable;
 import jp.l1j.server.datatables.LetterTable;
 import jp.l1j.server.datatables.PetTable;
+import jp.l1j.server.model.L1Object;
+import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1FurnitureInstance;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.L1Object;
-import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.inventory.L1Inventory;
 
 public class L1DeleteGroundItem implements L1CommandExecutor {
-	private static Logger _log = Logger.getLogger(L1DeleteGroundItem.class
-			.getName());
+	private static Logger _log = Logger.getLogger(L1DeleteGroundItem.class.getName());
 
 	private L1DeleteGroundItem() {
 	}
@@ -43,31 +43,29 @@ public class L1DeleteGroundItem implements L1CommandExecutor {
 		for (L1Object l1object : L1World.getInstance().getObject()) {
 			if (l1object instanceof L1ItemInstance) {
 				L1ItemInstance l1iteminstance = (L1ItemInstance) l1object;
-				if (l1iteminstance.getX() == 0 && l1iteminstance.getY() == 0) { // 地面上のアイテムではなく、誰かの所有物
+				if (l1iteminstance.getX() == 0 && l1iteminstance.getY() == 0) {
+					// 地面上のアイテムではなく、誰かの所有物
 					continue;
 				}
 
-				ArrayList<L1PcInstance> players = L1World.getInstance()
-						.getVisiblePlayer(l1iteminstance, 0);
+				ArrayList<L1PcInstance> players =
+						L1World.getInstance().getVisiblePlayer(l1iteminstance, 0);
 				if (0 == players.size()) {
-					L1Inventory groundInventory = L1World.getInstance()
-							.getInventory(l1iteminstance.getX(),
-									l1iteminstance.getY(),
-									l1iteminstance.getMapId());
+					L1Inventory groundInventory =
+							L1World.getInstance().getInventory(l1iteminstance.getX(),
+							l1iteminstance.getY(), l1iteminstance.getMapId());
 					int itemId = l1iteminstance.getItem().getItemId();
 					if (itemId == 40314 || itemId == 40316) { // ペットのアミュレット
-						PetTable.getInstance()
-								.deletePet(l1iteminstance.getId());
+						PetTable.getInstance().deletePet(l1iteminstance.getId());
 					} else if (itemId >= 49016 && itemId <= 49025) { // 便箋
 						LetterTable lettertable = new LetterTable();
 						lettertable.deleteLetter(l1iteminstance.getId());
 					} else if (itemId >= 41383 && itemId <= 41400) { // 家具
 						if (l1object instanceof L1FurnitureInstance) {
 							L1FurnitureInstance furniture = (L1FurnitureInstance) l1object;
-							if (furniture.getItemObjId() == l1iteminstance
-									.getId()) { // 既に引き出している家具
-								FurnitureSpawnTable.getInstance()
-										.deleteFurniture(furniture);
+							if (furniture.getItemObjId() == l1iteminstance.getId()) {
+								// 既に引き出している家具
+								FurnitureSpawnTable.getInstance().deleteFurniture(furniture);
 							}
 						}
 					}
@@ -77,7 +75,7 @@ public class L1DeleteGroundItem implements L1CommandExecutor {
 				}
 			}
 		}
-		L1World.getInstance().broadcastServerMessage(
-				"ワールドマップ上のアイテムがGMにより削除されました。");
+		L1World.getInstance().broadcastServerMessage(I18N_REMOVED_THE_ITEMS_ON_THE_WORLD_MAP);
+		// GMがワールドマップ上のアイテムを削除しました。
 	}
 }

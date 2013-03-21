@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.L1ItemId;
@@ -37,16 +38,16 @@ public class L1Adena implements L1CommandExecutor {
 		try {
 			StringTokenizer stringtokenizer = new StringTokenizer(arg);
 			int count = Integer.parseInt(stringtokenizer.nextToken());
-
-			L1ItemInstance adena = pc.getInventory().storeItem(L1ItemId.ADENA,
-					count);
+			L1ItemInstance adena = pc.getInventory().storeItem(L1ItemId.ADENA, count);
+			
 			if (adena != null) {
-				pc.sendPackets(new S_SystemMessage((new StringBuilder())
-						.append(count).append("アデナを生成しました。").toString()));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_GENERATED_THE_ADENA, count)));
+				// %d アデナを生成しました。
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage((new StringBuilder()).append(
-					".adena アデナ数 と入力して下さい。").toString()));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, I18N_AMOUNT)));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

@@ -19,6 +19,7 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -36,8 +37,9 @@ public class L1SpawnCmd implements L1CommandExecutor {
 	}
 
 	private void sendErrorMessage(L1PcInstance pc, String cmdName) {
-		String errorMsg = cmdName + " npcid|name [数] [範囲] と入力して下さい。";
-		pc.sendPackets(new S_SystemMessage(errorMsg));
+		pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_3,
+				cmdName, I18N_NPC_ID+"|"+I18N_NPC_NAME, "["+I18N_AMOUNT+"]", "["+I18N_RANGE+"]")));
+		// .%s %s %s %s の形式で入力してください。
 	}
 
 	private int parseNpcId(String nameId) {
@@ -67,14 +69,15 @@ public class L1SpawnCmd implements L1CommandExecutor {
 
 			L1Npc npc = NpcTable.getInstance().getTemplate(npcid);
 			if (npc == null) {
-				pc.sendPackets(new S_SystemMessage("該当NPCが見つかりません。"));
+				pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_NPC));
+				// NPCは存在しません。
 				return;
 			}
 			for (int i = 0; i < count; i++) {
 				L1SpawnUtil.spawn(pc, npcid, randomrange, 0);
 			}
-			String msg = String.format("%s(%d) (%d) を召還しました。 (範囲:%d)", npc
-					.getName(), npcid, count, randomrange);
+			String msg = String.format(I18N_SUMMON_MONSTER_1, npc.getName(), npcid, count, randomrange);
+			// %s(%d) (%d) を召還しました。 (範囲:%d)
 			pc.sendPackets(new S_SystemMessage(msg));
 		} catch (NoSuchElementException e) {
 			sendErrorMessage(pc, cmdName);
@@ -82,7 +85,8 @@ public class L1SpawnCmd implements L1CommandExecutor {
 			sendErrorMessage(pc, cmdName);
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			pc.sendPackets(new S_SystemMessage(cmdName + " 内部エラーです。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_ERROR, cmdName)));
+			// .%s コマンドエラー
 		}
 	}
 }

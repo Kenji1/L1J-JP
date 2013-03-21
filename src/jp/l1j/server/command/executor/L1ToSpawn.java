@@ -19,11 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.NpcSpawnTable;
 import jp.l1j.server.datatables.SpawnTable;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Spawn;
 import jp.l1j.server.model.L1Teleport;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1ToSpawn implements L1CommandExecutor {
@@ -57,17 +58,18 @@ public class L1ToSpawn implements L1CommandExecutor {
 				spawn = SpawnTable.getInstance().getTemplate(id);
 			}
 			if (spawn != null) {
-				L1Teleport.teleport(pc, spawn.getLocX(), spawn.getLocY(),
-						spawn.getMapId(), 5, false);
-				pc.sendPackets(new S_SystemMessage("spawnid(" + id
-						+ ")の元へ飛びます"));
+				L1Teleport.teleport(pc, spawn.getLocX(), spawn.getLocY(), spawn.getMapId(), 5, false);
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_MOVED_TO_THE_CHAR, id)));
+				// %s の場所に移動しました。
 			} else {
-				pc.sendPackets(new S_SystemMessage("spawnid(" + id
-						+ ")は見つかりません"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_CHAR, id)));
+				// %s はゲームワールド内に存在しません。
 			}
 			_spawnId.put(pc.getId(), id);
 		} catch (Exception exception) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " spawnid|+|-"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, I18N_SPAWN_ID+"|+|-")));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

@@ -16,6 +16,7 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
@@ -33,29 +34,27 @@ public class L1Describe implements L1CommandExecutor {
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		try {
 			StringBuilder msg = new StringBuilder();
-			pc.sendPackets(new S_SystemMessage("-- describe: " + pc.getName()
-					+ " --"));
-			int hpr = pc.getHpr();
-			int mpr = pc.getMpr();
-			msg.append("Dmg: +" + pc.getDmgup() + " / ");
-			msg.append("Hit: +" + pc.getHitup() + " / ");
-			msg.append("BowDmg: +" + pc.getBowDmgup() + " / ");
-			msg.append("BowHit: +" + pc.getBowHitup() + " / ");
-			msg.append("MR: " + pc.getMr() + " / ");
-			msg.append("HPR: " + hpr + " / ");
-			msg.append("MPR: " + mpr + " / ");
-			msg.append("凍結耐性: " + pc.getResistFreeze() + " / ");
-			msg.append("スタン耐性: " + pc.getResistStun() + " / ");
-			msg.append("石化耐性: " + pc.getResistStone() + " / ");
-			msg.append("睡眠耐性: " + pc.getResistSleep() + " / ");
-			msg.append("ホールド耐性: " + pc.getResistHold() + " / ");
-			msg.append("闇耐性: " + pc.getResistBlind() + " / ");
-			msg.append("カルマ: " + pc.getKarma() + " / ");
-			msg.append("所持Item数: " + pc.getInventory().getSize() + " / ");
-			msg.append("追加Exp: +" + pc.getExpBonusPct() + "% / ");
+			pc.sendPackets(new S_SystemMessage("-- describe: " + pc.getName() + " --"));
+			msg.append(String.format(I18N_DESC_DMG, pc.getDmgup()));
+			msg.append(String.format(I18N_DESC_HIT, pc.getHitup()));
+			msg.append(String.format(I18N_DESC_BOW_DMG, pc.getBowDmgup()));
+			msg.append(String.format(I18N_DESC_BOW_HIT, pc.getBowHitup()));
+			msg.append(String.format(I18N_DESC_MR, pc.getMr()));
+			msg.append(String.format(I18N_DESC_HPR, pc.getHpr()));
+			msg.append(String.format(I18N_DESC_MPR, pc.getMpr()));
+			msg.append(String.format(I18N_DESC_RESIST_FREEZE, pc.getResistFreeze()));
+			msg.append(String.format(I18N_DESC_RESIST_STUN, pc.getResistStun()));
+			msg.append(String.format(I18N_DESC_RESIST_STONE, pc.getResistStone()));
+			msg.append(String.format(I18N_DESC_RESIST_SLEEP, pc.getResistSleep()));
+			msg.append(String.format(I18N_DESC_RESIST_HOLD, pc.getResistHold()));
+			msg.append(String.format(I18N_DESC_RESIST_BLIND, pc.getResistBlind()));
+			msg.append(String.format(I18N_DESC_KARMA, pc.getKarma()));
+			msg.append(String.format(I18N_DESC_INVENTORY_SIZE, pc.getInventory().getSize()));
+			msg.append(String.format(I18N_DESC_EXP_BONUS, pc.getExpBonusPct()));
 			pc.sendPackets(new S_SystemMessage(msg.toString()));
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " コマンドエラー"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_ERROR, cmdName)));
+			// .%s コマンドエラー
 		}
 	}
 }

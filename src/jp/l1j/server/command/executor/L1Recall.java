@@ -18,9 +18,10 @@ package jp.l1j.server.command.executor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1Recall implements L1CommandExecutor {
@@ -43,7 +44,8 @@ public class L1Recall implements L1CommandExecutor {
 				targets = new ArrayList<L1PcInstance>();
 				L1PcInstance tg = L1World.getInstance().getPlayer(arg);
 				if (tg == null) {
-					pc.sendPackets(new S_SystemMessage("そのようなキャラクターはいません。"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_CHAR, arg)));
+					// %s はゲームワールド内に存在しません。
 					return;
 				}
 				targets.add(tg);
@@ -54,14 +56,15 @@ public class L1Recall implements L1CommandExecutor {
 					continue;
 				}
 				L1Teleport.teleportToTargetFront(target, pc, 2);
-				pc.sendPackets(new S_SystemMessage((new StringBuilder())
-						.append(target.getName()).append("さんを召還しました。")
-						.toString()));
-				target.sendPackets(new S_SystemMessage("ゲームマスターに召還されました。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_RECALLED, target.getName())));
+				// %s を召還しました。
+				target.sendPackets(new S_SystemMessage(I18N_RECALLED_BY_GM));
+				// GMから召還されました。
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " all|キャラクター名 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, "all|"+I18N_CHAR_NAME)));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

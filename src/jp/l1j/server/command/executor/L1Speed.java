@@ -16,6 +16,7 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.L1BuffUtil;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -36,7 +37,8 @@ public class L1Speed implements L1CommandExecutor {
 			L1BuffUtil.haste(pc, 3600 * 1000);
 			L1BuffUtil.brave(pc, 3600 * 1000);
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(".speed コマンドエラー"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_ERROR, cmdName)));
+			// .%s コマンドエラー
 		}
 	}
 }

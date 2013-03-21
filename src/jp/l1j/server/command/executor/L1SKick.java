@@ -16,9 +16,10 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Disconnect;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
@@ -37,9 +38,9 @@ public class L1SKick implements L1CommandExecutor {
 		try {
 			L1PcInstance target = L1World.getInstance().getPlayer(arg);
 			if (target != null) {
-				pc.sendPackets(new S_SystemMessage((new StringBuilder())
-						.append(target.getName()).append("さんをキックしました。")
-						.toString()));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_ACCOUNT_KICK, target.getName())));
+				// %s をキックしました。
+				
 				// SKTへ移動させる
 				target.setX(33080);
 				target.setY(33392);
@@ -48,14 +49,17 @@ public class L1SKick implements L1CommandExecutor {
 				target.sendPackets(new S_Disconnect());
 				ClientThread targetClient = target.getNetConnection();
 				targetClient.kick();
-				_log.warning("GMのskickコマンドにより(" + targetClient.getAccountName()
-						+ ":" + targetClient.getHostname() + ")との接続を強制切断しました。");
+				_log.warning(String.format(I18N_DISCONNECTED_THE_CONNECTION,
+						cmdName, targetClient.getAccountName(), targetClient.getHostname()));
+				// %s コマンドにより、%s(%s)との接続を強制切断しました。
 			} else {
-				pc.sendPackets(new S_SystemMessage(
-						"そのような名前のキャラクターはワールド内には存在しません。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_CHAR, arg)));
+				// %s はゲームワールド内に存在しません。
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " キャラクター名 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, I18N_CHAR_NAME)));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

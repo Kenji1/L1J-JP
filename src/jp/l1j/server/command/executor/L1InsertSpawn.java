@@ -18,6 +18,7 @@ package jp.l1j.server.command.executor;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.NpcSpawnTable;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.SpawnTable;
@@ -47,12 +48,12 @@ public class L1InsertSpawn implements L1CommandExecutor {
 			L1Npc template = NpcTable.getInstance().getTemplate(npcId);
 
 			if (template == null) {
-				msg = "該当するNPCが見つかりません。";
+				msg = I18N_DOES_NOT_EXIST_NPC; // NPCは存在しません。
 				return;
 			}
 			if (type.equals("mob")) {
 				if (!template.getImpl().equals("L1Monster")) {
-					msg = "指定したNPCはL1Monsterではありません。";
+					msg = String.format(I18N_IS_NOT_MOBS, npcId); // %s はMobではありません。
 					return;
 				}
 				SpawnTable.storeSpawn(pc, template);
@@ -60,11 +61,12 @@ public class L1InsertSpawn implements L1CommandExecutor {
 				NpcSpawnTable.getInstance().storeSpawn(pc, template);
 			}
 			L1SpawnUtil.spawn(pc, npcId, 0, 0);
-			msg = new StringBuilder().append(template.getName()).append(
-					" (" + npcId + ") ").append("を追加しました。").toString();
+			msg = String.format(I18N_ADDED_TO_THE_SPAWN_LIST, template.getName(), npcId);
+			// %s(%d) をSpawnリストに登録しました。
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "", e);
-			msg = cmdName + " mob|npc NPCID と入力して下さい。";
+			msg = String.format(I18N_COMMAND_FORMAT_2, cmdName, "mob|npc", I18N_NPC_ID);
+			// .%s %s の形式で入力してください。
 		} finally {
 			if (msg != null) {
 				pc.sendPackets(new S_SystemMessage(msg));

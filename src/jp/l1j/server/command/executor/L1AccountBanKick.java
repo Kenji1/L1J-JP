@@ -16,8 +16,9 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Disconnect;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Account;
@@ -40,15 +41,18 @@ public class L1AccountBanKick implements L1CommandExecutor {
 			if (target != null) {
 				// アカウントをBANする
 				L1Account.ban(target.getAccountName());
-				pc.sendPackets(new S_SystemMessage(target.getName()
-						+ "さんをキックしました。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_ACCOUNT_BAN,
+						target.getName())));
+				// %s をBANしました。
 				target.sendPackets(new S_Disconnect());
 			} else {
-				pc.sendPackets(new S_SystemMessage(
-						"そのような名前のキャラクターはワールド内には存在しません。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_CHAR, arg)));
+				// %s はゲームワールド内に存在しません。
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " キャラクター名 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, I18N_CHAR_NAME)));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

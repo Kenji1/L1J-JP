@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -45,8 +46,9 @@ public class L1InvGfxId implements L1CommandExecutor {
 				pc.getInventory().storeItem(item);
 			}
 		} catch (Exception exception) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-							+ " id 出現させる数 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_2,
+					cmdName, I18N_GFX_ID, I18N_AMOUNT)));
+			// .%s %s %s の形式で入力してください。
 		}
 	}
 }

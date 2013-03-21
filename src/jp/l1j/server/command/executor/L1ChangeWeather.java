@@ -17,14 +17,14 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.packets.server.S_Weather;
 
 public class L1ChangeWeather implements L1CommandExecutor {
-	private static Logger _log = Logger.getLogger(L1ChangeWeather.class
-			.getName());
+	private static Logger _log = Logger.getLogger(L1ChangeWeather.class.getName());
 
 	private L1ChangeWeather() {
 	}
@@ -41,8 +41,9 @@ public class L1ChangeWeather implements L1CommandExecutor {
 			L1World.getInstance().setWeather(weather);
 			L1World.getInstance().broadcastPacketToAll(new S_Weather(weather));
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-							+ " 0～3、16～19 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, I18N_WEATHER_OPTIONS)));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

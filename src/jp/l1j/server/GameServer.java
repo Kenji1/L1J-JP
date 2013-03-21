@@ -179,9 +179,9 @@ public class GameServer extends Thread {
 
 	private void printStartupMessage() {
 			puts(I18N_GENERATE_SERVER_SOCKET);
-			puts("┌───────────────────────────────┐");
-			puts("│                 L1J-JP 3.60C  For All User\t\t        │");
-			puts("└───────────────────────────────┘");
+			puts("/***********************************************************");
+			puts("*                L1J-JP 3.60C  For All User                *");
+			puts("***********************************************************/");
 			puts("");
 			puts(I18N_SERVER_SETTINGS);
 			puts("");
@@ -197,9 +197,9 @@ public class GameServer extends Thread {
 			puts(Config.ALT_NONPVP ? I18N_PVP : I18N_NON_PVP);
 			puts(I18N_MAX_USERS, Config.MAX_ONLINE_USERS);
 			puts("");
-			puts("┌───────────────────────────────┐");
-			puts("│    by L1J-JP MMORPG Game Server Emulation Java Project\t│");
-			puts("└───────────────────────────────┘");
+			puts("/***********************************************************");
+			puts("*    L1J-JP MMORPG Lineage Server Emulator Java Project    *");
+			puts("***********************************************************/");
 			puts("");
 		}
 

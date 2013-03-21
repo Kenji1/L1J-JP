@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.controller.timer.HomeTownTimeController;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -44,8 +45,10 @@ public class L1HomeTown implements L1CommandExecutor {
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(
-					".hometown daily|monthly と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, "daily|monthly")));
+			
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

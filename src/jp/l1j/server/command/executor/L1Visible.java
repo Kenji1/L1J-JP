@@ -16,6 +16,7 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Invis;
 import jp.l1j.server.packets.server.S_OtherCharPacks;
@@ -37,9 +38,11 @@ public class L1Visible implements L1CommandExecutor {
 			pc.setGmInvis(false);
 			pc.sendPackets(new S_Invis(pc.getId(), 0));
 			pc.broadcastPacket(new S_OtherCharPacks(pc));
-			pc.sendPackets(new S_SystemMessage("透明状態を解除しました。"));
+			pc.sendPackets(new S_SystemMessage(I18N_BECAME_VISIBLE));
+			// 姿が見えるようになりました。
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " コマンドエラー"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_ERROR, cmdName)));
+			// .%s コマンドエラー
 		}
 	}
 }

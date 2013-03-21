@@ -16,10 +16,11 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.command.GMCommandsConfig;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1Teleport;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1GMRoom implements L1CommandExecutor {
@@ -54,15 +55,16 @@ public class L1GMRoom implements L1CommandExecutor {
 			} else {
 				L1Location loc = GMCommandsConfig.ROOMS.get(arg.toLowerCase());
 				if (loc == null) {
-					pc.sendPackets(new S_SystemMessage(arg + " 未定義のRoomです"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_THE_ROOM, arg)));
+					// ルーム: %s は存在しません。
 					return;
 				}
-				L1Teleport.teleport(pc, loc.getX(), loc.getY(),
-						(short) loc.getMapId(), 5, false);
+				L1Teleport.teleport(pc, loc.getX(), loc.getY(), (short) loc.getMapId(), 5, false);
 			}
 		} catch (Exception exception) {
-			pc.sendPackets(new S_SystemMessage(
-					".gmroom1～.gmroom5 or .gmroom name と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, "1|2|3|4|5|" + I18N_ROOM_NAME)));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

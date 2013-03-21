@@ -18,10 +18,11 @@ package jp.l1j.server.command.executor;
 import java.lang.reflect.Constructor;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.NpcTable;
+import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.L1World;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.IdFactory;
@@ -46,9 +47,8 @@ public class L1GfxId implements L1CommandExecutor {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(45001);
 				if (l1npc != null) {
 					String s = l1npc.getImpl();
-					Constructor constructor = Class.forName(
-							"jp.l1j.server.model.instance." + s
-									+ "Instance").getConstructors()[0];
+					Constructor constructor = Class.forName("jp.l1j.server.model.instance."
+							+ s + "Instance").getConstructors()[0];
 					Object aobj[] = { l1npc };
 					L1NpcInstance npc = (L1NpcInstance) constructor.newInstance(aobj);
 					npc.setId(IdFactory.getInstance().nextId());
@@ -67,8 +67,10 @@ public class L1GfxId implements L1CommandExecutor {
 				}
 			}
 		} catch (Exception exception) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-							+ " id 出現させる数 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_2,
+					cmdName, I18N_GFX_ID, I18N_AMOUNT)));
+			
+			// .%s %s %s の形式で入力してください。
 		}
 	}
 }

@@ -20,9 +20,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.command.executor.L1CommandExecutor;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Command;
 
@@ -54,15 +54,16 @@ public class GMCommands {
 				return false;
 			}
 			if (pc.getAccessLevel() < command.getLevel()) {
-				pc.sendPackets(new S_ServerMessage(74, "コマンド" + name)); // \f1%0は使用できません。
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_CANNOT_USE_THE_COMMAND, name)));
+				// コマンド %s は使用できません。
 				return true;
 			}
 
 			Class<?> cls = Class.forName(command.getExecutorClassFullName());
-			L1CommandExecutor exe = (L1CommandExecutor) cls.getMethod(
-					"getInstance").invoke(null);
+			L1CommandExecutor exe = (L1CommandExecutor) cls.getMethod("getInstance").invoke(null);
 			exe.execute(pc, name, arg);
-			_log.info(pc.getName() + "が." + name + " " + arg + "コマンドを使用しました。");
+			_log.info(String.format(I18N_USED_THE_COMMAND, pc.getName(), name, arg));
+			// %s が .%s %s コマンドを使用しました。
 			return true;
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "error gm command", e);
@@ -76,8 +77,7 @@ public class GMCommands {
 		String cmd = token.nextToken();
 		String param = "";
 		while (token.hasMoreTokens()) {
-			param = new StringBuilder(param).append(token.nextToken()).append(
-					' ').toString();
+			param = new StringBuilder(param).append(token.nextToken()).append(' ').toString();
 		}
 		param = param.trim();
 
@@ -90,13 +90,15 @@ public class GMCommands {
 		}
 		if (cmd.equalsIgnoreCase("r")) {
 			if (!_lastCommands.containsKey(gm.getId())) {
-				gm.sendPackets(new S_ServerMessage(74, "コマンド" + cmd)); // \f1%0は使用できません。
+				gm.sendPackets(new S_SystemMessage(String.format(I18N_CANNOT_USE_THE_COMMAND, cmd)));
+				// コマンド %s は使用できません。
 				return;
 			}
 			redo(gm, param);
 			return;
 		}
-		gm.sendPackets(new S_SystemMessage("コマンド " + cmd + " は存在しません。"));
+		gm.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_COMMAND, cmd)));
+		// コマンド %s は存在しません。
 	}
 
 	private static Map<Integer, String> _lastCommands = new HashMap<Integer, String>();
@@ -105,19 +107,21 @@ public class GMCommands {
 		try {
 			String lastCmd = _lastCommands.get(pc.getId());
 			if (arg.isEmpty()) {
-				pc.sendPackets(new S_SystemMessage("コマンド " + lastCmd
-						+ " を再実行します"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_REEXECUTE_THE_COMMAND, lastCmd)));
+				// コマンド %s を再実行します。
 				handleCommands(pc, lastCmd);
 			} else {
 				// 引数を変えて実行
 				StringTokenizer token = new StringTokenizer(lastCmd);
 				String cmd = token.nextToken() + " " + arg;
-				pc.sendPackets(new S_SystemMessage("コマンド " + cmd + " を実行します。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_EXECUTE_THE_COMMAND, cmd)));
+				// コマンド %s を実行します。
 				handleCommands(pc, cmd);
 			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			pc.sendPackets(new S_SystemMessage(".r コマンドエラー"));
+			pc.sendPackets(new S_SystemMessage(I18N_REEXECUTE_THE_COMMAND_ERROR));
+			// コマンド %s を再実行します。
 		}
 	}
 }

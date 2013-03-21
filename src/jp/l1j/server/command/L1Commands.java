@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.templates.L1Command;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
@@ -52,7 +53,9 @@ public class L1Commands {
 			}
 			return fromResultSet(rs);
 		} catch (SQLException e) {
-			_log.log(Level.SEVERE, "コマンド取得エラー", e);
+			_log.log(Level.SEVERE, String.format(I18N_LOAD_FROM_THE_TABLE_FAILED,
+					"commands"), e);
+			// %s テーブルからのコマンドの読み込みに失敗しました。
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);
@@ -68,15 +71,16 @@ public class L1Commands {
 		List<L1Command> result = new ArrayList<L1Command>();
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM commands WHERE access_level <= ?");
+			pstm = con.prepareStatement("SELECT * FROM commands WHERE access_level <= ?");
 			pstm.setInt(1, accessLevel);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				result.add(fromResultSet(rs));
 			}
 		} catch (SQLException e) {
-			_log.log(Level.SEVERE, "コマンド取得エラー", e);
+			_log.log(Level.SEVERE, String.format(I18N_LOAD_FROM_THE_TABLE_FAILED,
+					"commands"), e);
+			// %s テーブルからのコマンドの読み込みに失敗しました。
 		} finally {
 			SqlUtil.close(rs);
 			SqlUtil.close(pstm);

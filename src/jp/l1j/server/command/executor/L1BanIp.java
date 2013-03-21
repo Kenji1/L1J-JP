@@ -17,9 +17,10 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.IpTable;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1BanIp implements L1CommandExecutor {
@@ -52,40 +53,36 @@ public class L1BanIp implements L1CommandExecutor {
 
 			for (L1PcInstance tg : L1World.getInstance().getAllPlayers()) {
 				if (s1.equals(tg.getNetConnection().getIp())) {
-					String msg = new StringBuilder().append("IP:").append(s1)
-							.append(" で接続中のプレイヤー:").append(tg.getName())
-							.toString();
 					host = tg.getNetConnection().getHostname();
-					pc.sendPackets(new S_SystemMessage(msg));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_CONNECTED_PLAYER,
+							s1, tg.getName())));
+					// %s で接続中のプレイヤー: %s
 				}
 			}
 
 			if ("add".equals(s2) && !isBanned) {
 				iptable.banIp(s1, host); // BANリストへIPを加える
-				String msg = new StringBuilder().append("IP:").append(s1)
-						.append(" をBAN IPに登録しました。").toString();
-				pc.sendPackets(new S_SystemMessage(msg));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_ADDED_TO_THE_BAN_LIST, s1)));
+				// %s をBANリストに登録しました。
 			} else if ("del".equals(s2) && isBanned) {
 				if (iptable.liftBanIp(s1, host)) { // BANリストからIPを削除する
-					String msg = new StringBuilder().append("IP:").append(s1)
-							.append(" をBAN IPから削除しました。").toString();
-					pc.sendPackets(new S_SystemMessage(msg));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_REMOVED_FROM_THE_BAN_LIST, s1)));
+					// %s をBANリストから削除しました。
 				}
 			} else {
 				// BANの確認
 				if (isBanned) {
-					String msg = new StringBuilder().append("IP:").append(s1)
-							.append(" はBAN IPに登録されています。").toString();
-					pc.sendPackets(new S_SystemMessage(msg));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_EXIST_IN_THE_BAN_LIST, s1)));
+					// %s はBANリストに存在します。
 				} else {
-					String msg = new StringBuilder().append("IP:").append(s1)
-							.append(" はBAN IPに登録されていません。").toString();
-					pc.sendPackets(new S_SystemMessage(msg));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_IN_THE_BAN_LIST, s1)));
+					// %s はBANリストに存在しません。
 				}
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " IP [ add | del ]と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_2,
+					cmdName, "IP", "[add|del]")));
+			// .%s %s %s の形式で入力してください。
 		}
 	}
 }

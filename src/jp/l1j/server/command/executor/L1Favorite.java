@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.command.GMCommands;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -47,15 +48,15 @@ public class L1Favorite implements L1CommandExecutor {
 				StringTokenizer st = new StringTokenizer(arg);
 				st.nextToken();
 				if (!st.hasMoreTokens()) {
-					pc.sendPackets(new S_SystemMessage("コマンドが空です。"));
+					pc.sendPackets(new S_SystemMessage(I18N_COMMAND_IS_EMPTY));
+					// コマンドが空です。
 					return;
 				}
 				StringBuilder cmd = new StringBuilder();
 				String temp = st.nextToken(); // コマンドタイプ
 				if (temp.equalsIgnoreCase(cmdName)) {
-					pc
-							.sendPackets(new S_SystemMessage(cmdName
-									+ " 自身は登録できません。"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_CAN_NOT_BE_REGISTERD, cmdName)));
+					// %s コマンドは登録できません。
 					return;
 				}
 				cmd.append(temp + " ");
@@ -64,11 +65,14 @@ public class L1Favorite implements L1CommandExecutor {
 				}
 				faviCom = cmd.toString().trim();
 				_faviCom.put(pc.getId(), faviCom);
-				pc.sendPackets(new S_SystemMessage(faviCom + " を登録しました。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_REGISTERD_COMMAND, faviCom)));
+				// %s コマンドを登録しました。
 			} else if (arg.startsWith("show")) {
-				pc.sendPackets(new S_SystemMessage("現在の登録コマンド: " + faviCom));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_THAT_ARE_REGISTERD, faviCom)));
+				// 登録されているコマンド: %s
 			} else if (faviCom.isEmpty()) {
-				pc.sendPackets(new S_SystemMessage("登録しているコマンドがありません。"));
+				pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_COMMAND_THAT_ARE_REGISTERD));
+				// 登録されているコマンドは存在しません。
 			} else {
 				StringBuilder cmd = new StringBuilder();
 				StringTokenizer st = new StringTokenizer(arg);
@@ -84,13 +88,17 @@ public class L1Favorite implements L1CommandExecutor {
 				while (st.hasMoreTokens()) {
 					cmd.append(st.nextToken() + " ");
 				}
-				pc.sendPackets(new S_SystemMessage(cmd + " を実行します。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_EXECUTE_THE_COMMAND, cmd)));
+				// .%s を実行します。
 				GMCommands.getInstance().handleCommands(pc, cmd.toString());
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " set コマンド名 " + "| "
-					+ cmdName + " show | " + cmdName + " [引数] と入力してください。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_2,
+					cmdName + " set " + I18N_COMMAND_NAME + " | ",
+					cmdName + " show | ",
+					cmdName + " [" + I18N_PARAM + "]")));
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			// .%s %s %s の形式で入力してください。
 		}
 	}
 }

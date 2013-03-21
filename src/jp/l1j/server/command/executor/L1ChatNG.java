@@ -17,8 +17,9 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SkillIconGFX;
@@ -46,12 +47,14 @@ public class L1ChatNG implements L1CommandExecutor {
 			if (tg != null) {
 				tg.setSkillEffect(STATUS_CHAT_PROHIBITED, time * 60 * 1000);
 				tg.sendPackets(new S_SkillIconGFX(36, time * 60));
-				tg.sendPackets(new S_ServerMessage(286, String.valueOf(time))); // \f3ゲームに適合しない行動であるため、今後%0分間チャットを禁じます。
+				tg.sendPackets(new S_ServerMessage(286, String.valueOf(time)));
+				// \f3ゲームに適合しない行動であるため、今後%0分間チャットを禁じます。
 				pc.sendPackets(new S_ServerMessage(287, name)); // %0のチャットを禁じました。
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " キャラクター名 時間（分） と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_2,
+					cmdName, I18N_CHAR_NAME, I18N_MINUTES)));
+			// // .%s %s %s の形式で入力してください。
 		}
 	}
 }

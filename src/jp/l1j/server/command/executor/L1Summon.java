@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.instance.L1SummonInstance;
@@ -42,10 +43,10 @@ public class L1Summon implements L1CommandExecutor {
 			try {
 				npcid = Integer.parseInt(nameid);
 			} catch (NumberFormatException e) {
-				npcid = NpcTable.getInstance().findNpcIdByNameWithoutSpace(
-						nameid);
+				npcid = NpcTable.getInstance().findNpcIdByNameWithoutSpace(nameid);
 				if (npcid == 0) {
-					pc.sendPackets(new S_SystemMessage("該当NPCが見つかりません。"));
+					pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_NPC));
+					// NPCは存在しません。
 					return;
 				}
 			}
@@ -59,11 +60,13 @@ public class L1Summon implements L1CommandExecutor {
 				summonInst.setPetcost(0);
 			}
 			nameid = NpcTable.getInstance().getTemplate(npcid).getName();
-			pc.sendPackets(new S_SystemMessage(nameid + "(ID:" + npcid + ") ("
-					+ count + ") を召還しました。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_SUMMON_MONSTER_2,
+					nameid, npcid, count)));
+			// %s(%d) (%d) を召還しました。
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " npcid|name [数] と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_2,
+				cmdName, I18N_NPC_ID+"|"+I18N_NPC_NAME, "["+I18N_AMOUNT+"]")));
+			// .%s %s %s の形式で入力してください。
 		}
 	}
 }

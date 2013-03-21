@@ -16,8 +16,9 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_MessageYN;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -42,14 +43,16 @@ public class L1Ress implements L1CommandExecutor {
 			pc.setCurrentMp(pc.getMaxMp());
 			for (L1PcInstance tg : L1World.getInstance().getVisiblePlayer(pc)) {
 				if (tg.getCurrentHp() == 0 && tg.isDead()) {
-					tg.sendPackets(new S_SystemMessage("GMに蘇生を貰いました。"));
+					tg.sendPackets(new S_SystemMessage(I18N_RESUSCITATED_BY_GM));
+					// GMによって蘇生されました。
 					tg.broadcastPacket(new S_SkillSound(tg.getId(), 3944));
 					tg.sendPackets(new S_SkillSound(tg.getId(), 3944));
 					// 祝福された 復活スクロールと同じ効果
 					tg.setTempID(objid);
 					tg.sendPackets(new S_MessageYN(322, "")); // また復活したいですか？（Y/N）
 				} else {
-					tg.sendPackets(new S_SystemMessage("GMが癒してくれました。"));
+					tg.sendPackets(new S_SystemMessage(I18N_RECOVERED_BY_GM));
+					// GMによって回復されました。
 					tg.broadcastPacket(new S_SkillSound(tg.getId(), 832));
 					tg.sendPackets(new S_SkillSound(tg.getId(), 832));
 					tg.setCurrentHp(tg.getMaxHp());
@@ -57,7 +60,8 @@ public class L1Ress implements L1CommandExecutor {
 				}
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " コマンドエラー"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_ERROR, cmdName)));
+			// .%s コマンドエラー
 		}
 	}
 }

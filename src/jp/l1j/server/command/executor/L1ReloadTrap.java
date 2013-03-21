@@ -16,6 +16,7 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.trap.L1WorldTraps;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -33,6 +34,7 @@ public class L1ReloadTrap implements L1CommandExecutor {
 	@Override
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		L1WorldTraps.reloadTraps();
-		pc.sendPackets(new S_SystemMessage("トラップを再読み込みしました"));
+		pc.sendPackets(new S_SystemMessage(I18N_RELOADED_THE_TRAPS));
+		// トラップをリロードしました。
 	}
 }

@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.L1SkillUse;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Skill;
@@ -63,22 +64,22 @@ public class L1Buff implements L1CommandExecutor {
 
 			if (skill.getTarget().equals("buff")) {
 				for (L1PcInstance tg : players) {
-					new L1SkillUse().handleCommands(pc, skillId, tg.getId(), tg
-							.getX(), tg.getY(), null, time,
-							L1SkillUse.TYPE_SPELLSC);
+					new L1SkillUse().handleCommands(pc, skillId, tg.getId(),
+							tg.getX(), tg.getY(), null, time, L1SkillUse.TYPE_SPELLSC);
 				}
 			} else if (skill.getTarget().equals("none")) {
 				for (L1PcInstance tg : players) {
-					new L1SkillUse().handleCommands(tg, skillId, tg.getId(), tg
-							.getX(), tg.getY(), null, time,
-							L1SkillUse.TYPE_GMBUFF);
+					new L1SkillUse().handleCommands(tg, skillId, tg.getId(),
+							tg.getX(), tg.getY(), null, time, L1SkillUse.TYPE_GMBUFF);
 				}
 			} else {
-				pc.sendPackets(new S_SystemMessage("buff系のスキルではありません。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_IS_NOT_BUFF_SKILL, skillId)));
+				// %d はBUFFスキルではありません。
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " [all|me] skillId time と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_3,
+					cmdName, "[all|me]", I18N_SKILL_ID, I18N_SECONDS)));
+			// .%s %s %s %s の形式で入力してください。
 		}
 	}
 }

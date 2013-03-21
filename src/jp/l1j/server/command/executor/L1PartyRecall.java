@@ -17,15 +17,15 @@ package jp.l1j.server.command.executor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1Party;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1PartyRecall implements L1CommandExecutor {
-	private static Logger _log = Logger
-			.getLogger(L1PartyRecall.class.getName());
+	private static Logger _log = Logger.getLogger(L1PartyRecall.class.getName());
 
 	private L1PartyRecall() {
 	}
@@ -48,16 +48,19 @@ public class L1PartyRecall implements L1CommandExecutor {
 				for (L1PcInstance pc2 : players) {
 					try {
 						L1Teleport.teleport(pc2, x, y, map, 5, true);
-						pc2.sendPackets(new S_SystemMessage("ゲームマスターに召還されました。"));
+						pc2.sendPackets(new S_SystemMessage(I18N_RECALLED_BY_GM));
+						// GMにより召還されました。
 					} catch (Exception e) {
 						_log.log(Level.SEVERE, "", e);
 					}
 				}
 			} else {
-				pc.sendPackets(new S_SystemMessage("パーティメンバーではありません。"));
+				pc.sendPackets(new S_SystemMessage(I18N_IS_NOT_PARTY_MEMBER));
+				// パーティメンバーではありません。
 			}
 		} else {
-			pc.sendPackets(new S_SystemMessage("そのようなキャラクターはいません。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_CHAR, arg)));
+			// %s はゲームワールド内に存在しません。
 		}
 	}
 }

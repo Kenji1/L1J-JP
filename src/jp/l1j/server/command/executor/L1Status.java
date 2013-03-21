@@ -17,8 +17,9 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Lawful;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.packets.server.S_ServerMessage;
@@ -83,8 +84,8 @@ public class L1Status implements L1CommandExecutor {
 						value = 200;
 					}
 					target.setAccessLevel((short) value);
-					target.sendPackets(new S_SystemMessage(
-							"リスタートすれば、GMに昇格されています。"));
+					target.sendPackets(new S_SystemMessage(I18N_PROMOTED_TO_GM));
+					// GMに昇格しました。リスタートしてください。
 				} else if (param.equalsIgnoreCase("STR")) {
 					target.addBaseStr((byte) (value - target.getBaseStr()));
 				} else if (param.equalsIgnoreCase("CON")) {
@@ -98,18 +99,20 @@ public class L1Status implements L1CommandExecutor {
 				} else if (param.equalsIgnoreCase("CHA")) {
 					target.addBaseCha((byte) (value - target.getBaseCha()));
 				} else {
-					pc.sendPackets(new S_SystemMessage("ステータス " + param
-							+ " は不明です。"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_IS_UNKNOWN_PARAM, param)));
+					// %s は不明なパラメータです。
 					return;
 				}
 				target.save(); // DBにキャラクター情報を書き込む
 			}
 			target.sendPackets(new S_OwnCharStatus(target));
-			pc.sendPackets(new S_SystemMessage(target.getName() + " の" + param
-					+ "を" + value + "に変更しました。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_CHANGED_THE_STATUS,
+					target.getName(), param, value)));
+			// %s の %s を %d に変更しました。
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " キャラクター名|me ステータス 変更値 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_3,
+					cmdName, I18N_CHAR_NAME+"|me", I18N_STATUS, I18N_VALUE)));
+			// .%s %s %s %s の形式で入力してください。
 		}
 	}
 }

@@ -15,12 +15,11 @@
 
 package jp.l1j.server.command.executor;
 
-
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1PotLog implements L1CommandExecutor {
-
 
 	private L1PotLog() {
 	}
@@ -33,17 +32,19 @@ public class L1PotLog implements L1CommandExecutor {
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		if (arg.equalsIgnoreCase("off")) {
 			pc.setPotLog(false);
-			pc.sendPackets(new S_SystemMessage("回復ボッド使用メッセージを非表示に変更しました。"));
+			pc.sendPackets(new S_SystemMessage(I18N_CHANGED_TO_HIDE_USE_OF_POTIONS));
+			// ポーションの使用を非表示に変更しました。
 		} else if (arg.equalsIgnoreCase("on")) {
 			pc.setPotLog(true);
-			pc.sendPackets(new S_SystemMessage("回復ポッド使用メッセージを表示に変更しました"));
+			pc.sendPackets(new S_SystemMessage(I18N_CHANGED_TO_DISPLAY_USE_OF_POTIONS));
+			// ポーションの使用を表示に変更しました。
 		} else {
-			if (pc.getPotLog() == true) {
-				pc.sendPackets(new S_SystemMessage(cmdName
-						+ " on|off と入力してください。現在はonです。"));
+			if (pc.getPotLog()) {
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_ON, cmdName)));
+				// .%s on|off と入力してください。現在はONです。
 			} else {
-				pc.sendPackets(new S_SystemMessage(cmdName
-						+ " on|off と入力してください。現在はoffです。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_ON, cmdName)));
+				// .%s on|off と入力してください。現在はOFFです。
 			}
 		}
 	}

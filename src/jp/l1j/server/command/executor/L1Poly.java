@@ -17,9 +17,10 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1PolyMorph;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
@@ -46,16 +47,17 @@ public class L1Poly implements L1CommandExecutor {
 				pc.sendPackets(new S_ServerMessage(73, name)); // \f1%0はゲームをしていません。
 			} else {
 				try {
-					L1PolyMorph.doPoly(tg, polyid, 7200,
-							L1PolyMorph.MORPH_BY_GM);
+					L1PolyMorph.doPoly(tg, polyid, 7200, L1PolyMorph.MORPH_BY_GM);
 				} catch (Exception exception) {
-					pc.sendPackets(new S_SystemMessage(
-							".poly キャラクター名 グラフィックID と入力して下さい。"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_2,
+							cmdName, I18N_CHAR_NAME, I18N_GFX_ID)));
+					// .%s %s %s の形式で入力してください。
 				}
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " キャラクター名 グラフィックID と入力して下さい。"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_2,
+							cmdName, I18N_CHAR_NAME, I18N_GFX_ID)));
+					// .%s %s %s の形式で入力してください。
 		}
 	}
 }

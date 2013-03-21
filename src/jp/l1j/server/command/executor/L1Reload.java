@@ -17,8 +17,9 @@ package jp.l1j.server.command.executor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1Teleport;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1Reload  implements L1CommandExecutor {
@@ -35,7 +36,8 @@ public class L1Reload  implements L1CommandExecutor {
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		try {
 			L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), 5, false);
-			pc.sendPackets(new S_SystemMessage("再配置しました。"));//24byte
+			pc.sendPackets(new S_SystemMessage(I18N_RELOADED_THE_DISPLAY_OBJECTS));
+			// 表示オブジェクトをリロードしました。
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}

@@ -16,6 +16,7 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
 import static jp.l1j.server.model.skill.L1SkillId.*;
@@ -40,14 +41,15 @@ public class L1FindInvis implements L1CommandExecutor {
 			pc.updateObject();
 		} else if (arg.equalsIgnoreCase("off")) {
 			pc.removeSkillEffect(GMSTATUS_FINDINVIS);
-			for (L1PcInstance visible : L1World.getInstance()
-					.getVisiblePlayer(pc)) {
+			for (L1PcInstance visible : L1World.getInstance().getVisiblePlayer(pc)) {
 				if (visible.isInvisble()) {
 					pc.sendPackets(new S_RemoveObject(visible));
 				}
 			}
 		} else {
-			pc.sendPackets(new S_SystemMessage(cmdName + " on|off と入力してください。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, "on|off")));
+			// .%s %s の形式で入力してください。
 		}
 	}
 

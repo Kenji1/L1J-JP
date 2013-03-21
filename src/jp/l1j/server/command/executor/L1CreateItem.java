@@ -18,6 +18,7 @@ package jp.l1j.server.command.executor;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -57,18 +58,17 @@ public class L1CreateItem implements L1CommandExecutor {
 			try {
 				itemid = Integer.parseInt(nameid);
 			} catch (NumberFormatException e) {
-				itemid = ItemTable.getInstance().findItemIdByNameWithoutSpace(
-						nameid);
+				itemid = ItemTable.getInstance().findItemIdByNameWithoutSpace(nameid);
 				if (itemid == 0) {
-					pc.sendPackets(new S_SystemMessage("該当アイテムが見つかりません。"));
+					pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_ITEM));
+					// アイテムが存在しません。
 					return;
 				}
 			}
 			L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 			if (temp != null) {
 				if (temp.isStackable()) {
-					L1ItemInstance item = ItemTable.getInstance().createItem(
-							itemid);
+					L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
 					item.setEnchantLevel(0);
 					item.setCount(count);
 					if (isId == 1) {
@@ -108,12 +108,15 @@ public class L1CreateItem implements L1CommandExecutor {
 					}
 				}
 			} else {
-				pc.sendPackets(new S_SystemMessage("指定IDのアイテムは存在しません"));
+				pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_ITEM));
+				// アイテムが存在しません。
 			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			pc.sendPackets(new S_SystemMessage(
-					".item itemid|name [個数] [エンチャント数] [鑑定状態] と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_4,
+					cmdName, I18N_ITEM_ID+"|"+I18N_ITEM_NAME, "["+I18N_AMOUNT+"]",
+					"["+I18N_ENCHANT+"}", "["+I18N_IDENTIFY+"]")));
+			// .%s %s %s %s %s の形式で入力してください。
 		}
 	}
 }

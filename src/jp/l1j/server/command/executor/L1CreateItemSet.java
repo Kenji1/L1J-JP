@@ -18,6 +18,7 @@ package jp.l1j.server.command.executor;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.command.GMCommandsConfig;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
@@ -27,8 +28,7 @@ import jp.l1j.server.templates.L1Item;
 import jp.l1j.server.templates.L1ItemSetItem;
 
 public class L1CreateItemSet implements L1CommandExecutor {
-	private static Logger _log = Logger.getLogger(L1CreateItemSet.class
-			.getName());
+	private static Logger _log = Logger.getLogger(L1CreateItemSet.class.getName());
 
 	private L1CreateItemSet() {
 	}
@@ -43,15 +43,15 @@ public class L1CreateItemSet implements L1CommandExecutor {
 			String name = new StringTokenizer(arg).nextToken();
 			List<L1ItemSetItem> list = GMCommandsConfig.ITEM_SETS.get(name);
 			if (list == null) {
-				pc.sendPackets(new S_SystemMessage(name + " 未定義のセットです"));
+				pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_ITEM_SET));
+				// アイテムセットが存在しません。
 				return;
 			}
 			for (L1ItemSetItem item : list) {
 				L1Item temp = ItemTable.getInstance().getTemplate(item.getId());
 				if (!temp.isStackable() && 0 != item.getEnchant()) {
 					for (int i = 0; i < item.getAmount(); i++) {
-						L1ItemInstance inst = ItemTable.getInstance()
-								.createItem(item.getId());
+						L1ItemInstance inst = ItemTable.getInstance().createItem(item.getId());
 						inst.setEnchantLevel(item.getEnchant());
 						pc.getInventory().storeItem(inst);
 					}
@@ -60,7 +60,9 @@ public class L1CreateItemSet implements L1CommandExecutor {
 				}
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(".itemset セット名 と入力してください。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, I18N_ITEM_SET_NAME)));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

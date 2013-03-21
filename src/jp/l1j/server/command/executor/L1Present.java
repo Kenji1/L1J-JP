@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -42,8 +43,7 @@ public class L1Present implements L1CommandExecutor {
 		return new L1Present();
 	}
 
-	private static void present(String accountName, int itemid, int enchant,
-			int count) {
+	private static void present(String accountName, int itemid, int enchant, int count) {
 		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
 			return;
@@ -59,20 +59,17 @@ public class L1Present implements L1CommandExecutor {
 		present(accounts, temp, enchant, count);
 	}
 
-	public static void present(int minLevel, int maxLevel, int itemid,
-			int enchant, int count) {
+	public static void present(int minLevel, int maxLevel, int itemid, int enchant, int count) {
 		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
 			return;
 		}
 
-		List<L1Account> accounts = L1Account.findByCharacterLevel(minLevel,
-				maxLevel);
+		List<L1Account> accounts = L1Account.findByCharacterLevel(minLevel, maxLevel);
 		present(accounts, temp, enchant, count);
 	}
 
-	private static void present(List<L1Account> accountList,
-			L1Item itemTemplate, int enchantLevel, int count) {
+	private static void present(List<L1Account> accountList, L1Item itemTemplate, int enchantLevel, int count) {
 		Connection con = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
@@ -103,7 +100,8 @@ public class L1Present implements L1CommandExecutor {
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
 			SqlUtil.rollback(con);
-			throw new L1SqlException(".present処理中にエラーが発生しました。", e);
+			throw new L1SqlException(String.format(I18N_COMMAND_ERROR, "present"), e);
+			// .%s コマンドエラー
 		} finally {
 			SqlUtil.close(con);
 		}
@@ -120,16 +118,19 @@ public class L1Present implements L1CommandExecutor {
 
 			L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 			if (temp == null) {
-				pc.sendPackets(new S_SystemMessage("存在しないアイテムIDです。"));
+				pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_ITEM));
+				// アイテムが存在しません。
 				return;
 			}
 
 			present(account, itemid, enchant, count);
-			pc.sendPackets(new S_SystemMessage(temp.getIdentifiedNameId() + "を"
-					+ count + "個プレゼントしました。", true));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_GAVE_THE_ITEM_2,
+				temp.getIdentifiedNameId(), count)));
+			// %s を %d 個与えました。
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(
-							".present アカウント名 アイテムID エンチャント数 アイテム数 と入力してください。（アカウント名=*で全て）"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_5,
+				cmdName, I18N_CHAR_NAME, I18N_ITEM_ID, I18N_ENCHANT, I18N_AMOUNT, I18N_CHAR_NAME+"=* is All")));
+			// .%s %s %s %s %s %s の形式で入力してください。
 		}
 	}
 }

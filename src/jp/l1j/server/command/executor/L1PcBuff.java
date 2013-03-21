@@ -16,9 +16,10 @@ package jp.l1j.server.command.executor;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.L1BuffUtil;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 import jp.l1j.server.model.skill.L1SkillUse;
@@ -53,34 +54,13 @@ public class L1PcBuff implements L1CommandExecutor {
 			}
 
 			int[] pcBuffSkill = { // L1SkillId から必要なBuffを入力
-				LIGHT,
-				DECREASE_WEIGHT,
-				PHYSICAL_ENCHANT_DEX,
-				PHYSICAL_ENCHANT_STR,
-				BLESS_WEAPON,
-				IMMUNE_TO_HARM,
-				ADVANCE_SPIRIT,
-				REDUCTION_ARMOR,
-				BOUNCE_ATTACK,
-				SOLID_CARRIAGE,
-				ENCHANT_VENOM,
-				BURNING_SPIRIT,
-				VENOM_RESIST,
-				UNCANNY_DODGE,
-				DRESS_EVASION,
-				GLOWING_AURA,
-				BRAVE_AURA,
-				RESIST_MAGIC,
-				CLEAR_MIND,
-				RESIST_ELEMENTAL,
-				AQUA_PROTECTER,
-				BURNING_WEAPON,
-				IRON_SKIN,
-				EXOTIC_VITALIZE,
-				WATER_LIFE,
-				ELEMENTAL_FIRE,
-				SOUL_OF_FLAME,
-				ADDITIONAL_FIRE
+				LIGHT, DECREASE_WEIGHT, PHYSICAL_ENCHANT_DEX, PHYSICAL_ENCHANT_STR,
+				BLESS_WEAPON, IMMUNE_TO_HARM, ADVANCE_SPIRIT, REDUCTION_ARMOR,
+				BOUNCE_ATTACK, SOLID_CARRIAGE, ENCHANT_VENOM, BURNING_SPIRIT,
+				VENOM_RESIST, UNCANNY_DODGE, DRESS_EVASION, GLOWING_AURA,
+				BRAVE_AURA, RESIST_MAGIC, CLEAR_MIND, RESIST_ELEMENTAL,
+				AQUA_PROTECTER, BURNING_WEAPON, IRON_SKIN, EXOTIC_VITALIZE,
+				WATER_LIFE, ELEMENTAL_FIRE, SOUL_OF_FLAME, ADDITIONAL_FIRE
 			};
 
 			for (L1PcInstance tg : players) {
@@ -91,13 +71,15 @@ public class L1PcBuff implements L1CommandExecutor {
 				for (int element : pcBuffSkill) {
 					L1Skill skill = SkillTable.getInstance().getTemplate(element);
 					new L1SkillUse().handleCommands(tg, element, tg.getId(),
-							tg.getX(), tg.getY(), null,
-							skill.getBuffDuration(), L1SkillUse.TYPE_GMBUFF);
+							tg.getX(), tg.getY(), null, skill.getBuffDuration(), L1SkillUse.TYPE_GMBUFF);
 				}
-				tg.sendPackets(new S_SystemMessage("ゲームマスターからエンチャントを受けました。"));
+				tg.sendPackets(new S_SystemMessage(I18N_BUFF_SKILLS_BY_GM));
+				// GMからBuffスキルを受けました。
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage("入力 .pcbuff [all|me]"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_1,
+					cmdName, "[all|me]")));
+			// .%s %s の形式で入力してください。
 		}
 	}
 }

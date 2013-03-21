@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
@@ -45,16 +46,19 @@ public class L1LevelPresent implements L1CommandExecutor {
 
 			L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 			if (temp == null) {
-				pc.sendPackets(new S_SystemMessage("存在しないアイテムIDです。"));
+				pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_ITEM));
+				// アイテムが存在しません。
 				return;
 			}
 
 			L1Present.present(minlvl, maxlvl, itemid, enchant, count);
-			pc.sendPackets(new S_SystemMessage(temp.getName() + "を" + count
-					+ "個プレゼントしました。(Lv" + minlvl + "～" + maxlvl + ")"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_GAVE_THE_ITEM_1,
+				temp.getName(), count, I18N_MIN_LEVEL, minlvl, I18N_MAX_LEVEL, maxlvl)));
+			// %s を %d 個与えました。(%s: %d, %s: %d)
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(
-							".lvpresent minlvl maxlvl アイテムID エンチャント数 アイテム数 と入力してください。"));
+			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_FORMAT_5,
+				cmdName, I18N_MIN_LEVEL, I18N_MAX_LEVEL, I18N_ITEM_ID, I18N_ENCHANT, I18N_AMOUNT)));
+			// // .%s %s %s %s %s %s の形式で入力してください。
 		}
 	}
 }
