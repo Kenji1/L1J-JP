@@ -194,10 +194,13 @@ public final class Config {
 	public static boolean SEND_PACKET_BEFORE_TELEPORT = false;
 	
 	@Configure(file = SERVER, key = "AnnouncementsCycleTime")
-	public static int Announcements_Cycle_Time;
+	public static int ANNOUNCEMENTS_CYCLE_TIME = 10;
 	
-	@Configure(file = SERVER, key = "AnnounceTimeDisplay")
-	public static boolean Announcements_Cycle_Modify_Time;
+	@Configure(file = SERVER, key = "AnnouncmenntsTimeDisplay")
+	public static boolean ANNOUNCEMENTS_TIME_DISPALY = true;
+	
+	@Configure(file = SERVER, key = "AnnouncmenntsTimeFormat")
+	public static String ANNOUNCEMENTS_TIME_FORMAT = "YYYY.MM.DD";
 	
 	@Configure(file = SERVER, key = "AutoShutdown")
 	public static boolean AUTO_SHUTDOWN = false;

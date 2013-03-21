@@ -12,10 +12,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.controller.timer;
 
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.packets.server.S_Weather;
 import jp.l1j.server.random.RandomGenerator;
@@ -50,13 +52,12 @@ public class WeatherTimeController implements Runnable {
 		int rnd = _random.nextInt(20);
 		L1World.getInstance().setWeather(rnd);
 		L1World.getInstance().broadcastPacketToAll(new S_Weather(rnd));
-		String msg = "天候システム：晴れ";
+		String msg = I18N_WEATHER_SYS_CLEAR; // 天候システム: 晴れ
 		if (rnd == 0 || (rnd >= 17 && rnd <= 19)) {
-			msg = "天候システム：雨";
+			msg = I18N_WEATHER_SYS_RAIN; // 天候システム: 雨
 		} else if (rnd >= 1 && rnd <= 3) {
-			msg = "天候システム：雪";
+			msg = I18N_WEATHER_SYS_SNOW; // 天候システム: 雪
 		}
 		System.out.println(msg);
 	}
-	
 }

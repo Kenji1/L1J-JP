@@ -12,8 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jp.l1j.server.controller;
 
+package jp.l1j.server.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.utils.StreamUtil;
 
@@ -46,7 +46,6 @@ public class Announcements {
 		if (_instance == null) {
 			_instance = new Announcements();
 		}
-
 		return _instance;
 	}
 
@@ -77,12 +76,11 @@ public class Announcements {
 				if (st.hasMoreTokens()) {
 					String announcement = st.nextToken();
 					_announcements.add(announcement);
-
 					i++;
 				}
 			}
 
-			_log.config("告知事項 " + i + "件ロード");
+			_log.config(String.format("Loaded %d announcements", i));
 		} catch (FileNotFoundException e) {
 			// ファイルがない場合は、告知事項なし
 		} catch (IOException e) {
@@ -95,7 +93,6 @@ public class Announcements {
 	private void saveToDisk() {
 		File file = new File("data/announcements.txt");
 		FileWriter save = null;
-
 		try {
 			save = new FileWriter(file);
 			for (String msg : _announcements) {

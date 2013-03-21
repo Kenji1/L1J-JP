@@ -56,7 +56,7 @@ class L1Properties {
 					+ " does not exists. It has not default value.");
 		}
 		// デフォルト値をロードすることを通知
-		_log.log(Level.INFO, "{0} does not exists. Server use default value.", key);
+		_log.log(Level.INFO, String.format("%s does not exists. Server use default value.", key));
 	}
 
 	public String getProperty(String key, boolean allowDefaultValue) {

@@ -50,5 +50,4 @@ public class UbTimeController implements Runnable {
 			}
 		}
 	}
-
 }

@@ -168,7 +168,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- 定期実行アナウンス -->
 <!-- 単位：分間隔 -->
 <entry key="AnnouncementsCycleTime">10</entry>
-<entry key="AnnounceTimeDisplay">True</entry>
+<entry key="AnnouncmenntsTimeDisplay">True</entry>
+<entry key="AnnouncmenntsTimeFormat">YYYY.MM.DD</entry>
 
 <!-- 自動シャットダウン -->
 <!-- シャットダウン時刻は、/trunk/data/xml/Cycle/ShutdownCycle.xmlで設定する。-->

@@ -2,8 +2,8 @@ package jp.l1j.server.controller.timer;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class BlessOfAinTimeController implements Runnable {
 	private static Logger _log = Logger.getLogger(FishingTimeController.class.getName());
@@ -44,5 +44,4 @@ public class BlessOfAinTimeController implements Runnable {
 			}
 		}
 	}
-
 }

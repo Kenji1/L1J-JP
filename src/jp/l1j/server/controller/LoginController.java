@@ -18,6 +18,7 @@ package jp.l1j.server.controller;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.GeneralThreadPool;
 import jp.l1j.server.exception.AccountAlreadyLoginException;
@@ -69,10 +70,8 @@ public class LoginController {
 			@Override
 			public void run() {
 				if (client.getActiveChar() != null) {
-					client.getActiveChar()
-							.sendPackets(new S_ServerMessage(357));
+					client.getActiveChar().sendPackets(new S_ServerMessage(357));
 				}
-
 				try {
 					Thread.sleep(1000);
 				} catch (Exception e) {
@@ -87,7 +86,8 @@ public class LoginController {
 		if (!account.isValid()) {
 			// パスワード認証がされていない、あるいは認証に失敗したアカウントが指定された。
 			// このコードは、バグ検出の為にのみ存在する。
-			throw new IllegalArgumentException("認証されていないアカウントです");
+			throw new IllegalArgumentException(I18N_IS_NOT_AUTHENTICATED);
+			// 認証されていないアカウントです。
 		}
 		if ((getMaxAllowedOnlinePlayers() <= getOnlinePlayerCount())
 				&& !account.isGameMaster()) {
@@ -97,7 +97,6 @@ public class LoginController {
 			kickClient(_accounts.remove(account.getName()));
 			throw new AccountAlreadyLoginException();
 		}
-
 		_accounts.put(account.getName(), client);
 	}
 

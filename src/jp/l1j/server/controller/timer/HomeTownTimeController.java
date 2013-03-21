@@ -23,12 +23,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.TownTable;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTime;
 import jp.l1j.server.model.gametime.L1GameTimeAdapter;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
@@ -68,7 +69,6 @@ public class HomeTownTimeController {
 	private void fixedProc(L1GameTime time) {
 		Calendar cal = time.getCalendar();
 		int day = cal.get(Calendar.DAY_OF_MONTH);
-
 		if (day == 25) {
 			monthlyProc();
 		} else {
@@ -77,17 +77,18 @@ public class HomeTownTimeController {
 	}
 
 	public void dailyProc() {
-		_log.info("ホームタウンシステム：日時処理開始");
+		_log.info(I18N_HOME_TOWN_SYS_DAILY_PROC);
+		// ホームタウンシステム: 日時処理
 		TownTable.getInstance().updateTaxRate();
 		TownTable.getInstance().updateSalesMoneyYesterday();
 		TownTable.getInstance().load();
 	}
 
 	public void monthlyProc() {
-		_log.info("ホームタウンシステム：月時処理開始");
+		_log.info(I18N_HOME_TOWN_SYS_MONTHLY_PROC);
+		// ホームタウンシステム: 月次処理
 		L1World.getInstance().setProcessingContributionTotal(true);
-		Collection<L1PcInstance> players = L1World.getInstance()
-				.getAllPlayers();
+		Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
 		for (L1PcInstance pc : players) {
 			try {
 				// DBにキャラクター情報を書き込む
@@ -96,12 +97,11 @@ public class HomeTownTimeController {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}
-
+		
 		for (int townId = 1; townId <= 10; townId++) {
 			String leaderName = totalContribution(townId);
 			if (leaderName != null) {
-				S_PacketBox packet = new S_PacketBox(
-						S_PacketBox.MSG_TOWN_LEADER, leaderName);
+				S_PacketBox packet = new S_PacketBox(S_PacketBox.MSG_TOWN_LEADER, leaderName);
 				for (L1PcInstance pc : players) {
 					if (pc.getHomeTownId() == townId) {
 						pc.setContribution(0);
@@ -111,7 +111,6 @@ public class HomeTownTimeController {
 			}
 		}
 		TownTable.getInstance().load();
-
 		for (L1PcInstance pc : players) {
 			if (pc.getHomeTownId() == -1) {
 				pc.setHomeTownId(0);
@@ -138,54 +137,40 @@ public class HomeTownTimeController {
 		ResultSet rs3 = null;
 		PreparedStatement pstm4 = null;
 		PreparedStatement pstm5 = null;
-
 		int leaderId = 0;
 		String leaderName = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm1 = con
-					.prepareStatement("SELECT id, name FROM characters WHERE hometown_id = ? ORDER BY contribution DESC");
-
+			pstm1 = con.prepareStatement("SELECT id, name FROM characters WHERE hometown_id = ? ORDER BY contribution DESC");
 			pstm1.setInt(1, townId);
 			rs1 = pstm1.executeQuery();
-
 			if (rs1.next()) {
 				leaderId = rs1.getInt("id");
 				leaderName = rs1.getString("name");
 			}
-
 			double totalContribution = 0;
-			pstm2 = con
-					.prepareStatement("SELECT SUM(contribution) AS total_contribution FROM characters WHERE hometown_id = ?");
+			pstm2 = con.prepareStatement("SELECT SUM(contribution) AS total_contribution FROM characters WHERE hometown_id = ?");
 			pstm2.setInt(1, townId);
 			rs2 = pstm2.executeQuery();
 			if (rs2.next()) {
 				totalContribution = rs2.getInt("total_contribution");
 			}
-
 			double townFixTax = 0;
-			pstm3 = con
-					.prepareStatement("SELECT town_fix_tax FROM towns WHERE town_id = ?");
+			pstm3 = con.prepareStatement("SELECT town_fix_tax FROM towns WHERE town_id = ?");
 			pstm3.setInt(1, townId);
 			rs3 = pstm3.executeQuery();
 			if (rs3.next()) {
 				townFixTax = rs3.getInt("town_fix_tax");
 			}
-
 			double contributionUnit = 0;
 			if (totalContribution != 0) {
-				contributionUnit = Math.floor(townFixTax / totalContribution
-						* 100) / 100;
+				contributionUnit = Math.floor(townFixTax / totalContribution * 100) / 100;
 			}
-			pstm4 = con
-					.prepareStatement("UPDATE characters SET contribution = 0, pay = contribution * ? WHERE hometown_id = ?");
+			pstm4 = con.prepareStatement("UPDATE characters SET contribution = 0, pay = contribution * ? WHERE hometown_id = ?");
 			pstm4.setDouble(1, contributionUnit);
 			pstm4.setInt(2, townId);
 			pstm4.execute();
-
-			pstm5 = con
-					.prepareStatement("UPDATE towns SET leader_id = ?, leader_name = ?, tax_rate = 0, tax_rate_reserved = 0, sales_money = 0, sales_money_yesterday = sales_money, town_tax = 0, town_fix_tax = 0 WHERE town_id = ?");
+			pstm5 = con.prepareStatement("UPDATE towns SET leader_id = ?, leader_name = ?, tax_rate = 0, tax_rate_reserved = 0, sales_money = 0, sales_money_yesterday = sales_money, town_tax = 0, town_fix_tax = 0 WHERE town_id = ?");
 			pstm5.setInt(1, leaderId);
 			pstm5.setString(2, leaderName);
 			pstm5.setInt(3, townId);
@@ -203,18 +188,15 @@ public class HomeTownTimeController {
 			SqlUtil.close(pstm5);
 			SqlUtil.close(con);
 		}
-
 		return leaderName;
 	}
 
 	private static void clearHomeTownID() {
 		Connection con = null;
 		PreparedStatement pstm = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE characters SET hometown_id = 0 WHERE hometown_id = -1");
+			pstm = con.prepareStatement("UPDATE characters SET hometown_id = 0 WHERE hometown_id = -1");
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -235,21 +217,15 @@ public class HomeTownTimeController {
 		PreparedStatement pstm2 = null;
 		ResultSet rs1 = null;
 		int pay = 0;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm1 = con
-					.prepareStatement("SELECT pay FROM characters WHERE id = ? FOR UPDATE");
-
+			pstm1 = con.prepareStatement("SELECT pay FROM characters WHERE id = ? FOR UPDATE");
 			pstm1.setInt(1, objid);
 			rs1 = pstm1.executeQuery();
-
 			if (rs1.next()) {
 				pay = rs1.getInt("pay");
 			}
-
-			pstm2 = con
-					.prepareStatement("UPDATE characters SET pay = 0 WHERE id = ?");
+			pstm2 = con.prepareStatement("UPDATE characters SET pay = 0 WHERE id = ?");
 			pstm2.setInt(1, objid);
 			pstm2.execute();
 		} catch (SQLException e) {
@@ -260,7 +236,6 @@ public class HomeTownTimeController {
 			SqlUtil.close(pstm2);
 			SqlUtil.close(con);
 		}
-
 		return pay;
 	}
 }

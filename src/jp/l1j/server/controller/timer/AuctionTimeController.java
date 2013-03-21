@@ -22,10 +22,10 @@ import jp.l1j.server.datatables.AuctionBoardTable;
 import jp.l1j.server.datatables.ClanTable;
 import jp.l1j.server.datatables.HouseTable;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.model.instance.L1ItemInstance;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.L1ItemId;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.templates.L1AuctionBoard;
@@ -78,48 +78,40 @@ public class AuctionTimeController implements Runnable {
 		int bidderId = board.getBidderId();
 
 		if (oldOwnerId != 0 && bidderId != 0) { // 以前の所有者あり・落札者あり
-			L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance()
-					.findObject(oldOwnerId);
+			L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance().findObject(oldOwnerId);
 			int payPrice = (int) (price * 0.9);
 			if (oldOwnerPc != null) { // 以前の所有者がオンライン中
 				oldOwnerPc.getInventory().storeItem(L1ItemId.ADENA, payPrice);
 				// あなたが所有していた家が最終価格%1アデナで落札されました。%n
 				// 手数料10%%を除いた残りの金額%0アデナを差し上げます。%nありがとうございました。%n%n
-				oldOwnerPc.sendPackets(new S_ServerMessage(527, String
-						.valueOf(payPrice)));
+				oldOwnerPc.sendPackets(new S_ServerMessage(527, String.valueOf(payPrice)));
 			} else { // 以前の所有者がオフライン中
-				L1ItemInstance item = ItemTable.getInstance().createItem(
-						L1ItemId.ADENA);
+				L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
 				item.setCount(payPrice);
 				item.setOwner(oldOwnerId, L1InventoryItem.LOC_CHARACTER);
 				item.save();
 			}
 
-			L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance()
-					.findObject(bidderId);
+			L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance().findObject(bidderId);
 			if (bidderPc != null) { // 落札者がオンライン中
 				// おめでとうございます。%nあなたが参加された競売は最終価格%0アデナの価格で落札されました。%n
 				// 様がご購入された家はすぐにご利用できます。%nありがとうございました。%n%n
-				bidderPc.sendPackets(new S_ServerMessage(524, String
-						.valueOf(price), bidder));
+				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidder));
 			}
 			deleteHouseInfo(houseId);
 			setHouseInfo(houseId, bidderId);
 			deleteNote(houseId);
 		} else if (oldOwnerId == 0 && bidderId != 0) { // 以前の所有者なし・落札者あり
-			L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance()
-					.findObject(bidderId);
+			L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance().findObject(bidderId);
 			if (bidderPc != null) { // 落札者がオンライン中
 				// おめでとうございます。%nあなたが参加された競売は最終価格%0アデナの価格で落札されました。%n
 				// 様がご購入された家はすぐにご利用できます。%nありがとうございました。%n%n
-				bidderPc.sendPackets(new S_ServerMessage(524, String
-						.valueOf(price), bidder));
+				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidder));
 			}
 			setHouseInfo(houseId, bidderId);
 			deleteNote(houseId);
 		} else if (oldOwnerId != 0 && bidderId == 0) { // 以前の所有者あり・落札者なし
-			L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance()
-					.findObject(oldOwnerId);
+			L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance().findObject(oldOwnerId);
 			if (oldOwnerPc != null) { // 以前の所有者がオンライン中
 				// あなたが申請なさった競売は、競売期間内に提示した金額以上での支払いを表明した方が現れなかったため、結局取り消されました。%n
 				// 従って、所有権があなたに戻されたことをお知らせします。%nありがとうございました。%n%n

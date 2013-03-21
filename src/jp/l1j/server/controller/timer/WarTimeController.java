@@ -21,17 +21,17 @@ import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.CastleTable;
 import jp.l1j.server.datatables.DoorTable;
-import jp.l1j.server.model.instance.L1CrownInstance;
-import jp.l1j.server.model.instance.L1DoorInstance;
-import jp.l1j.server.model.instance.L1FieldObjectInstance;
-import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.instance.L1TowerInstance;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1WarSpawn;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1CrownInstance;
+import jp.l1j.server.model.instance.L1DoorInstance;
+import jp.l1j.server.model.instance.L1FieldObjectInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1TowerInstance;
 import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.templates.L1Castle;
 
@@ -100,15 +100,14 @@ public final class WarTimeController implements Runnable {
 					L1WarSpawn warspawn = new L1WarSpawn();
 					warspawn.SpawnFlag(i + 1);
 					// 城門を修理して閉じる
-					for (L1DoorInstance door : DoorTable.getInstance()
-							.getDoorList()) {
+					for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 						if (L1CastleLocation.checkInWarArea(i + 1, door)) {
 							door.repairGate();
 						}
 					}
 
-					L1World.getInstance().broadcastPacketToAll(
-							new S_PacketBox(S_PacketBox.MSG_WAR_BEGIN, i + 1)); // %sの攻城戦が始まりました。
+					L1World.getInstance().broadcastPacketToAll(new S_PacketBox(S_PacketBox.MSG_WAR_BEGIN,
+							i + 1)); // %sの攻城戦が始まりました。
 					int[] loc = new int[3];
 					for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
 						int castleId = i + 1;
@@ -130,8 +129,8 @@ public final class WarTimeController implements Runnable {
 			} else if (_war_end_time[i].before(getRealTime())) { // 戦争終了
 				if (_is_now_war[i] == true) {
 					_is_now_war[i] = false;
-					L1World.getInstance().broadcastPacketToAll(
-							new S_PacketBox(S_PacketBox.MSG_WAR_END, i + 1)); // %sの攻城戦が終了しました。
+					L1World.getInstance().broadcastPacketToAll(new S_PacketBox(S_PacketBox.MSG_WAR_END,
+							i + 1)); // %sの攻城戦が終了しました。
 					_war_start_time[i].add(Config.ALT_WAR_INTERVAL_UNIT,
 							Config.ALT_WAR_INTERVAL);
 					_war_end_time[i].add(Config.ALT_WAR_INTERVAL_UNIT,
@@ -145,24 +144,21 @@ public final class WarTimeController implements Runnable {
 						// 戦争エリア内の旗を消す
 						if (l1object instanceof L1FieldObjectInstance) {
 							L1FieldObjectInstance flag = (L1FieldObjectInstance) l1object;
-							if (L1CastleLocation
-									.checkInWarArea(castle_id, flag)) {
+							if (L1CastleLocation.checkInWarArea(castle_id, flag)) {
 								flag.deleteMe();
 							}
 						}
 						// クラウンを消す
 						if (l1object instanceof L1CrownInstance) {
 							L1CrownInstance crown = (L1CrownInstance) l1object;
-							if (L1CastleLocation.checkInWarArea(castle_id,
-									crown)) {
+							if (L1CastleLocation.checkInWarArea(castle_id, crown)) {
 								crown.deleteMe();
 							}
 						}
 						// タワーを一旦消す
 						if (l1object instanceof L1TowerInstance) {
 							L1TowerInstance tower = (L1TowerInstance) l1object;
-							if (L1CastleLocation.checkInWarArea(castle_id,
-									tower)) {
+							if (L1CastleLocation.checkInWarArea(castle_id, tower)) {
 								tower.deleteMe();
 							}
 						}
@@ -172,15 +168,13 @@ public final class WarTimeController implements Runnable {
 					warspawn.SpawnTower(castle_id);
 
 					// 城門を元に戻す
-					for (L1DoorInstance door : DoorTable.getInstance()
-							.getDoorList()) {
+					for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 						if (L1CastleLocation.checkInWarArea(castle_id, door)) {
 							door.repairGate();
 						}
 					}
 				}
 			}
-
 		}
 	}
 }

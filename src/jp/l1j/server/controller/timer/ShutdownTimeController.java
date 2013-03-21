@@ -35,7 +35,8 @@ public class ShutdownTimeController implements Runnable {
 
 	private static final String PATH = "./data/xml/Cycle/ShutdownCycle.xml";
 
-	private static final HashMap<String, ShutdownTimeController> _dataMap = new HashMap<String, ShutdownTimeController>();
+	private static final HashMap<String, ShutdownTimeController> _dataMap =
+			new HashMap<String, ShutdownTimeController>();
 
 	private static ShutdownTimeController _instance;
 
@@ -92,7 +93,7 @@ public class ShutdownTimeController implements Runnable {
 				_dataMap.put(each.getTime(), each);
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "のロードに失敗。", e);
+			_log.log(Level.SEVERE, "Load " + PATH + "failed!", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
@@ -117,5 +118,4 @@ public class ShutdownTimeController implements Runnable {
 			GameServer.getInstance().shutdownWithCountdown(timer.getDelay());
 		}
 	}
-
 }

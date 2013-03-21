@@ -248,4 +248,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- jp/l1j/server/command/executor/L1Visible.java -->
 <entry key="BecameVisible">姿が見えるようになりました。</entry>
 
+<!-- jp/l1j/server/controller/LoginController.java -->
+<entry key="IsNotAuthenticated">認証されていないアカウントです。</entry>
+
+<!-- jp/l1j/server/controller/HomeTownTimeController.java -->
+<entry key="HomeTownSystemDailyProcess">ホームタウンシステム: 日時処理</entry>
+<entry key="HomeTownSystemMonthlyProcess">ホームタウンシステム: 月次処理</entry>
+
+<!-- jp/l1j/server/controller/WeatherTimeController.java -->
+<entry key="WeatherSystemClear">天候システム: 晴れ</entry>
+<entry key="WeatherSystemRain">天候システム: 雨</entry>
+<entry key="WeatherSystemSnow">天候システム: 雪</entry>
+
 </properties>

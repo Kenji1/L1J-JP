@@ -17,10 +17,10 @@ package jp.l1j.server.controller.timer;
 
 import java.util.logging.Logger;
 import jp.l1j.server.datatables.LightSpawnTable;
-import jp.l1j.server.model.instance.L1FieldObjectInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
+import jp.l1j.server.model.instance.L1FieldObjectInstance;
 
 public class LightTimeController implements Runnable {
 	private static Logger _log = Logger.getLogger(LightTimeController.class.getName());
@@ -48,23 +48,21 @@ public class LightTimeController implements Runnable {
 	}
 
 	private void checkLightTime() {
-		int serverTime = L1GameTimeClock.getInstance().currentTime()
-				.getSeconds();
+		int serverTime = L1GameTimeClock.getInstance().currentTime().getSeconds();
 		int nowTime = serverTime % 86400;
 		if (nowTime >= ((5 * 3600) + 3300) && nowTime < ((17 * 3600) + 3300)) { // 5:55~17:55
 			if (isSpawn) {
 				isSpawn = false;
 				for (L1Object object : L1World.getInstance().getObject()) {
 					if (object instanceof L1FieldObjectInstance) {
-						L1FieldObjectInstance npc = (L1FieldObjectInstance)
-								object;
+						L1FieldObjectInstance npc = (L1FieldObjectInstance) object;
 						if ((npc.getNpcTemplate().getNpcId() == 81177
 							|| npc.getNpcTemplate().getNpcId() == 81178
 							|| npc.getNpcTemplate().getNpcId() == 81179
 							|| npc.getNpcTemplate().getNpcId() == 81180
 							|| npc.getNpcTemplate().getNpcId() == 81181)
 							&& (npc.getMapId() == 0 || npc.getMapId() == 4)) {
-						npc.deleteMe();
+							npc.deleteMe();
 						}
 					}
 				}
@@ -77,5 +75,4 @@ public class LightTimeController implements Runnable {
 			}
 		}
 	}
-
 }

@@ -102,5 +102,4 @@ public class HouseTaxTimeController implements Runnable {
 			}
 		}
 	}
-
 }

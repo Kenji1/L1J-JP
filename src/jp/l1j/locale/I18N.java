@@ -338,4 +338,22 @@ public class I18N {
 	 */
 	public static final String I18N_BECAME_VISIBLE = bundle.getString("BecameVisible");
 	
+	/*
+	 * jp.l1j.server.controller.LoginController.java
+	 */
+	public static final String I18N_IS_NOT_AUTHENTICATED = bundle.getString("IsNotAuthenticated");
+	
+	/*
+	 * jp.l1j.server.controller.HomeTownTimeController.java
+	 */
+	public static final String I18N_HOME_TOWN_SYS_DAILY_PROC = bundle.getString("HomeTownSystemDailyProcess");
+	public static final String I18N_HOME_TOWN_SYS_MONTHLY_PROC = bundle.getString("HomeTownSystemMonthlyProcess");
+	
+	/*
+	 * jp.l1j.server.controller.WeatherTimeController.java
+	 */
+	public static final String I18N_WEATHER_SYS_CLEAR = bundle.getString("WeatherSystemClear");
+	public static final String I18N_WEATHER_SYS_RAIN = bundle.getString("WeatherSystemRain");
+	public static final String I18N_WEATHER_SYS_SNOW = bundle.getString("WeatherSystemSnow");
+	
 }

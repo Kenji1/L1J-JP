@@ -97,8 +97,8 @@ public class MapTimeController implements Runnable {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("loading reset map cycle...");
 		try {
-			JAXBContext context = JAXBContext.newInstance(
-					MapTimeController.ResetCycleList.class);
+			JAXBContext context =
+					JAXBContext.newInstance(MapTimeController.ResetCycleList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
@@ -110,7 +110,7 @@ public class MapTimeController implements Runnable {
 				_dataMap.put(each.getTime(), each);
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "のロードに失敗。", e);
+			_log.log(Level.SEVERE, "Load " + PATH + "failed!", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
@@ -141,5 +141,4 @@ public class MapTimeController implements Runnable {
 			}
 		}
 	}
-
 }

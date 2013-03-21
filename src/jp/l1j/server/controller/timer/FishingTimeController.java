@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.ItemTable;
+import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.packets.server.S_CharVisualUpdate;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
@@ -77,8 +77,7 @@ public class FishingTimeController implements Runnable {
 				L1PcInstance pc = _fishingList.get(i);
 				if (pc.isFishing()) {
 					long time = pc.getFishingTime();
-					if (currentTime <= (time + 500)
-							&& currentTime >= (time - 500)
+					if (currentTime <= (time + 500) && currentTime >= (time - 500)
 							&& !pc.isFishingReady()) {
 						pc.setFishingReady(true);
 						finishFishing(pc);
@@ -173,5 +172,4 @@ public class FishingTimeController implements Runnable {
 		pc.broadcastPacket(new S_CharVisualUpdate(pc));
 		FishingTimeController.getInstance().removeMember(pc);
 	}
-	
 }
