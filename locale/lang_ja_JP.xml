@@ -263,4 +263,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- jp/l1j/server/datatables/ItemTable.java -->
 <entry key="LoadItemFailed">%s(%s) の読み込みに失敗しました。</entry>
 
+<!-- jp/l1j/server/model/item/executor/* -->
+<entry key="DoesNotExistItemList">%s はアイテムリストに存在しません。</entry>
+<entry key="DoesNotExistSkillList">%s はスキルリストに存在しません。</entry>
+<entry key="DoesNotExistPolyList">%s は変身リストに存在しません。</entry>
+<entry key="DoesNotExistMapList">%s はマップリストに存在しません。</entry>
+<entry key="DoesNotExistNpcList">%s はNPCリストに存在しません。</entry>
+<entry key="ProbabilitiesError">%s の合計確率は100％ではありません。</entry>
+<entry key="OverEnchantSuccessful">%sが%sの製作に成功しました。</entry>
+
 </properties>

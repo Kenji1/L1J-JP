@@ -16,6 +16,7 @@ package jp.l1j.server.model.item.executor;
 
 import java.util.Arrays;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.LogEnchantTable;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1ItemInstance;
@@ -1083,9 +1084,9 @@ public class L1EnchantScroll {
 		for (L1PcInstance listner : L1World.getInstance().getAllPlayers()) {
 			if (!listner.getExcludingList().contains(pc.getName())) {
 				if (listner.isShowTradeChat() || listner.isShowWorldChat()) {
-					String msg = pc.getName() + "が" + item.getLogName()
-							+ "の製作に成功しました。";
-					listner.sendPackets(new S_SystemMessage(msg));
+					listner.sendPackets(new S_SystemMessage(String.format(I18N_OVER_ENCHANT_SUCCESSFUL,
+							pc.getName(), item.getLogName())));
+					// %sが%sの成功に成功しました。
 				}
 			}
 		}

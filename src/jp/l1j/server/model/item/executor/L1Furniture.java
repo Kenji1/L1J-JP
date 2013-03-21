@@ -28,16 +28,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.datatables.FurnitureSpawnTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.NpcTable;
-import jp.l1j.server.model.instance.L1FurnitureInstance;
-import jp.l1j.server.model.instance.L1ItemInstance;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1HouseLocation;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1FurnitureInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_AttackPacket;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.templates.L1Npc;
@@ -103,12 +104,14 @@ public class L1Furniture {
 
 	private boolean init() {
 		if (ItemTable.getInstance().getTemplate(getItemId()) == null) {
-			System.out.println("アイテムID " + getItemId() + " のテンプレートが見つかりません。");
+			System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, getItemId()));
+			// %s はアイテムリストに存在しません。
 			return false;
 		}
 		Effect effect = getEffect();
 		if (NpcTable.getInstance().getTemplate(effect.getNpcId()) == null) {
-			System.out.println("NpcID " + effect.getNpcId() + " のテンプレートが見つかりません。");
+			System.out.println(String.format(I18N_DOES_NOT_EXIST_NPC_LIST, effect.getNpcId()));
+			// %s はNPCリストに存在しません。
 			return false;
 		}
 		return true;
@@ -131,7 +134,7 @@ public class L1Furniture {
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "のロードに失敗。", e);
+			_log.log(Level.SEVERE, PATH + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");

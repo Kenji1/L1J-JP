@@ -263,4 +263,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- jp/l1j/server/datatables/ItemTable.java -->
 <entry key="LoadItemFailed">%s(%s) load failed</entry>
 
+<!-- jp/l1j/server/model/item/executor/* -->
+<entry key="DoesNotExistItemList">%s does not exist in the item list.</entry>
+<entry key="DoesNotExistSkillList">%s does not exist in the skill list.</entry>
+<entry key="DoesNotExistPolyList">%s does not exist in the poly list.</entry>
+<entry key="DoesNotExistMapList">%s does not exist in the map list.</entry>
+<entry key="DoesNotExistNpcList">%s does not exist in the npc list.</entry>
+<entry key="ProbabilitiesError">%s total probabilities is not 100%%.</entry>
+<entry key="OverEnchantSuccessful">%s has succeeded in making the %s</entry>
+
 </properties>

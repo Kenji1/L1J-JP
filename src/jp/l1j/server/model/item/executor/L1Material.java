@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -131,12 +132,14 @@ public class L1Material {
 	
 	private boolean init() {
 		if (ItemTable.getInstance().getTemplate(getItemId()) == null) {
-			System.out.println("アイテムID " + getItemId() + " のテンプレートが見つかりません。");
+			System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, getItemId()));
+			// %s はアイテムリストに存在しません。
 			return false;
 		}
 		Effect effect = getEffect();
 		if (ItemTable.getInstance().getTemplate(effect.getItemId()) == null) {
-			System.out.println("アイテムID " + effect.getItemId() + " のテンプレートが見つかりません。");
+			System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, effect.getItemId()));
+			// %s はアイテムリストに存在しません。
 			return false;
 		}
 		return true;
@@ -159,7 +162,7 @@ public class L1Material {
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "のロードに失敗。", e);
+			_log.log(Level.SEVERE, PATH + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");

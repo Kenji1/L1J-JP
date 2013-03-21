@@ -28,10 +28,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
+import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.random.RandomGenerator;
@@ -130,18 +131,21 @@ public class L1TreasureBox {
 
 	private boolean init() {
 		if (ItemTable.getInstance().getTemplate(getBoxId()) == null) {
-			System.out.println("アイテムID " + getBoxId() + " のテンプレートが見つかりません。");
+			System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, getBoxId()));
+			// %s はアイテムリストに存在しません。
 			return false;
 		}
 		for (Item each : getItems()) {
 			_totalChance += each.getChance();
 			if (ItemTable.getInstance().getTemplate(each.getItemId()) == null) {
-				_log.warning("アイテムID " + each.getItemId() + " のテンプレートが見つかりません。");
+				_log.warning(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, each.getItemId()));
+				// %s はアイテムリストに存在しません。
 				return false;
 			}
 		}
 		if (getTotalChance() != 0 && getTotalChance() != 1000000) {
-			_log.warning("ID " + getBoxId() + " の確率の合計が100%になりません。");
+			_log.warning(String.format(I18N_PROBABILITIES_ERROR, getBoxId()));
+			// %s の確率が100%ではありません。
 			return false;
 		}
 		return true;
@@ -164,7 +168,7 @@ public class L1TreasureBox {
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "のロードに失敗。", e);
+			_log.log(Level.SEVERE, PATH + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");

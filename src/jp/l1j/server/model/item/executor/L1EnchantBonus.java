@@ -18,7 +18,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -28,10 +27,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
-import jp.l1j.server.templates.L1InventoryItem;
 import jp.l1j.server.utils.PerformanceTimer;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -302,7 +300,8 @@ public class L1EnchantBonus {
 	
 	private boolean init() {
 		if (ItemTable.getInstance().getTemplate(getItemId()) == null) {
-			System.out.println("アイテムID " + getItemId() + " のテンプレートが見つかりません。");
+			System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, getItemId()));
+			// %s はアイテムリストに存在しません。
 			return false;
 		}
 		return true;
@@ -325,7 +324,7 @@ public class L1EnchantBonus {
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "のロードに失敗。", e);
+			_log.log(Level.SEVERE, PATH + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");

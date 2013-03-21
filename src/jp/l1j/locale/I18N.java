@@ -361,4 +361,15 @@ public class I18N {
 	 */
 	public static final String I18N_LOAD_ITEM_FAILED = bundle.getString("LoadItemFailed");
 	
+	/*
+	 * jp.l1j.server.model.item.executor.*
+	 */
+	public static final String I18N_DOES_NOT_EXIST_ITEM_LIST = bundle.getString("DoesNotExistItemList");
+	public static final String I18N_DOES_NOT_EXIST_SKILL_LIST = bundle.getString("DoesNotExistSkillList");
+	public static final String I18N_DOES_NOT_EXIST_POLY_LIST = bundle.getString("DoesNotExistPolyList");
+	public static final String I18N_DOES_NOT_EXIST_MAP_LIST = bundle.getString("DoesNotExistMapList");
+	public static final String I18N_DOES_NOT_EXIST_NPC_LIST = bundle.getString("DoesNotExistNpcList");
+	public static final String I18N_PROBABILITIES_ERROR = bundle.getString("ProbabilitiesError");
+	public static final String I18N_OVER_ENCHANT_SUCCESSFUL = bundle.getString("OverEnchantSuccessful");
+	
 }
