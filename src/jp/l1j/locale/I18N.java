@@ -362,6 +362,54 @@ public class I18N {
 	public static final String I18N_LOAD_ITEM_FAILED = bundle.getString("LoadItemFailed");
 	
 	/*
+	 * jp.l1j.server.model.AccelerratorChecker.java
+	 */
+	public static final String I18N_ACCELERRATOR_DISCONNECT_THE_CONNECTION = bundle.getString("AccelerratorDisconnectTheConnection");
+	public static final String I18N_ACCELERRATOR_STOP_THE_ACTION = bundle.getString("AccelerratorStopTheAction");
+	public static final String I18N_ACCELERRATOR_MOVE_TO_THE_ISOLATION_MAP = bundle.getString("AccelerratorMoveToTheIsolationMap");
+	public static final String I18N_ACCELERRATOR_OVERSPEED_DETECTED = bundle.getString("AccelerratorOverspeedDetected");
+	
+	/*
+	 * jp.l1j.server.model.L1Attack.java
+	 */
+	public static final String I18N_ATTACK_GAVE_TEXT_COLOR = bundle.getString("AttackGaveTextColor");
+	public static final String I18N_ATTACK_RECEIVED_TEXT_COLOR = bundle.getString("AttackReceivedTextColor");
+	public static final String I18N_ATTACK_FORMAT = bundle.getString("AttackFormat");
+	public static final String I18N_ATTACK_TO = bundle.getString("AttackTo");
+	public static final String I18N_ATTACK_DMG = bundle.getString("AttackDmg");
+	public static final String I18N_ATTACK_MISS = bundle.getString("AttackMiss");
+	
+	/*
+	 * jp.l1j.server.model.L1Magic.java
+	 */
+	public static final String I18N_SKILL_GAVE_TEXT_COLOR = bundle.getString("SkillGaveTextColor");
+	public static final String I18N_SKILL_RECEIVED_TEXT_COLOR = bundle.getString("SkillReceivedTextColor");
+	public static final String I18N_SKILL_SUCCESS = bundle.getString("SkillSuccess");
+	public static final String I18N_SKILL_FAILED = bundle.getString("SkillFailed");
+	public static final String I18N_SKILL_DMG = bundle.getString("SkillDmg");
+	
+	/*
+	 * jp.l1j.server.model.L1DeathMatch.java
+	 */
+	public static final String I18N_DEATHMATCH_LESS_THAN_MIN_PLAYERS = bundle.getString("DeathMatchLessThanMinPlayers");
+	
+	/*
+	 * jp.l1j.server.model.L1PolyRace.java
+	 */
+	public static final String I18N_POLYRACE_LESS_THAN_MIN_PLAYERS = bundle.getString("PolyRaceLessThanMinPlayers");
+	public static final String I18N_POLYRACE_REACHED_TO_MAX_PLAYERS = bundle.getString("PolyRaceReachedToMaxPlayers");
+	
+	/*
+	 * jp.l1j.server.model.instance.L1HousekeeperInstance.java
+	 */
+	public static final String I18N_TAX_HAS_ALLREADY_PAID = bundle.getString("TaxHasAllreadyPaid");
+	
+	/*
+	 * jp.l1j.server.model.instance.L1PcInstance.java
+	 */
+	public static final String I18N_FAILED_TO_OBTAIN_THE_REVIVAL_POTION = bundle.getString("FailedToObtainTheRevivalPotion");
+	
+	/*
 	 * jp.l1j.server.model.item.executor.*
 	 */
 	public static final String I18N_DOES_NOT_EXIST_ITEM_LIST = bundle.getString("DoesNotExistItemList");
@@ -372,4 +420,8 @@ public class I18N {
 	public static final String I18N_PROBABILITIES_ERROR = bundle.getString("ProbabilitiesError");
 	public static final String I18N_OVER_ENCHANT_SUCCESSFUL = bundle.getString("OverEnchantSuccessful");
 	
+	/*
+	 * jp.l1j.server.packets.client.C_UseItem.java
+	 */
+	public static final String I18N_CAN_BE_USED_BELOW_THE_MAX_LEVEL = bundle.getString("CanBeUsedBelowTheMaxLevel");
 }

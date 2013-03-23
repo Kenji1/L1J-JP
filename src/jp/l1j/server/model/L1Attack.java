@@ -15,14 +15,14 @@
 
 package jp.l1j.server.model;
 
+import java.text.MessageFormat;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.controller.timer.WarTimeController;
-import jp.l1j.server.datatables.MagicDollTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
-import jp.l1j.server.model.instance.L1DollInstance;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -31,15 +31,17 @@ import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.poison.L1DamagePoison;
 import jp.l1j.server.model.poison.L1ParalysisPoison;
 import jp.l1j.server.model.poison.L1SilencePoison;
-import jp.l1j.server.model.skill.L1SkillUse;
 import static jp.l1j.server.model.skill.L1SkillId.*;
+import jp.l1j.server.model.skill.L1SkillUse;
 import jp.l1j.server.packets.server.S_AttackMissPacket;
 import jp.l1j.server.packets.server.S_AttackPacket;
 import jp.l1j.server.packets.server.S_AttackPacketForNpc;
 import jp.l1j.server.packets.server.S_DoActionGFX;
+import jp.l1j.server.packets.server.S_GreenMessage;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SkillIconGFX;
 import jp.l1j.server.packets.server.S_SkillSound;
+import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.packets.server.S_UseArrowSkill;
 import jp.l1j.server.packets.server.S_UseAttackSkill;
 import jp.l1j.server.random.RandomGenerator;
@@ -2078,9 +2080,6 @@ public class L1Attack {
 		}
 
 		// ダメージ値及び命中率確認用メッセージ
-		if (!Config.ALT_ATKMSG) {
-			return;
-		}
 		if ((_calcType == PC_PC || _calcType == PC_NPC) && !_pc.getAttackLog()) {
 			return;
 		}
@@ -2089,7 +2088,7 @@ public class L1Attack {
 		}
 
 		String msg0 = "";
-		String msg1 = "に";
+		String msg1 = I18N_ATTACK_TO; // に
 		String msg2 = "";
 		String msg3 = "";
 		String msg4 = "";
@@ -2106,15 +2105,22 @@ public class L1Attack {
 			msg4 = _targetNpc.getName();
 			msg2 = "Hit" + _hitRate + "% Hp" + _targetNpc.getCurrentHp();
 		}
-		msg3 = _isHit ? _damage + "のダメージを与えました。" : "攻撃をミスしました";
+		msg3 = _isHit ? String.format(I18N_ATTACK_DMG, _damage) : I18N_ATTACK_MISS;
+		// %dのダメージを与えました。 : 攻撃をミスしました。
 
 		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
-			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3,
-					msg4)); // \f1%0が%4%1%3 %2
+			//_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4));
+			// \f1%0が%4%1%3 %2
+			_pc.sendPackets(new S_SystemMessage(I18N_ATTACK_GAVE_TEXT_COLOR +
+				MessageFormat.format(I18N_ATTACK_FORMAT, msg0, msg4, msg3, msg2)));
+			// {0}が{1}に{2} {3}
 		}
 		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
-			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2,
-					msg3, msg4)); // \f1%0が%4%1%3 %2
+			// _targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4));
+			// \f1%0が%4%1%3 %2
+			_targetPc.sendPackets(new S_SystemMessage(I18N_ATTACK_RECEIVED_TEXT_COLOR +
+				MessageFormat.format(I18N_ATTACK_FORMAT, msg0, msg4, msg3, msg2)));
+			// {0}が{1}に{2} {3}
 		}
 	}
 

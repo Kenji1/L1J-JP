@@ -387,9 +387,6 @@ public final class Config {
 	@Configure(file = ALT, key = "NonPvP")
 	public static boolean ALT_NONPVP = true;
 
-	@Configure(file = ALT, key = "AttackMessageOn")
-	public static boolean ALT_ATKMSG = true;
-
 	@Configure(file = ALT, key = "ChangeTitleByOneself")
 	public static boolean CHANGE_TITLE_BY_ONESELF = false;
 

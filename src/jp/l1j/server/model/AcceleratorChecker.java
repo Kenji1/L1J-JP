@@ -18,7 +18,7 @@ package jp.l1j.server.model;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.logging.Logger;
-
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.SprTable;
 import jp.l1j.server.datatables.LogAcceleratorTable;
@@ -137,7 +137,8 @@ public class AcceleratorChecker {
 			int x = _pc.getX() ,y = _pc.getY() ,mapid = _pc.getMapId();// 座標
 			switch (punishment_type) {
 			case 0:// 強制切断
-				_pc.sendPackets(new S_SystemMessage("加速器検知のため"+punishment_time+"秒後に強制切断します。"));
+				_pc.sendPackets(new S_SystemMessage(String.format(I18N_ACCELERRATOR_DISCONNECT_THE_CONNECTION, punishment_time)));
+				// 速度超過を検出しました。%D秒後に接続を切断します。
 				try {
 					Thread.sleep(punishment_time * 1000);
 				} catch (Exception e) {
@@ -148,7 +149,8 @@ public class AcceleratorChecker {
 				break;
 			case 1:// 行動停止
 				_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, true));
-				_pc.sendPackets(new S_SystemMessage("加速器検知のため"+punishment_time+"秒間行動を停止します。"));
+				_pc.sendPackets(new S_SystemMessage(String.format(I18N_ACCELERRATOR_STOP_THE_ACTION, punishment_time)));
+				// 速度超過を検出しました。%D秒後に行動を停止します。
 				try {
 					Thread.sleep(punishment_time * 1000);
 				} catch (Exception e) {
@@ -158,7 +160,8 @@ public class AcceleratorChecker {
 				break;
 			case 2:// 指定MAPへ転送（隔離）
 				L1Teleport.teleport(_pc, 32737, 32796, (short) punishment_mapid, 5, false);
-				_pc.sendPackets(new S_SystemMessage("加速器検知のため"+punishment_time+"秒間隔離マップへ転送します。"));
+				_pc.sendPackets(new S_SystemMessage(String.format(I18N_ACCELERRATOR_MOVE_TO_THE_ISOLATION_MAP, punishment_time)));
+				// 速度超過を検出しました。%d秒後に隔離マップへ移動します。
 				try {
 					Thread.sleep(punishment_time * 1000);
 				} catch (Exception e) {
@@ -171,6 +174,8 @@ public class AcceleratorChecker {
 			// GMは処罰しない。警告メッセージのみ
 			if (Config.DEBUG_MODE) {
 				_pc.sendPackets(new S_SystemMessage("加速器検知にひっかかっています。"));
+				_pc.sendPackets(new S_SystemMessage(I18N_ACCELERRATOR_OVERSPEED_DETECTED));
+				// 速度超過を検出しました。
 				_injusticeCount = 0;
 			}
 		}

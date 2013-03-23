@@ -32,9 +32,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- NonPvp setting ... True PvP可能 False PvP不可 -->
 <entry key="NonPvP">True</entry>
 
-<!-- AttackMessage ... True to On, False to Off -->
-<entry key="AttackMessageOn">False</entry>
-
 <!-- 自分でタイトルを変更できるか -->
 <entry key="ChangeTitleByOneself">False</entry>
 

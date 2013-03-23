@@ -17,6 +17,7 @@ package jp.l1j.server.model.instance;
 import java.util.Calendar;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.HouseTable;
 import jp.l1j.server.datatables.NpcTalkDataTable;
 import jp.l1j.server.model.L1Attack;
@@ -32,16 +33,11 @@ import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.StringUtil;
 
 public class L1HousekeeperInstance extends L1NpcInstance {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private static Logger _log = Logger.getLogger(L1HousekeeperInstance.class
-			.getName());
 
-	/**
-	 * @param template
-	 */
+	private static final long serialVersionUID = 1L;
+	
+	private static Logger _log = Logger.getLogger(L1HousekeeperInstance.class.getName());
+
 	public L1HousekeeperInstance(L1Npc template) {
 		super(template);
 	}
@@ -67,39 +63,33 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 	@Override
 	public void onTalkAction(L1PcInstance pc) {
 		int objid = getId();
-		L1NpcTalkData talking = NpcTalkDataTable.getInstance().getTemplate(
-				getNpcTemplate().getNpcId());
+		L1NpcTalkData talking = NpcTalkDataTable.getInstance().getTemplate(getNpcTemplate().getNpcId());
 		int npcid = getNpcTemplate().getNpcId();
 		String htmlid = null;
 		String[] htmldata = null;
 		boolean isOwner = false;
-
 		if (talking != null) {
 			// 話しかけたPCが所有者とそのクラン員かどうか調べる
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				int houseId = clan.getHouseId();
 				if (houseId != 0) {
-					L1House house = HouseTable.getInstance().getHouseTable(
-							houseId);
+					L1House house = HouseTable.getInstance().getHouseTable(houseId);
 					if (npcid == house.getKeeperId()) {
 						isOwner = true;
 					}
 				}
 			}
-
 			// 所有者とそのクラン員以外なら会話内容を変える
 			if (!isOwner) {
 				// Housekeeperが属するアジトを取得する
 				L1House targetHouse = null;
-				for (L1House house : HouseTable.getInstance()
-						.getHouseTableList()) {
+				for (L1House house : HouseTable.getInstance().getHouseTableList()) {
 					if (npcid == house.getKeeperId()) {
 						targetHouse = house;
 						break;
 					}
 				}
-
 				// アジトがに所有者が居るかどうか調べる
 				boolean isOccupy = false;
 				String clanName = null;
@@ -112,24 +102,19 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 						break;
 					}
 				}
-
 				// 会話内容を設定する
 				if (isOccupy) { // 所有者あり
 					htmlid = "agname";
-					htmldata = new String[] { clanName, leaderName,
-							targetHouse.getHouseName() };
+					htmldata = new String[] { clanName, leaderName, targetHouse.getHouseName() };
 				} else { // 所有者なし(競売中)
 					htmlid = "agnoname";
 					htmldata = new String[] { targetHouse.getHouseName() };
 				}
 			}
-
 			// html表示パケット送信
 			if (htmlid != null) { // htmlidが指定されている場合
 				if (htmldata != null) { // html指定がある場合は表示
-					pc
-							.sendPackets(new S_NpcTalkReturn(objid, htmlid,
-									htmldata));
+					pc.sendPackets(new S_NpcTalkReturn(objid, htmlid, htmldata));
 				} else {
 					pc.sendPackets(new S_NpcTalkReturn(objid, htmlid));
 				}
@@ -157,7 +142,6 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 			pc.sendPackets(new S_ServerMessage(189)); // \f1アデナが不足しています。
 			return;
 		}
-
 		L1House house = HouseTable.getInstance().findByKeeperId(getNpcId());
 		Calendar cal = house.getTaxDeadline();
 		cal.set(Calendar.MINUTE, 0); // 分、秒は切り捨て
@@ -166,13 +150,12 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 		next.add(Calendar.DATE, Config.HOUSE_TAX_INTERVAL);
 		next.set(Calendar.MINUTE, 0); // 分、秒は切り捨て
 		next.set(Calendar.SECOND, 0);
-		
 		if (next.compareTo(cal) > 0) {
 			cal.add(Calendar.DATE, Config.HOUSE_TAX_INTERVAL);
 			HouseTable.getInstance().updateHouse(house); // DBに書き込み
 			pc.getInventory().consumeItem(L1ItemId.ADENA, FEE_AMOUNT);
 		} else {
-			pc.sendPackets(new S_SystemMessage("次回分の税金は支払い済みです。"));
+			pc.sendPackets(new S_SystemMessage(I18N_TAX_HAS_ALLREADY_PAID));
 		}
 	}
 
@@ -182,7 +165,7 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 		int month = cal.get(Calendar.MONTH) + 1;
 		int day = cal.get(Calendar.DATE);
 		int hour = cal.get(Calendar.HOUR_OF_DAY);
-
 		return StringUtil.newArray(getNameId(), FEE_AMOUNT, month, day, hour);
 	}
 }
+

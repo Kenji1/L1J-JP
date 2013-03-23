@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.configure.Config;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.datatables.DoorTable;
@@ -347,9 +347,7 @@ public class L1DeathMatch {
 			for (L1PcInstance pc : playerList) {
 				// pc.sendPackets(new S_ServerMessage(1264)); 本鯖用メッセージ
 				// 最小参加人数の2名に満たなかったため、レースを強制終了します。 1000アデナをお返ししました。
-				pc.sendPackets(new S_SystemMessage("最小参加人数の"
-						+ gameStartMinPlayer + "名に満たなかったため、デスマッチを強制終了します。"
-						+ "1000アデナお返ししました。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_DEATHMATCH_LESS_THAN_MIN_PLAYERS, gameStartMinPlayer)));
 				pc.getInventory().storeItem(40308, 1000);
 			}
 			break;

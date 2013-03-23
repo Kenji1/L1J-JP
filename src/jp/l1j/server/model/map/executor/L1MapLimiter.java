@@ -27,12 +27,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.MapTimerTable;
 import jp.l1j.server.datatables.MapsTable;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Teleport;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_ServerMessage;
-import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -155,7 +155,7 @@ public class L1MapLimiter implements Runnable  {
 
 			for (L1MapLimiter each : list) {
 				if (MapsTable.getInstance().locationname(each.getMapId()) == null) {
-					System.out.println("マップID " + each.getMapId() + " のテンプレートが見つかりません。");
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, each.getMapId()));
 				} else {
 					_dataMap.put(each.getMapId(), each);
 				}

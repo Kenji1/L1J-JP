@@ -395,7 +395,7 @@ public class L1BossCycle {
 	 */
 	public final void showData(final Calendar now) {
 		System.out.println("[Type]" + getName());
-		System.out.print("  [出現期間]");
+		System.out.print("[SpawnTime]");
 		System.out.print(_sdf.format(getSpawnStartTime(now).getTime()) + " - ");
 		System.out.println(_sdf.format(getSpawnEndTime(now).getTime()));
 	}

@@ -17,8 +17,8 @@ package jp.l1j.server.model;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.DoorTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1DoorInstance;
@@ -27,8 +27,6 @@ import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.model.skill.L1SkillId;
 import jp.l1j.server.model.skill.L1SkillUse;
-import jp.l1j.server.random.RandomGenerator;
-import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.packets.server.S_EffectLocation;
 import jp.l1j.server.packets.server.S_MessageYN;
 import jp.l1j.server.packets.server.S_Race;
@@ -36,6 +34,8 @@ import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SkillBrave;
 import jp.l1j.server.packets.server.S_SkillHaste;
 import jp.l1j.server.packets.server.S_SystemMessage;
+import jp.l1j.server.random.RandomGenerator;
+import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.types.Base;
 import jp.l1j.server.utils.collections.Lists;
 
@@ -103,7 +103,7 @@ public class L1PolyRace {
 			return;
 		}
 		if (playerList.size() + orderList.size() >= maxPlayer) {
-			pc.sendPackets(new S_SystemMessage("参加人数上限です。"));
+			pc.sendPackets(new S_SystemMessage(I18N_POLYRACE_REACHED_TO_MAX_PLAYERS));
 			return;
 		}
 		if (getGameStatus() == STATUS_PLAYING || getGameStatus() == STATUS_END) {
@@ -221,9 +221,7 @@ public class L1PolyRace {
 			for (L1PcInstance pc : playerList) {
 				// pc.sendPackets(new S_ServerMessage(1264)); 本鯖用メッセージ
 				// 最小参加人数の2名に満たなかったため、レースを強制終了します。 1000アデナをお返ししました。
-				pc.sendPackets(new S_SystemMessage("最小参加人数の"
-						+ Config.PET_RACE_MIN_PLAYER
-						+ "名に満たなかったため、レースを強制終了します。" + "1000アデナお返ししました。"));
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_POLYRACE_LESS_THAN_MIN_PLAYERS, Config.PET_RACE_MIN_PLAYER)));
 				pc.getInventory().storeItem(40308, 1000);
 			}
 			break;

@@ -263,6 +263,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- jp/l1j/server/datatables/ItemTable.java -->
 <entry key="LoadItemFailed">%s(%s) の読み込みに失敗しました。</entry>
 
+<!-- jp/l1j/server/model/AcceleratorChecker.java -->
+<entry key="AccelerratorDisconnectTheConnection">速度超過が検出されました。%d秒後に接続を切断します。</entry>
+<entry key="AccelerratorStopTheAction">速度超過が検出されました。%d秒後に行動を停止します。</entry>
+<entry key="AccelerratorMoveToTheIsolationMap">速度超過が検出されました。%d秒後に隔離マップに移動します。。</entry>
+<entry key="AccelerratorOverspeedDetected">速度超過が検出されました。</entry>
+
+<!-- jp/l1j/server/model/L1Attack.java -->
+<entry key="AttackGaveTextColor">\F2</entry>
+<entry key="AttackReceivedTextColor">\F3</entry>
+<entry key="AttackFormat">{0}が{1}に{2} {3}</entry>
+<entry key="AttackTo">に</entry>
+<entry key="AttackDmg">%dダメージ</entry>
+<entry key="AttackMiss">攻撃ミス</entry>
+
+<!-- jp/l1j/server/model/L1Magic.java -->
+<entry key="SkillGaveTextColor">\F2</entry>
+<entry key="SkillReceivedTextColor">\F3</entry>
+<entry key="SkillSuccess">成功</entry>
+<entry key="SkillFailed">失敗</entry>
+<entry key="SkillDmg">%dスキルダメージ</entry>
+
+<!-- jp/l1j/server/model/L1DeathMatch.java -->
+<entry key="DeathMatchLessThanMinPlayers">最小参加人数の%d名に満たなかったため、デスマッチを強制終了します。 1,000アデナをお返ししました。</entry>
+
+<!-- jp/l1j/server/model/L1DeathMatch.java -->
+<entry key="PolyRaceLessThanMinPlayers">最小参加人数の%d名に満たなかったため、レースを強制終了します。 1,000アデナをお返ししました。</entry>
+<entry key="PolyRaceReachedToMaxPlayers">Reached the max participants.</entry>
+
+<!-- jp/l1j/server/model/instance/L1HousekeeperInstance.java -->
+<entry key="TaxHasAllreadyPaid">次回分の税金は既に支払われています。</entry>
+
+<!-- jp/l1j/server/model/instance/L1PcInstance.java -->
+<entry key="FailedToObtainTheRevivalPotion">復活ポーションを取得するのに失敗しました。</entry>
+
 <!-- jp/l1j/server/model/item/executor/* -->
 <entry key="DoesNotExistItemList">%s はアイテムリストに存在しません。</entry>
 <entry key="DoesNotExistSkillList">%s はスキルリストに存在しません。</entry>
@@ -271,5 +305,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="DoesNotExistNpcList">%s はNPCリストに存在しません。</entry>
 <entry key="ProbabilitiesError">%s の合計確率は100％ではありません。</entry>
 <entry key="OverEnchantSuccessful">%sが%sの製作に成功しました。</entry>
+
+<!-- jp/l1j/server/packets/client/C_UseItem.java -->
+<entry key="CanBeUsedBelowTheMaxLevel">このアイテムは%dレベル以下のみ使用できます。</entry>
 
 </properties>

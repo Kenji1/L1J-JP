@@ -15,6 +15,7 @@
 
 package jp.l1j.server.packets.server;
 
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.codes.Opcodes;
 
 // Referenced classes of package jp.l1j.server.serverpackets:
@@ -44,7 +45,7 @@ public class S_Poison extends ServerBasePacket {
 			writeC(0);
 			writeC(1);
 		} else {
-			throw new IllegalArgumentException("不正な引数です。type = " + type);
+			throw new IllegalArgumentException(String.format(I18N_IS_UNKNOWN_PARAM, type));
 		}
 	}
 

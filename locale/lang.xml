@@ -108,10 +108,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="DoesNotExistChar">%s does not exist in the game world.</entry>
 
 <!-- jp/l1j/server/command/executor/L1AddInstanceMap.java -->
-<entry key="GenerateTheInstanceMap">Generated the instance map: %d(%d)</entry>
+<entry key="GeneratedTheInstanceMap">Generated the instance map: %d(%d)</entry>
 
 <!-- jp/l1j/server/command/executor/L1Adena.java -->
-<entry key="GenerateTheAdena">Generated the %d adena.</entry>
+<entry key="GeneratedTheAdena">Generated the %d adena.</entry>
 
 <!-- jp/l1j/server/command/executor/L1AttackLog.java -->
 <entry key="ChangedToDisplayTheDamage">Change to display the damage to the target.</entry>
@@ -195,7 +195,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="Location">Loc (%d, %d, %d) %d</entry>
 
 <!-- jp/l1j/server/command/executor/L1Move.java -->
-<entry key="MovedTheLoc">Moved to Loc (%d, %d, %d) %d</entry>
+<entry key="MovedToLoc">Moved to Loc (%d, %d, %d) %d</entry>
 
 <!-- jp/l1j/server/command/executor/L1PartyRecall.java -->
 <entry key="RecalledByGM">Recalled by GM.</entry>
@@ -263,6 +263,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- jp/l1j/server/datatables/ItemTable.java -->
 <entry key="LoadItemFailed">%s(%s) load failed</entry>
 
+<!-- jp/l1j/server/model/AcceleratorChecker.java -->
+<entry key="AccelerratorDisconnectTheConnection">Overspeed detected. Disconnect the connection after %d seconds.</entry>
+<entry key="AccelerratorStopTheAction">Overspeed detected. Stop the action after %d seconds.</entry>
+<entry key="AccelerratorMoveToTheIsolationMap">Overspeed detected. Move to the isolation map after %d seconds.</entry>
+<entry key="AccelerratorOverspeedDetected">Overspeed detected.</entry>
+
+<!-- jp/l1j/server/model/L1Attack.java -->
+<entry key="AttackGaveTextColor">\F2</entry>
+<entry key="AttackReceivedTextColor">\F3</entry>
+<entry key="AttackFormat">{0} to {1} {2} {3}</entry>
+<entry key="AttackTo">to</entry>
+<entry key="AttackDmg">%d damage</entry>
+<entry key="AttackMiss">miss</entry>
+
+<!-- jp/l1j/server/model/L1Magic.java -->
+<entry key="SkillGaveTextColor">\F2</entry>
+<entry key="SkillReceivedTextColor">\F3</entry>
+<entry key="SkillSuccess">successful</entry>
+<entry key="SkillFailed">failed</entry>
+<entry key="SkillDmg">%d skill damage</entry>
+
+<!-- jp/l1j/server/model/L1DeathMatch.java -->
+<entry key="DeathMatchLessThanMinPlayers">Because less than minimum participants number (%d players), End the deathmatch. Returned the 1,000 adena.</entry>
+
+<!-- jp/l1j/server/model/L1DeathMatch.java -->
+<entry key="PolyRaceLessThanMinPlayers">Because less than minimum participants number (%d players), End the race. Returned the 1,000 adena.</entry>
+<entry key="PolyRaceReachedToMaxPlayers">Reached the maximum number of participants.
+</entry>
+
+<!-- jp/l1j/server/model/instance/L1HousekeeperInstance.java -->
+<entry key="TaxHasAllreadyPaid">The next minute tax has already paid.</entry>
+
+<!-- jp/l1j/server/model/instance/L1PcInstance.java -->
+<entry key="FailedToObtainTheRevivalPotion">Failed to obtain a revival potion.</entry>
+
 <!-- jp/l1j/server/model/item/executor/* -->
 <entry key="DoesNotExistItemList">%s does not exist in the item list.</entry>
 <entry key="DoesNotExistSkillList">%s does not exist in the skill list.</entry>
@@ -271,5 +306,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="DoesNotExistNpcList">%s does not exist in the npc list.</entry>
 <entry key="ProbabilitiesError">%s total probabilities is not 100%%.</entry>
 <entry key="OverEnchantSuccessful">%s has succeeded in making the %s</entry>
+
+<!-- jp/l1j/server/packets/client/C_UseItem.java -->
+<entry key="CanBeUsedBelowTheMaxLevel">This item can be used below the level %d.</entry>
 
 </properties>

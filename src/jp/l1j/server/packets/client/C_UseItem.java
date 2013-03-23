@@ -25,6 +25,7 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.controller.timer.FishingTimeController;
@@ -37,13 +38,6 @@ import jp.l1j.server.datatables.PetTable;
 import jp.l1j.server.datatables.ResolventTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.model.Getback;
-import jp.l1j.server.model.instance.L1DollInstance;
-import jp.l1j.server.model.instance.L1GuardianInstance;
-import jp.l1j.server.model.instance.L1ItemInstance;
-import jp.l1j.server.model.instance.L1NpcInstance;
-import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.instance.L1PetInstance;
-import jp.l1j.server.model.instance.L1TowerInstance;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Character;
 import jp.l1j.server.model.L1Clan;
@@ -59,6 +53,13 @@ import jp.l1j.server.model.L1SpellBook;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1TownLocation;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1DollInstance;
+import jp.l1j.server.model.instance.L1GuardianInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1TowerInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.item.L1ItemId;
@@ -131,9 +132,6 @@ import jp.l1j.server.templates.L1Pet;
 import jp.l1j.server.templates.L1Skill;
 import jp.l1j.server.utils.L1ItemUtil;
 
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket
-//
 public class C_UseItem extends ClientBasePacket {
 
 	private static final String C_ITEM_USE = "[C] C_ItemUse";
@@ -273,8 +271,15 @@ public class C_UseItem extends ClientBasePacket {
 				// このアイテムは%0レベル以上にならなければ使用できません。
 				return;
 			} else if (item_maxlvl != 0 && item_maxlvl < pc.getLevel() && !pc.isGm()) {
-				pc.sendPackets(new S_ServerMessage(673, String.valueOf(item_maxlvl)));
-				// このアイテムは%dレベル以上のみ使用できます。
+				// S_ServerMessageでは引数が%dの場合表示されない。
+				// pc.sendPackets(new S_ServerMessage(673, String.valueOf(max)));
+
+				// pc.sendPackets(new S_SystemMessage("このアイテムは" + max
+				//		+ "レベル以下のみ使用できます。"));
+
+				// TODO
+				pc.sendPackets(new S_SystemMessage(String.format(I18N_CAN_BE_USED_BELOW_THE_MAX_LEVEL, item_maxlvl)));
+				// このアイテムは%dレベル以下のみ使用できます。
 				return;
 			}
 
@@ -1125,11 +1130,16 @@ public class C_UseItem extends ClientBasePacket {
 				if (max < 50) {
 					pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_LEVEL_OVER, max));
 				} else {
-					pc.sendPackets(new S_SystemMessage("このアイテムは" + max
-							+ "レベル以下のみ使用できます。"));
+					// S_ServerMessageでは引数が%dの場合表示されない。
+					// pc.sendPackets(new S_ServerMessage(673, String.valueOf(max)));
+					
+					// pc.sendPackets(new S_SystemMessage("このアイテムは" + max
+					//		+ "レベル以下のみ使用できます。"));
+					
+					// TODO
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_CAN_BE_USED_BELOW_THE_MAX_LEVEL, max)));
+					// このアイテムは%dレベル以下のみ使用できます。
 				}
-				// このアイテムは%dレベル以下のみ使用できます。
-				// S_ServerMessageでは引数が表示されない
 			} else {
 				if (pc.isCrown() && item.getItem().isUseRoyal()
 						|| pc.isKnight() && item.getItem().isUseKnight()
@@ -1162,11 +1172,16 @@ public class C_UseItem extends ClientBasePacket {
 					if (max < 50) {
 						pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_LEVEL_OVER, max));
 					} else {
-						pc.sendPackets(new S_SystemMessage("このアイテムは" + max
-								+ "レベル以下のみ使用できます。"));
+						// S_ServerMessageでは引数が%dの場合表示されない。
+						// pc.sendPackets(new S_ServerMessage(673, String.valueOf(max)));
+
+						// pc.sendPackets(new S_SystemMessage("このアイテムは" + max
+						//		+ "レベル以下のみ使用できます。"));
+
+						// TODO
+						pc.sendPackets(new S_SystemMessage(String.format(I18N_CAN_BE_USED_BELOW_THE_MAX_LEVEL, max)));
+						// このアイテムは%dレベル以下のみ使用できます。
 					}
-					// このアイテムは%dレベル以下のみ使用できます。
-					// S_ServerMessageでは引数が表示されない
 				} else {
 					UseArmor(pc, item);
 				}

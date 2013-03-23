@@ -28,6 +28,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.GeneralThreadPool;
@@ -120,11 +121,6 @@ import jp.l1j.server.templates.L1MagicDoll;
 import jp.l1j.server.templates.L1PrivateShopBuyList;
 import jp.l1j.server.templates.L1PrivateShopSellList;
 import jp.l1j.server.utils.CalcStat;
-
-// Referenced classes of package jp.l1j.server.model:
-// L1Character, L1DropTable, L1Object, L1ItemInstance,
-// L1World
-//
 
 public class L1PcInstance extends L1Character {
 	private static final long serialVersionUID = 1L;
@@ -1414,8 +1410,7 @@ public class L1PcInstance extends L1Character {
 				}
 			}
 		} else if (!isDead()) { // 念のため
-			System.out
-					.println("警告：プレイヤーのＨＰ減少処理が正しく行われていない箇所があります。※もしくは最初からＨＰ０");
+			System.out.println("警告：プレイヤーのＨＰ減少処理が正しく行われていない箇所があります。※もしくは最初からＨＰ０");
 			death(attacker);
 		}
 	}
@@ -2802,11 +2797,11 @@ public class L1PcInstance extends L1Character {
 					getInventory().storeItem(43000, 1);
 					sendPackets(new S_ServerMessage(403, l1item.getName()));
 				} else {
-					sendPackets(new S_SystemMessage("復活のポーションの入手に失敗しました。"));
+					sendPackets(new S_SystemMessage(I18N_FAILED_TO_OBTAIN_THE_REVIVAL_POTION));
 				}
 			} catch (Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				sendPackets(new S_SystemMessage("復活のポーションの入手に失敗しました。"));
+				sendPackets(new S_SystemMessage(I18N_FAILED_TO_OBTAIN_THE_REVIVAL_POTION));
 			}
 		}
 
