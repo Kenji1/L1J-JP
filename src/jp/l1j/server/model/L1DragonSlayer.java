@@ -602,25 +602,6 @@ public class L1DragonSlayer {
 				inventory.clearItems();
 			}
 		}
-		for (final L1Object obj : L1World.getInstance().getObject()) {
-			if (obj.getMapId() == mapId) {
-				if (obj instanceof L1FieldObjectInstance) {
-					L1World.getInstance().removeVisibleObject(obj);
-					L1World.getInstance().removeObject(obj);
-				} else if (obj instanceof L1EffectInstance) {
-					L1World.getInstance().removeVisibleObject(obj);
-					L1World.getInstance().removeObject(obj);
-				} else if (obj instanceof L1ItemInstance) {
-					final L1Inventory groundInventory = L1World.getInstance().getInventory(
-							obj.getX(), obj.getY(), obj.getMapId());
-					groundInventory.deleteItem((L1ItemInstance) obj);
-					L1World.getInstance().removeVisibleObject(obj);
-					L1World.getInstance().removeObject(obj);
-				} else if (obj instanceof L1NpcInstance) {
-					((L1NpcInstance) obj).deleteMe();
-				}
-			}
-		}
 		setPortalPack(portalNumber, null);
 		setDragonSlayerStatus(portalNumber, STATUS_DRAGONSLAYER_NONE);
 		clearPlayerList(portalNumber);
