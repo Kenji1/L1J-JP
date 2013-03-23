@@ -27,11 +27,15 @@ import jp.l1j.server.types.Point;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.model.instance.L1DoorInstance;
+import jp.l1j.server.model.instance.L1EffectInstance;
+import jp.l1j.server.model.instance.L1FieldObjectInstance;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1MonsterInstance;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1TrapInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
+import jp.l1j.server.model.trap.L1WorldTraps;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.packets.server.S_CharVisualUpdate;
@@ -564,6 +568,10 @@ public class L1DragonSlayer {
 		}
 	}
 
+	/**
+	 *  レイド終了後のリセット
+	 *  
+	 */
 	public void resetDragonSlayer(int portalNumber) {
 		short mapId = (short) (1005 + portalNumber);
 
@@ -592,6 +600,25 @@ public class L1DragonSlayer {
 			} else if (obj instanceof L1Inventory) {
 				L1Inventory inventory = (L1Inventory) obj;
 				inventory.clearItems();
+			}
+		}
+		for (final L1Object obj : L1World.getInstance().getObject()) {
+			if (obj.getMapId() == mapId) {
+				if (obj instanceof L1FieldObjectInstance) {
+					L1World.getInstance().removeVisibleObject(obj);
+					L1World.getInstance().removeObject(obj);
+				} else if (obj instanceof L1EffectInstance) {
+					L1World.getInstance().removeVisibleObject(obj);
+					L1World.getInstance().removeObject(obj);
+				} else if (obj instanceof L1ItemInstance) {
+					final L1Inventory groundInventory = L1World.getInstance().getInventory(
+							obj.getX(), obj.getY(), obj.getMapId());
+					groundInventory.deleteItem((L1ItemInstance) obj);
+					L1World.getInstance().removeVisibleObject(obj);
+					L1World.getInstance().removeObject(obj);
+				} else if (obj instanceof L1NpcInstance) {
+					((L1NpcInstance) obj).deleteMe();
+				}
 			}
 		}
 		setPortalPack(portalNumber, null);
@@ -705,7 +732,7 @@ public class L1DragonSlayer {
 
 /*	*//**
 	 * 指定されたロケーションに任意のモンスターを指定数生成する。
-	 *
+	 * （将来、エンチャントルートのMOBをインスタンスマップに自動Spawnさせる準備）
 	 * @param loc
 	 *            出現位置
 	 * @param npcid
@@ -750,7 +777,8 @@ public class L1DragonSlayer {
 
 	*//**
 	 * モンスターをカウントする
-	 *
+	 * （将来、エンチャントルートのMOBをインスタンスマップに自動Spawnさせる準備）
+	 * （一般MOB既定カウントでゲートMOBをSpawnさせる為）
 	 * @param mobCnt 討伐MOB数
 	 *
 	 * @return 討伐MOB数
