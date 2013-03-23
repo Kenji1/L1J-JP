@@ -572,8 +572,8 @@ public class L1DragonSlayer {
 	 *  レイド終了後のリセット
 	 *  
 	 */
-	public void resetDragonSlayer(int portalNumber) {
-		short mapId = (short) (1005 + portalNumber);
+	public void resetDragonSlayer(int portalNum) {
+		short mapId = (short) (1005 + portalNum);
 
 		for (Object obj : L1World.getInstance().getVisibleObjects(mapId).values()) {
 			if (obj instanceof L1PcInstance) {
@@ -602,9 +602,22 @@ public class L1DragonSlayer {
 				inventory.clearItems();
 			}
 		}
-		setPortalPack(portalNumber, null);
-		setDragonSlayerStatus(portalNumber, STATUS_DRAGONSLAYER_NONE);
-		clearPlayerList(portalNumber);
+		for (L1Object obj : L1World.getInstance().getObject()) {
+			if (obj.getMapId() == mapId) {
+				if (obj instanceof L1NpcInstance) {
+					L1NpcInstance npc = (L1NpcInstance) obj;
+					if ((npc.getNpcTemplate().getNpcId() < 91506 // 五色のパール、神秘の五色のパール
+						&& npc.getNpcTemplate().getNpcId() > 91508) // トルナール
+					|| (npc.getNpcTemplate().getNpcId() < 91615 // 雲の大精霊
+							&& npc.getNpcTemplate().getNpcId() > 91616)) { // 怪しい暗雲
+					((L1NpcInstance) obj).deleteMe();
+					}
+				}
+			}
+		}
+		setPortalPack(portalNum, null);
+		setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_NONE);
+		clearPlayerList(portalNum);
 	}
 
 	private void reStartPlayer(L1PcInstance pc) {
