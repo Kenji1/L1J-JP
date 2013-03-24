@@ -341,8 +341,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- jp/l1j/server/packets/client/C_LoginToServer.java -->
 <entry key="MultipleLoginsDetected">多重ログインを検出しました。%s の接続を切断します。</entry>
 <entry key="LoginRequestIsInvalid">ログインリクエストが無効です。char=%s account=%s host=%s</entry>
-<entry key="BeyondTheToleranceOfTheLevelDown">レベルダウンの許容範囲を超えています。char=%s account=% host=%</entry>
-<entry key="LoggedCharacter">ログインキャラクター: char=%s account=% host=%</entry>
+<entry key="BeyondTheToleranceOfTheLevelDown">レベルダウンの許容範囲を超えています。char=%s account=%s host=%s</entry>
+<entry key="LoggedCharacter">ログインキャラクター: char=%s account=%s host=%s</entry>
 
 <!-- jp/l1j/server/packets/client/C_PickUpItem.java -->
 <entry key="CanNotPickUpAdena">2,000,000,000アデナを超えるので拾えません。</entry>
