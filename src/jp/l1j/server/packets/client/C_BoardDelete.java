@@ -21,23 +21,18 @@ import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.templates.L1BoardTopic;
 
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket
-
 public class C_BoardDelete extends ClientBasePacket {
-
 	private static final String C_BOARD_DELETE = "[C] C_BoardDelete";
-	private static Logger _log = Logger
-			.getLogger(C_BoardDelete.class.getName());
+	
+	private static Logger _log = Logger.getLogger(C_BoardDelete.class.getName());
 
 	public C_BoardDelete(byte decrypt[], ClientThread client) {
 		super(decrypt);
 		int objId = readD();
 		int topicId = readD();
-
 		L1Object obj = L1World.getInstance().findObject(objId);
 		if (obj == null) {
-			_log.warning("不正なNPCID : " + objId);
+			_log.warning("Invalid NPC ID: " + objId);
 			return;
 		}
 		L1BoardTopic topic = L1BoardTopic.findById(topicId);
@@ -50,29 +45,20 @@ public class C_BoardDelete extends ClientBasePacket {
 			logIllegalDeletion(topic, name);
 			return;
 		}
-
 		topic.delete();
 	}
 
 	private void logNotExist(int topicId) {
-		_log
-				.warning(String
-						.format(
-								"Illegal board deletion request: Topic id <%d> does not exist.",
-								topicId));
+		_log.warning(String.format("Illegal board deletion request: Topic id <%d> does not exist.", topicId));
 	}
 
 	private void logIllegalDeletion(L1BoardTopic topic, String name) {
-		_log
-				.warning(String
-						.format(
-								"Illegal board deletion request: Name <%s> expected but was <%s>.",
-								topic.getName(), name));
+		_log.warning(String.format("Illegal board deletion request: Name <%s> expected but was <%s>.",
+				topic.getName(), name));
 	}
 
 	@Override
 	public String getType() {
 		return C_BOARD_DELETE;
 	}
-
 }

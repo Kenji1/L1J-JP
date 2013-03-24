@@ -17,6 +17,7 @@ package jp.l1j.server.packets.client;
 
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.controller.LoginController;
 import jp.l1j.server.datatables.IpTable;
@@ -26,47 +27,36 @@ import jp.l1j.server.packets.server.S_CommonNews;
 import jp.l1j.server.packets.server.S_LoginResult;
 import jp.l1j.server.templates.L1Account;
 
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket
-
 public class C_AuthLogin extends ClientBasePacket {
-
 	private static final String C_AUTH_LOGIN = "[C] C_AuthLogin";
+	
 	private static Logger _log = Logger.getLogger(C_AuthLogin.class.getName());
 
 	public C_AuthLogin(byte[] decrypt, ClientThread client) {
 		super(decrypt);
 		String accountName = readS().toLowerCase();
 		String password = readS();
-
 		String ip = client.getIp();
 		String host = client.getHostname();
-
 		_log.finest("Request AuthLogin from user : " + accountName);
-
 		if (!Config.ALLOW_2PC) {
-			for (ClientThread tempClient : LoginController.getInstance()
-					.getAllAccounts()) {
+			for (ClientThread tempClient : LoginController.getInstance().getAllAccounts()) {
 				if (ip.equalsIgnoreCase(tempClient.getIp())) {
-					_log.info("2PCのログインを拒否しました。account=" + accountName
-							+ " host=" + host);
-					client.sendPacket(new S_LoginResult(
-							S_LoginResult.REASON_USER_OR_PASS_WRONG));
+					_log.info(String.format(I18N_DENY_TO_MULTIPLE_LOGINS, accountName, host));
+					// 多重ログインを拒否しました。account=%s host=%s
+					client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 					return;
 				}
 			}
 		}
-
 		L1Account account = L1Account.findByName(accountName);
 		if (IpTable.getInstance().isBannedIpMask(host)
 				&& (account == null || account.getAccessLevel() == 0)) {
-			_log.info("指定IP範囲からの接続を拒否しました。 account=" + accountName + " host="
-					+ host);
-			client.sendPacket(new S_LoginResult(
-					S_LoginResult.REASON_USER_OR_PASS_WRONG));
+			_log.info(String.format(I18N_DENY_TO_CONNECT_FROM_SPECIFIC_IP, accountName, host));
+			// 特定のIP範囲の接続を拒否しました。account=%s host=%s
+			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 			return;
 		}
-
 		if (account == null) {
 			if (Config.AUTO_CREATE_ACCOUNTS) {
 				account = L1Account.create(accountName, password, ip, host);
@@ -75,18 +65,15 @@ public class C_AuthLogin extends ClientBasePacket {
 			}
 		}
 		if (account == null || !account.validatePassword(password)) {
-			client.sendPacket(new S_LoginResult(
-					S_LoginResult.REASON_USER_OR_PASS_WRONG));
+			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 			return;
 		}
 		if (account.isBanned()) { // BANアカウント
-			_log.info("BANアカウントのログインを拒否しました。account=" + accountName + " host="
-					+ host);
-			client.sendPacket(new S_LoginResult(
-					S_LoginResult.REASON_USER_OR_PASS_WRONG));
+			_log.info(String.format(I18N_DENY_TO_LOGIN_BAN_ACCOUNT, accountName, host));
+			// BANアカウントのログインを拒否しました。account=%s host=%s
+			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 			return;
 		}
-
 		try {
 			LoginController.getInstance().login(client, account);
 			account.updateLastActivatedTime(); // 最終ログイン日を更新する
@@ -95,13 +82,13 @@ public class C_AuthLogin extends ClientBasePacket {
 			client.sendPacket(new S_CommonNews());
 		} catch (GameServerFullException e) {
 			client.kick();
-			_log.info("接続人数上限に達している為(" + client.getHostname()
-					+ ")のログインを拒否し、切断しました。");
+			_log.info(String.format(I18N_DENY_TO_LOGIN_BAN_ACCOUNT, host));
+			// 最大接続人数に達しているためログインを拒否しました。host=%s
 			return;
 		} catch (AccountAlreadyLoginException e) {
 			client.kick();
-			_log.info("同一IDでの重複接続の為(" + client.getHostname()
-					+ ")との接続を強制切断しました。");
+			_log.info(String.format(I18N_MULTIPLE_LOGINS_DETECTED, host));
+			// 多重ログインを検出しました。%S の接続を切断します。
 			return;
 		}
 	}
@@ -110,5 +97,4 @@ public class C_AuthLogin extends ClientBasePacket {
 	public String getType() {
 		return C_AUTH_LOGIN;
 	}
-
 }

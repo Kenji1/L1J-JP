@@ -17,6 +17,7 @@ package jp.l1j.server.packets.client;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.model.instance.L1ItemInstance;
@@ -29,33 +30,26 @@ import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1PrivateShopBuyList;
 import jp.l1j.server.templates.L1PrivateShopSellList;
 
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket
-
 public class C_Shop extends ClientBasePacket {
-
 	private static final String C_SHOP = "[C] C_Shop";
+	
 	private static Logger _log = Logger.getLogger(C_Shop.class.getName());
 
 	public C_Shop(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
-
 		L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
-
 		int mapId = pc.getMapId();
 		if (mapId != 340 && mapId != 350 && mapId != 360 && mapId != 370) {
 			pc.sendPackets(new S_ServerMessage(876)); // この場所では個人商店を開けません。
 			return;
 		}
-
 		ArrayList<L1PrivateShopSellList> sellList = pc.getSellList();
 		ArrayList<L1PrivateShopBuyList> buyList = pc.getBuyList();
 		L1ItemInstance checkItem;
 		boolean tradable = true;
-
 		int type = readC();
 		if (type == 0) { // 開始
 			int sellTotalCount = readH();
@@ -70,8 +64,9 @@ public class C_Shop extends ClientBasePacket {
 				checkItem = pc.getInventory().getItem(sellObjectId);
 				if (!checkItem.getItem().isTradable()) {
 					tradable = false;
-					pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
-							checkItem.getItem().getName(), "取引不可能です。"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_TRADING_IS_IMPOSSIBLE,
+							checkItem.getItem().getName())));
+					// %sは取引不可能です。
 				}
 				Object[] petlist = pc.getPetList().values().toArray();
 				for (Object petObject : petlist) {
@@ -79,8 +74,9 @@ public class C_Shop extends ClientBasePacket {
 						L1PetInstance pet = (L1PetInstance) petObject;
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
-							pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
-									checkItem.getItem().getName(), "取引不可能です。"));
+							pc.sendPackets(new S_SystemMessage(String.format(I18N_TRADING_IS_IMPOSSIBLE,
+									checkItem.getItem().getName())));
+							// %sは取引不可能です。
 							break;
 						}
 					}
@@ -103,32 +99,31 @@ public class C_Shop extends ClientBasePacket {
 				checkItem = pc.getInventory().getItem(buyObjectId);
 				if (!checkItem.getItem().isTradable()) {
 					tradable = false;
-					pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
-							checkItem.getItem().getName(), "取引不可能です。"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_TRADING_IS_IMPOSSIBLE,
+							checkItem.getItem().getName())));
+					// %sは取引不可能です。
 				}
 				if (checkItem.isSealed()) { // 封印された装備
 					// \f1%0は捨てたりまたは他人に讓ることができません。
-					pc.sendPackets(new S_ServerMessage(210, checkItem.getItem()
-							.getName()));
+					pc.sendPackets(new S_ServerMessage(210, checkItem.getItem().getName()));
 					return;
 				}
-
 				// 異常スタック取引防止用
 				if (checkItem.getCount() > 1
 						&& checkItem.getItem().isStackable() == false) {
-					pc.sendPackets(new S_SystemMessage(
-							"このアイテムはスタックすることができません。取引不可能です。"));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_CAN_NOT_TO_STACK, checkItem.getItem().getName())));
+					// %sはスタックすることができません。取引不可能です。
 					return;
 				}
-
 				Object[] petlist = pc.getPetList().values().toArray();
 				for (Object petObject : petlist) {
 					if (petObject instanceof L1PetInstance) {
 						L1PetInstance pet = (L1PetInstance) petObject;
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
-							pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
-									checkItem.getItem().getName(), "取引不可能です。"));
+							pc.sendPackets(new S_SystemMessage(String.format(I18N_TRADING_IS_IMPOSSIBLE,
+									checkItem.getItem().getName())));
+							// %sは取引不可能です。
 							break;
 						}
 					}
@@ -143,27 +138,21 @@ public class C_Shop extends ClientBasePacket {
 				sellList.clear();
 				buyList.clear();
 				pc.setPrivateShop(false);
-				pc.sendPackets(new S_DoActionGFX(pc.getId(),
-						ActionCodes.ACTION_Idle));
-				pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
-						ActionCodes.ACTION_Idle));
+				pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
+				pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
 				return;
 			}
 			byte[] chat = readByte();
 			pc.setShopChat(chat);
 			pc.setPrivateShop(true);
-			pc.sendPackets(new S_DoActionShop(pc.getId(),
-					ActionCodes.ACTION_Shop, chat));
-			pc.broadcastPacket(new S_DoActionShop(pc.getId(),
-					ActionCodes.ACTION_Shop, chat));
+			pc.sendPackets(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));
+			pc.broadcastPacket(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));
 		} else if (type == 1) { // 終了
 			sellList.clear();
 			buyList.clear();
 			pc.setPrivateShop(false);
-			pc.sendPackets(new S_DoActionGFX(pc.getId(),
-					ActionCodes.ACTION_Idle));
-			pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
-					ActionCodes.ACTION_Idle));
+			pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
+			pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
 		}
 	}
 
@@ -171,5 +160,4 @@ public class C_Shop extends ClientBasePacket {
 	public String getType() {
 		return C_SHOP;
 	}
-
 }

@@ -17,17 +17,15 @@ package jp.l1j.server.packets.client;
 
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.L1ItemId;
 import jp.l1j.server.templates.L1BoardTopic;
 
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket
-
 public class C_BoardWrite extends ClientBasePacket {
 	private static final String C_BOARD_WRITE = "[C] C_BoardWrite";
+	
 	private static Logger _log = Logger.getLogger(C_BoardWrite.class.getName());
 
 	public C_BoardWrite(byte decrypt[], ClientThread client) {
@@ -35,13 +33,11 @@ public class C_BoardWrite extends ClientBasePacket {
 		int id = readD();
 		String title = readS();
 		String content = readS();
-
 		L1Object tg = L1World.getInstance().findObject(id);
 		if (tg == null) {
-			_log.warning("不正なNPCID : " + id);
+			_log.warning("Invalid NPC ID: " + id);
 			return;
 		}
-
 		L1PcInstance pc = client.getActiveChar();
 		L1BoardTopic.create(pc.getName(), title, content);
 		pc.getInventory().consumeItem(L1ItemId.ADENA, 300);

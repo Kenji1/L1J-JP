@@ -18,23 +18,19 @@ package jp.l1j.server.packets.client;
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.NpcActionTable;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.npc.L1NpcHtml;
 import jp.l1j.server.model.npc.action.L1NpcAction;
 import jp.l1j.server.packets.server.S_NpcTalkReturn;
 
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket, C_NpcTalk
-
 public class C_NpcTalk extends ClientBasePacket {
-
 	private static final String C_NPC_TALK = "[C] C_NpcTalk";
+	
 	private static Logger _log = Logger.getLogger(C_NpcTalk.class.getName());
 
-	public C_NpcTalk(byte abyte0[], ClientThread client)
-			throws Exception {
+	public C_NpcTalk(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
 		int objid = readD();
 		L1Object obj = L1World.getInstance().findObject(objid);
@@ -50,7 +46,7 @@ public class C_NpcTalk extends ClientBasePacket {
 			}
 			obj.onTalkAction(pc);
 		} else {
-			_log.severe("オブジェクトが見つかりません objid=" + objid);
+			_log.severe("Does not exist objid=" + objid);
 		}
 	}
 

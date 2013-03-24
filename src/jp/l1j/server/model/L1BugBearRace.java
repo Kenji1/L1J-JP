@@ -15,12 +15,11 @@
 
 package jp.l1j.server.model;
 
+import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.math.BigDecimal;
-
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.GeneralThreadPool;
-import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.datatables.DoorTable;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.RaceTicketTable;
@@ -31,17 +30,14 @@ import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.model.shop.L1Shop;
+import jp.l1j.server.packets.server.S_NpcChatPacket;
+import jp.l1j.server.packets.server.S_NpcPack;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
-import jp.l1j.server.packets.server.S_NpcPack;
-import jp.l1j.server.packets.server.S_NpcChatPacket;
 import jp.l1j.server.templates.L1RaceTicket;
 import jp.l1j.server.templates.L1ShopItem;
+import jp.l1j.server.utils.IdFactory;
 
-/**
- * @author l1j.coordinator
- * 
- */
 public class L1BugBearRace {
 	L1MerchantInstance pory;
 	L1MerchantInstance cecile;
@@ -61,7 +57,6 @@ public class L1BugBearRace {
 	private final int[] _condition = new int[5];
 	private int _allBet;
 	private final int[] _betCount = new int[5];
-
 	private int _round;
 
 	public int getRound() {
@@ -229,8 +224,6 @@ public class L1BugBearRace {
 			setGameStatus(STATUS_END);
 			new RaceTimer(30).begin();
 			/* SHOP格納処理 */
-
-			/**/
 		}
 	}
 
@@ -242,17 +235,14 @@ public class L1BugBearRace {
 			}
 		}
 		if (cnt == 1) {
-			cecile.wideBroadcastPacket(new S_NpcChatPacket(cecile, "第 "
-					+ getRound()
-					+ " $366 "
-					+ NpcTable.getInstance().getTemplate(
-							_runner[runnberNumber].getNpcId()).getNameId()
+			cecile.wideBroadcastPacket(new S_NpcChatPacket(cecile,
+					String.format(I18N_RACE_ROUND, getRound()) + " $366 "
+					+ NpcTable.getInstance().getTemplate(_runner[runnberNumber].getNpcId()).getNameId()
 					+ " $367", 2));// 5>3バイト
 			/* DB格納処理 */
 			RaceTicketTable.getInstance().updateTicket(getRound(),
 					_runner[runnberNumber].getNpcId() - FIRST_NPCID + 1,
 					_allotment_percentage[runnberNumber]);
-			/**/
 		}
 	}
 
@@ -283,7 +273,6 @@ public class L1BugBearRace {
 
 		@Override
 		public void run() {
-
 			try {
 				// ゲームのステータスをNONEに（10分前）
 				setGameStatus(STATUS_NONE);
@@ -325,8 +314,7 @@ public class L1BugBearRace {
 				setGameStatus(STATUS_READY);
 				for (int loop = 0; loop < READY_TIME - 1; loop++) {
 					if (loop % 60 == 0) {
-						sendMessage("$376 " + (1 + (READY_TIME - loop) / 60)
-								+ " $377");
+						sendMessage("$376 " + (1 + (READY_TIME - loop) / 60) + " $377");
 					}
 					Thread.sleep(1000);
 				}
@@ -343,8 +331,7 @@ public class L1BugBearRace {
 				shop2.getSellingItems().clear();
 				shop3.getSellingItems().clear();
 				/**/
-				for (L1DoorInstance door : DoorTable.getInstance()
-						.getDoorList()) {
+				for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 					if (door.getDoorId() <= 812 && door.getDoorId() >= 808) {
 						door.open();
 					}
@@ -352,14 +339,12 @@ public class L1BugBearRace {
 				for (int i = 0; i < _runner.length; i++) {
 					new BugBearRunning(i).begin(0);
 				}
-
 				new StartBuffTimer().begin();
-
 				for (int i = 0; i < _runner.length; i++) {
 					if (getBetCount(i) > 0) {
 						// TODO 一人でも遊べるように、0.2を加算
-						BigDecimal p = new BigDecimal(String.valueOf(
-								(double) (getAllBet() / (getBetCount(i)) / 500D) + 0.2));
+						BigDecimal p = new BigDecimal(String.valueOf((double) (getAllBet()
+								/ (getBetCount(i)) / 500D) + 0.2));
 						// 小数点第3位で切り捨て
 						_allotment_percentage[i] = p.setScale(2,BigDecimal.ROUND_DOWN).doubleValue();;
 					} else {
@@ -379,7 +364,6 @@ public class L1BugBearRace {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 
 		public void begin() {
@@ -406,7 +390,6 @@ public class L1BugBearRace {
 			if (checkPosition(_runnerNumber)) {
 				return;
 			}
-
 			int sleepTime = calcSleepTime(_bugBear);
 			GeneralThreadPool.getInstance().schedule(this, sleepTime);
 		}
@@ -416,7 +399,6 @@ public class L1BugBearRace {
 			if (runner.getBraveSpeed() == 1) {
 				sleepTime -= (sleepTime * 0.25);
 			}
-
 			return sleepTime;
 		}
 
@@ -452,14 +434,11 @@ public class L1BugBearRace {
 	 * @return L1NpcInstance 戻り値 : 成功=生成したインスタンス 失敗=null
 	 */
 	private L1NpcInstance spawnOne(L1Location loc, int npcid, int heading) {
-		final L1NpcInstance mob = new L1NpcInstance(NpcTable.getInstance()
-				.getTemplate(npcid));
+		final L1NpcInstance mob = new L1NpcInstance(NpcTable.getInstance().getTemplate(npcid));
 		if (mob == null) {
 			return mob;
 		}
-
-		mob.setNameId("#" + (mob.getNpcId() - FIRST_NPCID + 1) + " "
-				+ mob.getNameId());
+		mob.setNameId("#" + (mob.getNpcId() - FIRST_NPCID + 1) + " " + mob.getNameId());
 		mob.setId(IdFactory.getInstance().nextId());
 		mob.setHeading(heading);
 		mob.setX(loc.getX());
@@ -470,10 +449,8 @@ public class L1BugBearRace {
 		mob.setMoveSpeed(mob.getMoveSpeed() * 2);
 		L1World.getInstance().storeObject(mob);
 		L1World.getInstance().addVisibleObject(mob);
-
 		final S_NpcPack S_NpcPack = new S_NpcPack(mob);
-		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(
-				mob)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(mob)) {
 			pc.addKnownObject(mob);
 			mob.addKnownObject(pc);
 			pc.sendPackets(S_NpcPack);

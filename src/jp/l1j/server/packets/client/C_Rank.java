@@ -18,6 +18,7 @@ package jp.l1j.server.packets.client;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.model.L1Clan;
@@ -29,36 +30,30 @@ import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket
-
 public class C_Rank extends ClientBasePacket {
-
 	private static final String C_RANK = "[C] C_Rank";
+	
 	private static Logger _log = Logger.getLogger(C_Rank.class.getName());
+	
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
+	
 	private static Calendar _cal = Calendar.getInstance();
 
 	public C_Rank(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
-
-		int data = readC(); // ?
+		int data = readC();
 		int rank = readC();
 		String name = readS();
-
 		L1PcInstance pc = clientthread.getActiveChar();
 		L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
-
 		if (data == 1) {
 			if (pc == null) {
 				return;
 			}
-
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan == null) {
 				return;
 			}
-
 			if (rank != L1Clan.CLAN_RANK_SUBLEADER
 					&& rank != L1Clan.CLAN_RANK_GUARDIAN
 					&& rank != L1Clan.CLAN_RANK_ELITE
@@ -67,7 +62,6 @@ public class C_Rank extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(2150));
 				return;
 			}
-
 			int pcRank = pc.getClanRank();
 			int targetPcRank = targetPc.getClanRank();
 			if ((pcRank == L1Clan.CLAN_RANK_LEADER
@@ -76,12 +70,10 @@ public class C_Rank extends ClientBasePacket {
 				// この権限を遂行するには、レベル25以上でなければなりません。
 				pc.sendPackets(new S_ServerMessage(2471));
 			}
-
 			if (pcRank == L1Clan.CLAN_RANK_GUARDIAN && pc.getLevel() < 40) {
 				// この権限を遂行するには、レベル40以上でなければなりません。
 				pc.sendPackets(new S_ServerMessage(2472));
 			}
-			
 			if (pcRank == L1Clan.CLAN_RANK_ELITE
 					|| pcRank == L1Clan.CLAN_RANK_REGULAR
 				// エリート、一般は、階級任命の権限はない
@@ -108,14 +100,12 @@ public class C_Rank extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(2068)); // 自分より低いランクのみ変更できます。
 				return;
 			}
-
 			if (targetPc != null) { // オンライン中
 				if (pc.getClanid() == targetPc.getClanid()) { // 同じクラン
 					try {
 						targetPc.setClanRank(rank);
 						targetPc.save(); // DBにキャラクター情報を書き込む
-						targetPc.sendPackets(new S_PacketBox(
-								S_PacketBox.MSG_RANK_CHANGED, rank));
+						targetPc.sendPackets(new S_PacketBox(S_PacketBox.MSG_RANK_CHANGED, rank));
 						// あなたのランクが%sに変更されました。
 					} catch (Exception e) {
 						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -125,10 +115,8 @@ public class C_Rank extends ClientBasePacket {
 					return;
 				}
 			} else { // オフライン中
-				L1PcInstance restorePc = CharacterTable.getInstance()
-						.restoreCharacter(name);
-				if (restorePc != null
-						&& restorePc.getClanid() == pc.getClanid()) { // 同じクラン
+				L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(name);
+				if (restorePc != null && restorePc.getClanid() == pc.getClanid()) { // 同じクラン
 					try {
 						restorePc.setClanRank(rank);
 						restorePc.save(); // DBにキャラクター情報を書き込む
@@ -141,11 +129,11 @@ public class C_Rank extends ClientBasePacket {
 				}
 			}
 		} else if (data == 2) {
-			pc.sendPackets(new S_ServerMessage(74, "同盟リスト"));
+			pc.sendPackets(new S_ServerMessage(74, I18N_CLAN_LIST)); // 血盟リスト
 		} else if (data == 3) {
-			pc.sendPackets(new S_ServerMessage(74, "同盟加入"));
+			pc.sendPackets(new S_ServerMessage(74, I18N_JOIN_TO_CLAN)); // 血盟に加入
 		} else if (data == 4) {
-			pc.sendPackets(new S_ServerMessage(74, "同盟脱退"));
+			pc.sendPackets(new S_ServerMessage(74, I18N_LEAVE_THE_CLAN)); // 血盟から脱退
 		} else if (data == 5) { // TODO 生存の叫び(CTRL+E)
 			if (pc.getWeapon() == null) {
 				pc.sendPackets(new S_ServerMessage(1973));
@@ -194,7 +182,6 @@ public class C_Rank extends ClientBasePacket {
 						addHp = (int) (pc.getMaxHp() * (0.7));
 						// 70%のHP回復
 					}
-					
 					S_SkillSound spr1 = new S_SkillSound(pc.getId(), gfxId1);
 					S_SkillSound spr2 = new S_SkillSound(pc.getId(), gfxId2);
 					pc.sendPackets(spr1);
@@ -202,7 +189,6 @@ public class C_Rank extends ClientBasePacket {
 					pc.sendPackets(spr2);
 					pc.broadcastPacket(spr2);
 				}
-				
 				if (addHp != 0) {
 					pc.setFood(0);
 					pc.sendPackets(new S_PacketBox(S_PacketBox.FOOD, (short) 0));

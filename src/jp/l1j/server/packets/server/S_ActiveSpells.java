@@ -12,10 +12,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.packets.server;
 
 import java.util.Map;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.codes.Opcodes;
 import jp.l1j.server.model.instance.L1PcInstance;
 import static jp.l1j.server.model.skill.L1SkillId.*;
@@ -72,14 +74,14 @@ import jp.l1j.server.utils.collections.Maps;
 
 public class S_ActiveSpells extends ServerBasePacket {
 	private byte[] _byte = null;
+	
 	private static final Map<Integer, ActiveSkill> _indexes = Maps.newHashMap();
-	private static Logger _log = Logger.getLogger(S_ActiveSpells.class
-			.getName());
+	
+	private static Logger _log = Logger.getLogger(S_ActiveSpells.class.getName());
 
 	private static class ActiveSkill {
 		public final int id;
 		public final int timeCoefficient;
-
 		public ActiveSkill(int skillId, int timeCoefficient) {
 			this.id = skillId;
 			this.timeCoefficient = timeCoefficient;
@@ -90,8 +92,7 @@ public class S_ActiveSpells extends ServerBasePacket {
 		addIndex(skillIndex, skillId, 4);
 	}
 
-	private static void addIndex(int skillIndex, int skillId,
-			int timeCoefficient) {
+	private static void addIndex(int skillIndex, int skillId, int timeCoefficient) {
 		ActiveSkill skill = new ActiveSkill(skillId, timeCoefficient);
 		_indexes.put(skillIndex, skill);
 	}
@@ -140,8 +141,7 @@ public class S_ActiveSpells extends ServerBasePacket {
 		StringBuilder result = new StringBuilder();
 		result.append("スキルの効果時間が送信可能な範囲を超えています。\n");
 		result.append("Hint: 効果時間を独自に設定している場合は、限界効果時間以下に設定してください。\n");
-		String detail = String.format("プレイヤー名: %s, スキルID: %d\n", pc.getName(),
-				skill.id);
+		String detail = String.format("プレイヤー名: %s, スキルID: %d\n", pc.getName(), skill.id);
 		int time = pc.getSkillEffectTimeSec(skill.id);
 		String detail2 = String.format("現在の効果時間: %d 秒, 限界効果時間: %d 秒以下", time,
 				255 * skill.timeCoefficient);

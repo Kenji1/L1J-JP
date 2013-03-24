@@ -21,20 +21,17 @@ import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_ChangeHeading;
 
 public class C_ChangeHeading extends ClientBasePacket {
+	
 	private static final String C_CHANGE_HEADING = "[C] C_ChangeHeading";
-	private static Logger _log = Logger.getLogger(C_ChangeHeading.class
-			.getName());
+	
+	private static Logger _log = Logger.getLogger(C_ChangeHeading.class.getName());
 
 	public C_ChangeHeading(byte[] decrypt, ClientThread client) {
 		super(decrypt);
 		int heading = readC();
-
 		L1PcInstance pc = client.getActiveChar();
-
 		pc.setHeading(heading);
-
-		_log.finest("Change Heading : " + pc.getHeading());
-
+		_log.finest("Change Heading: " + pc.getHeading());
 		if (pc.isGmInvis() || pc.isGhost()) {
 		} else if (pc.isInvisble()) {
 			pc.broadcastPacketForFindInvis(new S_ChangeHeading(pc), true);

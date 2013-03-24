@@ -120,6 +120,17 @@ public class I18N {
 	public static final String I18N_SPR_ID = bundle.getString("SprID");
 	public static final String I18N_STATUS = bundle.getString("Status");
 	public static final String I18N_VALUE = bundle.getString("Value");
+	public static final String I18N_PRINCE = bundle.getString("Prince");
+	public static final String I18N_KNIGHT = bundle.getString("Knight");
+	public static final String I18N_WIZARD = bundle.getString("Wizard");
+	public static final String I18N_ELF = bundle.getString("Elf");
+	public static final String I18N_DARK_ELF = bundle.getString("DarkElf");
+	public static final String I18N_DRAGON_KNIGHT = bundle.getString("DragonKnight");
+	public static final String I18N_ILLUSIONIST = bundle.getString("Illusionist");
+	public static final String I18N_POSSIBLE = bundle.getString("Possible");
+	public static final String I18N_IMPOSSIBLE = bundle.getString("Impossible");
+	public static final String I18N_MALE = bundle.getString("Male");
+	public static final String I18N_FEMALE = bundle.getString("Female");
 	
 	/*
 	 * jp.l1j.server.command.executor.L1AccountBanKick.java
@@ -380,6 +391,26 @@ public class I18N {
 	public static final String I18N_ATTACK_MISS = bundle.getString("AttackMiss");
 	
 	/*
+	 * jp.l1j.server.model.L1BugBearRace.java
+	 */
+	public static final String I18N_RACE_ROUND = bundle.getString("RaceRound");
+	
+	/*
+	 * jp.l1j.server.model.L1Clan.java
+	 */
+	public static final String I18N_CLAN_LEADER = bundle.getString("ClanLeader");
+	public static final String I18N_CLAN_SUBLEADER = bundle.getString("ClanSubLeader");
+	public static final String I18N_CLAN_GUARDIAN = bundle.getString("ClanGuardian");
+	public static final String I18N_CLAN_ELITE = bundle.getString("ClanElite");
+	public static final String I18N_CLAN_REGULAR = bundle.getString("ClanRegular");
+	
+	/*
+	 * jp.l1j.server.model.L1Clan.java
+	 */
+	public static final String I18N_REMOVE_ITEMS_AFTER_FEW_SECONDS = bundle.getString("RemoveItemsAfterFewSeconds");
+	public static final String I18N_REMOVED_ITEMS_ON_WORLD_MAP = bundle.getString("RemovedItemsOnWorldMap");
+	
+	/*
 	 * jp.l1j.server.model.L1Magic.java
 	 */
 	public static final String I18N_SKILL_GAVE_TEXT_COLOR = bundle.getString("SkillGaveTextColor");
@@ -419,6 +450,40 @@ public class I18N {
 	public static final String I18N_DOES_NOT_EXIST_NPC_LIST = bundle.getString("DoesNotExistNpcList");
 	public static final String I18N_PROBABILITIES_ERROR = bundle.getString("ProbabilitiesError");
 	public static final String I18N_OVER_ENCHANT_SUCCESSFUL = bundle.getString("OverEnchantSuccessful");
+	
+	/*
+	 * jp.l1j.server.packets.client.C_AuthLogin.java
+	 */
+	public static final String I18N_DENY_TO_MULTIPLE_LOGINS = bundle.getString("DenyToMultipleLogins");
+	public static final String I18N_DENY_TO_CONNECT_FROM_SPECIFIC_IP = bundle.getString("DenyToConnectFromSpecificIP");
+	public static final String I18N_DENY_TO_LOGIN_BAN_ACCOUNT = bundle.getString("DenyToLoginBanAccount");
+	public static final String I18N_DENY_TO_LOGIN_BECAUSE_REACHED_MAX_CONNECTIONS = bundle.getString("DenyToLoginBecauseReachedMaxConnections");
+	
+	/*
+	 * jp.l1j.server.packets.client.C_LoginToServer.java
+	 */
+	public static final String I18N_MULTIPLE_LOGINS_DETECTED = bundle.getString("MultipleLoginsDetected");
+	public static final String I18N_LOGIN_REQUEST_IS_INVALID = bundle.getString("LoginRequestIsInvalid");
+	public static final String I18N_BEYOND_THE_TOLERANCE_OF_THE_LEVEL_DOWN = bundle.getString("BeyondTheToleranceOfTheLevelDown");
+	public static final String I18N_LOGGED_CHARACTER = bundle.getString("LoggedCharacter");
+	
+	/*
+	 * jp.l1j.server.packets.client.C_PickUpItem.java
+	 */
+	public static final String I18N_CAN_NOT_PICK_UP_ADENA = bundle.getString("CanNotPickUpAdena");
+	
+	/*
+	 * jp.l1j.server.packets.client.C_Rank.java
+	 */
+	public static final String I18N_CLAN_LIST = bundle.getString("ClanList");
+	public static final String I18N_JOIN_TO_CLAN = bundle.getString("JoinToClan");
+	public static final String I18N_LEAVE_THE_CLAN = bundle.getString("LeaveTheClan");
+
+	/*
+	 * jp.l1j.server.packets.client.C_Shop.java
+	 */
+	public static final String I18N_TRADING_IS_IMPOSSIBLE = bundle.getString("TradingIsImpossible");
+	public static final String I18N_CAN_NOT_TO_STACK = bundle.getString("CanNotToStack");
 	
 	/*
 	 * jp.l1j.server.packets.client.C_UseItem.java

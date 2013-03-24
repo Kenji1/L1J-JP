@@ -12,20 +12,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1WarehouseInventory;
 import jp.l1j.server.templates.L1InventoryItem;
 
 public class L1Clan {
-
 	public static final int CLAN_RANK_LEADER = 4;	// 君主
 	public static final int CLAN_RANK_SUBLEADER = 3; // 副君主
 	public static final int CLAN_RANK_GUARDIAN = 6; // ガーディアン
@@ -160,8 +159,7 @@ public class L1Clan {
 		String result = "";
 		try {
 			for (String name : membersNameList) {
-				L1PcInstance pc = CharacterTable.getInstance()
-						.restoreCharacter(name);
+				L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
 				if (pc != null) {
 					result = result + name + getRankString(pc) + " ";
 				}
@@ -176,15 +174,15 @@ public class L1Clan {
 		String rank = "";
 		if (pc != null) {
 			if (pc.getClanRank() == CLAN_RANK_REGULAR) {
-				rank = "[一般]";
+				rank = I18N_CLAN_REGULAR; // [一般]
 			} else if (pc.getClanRank() == CLAN_RANK_ELITE) {
-				rank = "[エリート]";
+				rank = I18N_CLAN_ELITE; // [エリート]
 			} else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
-				rank = "[ガーディアン]";
+				rank = I18N_CLAN_GUARDIAN; // [ガーディアン]
 			} else if (pc.getClanRank() == CLAN_RANK_SUBLEADER) {
-				rank = "[副君主]";
+				rank = I18N_CLAN_SUBLEADER; // [副君主]
 			} else if (pc.getClanRank() == CLAN_RANK_LEADER) {
-				rank = "[血盟君主]";
+				rank = I18N_CLAN_LEADER; // [君主]
 			}
 		}
 		return rank;

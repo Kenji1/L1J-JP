@@ -12,6 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.model;
 
 import jp.l1j.server.model.map.L1Map;
@@ -22,6 +23,7 @@ import jp.l1j.server.types.Point;
 
 public class L1Location extends Point {
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
+	
 	protected L1Map _map = L1Map.newNull();
 
 	public L1Location() {
@@ -161,7 +163,7 @@ public class L1Location extends Point {
 	public static L1Location randomLocation(L1Location baseLocation, int min,
 			int max, boolean isRandomTeleport) {
 		if (min > max) {
-			throw new IllegalArgumentException("min > maxとなる引数は無効");
+			throw new IllegalArgumentException("param is invalid. (min > max)");
 		}
 		if (max <= 0) {
 			return new L1Location(baseLocation);
@@ -169,7 +171,6 @@ public class L1Location extends Point {
 		if (min < 0) {
 			min = 0;
 		}
-
 		L1Location newLocation = new L1Location();
 		int newX = 0;
 		int newY = 0;
@@ -177,20 +178,16 @@ public class L1Location extends Point {
 		int locY = baseLocation.getY();
 		short mapId = (short) baseLocation.getMapId();
 		L1Map map = baseLocation.getMap();
-
 		newLocation.setMap(map);
-
 		int locX1 = locX - max;
 		int locX2 = locX + max;
 		int locY1 = locY - max;
 		int locY2 = locY + max;
-
 		// map範囲
 		int mapX1 = map.getX();
 		int mapX2 = mapX1 + map.getWidth();
 		int mapY1 = map.getY();
 		int mapY2 = mapY1 + map.getHeight();
-
 		// 最大でもマップの範囲内までに補正
 		if (locX1 < mapX1) {
 			locX1 = mapX1;
@@ -204,43 +201,34 @@ public class L1Location extends Point {
 		if (locY2 > mapY2) {
 			locY2 = mapY2;
 		}
-
 		int diffX = locX2 - locX1; // x方向
 		int diffY = locY2 - locY1; // y方向
-
 		int trial = 0;
 		// 試行回数を範囲最小値によってあげる為の計算
 		int amax = (int) Math.pow(1 + (max * 2), 2);
 		int amin = (min == 0) ? 0 : (int) Math.pow(1 + ((min - 1) * 2), 2);
 		int trialLimit = 40 * amax / (amax - amin);
-
 		while (true) {
 			if (trial >= trialLimit) {
 				newLocation.set(locX, locY);
 				break;
 			}
 			trial++;
-
 			newX = locX1 + L1Location._random.nextInt(diffX + 1);
 			newY = locY1 + L1Location._random.nextInt(diffY + 1);
-
 			newLocation.set(newX, newY);
-
 			if (baseLocation.getTileLineDistance(newLocation) < min) {
 				continue;
-
 			}
 			if (isRandomTeleport) { // ランダムテレポートの場合
 				if (L1CastleLocation.checkInAllWarArea(newX, newY, mapId)) { // いずれかの城エリア
 					continue;
 				}
-
 				// いずれかのアジト内
 				if (L1HouseLocation.isInHouse(newX, newY, mapId)) {
 					continue;
 				}
 			}
-
 			if (map.isInMap(newX, newY) && map.isPassable(newX, newY)) {
 				break;
 			}

@@ -17,22 +17,19 @@ package jp.l1j.server.model;
 
 import java.util.List;
 import java.util.logging.Logger;
-
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.GeneralThreadPool;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.packets.server.S_ServerMessage;
-
-// Referenced classes of package jp.l1j.server.model:
-// L1DeleteItemOnGround
+import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1DeleteItemOnGround {
 	private DeleteTimer _deleteTimer;
 
-	private static Logger _log = Logger
-			.getLogger(L1DeleteItemOnGround.class.getName());
+	private static Logger _log = Logger.getLogger(L1DeleteItemOnGround.class.getName());
 
 	public L1DeleteItemOnGround() {
 	}
@@ -51,9 +48,8 @@ public class L1DeleteItemOnGround {
 					_log.warning("L1DeleteItemOnGround error: " + exception);
 					break;
 				}
-				L1World.getInstance().broadcastPacketToAll(
-						new S_ServerMessage(166, "ワールドマップ上のアイテム",
-								"10秒後に削除されます。")); // \f1%0が%4%1%3 %2
+				L1World.getInstance().broadcastPacketToAll(new S_SystemMessage(String.format(I18N_REMOVE_ITEMS_AFTER_FEW_SECONDS, 10)));
+				// ワールドマップ上のアイテムが、%d秒後に削除されます。
 				try {
 					Thread.sleep(10000);
 				} catch (Exception exception) {
@@ -61,9 +57,8 @@ public class L1DeleteItemOnGround {
 					break;
 				}
 				deleteItem();
-				L1World.getInstance().broadcastPacketToAll(
-						new S_ServerMessage(166, "ワールドマップ上のアイテム", "削除されました。")); // \f1%0が%4%1%3
-				// %2
+				L1World.getInstance().broadcastPacketToAll(new S_SystemMessage(I18N_REMOVED_ITEMS_ON_WORLD_MAP));
+				// ワールドマップ上のアイテムが削除されました。
 			}
 		}
 	}
@@ -72,7 +67,6 @@ public class L1DeleteItemOnGround {
 		if (!Config.ALT_ITEM_DELETION_TYPE.equalsIgnoreCase("auto")) {
 			return;
 		}
-
 		_deleteTimer = new DeleteTimer();
 		GeneralThreadPool.getInstance().execute(_deleteTimer); // タイマー開始
 	}
@@ -83,7 +77,6 @@ public class L1DeleteItemOnGround {
 			if (!(obj instanceof L1ItemInstance)) {
 				continue;
 			}
-
 			L1ItemInstance item = (L1ItemInstance) obj;
 			if (item.getX() == 0 && item.getY() == 0) { // 地面上のアイテムではなく、誰かの所有物
 				continue;
@@ -95,17 +88,13 @@ public class L1DeleteItemOnGround {
 					.getMapId())) { // アジト内
 				continue;
 			}
-
-			List<L1PcInstance> players = L1World.getInstance()
-					.getVisiblePlayer(item, Config.ALT_ITEM_DELETION_RANGE);
+			List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(item, Config.ALT_ITEM_DELETION_RANGE);
 			if (players.isEmpty()) { // 指定範囲内にプレイヤーが居なければ削除
-				L1Inventory groundInventory = L1World
-						.getInstance()
-						.getInventory(item.getX(), item.getY(), item.getMapId());
+				L1Inventory groundInventory = L1World.getInstance().getInventory(item.getX(), item.getY(), item.getMapId());
 				groundInventory.removeItem(item);
 				numOfDeleted++;
 			}
 		}
-		_log.fine("ワールドマップ上のアイテムを自動削除。削除数: " + numOfDeleted);
+		_log.fine("Automatic deletion of items on the world map: " + numOfDeleted + "items");
 	}
 }

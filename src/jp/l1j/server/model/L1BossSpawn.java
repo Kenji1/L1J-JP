@@ -12,12 +12,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.model;
 
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jp.l1j.configure.Config;
 import jp.l1j.server.GeneralThreadPool;
 import jp.l1j.server.random.RandomGenerator;
@@ -62,7 +62,6 @@ public class L1BossSpawn extends L1Spawn {
 		Calendar spawnTime;
 		Calendar now = Calendar.getInstance(); // 現時刻
 		Calendar latestStart = _cycle.getLatestStartTime(now); // 現時刻に対する最近の周期の開始時間
-
 		Calendar activeStart = _cycle.getSpawnStartTime(_activeSpawnTime); // アクティブだった周期の開始時間
 		// アクティブだった周期の開始時間 >= 最近の周期開始時間の場合、次の出現
 		if (!activeStart.before(latestStart)) {
@@ -71,8 +70,7 @@ public class L1BossSpawn extends L1Spawn {
 			// アクティブだった周期の開始時間 < 最近の周期開始時間の場合は、最近の周期で出現
 			// わかりづらいが確率計算する為に、無理やりcalcNextSpawnTimeを通している。
 			latestStart.add(Calendar.SECOND, -1);
-			spawnTime = calcNextSpawnTime(_cycle
-					.getLatestStartTime(latestStart));
+			spawnTime = calcNextSpawnTime(_cycle.getLatestStartTime(latestStart));
 		}
 		spawnBoss(spawnTime, objectId);
 	}
@@ -135,13 +133,11 @@ public class L1BossSpawn extends L1Spawn {
 		// 今回の出現時間を保存しておく。再出現時に使用。
 		_activeSpawnTime = spawnTime;
 		long delay = spawnTime.getTimeInMillis() - System.currentTimeMillis();
-
 		int cnt = _spawnCount;
 		_spawnCount = getAmount();
 		while (cnt < getAmount()) {
 			cnt++;
-			GeneralThreadPool.getInstance().schedule(
-					new SpawnTask(0, objectId), delay);
+			GeneralThreadPool.getInstance().schedule(new SpawnTask(0, objectId), delay);
 		}
 		_log.log(Level.FINE, toString());
 	}
@@ -155,11 +151,11 @@ public class L1BossSpawn extends L1Spawn {
 		builder.append("[MOB]npcid:" + getNpcId());
 		builder.append(" name:" + getName());
 		builder.append("[Type]" + _cycle.getName());
-		builder.append("[現在の周期]");
+		builder.append("[Cycle]");
 		builder.append(_cycle.getSpawnStartTime(_activeSpawnTime).getTime());
 		builder.append(" - ");
 		builder.append(_cycle.getSpawnEndTime(_activeSpawnTime).getTime());
-		builder.append("[出現時間]");
+		builder.append("[Time]");
 		builder.append(_activeSpawnTime.getTime());
 		return builder.toString();
 	}

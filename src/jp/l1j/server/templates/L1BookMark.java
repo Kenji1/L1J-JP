@@ -51,15 +51,13 @@ public class L1BookMark {
 			Connection con = null;
 			PreparedStatement pstm = null;
 			try {
-
 				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con
-						.prepareStatement("DELETE FROM character_bookmarks WHERE id=?");
+				pstm = con.prepareStatement("DELETE FROM character_bookmarks WHERE id=?");
 				pstm.setInt(1, book.getId());
 				pstm.execute();
 				player.removeBookMark(book);
 			} catch (SQLException e) {
-				_log.log(Level.SEVERE, "ブックマークの削除でエラーが発生しました。", e);
+				_log.log(Level.SEVERE, "An error occurred during deletion of the bookmark.", e);
 			} finally {
 				SqlUtil.close(pstm);
 				SqlUtil.close(con);
@@ -73,17 +71,14 @@ public class L1BookMark {
 //			pc.sendPackets(new S_ServerMessage(204));
 //			return;
 //		}
-
 		if (!pc.getMap().isMarkable()) {
 			pc.sendPackets(new S_ServerMessage(214)); // \f1ここを記憶することができません。
 			return;
 		}
-
 		int size = pc.getBookMarkSize();
 		if (size > 49) {
 			return;
 		}
-
 		if (pc.getBookMark(s) == null) {
 			L1BookMark bookmark = new L1BookMark();
 			bookmark.setId(IdFactory.getInstance().nextId());
@@ -92,10 +87,8 @@ public class L1BookMark {
 			bookmark.setLocX(pc.getX());
 			bookmark.setLocY(pc.getY());
 			bookmark.setMapId(pc.getMapId());
-
 			Connection con = null;
 			PreparedStatement pstm = null;
-
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
 				pstm = con.prepareStatement("INSERT INTO character_bookmarks SET id = ?, char_id = ?, name = ?, loc_x = ?, loc_y = ?, map_id = ?");
@@ -107,15 +100,13 @@ public class L1BookMark {
 				pstm.setInt(6, bookmark.getMapId());
 				pstm.execute();
 			} catch (SQLException e) {
-				_log.log(Level.SEVERE, "ブックマークの追加でエラーが発生しました。", e);
+				_log.log(Level.SEVERE, "An error occurred during deletion of the bookmark.", e);
 			} finally {
 				SqlUtil.close(pstm);
 				SqlUtil.close(con);
 			}
-
 			pc.addBookMark(bookmark);
-			pc.sendPackets(new S_Bookmarks(s, bookmark.getMapId(),
-					bookmark.getId()));
+			pc.sendPackets(new S_Bookmarks(s, bookmark.getMapId(), bookmark.getId()));
 		} else {
 			pc.sendPackets(new S_ServerMessage(327)); // 同じ名前がすでに存在しています。
 		}

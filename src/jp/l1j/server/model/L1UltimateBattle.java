@@ -12,6 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.model;
 
 import java.text.SimpleDateFormat;
@@ -24,10 +25,10 @@ import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jp.l1j.configure.Config;
-import jp.l1j.server.codes.ActionCodes;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.GeneralThreadPool;
+import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.UbSpawnTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
@@ -36,14 +37,11 @@ import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1GroundInventory;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.model.item.L1ItemId;
+import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
-import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.templates.L1Item;
 import jp.l1j.server.utils.IntRange;
-
-// Referenced classes of package jp.l1j.server.model:
-// L1UltimateBattle
 
 public class L1UltimateBattle {
 	private int _locX;
@@ -54,16 +52,13 @@ public class L1UltimateBattle {
 	private int _locY1;
 	private int _locX2;
 	private int _locY2;
-
 	private int _ubId;
 	private int _pattern;
 	private boolean _isNowUb;
 	private boolean _active; // UB入場可能〜競技終了までtrue
-
 	private int _minLevel;
 	private int _maxLevel;
 	private int _maxPlayer;
-
 	private boolean _enterRoyal;
 	private boolean _enterKnight;
 	private boolean _enterMage;
@@ -76,14 +71,13 @@ public class L1UltimateBattle {
 	private boolean _usePot;
 	private int _hpr;
 	private int _mpr;
-
 	private static int BEFORE_MINUTE = 5; // 5分前から入場開始
 
 	private Set<Integer> _managers = new HashSet<Integer>();
+	
 	private SortedSet<Integer> _ubTimes = new TreeSet<Integer>();
 
-	private static Logger _log = Logger.getLogger(L1UltimateBattle.class
-			.getName());
+	private static Logger _log = Logger.getLogger(L1UltimateBattle.class.getName());
 
 	private final ArrayList<L1PcInstance> _members = new ArrayList<L1PcInstance>();
 
@@ -96,7 +90,6 @@ public class L1UltimateBattle {
 	private void sendRoundMessage(int curRound) {
 		// XXX - このIDは間違っている
 		final int MSGID_ROUND_TABLE[] = { 893, 894, 895, 896 };
-
 		sendMessage(MSGID_ROUND_TABLE[curRound - 1], "");
 	}
 
@@ -173,17 +166,13 @@ public class L1UltimateBattle {
 		if (temp == null) {
 			return;
 		}
-
 		for (int i = 0; i < count; i++) {
-			L1Location loc = _location.randomLocation(
-					(getLocX2() - getLocX1()) / 2, false);
+			L1Location loc = _location.randomLocation((getLocX2() - getLocX1()) / 2, false);
 			if (temp.isStackable()) {
-				L1ItemInstance item = ItemTable.getInstance()
-						.createItem(itemId);
+				L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
 				item.setEnchantLevel(0);
 				item.setCount(stackCount);
-				L1GroundInventory ground = L1World.getInstance().getInventory(
-						loc.getX(), loc.getY(), _mapId);
+				L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
 				if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
 					ground.storeItem(item);
 				}
@@ -192,8 +181,7 @@ public class L1UltimateBattle {
 				for (int createCount = 0; createCount < stackCount; createCount++) {
 					item = ItemTable.getInstance().createItem(itemId);
 					item.setEnchantLevel(0);
-					L1GroundInventory ground = L1World.getInstance()
-							.getInventory(loc.getX(), loc.getY(), _mapId);
+					L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
 					if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
 						ground.storeItem(item);
 					}
@@ -206,8 +194,7 @@ public class L1UltimateBattle {
 	 * コロシアム上のアイテムとモンスターを全て削除する。
 	 */
 	private void clearColosseum() {
-		for (Object obj : L1World.getInstance().getVisibleObjects(_mapId)
-				.values()) {
+		for (Object obj : L1World.getInstance().getVisibleObjects(_mapId).values()) {
 			if (obj instanceof L1MonsterInstance) // モンスター削除
 			{
 				L1MonsterInstance mob = (L1MonsterInstance) obj;
@@ -216,7 +203,6 @@ public class L1UltimateBattle {
 					mob.setStatus(ActionCodes.ACTION_Die);
 					mob.setCurrentHpDirect(0);
 					mob.deleteMe();
-
 				}
 			} else if (obj instanceof L1Inventory) // アイテム削除
 			{
@@ -242,30 +228,22 @@ public class L1UltimateBattle {
 			// XXX - このIDは間違っている
 			final int MSGID_COUNT = 637;
 			final int MSGID_START = 632;
-
 			for (int loop = 0; loop < BEFORE_MINUTE * 60 - 10; loop++) { // 開始10秒前まで待つ
 				Thread.sleep(1000);
 				// removeRetiredMembers();
 			}
 			removeRetiredMembers();
-
 			sendMessage(MSGID_COUNT, "10"); // 10秒前
-
 			Thread.sleep(5000);
 			sendMessage(MSGID_COUNT, "5"); // 5秒前
-
 			Thread.sleep(1000);
 			sendMessage(MSGID_COUNT, "4"); // 4秒前
-
 			Thread.sleep(1000);
 			sendMessage(MSGID_COUNT, "3"); // 3秒前
-
 			Thread.sleep(1000);
 			sendMessage(MSGID_COUNT, "2"); // 2秒前
-
 			Thread.sleep(1000);
 			sendMessage(MSGID_COUNT, "1"); // 1秒前
-
 			Thread.sleep(1000);
 			sendMessage(MSGID_START, "アルティメット バトル"); // スタート
 			removeRetiredMembers();
@@ -280,7 +258,6 @@ public class L1UltimateBattle {
 		 */
 		private void waitForNextRound(int curRound) throws InterruptedException {
 			final int WAIT_TIME_TABLE[] = { 6, 6, 2, 18 };
-
 			int wait = WAIT_TIME_TABLE[curRound - 1];
 			for (int i = 0; i < wait; i++) {
 				Thread.sleep(10000);
@@ -300,33 +277,22 @@ public class L1UltimateBattle {
 				setNowUb(true);
 				for (int round = 1; round <= 4; round++) {
 					sendRoundMessage(round);
-
-					L1UbPattern pattern = UbSpawnTable.getInstance()
-							.getPattern(_ubId, _pattern);
-
-					ArrayList<L1UbSpawn> spawnList = pattern
-							.getSpawnList(round);
-
+					L1UbPattern pattern = UbSpawnTable.getInstance().getPattern(_ubId, _pattern);
+					ArrayList<L1UbSpawn> spawnList = pattern.getSpawnList(round);
 					for (L1UbSpawn spawn : spawnList) {
 						if (getMembersCount() > 0) {
 							spawn.spawnAll();
 						}
-
 						Thread.sleep(spawn.getSpawnDelay() * 1000);
 						// removeRetiredMembers();
 					}
-
 					if (getMembersCount() > 0) {
 						spawnSupplies(round);
 					}
-
 					waitForNextRound(round);
 				}
-
-				for (L1PcInstance pc : getMembersArray()) // コロシアム内に居るPCを外へ出す
-				{
-					RandomGenerator random = RandomGeneratorFactory
-							.getSharedRandom();
+				for (L1PcInstance pc : getMembersArray()) { // コロシアム内に居るPCを外へ出す
+					RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
 					int rndx = random.nextInt(4);
 					int rndy = random.nextInt(4);
 					int locx = 33503 + rndx;
@@ -354,7 +320,6 @@ public class L1UltimateBattle {
 		int patternsMax = UbSpawnTable.getInstance().getMaxPattern(_ubId);
 		RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
 		_pattern = random.nextInt(patternsMax) + 1; // 出現パターンを決める
-
 		UbThread ub = new UbThread();
 		GeneralThreadPool.getInstance().execute(ub);
 	}
@@ -648,16 +613,13 @@ public class L1UltimateBattle {
 		if (!IntRange.includes(pc.getLevel(), _minLevel, _maxLevel)) {
 			return false;
 		}
-
 		// 参加可能なクラスか
 		if (!((pc.isCrown() && _enterRoyal) || (pc.isKnight() && _enterKnight)
 				|| (pc.isWizard() && _enterMage) || (pc.isElf() && _enterElf)
 				|| (pc.isDarkelf() && _enterDarkelf)
-				|| (pc.isDragonKnight() && _enterDragonKnight) || (pc
-				.isIllusionist() && _enterIllusionist))) {
+				|| (pc.isDragonKnight() && _enterDragonKnight) || (pc.isIllusionist() && _enterIllusionist))) {
 			return false;
 		}
-
 		return true;
 	}
 
@@ -671,45 +633,45 @@ public class L1UltimateBattle {
 		// クラス
 		StringBuilder classesBuff = new StringBuilder();
 		if (_enterDarkelf) {
-			classesBuff.append("ダーク エルフ ");
+			classesBuff.append(I18N_DARK_ELF + " "); // ダークエルフ
 		}
 		if (_enterMage) {
-			classesBuff.append("ウィザード ");
+			classesBuff.append(I18N_WIZARD + " "); // ウィザード
 		}
 		if (_enterElf) {
-			classesBuff.append("エルフ ");
+			classesBuff.append(I18N_ELF + " "); // エルフ
 		}
 		if (_enterKnight) {
-			classesBuff.append("ナイト ");
+			classesBuff.append(I18N_KNIGHT + " "); // ナイト
 		}
 		if (_enterRoyal) {
-			classesBuff.append("プリンス ");
+			classesBuff.append(I18N_PRINCE + " "); // プリンス
 		}
 		if (_enterDragonKnight) {
-			classesBuff.append("ドラゴンナイト ");
+			classesBuff.append(I18N_DRAGON_KNIGHT + " "); // ドラゴンナイト
 		}
 		if (_enterIllusionist) {
-			classesBuff.append("イリュージョニスト ");
+			classesBuff.append(I18N_ILLUSIONIST + " "); // イリュージョニスト
 		}
 		String classes = classesBuff.toString().trim();
 		// 性別
 		StringBuilder sexBuff = new StringBuilder();
 		if (_enterMale) {
-			sexBuff.append("男 ");
+			sexBuff.append(I18N_MALE + " "); // 男
 		}
 		if (_enterFemale) {
-			sexBuff.append("女 ");
+			sexBuff.append(I18N_FEMALE + " "); // 女
 		}
 		String sex = sexBuff.toString().trim();
 		String loLevel = String.valueOf(_minLevel);
 		String hiLevel = String.valueOf(_maxLevel);
-		String teleport = _location.getMap().isEscapable() ? "可能" : "不可能";
-		String res = _location.getMap().isUseResurrection() ? "可能" : "不可能";
-		String pot = "可能";
+		String teleport = _location.getMap().isEscapable() ? I18N_POSSIBLE : I18N_IMPOSSIBLE; // 可能 : 不可
+		String res = _location.getMap().isUseResurrection() ? I18N_POSSIBLE : I18N_IMPOSSIBLE; // 可能 : 不可
+		String pot = I18N_POSSIBLE; // 可能
 		String hpr = String.valueOf(_hpr);
 		String mpr = String.valueOf(_mpr);
-		String summon = _location.getMap().isTakePets() ? "可能" : "不可能";
-		String summon2 = _location.getMap().isRecallPets() ? "可能" : "不可能";
+		String summon = _location.getMap().isTakePets() ? I18N_POSSIBLE : I18N_IMPOSSIBLE; // 可能 : 不可
+		String summon2 = _location.getMap().isRecallPets() ? I18N_POSSIBLE : I18N_IMPOSSIBLE; // 可能 : 不可
 		_ubInfo = new String[] { nextUbTime, classes, sex, loLevel, hiLevel,
 				teleport, res, pot, hpr, mpr, summon, summon2 };
 		return _ubInfo;

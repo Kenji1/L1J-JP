@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.controller.timer.WarTimeController;
@@ -92,65 +93,53 @@ import jp.l1j.server.templates.L1Skill;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket
-//
 public class C_LoginToServer extends ClientBasePacket {
-
 	private static final String C_LOGIN_TO_SERVER = "[C] C_LoginToServer";
+	
 	private static Logger _log = Logger.getLogger(C_LoginToServer.class.getName());
 
 	public C_LoginToServer(byte abyte0[], ClientThread client)
 			throws FileNotFoundException, Exception {
 		super(abyte0);
-
 		String login = client.getAccountName();
-
 		String charName = readS();
-
 		if (client.getActiveChar() != null) {
-			_log.info("同一IDでの重複接続の為(" + client.getHostname()
-					+ ")との接続を強制切断しました。");
+			_log.info(String.format(I18N_MULTIPLE_LOGINS_DETECTED, client.getHostname()));
+			// 多重ログインを検出しました。%s の接続を切断します。
 			client.close();
 			return;
 		}
-
 		L1PcInstance pc = L1PcInstance.load(charName);
 		if (pc == null || !login.equals(pc.getAccountName())) {
-			_log.info("無効なログインリクエスト: char=" + charName + " account=" + login
-					+ " host=" + client.getHostname());
+			_log.info(String.format(I18N_LOGIN_REQUEST_IS_INVALID,
+					charName, login, client.getHostname()));
+			// ログインリクエストが無効です。char=%s account=%s host=%s
 			client.close();
 			return;
 		}
-
 		if (Config.LEVEL_DOWN_RANGE != 0) {
 			if (pc.getHighLevel() - pc.getLevel() >= Config.LEVEL_DOWN_RANGE) {
-				_log.info("レベルダウンの許容範囲を超えたキャラクターのログインリクエスト: char="
-						+ charName + " account=" + login + " host="
-						+ client.getHostname());
+				_log.info(String.format(I18N_BEYOND_THE_TOLERANCE_OF_THE_LEVEL_DOWN,
+						charName, login, client.getHostname()));
+				// レベルダウンの許容範囲を超えています。char=%s account=% host=%
 				client.kick();
 				return;
 			}
 		}
-
-		_log.info("キャラクターログイン: char=" + charName + " account=" + login
-				+ " host=" + client.getHostname());
-
+		_log.info(String.format(I18N_LOGGED_CHARACTER, charName, login, client.getHostname()));
+		// ログインキャラクター: char=%s account=% host=%
 		int currentHpAtLoad = pc.getCurrentHp();
 		int currentMpAtLoad = pc.getCurrentMp();
 		pc.clearSkillMastery();
 		pc.setOnlineStatus(1);
 		CharacterTable.updateOnlineStatus(pc);
 		L1World.getInstance().storeObject(pc);
-
 		pc.setNetConnection(client);
 		pc.setPacketOutput(client);
 		client.setActiveChar(pc);
-
 		/** 初期ステータスボーナス */
 		S_InitialAbilityGrowth AbilityGrowth = new S_InitialAbilityGrowth(pc);
 		pc.sendPackets(AbilityGrowth);
-
 		// 3.0c
 		/*
 		 * S_Unknown1 s_unknown1 = new S_Unknown1(); pc.sendPackets(s_unknown1);
@@ -159,14 +148,12 @@ public class C_LoginToServer extends ClientBasePacket {
 		 */
 		pc.sendPackets(new S_LoginGame()); // 3.3c
 		pc.sendPackets(new S_Karma(pc)); // カルマ値を表示
-
 		// ミニゲーム実行中判定
 		if (pc.getMapId() == 5143) {
 			pc.setMiniGamePlaying(1);
 		} else {
 			pc.setMiniGamePlaying(0);
 		}
-
 		// リスタート先がgetback_restartテーブルで指定されていたら移動させる
 		GetBackRestartTable gbrTable = GetBackRestartTable.getInstance();
 		L1GetBackRestart[] gbrList = gbrTable.getGetBackRestartTableList();
@@ -178,7 +165,6 @@ public class C_LoginToServer extends ClientBasePacket {
 				break;
 			}
 		}
-
 		// altsettings.propertiesでGetBackがtrueなら街に移動させる
 		if (Config.GET_BACK) {
 			int[] loc = Getback.GetBack_Location(pc, true);
@@ -186,7 +172,6 @@ public class C_LoginToServer extends ClientBasePacket {
 			pc.setY(loc[1]);
 			pc.setMap((short) loc[2]);
 		}
-
 		// 戦争中の旗内に居た場合、城主血盟でない場合は帰還させる。
 		int castle_id = L1CastleLocation.getCastleIdByArea(pc);
 		if (0 < castle_id) {
@@ -211,37 +196,24 @@ public class C_LoginToServer extends ClientBasePacket {
 				}
 			}
 		}
-
 		L1World.getInstance().addVisibleObject(pc);
-
 		pc.beginGameTimeCarrier();
-
 		pc.sendPackets(new S_OwnCharStatus(pc));
-
-		pc.sendPackets(new S_MapID(pc.getMap().getBaseMapId(), pc.getMap()
-				.isUnderwater()));
-
+		pc.sendPackets(new S_MapID(pc.getMap().getBaseMapId(), pc.getMap().isUnderwater()));
 		pc.sendPackets(new S_OwnCharPack(pc));
-
 		pc.sendPackets(new S_SpMr(pc));
-
 		// XXX タイトル情報はS_OwnCharPackに含まれるので多分不要
 		S_CharTitle s_charTitle = new S_CharTitle(pc.getId(), pc.getTitle());
 		pc.sendPackets(s_charTitle);
 		pc.broadcastPacket(s_charTitle);
-
 		pc.sendVisualEffectAtLogin(); // クラウン、毒、水中等の視覚効果を表示
-
 		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather()));
-
 		items(pc);
 		skills(pc);
 		buff(client, pc);
 		buffBlessOfAin(pc); // アインハザードの祝福
 		pc.setServivalScream(); // TODO 生存の叫び
-
 		pc.sendPackets(new S_ActiveSpells(pc));
-
 		if (pc.getCurrentHp() > 0) {
 			pc.setDead(false);
 			pc.setStatus(0);
@@ -249,46 +221,37 @@ public class C_LoginToServer extends ClientBasePacket {
 			pc.setDead(true);
 			pc.setStatus(ActionCodes.ACTION_Die);
 		}
-		
 		if (pc.getLevel() >= 51 && pc.getLevel() - 50 > pc.getBonusStats()) {
 			if ((pc.getBaseStr() + pc.getBaseDex() + pc.getBaseCon()
 					+ pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < 210) {
 				pc.sendPackets(new S_BonusStats(pc.getId(), 1));
 			}
 		}
-
 		if (Config.CHARACTER_CONFIG_IN_SERVER_SIDE) {
 			pc.sendPackets(new S_CharacterConfig(pc.getId()));
 		}
-
 		serchSummon(pc);
-
 		WarTimeController.getInstance().checkCastleWar(pc);
-
 		if (pc.getClanid() != 0) { // クラン所属中
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				if (pc.getClanid() == clan.getClanId() && // クランを解散して、再度、同名のクランが創設された時の対策
-						pc.getClanname().toLowerCase().equals(
-								clan.getClanName().toLowerCase())) {
+						pc.getClanname().toLowerCase().equals(clan.getClanName().toLowerCase())) {
 					L1PcInstance[] clanMembers = clan.getOnlineClanMember();
 					for (L1PcInstance clanMember : clanMembers) {
 						if (clanMember.getId() != pc.getId()) {
-							clanMember.sendPackets(new S_ServerMessage(843, pc
-									.getName())); // 只今、血盟員の%0%sがゲームに接続しました。
+							clanMember.sendPackets(new S_ServerMessage(843, pc.getName()));
+							// 只今、血盟員の%0%sがゲームに接続しました。
 						}
 					}
-
 					// 全戦争リストを取得
 					for (L1War war : L1World.getInstance().getWarList()) {
 						boolean ret = war.CheckClanInWar(pc.getClanname());
 						if (ret) { // 戦争に参加中
-							String enemy_clan_name = war.GetEnemyClanName(pc
-									.getClanname());
+							String enemy_clan_name = war.GetEnemyClanName(pc.getClanname());
 							if (enemy_clan_name != null) {
 								// あなたの血盟が現在_血盟と交戦中です。
-								pc.sendPackets(new S_War(8, pc.getClanname(),
-										enemy_clan_name));
+								pc.sendPackets(new S_War(8, pc.getClanname(), enemy_clan_name));
 							}
 							break;
 						}
@@ -301,10 +264,8 @@ public class C_LoginToServer extends ClientBasePacket {
 				}
 			}
 		}
-
 		if (pc.getPartnerId() != 0) { // 結婚中
-			L1PcInstance partner = (L1PcInstance) L1World.getInstance()
-					.findObject(pc.getPartnerId());
+			L1PcInstance partner = (L1PcInstance) L1World.getInstance().findObject(pc.getPartnerId());
 			if (partner != null && partner.getPartnerId() != 0) {
 				if (pc.getPartnerId() == partner.getId()
 						&& partner.getPartnerId() == pc.getId()) {
@@ -313,7 +274,6 @@ public class C_LoginToServer extends ClientBasePacket {
 				}
 			}
 		}
-
 		if (currentHpAtLoad > pc.getCurrentHp()) {
 			pc.setCurrentHp(currentHpAtLoad);
 		}
@@ -326,13 +286,10 @@ public class C_LoginToServer extends ClientBasePacket {
 		client.CharReStart(false);
 		pc.beginExpMonitor();
 		pc.save(); // DBにキャラクター情報を書き込む
-
 		pc.sendPackets(new S_OwnCharStatus(pc));
-
 		if (pc.getHellTime() > 0) {
 			pc.beginHell(false);
 		}
-		
 		pc.startExpirationTimer(); // 有効期限付きアイテムのタイマーを開始
 		pc.startMapLimiter(); // マップリミッターを開始
 		bookmarks(pc);
@@ -346,17 +303,13 @@ public class C_LoginToServer extends ClientBasePacket {
 	}
 
 	private void bookmarks(L1PcInstance pc) {
-
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_bookmarks WHERE char_id=? ORDER BY name ASC");
+			pstm = con.prepareStatement("SELECT * FROM character_bookmarks WHERE char_id=? ORDER BY name ASC");
 			pstm.setInt(1, pc.getId());
-
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1BookMark bookmark = new L1BookMark();
@@ -371,7 +324,6 @@ public class C_LoginToServer extends ClientBasePacket {
 				pc.addBookMark(bookmark);
 				pc.sendPackets(s_bookmarks);
 			}
-
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -382,12 +334,10 @@ public class C_LoginToServer extends ClientBasePacket {
 	}
 
 	private void skills(L1PcInstance pc) {
-		List<L1CharacterSkill> skills = L1CharacterSkill.findByCharcterId(pc
-				.getId());
+		List<L1CharacterSkill> skills = L1CharacterSkill.findByCharcterId(pc.getId());
 		for (L1CharacterSkill skill : skills) {
 			pc.setSkillMastery(skill.getSkillId());
 		}
-
 		pc.sendPackets(new S_AddSkill(skills));
 	}
 
@@ -396,8 +346,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			if (summon.getMaster().getId() == pc.getId()) {
 				summon.setMaster(pc);
 				pc.addPet(summon);
-				for (L1PcInstance visiblePc : L1World.getInstance()
-						.getVisiblePlayer(summon)) {
+				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
 					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc));
 				}
 			}
@@ -405,8 +354,7 @@ public class C_LoginToServer extends ClientBasePacket {
 	}
 
 	private boolean buffByExecutor(L1PcInstance pc, L1CharacterBuff buff) {
-		L1Skill skill = SkillTable.getInstance().findBySkillId(
-				buff.getSkillId());
+		L1Skill skill = SkillTable.getInstance().findBySkillId(buff.getSkillId());
 		if (skill == null) {
 			return false;
 		}
@@ -426,11 +374,9 @@ public class C_LoginToServer extends ClientBasePacket {
 			long logoutTime = pc.getLogoutTime().getTime();
 			long loginTime = new Timestamp(System.currentTimeMillis()).getTime();
 			int differenceTime = (int)(loginTime - logoutTime) / 1000;
-			
 			if (buffByExecutor(pc, buff)) {
 				continue;
 			}
-
 			if (skillId == SHAPE_CHANGE) { // 変身
 				if (pc.getMiniGamePlaying() == 0) {
 					L1PolyMorph.doPoly(pc, buff.getPolyId(), remainingTime,
@@ -735,7 +681,6 @@ public class C_LoginToServer extends ClientBasePacket {
 			pc.sendPackets(new S_PacketBox(S_PacketBox.BLESS_OF_AIN, pc.getBlessOfAin()));
 			return;
 		}
-		
 		Timestamp logoutTime = pc.getLogoutTime();
 		if (logoutTime == null) {
 			logoutTime = new Timestamp(System.currentTimeMillis());
@@ -754,5 +699,4 @@ public class C_LoginToServer extends ClientBasePacket {
 	public String getType() {
 		return C_LOGIN_TO_SERVER;
 	}
-	
 }

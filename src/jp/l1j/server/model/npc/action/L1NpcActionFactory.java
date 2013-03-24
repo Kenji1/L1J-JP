@@ -12,6 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.model.npc.action;
 
 import java.lang.reflect.Constructor;
@@ -40,7 +41,7 @@ public class L1NpcActionFactory {
 			_actions.put("SetQuest", loadConstructor(L1NpcSetQuestAction.class));
 			_actions.put("Teleport", loadConstructor(L1NpcTeleportAction.class));
 		} catch (NoSuchMethodException e) {
-			_log.log(Level.SEVERE, "NpcActionのクラスロードに失敗", e);
+			_log.log(Level.SEVERE, "Failed to load NpcAction class.", e);
 		}
 	}
 
@@ -49,9 +50,9 @@ public class L1NpcActionFactory {
 			Constructor<L1NpcAction> con = _actions.get(element.getNodeName());
 			return con.newInstance(element);
 		} catch (NullPointerException e) {
-			_log.warning(element.getNodeName() + " 未定義のNPCアクションです");
+			_log.warning(element.getNodeName() + " does not exist npc action.");
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, "NpcActionのクラスロードに失敗", e);
+			_log.log(Level.SEVERE, "Failed to load NpcAction class.", e);
 		}
 		return null;
 	}

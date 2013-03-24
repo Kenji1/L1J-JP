@@ -19,7 +19,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Executors;
@@ -28,8 +27,9 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static jp.l1j.locale.I18N.*;
 import jp.l1j.configure.Config;
+import jp.l1j.locale.I18N;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.GeneralThreadPool;
 import jp.l1j.server.codes.ActionCodes;
@@ -69,7 +69,7 @@ import jp.l1j.server.model.MpReductionByAwake;
 import jp.l1j.server.model.MpRegeneration;
 import jp.l1j.server.model.MpRegenerationByDoll;
 import jp.l1j.server.model.classes.L1ClassFeature;
-import jp.l1j.server.model.gametime.L1GameTimeCarrier;
+import jp.l1j.server.model.gametime.L1RealTimeCarrier;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.inventory.L1WarehouseInventory;
@@ -2857,8 +2857,9 @@ public class L1PcInstance extends L1Character {
 			if (getHighLevel() - getLevel() >= Config.LEVEL_DOWN_RANGE) {
 				sendPackets(new S_ServerMessage(64)); // ワールドとの接続が切断されました。
 				sendPackets(new S_Disconnect());
-				_log.info(String.format("レベルダウンの許容範囲を超えたため%sを強制切断しました。",
-						getName()));
+				_log.info(String.format(String.format(I18N_BEYOND_THE_TOLERANCE_OF_THE_LEVEL_DOWN,
+						this.getName(), this.getAccountName())));
+				// レベルダウンの許容範囲を超えています。char=%s account=% host=%
 			}
 		}
 
@@ -2873,7 +2874,8 @@ public class L1PcInstance extends L1Character {
 	}
 
 	public void beginGameTimeCarrier() {
-		new L1GameTimeCarrier(this).start();
+		//new L1GameTimeCarrier(this).start();
+		new L1RealTimeCarrier(this).start();
 	}
 
 	private boolean _ghost = false; // ゴースト

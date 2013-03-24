@@ -18,19 +18,15 @@ package jp.l1j.server.packets.client;
 import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.model.instance.L1NpcInstance;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
-
-// Referenced classes of package jp.l1j.server.clientpackets:
-// ClientBasePacket
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 
 public class C_NpcTalkAction extends ClientBasePacket {
-
 	private static final String C_NPC_TALK_ACTION = "[C] C_NpcTalkAction";
-	private static Logger _log = Logger.getLogger(C_NpcTalkAction.class
-			.getName());
+	
+	private static Logger _log = Logger.getLogger(C_NpcTalkAction.class.getName());
 
 	public C_NpcTalkAction(byte decrypt[], ClientThread client)
 			throws FileNotFoundException, Exception {
@@ -38,13 +34,11 @@ public class C_NpcTalkAction extends ClientBasePacket {
 		int objectId = readD();
 		String action = readS();
 		L1PcInstance activeChar = client.getActiveChar();
-
 		L1Object obj = L1World.getInstance().findObject(objectId);
 		if (obj == null) {
 			_log.warning("object not found, oid " + objectId);
 			return;
 		}
-
 		try {
 			L1NpcInstance npc = (L1NpcInstance) obj;
 			npc.onFinalAction(activeChar, action);
@@ -56,5 +50,4 @@ public class C_NpcTalkAction extends ClientBasePacket {
 	public String getType() {
 		return C_NPC_TALK_ACTION;
 	}
-
 }
