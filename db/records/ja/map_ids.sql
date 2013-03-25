@@ -721,8 +721,8 @@ INSERT INTO `map_ids` VALUES(7108, 'Halloween event', 32704, 32959, 32832, 33087
 INSERT INTO `map_ids` VALUES(7109, 'Halloween event', 32704, 32959, 32832, 33087, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(7701, NULL, 32576, 33023, 32640, 33087, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(7771, NULL, 32448, 32831, 32832, 33151, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `map_ids` VALUES(7781, NULL, 32576, 32959, 32576, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `map_ids` VALUES(7782, NULL, 32576, 32959, 32576, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `map_ids` VALUES(7781, 'Air Temple of Fairies', 32576, 32959, 32576, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `map_ids` VALUES(7782, 'Air Temple of Fairies', 32576, 32959, 32576, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(8000, '惣構え', 32768, 32959, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(8011, 'Singing Island', 32768, 32895, 32768, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `map_ids` VALUES(8012, 'Singing Island West Area', 32704, 32895, 32704, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
