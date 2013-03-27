@@ -64,7 +64,14 @@ public class C_CharReset extends ClientBasePacket {
 			int mp = CalcInitHpMp.calcInitMp(pc);
 			pc.sendPackets(new S_CharReset(pc, 1, hp, mp, 10, str, intel, wis,
 					dex, con, cha));
-			initCharStatus(pc, hp, mp, str, intel, wis, dex, con, cha);
+			initCharStatus(pc, hp, mp, str, intel, wis, dex, con, cha);                        
+                        pc.setOriginalStr(pc.getBaseStr());
+                        pc.setOriginalInt(pc.getBaseInt());
+                	pc.setOriginalWis(pc.getBaseWis());
+                	pc.setOriginalDex(pc.getBaseDex());
+                	pc.setOriginalCon(pc.getBaseCon());
+                        pc.setOriginalCha(pc.getBaseCha());
+                
 		} else if (stage == 0x02) { // 0x02:ステータス再分配
 			int type2 = readC();
 			if (type2 == 0x00) { // 0x00:Lv1UP
