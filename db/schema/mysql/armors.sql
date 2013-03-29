@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `armors`;
 CREATE TABLE `armors` (
-  `item_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `item_id` int(10) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `unidentified_name_id` varchar(255) NOT NULL DEFAULT '',
   `identified_name_id` varchar(255) NOT NULL DEFAULT '',
@@ -39,7 +39,7 @@ CREATE TABLE `armors` (
   `max_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `mr` tinyint(3) NOT NULL DEFAULT '0',
   `is_haste` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `damage_reduction` tinyint(3) NOT NULL DEFAULT '0',
+  `damage_reduction` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `weight_reduction` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `hit_modifier` tinyint(3) NOT NULL DEFAULT '0',
   `dmg_modifier` tinyint(3) NOT NULL DEFAULT '0',
@@ -61,6 +61,6 @@ CREATE TABLE `armors` (
   `resist_hold` tinyint(3) NOT NULL DEFAULT '0',
   `resist_blind` tinyint(3) NOT NULL DEFAULT '0',
   `exp_bonus` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `potion_recovery_rate` tinyint(3) NOT NULL DEFAULT '0',
+  `potion_recovery_rate` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
