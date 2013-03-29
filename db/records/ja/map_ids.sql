@@ -736,9 +736,9 @@ INSERT INTO `map_ids` VALUES(8116, NULL, 32576, 32639, 32704, 32831, 1, 1, 1, 0,
 INSERT INTO `map_ids` VALUES(8117, NULL, 32576, 32639, 32704, 32831, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(8118, NULL, 32576, 32639, 32704, 32831, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(9000, 'Secret Research Lab of The Past', 32576, 32895, 32640, 33023, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1);
-INSERT INTO `map_ids` VALUES(9100, 'Ivory Tower Secret Research Lab', 32704, 32767, 32832, 32895, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `map_ids` VALUES(9100, 'Ivory Tower Secret Research Lab - Hardin', 32704, 32767, 32832, 32895, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(9101, NULL, 32640, 32831, 32768, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
-INSERT INTO `map_ids` VALUES(9202, NULL, 32704, 32767, 32832, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
+INSERT INTO `map_ids` VALUES(9202, 'Ivory Tower Secret Research Lab - Orim', 32704, 32767, 32832, 32895, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `map_ids` VALUES(16384, 'Inn', 32704, 32767, 32768, 32831, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);
 INSERT INTO `map_ids` VALUES(16896, 'Inn', 32704, 32767, 32768, 32831, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1);
 INSERT INTO `map_ids` VALUES(17408, 'Inn', 32704, 32767, 32768, 32831, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1);

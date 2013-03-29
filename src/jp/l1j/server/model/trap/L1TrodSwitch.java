@@ -12,23 +12,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package jp.l1j.server.model.trap;
 
-
-//import jp.l1j.server.IdFactory;
 import jp.l1j.server.GeneralThreadPool;
-import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1HardinQuest;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1Object;
+import jp.l1j.server.model.L1OrimQuest;
+import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.storage.TrapStorage;
 
 public class L1TrodSwitch extends L1Trap{
-
 	private final int _switchId;
+	
 	private L1PcInstance _trodFrom;
+	
 	private L1Object _trapObj;
+	
 	public L1TrodSwitch(TrapStorage storage) {
 		super(storage);
 		_switchId= storage.getInt("switch_id");
@@ -40,17 +43,18 @@ public class L1TrodSwitch extends L1Trap{
 		_trapObj=trapObj;
 		GeneralThreadPool.getInstance().execute(new SwitchThread());
 	}
-class SwitchThread implements Runnable{
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		//今回はインスタンスマップの生成を考慮する
-		//IF文はelse構成がなるべくでないようにする。
-		try {
-			int mapId=_trodFrom.getMapId();
-			boolean onPc;
-			L1Location loc;
-			switch(_switchId){
+	
+	class SwitchThread implements Runnable{
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			//今回はインスタンスマップの生成を考慮する
+			//IF文はelse構成がなるべくでないようにする。
+			try {
+				int mapId=_trodFrom.getMapId();
+				boolean onPc;
+				L1Location loc;
+				switch(_switchId){
 				case 1://過去の話せる島のダンジョン2F　骨部屋へ
 					if(!L1HardinQuest.getInstance().getActiveMaps(mapId).isActive())return;
 					if(L1HardinQuest.getInstance().getActiveMaps(mapId).isDeleteTransactionNow())return;
@@ -302,6 +306,26 @@ class SwitchThread implements Runnable{
 					if(L1HardinQuest.getInstance().getActiveMaps(mapId).isDeleteTransactionNow())return;
 					L1HardinQuest.getInstance().getActiveMaps(mapId)
 						.tereportEntrance(_trodFrom, new L1Location(32666,32797,_trodFrom.getMapId()), 5);
+				break;
+				case 14://過去のオリムの連絡船->船内へ
+					if(L1OrimQuest.getInstance().getActiveMaps(mapId)==null)return;
+					L1Teleport.teleport(_trodFrom, new L1Location(32677,32800,_trodFrom.getMapId()), 5,true);
+				break;
+				case 15://過去のオリムの連絡船->船内へ
+					if(L1OrimQuest.getInstance().getActiveMaps(mapId)==null)return;
+					L1Teleport.teleport(_trodFrom, new L1Location(32677,32864,_trodFrom.getMapId()), 5,true);
+				break;
+				case 16://過去のオリムの連絡船->船内へ
+					if(L1OrimQuest.getInstance().getActiveMaps(mapId)==null)return;
+					L1Teleport.teleport(_trodFrom, new L1Location(32741,32860,_trodFrom.getMapId()), 5,true);
+				break;
+				case 17://過去のオリムの連絡船->船内へ
+					if(L1OrimQuest.getInstance().getActiveMaps(mapId)==null)return;
+					L1Teleport.teleport(_trodFrom, new L1Location(32805,32862,_trodFrom.getMapId()), 5,true);
+				break;
+				case 18://船内->過去のオリムの連絡船へ
+					if(L1OrimQuest.getInstance().getActiveMaps(mapId)==null)return;
+					L1Teleport.teleport(_trodFrom, new L1Location(32792,32802,_trodFrom.getMapId()), 2,true);
 				break;
 			}
 		} catch (Exception e) {

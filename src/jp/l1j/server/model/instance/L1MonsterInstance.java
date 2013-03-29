@@ -32,6 +32,7 @@ import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1MobGroupInfo;
 import jp.l1j.server.model.L1NpcTalkData;
 import jp.l1j.server.model.L1Object;
+import jp.l1j.server.model.L1OrimQuest;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1UltimateBattle;
 import jp.l1j.server.model.L1World;
@@ -970,7 +971,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 	// スレッドにアクセス
 	private void doExecutionWhenNpcDied() throws InterruptedException {
-		if (91265 <= getNpcId() && 91268 >= getNpcId()) {
+		if (91265 <= getNpcId() && 91268 >= getNpcId()) { // ハーディンクエスト
 			L1MobGroupInfo mobGroupInfo = getMobGroupInfo();
 			if (mobGroupInfo != null) {
 				boolean flag=false;
@@ -1017,6 +1018,22 @@ public class L1MonsterInstance extends L1NpcInstance {
 					L1HardinQuest.getInstance().getActiveMaps(getMapId())
 							.lunkerDie(this);
 				}
+			}
+		} else if (getNpcId() == 91455) {// 呪術ミミック
+			if (L1OrimQuest.getInstance().getActiveMaps(getMapId()) != null) {
+				L1OrimQuest.getInstance().getActiveMaps(getMapId()).mimicDie(this);
+			}
+		} else if (getNpcId() == 91481) {// クラーケン
+			if (L1OrimQuest.getInstance().getActiveMaps(getMapId()) != null) {
+				L1OrimQuest.getInstance().getActiveMaps(getMapId()).crakenDead();
+			}
+		} else if (getNpcId() == 91492) {// イカ足右
+			if (L1OrimQuest.getInstance().getActiveMaps(getMapId()) != null) {
+				L1OrimQuest.getInstance().getActiveMaps(getMapId()).crakenTailDead_Right();
+			}
+		} else if (getNpcId() == 91491) {// イカ足左
+			if (L1OrimQuest.getInstance().getActiveMaps(getMapId()) != null) {
+				L1OrimQuest.getInstance().getActiveMaps(getMapId()).crakenTailDead_Left();
 			}
 		}
 	}
@@ -1156,5 +1173,15 @@ public class L1MonsterInstance extends L1NpcInstance {
 			} catch (InterruptedException e) {
 			}
 		}
+	}
+	
+	private boolean _isCurseMimic ;
+
+	public void setCurseMimic(boolean curseMimic) {
+		_isCurseMimic = curseMimic;
+	}
+	
+	public boolean isCurseMimic(){
+		return _isCurseMimic;
 	}
 }

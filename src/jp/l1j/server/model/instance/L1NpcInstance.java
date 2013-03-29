@@ -42,20 +42,11 @@ import jp.l1j.server.model.L1MobSkillUse.L1AvailableSkill;
 import jp.l1j.server.model.L1NpcChatTimer;
 import jp.l1j.server.model.L1NpcRegenerationTimer;
 import jp.l1j.server.model.L1Object;
+import jp.l1j.server.model.L1OrimQuest;
 import jp.l1j.server.model.L1Spawn;
 import jp.l1j.server.model.L1World;
-import jp.l1j.server.model.instance.L1GuardInstance;
-import jp.l1j.server.model.instance.L1ItemInstance;
-import jp.l1j.server.model.instance.L1MerchantInstance;
-import jp.l1j.server.model.instance.L1MonsterInstance;
-import jp.l1j.server.model.instance.L1NpcInstance;
-import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.instance.L1PetInstance;
-import jp.l1j.server.model.instance.L1ScarecrowInstance;
-import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.inventory.L1GroundInventory;
 import jp.l1j.server.model.inventory.L1Inventory;
-import jp.l1j.server.model.inventory.L1PcInventory;
 import static jp.l1j.server.model.item.L1ItemId.*;
 import jp.l1j.server.model.map.L1Map;
 import jp.l1j.server.model.map.L1WorldMap;
@@ -2409,16 +2400,16 @@ public class L1NpcInstance extends L1Character {
 	public void receiveSocialAction(L1PcInstance pc, int actionId) {
 		// TODO Auto-generated method stub
 		if (getNpcId() == 91330) {// GFX不可 ハーディン
-			if (L1HardinQuest.getInstance().getActiveMaps(getMapId())
-					.isActive()) {
-				L1HardinQuest.getInstance().getActiveMaps(getMapId())
-						.setActionHardin(pc, actionId);
+			if (L1HardinQuest.getInstance().getActiveMaps(getMapId()).isActive()) {
+				L1HardinQuest.getInstance().getActiveMaps(getMapId()).setActionHardin(pc, actionId);
 			}
 		} else if (getNpcId() == 91297) {// ケレニス
-			if (L1HardinQuest.getInstance().getActiveMaps(getMapId())
-					.isActive()) {
-				L1HardinQuest.getInstance().getActiveMaps(getMapId())
-						.setActionKerenis(pc, actionId);
+			if (L1HardinQuest.getInstance().getActiveMaps(getMapId()).isActive()) {
+				L1HardinQuest.getInstance().getActiveMaps(getMapId()).setActionKerenis(pc, actionId);
+			}
+		} else if (getNpcId() == 91449) {// 船の外枠
+			if (L1OrimQuest.getInstance().getActiveMaps(getMapId())!=null) {
+				L1OrimQuest.getInstance().getActiveMaps(getMapId()).setAction(pc,actionId);
 			}
 		}
 	}

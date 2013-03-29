@@ -31,7 +31,7 @@ public class L1DoorGfx {
 	private final int _rightEdgeOffset;
 	private final int _leftEdgeOffset;
 
-	private L1DoorGfx(int gfxId, int direction, int rightEdgeOffset,
+	public L1DoorGfx(int gfxId, int direction, int rightEdgeOffset,
 			int leftEdgeOffset) {
 		_gfxId = gfxId;
 		_direction = direction;

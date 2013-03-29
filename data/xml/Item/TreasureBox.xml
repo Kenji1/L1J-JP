@@ -1316,6 +1316,7 @@
 	<!-- 時空の瓶 -->
 	<TreasureBox Type="SPECIFIC" ItemId="50006">
 		<Item ItemId="50007" Count="2" />
+		<Item ItemId="50025" Count="2" />
 	</TreasureBox>
 	<!-- ドルーガバック -->
 	<TreasureBox Type="RANDOM" ItemId="50500">

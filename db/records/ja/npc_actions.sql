@@ -1091,6 +1091,7 @@ INSERT INTO `npc_actions` VALUES ('81359', 'bs_01', 'bs_01', '', '');
 INSERT INTO `npc_actions` VALUES ('81360', 'bs_01', 'bs_01', '', '');
 INSERT INTO `npc_actions` VALUES ('81361', 'bs_01', 'bs_01', '', '');
 INSERT INTO `npc_actions` VALUES ('81362', 'bs_01', 'bs_01', '', '');
+INSERT INTO `npc_actions` VALUES ('81374', 'j_l_out00', '', '', '');
 INSERT INTO `npc_actions` VALUES ('90115', 'usender1', 'usender1', 'usender2', '');
 INSERT INTO `npc_actions` VALUES ('90521', 'tikalgate1', 'tikalgate1', '', '');
 INSERT INTO `npc_actions` VALUES ('91003', 'gr_mammon1', 'gr_mammon1', 'gr_mammon3', '');
@@ -1125,6 +1126,7 @@ INSERT INTO `npc_actions` VALUES ('91314', 'bluesoul_f4', 'bluesoul_f4', '', '')
 INSERT INTO `npc_actions` VALUES ('91315', 'redsoul_f4', 'redsoul_f4', '', '');
 INSERT INTO `npc_actions` VALUES ('91327', 'j_html00', 'j_html00', '', '');
 INSERT INTO `npc_actions` VALUES ('91328', 'id0', 'id0', '', '');
+INSERT INTO `npc_actions` VALUES ('91329', 'id1', 'id1', '', '');
 INSERT INTO `npc_actions` VALUES ('91500', 'shamansael2', 'shamansael2', '', '');
 INSERT INTO `npc_actions` VALUES ('91501', 'beasamoo', 'beasamoo', '', '');
 INSERT INTO `npc_actions` VALUES ('91502', 'kymsamoo', 'kymsamoo', '', '');

@@ -19,6 +19,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jp.l1j.server.model.L1OrimQuest;
 import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.controller.timer.HomeTownTimeController;
@@ -590,7 +591,7 @@ public class C_NpcAction extends ClientBasePacket {
 				htmlid = "";
 			}
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91328) {
-			// ユキ - 象牙の塔秘密研究室
+			// ユキ - 象牙の塔秘密研究室 - ハーディンクエスト
 			if (s.equalsIgnoreCase("enter")) { // 過去にテレポートする。
 				boolean entrance = false;
 				if (pc.isInParty()) { // パーティに所属しているか？
@@ -608,7 +609,6 @@ public class C_NpcAction extends ClientBasePacket {
 						}
 					}
 				}
-
 				if (entrance) {
 					if (L1HardinQuest.getInstance().getNumOfActiveMaps() < 50) {
 						int instanceMap = L1HardinQuest.getInstance().setActiveMaps(9000);
@@ -619,6 +619,44 @@ public class C_NpcAction extends ClientBasePacket {
 						}
 						L1HardinQuest.getInstance().getActiveMaps(instanceMap).setLeader(pc);
 						L1HardinQuest.getInstance().getActiveMaps(instanceMap).start();
+					}
+				}else{
+					htmlid = "";
+				}
+			}
+		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91329) {
+			// ユキ - 象牙の塔秘密研究室 - オリムクエスト(通常は3名以上)
+			if (s.equalsIgnoreCase("enter")) {
+				boolean entrance =false;
+				if(pc.isInParty()){//パーティに所属しているか？
+					if(pc.getParty().isLeader(pc)){//リーダーか？
+						int members = 1;
+						for(L1PcInstance player:L1World.getInstance().getVisiblePlayer(pc)){
+							if(pc.getParty().isMember(player)){
+								members++;
+								if(pc.getParty().getNumOfMembers()==members &&
+										pc.getParty().getNumOfMembers()> 1){
+									// 画面内にパーティメンバーが全員いる
+									entrance = true;
+								}
+							}
+						}
+					}
+				}
+				if(pc.isGm()){
+					int instanceMap = L1OrimQuest.getInstance().setActiveMaps(9101);
+					L1Teleport.teleport(pc, 32798, 32805, (short) (instanceMap), 6, true);
+					L1OrimQuest.getInstance().getActiveMaps(instanceMap).start();
+					return;
+				}
+				if(entrance){//入場します。
+					if (L1OrimQuest.getInstance().getNumOfActiveMaps() < 50) {
+						int instanceMap = L1OrimQuest.getInstance().setActiveMaps(9101);
+						for(L1PcInstance ptmember:pc.getParty().getMembers()){
+							L1PolyMorph.undoPoly(ptmember);// ptmember
+							L1Teleport.teleport(ptmember, 32798, 32805, (short) (instanceMap), 6, true);
+						}
+						L1OrimQuest.getInstance().getActiveMaps(instanceMap).start();
 					}
 				}else{
 					htmlid = "";
@@ -4657,6 +4695,26 @@ public class C_NpcAction extends ClientBasePacket {
 				} else {
 					htmlid = "j_html02";
 				}
+			} else if (s.equalsIgnoreCase("b")) {// 寄付金10000アデナとオリムの水晶を渡す
+				if(!pc.isGm()){
+					return;
+				}
+				if (pc.getInventory().checkItem(L1ItemId.ADENA, 10000)
+						&& pc.getInventory().checkItem(50025, 1)) {
+					int mate = 1;
+					if (pc.getInventory().countItems(50025) > 3) {
+						mate = pc.getInventory().countItems(50025) - 2;
+					}
+					if(!pc.isGm()){
+						pc.getInventory().consumeItem(50025, mate);
+						pc.getInventory().consumeItem(L1ItemId.ADENA, 10000);
+					}
+					htmlid = "";
+					L1Teleport
+							.teleport(pc, 32745, 32855, (short) 9202, 6, true);
+				} else {
+					htmlid = "j_html02";
+				}
 			} else if (s.equalsIgnoreCase("d")) {// 日記10ページ分をハーディンの日記帳に復元してもらう
 				if (pc.getInventory().checkItem(50008, 1)
 						&& pc.getInventory().checkItem(50009, 1)
@@ -4672,6 +4730,35 @@ public class C_NpcAction extends ClientBasePacket {
 							50013, 50014, 50015, 50016, 50017 }; // アデナ、
 					counts = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 					createitem = new int[] { 50018 }; // ケレニスの日記帳
+					createcount = new int[] { 1 };
+					htmlid = "j_html04";
+				} else {
+					htmlid = "j_html06";
+				}
+			} else if (s.equalsIgnoreCase("e")) {// 日記18ページ分をオリムの日記帳に復元してもらう
+				if (pc.getInventory().checkItem(50026,1)//オリムの日記 6月14日
+						&& pc.getInventory().checkItem(50027,1)//オリムの日記 6月16日
+						&& pc.getInventory().checkItem(50028,1)//オリムの日記 6月18日
+						&& pc.getInventory().checkItem(50029,1)//オリムの日記 6月21日
+						&& pc.getInventory().checkItem(50030,1)//オリムの日記 6月22日
+						&& pc.getInventory().checkItem(50031,1)//オリムの日記 6月25日
+						&& pc.getInventory().checkItem(50032,1)//オリムの日記 7月5日
+						&& pc.getInventory().checkItem(50033,1)//オリムの日記 7月17日
+						&& pc.getInventory().checkItem(50034,1)//オリムの日記 7月18日
+						&& pc.getInventory().checkItem(50035,1)//オリムの日記 8月5日
+						&& pc.getInventory().checkItem(50036,1)//オリムの日記 8月8日
+						&& pc.getInventory().checkItem(50037,1)//オリムの日記 8月9日
+						&& pc.getInventory().checkItem(50038,1)//オリムの日記 8月10日
+						&& pc.getInventory().checkItem(50039,1)//オリムの日記 8月11日
+						&& pc.getInventory().checkItem(50040,1)//オリムの日記 8月12日
+						&& pc.getInventory().checkItem(50041,1)//オリムの日記 8月13日
+						&& pc.getInventory().checkItem(50042,1)//オリムの日記 8月14日
+						&& pc.getInventory().checkItem(50043,1)//オリムの日記 8月15日
+					) {
+					materials = new int[] {50026,50027,50028,50029,50030,50031,50032,50033,
+								50034,50035,50036,50037,50038,50039,50040,50041,50042,50043}; // アデナ、
+					counts = new int[] {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+					createitem = new int[] { 50044 }; // オリムの日記帳
 					createcount = new int[] { 1 };
 					htmlid = "j_html04";
 				} else {
