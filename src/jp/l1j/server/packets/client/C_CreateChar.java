@@ -238,9 +238,6 @@ public class C_CreateChar extends ClientBasePacket {
 			int skill_id = l1skills.getSkillId();
 			SkillTable.getInstance().spellMastery(object_id, skill_id,
 					skill_name, 0, 0); // DBに登録
-		} else {
-			pc.sendPackets(new S_AddSkill(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 		}
 		giveBeginnerItems(pc);
 		CharacterTable.getInstance().storeNewCharacter(pc);
