@@ -145,7 +145,7 @@ public class L1WorldTraps {
 		L1Location loc = player.getLocation();
 
 		for (L1TrapInstance trap : _allTraps) {
-			if (trap.isEnable() && loc.equals(trap.getLocation())) {
+			if (trap.isEnable() && loc.equals(trap.getLocation()) && !player.isGmInvis()) {
 				trap.onTrod(player);
 				disableTrap(trap);
 			}
