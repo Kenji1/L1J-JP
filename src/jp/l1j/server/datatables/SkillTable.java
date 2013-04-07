@@ -99,7 +99,7 @@ public class SkillTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO character_skills SET char_obj_id=?, skill_id=?, skill_name=?, is_active=?, active_time_left=?");
+			pstm = con.prepareStatement("INSERT INTO character_skills SET char_id=?, skill_id=?, skill_name=?, is_active=?, active_time_left=?");
 			pstm.setInt(1, playerobjid);
 			pstm.setInt(2, skillid);
 			pstm.setString(3, skillname);
@@ -123,7 +123,7 @@ public class SkillTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM character_skills WHERE char_obj_id=? AND skill_id=?");
+			pstm = con.prepareStatement("DELETE FROM character_skills WHERE char_id=? AND skill_id=?");
 			pstm.setInt(1, playerobjid);
 			pstm.setInt(2, skillid);
 			pstm.execute();
@@ -141,7 +141,7 @@ public class SkillTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=? AND skill_id=?");
+			pstm = con.prepareStatement("SELECT * FROM character_skills WHERE char_id=? AND skill_id=?");
 			pstm.setInt(1, playerobjid);
 			pstm.setInt(2, skillid);
 			rs = pstm.executeQuery();

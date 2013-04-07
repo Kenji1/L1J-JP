@@ -122,7 +122,7 @@ public class C_UseSkill extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(73, charName)); // \f1%0はゲームをしていません。
 					return;
 				}
-				if (pc.getClanid() != target.getClanid()) {
+				if (pc.getClanId() != target.getClanId()) {
 					pc.sendPackets(new S_ServerMessage(414)); // 同じ血盟員ではありません。
 					return;
 				}

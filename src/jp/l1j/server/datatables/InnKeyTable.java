@@ -36,7 +36,7 @@ public class InnKeyTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO inn_keys SET item_obj_id=?, key_id=?, npc_id=?, hall=?, due_time=?");
+			pstm = con.prepareStatement("INSERT INTO inn_keys SET item_obj_id=?, id=?, npc_id=?, hall=?, due_time=?");
 			pstm.setInt(1, item.getId());
 			pstm.setInt(2, item.getKeyId());
 			pstm.setInt(3, item.getInnNpcId());
@@ -79,7 +79,7 @@ public class InnKeyTable {
 			while (rs.next()) {
 				int itemObj = rs.getInt("item_obj_id");
 				if (item.getId() == itemObj) {
-					item.setKeyId(rs.getInt("key_id"));
+					item.setKeyId(rs.getInt("id"));
 					item.setInnNpcId(rs.getInt("npc_id"));
 					item.setHall(rs.getBoolean("hall"));
 					item.setDueTime(rs.getTimestamp("due_time"));

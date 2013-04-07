@@ -674,12 +674,12 @@ public class L1SkillUse {
 							.hasSkillEffect(BLIND_HIDING))) {
 				return true; // インビジかブラインドハイディング中
 			}
-			if (_player.getClanid() != 0 && enemy.getClanid() != 0) { // クラン所属中
+			if (_player.getClanId() != 0 && enemy.getClanId() != 0) { // クラン所属中
 				// 全戦争リストを取得
 				for (L1War war : L1World.getInstance().getWarList()) {
-					if (war.CheckClanInWar(_player.getClanname())) { // 自クランが戦争に参加中
+					if (war.CheckClanInWar(_player.getClanName())) { // 自クランが戦争に参加中
 						if (war.CheckClanInSameWar( // 同じ戦争に参加中
-								_player.getClanname(), enemy.getClanname())) {
+								_player.getClanName(), enemy.getClanName())) {
 							if (L1CastleLocation.checkInAllWarArea(
 									enemy.getX(), enemy.getY(), enemy
 									.getMapId())) {
@@ -829,8 +829,8 @@ public class L1SkillUse {
 
 		if (_calcType == PC_PC && cha instanceof L1PcInstance) {
 			if ((_skill.getTargetTo() & L1Skill.TARGET_TO_CLAN) == L1Skill.TARGET_TO_CLAN
-					&& ((_player.getClanid() != 0 // ターゲットがクラン員
-					&& _player.getClanid() == ((L1PcInstance) cha).getClanid()) || _player
+					&& ((_player.getClanId() != 0 // ターゲットがクラン員
+					&& _player.getClanId() == ((L1PcInstance) cha).getClanId()) || _player
 					.isGm())) {
 				return true;
 			}
@@ -2670,9 +2670,9 @@ public class L1SkillUse {
 										if (pc.getLocation()
 												.getTileLineDistance(
 														member.getLocation()) <= 3
-														&& member.getClanid() == pc
-														.getClanid()
-														&& pc.getClanid() != 0
+														&& member.getClanId() == pc
+														.getClanId()
+														&& pc.getClanId() != 0
 														&& member.getId() != pc.getId()) {
 											L1Teleport.teleport(member, newX,
 													newY, mapId, 5, true);
@@ -2701,9 +2701,9 @@ public class L1SkillUse {
 										if (pc.getLocation()
 												.getTileLineDistance(
 														member.getLocation()) <= 3
-														&& member.getClanid() == pc
-														.getClanid()
-														&& pc.getClanid() != 0
+														&& member.getClanId() == pc
+														.getClanId()
+														&& pc.getClanId() != 0
 														&& member.getId() != pc.getId()) {
 											L1Teleport.teleport(member, newX,
 													newY, mapId, 5, true);
@@ -3524,8 +3524,8 @@ public class L1SkillUse {
 			if (_calcType == PC_PC && _player.checkNonPvP(_player, cha)) { // Non-PvP設定
 				L1PcInstance pc = (L1PcInstance) cha;
 				if (_player.getId() == pc.getId()
-						|| (pc.getClanid() != 0 && _player.getClanid() == pc
-						.getClanid())) {
+						|| (pc.getClanId() != 0 && _player.getClanId() == pc
+						.getClanId())) {
 					return false;
 				}
 				return true;

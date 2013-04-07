@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
-import jp.l1j.server.datatables.AuctionBoardTable;
+import jp.l1j.server.datatables.AuctionHouseTable;
 import jp.l1j.server.datatables.ClanTable;
 import jp.l1j.server.datatables.HouseTable;
 import jp.l1j.server.datatables.ItemTable;
@@ -28,7 +28,7 @@ import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.L1ItemId;
 import jp.l1j.server.packets.server.S_ServerMessage;
-import jp.l1j.server.templates.L1AuctionBoard;
+import jp.l1j.server.templates.L1AuctionHouse;
 import jp.l1j.server.templates.L1House;
 import jp.l1j.server.templates.L1InventoryItem;
 
@@ -62,18 +62,18 @@ public class AuctionTimeController implements Runnable {
 	}
 
 	private void checkAuctionDeadline() {
-		AuctionBoardTable boardTable = new AuctionBoardTable();
-		for (L1AuctionBoard board : boardTable.getAuctionBoardTableList()) {
+		AuctionHouseTable boardTable = new AuctionHouseTable();
+		for (L1AuctionHouse board : boardTable.getAuctionBoardTableList()) {
 			if (board.getDeadline().before(getRealTime())) {
 				endAuction(board);
 			}
 		}
 	}
 
-	private void endAuction(L1AuctionBoard board) {
+	private void endAuction(L1AuctionHouse board) {
 		int houseId = board.getHouseId();
 		int price = board.getPrice();
-		int oldOwnerId = board.getOldOwnerId();
+		int oldOwnerId = board.getOwnerId();
 		String bidder = board.getBidder();
 		int bidderId = board.getBidderId();
 
@@ -125,7 +125,7 @@ public class AuctionTimeController implements Runnable {
 			cal.set(Calendar.MINUTE, 0); // 分、秒は切り捨て
 			cal.set(Calendar.SECOND, 0);
 			board.setDeadline(cal);
-			AuctionBoardTable boardTable = new AuctionBoardTable();
+			AuctionHouseTable boardTable = new AuctionHouseTable();
 			boardTable.updateAuctionBoard(board);
 		}
 	}
@@ -183,7 +183,7 @@ public class AuctionTimeController implements Runnable {
 		HouseTable.getInstance().updateHouse(house);
 
 		// 競売掲示板から消す
-		AuctionBoardTable boardTable = new AuctionBoardTable();
+		AuctionHouseTable boardTable = new AuctionHouseTable();
 		boardTable.deleteAuctionBoard(houseId);
 	}
 

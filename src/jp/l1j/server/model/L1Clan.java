@@ -78,11 +78,8 @@ public class L1Clan {
 	}
 
 	public String getLeaderName() {
-		return _leaderName;
-	}
-
-	public void setLeaderName(String leader_name) {
-		_leaderName = leader_name;
+		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(_leaderId);
+		return pc != null ? pc.getName() : null;
 	}
 
 	public int getCastleId() {

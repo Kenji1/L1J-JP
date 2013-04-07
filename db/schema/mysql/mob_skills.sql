@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `mob_skills`;
 CREATE TABLE `mob_skills` (
-  `mob_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `npc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `act_no` int(10) unsigned NOT NULL DEFAULT '0',
   `mob_name` varchar(255) NOT NULL DEFAULT '',
   `type` int(10) unsigned NOT NULL DEFAULT '0',
@@ -26,5 +26,5 @@ CREATE TABLE `mob_skills` (
   `summon_max` int(10) NOT NULL DEFAULT '0',
   `poly_id` int(10) unsigned NOT NULL DEFAULT '0',
   `chat_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`mob_id`,`act_no`)
+  PRIMARY KEY (`npc_id`,`act_no`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

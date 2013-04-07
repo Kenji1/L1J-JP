@@ -42,7 +42,7 @@ public class BossSpawnTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawn_boss");
+			pstm = con.prepareStatement("SELECT * FROM spawn_boss_mobs");
 			rs = pstm.executeQuery();
 			L1BossSpawn spawnDat;
 			L1Npc template1;
@@ -56,7 +56,8 @@ public class BossSpawnTable {
 					spawnDat = new L1BossSpawn(template1);
 					spawnDat.setId(rs.getInt("id"));
 					spawnDat.setNpcid(npcTemplateId);
-					spawnDat.setLocation(rs.getString("location"));
+					L1Npc npc = NpcTable.getInstance().getTemplate(npcTemplateId);
+					spawnDat.setLocation(npc != null ? npc.getName() : null);
 					spawnDat.setCycleType(rs.getString("cycle_type"));
 					spawnDat.setAmount(rs.getInt("count"));
 					spawnDat.setGroupId(rs.getInt("group_id"));

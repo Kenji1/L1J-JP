@@ -92,7 +92,7 @@ public final class CastleTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE castles SET name=?, war_time=?, tax_rate=?, public_money=? WHERE castle_id=?");
+			pstm = con.prepareStatement("UPDATE castles SET name=?, war_time=?, tax_rate=?, public_money=? WHERE id=?");
 			pstm.setString(1, castle.getName());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String fm = sdf.format(castle.getWarTime().getTime());

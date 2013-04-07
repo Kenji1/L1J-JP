@@ -30,7 +30,7 @@ import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.GeneralThreadPool;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.datatables.UbSpawnTable;
+import jp.l1j.server.datatables.SpawnUbMobTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1MonsterInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -277,7 +277,7 @@ public class L1UltimateBattle {
 				setNowUb(true);
 				for (int round = 1; round <= 4; round++) {
 					sendRoundMessage(round);
-					L1UbPattern pattern = UbSpawnTable.getInstance().getPattern(_ubId, _pattern);
+					L1UbPattern pattern = SpawnUbMobTable.getInstance().getPattern(_ubId, _pattern);
 					ArrayList<L1UbSpawn> spawnList = pattern.getSpawnList(round);
 					for (L1UbSpawn spawn : spawnList) {
 						if (getMembersCount() > 0) {
@@ -317,7 +317,7 @@ public class L1UltimateBattle {
 	 *            開始するアルティメットバトルのID
 	 */
 	public void start() {
-		int patternsMax = UbSpawnTable.getInstance().getMaxPattern(_ubId);
+		int patternsMax = SpawnUbMobTable.getInstance().getMaxPattern(_ubId);
 		RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
 		_pattern = random.nextInt(patternsMax) + 1; // 出現パターンを決める
 		UbThread ub = new UbThread();

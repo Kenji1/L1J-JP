@@ -64,7 +64,7 @@ public class WeaponSkillTable {
 
 	private void fillWeaponSkillTable(ResultSet rs) throws SQLException {
 		while (rs.next()) {
-			int weaponId = rs.getInt("weapon_id");
+			int weaponId = rs.getInt("item_id");
 			int probability = rs.getInt("probability");
 			int probEnchant = rs.getInt("prob_enchant");
 			int fixDamage = rs.getInt("fix_damage");

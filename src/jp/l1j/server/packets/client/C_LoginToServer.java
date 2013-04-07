@@ -176,7 +176,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		int castle_id = L1CastleLocation.getCastleIdByArea(pc);
 		if (0 < castle_id) {
 			if (WarTimeController.getInstance().isNowWar(castle_id)) {
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+				L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 				if (clan != null) {
 					if (clan.getCastleId() != castle_id) {
 						// 城主クランではない
@@ -232,11 +232,11 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 		serchSummon(pc);
 		WarTimeController.getInstance().checkCastleWar(pc);
-		if (pc.getClanid() != 0) { // クラン所属中
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (pc.getClanId() != 0) { // クラン所属中
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
-				if (pc.getClanid() == clan.getClanId() && // クランを解散して、再度、同名のクランが創設された時の対策
-						pc.getClanname().toLowerCase().equals(clan.getClanName().toLowerCase())) {
+				if (pc.getClanId() == clan.getClanId() && // クランを解散して、再度、同名のクランが創設された時の対策
+						pc.getClanName().toLowerCase().equals(clan.getClanName().toLowerCase())) {
 					L1PcInstance[] clanMembers = clan.getOnlineClanMember();
 					for (L1PcInstance clanMember : clanMembers) {
 						if (clanMember.getId() != pc.getId()) {
@@ -246,12 +246,12 @@ public class C_LoginToServer extends ClientBasePacket {
 					}
 					// 全戦争リストを取得
 					for (L1War war : L1World.getInstance().getWarList()) {
-						boolean ret = war.CheckClanInWar(pc.getClanname());
+						boolean ret = war.CheckClanInWar(pc.getClanName());
 						if (ret) { // 戦争に参加中
-							String enemy_clan_name = war.GetEnemyClanName(pc.getClanname());
+							String enemy_clan_name = war.GetEnemyClanName(pc.getClanName());
 							if (enemy_clan_name != null) {
 								// あなたの血盟が現在_血盟と交戦中です。
-								pc.sendPackets(new S_War(8, pc.getClanname(), enemy_clan_name));
+								pc.sendPackets(new S_War(8, pc.getClanName(), enemy_clan_name));
 							}
 							break;
 						}

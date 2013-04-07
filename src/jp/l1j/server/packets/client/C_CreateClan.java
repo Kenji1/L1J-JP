@@ -39,7 +39,7 @@ public class C_CreateClan extends ClientBasePacket {
 			// \f1プリンスとプリンセスだけが血盟を創設できます。
 			return;
 		}
-		if (pc.getClanid() != 0) {
+		if (pc.getClanId() != 0) {
 			pc.sendPackets(new S_ServerMessage(86));
 			// \f1すでに血盟を結成されているので作成できません。
 			return;

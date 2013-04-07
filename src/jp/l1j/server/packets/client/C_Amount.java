@@ -23,7 +23,7 @@ import java.util.TimeZone;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.datatables.AuctionBoardTable;
+import jp.l1j.server.datatables.AuctionHouseTable;
 import jp.l1j.server.datatables.HouseTable;
 import jp.l1j.server.datatables.InnKeyTable;
 import jp.l1j.server.datatables.InnTable;
@@ -39,7 +39,7 @@ import jp.l1j.server.model.npc.L1NpcHtml;
 import jp.l1j.server.model.npc.action.L1NpcAction;
 import jp.l1j.server.packets.server.S_NpcTalkReturn;
 import jp.l1j.server.packets.server.S_ServerMessage;
-import jp.l1j.server.templates.L1AuctionBoard;
+import jp.l1j.server.templates.L1AuctionHouse;
 import jp.l1j.server.templates.L1House;
 import jp.l1j.server.templates.L1Inn;
 import jp.l1j.server.templates.L1InventoryItem;
@@ -79,22 +79,21 @@ public class C_Amount extends ClientBasePacket {
 		}
 		if (s1.equalsIgnoreCase("agapply")) { // 競売に入札した場合
 			String pcName = pc.getName();
-			AuctionBoardTable boardTable = new AuctionBoardTable();
-			for (L1AuctionBoard board : boardTable.getAuctionBoardTableList()) {
+			AuctionHouseTable boardTable = new AuctionHouseTable();
+			for (L1AuctionHouse board : boardTable.getAuctionBoardTableList()) {
 				if (pcName.equalsIgnoreCase(board.getBidder())) {
 					pc.sendPackets(new S_ServerMessage(523)); // すでに他の家の競売に参加しています。
 					return;
 				}
 			}
 			int houseId = Integer.valueOf(s2);
-			L1AuctionBoard board = boardTable.getAuctionBoardTable(houseId);
+			L1AuctionHouse board = boardTable.getAuctionBoardTable(houseId);
 			if (board != null) {
 				int nowPrice = board.getPrice();
 				int nowBidderId = board.getBidderId();
 				if (pc.getInventory().consumeItem(L1ItemId.ADENA, amount)) {
 					// 競売掲示板を更新
 					board.setPrice(amount);
-					board.setBidder(pcName);
 					board.setBidderId(pc.getId());
 					boardTable.updateAuctionBoard(board);
 					if (nowBidderId != 0) {
@@ -123,14 +122,12 @@ public class C_Amount extends ClientBasePacket {
 			}
 		} else if (s1.equalsIgnoreCase("agsell")) { // 家を売った場合
 			int houseId = Integer.valueOf(s2);
-			AuctionBoardTable boardTable = new AuctionBoardTable();
-			L1AuctionBoard board = new L1AuctionBoard();
+			AuctionHouseTable boardTable = new AuctionHouseTable();
+			L1AuctionHouse board = new L1AuctionHouse();
 			if (board != null) {
 				// 競売掲示板に新規書き込み
 				board.setHouseId(houseId);
 				L1House house = HouseTable.getInstance().getHouseTable(houseId);
-				board.setHouseName(house.getHouseName());
-				board.setHouseArea(house.getHouseArea());
 				TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
 				Calendar cal = Calendar.getInstance(tz);
 				cal.add(Calendar.DATE, 5); // 5日後
@@ -138,10 +135,7 @@ public class C_Amount extends ClientBasePacket {
 				cal.set(Calendar.SECOND, 0);
 				board.setDeadline(cal);
 				board.setPrice(amount);
-				board.setLocation(house.getLocation());
-				board.setOldOwner(pc.getName());
-				board.setOldOwnerId(pc.getId());
-				board.setBidder("");
+				board.setOwnerId(pc.getId());
 				board.setBidderId(0);
 				boardTable.insertAuctionBoard(board);
 

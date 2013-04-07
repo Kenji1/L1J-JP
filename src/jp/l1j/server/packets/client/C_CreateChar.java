@@ -226,7 +226,7 @@ public class C_CreateChar extends ClientBasePacket {
 		pc.setOnlineStatus(0);
 		pc.setHomeTownId(0);
 		pc.setContribution(0);
-		pc.setBanned(false);
+		pc.setActive(true);
 		pc.setKarma(0);
 		pc.setBlessOfAin(0); // アインハザードの祝福
 		if (pc.isWizard()) { // WIZ

@@ -1,3 +1,6 @@
+-- ----------------------------
+-- Records of map_ids
+-- ----------------------------
 INSERT INTO `map_ids` VALUES(0, 'Talking Island', 32256, 32767, 32768, 33279, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(1, 'Talking Island Dungeon 1F', 32576, 32831, 32704, 32959, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO `map_ids` VALUES(2, 'Talking Island Dungeon 2F', 32576, 32895, 32704, 32959, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1);

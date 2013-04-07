@@ -156,7 +156,7 @@ public class HomeTownTimeController {
 				totalContribution = rs2.getInt("total_contribution");
 			}
 			double townFixTax = 0;
-			pstm3 = con.prepareStatement("SELECT town_fix_tax FROM towns WHERE town_id = ?");
+			pstm3 = con.prepareStatement("SELECT town_fix_tax FROM towns WHERE id = ?");
 			pstm3.setInt(1, townId);
 			rs3 = pstm3.executeQuery();
 			if (rs3.next()) {
@@ -170,7 +170,7 @@ public class HomeTownTimeController {
 			pstm4.setDouble(1, contributionUnit);
 			pstm4.setInt(2, townId);
 			pstm4.execute();
-			pstm5 = con.prepareStatement("UPDATE towns SET leader_id = ?, leader_name = ?, tax_rate = 0, tax_rate_reserved = 0, sales_money = 0, sales_money_yesterday = sales_money, town_tax = 0, town_fix_tax = 0 WHERE town_id = ?");
+			pstm5 = con.prepareStatement("UPDATE towns SET leader_id = ?, leader_name = ?, tax_rate = 0, tax_rate_reserved = 0, sales_money = 0, sales_money_yesterday = sales_money, town_tax = 0, town_fix_tax = 0 WHERE id = ?");
 			pstm5.setInt(1, leaderId);
 			pstm5.setString(2, leaderName);
 			pstm5.setInt(3, townId);

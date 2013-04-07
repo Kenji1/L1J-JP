@@ -256,7 +256,7 @@ public class ItemTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				item = new L1EtcItem();
-				item.setItemId(rs.getInt("item_id"));
+				item.setItemId(rs.getInt("id"));
 				item.setName(rs.getString("name"));
 				item.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
 				item.setIdentifiedNameId(rs.getString("identified_name_id"));
@@ -266,8 +266,8 @@ public class ItemTable {
 				item.setType2(0);
 				item.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				item.setWeight(rs.getInt("weight"));
-				item.setGfxId(rs.getInt("inv_gfx"));
-				item.setGroundGfxId(rs.getInt("grd_gfx"));
+				item.setGfxId(rs.getInt("inv_gfx_id"));
+				item.setGroundGfxId(rs.getInt("grd_gfx_id"));
 				item.setItemDescId(rs.getInt("item_desc_id"));
 				item.setMinLevel(rs.getInt("min_level"));
 				item.setMaxLevel(rs.getInt("max_level"));
@@ -315,7 +315,7 @@ public class ItemTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				weapon = new L1Weapon();
-				weapon.setItemId(rs.getInt("item_id"));
+				weapon.setItemId(rs.getInt("id"));
 				weapon.setName(rs.getString("name"));
 				weapon.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
 				weapon.setIdentifiedNameId(rs.getString("identified_name_id"));
@@ -326,8 +326,8 @@ public class ItemTable {
 				weapon.setIsTwohanded(rs.getBoolean("is_twohanded"));
 				weapon.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				weapon.setWeight(rs.getInt("weight"));
-				weapon.setGfxId(rs.getInt("inv_gfx"));
-				weapon.setGroundGfxId(rs.getInt("grd_gfx"));
+				weapon.setGfxId(rs.getInt("inv_gfx_id"));
+				weapon.setGroundGfxId(rs.getInt("grd_gfx_id"));
 				weapon.setItemDescId(rs.getInt("item_desc_id"));
 				weapon.setDmgSmall(rs.getInt("dmg_small"));
 				weapon.setDmgLarge(rs.getInt("dmg_large"));
@@ -336,7 +336,7 @@ public class ItemTable {
 				weapon.setUseRoyal(rs.getInt("use_royal") == 0 ? false : true);
 				weapon.setUseKnight(rs.getInt("use_knight") == 0 ? false : true);
 				weapon.setUseElf(rs.getInt("use_elf") == 0 ? false : true);
-				weapon.setUseMage(rs.getInt("use_mage") == 0 ? false : true);
+				weapon.setUseWizard(rs.getInt("use_wizard") == 0 ? false : true);
 				weapon.setUseDarkelf(rs.getInt("use_darkelf") == 0 ? false : true);
 				weapon.setUseDragonknight(rs.getInt("use_dragonknight") == 0 ? false : true);
 				weapon.setUseIllusionist(rs.getInt("use_illusionist") == 0 ? false : true);
@@ -392,7 +392,7 @@ public class ItemTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				armor = new L1Armor();
-				armor.setItemId(rs.getInt("item_id"));
+				armor.setItemId(rs.getInt("id"));
 				armor.setName(rs.getString("name"));
 				armor.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
 				armor.setIdentifiedNameId(rs.getString("identified_name_id"));
@@ -404,14 +404,14 @@ public class ItemTable {
 				armor.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				armor.setGrade(rs.getInt("grade"));
 				armor.setWeight(rs.getInt("weight"));
-				armor.setGfxId(rs.getInt("inv_gfx"));
-				armor.setGroundGfxId(rs.getInt("grd_gfx"));
+				armor.setGfxId(rs.getInt("inv_gfx_id"));
+				armor.setGroundGfxId(rs.getInt("grd_gfx_id"));
 				armor.setItemDescId(rs.getInt("item_desc_id"));
 				armor.setSafeEnchant(rs.getInt("safe_enchant"));
 				armor.setUseRoyal(rs.getInt("use_royal") == 0 ? false : true);
 				armor.setUseKnight(rs.getInt("use_knight") == 0 ? false : true);
 				armor.setUseElf(rs.getInt("use_elf") == 0 ? false : true);
-				armor.setUseMage(rs.getInt("use_mage") == 0 ? false : true);
+				armor.setUseWizard(rs.getInt("use_wizard") == 0 ? false : true);
 				armor.setUseDarkelf(rs.getInt("use_darkelf") == 0 ? false : true);
 				armor.setUseDragonknight(rs.getInt("use_dragonknight") == 0 ? false : true);
 				armor.setUseIllusionist(rs.getInt("use_illusionist") == 0 ? false : true);

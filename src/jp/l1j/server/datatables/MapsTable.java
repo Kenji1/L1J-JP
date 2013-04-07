@@ -78,9 +78,9 @@ public final class MapsTable {
 			pstm = con.prepareStatement("SELECT * FROM map_ids");
 			for (rs = pstm.executeQuery(); rs.next();) {
 				MapData data = new MapData();
-				int mapId = rs.getInt("map_id");
+				int mapId = rs.getInt("id");
 				// TODO マップ名称検索用
-				data.locationname = rs.getString("location_name");
+				data.locationname = rs.getString("name");
 				data.startX = rs.getInt("start_x");
 				data.endX = rs.getInt("end_x");
 				data.startY = rs.getInt("start_y");

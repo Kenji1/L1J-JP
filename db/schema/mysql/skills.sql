@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `skills`;
 CREATE TABLE `skills` (
-  `skill_id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `skill_level` int(10) NOT NULL DEFAULT '0',
   `skill_number` int(10) NOT NULL DEFAULT '0',
@@ -28,7 +28,7 @@ CREATE TABLE `skills` (
   `ranged` int(10) NOT NULL DEFAULT '0',
   `area` int(10) NOT NULL DEFAULT '0',
   `through` int(10) NOT NULL DEFAULT '0',
-  `id` int(10) unsigned NOT NULL DEFAULT '0',
+  `skill_id` int(10) unsigned NOT NULL DEFAULT '0',
   `name_id` varchar(255) NOT NULL DEFAULT '',
   `action_id` int(10) unsigned NOT NULL DEFAULT '0',
   `cast_gfx` int(10) NOT NULL DEFAULT '-1',
@@ -40,5 +40,5 @@ CREATE TABLE `skills` (
   `ignores_counter_magic` tinyint(1) NOT NULL DEFAULT '0',
   `is_buff` tinyint(1) NOT NULL DEFAULT '0',
   `impl` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`skill_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `armors`;
 CREATE TABLE `armors` (
-  `item_id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `unidentified_name_id` varchar(255) NOT NULL DEFAULT '',
   `identified_name_id` varchar(255) NOT NULL DEFAULT '',
@@ -12,14 +12,14 @@ CREATE TABLE `armors` (
   `material` varchar(255) NOT NULL DEFAULT '',
   `grade` tinyint(1) NOT NULL DEFAULT '-1',
   `weight` int(10) unsigned NOT NULL DEFAULT '0',
-  `inv_gfx` int(10) unsigned NOT NULL DEFAULT '0',
-  `grd_gfx` int(10) unsigned NOT NULL DEFAULT '0',
+  `inv_gfx_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `grd_gfx_id` int(10) unsigned NOT NULL DEFAULT '0',
   `item_desc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `ac` tinyint(3) NOT NULL DEFAULT '0',
   `safe_enchant` tinyint(3) NOT NULL DEFAULT '0',
   `use_royal` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `use_knight` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `use_mage` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `use_wizard` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `use_elf` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `use_darkelf` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `use_dragonknight` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -62,5 +62,5 @@ CREATE TABLE `armors` (
   `resist_blind` tinyint(3) NOT NULL DEFAULT '0',
   `exp_bonus` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `potion_recovery_rate` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`item_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

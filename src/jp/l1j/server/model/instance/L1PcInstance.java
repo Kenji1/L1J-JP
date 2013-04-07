@@ -483,7 +483,7 @@ public class L1PcInstance extends L1Character {
 		}
 
 		if (isCrown()) { // 君主
-			L1Clan clan = L1World.getInstance().getClan(getClanname());
+			L1Clan clan = L1World.getInstance().getClan(getClanName());
 			if (clan != null) {
 				if (getId() == clan.getLeaderId() // 血盟主で城主クラン
 						&& clan.getCastleId() != 0) {
@@ -575,8 +575,8 @@ public class L1PcInstance extends L1Character {
 			sendPackets(new S_Emblem(clan.getClanId()));
 		}
 
-		if (getClanid() != 0) { // クラン所属
-			L1Clan clan = L1World.getInstance().getClan(getClanname());
+		if (getClanId() != 0) { // クラン所属
+			L1Clan clan = L1World.getInstance().getClan(getClanName());
 			if (clan != null) {
 				if (isCrown() && getId() == clan.getLeaderId() && // プリンスまたはプリンセス、
 						// かつ、血盟主で自クランが城主
@@ -765,7 +765,7 @@ public class L1PcInstance extends L1Character {
 
 	private int _clanid; // ● クランＩＤ
 
-	public int getClanid() {
+	public int getClanId() {
 		return _clanid;
 	}
 
@@ -775,7 +775,7 @@ public class L1PcInstance extends L1Character {
 
 	private String clanname; // ● クラン名
 
-	public String getClanname() {
+	public String getClanName() {
 		return clanname;
 	}
 
@@ -785,7 +785,7 @@ public class L1PcInstance extends L1Character {
 
 	// 参照を持つようにしたほうがいいかもしれない
 	public L1Clan getClan() {
-		return L1World.getInstance().getClan(getClanname());
+		return L1World.getInstance().getClan(getClanName());
 	}
 
 	private int _clanRank; // ● クラン内のランク(君主、副君主、ガーディアン、エリート、一般)
@@ -874,9 +874,9 @@ public class L1PcInstance extends L1Character {
 
 	public void logout() {
 		L1World world = L1World.getInstance();
-		if (getClanid() != 0) // クラン所属
+		if (getClanId() != 0) // クラン所属
 		{
-			L1Clan clan = world.getClan(getClanname());
+			L1Clan clan = world.getClan(getClanName());
 			if (clan != null) {
 				if (clan.getWarehouseUsingChar() == getId()) // 自キャラがクラン倉庫使用中
 				{
@@ -1162,9 +1162,9 @@ public class L1PcInstance extends L1Character {
 
 			// 全戦争リストを取得
 			for (L1War war : L1World.getInstance().getWarList()) {
-				if (pc.getClanid() != 0 && targetpc.getClanid() != 0) { // 共にクラン所属中
-					boolean same_war = war.CheckClanInSameWar(pc.getClanname(),
-							targetpc.getClanname());
+				if (pc.getClanId() != 0 && targetpc.getClanId() != 0) { // 共にクラン所属中
+					boolean same_war = war.CheckClanInSameWar(pc.getClanName(),
+							targetpc.getClanName());
 					if (same_war == true) { // 同じ戦争に参加中
 						return false;
 					}
@@ -1725,15 +1725,15 @@ public class L1PcInstance extends L1Character {
 					int PKcount1 = 0;
 					int PKcount2 = 0;
 
-					if (player.getClanid() == 0) {
+					if (player.getClanId() == 0) {
 						Clanname1 = "未所属";
 					} else {
-						Clanname1 = player.getClanname();
+						Clanname1 = player.getClanName();
 					}
-					if (getClanid() == 0) {
+					if (getClanId() == 0) {
 						Clanname2 = "未所属";
 					} else {
-						Clanname2 = getClanname();
+						Clanname2 = getClanName();
 					}
 					areaname = lastAttacker.getMap().locationname();
 					PKcount1 = player.getPkCount();
@@ -1777,18 +1777,18 @@ public class L1PcInstance extends L1Character {
 	}
 
 	public boolean castleWarResult() {
-		if (getClanid() != 0 && isCrown()) { // クラン所属中プリのチェック
-			L1Clan clan = L1World.getInstance().getClan(getClanname());
+		if (getClanId() != 0 && isCrown()) { // クラン所属中プリのチェック
+			L1Clan clan = L1World.getInstance().getClan(getClanName());
 			// 全戦争リストを取得
 			for (L1War war : L1World.getInstance().getWarList()) {
 				int warType = war.GetWarType();
-				boolean isInWar = war.CheckClanInWar(getClanname());
-				boolean isAttackClan = war.CheckAttackClan(getClanname());
+				boolean isInWar = war.CheckClanInWar(getClanName());
+				boolean isAttackClan = war.CheckAttackClan(getClanName());
 				if (getId() == clan.getLeaderId() && // 血盟主で攻撃側で攻城戦中
 						warType == 1 && isInWar && isAttackClan) {
-					String enemyClanName = war.GetEnemyClanName(getClanname());
+					String enemyClanName = war.GetEnemyClanName(getClanName());
 					if (enemyClanName != null) {
-						war.CeaseWar(getClanname(), enemyClanName); // 終結
+						war.CeaseWar(getClanName(), enemyClanName); // 終結
 					}
 					break;
 				}
@@ -1805,7 +1805,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	public boolean simWarResult(L1Character lastAttacker) {
-		if (getClanid() == 0) { // クラン所属していない
+		if (getClanId() == 0) { // クラン所属していない
 			return false;
 		}
 		if (Config.SIM_WAR_PENALTY) { // 模擬戦ペナルティありの場合はfalse
@@ -1829,21 +1829,21 @@ public class L1PcInstance extends L1Character {
 
 		// 全戦争リストを取得
 		for (L1War war : L1World.getInstance().getWarList()) {
-			L1Clan clan = L1World.getInstance().getClan(getClanname());
+			L1Clan clan = L1World.getInstance().getClan(getClanName());
 
 			int warType = war.GetWarType();
-			boolean isInWar = war.CheckClanInWar(getClanname());
-			if (attacker != null && attacker.getClanid() != 0) {
+			boolean isInWar = war.CheckClanInWar(getClanName());
+			if (attacker != null && attacker.getClanId() != 0) {
 				// lastAttackerがPC、サモン、ペットでクラン所属中
-				sameWar = war.CheckClanInSameWar(getClanname(), attacker
-						.getClanname());
+				sameWar = war.CheckClanInSameWar(getClanName(), attacker
+						.getClanName());
 			}
 
 			if (getId() == clan.getLeaderId() && // 血盟主で模擬戦中
 					warType == 2 && isInWar == true) {
-				enemyClanName = war.GetEnemyClanName(getClanname());
+				enemyClanName = war.GetEnemyClanName(getClanName());
 				if (enemyClanName != null) {
-					war.CeaseWar(getClanname(), enemyClanName); // 終結
+					war.CeaseWar(getClanName(), enemyClanName); // 終結
 				}
 			}
 
@@ -2604,14 +2604,14 @@ public class L1PcInstance extends L1Character {
 		_rejoinClanTime = time;
 	}
 
-	private boolean _banned; // ● 凍結
+	private boolean _active; // ● 有効/無効
 
-	public boolean isBanned() {
-		return _banned;
+	public boolean isActive() {
+		return _active;
 	}
 
-	public void setBanned(boolean flag) {
-		_banned = flag;
+	public void setActive(boolean flag) {
+		_active = flag;
 	}
 
 	private int _food; // ● 満腹度

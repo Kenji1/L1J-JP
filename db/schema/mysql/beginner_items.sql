@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS `beginner_items` (
   `item_count` int(10) unsigned NOT NULL DEFAULT '0',
   `charge_count` int(10) unsigned NOT NULL DEFAULT '0',
   `enchant_level` tinyint(3) NOT NULL DEFAULT '0',
-  `note` varchar(255) NOT NULL DEFAULT '',
   `class_initial` varchar(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`id`),
   KEY `class_initial` (`class_initial`) USING BTREE

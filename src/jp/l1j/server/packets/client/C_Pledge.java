@@ -35,8 +35,8 @@ public class C_Pledge extends ClientBasePacket {
 		super(abyte0);
 		L1PcInstance pc = clientthread.getActiveChar();
 
-		if (pc.getClanid() > 0) {
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (pc.getClanId() > 0) {
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (pc.isCrown() && pc.getId() == clan.getLeaderId()) {
 				pc.sendPackets(new S_Pledge("pledgeM", pc.getId(),
 						clan.getClanName(), clan.getOnlineMembersFPWithRank(),

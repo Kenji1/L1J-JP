@@ -45,10 +45,10 @@ public class L1CrownInstance extends L1NpcInstance {
 	@Override
 	public void onAction(L1PcInstance player) {
 		boolean in_war = false;
-		if (player.getClanid() == 0) { // クラン未所属
+		if (player.getClanId() == 0) { // クラン未所属
 			return;
 		}
-		String playerClanName = player.getClanname();
+		String playerClanName = player.getClanName();
 		L1Clan clan = L1World.getInstance().getClan(playerClanName);
 		if (clan == null) {
 			return;
@@ -125,7 +125,7 @@ public class L1CrownInstance extends L1NpcInstance {
 		// クラン員以外を街に強制テレポート
 		int[] loc = new int[3];
 		for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-			if (pc.getClanid() != player.getClanid() && !pc.isGm()) {
+			if (pc.getClanId() != player.getClanId() && !pc.isGm()) {
 
 				if (L1CastleLocation.checkInWarArea(castle_id, pc)) {
 					// 旗内に居る

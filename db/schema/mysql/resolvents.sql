@@ -5,7 +5,6 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `resolvents`;
 CREATE TABLE IF NOT EXISTS `resolvents` (
   `item_id` int(10) NOT NULL DEFAULT '0',
-  `note` varchar(255) NOT NULL,
   `crystal_count` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

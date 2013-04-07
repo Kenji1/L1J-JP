@@ -40,7 +40,7 @@ public class C_ChangeWarTime extends ClientBasePacket {
 
 		L1PcInstance player = clientthread.getActiveChar();
 
-		L1Clan clan = L1World.getInstance().getClan(player.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(player.getClanName());
 		if (clan != null) {
 			int castle_id = clan.getCastleId();
 			if (castle_id != 0) { // 城主クラン

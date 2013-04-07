@@ -5,9 +5,8 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `spawn_mobs`;
 CREATE TABLE `spawn_mobs` (
   `id` int(10) unsigned NOT NULL,
-  `location` varchar(255) NOT NULL DEFAULT '',
   `count` int(10) unsigned NOT NULL DEFAULT '0',
-  `npc_template_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `npc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',
   `loc_x` int(10) unsigned NOT NULL DEFAULT '0',
   `loc_y` int(10) unsigned NOT NULL DEFAULT '0',
@@ -26,4 +25,4 @@ CREATE TABLE `spawn_mobs` (
   `rest` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `near_spawn` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=801501345 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

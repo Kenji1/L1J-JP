@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
 import jp.l1j.configure.Config;
 import jp.l1j.server.datatables.SprTable;
-import jp.l1j.server.datatables.LogAcceleratorTable;
+import jp.l1j.server.datatables.AcceleratorLogTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Disconnect;
 import jp.l1j.server.packets.server.S_Paralysis;
@@ -180,7 +180,7 @@ public class AcceleratorChecker {
 			}
 		}
 		if (Config.LOGGING_ACCELERATOR) {
-			LogAcceleratorTable logaccelerator = new LogAcceleratorTable();
+			AcceleratorLogTable logaccelerator = new AcceleratorLogTable();
 			logaccelerator.storeLogAccelerator(_pc);// 加速器検知ログ
 		}
 	}

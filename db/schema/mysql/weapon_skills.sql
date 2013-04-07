@@ -4,8 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `weapon_skills`;
 CREATE TABLE IF NOT EXISTS `weapon_skills` (
-  `weapon_id` int(10) unsigned NOT NULL,
-  `note` varchar(255) DEFAULT NULL,
+  `item_id` int(10) unsigned NOT NULL,
   `probability` int(10) unsigned NOT NULL DEFAULT '0',
   `prob_enchant` int(10) NOT NULL DEFAULT '0',
   `fix_damage` int(10) unsigned NOT NULL DEFAULT '0',
@@ -14,5 +13,5 @@ CREATE TABLE IF NOT EXISTS `weapon_skills` (
   `arrow_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `enable_mr` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `enable_attr_mr` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`weapon_id`)
+  PRIMARY KEY (`item_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

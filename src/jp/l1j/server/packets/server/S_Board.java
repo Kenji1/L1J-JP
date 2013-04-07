@@ -17,7 +17,7 @@ package jp.l1j.server.packets.server;
 
 import java.util.List;
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.templates.L1BoardTopic;
+import jp.l1j.server.templates.L1BoardPost;
 
 public class S_Board extends ServerBasePacket {
 
@@ -36,7 +36,7 @@ public class S_Board extends ServerBasePacket {
 	}
 
 	private void buildPacket(int boardObjId, int number) {
-		List<L1BoardTopic> topics = L1BoardTopic.index(number, TOPIC_LIMIT);
+		List<L1BoardPost> topics = L1BoardPost.index(number, TOPIC_LIMIT);
 		writeC(Opcodes.S_OPCODE_BOARD);
 		writeC(0); // DragonKeybbs = 1
 		writeD(boardObjId);
@@ -50,7 +50,7 @@ public class S_Board extends ServerBasePacket {
 			writeC(0);
 			writeH(300);
 		}
-		for (L1BoardTopic topic : topics) {
+		for (L1BoardPost topic : topics) {
 			writeD(topic.getId());
 			writeS(topic.getName());
 			writeS(topic.getDate());

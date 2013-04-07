@@ -101,11 +101,11 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,obj_id=?,npc_id=?,name=?,level=?,hp=?,mp=?,exp=?,lawful=?,food=?");
+			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,id=?,name=?,npc_id=?,level=?,hp=?,mp=?,exp=?,lawful=?,food=?");
 			pstm.setInt(1, l1pet.getItemObjId());
 			pstm.setInt(2, l1pet.getObjId());
-			pstm.setInt(3, l1pet.getNpcId());
-			pstm.setString(4, l1pet.getName());
+			pstm.setString(3, l1pet.getName());
+			pstm.setInt(4, l1pet.getNpcId());
 			pstm.setInt(5, l1pet.getLevel());
 			pstm.setInt(6, l1pet.getHp());
 			pstm.setInt(7, l1pet.getMp());
@@ -126,10 +126,10 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE pets SET obj_id=?,npc_id=?,name=?,level=?,hp=?,mp=?,exp=?,lawful=?,food=? WHERE item_obj_id=?");
+			pstm = con.prepareStatement("UPDATE pets SET id=?,name=?,npc_id=?,level=?,hp=?,mp=?,exp=?,lawful=?,food=? WHERE item_obj_id=?");
 			pstm.setInt(1, pet.getObjId());
-			pstm.setInt(2, pet.getNpcId());
-			pstm.setString(3, pet.getName());
+			pstm.setString(2, pet.getName());
+			pstm.setInt(3, pet.getNpcId());
 			pstm.setInt(4, pet.getLevel());
 			pstm.setInt(5, pet.getHp());
 			pstm.setInt(6, pet.getMp());
@@ -236,11 +236,11 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,obj_id=?,npc_id=?,name=?,level=?,hp=?,mp=?,exp=?,lawful=?,food=?");
+			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,id=?,name=?,npc_id=?,level=?,hp=?,mp=?,exp=?,lawful=?,food=?");
 			pstm.setInt(1, l1pet.getItemObjId());
 			pstm.setInt(2, l1pet.getObjId());
-			pstm.setInt(3, l1pet.getNpcId());
-			pstm.setString(4, l1pet.getName());
+			pstm.setString(3, l1pet.getName());
+			pstm.setInt(4, l1pet.getNpcId());
 			pstm.setInt(5, l1pet.getLevel());
 			pstm.setInt(6, l1pet.getHp());
 			pstm.setInt(7, l1pet.getMp());

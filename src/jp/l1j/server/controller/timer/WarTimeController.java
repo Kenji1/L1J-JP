@@ -114,7 +114,7 @@ public final class WarTimeController implements Runnable {
 						if (L1CastleLocation.checkInWarArea(castleId, pc)
 								&& !pc.isGm()) { // 旗内に居る
 							L1Clan clan = L1World.getInstance().getClan(
-									pc.getClanname());
+									pc.getClanName());
 							if (clan != null) {
 								if (clan.getCastleId() == castleId) { // 城主クラン員
 									continue;

@@ -169,8 +169,8 @@ public class L1EffectInstance extends L1NpcInstance {
 								cubeToAlly(pc, _effect);
 								continue;
 							}
-							if (pc.getClanid() != 0
-									&& user.getClanid() == pc.getClanid()) {
+							if (pc.getClanId() != 0
+									&& user.getClanId() == pc.getClanId()) {
 								cubeToAlly(pc, _effect);
 								continue;
 							}

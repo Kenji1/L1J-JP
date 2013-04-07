@@ -18,7 +18,7 @@ package jp.l1j.server.command.executor;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
-import jp.l1j.server.datatables.FurnitureSpawnTable;
+import jp.l1j.server.datatables.SpawnFurnitureTable;
 import jp.l1j.server.datatables.LetterTable;
 import jp.l1j.server.datatables.PetTable;
 import jp.l1j.server.model.L1Object;
@@ -65,7 +65,7 @@ public class L1DeleteGroundItem implements L1CommandExecutor {
 							L1FurnitureInstance furniture = (L1FurnitureInstance) l1object;
 							if (furniture.getItemObjId() == l1iteminstance.getId()) {
 								// 既に引き出している家具
-								FurnitureSpawnTable.getInstance().deleteFurniture(furniture);
+								SpawnFurnitureTable.getInstance().deleteFurniture(furniture);
 							}
 						}
 					}

@@ -3,8 +3,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `PET_TYPES`;
 CREATE TABLE `PET_TYPES` (
-  `BASE_NPC_ID` INT NOT NULL,
-  `NAME` VARCHAR(255) NOT NULL,
+  `NPC_ID` INT NOT NULL,
   `TAME_ITEM_ID` INT NOT NULL,
   `MIN_HPUP` INT NOT NULL,
   `MAX_HPUP` INT NOT NULL,
@@ -23,4 +22,4 @@ CREATE TABLE `PET_TYPES` (
 -- ----------------------------
 -- Index for `PET_TYPES`
 -- ----------------------------
-CREATE PRIMARY KEY `PET_TYPES_PK` ON `PET_TYPES`(`BASE_NPC_ID`);
+CREATE PRIMARY KEY `PET_TYPES_PK` ON `PET_TYPES`(`NPC_ID`);

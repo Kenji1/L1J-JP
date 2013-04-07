@@ -68,16 +68,16 @@ public class PolyTable {
 		while (rs.next()) {
 			int id = rs.getInt("id");
 			String name = rs.getString("name");
-			int polyId = rs.getInt("poly_id");
+			int gfxId = rs.getInt("gfx_id");
 			int minLevel = rs.getInt("min_level");
 			int weaponEquipFlg = rs.getInt("weapon_equip");
 			int armorEquipFlg = rs.getInt("armor_equip");
 			boolean canUseSkill = rs.getBoolean("can_use_skill");
 			int causeFlg = rs.getInt("cause");
-			L1PolyMorph poly = new L1PolyMorph(id, name, polyId, minLevel,
+			L1PolyMorph poly = new L1PolyMorph(id, name, gfxId, minLevel,
 					weaponEquipFlg, armorEquipFlg, canUseSkill, causeFlg);
 			_polymorphs.put(name, poly);
-			_polyIdIndex.put(polyId, poly);
+			_polyIdIndex.put(gfxId, poly);
 		}
 		_log.fine("loaded poly: " + _polymorphs.size() + " records");
 	}

@@ -50,7 +50,7 @@ public class C_Rank extends ClientBasePacket {
 			if (pc == null) {
 				return;
 			}
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan == null) {
 				return;
 			}
@@ -101,7 +101,7 @@ public class C_Rank extends ClientBasePacket {
 				return;
 			}
 			if (targetPc != null) { // オンライン中
-				if (pc.getClanid() == targetPc.getClanid()) { // 同じクラン
+				if (pc.getClanId() == targetPc.getClanId()) { // 同じクラン
 					try {
 						targetPc.setClanRank(rank);
 						targetPc.save(); // DBにキャラクター情報を書き込む
@@ -116,7 +116,7 @@ public class C_Rank extends ClientBasePacket {
 				}
 			} else { // オフライン中
 				L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(name);
-				if (restorePc != null && restorePc.getClanid() == pc.getClanid()) { // 同じクラン
+				if (restorePc != null && restorePc.getClanId() == pc.getClanId()) { // 同じクラン
 					try {
 						restorePc.setClanRank(rank);
 						restorePc.save(); // DBにキャラクター情報を書き込む

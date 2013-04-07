@@ -64,9 +64,9 @@ public class LetterTable {
 		PreparedStatement pstm2 = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm1 = con.prepareStatement("SELECT * FROM letters ORDER BY item_object_id");
+			pstm1 = con.prepareStatement("SELECT * FROM letters ORDER BY item_obj_id");
 			rs = pstm1.executeQuery();
-			pstm2 = con.prepareStatement("INSERT INTO letters SET item_object_id=?, code=?, sender=?, receiver=?, date=?, template_id=?, subject=?, content=?");
+			pstm2 = con.prepareStatement("INSERT INTO letters SET item_obj_id=?, code=?, sender=?, receiver=?, date=?, template_id=?, subject=?, content=?");
 			pstm2.setInt(1, itemObjectId);
 			pstm2.setInt(2, code);
 			pstm2.setString(3, sender);
@@ -91,7 +91,7 @@ public class LetterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM letters WHERE item_object_id=?");
+			pstm = con.prepareStatement("DELETE FROM letters WHERE item_obj_id=?");
 			pstm.setInt(1, itemObjectId);
 			pstm.execute();
 		} catch (SQLException e) {

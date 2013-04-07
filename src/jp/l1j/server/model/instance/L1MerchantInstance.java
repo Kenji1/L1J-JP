@@ -3265,8 +3265,8 @@ public class L1MerchantInstance extends L1NpcInstance {
 	}
 
 	private boolean checkHasCastle(L1PcInstance pc, int castle_id) {
-		if (pc.getClanid() != 0) { // クラン所属中
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (pc.getClanId() != 0) { // クラン所属中
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				if (clan.getCastleId() == castle_id) {
 					return true;
@@ -3278,7 +3278,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 
 	private boolean checkClanLeader(L1PcInstance pc) {
 		if (pc.isCrown()) { // 君主
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				if (pc.getId() == clan.getLeaderId()) {
 					return true;

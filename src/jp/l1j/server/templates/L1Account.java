@@ -31,37 +31,37 @@ import jp.l1j.server.utils.L1QueryUtil.EntityFactory;
  * ログインの為の様々なインターフェースを提供する.
  */
 public class L1Account {
+	private static Logger _log = Logger.getLogger(L1Account.class.getName());
+
+	// アカウントID
 	private int _id;
 
-	/** アカウント名. */
+	// アカウント名
 	private String _name;
 
-	/** 接続先のIPアドレス. */
-	private String _ip;
-
-	/** パスワード(暗号化されている). */
+	/// パスワード(暗号化されている)
 	private String _password;
 
-	/** 最終アクティブ日. */
-	private Timestamp _lastActivatedAt;
-
-	/** アクセスレベル(GMか？). */
+	// アクセスレベル(GMか？)
 	private int _accessLevel;
 
-	/** 接続先のホスト名. */
-	private String _host;
-
-	/** アクセス禁止の有無(Trueで禁止). */
-	private boolean _isBanned;
-
-	/** キャラクターの追加スロット数 */
+	// キャラクターの追加スロット数
 	private int _characterSlot;
 
-	/** アカウントが有効か否か(Trueで有効). */
-	private boolean _isValid = false;
+	// 最終アクティブ日
+	private Timestamp _lastActivatedAt;
 
-	/** メッセージログ用. */
-	private static Logger _log = Logger.getLogger(L1Account.class.getName());
+	// 接続先のIPアドレス
+	private String _ip;
+
+	// 接続先のホスト名
+	private String _host;
+
+	// アカウントの有効/無効(True:有効)
+	private boolean _isActive;
+
+	// パスワード認証結果の有効/無効(True:有効)
+	private boolean _isValid = false;
 
 	/**
 	 * コンストラクタ.
@@ -80,7 +80,6 @@ public class L1Account {
 		try {
 			byte[] buf = rawPassword.getBytes("UTF-8");
 			buf = MessageDigest.getInstance("SHA").digest(buf);
-
 			return Base64.encodeBytes(buf);
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
@@ -93,9 +92,8 @@ public class L1Account {
 			final String rawPassword, final String ip, final String host) {
 		String password = encodePassword(rawPassword);
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-		String sql = "INSERT INTO accounts SET id = ?, name = ?, password = ?, last_activated_at = ?, access_level = ?, ip = ?, host = ?, is_banned = ?, character_slot = ?";
-		L1QueryUtil.execute(sql, id, name, password, currentTime, 0, ip, host,
-				false, 0);
+		String sql = "INSERT INTO accounts SET id = ?, name = ?, password = ?, access_level = ?, character_slot = ?, last_activated_at = ?, ip = ?, host = ?, is_active = ?";
+		L1QueryUtil.execute(sql, id, name, password, 0, 0, currentTime, ip, host, true);
 		_log.info("created new account for " + name);
 		return findById(id);
 	}
@@ -115,8 +113,7 @@ public class L1Account {
 	 */
 	public static L1Account create(final String name, final String rawPassword,
 			final String ip, final String host) {
-		return create(IdFactory.getInstance().nextId(), name, rawPassword, ip,
-				host);
+		return create(IdFactory.getInstance().nextId(), name, rawPassword, ip, host);
 	}
 
 	public static List<L1Account> findAll() {
@@ -125,9 +122,7 @@ public class L1Account {
 
 	public static List<L1Account> findByCharacterLevel(int minLevel,
 			int maxLevel) {
-		return L1QueryUtil
-				.selectAll(
-						new Factory(),
+		return L1QueryUtil.selectAll(new Factory(),
 						"SELECT * FROM accounts WHERE name IN (SELECT DISTINCT(account_id) FROM characters WHERE level BETWEEN ? AND ?)",
 						minLevel, maxLevel);
 	}
@@ -190,7 +185,7 @@ public class L1Account {
 	 */
 	public static void ban(final String name) {
 		L1QueryUtil.execute(
-				"UPDATE accounts SET is_banned = 1, WHERE name = ?", name);
+				"UPDATE accounts SET is_active = 0, WHERE name = ?", name);
 	}
 
 	/**
@@ -283,8 +278,8 @@ public class L1Account {
 	 * 
 	 * @return boolean
 	 */
-	public boolean isBanned() {
-		return _isBanned;
+	public boolean isActive() {
+		return _isActive;
 	}
 
 	/**
@@ -314,12 +309,12 @@ public class L1Account {
 			result._id = rs.getInt("id");
 			result._name = rs.getString("name");
 			result._password = rs.getString("password");
-			result._lastActivatedAt = rs.getTimestamp("last_activated_at");
 			result._accessLevel = rs.getInt("access_level");
+			result._characterSlot = rs.getInt("character_slot");
+			result._lastActivatedAt = rs.getTimestamp("last_activated_at");
 			result._ip = rs.getString("ip");
 			result._host = rs.getString("host");
-			result._isBanned = rs.getBoolean("is_banned");
-			result._characterSlot = rs.getInt("character_slot");
+			result._isActive = rs.getBoolean("is_active");
 			return result;
 		}
 	}

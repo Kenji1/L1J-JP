@@ -48,22 +48,22 @@ public class UbTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM ub_settings");
+			pstm = con.prepareStatement("SELECT * FROM ubs");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1UltimateBattle ub = new L1UltimateBattle();
-				ub.setUbId(rs.getInt("ub_id"));
-				ub.setMapId(rs.getShort("ub_map_id"));
-				ub.setLocX1(rs.getInt("ub_area_x1"));
-				ub.setLocY1(rs.getInt("ub_area_y1"));
-				ub.setLocX2(rs.getInt("ub_area_x2"));
-				ub.setLocY2(rs.getInt("ub_area_y2"));
+				ub.setUbId(rs.getInt("id"));
+				ub.setMapId(rs.getShort("map_id"));
+				ub.setLocX1(rs.getInt("area_x1"));
+				ub.setLocY1(rs.getInt("area_y1"));
+				ub.setLocX2(rs.getInt("area_x2"));
+				ub.setLocY2(rs.getInt("area_y2"));
 				ub.setMinLevel(rs.getInt("min_level"));
 				ub.setMaxLevel(rs.getInt("max_level"));
 				ub.setMaxPlayer(rs.getInt("max_player"));
 				ub.setEnterRoyal(rs.getBoolean("enter_royal"));
 				ub.setEnterKnight(rs.getBoolean("enter_knight"));
-				ub.setEnterMage(rs.getBoolean("enter_mage"));
+				ub.setEnterMage(rs.getBoolean("enter_wizard"));
 				ub.setEnterElf(rs.getBoolean("enter_elf"));
 				ub.setEnterDarkelf(rs.getBoolean("enter_darkelf"));
 				ub.setEnterDragonKnight(rs.getBoolean("enter_dragonknight"));
@@ -89,7 +89,7 @@ public class UbTable {
 			while (rs.next()) {
 				L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
 				if (ub != null) {
-					ub.addManager(rs.getInt("ub_manager_npc_id"));
+					ub.addManager(rs.getInt("npc_id"));
 				}
 			}
 		} catch (SQLException e) {
@@ -147,7 +147,7 @@ public class UbTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT MAX(pattern) FROM spawn_ub WHERE ub_id=?");
+			pstm = con.prepareStatement("SELECT MAX(pattern) FROM spawn_ub_mobs WHERE ub_id=?");
 			pstm.setInt(1, ubId);
 			rs = pstm.executeQuery();
 			if (rs.next()) {

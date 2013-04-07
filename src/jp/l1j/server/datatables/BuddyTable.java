@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.model.L1Buddy;
+import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
@@ -54,13 +56,16 @@ public class BuddyTable {
 				PreparedStatement buddysPS = null;
 				ResultSet buddysRS = null;
 				try {
-					buddysPS = con.prepareStatement("SELECT buddy_id, buddy_name FROM character_buddys WHERE char_id = ?");
+					buddysPS = con.prepareStatement("SELECT buddy_id FROM character_buddys WHERE char_id = ?");
 					int charId = charIdRS.getInt("char_id");
 					buddysPS.setInt(1, charId);
 					L1Buddy buddy = new L1Buddy(charId);
 					buddysRS = buddysPS.executeQuery();
 					while (buddysRS.next()) {
-						buddy.add(buddysRS.getInt("buddy_id"), buddysRS.getString("buddy_name"));
+						int id = buddysRS.getInt("buddy_id");
+						L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(id);
+						String name = pc != null ? pc.getName() : null;
+						buddy.add(id, name);
 					}
 					_buddys.put(buddy.getCharId(), buddy);
 				} catch (Exception e) {
@@ -89,15 +94,14 @@ public class BuddyTable {
 		return buddy;
 	}
 
-	public void addBuddy(int charId, int objId, String name) {
+	public void addBuddy(int charId, int buddyId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO character_buddys SET char_id=?, buddy_id=?, buddy_name=?");
+			pstm = con.prepareStatement("INSERT INTO character_buddys SET char_id=?, buddy_id=?");
 			pstm.setInt(1, charId);
-			pstm.setInt(2, objId);
-			pstm.setString(3, name);
+			pstm.setInt(2, buddyId);
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -115,10 +119,12 @@ public class BuddyTable {
 			return;
 		}
 		try {
+			L1PcInstance pc = (L1PcInstance) L1World.getInstance().getPlayer(buddyName);
+			int buddyId = pc != null ? pc.getId() : null;
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM character_buddys WHERE char_id=? AND buddy_name=?");
+			pstm = con.prepareStatement("DELETE FROM character_buddys WHERE char_id=? AND buddy_id=?");
 			pstm.setInt(1, charId);
-			pstm.setString(2, buddyName);
+			pstm.setInt(2, buddyId);
 			pstm.execute();
 			buddy.remove(buddyName);
 		} catch (SQLException e) {

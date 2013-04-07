@@ -52,7 +52,7 @@ public class C_AddBuddy extends ClientBasePacket {
 				int objId = cn.getId();
 				String name = cn.getName();
 				buddyList.add(objId, name);
-				buddyTable.addBuddy(pc.getId(), objId, name);
+				buddyTable.addBuddy(pc.getId(), objId);
 				return;
 			}
 		}

@@ -17,7 +17,7 @@ package jp.l1j.server.model.item.executor;
 import java.util.Arrays;
 import jp.l1j.configure.Config;
 import static jp.l1j.locale.I18N.*;
-import jp.l1j.server.datatables.LogEnchantTable;
+import jp.l1j.server.datatables.EnchantLogTable;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -1075,7 +1075,7 @@ public class L1EnchantScroll {
 
 	private void loggingEnchant(L1PcInstance pc, L1ItemInstance item,
 			int oldEnchantLvl, int newEnchantLvl) {
-		LogEnchantTable logenchant = new LogEnchantTable();
+		EnchantLogTable logenchant = new EnchantLogTable();
 		logenchant.storeLogEnchant(pc.getId(), item.getId(),
 				oldEnchantLvl, newEnchantLvl);
 	}

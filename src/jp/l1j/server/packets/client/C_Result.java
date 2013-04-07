@@ -244,13 +244,13 @@ public class C_Result extends ClientBasePacket {
 		} else if (resultType == 4 && size != 0
 				&& npcImpl.equalsIgnoreCase("L1Dwarf") && level >= 5) { // クラン倉庫に格納
 			int objectId, count;
-			if (pc.getClanid() != 0) { // クラン所属
+			if (pc.getClanId() != 0) { // クラン所属
 				for (int i = 0; i < size; i++) {
 					tradable = true;
 					objectId = readD();
 					count = readD();
 					L1Clan clan = L1World.getInstance().getClan(
-							pc.getClanname());
+							pc.getClanName());
 					L1Object object = pc.getInventory().getItem(objectId);
 					L1ItemInstance item = (L1ItemInstance) object;
 					if (clan != null) {
@@ -311,7 +311,7 @@ public class C_Result extends ClientBasePacket {
 			int objectId, count;
 			L1ItemInstance item;
 
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				for (int i = 0; i < size; i++) {
 					objectId = readD();
@@ -334,7 +334,7 @@ public class C_Result extends ClientBasePacket {
 			}
 		} else if (resultType == 5 && size == 0
 				&& npcImpl.equalsIgnoreCase("L1Dwarf")) { // クラン倉庫から取り出し中にCancel、または、ESCキー
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				clan.setWarehouseUsingChar(0); // クラン倉庫のロックを解除
 			}

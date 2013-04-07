@@ -38,7 +38,7 @@ public class C_BanClan extends ClientBasePacket {
 		String s = readS();
 
 		L1PcInstance pc = clientthread.getActiveChar();
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 		if (clan != null) {
 			String clanMemberName[] = clan.getAllMembers();
 			int i;
@@ -50,14 +50,14 @@ public class C_BanClan extends ClientBasePacket {
 				}
 				L1PcInstance tempPc = L1World.getInstance().getPlayer(s);
 				if (tempPc != null) { // オンライン中
-					if (tempPc.getClanid() == pc.getClanid()) { // 同じクラン
+					if (tempPc.getClanId() == pc.getClanId()) { // 同じクラン
 						tempPc.setClanid(0);
 						tempPc.setClanname("");
 						tempPc.setClanRank(0);
 						tempPc.save(); // DBにキャラクター情報を書き込む
 						clan.delMemberName(tempPc.getName());
 						tempPc.sendPackets(new S_ServerMessage(238, pc
-								.getClanname())); // あなたは%0血盟から追放されました。
+								.getClanName())); // あなたは%0血盟から追放されました。
 						pc.sendPackets(new S_ServerMessage(240, tempPc
 								.getName())); // %0があなたの血盟から追放されました。
 					} else {
@@ -68,7 +68,7 @@ public class C_BanClan extends ClientBasePacket {
 						L1PcInstance restorePc = CharacterTable.getInstance()
 								.restoreCharacter(s);
 						if (restorePc != null
-								&& restorePc.getClanid() == pc.getClanid()) { // 同じクラン
+								&& restorePc.getClanId() == pc.getClanId()) { // 同じクラン
 							restorePc.setClanid(0);
 							restorePc.setClanname("");
 							restorePc.setClanRank(0);

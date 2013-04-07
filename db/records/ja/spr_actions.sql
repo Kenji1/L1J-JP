@@ -1,3 +1,6 @@
+-- ----------------------------
+-- Records of spr_actions
+-- ----------------------------
 INSERT INTO `spr_actions` VALUES ('0', '0', '16', '24');
 INSERT INTO `spr_actions` VALUES ('0', '1', '20', '24');
 INSERT INTO `spr_actions` VALUES ('0', '4', '16', '24');

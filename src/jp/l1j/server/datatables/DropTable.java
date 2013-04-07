@@ -71,7 +71,7 @@ public class DropTable {
 			pstm = con.prepareStatement("select * from drop_items");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int mobId = rs.getInt("mob_id");
+				int mobId = rs.getInt("npc_id");
 				int itemId = rs.getInt("item_id");
 				int min = rs.getInt("min");
 				int max = rs.getInt("max");

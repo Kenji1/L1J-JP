@@ -100,8 +100,8 @@ public class C_Attr extends ClientBasePacket {
 					joinPc.sendPackets(new S_ServerMessage(96, pc.getName()));
 					// \f1%0はあなたの要請を拒絶しました。
 				} else if (c == 1) { // Yes
-					int clan_id = pc.getClanid();
-					String clanName = pc.getClanname();
+					int clan_id = pc.getClanId();
+					String clanName = pc.getClanName();
 					clan = L1World.getInstance().getClan(clanName);
 					if (clan != null) {
 						int maxMember = 0;
@@ -127,7 +127,7 @@ public class C_Attr extends ClientBasePacket {
 							maxMember = Config.MAX_CLAN_MEMBER;
 						}
 
-						if (joinPc.getClanid() == 0) { // クラン未加入
+						if (joinPc.getClanId() == 0) { // クラン未加入
 							String clanMembersName[] = clan.getAllMembers();
 							if (maxMember <= clanMembersName.length) { // 空きがない
 								// %0はあなたを血盟員として受け入れることができません。
@@ -167,7 +167,7 @@ public class C_Attr extends ClientBasePacket {
 			if (c == 0) { // No
 				return;
 			}		
-			clan_name = pc.getClanname();
+			clan_name = pc.getClanName();
 			clan = L1World.getInstance().getClan(clan_name);
 			clan_member_name = clan.getAllMembers();
 			for (i = 0; i < clan_member_name.length; i++) { // クラン員のクラン情報をクリア
@@ -196,7 +196,7 @@ public class C_Attr extends ClientBasePacket {
 					}
 				}
 			}
-			String emblem_file = String.valueOf(pc.getClanid());
+			String emblem_file = String.valueOf(pc.getClanId());
 			File file = new File("emblem/" + emblem_file);
 			file.delete();
 			ClanTable.getInstance().deleteClan(clan_name);
@@ -208,7 +208,7 @@ public class C_Attr extends ClientBasePacket {
 				leaveClan(pc, false);
 			} else { // Yes
 				loginLeader = false;
-				clan_name = pc.getClanname();
+				clan_name = pc.getClanName();
 				clan = L1World.getInstance().getClan(clan_name);
 				clanMember = clan.getOnlineClanMember();
 				for (i = 0; i < clanMember.length; i++) {
@@ -234,7 +234,7 @@ public class C_Attr extends ClientBasePacket {
 			L1PcInstance leavePc = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());		
 			c = readH();
 			if (c == 0) { // No
-				clan_name = pc.getClanname();
+				clan_name = pc.getClanName();
 				clan = L1World.getInstance().getClan(clan_name);
 				clanMember = clan.getOnlineClanMember();
 				for (i = 0; i < clanMember.length; i++) {
@@ -244,7 +244,7 @@ public class C_Attr extends ClientBasePacket {
 				// 君主が血盟脱退を拒否しました。任意で脱退しますか？
 				leavePc.sendPackets(new S_MessageYN(1912));
 			} else { // Yes
-				clan_name = pc.getClanname();
+				clan_name = pc.getClanName();
 				clan = L1World.getInstance().getClan(clan_name);
 				clanMember = clan.getOnlineClanMember();
 				for (i = 0; i < clanMember.length; i++) {
@@ -274,8 +274,8 @@ public class C_Attr extends ClientBasePacket {
 				return;
 			}
 			pc.setTempID(0);
-			String clanName = pc.getClanname();
-			String enemyClanName = enemyLeader.getClanname();
+			String clanName = pc.getClanName();
+			String enemyClanName = enemyLeader.getClanName();
 			if (c == 0) { // No
 				if (i == 217) {
 					enemyLeader.sendPackets(new S_ServerMessage(236, clanName)); // %0血盟があなたの血盟との戦争を拒絶しました。
@@ -677,7 +677,7 @@ public class C_Attr extends ClientBasePacket {
 	}
 
 	private void leaveClan(L1PcInstance leavePc, boolean isApproved) {
-		String clan_name = leavePc.getClanname();
+		String clan_name = leavePc.getClanName();
 		L1Clan clan = L1World.getInstance().getClan(clan_name);
 		L1PcInstance clanMember[] = clan.getOnlineClanMember();
 		for (int i = 0; i < clanMember.length; i++) {
@@ -710,14 +710,14 @@ public class C_Attr extends ClientBasePacket {
 	
 	private void changeClan(ClientThread clientthread,
 			L1PcInstance pc, L1PcInstance joinPc, int maxMember) {
-		int clanId = pc.getClanid();
-		String clanName = pc.getClanname();
+		int clanId = pc.getClanId();
+		String clanName = pc.getClanName();
 		L1Clan clan = L1World.getInstance().getClan(clanName);
 		String clanMemberName[] = clan.getAllMembers();
 		int clanNum = clanMemberName.length;
 
-		int oldClanId = joinPc.getClanid();
-		String oldClanName = joinPc.getClanname();
+		int oldClanId = joinPc.getClanId();
+		String oldClanName = joinPc.getClanName();
 		L1Clan oldClan = L1World.getInstance().getClan(oldClanName);
 		String oldClanMemberName[] = oldClan.getAllMembers();
 		int oldClanNum = oldClanMemberName.length;

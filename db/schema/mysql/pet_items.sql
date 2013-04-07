@@ -4,8 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `pet_items`;
 CREATE TABLE IF NOT EXISTS `pet_items` (
-  `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `note` varchar(255) NOT NULL DEFAULT '',
+  `item_id` int(10) unsigned NOT NULL,
   `hit_modifier` tinyint(3) NOT NULL DEFAULT '0',
   `dmg_modifier` tinyint(3) NOT NULL DEFAULT '0',
   `ac` tinyint(3) NOT NULL DEFAULT '0',
@@ -20,4 +19,4 @@ CREATE TABLE IF NOT EXISTS `pet_items` (
   `mr` tinyint(3) NOT NULL DEFAULT '0',
   `use_type` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40767 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

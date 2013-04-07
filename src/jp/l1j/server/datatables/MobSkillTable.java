@@ -48,16 +48,16 @@ public class MobSkillTable {
 	private static class NpcIdFactory implements EntityFactory<Integer> {
 		@Override
 		public Integer fromResultSet(ResultSet rs) throws SQLException {
-			return rs.getInt("mob_id");
+			return rs.getInt("npc_id");
 		}
 	}
 
 	private void load() {
 		List<Integer> npcIds = L1QueryUtil.selectAll(new NpcIdFactory(),
-				"SELECT DISTINCT mob_id FROM mob_skills");
+				"SELECT DISTINCT npc_id FROM mob_skills");
 		for (int npcId : npcIds) {
 			List<L1MobSkill> skills = L1QueryUtil.selectAll(new L1MobSkill.Factory(),
-				"SELECT * FROM mob_skills where mob_id = ? order by act_no", npcId);
+				"SELECT * FROM mob_skills where npc_id = ? order by act_no", npcId);
 			_mobskills.put(npcId, skills);
 		}
 	}

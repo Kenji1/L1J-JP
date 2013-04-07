@@ -102,7 +102,7 @@ public class L1DwarfInstance extends L1NpcInstance {
 		} else if (Action.equalsIgnoreCase("retrieve-pledge")) {
 			_log.finest("Retrive items in pledge storage");
 
-			if (pc.getClanname().equalsIgnoreCase(" ")) {
+			if (pc.getClanName().equalsIgnoreCase(" ")) {
 				_log.finest("pc isnt in a pledge");
 				S_ServerMessage talk = new S_ServerMessage(
 						(L1MessageId.NO_PLEDGE_WAREHOUSE), Action);

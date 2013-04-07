@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `armor_sets`;
 CREATE TABLE IF NOT EXISTS `armor_sets` (
   `id` int(10) unsigned NOT NULL,
-  `note` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `sets` varchar(255) NOT NULL,
   `poly_id` int(10) NOT NULL DEFAULT '-1',
   `ac` tinyint(3) NOT NULL DEFAULT '0',

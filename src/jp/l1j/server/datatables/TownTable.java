@@ -58,7 +58,7 @@ public class TownTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1Town town = new L1Town();
-				townid = rs.getInt("town_id");
+				townid = rs.getInt("id");
 				town.setTownId(townid);
 				town.setName(rs.getString("name"));
 				town.setLeaderId(rs.getInt("leader_id"));
@@ -108,7 +108,7 @@ public class TownTable {
 		}
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE towns SET sales_money = sales_money + ?, town_tax = town_tax + ?, town_fix_tax = town_fix_tax + ? WHERE town_id = ?");
+			pstm = con.prepareStatement("UPDATE towns SET sales_money = sales_money + ?, town_tax = town_tax + ?, town_fix_tax = town_fix_tax + ? WHERE id = ?");
 			pstm.setInt(1, salesMoney);
 			pstm.setInt(2, townTax);
 			pstm.setInt(3, townFixTax);

@@ -20,7 +20,7 @@ import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.model.AcceleratorChecker;
 import jp.l1j.server.model.Dungeon;
-import jp.l1j.server.model.DungeonRandom;
+import jp.l1j.server.model.RandomDungeon;
 import jp.l1j.server.model.instance.L1PcInstance;
 import static jp.l1j.server.model.instance.L1PcInstance.REGENSTATE_MOVE;
 import static jp.l1j.server.model.skill.L1SkillId.*;
@@ -91,7 +91,7 @@ public class C_MoveChar extends ClientBasePacket {
 		if (Dungeon.getInstance().dg(locx, locy, pc.getMap().getId(), pc)) { // ダンジョンにテレポートした場合
 			return;
 		}
-		if (DungeonRandom.getInstance().dg(locx, locy, pc.getMap().getId(),
+		if (RandomDungeon.getInstance().dg(locx, locy, pc.getMap().getId(),
 				pc)) { // テレポート先がランダムなテレポート地点
 			return;
 		}

@@ -70,7 +70,7 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 		boolean isOwner = false;
 		if (talking != null) {
 			// 話しかけたPCが所有者とそのクラン員かどうか調べる
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				int houseId = clan.getHouseId();
 				if (houseId != 0) {

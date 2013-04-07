@@ -55,7 +55,7 @@ public class S_AuctionBoard extends ServerBasePacket {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM house_auction");
+			pstm = con.prepareStatement("SELECT * FROM auction_houses");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				houseId = rs.getInt(1);
@@ -89,7 +89,7 @@ public class S_AuctionBoard extends ServerBasePacket {
 			price = new int[count];
 
 			for (int i = 0; i < count; ++i) {
-				pstm = con.prepareStatement("SELECT * FROM house_auction WHERE house_id=?");
+				pstm = con.prepareStatement("SELECT * FROM auction_houses WHERE house_id=?");
 				houseId = houseList.get(i);
 				pstm.setInt(1, houseId);
 				rs = pstm.executeQuery();

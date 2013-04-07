@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `contribution` int(10) unsigned NOT NULL DEFAULT '0',
   `pay` int(10) unsigned NOT NULL DEFAULT '0',
   `hell_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `banned` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `karma` int(10) NOT NULL DEFAULT '0',
   `last_pk` datetime DEFAULT NULL,
   `last_pk_for_elf` datetime DEFAULT NULL,

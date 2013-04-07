@@ -36,8 +36,8 @@ public class C_Emblem extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance player = clientthread.getActiveChar();
-		if (player.getClanid() != 0) {
-			String emblem_file = String.valueOf(player.getClanid());
+		if (player.getClanId() != 0) {
+			String emblem_file = String.valueOf(player.getClanId());
 
 			FileOutputStream fos = null;
 			try {
@@ -54,8 +54,8 @@ public class C_Emblem extends ClientBasePacket {
 				}
 				fos = null;
 			}
-			player.sendPackets(new S_Emblem(player.getClanid()));
-			L1World.getInstance().broadcastPacketToAll(new S_Emblem(player.getClanid()));
+			player.sendPackets(new S_Emblem(player.getClanId()));
+			L1World.getInstance().broadcastPacketToAll(new S_Emblem(player.getClanId()));
 		}
 	}
 

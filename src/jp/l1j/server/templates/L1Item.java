@@ -349,14 +349,14 @@ public abstract class L1Item implements Cloneable, Serializable {
 		_useElf = flag;
 	}
 
-	private boolean _useMage = false; // ● メイジクラスが装備できるか
+	private boolean _useWizard = false; // ● メイジクラスが装備できるか
 
-	public boolean isUseMage() {
-		return _useMage;
+	public boolean isUseWizard() {
+		return _useWizard;
 	}
 
-	public void setUseMage(boolean flag) {
-		_useMage = flag;
+	public void setUseWizard(boolean flag) {
+		_useWizard = flag;
 	}
 
 	private boolean _useDarkelf = false; // ● ダークエルフクラスが装備できるか

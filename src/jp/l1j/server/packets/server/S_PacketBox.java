@@ -395,7 +395,7 @@ public class S_PacketBox extends ServerBasePacket {
 
 			// キャラ情報
 			writeS(pc.getName()); // 半角12字まで
-			writeS(pc.getClanname()); // []内に表示される文字列。半角12字まで
+			writeS(pc.getClanName()); // []内に表示される文字列。半角12字まで
 		}
 	}
 

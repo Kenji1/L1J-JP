@@ -475,8 +475,8 @@ public class L1GuardInstance extends L1NpcInstance {
 			return true;
 		}
 
-		if (pc.getClanid() != 0) { // クラン所属中
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (pc.getClanId() != 0) { // クラン所属中
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				if (clan.getCastleId() == castleId) {
 					return true;

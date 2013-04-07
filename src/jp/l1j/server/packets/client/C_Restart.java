@@ -46,8 +46,8 @@ public class C_Restart extends ClientBasePacket {
 		int[] loc;
 		int castle_id = 0;
 		
-		if (pc.getClanid() != 0) { // クラン所属
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (pc.getClanId() != 0) { // クラン所属
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				castle_id = clan.getCastleId();
 			}

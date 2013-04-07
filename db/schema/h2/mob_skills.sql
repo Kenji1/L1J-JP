@@ -3,7 +3,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `mob_skills`;
 CREATE TABLE `mob_skills` (
-  `MOB_ID` INT NOT NULL DEFAULT '0',
+  `NPC_ID` INT NOT NULL DEFAULT '0',
   `ACT_NO` INT NOT NULL DEFAULT '0',
   `MOB_NAME` VARCHAR(255) NOT NULL DEFAULT '',
   `TYPE` INT NOT NULL DEFAULT '0',
@@ -29,4 +29,4 @@ CREATE TABLE `mob_skills` (
 -- ----------------------------
 -- Index for `mob_skills`
 -- ----------------------------
-CREATE PRIMARY KEY `mob_skills_PK` ON `mob_skills`(`MOB_ID`,`ACT_NO`);
+CREATE PRIMARY KEY `mob_skills_PK` ON `mob_skills`(`NPC_ID`,`ACT_NO`);

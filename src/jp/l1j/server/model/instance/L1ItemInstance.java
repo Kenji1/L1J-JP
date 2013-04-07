@@ -23,7 +23,7 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 import jp.l1j.configure.Config;
-import jp.l1j.server.datatables.FurnitureSpawnTable;
+import jp.l1j.server.datatables.SpawnFurnitureTable;
 import jp.l1j.server.datatables.InnKeyTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.LetterTable;
@@ -1215,7 +1215,7 @@ public class L1ItemInstance extends L1Object {
 			bit |= getItem().isUseRoyal() ? 1 : 0;
 			bit |= getItem().isUseKnight() ? 2 : 0;
 			bit |= getItem().isUseElf() ? 4 : 0;
-			bit |= getItem().isUseMage() ? 8 : 0;
+			bit |= getItem().isUseWizard() ? 8 : 0;
 			bit |= getItem().isUseDarkelf() ? 16 : 0;
 			bit |= getItem().isUseDragonknight() ? 32 : 0;
 			bit |= getItem().isUseIllusionist() ? 64 : 0;
@@ -2229,7 +2229,7 @@ public class L1ItemInstance extends L1Object {
 				if (l1object instanceof L1FurnitureInstance) {
 					L1FurnitureInstance furniture = (L1FurnitureInstance) l1object;
 					if (furniture.getItemObjId() == getId()) { // 既に引き出している家具
-						FurnitureSpawnTable.getInstance().deleteFurniture(
+						SpawnFurnitureTable.getInstance().deleteFurniture(
 								furniture);
 					}
 				}

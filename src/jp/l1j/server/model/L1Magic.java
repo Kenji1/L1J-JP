@@ -266,8 +266,8 @@ public class L1Magic {
 					return true;
 				}
 				// 同じクランの場合は100%成功
-				if (_pc.getClanid() > 0
-						&& (_pc.getClanid() == _targetPc.getClanid())) {
+				if (_pc.getClanId() > 0
+						&& (_pc.getClanId() == _targetPc.getClanId())) {
 					return true;
 				}
 				// 同じパーティの場合は100%成功

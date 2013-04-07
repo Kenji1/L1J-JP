@@ -48,8 +48,8 @@ public class S_WhoCharinfo extends ServerBasePacket {
 			title = pc.getTitle() + " ";
 		}
 
-		if (pc.getClanid() > 0) {
-			clan = "[" + pc.getClanname() + "]";
+		if (pc.getClanId() > 0) {
+			clan = "[" + pc.getClanName() + "]";
 		}
 
 		writeS(title + pc.getName() + " " + lawfulness + " " + clan);

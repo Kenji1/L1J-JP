@@ -69,13 +69,13 @@ public class L1DoorGfx {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("SELECT * FROM door_gfxs WHERE gfx_id = ?");
+					.prepareStatement("SELECT * FROM door_gfxs WHERE id = ?");
 			pstm.setInt(1, gfxId);
 			rs = pstm.executeQuery();
 			if (!rs.next()) {
 				return null;
 			}
-			int id = rs.getInt("gfx_id");
+			int id = rs.getInt("id");
 			int dir = rs.getInt("direction");
 			int rEdge = rs.getInt("right_edge_offset");
 			int lEdge = rs.getInt("left_edge_offset");

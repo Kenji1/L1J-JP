@@ -324,7 +324,7 @@ public class C_NpcAction extends ClientBasePacket {
 			}
 		} else if (s.equalsIgnoreCase("retrieve-pledge")) { // 「血盟倉庫：荷物を受け取る」
 			if (pc.getLevel() >= 5) {
-				if (pc.getClanid() == 0) {
+				if (pc.getClanId() == 0) {
 					// \f1血盟倉庫を使用するには血盟に加入していなくてはなりません。
 					pc.sendPackets(new S_ServerMessage(208));
 					return;
@@ -335,7 +335,7 @@ public class C_NpcAction extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(728));
 					return;
 				}
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+				L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 				int size = clan.getWarehouse().getSize();
 				if (size > 0) {
 					pc.sendPackets(new S_RetrievePledgeList(objid, pc));
@@ -760,7 +760,7 @@ public class C_NpcAction extends ClientBasePacket {
 		} else if (s.equalsIgnoreCase("inex")) { // 収入/支出の報告を受ける
 			// 暫定的に公金をチャットウィンドウに表示させる。
 			// メッセージは適当。
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				int castle_id = clan.getCastleId();
 				if (castle_id != 0) { // 城主クラン
@@ -775,7 +775,7 @@ public class C_NpcAction extends ClientBasePacket {
 		} else if (s.equalsIgnoreCase("tax")) { // 税率を調節する
 			pc.sendPackets(new S_TaxRate(pc.getId()));
 		} else if (s.equalsIgnoreCase("withdrawal")) { // 資金を引き出す
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				int castle_id = clan.getCastleId();
 				if (castle_id != 0) { // 城主クラン
@@ -895,7 +895,7 @@ public class C_NpcAction extends ClientBasePacket {
 		} else if (s.equalsIgnoreCase("map")) { // アジトの位置を確かめる
 			pc.sendPackets(new S_HouseMap(objid, s2));
 		} else if (s.equalsIgnoreCase("apply")) { // 競売に参加する
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				if (pc.isCrown() && pc.getId() == clan.getLeaderId()) { // 君主、かつ、
 					// 血盟主
@@ -942,7 +942,7 @@ public class C_NpcAction extends ClientBasePacket {
 			}
 			htmlid = "";
 		} else if (s.equalsIgnoreCase("name")) { // 家の名前を決める
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				int houseId = clan.getHouseId();
 				if (houseId != 0) {
@@ -962,7 +962,7 @@ public class C_NpcAction extends ClientBasePacket {
 				|| s.equalsIgnoreCase("tel1") // テレポートする(ペット保管所)
 				|| s.equalsIgnoreCase("tel2") // テレポートする(贖罪の使者)
 				|| s.equalsIgnoreCase("tel3")) { // テレポートする(ギラン市場)
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				int houseId = clan.getHouseId();
 				if (houseId != 0) {
@@ -992,7 +992,7 @@ public class C_NpcAction extends ClientBasePacket {
 			}
 			htmlid = ""; // ウィンドウを消す
 		} else if (s.equalsIgnoreCase("upgrade")) { // 地下アジトを作る
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				int houseId = clan.getHouseId();
 				if (houseId != 0) {
@@ -1028,7 +1028,7 @@ public class C_NpcAction extends ClientBasePacket {
 			htmlid = ""; // ウィンドウを消す
 		} else if (s.equalsIgnoreCase("hall")
 				&& obj instanceof L1HousekeeperInstance) { // 地下アジトにテレポートする
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				int houseId = clan.getHouseId();
 				if (houseId != 0) {
@@ -6670,7 +6670,7 @@ public class C_NpcAction extends ClientBasePacket {
 	}
 
 	private String sellHouse(L1PcInstance pc, int objectId, int npcId) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 		if (clan == null) {
 			return ""; // ウィンドウを消す
 		}
@@ -6701,7 +6701,7 @@ public class C_NpcAction extends ClientBasePacket {
 
 	private void openCloseDoor(L1PcInstance pc, L1NpcInstance npc, String s) {
 		// int doorId = 0;
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 		if (clan != null) {
 			int houseId = clan.getHouseId();
 			if (houseId != 0) {
@@ -6769,8 +6769,8 @@ public class C_NpcAction extends ClientBasePacket {
 	private void openCloseGate(L1PcInstance pc, int keeperId, boolean isOpen) {
 		boolean isNowWar = false;
 		int pcCastleId = 0;
-		if (pc.getClanid() != 0) {
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (pc.getClanId() != 0) {
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				pcCastleId = clan.getCastleId();
 			}
@@ -6876,7 +6876,7 @@ public class C_NpcAction extends ClientBasePacket {
 				L1PcInstance pc = (L1PcInstance) object;
 				if (L1HouseLocation.isInHouseLoc(houseId, pc.getX(), pc.getY(),
 						pc.getMapId())
-						&& clanPc.getClanid() != pc.getClanid()) {
+						&& clanPc.getClanId() != pc.getClanId()) {
 					loc = L1HouseLocation.getHouseTeleportLoc(houseId, 0);
 					if (pc != null) {
 						L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2],
@@ -6888,7 +6888,7 @@ public class C_NpcAction extends ClientBasePacket {
 	}
 
 	private void repairGate(L1PcInstance pc) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 		if (clan != null) {
 			int castleId = clan.getCastleId();
 			if (castleId != 0) { // 城主クラン

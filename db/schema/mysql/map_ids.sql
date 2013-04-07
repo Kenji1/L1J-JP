@@ -4,8 +4,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `map_ids`;
 CREATE TABLE IF NOT EXISTS `map_ids` (
-  `map_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `location_name` varchar(255) DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
   `start_x` int(10) unsigned NOT NULL DEFAULT '0',
   `end_x` int(10) unsigned NOT NULL DEFAULT '0',
   `start_y` int(10) unsigned NOT NULL DEFAULT '0',
@@ -24,5 +24,5 @@ CREATE TABLE IF NOT EXISTS `map_ids` (
   `recall_pets` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `usable_item` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `usable_skill` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`map_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

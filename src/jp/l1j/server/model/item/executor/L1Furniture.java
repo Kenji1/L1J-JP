@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.codes.ActionCodes;
-import jp.l1j.server.datatables.FurnitureSpawnTable;
+import jp.l1j.server.datatables.SpawnFurnitureTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.model.L1HouseLocation;
@@ -192,7 +192,7 @@ public class L1Furniture {
 
 						L1World.getInstance().storeObject(furniture);
 						L1World.getInstance().addVisibleObject(furniture);
-						FurnitureSpawnTable.getInstance().insertFurniture(furniture);
+						SpawnFurnitureTable.getInstance().insertFurniture(furniture);
 					} catch (Exception e) {
 						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 					}
@@ -201,7 +201,7 @@ public class L1Furniture {
 			}
 		} else {
 			furniture.deleteMe();
-			FurnitureSpawnTable.getInstance().deleteFurniture(furniture);
+			SpawnFurnitureTable.getInstance().deleteFurniture(furniture);
 		}
 		
 		return true;
@@ -218,7 +218,7 @@ public class L1Furniture {
 		if (target != null && target instanceof L1FurnitureInstance) {
 			L1FurnitureInstance furniture = (L1FurnitureInstance) target;
 			furniture.deleteMe();
-			FurnitureSpawnTable.getInstance().deleteFurniture(furniture);
+			SpawnFurnitureTable.getInstance().deleteFurniture(furniture);
 		}
 		
 		S_AttackPacket s_attackPacket = new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand);

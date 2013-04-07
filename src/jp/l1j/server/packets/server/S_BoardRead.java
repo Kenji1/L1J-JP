@@ -16,7 +16,7 @@
 package jp.l1j.server.packets.server;
 
 import jp.l1j.server.codes.Opcodes;
-import jp.l1j.server.templates.L1BoardTopic;
+import jp.l1j.server.templates.L1BoardPost;
 
 public class S_BoardRead extends ServerBasePacket {
 	private static final String S_BoardRead = "[S] S_BoardRead";
@@ -28,7 +28,7 @@ public class S_BoardRead extends ServerBasePacket {
 	}
 
 	private void buildPacket(int number) {
-		L1BoardTopic topic = L1BoardTopic.findById(number);
+		L1BoardPost topic = L1BoardPost.findById(number);
 		writeC(Opcodes.S_OPCODE_BOARDREAD);
 		writeD(number);
 		writeS(topic.getName());

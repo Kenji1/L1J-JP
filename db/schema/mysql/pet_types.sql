@@ -4,8 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `pet_types`;
 CREATE TABLE IF NOT EXISTS `pet_types` (
-  `base_npc_id` int(10) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `npc_id` int(10) NOT NULL,
   `tame_item_id` int(10) NOT NULL,
   `min_hpup` int(10) NOT NULL,
   `max_hpup` int(10) NOT NULL,
@@ -20,5 +19,5 @@ CREATE TABLE IF NOT EXISTS `pet_types` (
   `message_id5` int(10) NOT NULL,
   `defy_message_id` int(10) NOT NULL,
   `use_equipment` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`base_npc_id`)
+  PRIMARY KEY (`npc_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

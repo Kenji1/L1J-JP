@@ -39,8 +39,8 @@ public class C_LeaveClan extends ClientBasePacket {
 
 		L1PcInstance player = clientthread.getActiveChar();
 		String player_name = player.getName();
-		String clan_name = player.getClanname();
-		int clan_id = player.getClanid();
+		String clan_name = player.getClanName();
+		int clan_id = player.getClanId();
 		if (clan_id == 0) {// クラン未所属
 			return;
 		}

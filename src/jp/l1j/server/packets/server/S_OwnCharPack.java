@@ -82,8 +82,8 @@ public class S_OwnCharPack extends ServerBasePacket {
 		writeS(pc.getName());
 		writeS(pc.getTitle());
 		writeC(status);
-		writeD(pc.getClanid());
-		writeS(pc.getClanname());
+		writeD(pc.getClanId());
+		writeS(pc.getClanName());
 		writeS(null); // ペッホチング？
 
 		writeC(0); // 物件的狀態 (會使用到這個數值的物件有 Mob.哈維, 正在觀察....)

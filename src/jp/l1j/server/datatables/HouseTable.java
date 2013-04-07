@@ -61,7 +61,7 @@ public class HouseTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM houses ORDER BY house_id");
+			pstm = con.prepareStatement("SELECT * FROM houses ORDER BY id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1House house = new L1House();
@@ -106,8 +106,8 @@ public class HouseTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement(String.format("UPDATE houses SET %s, %s, %s, %s, %s, %s, %s WHERE house_id=?",
-				"house_name=?", "house_area=?", "location=?", "keeper_id=?",
+			pstm = con.prepareStatement(String.format("UPDATE houses SET %s, %s, %s, %s, %s, %s, %s WHERE id=?",
+				"name=?", "area=?", "location=?", "keeper_id=?",
 				"is_on_sale=?", "is_purchase_basement=?", "tax_deadline=?"));
 			pstm.setString(1, house.getHouseName());
 			pstm.setInt(2, house.getHouseArea());
@@ -134,10 +134,10 @@ public class HouseTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT house_id FROM houses ORDER BY house_id");
+			pstm = con.prepareStatement("SELECT id FROM houses ORDER BY id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int houseId = rs.getInt("house_id");
+				int houseId = rs.getInt("id");
 				houseIdList.add(Integer.valueOf(houseId));
 			}
 		} catch (SQLException e) {

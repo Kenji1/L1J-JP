@@ -16,7 +16,7 @@
 package jp.l1j.server.controller.timer;
 
 import java.util.logging.Logger;
-import jp.l1j.server.datatables.LightSpawnTable;
+import jp.l1j.server.datatables.SpawnLightTable;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
@@ -71,7 +71,7 @@ public class LightTimeController implements Runnable {
 				|| (nowTime >= 0 * 3600 && nowTime < ((5 * 3600) + 3300))) { // 17:55~24:00,0:00~5:55
 			if (!isSpawn) {
 				isSpawn = true;
-				LightSpawnTable.getInstance();
+				SpawnLightTable.getInstance();
 			}
 		}
 	}

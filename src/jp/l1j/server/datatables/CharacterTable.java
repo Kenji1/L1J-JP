@@ -99,9 +99,9 @@ public class CharacterTable {
 				pc.setMap((short) 4);
 			}
 			/*
-			 * if(l1pcinstance.getClanid() != 0) { L1Clan clan = new L1Clan();
+			 * if(l1pcinstance.getClanId() != 0) { L1Clan clan = new L1Clan();
 			 * ClanTable clantable = new ClanTable(); clan =
-			 * clantable.getClan(l1pcinstance.getClanname());
+			 * clantable.getClan(l1pcinstance.getClanName());
 			 * l1pcinstance.setClanname(clan.GetClanName()); }
 			 */
 			_log.finest("loadCharacter: " + pc.getName());

@@ -78,7 +78,7 @@ public class SpawnTable {
 						continue;
 					}
 				}
-				int npcTemplateId = rs.getInt("npc_template_id");
+				int npcTemplateId = rs.getInt("npc_id");
 				template1 = NpcTable.getInstance().getTemplate(npcTemplateId);
 				int count;
 				if (template1 == null) {
@@ -170,7 +170,7 @@ public class SpawnTable {
 			String note = npc.getName();
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement(String.format("INSERT INTO spawn_mobs SET ",
-				"location=?", "count=?", "npc_template_id=?", "group_id=?",
+				"location=?", "count=?", "npc_id=?", "group_id=?",
 				"loc_x=?", "loc_y=?", "random_x=?", "random_y=?", "heading=?",
 				"min_respawn_delay=?", "max_respawn_delay=?", "map_id=?"));
 			pstm.setString(1, note);

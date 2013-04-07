@@ -19,7 +19,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
-import jp.l1j.server.datatables.NpcSpawnTable;
+import jp.l1j.server.datatables.SpawnNpcTable;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.SpawnTable;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -58,7 +58,7 @@ public class L1InsertSpawn implements L1CommandExecutor {
 				}
 				SpawnTable.storeSpawn(pc, template);
 			} else if (type.equals("npc")) {
-				NpcSpawnTable.getInstance().storeSpawn(pc, template);
+				SpawnNpcTable.getInstance().storeSpawn(pc, template);
 			}
 			L1SpawnUtil.spawn(pc, npcId, 0, 0);
 			msg = String.format(I18N_ADDED_TO_THE_SPAWN_LIST, template.getName(), npcId);

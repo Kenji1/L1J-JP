@@ -293,7 +293,7 @@ public class C_Door extends ClientBasePacket {
 			return false;
 		}
 
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 		if (clan != null) {
 			int houseId = clan.getHouseId();
 			if (houseId != 0) {

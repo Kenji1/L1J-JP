@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
-import jp.l1j.server.datatables.NpcSpawnTable;
+import jp.l1j.server.datatables.SpawnNpcTable;
 import jp.l1j.server.datatables.SpawnTable;
 import jp.l1j.server.model.L1Spawn;
 import jp.l1j.server.model.L1Teleport;
@@ -53,7 +53,7 @@ public class L1ToSpawn implements L1CommandExecutor {
 				StringTokenizer st = new StringTokenizer(arg);
 				id = Integer.parseInt(st.nextToken());
 			}
-			L1Spawn spawn = NpcSpawnTable.getInstance().getTemplate(id);
+			L1Spawn spawn = SpawnNpcTable.getInstance().getTemplate(id);
 			if (spawn == null) {
 				spawn = SpawnTable.getInstance().getTemplate(id);
 			}

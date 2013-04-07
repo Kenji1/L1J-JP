@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.templates.L1PetType;
 import jp.l1j.server.utils.IntRange;
 import jp.l1j.server.utils.L1DatabaseFactory;
@@ -60,8 +61,9 @@ public class PetTypeTable {
 			pstm = con.prepareStatement("SELECT * FROM pet_types");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int baseNpcId = rs.getInt("base_npc_id");
-				String name = rs.getString("name");
+				int npcId = rs.getInt("npc_id");
+				L1Npc npc = NpcTable.getInstance().getTemplate(npcId);
+				String name = npc != null ? npc.getName() : null;
 				int tameItemId = rs.getInt("tame_item_id");
 				int minHpUp = rs.getInt("min_hpup");
 				int maxHpUp = rs.getInt("max_hpup");
@@ -77,7 +79,7 @@ public class PetTypeTable {
 				boolean useEquipment = rs.getBoolean("use_equipment");
 				IntRange hpUpRange = new IntRange(minHpUp, maxHpUp);
 				IntRange mpUpRange = new IntRange(minMpUp, maxMpUp);
-				_types.put(baseNpcId, new L1PetType(baseNpcId, name,
+				_types.put(npcId, new L1PetType(npcId, name,
 						tameItemId, hpUpRange, mpUpRange, transformItemId,
 						transformNpcId, msgIds, defyMsgId, useEquipment));
 				_defaultNames.add(name.toLowerCase());

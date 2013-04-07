@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
-import jp.l1j.server.templates.L1BoardTopic;
+import jp.l1j.server.templates.L1BoardPost;
 
 public class C_BoardDelete extends ClientBasePacket {
 	private static final String C_BOARD_DELETE = "[C] C_BoardDelete";
@@ -35,7 +35,7 @@ public class C_BoardDelete extends ClientBasePacket {
 			_log.warning("Invalid NPC ID: " + objId);
 			return;
 		}
-		L1BoardTopic topic = L1BoardTopic.findById(topicId);
+		L1BoardPost topic = L1BoardPost.findById(topicId);
 		if (topic == null) {
 			logNotExist(topicId);
 			return;
@@ -52,7 +52,7 @@ public class C_BoardDelete extends ClientBasePacket {
 		_log.warning(String.format("Illegal board deletion request: Topic id <%d> does not exist.", topicId));
 	}
 
-	private void logIllegalDeletion(L1BoardTopic topic, String name) {
+	private void logIllegalDeletion(L1BoardPost topic, String name) {
 		_log.warning(String.format("Illegal board deletion request: Name <%s> expected but was <%s>.",
 				topic.getName(), name));
 	}

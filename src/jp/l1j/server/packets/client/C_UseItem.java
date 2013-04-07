@@ -1144,7 +1144,7 @@ public class C_UseItem extends ClientBasePacket {
 				if (pc.isCrown() && item.getItem().isUseRoyal()
 						|| pc.isKnight() && item.getItem().isUseKnight()
 						|| pc.isElf() && item.getItem().isUseElf()
-						|| pc.isWizard() && item.getItem().isUseMage()
+						|| pc.isWizard() && item.getItem().isUseWizard()
 						|| pc.isDarkelf() && item.getItem().isUseDarkelf()
 						|| pc.isDragonKnight() && item.getItem().isUseDragonknight()
 						|| pc.isIllusionist() && item.getItem().isUseIllusionist()) {
@@ -1158,7 +1158,7 @@ public class C_UseItem extends ClientBasePacket {
 			if (pc.isCrown() && item.getItem().isUseRoyal()
 					|| pc.isKnight() && item.getItem().isUseKnight()
 					|| pc.isElf() && item.getItem().isUseElf()
-					|| pc.isWizard() && item.getItem().isUseMage()
+					|| pc.isWizard() && item.getItem().isUseWizard()
 					|| pc.isDarkelf() && item.getItem().isUseDarkelf()
 					|| pc.isDragonKnight() && item.getItem().isUseDragonknight()
 					|| pc.isIllusionist() && item.getItem().isUseIllusionist()) {
@@ -1864,8 +1864,8 @@ public class C_UseItem extends ClientBasePacket {
 		if (pc.getMap().isEscapable() || pc.isGm()) {
 			int castle_id = 0;
 			int house_id = 0;
-			if (pc.getClanid() != 0) { // クラン所属
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			if (pc.getClanId() != 0) { // クラン所属
+				L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 				if (clan != null) {
 					castle_id = clan.getCastleId();
 					house_id = clan.getHouseId();
@@ -2038,8 +2038,8 @@ public class C_UseItem extends ClientBasePacket {
 					for (L1PcInstance member : L1World.getInstance().getVisiblePlayer(pc)) {
 						if (pc.getLocation().getTileLineDistance(
 								member.getLocation()) <= 3
-								&& member.getClanid() == pc.getClanid()
-								&& pc.getClanid() != 0
+								&& member.getClanId() == pc.getClanId()
+								&& pc.getClanId() != 0
 								&& member.getId() != pc.getId()) {
 							L1Teleport.teleport(member, newX, newY, mapId, 5, true);
 						}
@@ -2061,8 +2061,8 @@ public class C_UseItem extends ClientBasePacket {
 					for (L1PcInstance member : L1World.getInstance().getVisiblePlayer(pc)) {
 						if (pc.getLocation().getTileLineDistance(
 								member.getLocation()) <= 3
-								&& member.getClanid() == pc.getClanid()
-								&& pc.getClanid() != 0
+								&& member.getClanId() == pc.getClanId()
+								&& pc.getClanId() != 0
 								&& member.getId() != pc.getId()) {
 							L1Teleport.teleport(member, newX, newY, mapId, 5, true);
 						}

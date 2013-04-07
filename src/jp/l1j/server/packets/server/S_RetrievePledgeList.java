@@ -23,7 +23,7 @@ import jp.l1j.server.model.L1World;
 
 public class S_RetrievePledgeList extends ServerBasePacket {
 	public S_RetrievePledgeList(int objid, L1PcInstance pc) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 		if (clan == null) {
 			return;
 		}

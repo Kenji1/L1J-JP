@@ -43,7 +43,7 @@ public class C_Drawal extends ClientBasePacket {
 		int j = Math.abs(readD());
 
 		L1PcInstance pc = clientthread.getActiveChar();
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 		if (clan != null) {
 			int castle_id = clan.getCastleId();
 			if (castle_id != 0) {

@@ -259,7 +259,7 @@ public class L1Inventory extends L1Object {
 	// /trade、倉庫から入手したアイテムの格納
 	public synchronized L1ItemInstance storeTradeItem(L1ItemInstance item) {
 		if (item.getItem().getItemId() == 40312) { // 宿屋のキー
-			L1ItemInstance findItem = findKeyId(item.getKeyId()); // 宿屋のキー Id照合
+			L1ItemInstance findItem = findKeyId(item.getId()); // 宿屋のキー Id照合
 			if (findItem != null) {
 				findItem.setCount(findItem.getCount() + item.getCount());
 				updateItem(findItem);
@@ -460,7 +460,6 @@ public class L1Inventory extends L1Object {
 			// 宿屋関連
 			if (carryItem.getItem().getItemId() == 40312) {
 				carryItem.setInnNpcId(item.getInnNpcId()); // 宿屋NPC
-				carryItem.setKeyId(item.getKeyId()); // 宿屋のキーId
 				carryItem.setHall(item.checkRoomOrHall()); // 宿屋小部屋or大部屋
 				carryItem.setDueTime(item.getDueTime()); // 利用時間
 			}
@@ -542,7 +541,7 @@ public class L1Inventory extends L1Object {
 
 	public L1ItemInstance findKeyId(int id) {
 		for (L1ItemInstance item : _items) {
-			if (item.getKeyId() == id) {
+			if (item.getId() == id) {
 				return item;
 			}
 		}

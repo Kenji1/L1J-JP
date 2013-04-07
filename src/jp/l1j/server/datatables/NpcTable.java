@@ -79,11 +79,11 @@ public class NpcTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM npc");
+			pstm = con.prepareStatement("SELECT * FROM npcs");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1Npc npc = new L1Npc();
-				int npcId = rs.getInt("npc_id");
+				int npcId = rs.getInt("id");
 				npc.setNpcId(npcId);
 				npc.setName(rs.getString("name"));
 				npc.setNameId(rs.getString("name_id"));
@@ -200,7 +200,7 @@ public class NpcTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("select distinct(family) as family from npc WHERE NOT trim(family) =''");
+			pstm = con.prepareStatement("select distinct(family) as family from npcs WHERE NOT trim(family) =''");
 			rs = pstm.executeQuery();
 			int id = 1;
 			while (rs.next()) {

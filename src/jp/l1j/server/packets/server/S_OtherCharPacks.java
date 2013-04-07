@@ -99,8 +99,8 @@ public class S_OtherCharPacks extends ServerBasePacket {
 		writeS(pc.getName());
 		writeS(pc.getTitle());
 		writeC(status);
-		writeD(pc.getClanid());
-		writeS(pc.getClanname()); // クラン名
+		writeD(pc.getClanId());
+		writeS(pc.getClanName()); // クラン名
 		writeS(null); // ペッホチング？
 		writeC(0); // ？
 		/*

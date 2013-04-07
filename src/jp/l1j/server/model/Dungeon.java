@@ -328,12 +328,12 @@ public class Dungeon {
 			if (item.getInnNpcId() == npcid) {
 				for (int i = 0; i < 16; i++) {
 					L1Inn inn = InnTable.getInstance().getTemplate(npcid, i);
-					if (inn.getKeyId() == item.getKeyId()) {
+					if (inn.getKeyId() == item.getId()) {
 						Timestamp dueTime = item.getDueTime();
 						if (dueTime != null) {
 							Calendar cal = Calendar.getInstance();
 							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) {
-								pc.setInnKeyId(item.getKeyId());
+								pc.setInnKeyId(item.getId());
 								return item.checkRoomOrHall() ? 2 : 1;
 							}
 						}

@@ -67,7 +67,7 @@ public class L1ItemCheck {
 
                 try {
                         con = L1DatabaseFactory.getInstance().getConnection();
-                        pstm = con.prepareStatement("SELECT * FROM weapons WHERE item_id = ?");
+                        pstm = con.prepareStatement("SELECT * FROM weapons WHERE id = ?");
                         pstm.setInt(1, itemId);
                         rs = pstm.executeQuery();
                         if (rs != null) {
@@ -89,7 +89,7 @@ public class L1ItemCheck {
                 boolean inArmor = false;
                 try {
                         con = L1DatabaseFactory.getInstance().getConnection();
-                        pstm = con.prepareStatement("SELECT * FROM armors WHERE item_id = ?");
+                        pstm = con.prepareStatement("SELECT * FROM armors WHERE id = ?");
                         pstm.setInt(1, itemId);
                         rs = pstm.executeQuery();
                         if (rs != null) {
@@ -111,7 +111,7 @@ public class L1ItemCheck {
                 boolean inEtcitem = false;
                 try {
                         con = L1DatabaseFactory.getInstance().getConnection();
-                        pstm = con.prepareStatement("SELECT * FROM etc_items WHERE item_id = ?");
+                        pstm = con.prepareStatement("SELECT * FROM etc_items WHERE id = ?");
                         pstm.setInt(1, itemId);
                         rs = pstm.executeQuery();
                         if (rs != null) {

@@ -42,8 +42,8 @@ public class C_War extends ClientBasePacket {
 
 		L1PcInstance player = clientthread.getActiveChar();
 		String playerName = player.getName();
-		String clanName = player.getClanname();
-		int clanId = player.getClanid();
+		String clanName = player.getClanName();
+		int clanId = player.getClanId();
 
 		if (!player.isCrown()) { // 君主以外
 			player.sendPackets(new S_ServerMessage(478)); // \f1プリンスとプリンセスのみ戦争を布告できます。

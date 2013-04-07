@@ -71,7 +71,7 @@ public class Teleportation {
 
 		pc.setTeleport(true);
 
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 		if (clan != null) {
 			if (clan.getWarehouseUsingChar() == pc.getId()) { // 自キャラがクラン倉庫使用中
 				clan.setWarehouseUsingChar(0); // クラン倉庫のロックを解除

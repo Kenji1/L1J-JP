@@ -147,8 +147,8 @@ public class C_Chat extends ClientBasePacket {
 		} else if (chatType == 3) { // 全体チャット
 			chatWorld(pc, chatText, chatType);
 		} else if (chatType == 4) { // 血盟チャット
-			if (pc.getClanid() != 0) { // クラン所属中
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			if (pc.getClanId() != 0) { // クラン所属中
+				L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 				int rank = pc.getClanRank();
 				if (clan != null
 						&& (rank == L1Clan.CLAN_RANK_REGULAR
@@ -186,8 +186,8 @@ public class C_Chat extends ClientBasePacket {
 		} else if (chatType == 12) { // トレードチャット
 			chatWorld(pc, chatText, chatType);
 		} else if (chatType == 13) { // 連合チャット
-			if (pc.getClanid() != 0) { // クラン所属中
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			if (pc.getClanId() != 0) { // クラン所属中
+				L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 				int rank = pc.getClanRank();
 				if (clan != null
 						&& (rank == L1Clan.CLAN_RANK_GUARDIAN

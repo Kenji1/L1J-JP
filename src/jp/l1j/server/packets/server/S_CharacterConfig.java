@@ -25,14 +25,11 @@ import jp.l1j.server.codes.Opcodes;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server.serverpackets:
-// ServerBasePacket
-
 public class S_CharacterConfig extends ServerBasePacket {
-
-	private static Logger _log = Logger.getLogger(S_CharacterConfig.class
-			.getName());
+	private static Logger _log = Logger.getLogger(S_CharacterConfig.class.getName());
+	
 	private static final String S_CHARACTER_CONFIG = "[S] S_CharacterConfig";
+	
 	private byte[] _byte = null;
 
 	public S_CharacterConfig(int objectId) {
@@ -47,8 +44,7 @@ public class S_CharacterConfig extends ServerBasePacket {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_configs WHERE object_id=?");
+			pstm = con.prepareStatement("SELECT * FROM character_configs WHERE char_id=?");
 			pstm.setInt(1, objectId);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -62,7 +58,6 @@ public class S_CharacterConfig extends ServerBasePacket {
 			SqlUtil.close(pstm);
 			SqlUtil.close(con);
 		}
-
 		if (length != 0) {
 			writeC(Opcodes.S_OPCODE_SKILLICONGFX);
 			writeC(41);

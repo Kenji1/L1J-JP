@@ -58,7 +58,7 @@ public class SpawnTimeTable {
 			pstm = con.prepareStatement("SELECT * FROM spawn_times");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int id = rs.getInt("spawn_id");
+				int id = rs.getInt("npc_id");
 				L1SpawnTime.L1SpawnTimeBuilder builder = new L1SpawnTime.L1SpawnTimeBuilder(id);
 				builder.setTimeStart(rs.getTime("time_start"));
 				builder.setTimeEnd(rs.getTime("time_end"));

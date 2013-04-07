@@ -230,7 +230,7 @@ public class L1MobSkill {
 		@Override
 		public L1MobSkill fromResultSet(ResultSet rs) throws SQLException {
 			L1MobSkill result = new L1MobSkill();
-			result._npcId = rs.getInt("mob_id");
+			result._npcId = rs.getInt("npc_id");
 			result._actionNo = rs.getInt("act_no");
 			result._name = rs.getString("mob_name");
 			result._type = rs.getInt("type");

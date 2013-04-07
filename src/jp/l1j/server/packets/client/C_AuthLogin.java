@@ -68,7 +68,7 @@ public class C_AuthLogin extends ClientBasePacket {
 			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 			return;
 		}
-		if (account.isBanned()) { // BANアカウント
+		if (!account.isActive()) { // BANアカウント
 			_log.info(String.format(I18N_DENY_TO_LOGIN_BAN_ACCOUNT, accountName, host));
 			// BANアカウントのログインを拒否しました。account=%s host=%s
 			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));

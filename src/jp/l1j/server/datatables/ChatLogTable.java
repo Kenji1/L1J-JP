@@ -81,45 +81,35 @@ public class ChatLogTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			if (target != null) {
-				pstm = con.prepareStatement(String.format("INSERT INTO log_chat SET %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s",
-					"account_name=?", "char_id=?", "name=?", "clan_id=?",
-					"clan_name=?", "loc_x=?", "loc_y=?", "map_id=?", "type=?",
-					"target_account_name=?", "target_id=?", "target_name=?",
-					"target_clan_id=?", "target_clan_name=?", "target_loc_x=?",
-					"target_loc_y=?", "target_map_id=?", "content=?", "datetime=SYSDATE()"));
-				pstm.setString(1, pc.getAccountName());
-				pstm.setInt(2, pc.getId());
-				pstm.setString(3, pc.isGm() ? "******" : pc.getName());
-				pstm.setInt(4, pc.getClanid());
-				pstm.setString(5, pc.getClanname());
-				pstm.setInt(6, pc.getX());
-				pstm.setInt(7, pc.getY());
-				pstm.setInt(8, pc.getMapId());
-				pstm.setInt(9, type);
-				pstm.setString(10, target.getAccountName());
-				pstm.setInt(11, target.getId());
-				pstm.setString(12, target.getName());
-				pstm.setInt(13, target.getClanid());
-				pstm.setString(14, target.getClanname());
-				pstm.setInt(15, target.getX());
-				pstm.setInt(16, target.getY());
-				pstm.setInt(17, target.getMapId());
-				pstm.setString(18, text);
-			} else {
-				pstm = con.prepareStatement(String.format("INSERT INTO log_chat SET %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s",
-					"account_name=?", "char_id=?", "name=?", "clan_id=?",
-					"clan_name=?", "loc_x=?", "loc_y=?", "map_id=?", "type=?",
+				pstm = con.prepareStatement(String.format("INSERT INTO chat_logs SET %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s",
+					"account_id=?", "char_id=?", "clan_id=?", "map_id=?", "loc_x=?", "loc_y=?", "type=?",
+					"target_account_id=?", "target_char_id=?", "target_clan_id=?", "target_map_id=?", "target_loc_x=?", "target_loc_y=?",
 					"content=?", "datetime=SYSDATE()"));
-				pstm.setString(1, pc.getAccountName());
+				pstm.setInt(1, pc.getAccountId());
 				pstm.setInt(2, pc.getId());
-				pstm.setString(3, pc.isGm() ? "******" : pc.getName());
-				pstm.setInt(4, pc.getClanid());
-				pstm.setString(5, pc.getClanname());
-				pstm.setInt(6, pc.getX());
-				pstm.setInt(7, pc.getY());
-				pstm.setInt(8, pc.getMapId());
-				pstm.setInt(9, type);
-				pstm.setString(10, text);
+				pstm.setInt(3, pc.getClanId());
+				pstm.setInt(4, pc.getMapId());
+				pstm.setInt(5, pc.getX());
+				pstm.setInt(6, pc.getY());
+				pstm.setInt(7, type);
+				pstm.setInt(8, target.getAccountId());
+				pstm.setInt(9, target.getId());
+				pstm.setInt(10, target.getClanId());
+				pstm.setInt(11, target.getMapId());
+				pstm.setInt(12, target.getX());
+				pstm.setInt(13, target.getY());
+				pstm.setString(14, text);
+			} else {
+				pstm = con.prepareStatement(String.format("INSERT INTO chat_logs SET %s, %s, %s, %s, %s, %s, %s, %s, %s",
+					"account_id=?", "char_id=?", "clan_id=?", "map_id=?", "loc_x=?", "loc_y=?", "type=?", "content=?", "datetime=SYSDATE()"));
+				pstm.setInt(1, pc.getAccountId());
+				pstm.setInt(2, pc.getId());
+				pstm.setInt(3, pc.getClanId());
+				pstm.setInt(4, pc.getMapId());
+				pstm.setInt(5, pc.getX());
+				pstm.setInt(6, pc.getY());
+				pstm.setInt(7, type);
+				pstm.setString(8, text);
 			}
 			pstm.execute();
 		} catch (SQLException e) {

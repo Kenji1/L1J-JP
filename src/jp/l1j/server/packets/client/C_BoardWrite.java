@@ -21,7 +21,7 @@ import jp.l1j.server.model.L1Object;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.L1ItemId;
-import jp.l1j.server.templates.L1BoardTopic;
+import jp.l1j.server.templates.L1BoardPost;
 
 public class C_BoardWrite extends ClientBasePacket {
 	private static final String C_BOARD_WRITE = "[C] C_BoardWrite";
@@ -39,7 +39,7 @@ public class C_BoardWrite extends ClientBasePacket {
 			return;
 		}
 		L1PcInstance pc = client.getActiveChar();
-		L1BoardTopic.create(pc.getName(), title, content);
+		L1BoardPost.create(pc.getName(), title, content);
 		pc.getInventory().consumeItem(L1ItemId.ADENA, 300);
 	}
 

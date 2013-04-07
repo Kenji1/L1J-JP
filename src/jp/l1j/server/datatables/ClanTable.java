@@ -51,17 +51,15 @@ public class ClanTable {
 			ResultSet rs = null;
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con.prepareStatement("SELECT * FROM clans ORDER BY clan_id");
+				pstm = con.prepareStatement("SELECT * FROM clans ORDER BY id");
 				rs = pstm.executeQuery();			
 				while (rs.next()) {
 					int clan_id = rs.getInt(1);
 					L1Clan clan = new L1Clan(clan_id);
-					// clan.SetClanId(clanData.getInt(1));
 					clan.setClanName(rs.getString(2));
 					clan.setLeaderId(rs.getInt(3));
-					clan.setLeaderName(rs.getString(4));
-					clan.setCastleId(rs.getInt(5));
-					clan.setHouseId(rs.getInt(6));
+					clan.setCastleId(rs.getInt(4));
+					clan.setHouseId(rs.getInt(5));
 					L1World.getInstance().storeClan(clan);
 					_clans.put(clan_id, clan);
 				}
@@ -81,7 +79,7 @@ public class ClanTable {
 			ResultSet rs = null;
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con.prepareStatement("SELECT name FROM characters WHERE clan_id = ?");
+				pstm = con.prepareStatement("SELECT name FROM characters WHERE id = ?");
 				pstm.setInt(1, clan.getClanId());
 				rs = pstm.executeQuery();
 				while (rs.next()) {
@@ -110,20 +108,18 @@ public class ClanTable {
 		L1Clan clan = new L1Clan(IdFactory.getInstance().nextId());
 		clan.setClanName(clanName);
 		clan.setLeaderId(player.getId());
-		clan.setLeaderName(player.getName());
 		clan.setCastleId(0);
 		clan.setHouseId(0);
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO clans SET clan_id=?, clan_name=?, leader_id=?, leader_name=?, has_castle=?, has_house=?");
+			pstm = con.prepareStatement("INSERT INTO clans SET id=?, clan_name=?, leader_id=?, has_castle=?, has_house=?");
 			pstm.setInt(1, clan.getClanId());
 			pstm.setString(2, clan.getClanName());
 			pstm.setInt(3, clan.getLeaderId());
-			pstm.setString(4, clan.getLeaderName());
-			pstm.setInt(5, clan.getCastleId());
-			pstm.setInt(6, clan.getHouseId());
+			pstm.setInt(4, clan.getCastleId());
+			pstm.setInt(5, clan.getHouseId());
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -151,13 +147,12 @@ public class ClanTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE clans SET clan_id=?, leader_id=?, leader_name=?, has_castle=?, has_house=? WHERE clan_name=?");
+			pstm = con.prepareStatement("UPDATE clans SET id=?, leader_id=?, has_castle=?, has_house=? WHERE clan_name=?");
 			pstm.setInt(1, clan.getClanId());
 			pstm.setInt(2, clan.getLeaderId());
-			pstm.setString(3, clan.getLeaderName());
-			pstm.setInt(4, clan.getCastleId());
-			pstm.setInt(5, clan.getHouseId());
-			pstm.setString(6, clan.getClanName());
+			pstm.setInt(3, clan.getCastleId());
+			pstm.setInt(4, clan.getHouseId());
+			pstm.setString(5, clan.getClanName());
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

@@ -67,7 +67,7 @@ public class C_JoinClan extends ClientBasePacket {
 					return;
 				}
 				// 自分が城またはアジトを所有している
-				String player_clan_name = player.getClanname();
+				String player_clan_name = player.getClanName();
 				L1Clan player_clan = L1World.getInstance().getClan(player_clan_name);
 				if (player_clan != null && (player_clan.getCastleId() != 0 || 
 						player_clan.getHouseId() != 0)) {

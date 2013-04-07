@@ -127,7 +127,7 @@ public class L1TowerInstance extends L1NpcInstance {
 			// 全戦争リストを取得
 			for (L1War war : L1World.getInstance().getWarList()) {
 				if (_castle_id == war.GetCastleId()) { // 今居る城の戦争
-					isProclamation = war.CheckClanInWar(pc.getClanname());
+					isProclamation = war.CheckClanInWar(pc.getClanName());
 					break;
 				}
 			}

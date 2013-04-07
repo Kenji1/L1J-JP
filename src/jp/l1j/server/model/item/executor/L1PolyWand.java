@@ -200,7 +200,7 @@ public class L1PolyWand {
 		boolean isSameClan = false;
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance target = (L1PcInstance) cha;
-			if (target.getClanid() != 0 && pc.getClanid() == target.getClanid()) {
+			if (target.getClanId() != 0 && pc.getClanId() == target.getClanId()) {
 				isSameClan = true;
 			}
 		}

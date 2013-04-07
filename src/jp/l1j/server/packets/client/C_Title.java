@@ -64,7 +64,7 @@ public class C_Title extends ClientBasePacket {
 				}
 				changeTitle(pc, title);
 			} else { // 他人
-				if (pc.getClanid() != target.getClanid()) {
+				if (pc.getClanId() != target.getClanId()) {
 					// \f1血盟員でなければ他人に呼称を与えることはできません。
 					pc.sendPackets(new S_ServerMessage(199));
 					return;
@@ -75,7 +75,7 @@ public class C_Title extends ClientBasePacket {
 					return;
 				}
 				changeTitle(target, title);
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+				L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 				if (clan != null) {
 					for (L1PcInstance clanPc : clan.getOnlineClanMember()) {
 						// \f1%0が%1に「%2」という呼称を与えました。
@@ -86,7 +86,7 @@ public class C_Title extends ClientBasePacket {
 			}
 		} else {
 			if (pc.getId() == target.getId()) { // 自分
-				if (pc.getClanid() != 0 && !Config.CHANGE_TITLE_BY_ONESELF) {
+				if (pc.getClanId() != 0 && !Config.CHANGE_TITLE_BY_ONESELF) {
 					// \f1血盟員に呼称を与えられるのはプリンスとプリンセスだけです。
 					pc.sendPackets(new S_ServerMessage(198));
 					return;
@@ -99,10 +99,10 @@ public class C_Title extends ClientBasePacket {
 				changeTitle(pc, title);
 			} else { // 他人
 				if (pc.isCrown()) { // 連合に所属した君主
-					if (pc.getClanid() == target.getClanid()) {
+					if (pc.getClanId() == target.getClanId()) {
 						// \f1%0はあなたの血盟ではありません。
 						pc.sendPackets(new S_ServerMessage(201, pc
-								.getClanname()));
+								.getClanName()));
 						return;
 					}
 				}
@@ -124,8 +124,8 @@ public class C_Title extends ClientBasePacket {
 
 	private boolean isClanLeader(L1PcInstance pc) {
 		boolean isClanLeader = false;
-		if (pc.getClanid() != 0) { // クラン所属
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (pc.getClanId() != 0) { // クラン所属
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan != null) {
 				if (pc.isCrown() && pc.getId() == clan.getLeaderId()) { // 君主、かつ、血盟主
 					isClanLeader = true;

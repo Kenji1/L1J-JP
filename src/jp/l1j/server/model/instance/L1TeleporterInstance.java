@@ -932,7 +932,7 @@ public class L1TeleporterInstance extends L1NpcInstance {
 					// 3マス以内のPc
 					for (L1PcInstance otherPc : L1World.getInstance()
 							.getVisiblePlayer(pc, 3)) {
-						if (otherPc.getClanid() == pc.getClanid()
+						if (otherPc.getClanId() == pc.getClanId()
 								&& otherPc.getId() != pc.getId()) {
 							L1Teleport.teleport(otherPc, 32740, 32800,
 									(short) 217, 5, true);

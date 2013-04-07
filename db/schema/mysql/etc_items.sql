@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `etc_items`;
 CREATE TABLE `etc_items` (
-  `item_id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `unidentified_name_id` varchar(255) NOT NULL DEFAULT '',
   `identified_name_id` varchar(255) NOT NULL DEFAULT '',
@@ -12,8 +12,8 @@ CREATE TABLE `etc_items` (
   `use_type` varchar(255) NOT NULL DEFAULT '',
   `material` varchar(255) NOT NULL DEFAULT '',
   `weight` int(10) unsigned NOT NULL DEFAULT '0',
-  `inv_gfx` int(10) unsigned NOT NULL DEFAULT '0',
-  `grd_gfx` int(10) unsigned NOT NULL DEFAULT '0',
+  `inv_gfx_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `grd_gfx_id` int(10) unsigned NOT NULL DEFAULT '0',
   `item_desc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `stackable` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `max_charge_count` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -35,5 +35,5 @@ CREATE TABLE `etc_items` (
   `save_at_once` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `charge_time` int(10) unsigned NOT NULL DEFAULT '0',
   `expiration_time` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`item_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

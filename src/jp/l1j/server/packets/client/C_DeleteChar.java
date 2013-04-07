@@ -89,7 +89,7 @@ public class C_DeleteChar extends ClientBasePacket {
 			}
 
 			if (pc != null) {
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+				L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 				if (clan != null) {
 					clan.delMemberName(name);
 				}

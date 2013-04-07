@@ -295,7 +295,7 @@ public class L1Skill {
 
 	public static L1Skill fromResultSet(ResultSet rs) throws SQLException {
 		L1Skill skill = new L1Skill();
-		int skillId = rs.getInt("skill_id");
+		int skillId = rs.getInt("id");
 		skill._skillId = skillId;
 		skill._name = rs.getString("name");
 		skill._skillLevel = rs.getInt("skill_level");
@@ -320,7 +320,7 @@ public class L1Skill {
 		skill._ranged = rs.getInt("ranged");
 		skill._area = rs.getInt("area");
 		skill._isThrough = rs.getBoolean("through");
-		skill._id = rs.getInt("id");
+		skill._id = rs.getInt("skill_id");
 		skill._nameId = rs.getString("name_id");
 		skill._actionId = rs.getInt("action_id");
 		skill._castGfx = rs.getInt("cast_gfx");
