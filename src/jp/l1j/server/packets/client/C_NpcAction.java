@@ -6938,21 +6938,21 @@ public class C_NpcAction extends ClientBasePacket {
 		int amuletId = 0;
 		L1ItemInstance item = null;
 		String htmlid = null;
-		if (s.equalsIgnoreCase("1")) {
+		if (s.equalsIgnoreCase("1") && pc.getKarmaLevel() == -1) {
 			amuletId = amuletIdList[0];
-		} else if (s.equalsIgnoreCase("2")) {
+		} else if (s.equalsIgnoreCase("2") && pc.getKarmaLevel() == -2) {
 			amuletId = amuletIdList[1];
-		} else if (s.equalsIgnoreCase("3")) {
+		} else if (s.equalsIgnoreCase("3") && pc.getKarmaLevel() == -3) {
 			amuletId = amuletIdList[2];
-		} else if (s.equalsIgnoreCase("4")) {
+		} else if (s.equalsIgnoreCase("4") && pc.getKarmaLevel() == -4) {
 			amuletId = amuletIdList[3];
-		} else if (s.equalsIgnoreCase("5")) {
+		} else if (s.equalsIgnoreCase("5") && pc.getKarmaLevel() == -5) {
 			amuletId = amuletIdList[4];
-		} else if (s.equalsIgnoreCase("6")) {
+		} else if (s.equalsIgnoreCase("6") && pc.getKarmaLevel() == -6) {
 			amuletId = amuletIdList[5];
-		} else if (s.equalsIgnoreCase("7")) {
+		} else if (s.equalsIgnoreCase("7") && pc.getKarmaLevel() == -7) {
 			amuletId = amuletIdList[6];
-		} else if (s.equalsIgnoreCase("8")) {
+		} else if (s.equalsIgnoreCase("8") && pc.getKarmaLevel() == -8) {
 			amuletId = amuletIdList[7];
 		}
 		if (amuletId != 0) {
@@ -6983,21 +6983,21 @@ public class C_NpcAction extends ClientBasePacket {
 		int earringId = 0;
 		L1ItemInstance item = null;
 		String htmlid = null;
-		if (s.equalsIgnoreCase("1")) {
+		if (s.equalsIgnoreCase("1") && pc.getKarmaLevel() == 1) {
 			earringId = earringIdList[0];
-		} else if (s.equalsIgnoreCase("2")) {
+		} else if (s.equalsIgnoreCase("2") && pc.getKarmaLevel() == 2) {
 			earringId = earringIdList[1];
-		} else if (s.equalsIgnoreCase("3")) {
+		} else if (s.equalsIgnoreCase("3") && pc.getKarmaLevel() == 3) {
 			earringId = earringIdList[2];
-		} else if (s.equalsIgnoreCase("4")) {
+		} else if (s.equalsIgnoreCase("4") && pc.getKarmaLevel() == 4) {
 			earringId = earringIdList[3];
-		} else if (s.equalsIgnoreCase("5")) {
+		} else if (s.equalsIgnoreCase("5") && pc.getKarmaLevel() == 5) {
 			earringId = earringIdList[4];
-		} else if (s.equalsIgnoreCase("6")) {
+		} else if (s.equalsIgnoreCase("6") && pc.getKarmaLevel() == 6) {
 			earringId = earringIdList[5];
-		} else if (s.equalsIgnoreCase("7")) {
+		} else if (s.equalsIgnoreCase("7") && pc.getKarmaLevel() == 7) {
 			earringId = earringIdList[6];
-		} else if (s.equalsIgnoreCase("8")) {
+		} else if (s.equalsIgnoreCase("8") && pc.getKarmaLevel() == 8) {
 			earringId = earringIdList[7];
 		}
 		if (earringId != 0) {
