@@ -80,7 +80,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				setTempLawful(_target.getLawful());
 				setTempCharGfx(targetPc.getClassId());
 				setGfxId(targetPc.getClassId());
-				setMoveSpeed(640);
+				setPassiSpeed(640);
 				setAtkSpeed(900); // 正確な値がわからん
 				for (L1PcInstance pc : L1World.getInstance()
 						.getRecognizePlayer(this)) {

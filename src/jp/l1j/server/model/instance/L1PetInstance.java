@@ -70,7 +70,7 @@ public class L1PetInstance extends L1NpcInstance {
 						.getY());
 				_dir = checkObject(getX(), getY(), getMapId(), _dir);
 				setDirectionMove(_dir);
-				setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
+				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
 			} else { // 主人を見失うか５マス以上はなれたら休憩状態に
 				_currentPetStatus = 3;
 				return true;
@@ -85,7 +85,7 @@ public class L1PetInstance extends L1NpcInstance {
 					setHomeY(getY());
 				} else {
 					setDirectionMove(dir);
-					setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
+					setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
 				}
 			}
 			return false;
@@ -105,7 +105,7 @@ public class L1PetInstance extends L1NpcInstance {
 				return true;
 			}
 			setDirectionMove(_dir);
-			setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
+			setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
 			return false;
 		default:
 			if ((_petMaster != null) && (_petMaster.getMapId() == getMapId())) { // 主人を追尾
@@ -118,7 +118,7 @@ public class L1PetInstance extends L1NpcInstance {
 					// 主人が離れすぎたら休憩状態に
 					_dir = moveDirection(_petMaster.getX(), _petMaster.getY());
 					setDirectionMove(_dir);
-					setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
+					setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
 				}
 			} else { // ● 主人を見失ったら休憩状態に
 				_currentPetStatus = 3;

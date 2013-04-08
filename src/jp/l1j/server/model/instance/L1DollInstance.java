@@ -67,7 +67,7 @@ public class L1DollInstance extends L1NpcInstance {
 						_master.getMapId(), 5);
 			} else if (distance > 3) {
 				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
+				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
 			} else {
 				if (sleeptime_PT == 0) {
 					broadcastPacket(new S_DoActionGFX(getId(),

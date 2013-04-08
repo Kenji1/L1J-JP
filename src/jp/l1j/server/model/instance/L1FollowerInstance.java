@@ -134,7 +134,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 		} else if (_master != null && _master.getMapId() == getMapId()) {
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
 				setDirectionMove(moveDirection(_master.getX(), _master.getY()));
-				setSleepTime(calcSleepTime(getMoveSpeed(), MOVE_SPEED));
+				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
 			}
 		}
 		return false;

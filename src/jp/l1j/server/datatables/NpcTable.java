@@ -105,7 +105,7 @@ public class NpcTable {
 				npc.setWeakAttr(rs.getInt("weak_attr"));
 				npc.setRanged(rs.getInt("ranged"));
 				npc.setTamable(rs.getBoolean("tamable"));
-				npc.setMoveSpeed(rs.getInt("move_speed"));
+				npc.setPassiSpeed(rs.getInt("move_speed"));
 				npc.setAtkSpeed(rs.getInt("atk_speed"));
 				npc.setAltAtkSpeed(rs.getInt("alt_atk_speed"));
 				npc.setAtkMagicSpeed(rs.getInt("atk_magic_speed"));
