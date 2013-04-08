@@ -399,7 +399,21 @@ public class L1MagicDoll {
 		return false;
 	}
 
-	public static int getHprByDoll(L1Character _master) { // HP回復 (時間固定性)
+	public static int getHprByDoll(L1Character _master) { // HP回復 (時間非固定性)
+		int s = 0;
+		for (Object obj : _master.getDollList().values().toArray()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
+					((L1DollInstance) obj).getItemId());
+			if (doll != null) {
+				if (!doll.getHprTime() && doll.getHpr() != 0) {
+					s += doll.getHpr();
+				}
+			}
+		}
+		return s;
+	}
+
+	public static int getHprFixByDoll(L1Character _master) { // HP回復 (時間固定性)
 		int s = 0;
 		for (Object obj : _master.getDollList().values().toArray()) {
 			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
@@ -426,7 +440,21 @@ public class L1MagicDoll {
 		return false;
 	}
 
-	public static int getMprByDoll(L1Character _master) { // MP回復 (時間固定性)
+	public static int getMprByDoll(L1Character _master) { // MP回復 (時間非固定性)
+		int s = 0;
+		for (Object obj : _master.getDollList().values().toArray()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
+					((L1DollInstance) obj).getItemId());
+			if (doll != null) {
+				if (!doll.getMprTime() && doll.getMpr() != 0) {
+					s += doll.getMpr();
+				}
+			}
+		}
+		return s;
+	}
+
+	public static int getMprFixByDoll(L1Character _master) { // MP回復 (時間固定性)
 		int s = 0;
 		for (Object obj : _master.getDollList().values().toArray()) {
 			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(

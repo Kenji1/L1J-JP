@@ -47,7 +47,7 @@ public class MpRegenerationByDoll extends TimerTask {
 	}
 
 	public void regenMp() {
-		int newMp = _pc.getCurrentMp() + L1MagicDoll.getMprByDoll(_pc);
+		int newMp = _pc.getCurrentMp() + L1MagicDoll.getMprFixByDoll(_pc);
 		if (newMp < 0) {
 			newMp = 0;
 		}

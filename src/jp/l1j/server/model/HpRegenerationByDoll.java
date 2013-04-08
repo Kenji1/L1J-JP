@@ -46,7 +46,7 @@ public class HpRegenerationByDoll extends TimerTask {
 	}
 
 	public void regenHp() {
-		int newHp = _pc.getCurrentHp() + L1MagicDoll.getHprByDoll(_pc);
+		int newHp = _pc.getCurrentHp() + L1MagicDoll.getHprFixByDoll(_pc);
 		if (newHp < 0) {
 			newHp = 0;
 		}
