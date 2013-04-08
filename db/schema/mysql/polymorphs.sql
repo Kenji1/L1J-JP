@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS `polymorphs`;
 CREATE TABLE IF NOT EXISTS `polymorphs` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `gfx_id` int(10) unsigned DEFAULT NULL,
+  `gfx_id` int(10) unsigned NOT NULL,
   `min_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `weapon_equip` int(10) unsigned NOT NULL DEFAULT '0',
   `armor_equip` int(10) unsigned NOT NULL DEFAULT '0',

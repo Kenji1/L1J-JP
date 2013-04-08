@@ -3,8 +3,8 @@
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `CHARACTER_BUDDYS` (
   `ID` INT NOT NULL AUTO_INCREMENT,
-  `CHAR_ID` INT NOT NULL DEFAULT '0',
-  `BUDDY_ID` INT NOT NULL DEFAULT '0'
+  `CHAR_ID` INT NOT NULL,
+  `BUDDY_ID` INT NOT NULL
 );
 -- ----------------------------
 -- Index for `CHARACTER_BUDDYS`

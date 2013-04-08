@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS `beginner_items`;
 CREATE TABLE IF NOT EXISTS `beginner_items` (
   `id` int(10) unsigned NOT NULL,
   `item_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `item_count` int(10) unsigned NOT NULL DEFAULT '0',
+  `item_count` int(10) unsigned NOT NULL DEFAULT '1',
   `charge_count` int(10) unsigned NOT NULL DEFAULT '0',
   `enchant_level` tinyint(3) NOT NULL DEFAULT '0',
   `class_initial` varchar(1) NOT NULL DEFAULT 'A',

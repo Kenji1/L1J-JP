@@ -2,8 +2,8 @@
 -- Table structure for BAN_IPS
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `BAN_IPS` (
-  `IP` VARCHAR(255) NOT NULL DEFAULT '',
-  `HOST` VARCHAR(255) NOT NULL DEFAULT '',
+  `IP` VARCHAR(255) NOT NULL,
+  `HOST` VARCHAR(255) DEFAULT NULL,
   `MASK` INT DEFAULT '32'
 );
 -- ----------------------------

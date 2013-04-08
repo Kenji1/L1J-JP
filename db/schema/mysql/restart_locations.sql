@@ -4,9 +4,9 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `restart_locations`;
 CREATE TABLE IF NOT EXISTS `restart_locations` (
-  `area` int(10) unsigned NOT NULL DEFAULT '0',
-  `loc_x` int(10) unsigned NOT NULL DEFAULT '0',
-  `loc_y` int(10) unsigned NOT NULL DEFAULT '0',
-  `map_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `area` int(10) unsigned NOT NULL,
+  `loc_x` int(10) unsigned NOT NULL,
+  `loc_y` int(10) unsigned NOT NULL,
+  `map_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`area`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

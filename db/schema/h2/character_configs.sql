@@ -2,7 +2,7 @@
 -- Table structure for `CHARACTER_CONFIGS`
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `CHARACTER_CONFIGS` (
-  `CHAR_ID` INT NOT NULL DEFAULT '0',
+  `CHAR_ID` INT NOT NULL,
   `LENGTH` INT NOT NULL DEFAULT '0',
   `DATA` BLOB
 );

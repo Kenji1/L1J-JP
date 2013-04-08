@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS `spawn_traps` (
   `loc_rnd_x` int(10) NOT NULL DEFAULT '0',
   `loc_rnd_y` int(10) NOT NULL DEFAULT '0',
   `count` int(10) NOT NULL DEFAULT '1',
-  `span` int(10) NOT NULL,
+  `span` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

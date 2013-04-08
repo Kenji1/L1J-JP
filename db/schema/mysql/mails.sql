@@ -3,7 +3,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for `mails`
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `mails` (
-  `id` int(10) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) unsigned NOT NULL,
   `type` int(10) unsigned NOT NULL DEFAULT '0',
   `sender` varchar(255) DEFAULT NULL,
   `receiver` varchar(255) DEFAULT NULL,

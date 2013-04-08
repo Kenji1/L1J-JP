@@ -3,7 +3,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for `letters`
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `letters` (
-  `item_obj_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `item_obj_id` int(10) unsigned NOT NULL,
   `code` int(10) unsigned NOT NULL DEFAULT '0',
   `sender` varchar(255) DEFAULT NULL,
   `receiver` varchar(255) DEFAULT NULL,

@@ -4,9 +4,9 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `random_dungeons`;
 CREATE TABLE IF NOT EXISTS `random_dungeons` (
-  `src_x` int(10) unsigned NOT NULL DEFAULT '0',
-  `src_y` int(10) unsigned NOT NULL DEFAULT '0',
-  `src_map_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `src_x` int(10) unsigned NOT NULL,
+  `src_y` int(10) unsigned NOT NULL,
+  `src_map_id` int(10) unsigned NOT NULL,
   `new_x1` int(10) unsigned NOT NULL DEFAULT '0',
   `new_y1` int(10) unsigned NOT NULL DEFAULT '0',
   `new_map_id1` int(10) unsigned NOT NULL DEFAULT '0',
@@ -23,6 +23,6 @@ CREATE TABLE IF NOT EXISTS `random_dungeons` (
   `new_y5` int(10) unsigned NOT NULL DEFAULT '0',
   `new_map_id5` int(10) unsigned NOT NULL DEFAULT '0',
   `new_heading` tinyint(3) unsigned DEFAULT '1',
-  `note` varchar(255) NOT NULL DEFAULT '',
+  `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`src_x`,`src_y`,`src_map_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

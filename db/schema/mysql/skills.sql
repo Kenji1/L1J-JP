@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `skills`;
 CREATE TABLE `skills` (
   `id` int(10) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) DEFAULT NULL,
   `skill_level` int(10) NOT NULL DEFAULT '0',
   `skill_number` int(10) NOT NULL DEFAULT '0',
   `consume_mp` int(10) unsigned NOT NULL DEFAULT '0',
@@ -14,7 +14,7 @@ CREATE TABLE `skills` (
   `consume_amount` int(10) unsigned NOT NULL DEFAULT '0',
   `reuse_delay` int(10) unsigned NOT NULL DEFAULT '0',
   `buff_duration` int(10) unsigned NOT NULL DEFAULT '0',
-  `target` varchar(255) NOT NULL DEFAULT '',
+  `target` varchar(255) DEFAULT NULL,
   `target_to` int(10) NOT NULL DEFAULT '0',
   `damage_value` double(10,1) unsigned NOT NULL DEFAULT '0.0',
   `damage_dice` int(10) unsigned NOT NULL DEFAULT '0',
@@ -29,7 +29,7 @@ CREATE TABLE `skills` (
   `area` int(10) NOT NULL DEFAULT '0',
   `through` int(10) NOT NULL DEFAULT '0',
   `skill_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `name_id` varchar(255) NOT NULL DEFAULT '',
+  `name_id` varchar(255) DEFAULT NULL,
   `action_id` int(10) unsigned NOT NULL DEFAULT '0',
   `cast_gfx` int(10) NOT NULL DEFAULT '-1',
   `cast_gfx2` int(10) NOT NULL DEFAULT '-1',

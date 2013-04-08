@@ -3,7 +3,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `RESOLVENTS`;
 CREATE TABLE `RESOLVENTS` (
-  `ITEM_ID` INT NOT NULL DEFAULT '0',
+  `ITEM_ID` INT NOT NULL,
   `CRYSTAL_COUNT` INT NOT NULL DEFAULT '0'
 );
 -- ----------------------------

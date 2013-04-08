@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS `spawn_times` (
   `npc_id` int(10) NOT NULL,
   `time_start` time DEFAULT NULL,
   `time_end` time DEFAULT NULL,
-  `delete_at_endtime` tinyint(1) NOT NULL DEFAULT '0',
+  `delete_at_endtime` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`npc_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

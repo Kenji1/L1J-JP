@@ -106,7 +106,7 @@ public class L1DoorSpawn {
 				int y = rs.getInt("loc_y");
 				int mapId = rs.getInt("map_id");
 				int hp = rs.getInt("hp");
-				int keeper = rs.getInt("keeper");
+				int keeper = rs.getInt("keeper_id");
 				boolean isOpen = rs.getBoolean("is_open");
 				L1DoorGfx gfx = L1DoorGfx.findByGfxId(gfxId);
 				L1DoorSpawn spawn = new L1DoorSpawn(id, gfx, x, y, mapId, hp, keeper, isOpen);

@@ -3,8 +3,8 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `UB_MANAGERS`;
 CREATE TABLE `UB_MANAGERS` (
-  `UB_ID` INT NOT NULL DEFAULT '0',
-  `NPC_ID` INT NOT NULL DEFAULT '0'
+  `UB_ID` INT NOT NULL,
+  `NPC_ID` INT NOT NULL
 );
 -- ----------------------------
 -- Index for `UB_MANAGERS`

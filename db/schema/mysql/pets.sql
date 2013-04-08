@@ -3,10 +3,10 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for `pets`
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `pets` (
-  `item_obj_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `item_obj_id` int(10) unsigned NOT NULL,
   `id` int(10) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `npc_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `npc_id` int(10) unsigned NOT NULL,
   `level` int(10) unsigned NOT NULL DEFAULT '0',
   `hp` int(10) unsigned NOT NULL DEFAULT '0',
   `mp` int(10) unsigned NOT NULL DEFAULT '0',

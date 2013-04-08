@@ -5,13 +5,13 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `pet_types`;
 CREATE TABLE IF NOT EXISTS `pet_types` (
   `npc_id` int(10) NOT NULL,
-  `tame_item_id` int(10) NOT NULL,
+  `tame_item_id` int(10) NOT NULL DEFAULT '0',
   `min_hpup` int(10) NOT NULL,
   `max_hpup` int(10) NOT NULL,
   `min_mpup` int(10) NOT NULL,
   `max_mpup` int(10) NOT NULL,
-  `transform_item_id` int(10) NOT NULL,
-  `transform_npc_id` int(10) NOT NULL,
+  `transform_item_id` int(10) NOT NULL NULL DEFAULT '0',
+  `transform_npc_id` int(10) NOT NULL NULL DEFAULT '0',
   `message_id1` int(10) NOT NULL,
   `message_id2` int(10) NOT NULL,
   `message_id3` int(10) NOT NULL,

@@ -2,8 +2,8 @@
 -- Table structure for `CHARACTER_QUESTS`
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `CHARACTER_QUESTS` (
-  `CHAR_ID` INT NOT NULL DEFAULT '0',
-  `QUEST_ID` INT NOT NULL DEFAULT '0',
+  `CHAR_ID` INT NOT NULL,
+  `QUEST_ID` INT NOT NULL,
   `QUEST_STEP` TINYINT NOT NULL DEFAULT '0'
 );
 -- ----------------------------
