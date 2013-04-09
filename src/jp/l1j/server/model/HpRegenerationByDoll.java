@@ -18,19 +18,20 @@ package jp.l1j.server.model;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import jp.l1j.server.model.instance.L1DollInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.packets.server.S_SkillSound; //TODO HPR効果
+import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.templates.L1MagicDoll;
 
 public class HpRegenerationByDoll extends TimerTask {
-	private static Logger _log = Logger.getLogger(HpRegenerationByDoll.class
-			.getName());
+	private static Logger _log = Logger.getLogger(HpRegenerationByDoll.class.getName());
 
 	private final L1PcInstance _pc;
+	private final L1DollInstance _doll;
 
-	public HpRegenerationByDoll(L1PcInstance pc) {
+	public HpRegenerationByDoll(L1PcInstance pc, L1DollInstance doll) {
 		_pc = pc;
+		_doll = doll;
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class HpRegenerationByDoll extends TimerTask {
 	}
 
 	public void regenHp() {
-		int newHp = _pc.getCurrentHp() + L1MagicDoll.getHprFixByDoll(_pc);
+		int newHp = _pc.getCurrentHp() + L1MagicDoll.getHprByDoll(_doll);
 		if (newHp < 0) {
 			newHp = 0;
 		}

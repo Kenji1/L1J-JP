@@ -37,7 +37,9 @@ CREATE TABLE IF NOT EXISTS `magic_dolls` (
   `resist_blind` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `exp_bonus` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `make_item_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `make_time` int(10) unsigned NOT NULL DEFAULT '0',
   `skill_id` int(10) unsigned NOT NULL DEFAULT '0',
   `skill_chance` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `summon_time` int(10) unsigned NOT NULL DEFAULT '1800',
   PRIMARY KEY (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

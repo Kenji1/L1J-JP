@@ -17,9 +17,9 @@ package jp.l1j.server.templates;
 
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.MagicDollTable;
+import jp.l1j.server.model.L1Character;
 import jp.l1j.server.model.instance.L1DollInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.L1Character;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
@@ -344,21 +344,6 @@ public class L1MagicDoll {
 		return s;
 	}
 
-	public static boolean isItemMake(L1Character _master) {
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
-					((L1DollInstance) obj).getItemId());
-			if (doll != null) {
-				L1Item item = ItemTable.getInstance().getTemplate(
-						(doll.getMakeItemId()));
-				if (item != null) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	public static int getExpBonusByDoll(L1Character _master) { // EXP獲得増加
 		int s = 0;
 		for (Object obj : _master.getDollList().values().toArray()) {
@@ -371,101 +356,69 @@ public class L1MagicDoll {
 		return s;
 	}
 
-	public static int getMakeItemId(L1Character _master) { // アイテム獲得
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
-					((L1DollInstance) obj).getItemId());
-			if (doll != null) {
-				L1Item item = ItemTable.getInstance().getTemplate(
-						(doll.getMakeItemId()));
-				if (item != null) {
-					return item.getItemId();
-				}
-			}
-		}
-		return 0;
-	}
-
-	public static boolean isHpRegeneration(L1Character _master) { // HPR判断(時間固定性)
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
-					((L1DollInstance) obj).getItemId());
-			if (doll != null) {
-				if (doll.getHprTime() && doll.getHpr() != 0) {
-					return true;
-				}
+	public static boolean enableMakeItem(L1DollInstance _doll) {
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		if (doll != null) {
+			L1Item item = ItemTable.getInstance().getTemplate((doll.getMakeItemId()));
+			if (item != null && doll.getMakeTime() > 0) {
+				return true;
 			}
 		}
 		return false;
 	}
 
-	public static int getHprByDoll(L1Character _master) { // HP回復 (時間非固定性)
-		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
-					((L1DollInstance) obj).getItemId());
-			if (doll != null) {
-				if (!doll.getHprTime() && doll.getHpr() != 0) {
-					s += doll.getHpr();
-				}
-			}
+	public static int getMakeItemId(L1DollInstance _doll) { // アイテム獲得
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		if (doll == null) {
+			return 0;
 		}
-		return s;
+		L1Item item = ItemTable.getInstance().getTemplate((doll.getMakeItemId()));
+		return item != null ? item.getItemId() : 0;
 	}
 
-	public static int getHprFixByDoll(L1Character _master) { // HP回復 (時間固定性)
-		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
-					((L1DollInstance) obj).getItemId());
-			if (doll != null) {
-				if (doll.getHprTime() && doll.getHpr() != 0) {
-					s += doll.getHpr();
-				}
-			}
-		}
-		return s;
+	public static int getMakeTime(L1DollInstance _doll) { // アイテム製作間隔
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		return doll != null ? doll.getMakeTime() : 0;
 	}
 
-	public static boolean isMpRegeneration(L1Character _master) { // MPR判斷(時間固定性)
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
-					((L1DollInstance) obj).getItemId());
-			if (doll != null) {
-				if (doll.getMprTime() && doll.getMpr() != 0) {
-					return true;
-				}
+	public static boolean enableHpr(L1DollInstance _doll) { // HPR判定
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		if (doll != null) {
+			if (doll.getHprTime() > 0 && doll.getHpr() > 0) {
+				return true;
 			}
 		}
 		return false;
 	}
 
-	public static int getMprByDoll(L1Character _master) { // MP回復 (時間非固定性)
-		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
-					((L1DollInstance) obj).getItemId());
-			if (doll != null) {
-				if (!doll.getMprTime() && doll.getMpr() != 0) {
-					s += doll.getMpr();
-				}
-			}
-		}
-		return s;
+	public static int getHprByDoll(L1DollInstance _doll) { // HP回復
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		return doll != null ? doll.getHpr() : 0;
 	}
 
-	public static int getMprFixByDoll(L1Character _master) { // MP回復 (時間固定性)
-		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
-					((L1DollInstance) obj).getItemId());
-			if (doll != null) {
-				if (doll.getMprTime() && doll.getMpr() != 0) {
-					s += doll.getMpr();
-				}
+	public static int getHprTimeByDoll(L1DollInstance _doll) { // HP回復間隔
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		return doll != null ? doll.getHprTime() : 0;
+	}
+
+	public static boolean enableMpr(L1DollInstance _doll) { // MPR判定
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		if (doll != null) {
+			if (doll.getMprTime() > 0 && doll.getMpr() > 0) {
+				return true;
 			}
 		}
-		return s;
+		return false;
+	}
+
+	public static int getMprByDoll(L1DollInstance _doll) { // MP回復
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		return doll != null ? doll.getMpr() : 0;
+	}
+
+	public static int getMprTimeByDoll(L1DollInstance _doll) { // MP回復間隔
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		return doll != null ? doll.getMprTime() : 0;
 	}
 
 	public static int getEffectByDoll(L1Character _master, int type) { // スキル
@@ -512,6 +465,11 @@ public class L1MagicDoll {
 		return false;
 	}
 
+	public static int getSummonTime(L1DollInstance _doll) { // マジックドール召喚時間
+		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
+		return doll != null ? doll.getSummonTime() : 0;
+	}
+
 	private int _itemId;
 	private int _dollId;
 	private int _ac;
@@ -525,8 +483,8 @@ public class L1MagicDoll {
 	private int _mp;
 	private int _hpr;
 	private int _mpr;
-	private boolean _hprTime;
-	private boolean _mprTime;
+	private int _hprTime;
+	private int _mprTime;
 	private int _mr;
 	private int _dmg;
 	private int _bowDmg;
@@ -545,8 +503,10 @@ public class L1MagicDoll {
 	private int _resistBlind;
 	private int _expBonus;
 	private int _makeItemId;
+	private int _makeTime;
 	private int _skillId;
 	private int _skillChance;
+	private int _summonTime;
 
 	public int getItemId() {
 		return _itemId;
@@ -652,19 +612,19 @@ public class L1MagicDoll {
 		_mpr = i;
 	}
 
-	public boolean getHprTime() {
+	public int getHprTime() {
 		return _hprTime;
 	}
 
-	public void setHprTime(boolean i) {
+	public void setHprTime(int i) {
 		_hprTime = i;
 	}
 
-	public boolean getMprTime() {
+	public int getMprTime() {
 		return _mprTime;
 	}
 
-	public void setMprTime(boolean i) {
+	public void setMprTime(int i) {
 		_mprTime = i;
 	}
 
@@ -796,10 +756,6 @@ public class L1MagicDoll {
 		_resistBlind = i;
 	}
 
-	public int getMakeItemId() {
-		return _makeItemId;
-	}
-
 	public int getExpBonus() {
 		return _expBonus;
 	}
@@ -808,8 +764,20 @@ public class L1MagicDoll {
 		_expBonus = i;
 	}
 
+	public int getMakeItemId() {
+		return _makeItemId;
+	}
+
 	public void setMakeItemId(int i) {
 		_makeItemId = i;
+	}
+
+	public int getMakeTime() {
+		return _makeTime;
+	}
+
+	public void setMakeTime(int i) {
+		_makeTime = i;
 	}
 
 	public int getSkillId() {
@@ -826,5 +794,13 @@ public class L1MagicDoll {
 
 	public void setSkillChance(int i) {
 		_skillChance = i;
+	}
+
+	public int getSummonTime() {
+		return _summonTime;
+	}
+
+	public void setSummonTime(int i) {
+		_summonTime = i;
 	}
 }

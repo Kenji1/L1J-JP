@@ -18,20 +18,20 @@ package jp.l1j.server.model;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jp.l1j.server.model.instance.L1DollInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.templates.L1MagicDoll;
 
 public class MpRegenerationByDoll extends TimerTask {
-	private static Logger _log = Logger.getLogger(MpRegenerationByDoll.class
-			.getName());
+	private static Logger _log = Logger.getLogger(MpRegenerationByDoll.class.getName());
 
 	private final L1PcInstance _pc;
+	private final L1DollInstance _doll;
 
-	public MpRegenerationByDoll(L1PcInstance pc) {
+	public MpRegenerationByDoll(L1PcInstance pc, L1DollInstance doll) {
 		_pc = pc;
+		_doll = doll;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class MpRegenerationByDoll extends TimerTask {
 	}
 
 	public void regenMp() {
-		int newMp = _pc.getCurrentMp() + L1MagicDoll.getMprFixByDoll(_pc);
+		int newMp = _pc.getCurrentMp() + L1MagicDoll.getMprByDoll(_doll);
 		if (newMp < 0) {
 			newMp = 0;
 		}

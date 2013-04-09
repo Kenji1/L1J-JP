@@ -19,6 +19,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Executors;
@@ -44,7 +45,7 @@ import jp.l1j.server.model.AcceleratorChecker;
 import jp.l1j.server.model.FafurionHydroEffect;
 import jp.l1j.server.model.HpRegeneration;
 import jp.l1j.server.model.HpRegenerationByDoll;
-import jp.l1j.server.model.ItemMakeByDoll;
+import jp.l1j.server.model.MakeItemByDoll;
 import jp.l1j.server.model.L1Attack;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Character;
@@ -145,8 +146,19 @@ public class L1PcInstance extends L1Character {
 	private short _hpr = 0;
 	private short _trueHpr = 0;
 
+	public short getHprByDoll() {
+		short hprByDoll = 0;
+		for (Object _doll : getDollList().values().toArray()) {
+			L1DollInstance doll = (L1DollInstance) _doll;
+			if (L1MagicDoll.enableHpr(doll)) {
+				hprByDoll += L1MagicDoll.getHprByDoll(doll);
+			}
+		}
+		return hprByDoll;
+	}
+	
 	public short getHpr() {
-		return (short) (_hpr + L1MagicDoll.getHprByDoll(this));
+		return (short) (_hpr + getHprByDoll());
 	}
 
 	// 3.3C start
@@ -164,8 +176,19 @@ public class L1PcInstance extends L1Character {
 	private short _mpr = 0;
 	private short _trueMpr = 0;
 
+	public short getMprByDoll() {
+		short mprByDoll = 0;
+		for (Object _doll : getDollList().values().toArray()) {
+			L1DollInstance doll = (L1DollInstance) _doll;
+			if (L1MagicDoll.enableMpr(doll)) {
+				mprByDoll += L1MagicDoll.getMprByDoll(doll);
+			}
+		}
+		return mprByDoll;
+	}
+	
 	public short getMpr() {
-		return (short) (_mpr + L1MagicDoll.getMprByDoll(this));
+		return (short) (_mpr + getMprByDoll());
 	}
 
 	public void addMpr(int i) {
@@ -192,7 +215,7 @@ public class L1PcInstance extends L1Character {
 
 		if (!_hpRegenActive) {
 			_hpRegen = new HpRegeneration(this);
-			_regenTimer.scheduleAtFixedRate(_hpRegen, INTERVAL, INTERVAL);
+			_timer.scheduleAtFixedRate(_hpRegen, INTERVAL, INTERVAL);
 			_hpRegenActive = true;
 		}
 	}
@@ -210,7 +233,7 @@ public class L1PcInstance extends L1Character {
 
 		if (!_mpRegenActive) {
 			_mpRegen = new MpRegeneration(this);
-			_regenTimer.scheduleAtFixedRate(_mpRegen, INTERVAL, INTERVAL);
+			_timer.scheduleAtFixedRate(_mpRegen, INTERVAL, INTERVAL);
 			_mpRegenActive = true;
 		}
 	}
@@ -225,74 +248,76 @@ public class L1PcInstance extends L1Character {
 
 	// TODO マジックドール　アイテム製作開始
 	public void startItemMakeByDoll() {
-		final int INTERVAL_BY_DOLL = 600000;
-		boolean isExistItemMakeDoll = false;
-		if (L1MagicDoll.isItemMake(this)) {
-			isExistItemMakeDoll = true;
-		}
-		if (!_ItemMakeActiveByDoll && isExistItemMakeDoll) {
-			_itemMakeByDoll = new ItemMakeByDoll(this);
-			_regenTimer.scheduleAtFixedRate(_itemMakeByDoll, INTERVAL_BY_DOLL,
-					INTERVAL_BY_DOLL);
-			_ItemMakeActiveByDoll = true;
+		for (Object _doll : getDollList().values().toArray()) {
+			L1DollInstance doll = (L1DollInstance) _doll;
+			if (L1MagicDoll.enableMakeItem(doll) && !doll.isActiveMakeItem()) {
+				int interval = L1MagicDoll.getMakeTime(doll) * 1000;
+				_makeItemDolls.put(doll.getId(), new MakeItemByDoll(this, doll));
+				_timer.scheduleAtFixedRate(_makeItemDolls.get(doll.getId()), interval, interval);
+				doll.setActiveMakeItem(true);
+			}
 		}
 	}
 
 	// TODO マジックドール　アイテム製作停止
 	public void stopItemMakeByDoll() {
-		if (_ItemMakeActiveByDoll) {
-			_itemMakeByDoll.cancel();
-			_itemMakeByDoll = null;
-			_ItemMakeActiveByDoll = false;
+		for (Object _doll : getDollList().values().toArray()) {
+			L1DollInstance doll = (L1DollInstance) _doll;
+			if (doll.isActiveMakeItem()) {
+				_makeItemDolls.get(doll.getId()).cancel();
+				_makeItemDolls.remove(doll.getId());
+				doll.setActiveMakeItem(false);
+			}
 		}
 	}
 
 	// TODO マジックドール　HPR開始
 	public void startHpRegenerationByDoll() {
-		final int INTERVAL_BY_DOLL = 64000;
-		boolean isExistHprDoll = false;
-		if (L1MagicDoll.isHpRegeneration(this)) {
-			isExistHprDoll = true;
-		}
-		if (!_hpRegenActiveByDoll && isExistHprDoll) {
-			_hpRegenByDoll = new HpRegenerationByDoll(this);
-			_regenTimer.scheduleAtFixedRate(_hpRegenByDoll, INTERVAL_BY_DOLL,
-					INTERVAL_BY_DOLL);
-			_hpRegenActiveByDoll = true;
+		for (Object _doll : getDollList().values().toArray()) {
+			L1DollInstance doll = (L1DollInstance) _doll;
+			if (L1MagicDoll.enableHpr(doll) && !doll.isActiveHpr()) {
+				int interval = L1MagicDoll.getHprTimeByDoll(doll) * 1000;
+				_hpRegenDolls.put(doll.getId(), new HpRegenerationByDoll(this, doll));
+				_timer.scheduleAtFixedRate(_hpRegenDolls.get(doll.getId()), interval, interval);
+				doll.setActiveHpr(true);
+			}
 		}
 	}
 
 	// TODO マジックドール　HPR停止
 	public void stopHpRegenerationByDoll() {
-		if (_hpRegenActiveByDoll) {
-			_hpRegenByDoll.cancel();
-			_hpRegenByDoll = null;
-			_hpRegenActiveByDoll = false;
+		for (Object _doll : getDollList().values().toArray()) {
+			L1DollInstance doll = (L1DollInstance) _doll;
+			if (doll.isActiveHpr()) {
+				_hpRegenDolls.get(doll.getId()).cancel();
+				_hpRegenDolls.remove(doll.getId());
+				doll.setActiveHpr(false);
+			}
 		}
 	}
 
 	// TODO マジックドール　MPR開始
 	public void startMpRegenerationByDoll() {
-
-		final int INTERVAL_BY_DOLL = 64000;
-		boolean isExistMprDoll = false;
-		if (L1MagicDoll.isMpRegeneration(this)) {
-			isExistMprDoll = true;
-		}
-		if (!_mpRegenActiveByDoll && isExistMprDoll) {
-			_mpRegenByDoll = new MpRegenerationByDoll(this);
-			_regenTimer.scheduleAtFixedRate(_mpRegenByDoll, INTERVAL_BY_DOLL,
-					INTERVAL_BY_DOLL);
-			_mpRegenActiveByDoll = true;
+		for (Object _doll : getDollList().values().toArray()) {
+			L1DollInstance doll = (L1DollInstance) _doll;
+			if (L1MagicDoll.enableMpr(doll) && !doll.isActiveMpr()) {
+				int interval = L1MagicDoll.getMprTimeByDoll(doll) * 1000;
+				_mpRegenDolls.put(doll.getId(), new MpRegenerationByDoll(this, doll));
+				_timer.scheduleAtFixedRate(_mpRegenDolls.get(doll.getId()), interval, interval);
+				doll.setActiveMpr(true);
+			}
 		}
 	}
 
 	// TODO マジックドール　MPR停止
 	public void stopMpRegenerationByDoll() {
-		if (_mpRegenActiveByDoll) {
-			_mpRegenByDoll.cancel();
-			_mpRegenByDoll = null;
-			_mpRegenActiveByDoll = false;
+		for (Object _doll : getDollList().values().toArray()) {
+			L1DollInstance doll = (L1DollInstance) _doll;
+			if (doll.isActiveMpr()) {
+				_mpRegenDolls.get(doll.getId()).cancel();
+				_mpRegenDolls.remove(doll.getId());
+				doll.setActiveMpr(false);
+			}
 		}
 	}
 
@@ -300,7 +325,7 @@ public class L1PcInstance extends L1Character {
 		final int INTERVAL_BY_AWAKE = 4000;
 		if (!_mpReductionActiveByAwake) {
 			_mpReductionByAwake = new MpReductionByAwake(this);
-			_regenTimer.scheduleAtFixedRate(_mpReductionByAwake,
+			_timer.scheduleAtFixedRate(_mpReductionByAwake,
 					INTERVAL_BY_AWAKE, INTERVAL_BY_AWAKE);
 			_mpReductionActiveByAwake = true;
 		}
@@ -325,7 +350,7 @@ public class L1PcInstance extends L1Character {
 	public void startFafurionHydroEffect() {
 		if (!_fafurionHydroActiveEffect) {
 			_fafurionHydroEffect = new FafurionHydroEffect(this);
-			_regenTimer.scheduleAtFixedRate(_fafurionHydroEffect, 60000,60000);
+			_timer.scheduleAtFixedRate(_fafurionHydroEffect, 60000,60000);
 			_fafurionHydroActiveEffect = true;
 		}
 	}
@@ -2120,18 +2145,19 @@ public class L1PcInstance extends L1Character {
 	private final ArrayList<L1BookMark> _bookmarks;
 	private L1Quest _quest;
 	private MpRegeneration _mpRegen;
-	private MpRegenerationByDoll _mpRegenByDoll;
+	private static HashMap<Integer,MpRegenerationByDoll> _mpRegenDolls =
+			new HashMap<Integer,MpRegenerationByDoll>();
 	private MpReductionByAwake _mpReductionByAwake;
 	private HpRegeneration _hpRegen;
-	private HpRegenerationByDoll _hpRegenByDoll;
-	private ItemMakeByDoll _itemMakeByDoll;
-	private static Timer _regenTimer = new Timer(true);
+	private static HashMap<Integer,HpRegenerationByDoll> _hpRegenDolls =
+			new HashMap<Integer,HpRegenerationByDoll>();
+	private static HashMap<Integer,MakeItemByDoll> _makeItemDolls =
+			new HashMap<Integer,MakeItemByDoll>();
+	private static Timer _timer = new Timer(true);
 	private boolean _mpRegenActive;
-	private boolean _mpRegenActiveByDoll;
 	private boolean _mpReductionActiveByAwake;
 	private boolean _hpRegenActive;
-	private boolean _hpRegenActiveByDoll;
-	private boolean _ItemMakeActiveByDoll;
+	private boolean _makeItemActiveByDoll;
 	private L1EquipmentSlot _equipSlot;
 	private L1PcDeleteTimer _pcDeleteTimer;
 	private final L1Account _account;
@@ -4442,7 +4468,7 @@ public class L1PcInstance extends L1Character {
 
 			_rp = new L1PartyRefresh(this);
 
-			_regenTimer.scheduleAtFixedRate(_rp, INTERVAL, INTERVAL);
+			_timer.scheduleAtFixedRate(_rp, INTERVAL, INTERVAL);
 
 			_rpActive = true;
 

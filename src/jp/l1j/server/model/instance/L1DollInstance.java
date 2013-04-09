@@ -36,16 +36,23 @@ import jp.l1j.server.utils.Teleportation;
 public class L1DollInstance extends L1NpcInstance {
 	private static final long serialVersionUID = 1L;
 
-	public static final int DOLL_TIME = 1800000;
+	public final int _summonTime = L1MagicDoll.getSummonTime(this) * 1000;
 
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
+	
 	private ScheduledFuture<?> _dollFuture;
-	private int _itemId;
-	private int _itemObjId;
-	private boolean _isDelete = false;
+	
 	private static final int[] DollAction = { ACTION_Think, ACTION_Aggress,
 			ACTION_Salute, ACTION_Cheer };
+	
 	private int sleeptime_PT = 10;
+	
+	private int _itemId;
+	private int _itemObjId;
+	private boolean _isActiveHpr = false;
+	private boolean _isActiveMpr = false;
+	private boolean _isActiveMakeItem = false;
+	private boolean _isDelete = false;
 
 	// ターゲットがいない場合の距離
 	@Override
@@ -130,9 +137,7 @@ public class L1DollInstance extends L1NpcInstance {
 		setId(IdFactory.getInstance().nextId());
 		setItemId(itemId);
 		setItemObjId(itemObjId);
-		_dollFuture = GeneralThreadPool.getInstance().schedule(new DollTimer(),
-				DOLL_TIME);
-
+		_dollFuture = GeneralThreadPool.getInstance().schedule(new DollTimer(), _summonTime);
 		setMaster(master);
 		setX((_random.nextInt(5) + master.getX() - 2));
 		setY((_random.nextInt(5) + master.getY() - 2));
@@ -147,13 +152,13 @@ public class L1DollInstance extends L1NpcInstance {
 		if (!isAiRunning()) {
 			startAI();
 		}
-		if (L1MagicDoll.isHpRegeneration(_master)) {
+		if (L1MagicDoll.enableHpr(this)) {
 			master.startHpRegenerationByDoll();
 		}
-		if (L1MagicDoll.isMpRegeneration(_master)) {
+		if (L1MagicDoll.enableMpr(this)) {
 			master.startMpRegenerationByDoll();
 		}
-		if (L1MagicDoll.isItemMake(_master)) {
+		if (L1MagicDoll.enableMakeItem(this)) {
 			master.startItemMakeByDoll();
 		}
 	}
@@ -166,13 +171,13 @@ public class L1DollInstance extends L1NpcInstance {
 			pc.sendPackets(new S_SkillIconGFX(56, 0));
 			pc.sendPackets(new S_OwnCharStatus(pc));
 		}
-		if (L1MagicDoll.isHpRegeneration(pc)) {
+		if (L1MagicDoll.enableHpr(this)) {
 			pc.stopHpRegenerationByDoll();
 		}
-		if (L1MagicDoll.isMpRegeneration(pc)) {
+		if (L1MagicDoll.enableMpr(this)) {
 			pc.stopMpRegenerationByDoll();
 		}
-		if (L1MagicDoll.isItemMake(pc)) {
+		if (L1MagicDoll.enableMakeItem(this)) {
 			pc.stopItemMakeByDoll();
 		}
 		if (L1MagicDoll.isHaste(pc)) {
@@ -230,6 +235,30 @@ public class L1DollInstance extends L1NpcInstance {
 
 	public void setItemId(int i) {
 		_itemId = i;
+	}
+
+	public boolean isActiveHpr() {
+		return _isActiveHpr;
+	}
+
+	public void setActiveHpr(boolean isActive) {
+		_isActiveHpr = isActive;
+	}
+
+	public boolean isActiveMpr() {
+		return _isActiveMpr;
+	}
+
+	public void setActiveMpr(boolean isActive) {
+		_isActiveMpr = isActive;
+	}
+
+	public boolean isActiveMakeItem() {
+		return _isActiveMakeItem;
+	}
+
+	public void setActiveMakeItem(boolean isActive) {
+		_isActiveMakeItem = isActive;
 	}
 
 	public boolean isChargeDoll() { // 課金マジックドール
