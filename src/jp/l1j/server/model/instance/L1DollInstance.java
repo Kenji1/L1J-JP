@@ -16,10 +16,14 @@
 package jp.l1j.server.model.instance;
 
 import java.util.Arrays;
+import java.util.Timer;
 import java.util.concurrent.ScheduledFuture;
 import jp.l1j.server.GeneralThreadPool;
 import static jp.l1j.server.codes.ActionCodes.*;
+import jp.l1j.server.model.HpRegenerationByDoll;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.MakeItemByDoll;
+import jp.l1j.server.model.MpRegenerationByDoll;
 import jp.l1j.server.packets.server.S_DoActionGFX;
 import jp.l1j.server.packets.server.S_DollPack;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
@@ -40,7 +44,15 @@ public class L1DollInstance extends L1NpcInstance {
 
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
 	
-	private ScheduledFuture<?> _dollFuture;
+	private ScheduledFuture<?> _summonFuture;
+	
+	private static Timer _timer = new Timer();
+
+	private HpRegenerationByDoll _hprTask;
+	
+	private MpRegenerationByDoll _mprTask;
+	
+	private MakeItemByDoll _makeTask;
 	
 	private static final int[] DollAction = { ACTION_Think, ACTION_Aggress,
 			ACTION_Salute, ACTION_Cheer };
@@ -49,11 +61,8 @@ public class L1DollInstance extends L1NpcInstance {
 	
 	private int _itemId;
 	private int _itemObjId;
-	private boolean _isActiveHpr = false;
-	private boolean _isActiveMpr = false;
-	private boolean _isActiveMakeItem = false;
 	private boolean _isDelete = false;
-
+	
 	// ターゲットがいない場合の距離
 	@Override
 	public boolean noTarget() {
@@ -137,7 +146,7 @@ public class L1DollInstance extends L1NpcInstance {
 		setId(IdFactory.getInstance().nextId());
 		setItemId(itemId);
 		setItemObjId(itemObjId);
-		_dollFuture = GeneralThreadPool.getInstance().schedule(new DollTimer(), _summonTime);
+		_summonFuture = GeneralThreadPool.getInstance().schedule(new DollTimer(), _summonTime);
 		setMaster(master);
 		setX((_random.nextInt(5) + master.getX() - 2));
 		setY((_random.nextInt(5) + master.getY() - 2));
@@ -153,13 +162,13 @@ public class L1DollInstance extends L1NpcInstance {
 			startAI();
 		}
 		if (L1MagicDoll.enableHpr(this)) {
-			master.startHpRegenerationByDoll();
+			startHprTimer();
 		}
 		if (L1MagicDoll.enableMpr(this)) {
-			master.startMpRegenerationByDoll();
+			startMprTimer();
 		}
 		if (L1MagicDoll.enableMakeItem(this)) {
-			master.startItemMakeByDoll();
+			startMakeTimer();
 		}
 	}
 
@@ -172,13 +181,13 @@ public class L1DollInstance extends L1NpcInstance {
 			pc.sendPackets(new S_OwnCharStatus(pc));
 		}
 		if (L1MagicDoll.enableHpr(this)) {
-			pc.stopHpRegenerationByDoll();
+			stopHprTimer();
 		}
 		if (L1MagicDoll.enableMpr(this)) {
-			pc.stopMpRegenerationByDoll();
+			stopMprTimer();
 		}
 		if (L1MagicDoll.enableMakeItem(this)) {
-			pc.stopItemMakeByDoll();
+			stopMakeTimer();
 		}
 		if (L1MagicDoll.isHaste(pc)) {
 			pc.addHasteItemEquipped(-1);
@@ -221,6 +230,45 @@ public class L1DollInstance extends L1NpcInstance {
 		}
 	}
 
+	// TODO マジックドール　アイテム製作開始
+	public void startMakeTimer() {
+		int interval = L1MagicDoll.getMakeTimeByDoll(this) * 1000;
+		_makeTask = new MakeItemByDoll((L1PcInstance) _master, this);
+		_timer.scheduleAtFixedRate(_makeTask, interval, interval);
+	}
+
+	// TODO マジックドール　アイテム製作停止
+	public void stopMakeTimer() {
+		_makeTask.cancel();
+		_makeTask = null;
+	}
+
+	// TODO マジックドール　HPR開始
+	public void startHprTimer() {
+		int interval = L1MagicDoll.getHprTimeByDoll(this) * 1000;
+		_hprTask = new HpRegenerationByDoll((L1PcInstance) _master, this);
+		_timer.scheduleAtFixedRate(_hprTask, interval, interval);
+	}
+
+	// TODO マジックドール　HPR停止
+	public void stopHprTimer() {
+		_hprTask.cancel();
+		_hprTask = null;
+	}
+
+	// TODO マジックドール　MPR開始
+	public void startMprTimer() {
+		int interval = L1MagicDoll.getMprTimeByDoll(this) * 1000;
+		_mprTask = new MpRegenerationByDoll((L1PcInstance) _master, this);
+		_timer.scheduleAtFixedRate(_mprTask, interval, interval);
+	}
+
+	// TODO マジックドール　MPR停止
+	public void stopMprTimer() {
+		_mprTask.cancel();
+		_mprTask = null;
+	}
+
 	public int getItemObjId() {
 		return _itemObjId;
 	}
@@ -237,28 +285,16 @@ public class L1DollInstance extends L1NpcInstance {
 		_itemId = i;
 	}
 
-	public boolean isActiveHpr() {
-		return _isActiveHpr;
+	public boolean isActiveHprTimer() {
+		return _hprTask != null ? true : false;
 	}
 
-	public void setActiveHpr(boolean isActive) {
-		_isActiveHpr = isActive;
+	public boolean isActiveMprTimer() {
+		return _mprTask != null ? true : false;
 	}
 
-	public boolean isActiveMpr() {
-		return _isActiveMpr;
-	}
-
-	public void setActiveMpr(boolean isActive) {
-		_isActiveMpr = isActive;
-	}
-
-	public boolean isActiveMakeItem() {
-		return _isActiveMakeItem;
-	}
-
-	public void setActiveMakeItem(boolean isActive) {
-		_isActiveMakeItem = isActive;
+	public boolean isActiveMakeTimer() {
+		return _makeTask != null ? true : false;
 	}
 
 	public boolean isChargeDoll() { // 課金マジックドール

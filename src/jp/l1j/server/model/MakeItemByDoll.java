@@ -50,7 +50,7 @@ public class MakeItemByDoll extends TimerTask {
 	}
 
 	public void makeItem() {
-		L1ItemInstance temp = ItemTable.getInstance().createItem(L1MagicDoll.getMakeItemId(_doll));
+		L1ItemInstance temp = ItemTable.getInstance().createItem(L1MagicDoll.getMakeItemIdByDoll(_doll));
 		if (temp != null) {
 			if (_pc.getInventory().checkAddItem(temp, 1) == L1Inventory.OK) {
 				L1ItemInstance item = _pc.getInventory().storeItem(temp.getItemId(), 1);

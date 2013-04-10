@@ -367,7 +367,7 @@ public class L1MagicDoll {
 		return false;
 	}
 
-	public static int getMakeItemId(L1DollInstance _doll) { // アイテム獲得
+	public static int getMakeItemIdByDoll(L1DollInstance _doll) { // アイテム獲得
 		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
 		if (doll == null) {
 			return 0;
@@ -376,7 +376,7 @@ public class L1MagicDoll {
 		return item != null ? item.getItemId() : 0;
 	}
 
-	public static int getMakeTime(L1DollInstance _doll) { // アイテム製作間隔
+	public static int getMakeTimeByDoll(L1DollInstance _doll) { // アイテム製作間隔
 		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
 		return doll != null ? doll.getMakeTime() : 0;
 	}
