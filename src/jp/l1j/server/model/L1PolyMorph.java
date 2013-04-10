@@ -115,8 +115,8 @@ public class L1PolyMorph {
 	private static final Map<Integer, Integer> armorFlgMap = new HashMap<Integer, Integer>();
 	static {
 		armorFlgMap.put(1, HELM_EQUIP);
-		armorFlgMap.put(2, TSHIRT_EQUIP);
-		armorFlgMap.put(3, ARMOR_EQUIP);
+		armorFlgMap.put(2, ARMOR_EQUIP);
+		armorFlgMap.put(3, TSHIRT_EQUIP);
 		armorFlgMap.put(4, CLOAK_EQUIP);
 		armorFlgMap.put(5, GLOVE_EQUIP);
 		armorFlgMap.put(6, BOOTS_EQUIP);

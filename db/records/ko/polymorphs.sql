@@ -12,7 +12,7 @@ INSERT INTO `polymorphs` VALUES(979, 'wild boar', 979, 1, 0, 0, 1, 7);
 INSERT INTO `polymorphs` VALUES(1037, 'giant ant', 1037, 1, 0, 136, 0, 7);
 INSERT INTO `polymorphs` VALUES(1039, 'giant ant soldier', 1039, 1, 0, 136, 0, 7);
 INSERT INTO `polymorphs` VALUES(1047, 'scorpion', 1047, 15, 0, 0, 0, 7);
-INSERT INTO `polymorphs` VALUES(2064, 'snowman', 2064, 1, 0, 1027, 1, 7);
+INSERT INTO `polymorphs` VALUES(2064, 'snowman', 2064, 1, 0, 4095, 1, 7);
 INSERT INTO `polymorphs` VALUES(2284, 'dark elf polymorph', 2284, 52, 256, 4095, 1, 7);
 INSERT INTO `polymorphs` VALUES(2323, 'orc scout polymorph', 2323, 15, 256, 4095, 1, 7);
 INSERT INTO `polymorphs` VALUES(2374, 're skeleton', 2374, 10, 751, 4095, 1, 7);
@@ -122,7 +122,7 @@ INSERT INTO `polymorphs` VALUES(5733, 'ancient gold assassin morph', 5733, 65, 7
 INSERT INTO `polymorphs` VALUES(5736, 'ancient platinum assassin morph', 5736, 70, 751, 4095, 1, 7);
 INSERT INTO `polymorphs` VALUES(5976, 'high bear', 5976, 1, 751, 2, 0, 7);
 INSERT INTO `polymorphs` VALUES(6002, 'spirit of earth boss', 6002, 1, 8, 0, 1, 7);
-INSERT INTO `polymorphs` VALUES(6010, 'red orc', 6010, 1, 0, 1, 0, 7);
+INSERT INTO `polymorphs` VALUES(6010, 'red orc', 6010, 1, 0, 5, 0, 7);
 INSERT INTO `polymorphs` VALUES(6034, 'priest of corruption', 6034, 45, 751, 4095, 1, 7);
 INSERT INTO `polymorphs` VALUES(6035, 'quest lesser demon', 6035, 45, 751, 4095, 1, 7);
 INSERT INTO `polymorphs` VALUES(6080, 'princess horse', 6080, 1, 16, 4095, 1, 7);
