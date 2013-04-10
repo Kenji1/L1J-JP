@@ -37,31 +37,29 @@ import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.utils.Teleportation;
 
-public class L1DollInstance extends L1NpcInstance {
-	private static final long serialVersionUID = 1L;
+public class L1DollInstance extends L1NpcInstance {	
+	private static final int[] DollAction = { ACTION_Think, ACTION_Aggress,
+			ACTION_Salute, ACTION_Cheer };
 
-	public final int _summonTime = L1MagicDoll.getSummonTime(this) * 1000;
+	private static final long serialVersionUID = 1L;
 
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
 	
-	private ScheduledFuture<?> _summonFuture;
-	
 	private static Timer _timer = new Timer();
+	
+	private ScheduledFuture<?> _summonFuture;
 
 	private HpRegenerationByDoll _hprTask;
 	
 	private MpRegenerationByDoll _mprTask;
 	
 	private MakeItemByDoll _makeTask;
-	
-	private static final int[] DollAction = { ACTION_Think, ACTION_Aggress,
-			ACTION_Salute, ACTION_Cheer };
-	
+
 	private int sleeptime_PT = 10;
 	
 	private int _itemId;
+	
 	private int _itemObjId;
-	private boolean _isDelete = false;
 	
 	// ターゲットがいない場合の距離
 	@Override
@@ -72,7 +70,6 @@ public class L1DollInstance extends L1NpcInstance {
 				item.stopChargeTimer();
 			}
 			deleteDoll();
-			_isDelete = true;
 			return true;
 		} else if (_master != null && _master.getMapId() == getMapId()) {
 			int dir = moveDirection(_master.getX(), _master.getY());
@@ -100,7 +97,6 @@ public class L1DollInstance extends L1NpcInstance {
 				item.stopChargeTimer();
 			}
 			deleteDoll();
-			_isDelete = true;
 			return true;
 		}
 		return false;
@@ -146,7 +142,8 @@ public class L1DollInstance extends L1NpcInstance {
 		setId(IdFactory.getInstance().nextId());
 		setItemId(itemId);
 		setItemObjId(itemObjId);
-		_summonFuture = GeneralThreadPool.getInstance().schedule(new DollTimer(), _summonTime);
+		int summonTime = L1MagicDoll.getSummonTime(this) * 1000;
+		_summonFuture = GeneralThreadPool.getInstance().schedule(new DollTimer(), summonTime);
 		setMaster(master);
 		setX((_random.nextInt(5) + master.getX() - 2));
 		setY((_random.nextInt(5) + master.getY() - 2));
@@ -176,7 +173,7 @@ public class L1DollInstance extends L1NpcInstance {
 		L1PcInstance pc = (L1PcInstance) _master;
 		L1ItemInstance item = _master.getInventory().findItemId(_itemId);
 		broadcastPacket(new S_SkillSound(getId(), 5936));
-		if (_master != null && _isDelete) {
+		if (_master != null) {
 			pc.sendPackets(new S_SkillIconGFX(56, 0));
 			pc.sendPackets(new S_OwnCharStatus(pc));
 		}
@@ -283,18 +280,6 @@ public class L1DollInstance extends L1NpcInstance {
 
 	public void setItemId(int i) {
 		_itemId = i;
-	}
-
-	public boolean isActiveHprTimer() {
-		return _hprTask != null ? true : false;
-	}
-
-	public boolean isActiveMprTimer() {
-		return _mprTask != null ? true : false;
-	}
-
-	public boolean isActiveMakeTimer() {
-		return _makeTask != null ? true : false;
 	}
 
 	public boolean isChargeDoll() { // 課金マジックドール
