@@ -716,6 +716,7 @@ public class L1NpcInstance extends L1Character {
 			if (dir != -1) {
 				setDirectionMove(dir);
 				setSleepTime(calcSleepTime(getPassiSpeed(), MOVE_SPEED));
+			} else {
 				return true;
 			}
 		} else {
