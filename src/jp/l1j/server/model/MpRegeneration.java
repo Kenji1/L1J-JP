@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.L1SkillId;
 import jp.l1j.server.types.Point;
+import jp.l1j.server.templates.L1MagicDoll;
 import static jp.l1j.server.model.skill.L1SkillId.*;
 
 public class MpRegeneration extends TimerTask {
@@ -135,7 +136,7 @@ public class MpRegeneration extends TimerTask {
  		if (_pc.getOriginalMpr() > 0) { // オリジナルWIS MPR補正
  			baseMpr += _pc.getOriginalMpr();
  		}
-
+		baseMpr += L1MagicDoll.getNatMprByDoll(_pc); // マジックドールによるMPR補正
 		int itemMpr = 0;
 		itemMpr += _pc.getMpr();
 

@@ -163,6 +163,7 @@ public class HpRegeneration extends TimerTask {
 		if (_pc.getOriginalHpr() > 0) { // オリジナルCON HPR補正
 			bonus += _pc.getOriginalHpr();
 		}
+		bonus += L1MagicDoll.getNatMprByDoll(_pc); // マジックドールによるHPR補正
 
 		boolean inLifeStream = false;
 		if (isPlayerInLifeStream(_pc)) {

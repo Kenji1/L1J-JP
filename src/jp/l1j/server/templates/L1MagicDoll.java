@@ -401,6 +401,20 @@ public class L1MagicDoll {
 		return doll != null ? doll.getHprTime() : 0;
 	}
 
+	public static int getNatHprByDoll(L1Character _master) { // HP自然回復
+		int s = 0;
+		for (Object obj : _master.getDollList().values().toArray()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
+					((L1DollInstance) obj).getItemId());
+			if(doll != null) {
+				if(doll.getHprTime() == 0 && doll.getHpr() != 0) {
+					s += doll.getHpr();
+				}
+			}
+		}
+		return s;
+	}
+
 	public static boolean enableMpr(L1DollInstance _doll) { // MPR判定
 		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
 		if (doll != null) {
@@ -419,6 +433,20 @@ public class L1MagicDoll {
 	public static int getMprTimeByDoll(L1DollInstance _doll) { // MP回復間隔
 		L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(_doll.getItemId());
 		return doll != null ? doll.getMprTime() : 0;
+	}
+
+	public static int getNatMprByDoll(L1Character _master) { // MP自然回復
+		int s = 0;
+		for (Object obj : _master.getDollList().values().toArray()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(
+					((L1DollInstance) obj).getItemId());
+			if(doll != null) {
+				if(doll.getMprTime() == 0 && doll.getMpr() != 0) {
+					s += doll.getMpr();
+				}
+			}
+		}
+		return s;
 	}
 
 	public static int getEffectByDoll(L1Character _master, int type) { // スキル
