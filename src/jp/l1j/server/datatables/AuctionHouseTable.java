@@ -62,11 +62,13 @@ public class AuctionHouseTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1AuctionHouse board = new L1AuctionHouse();
-				board.setHouseId(rs.getInt(1));
-				board.setDeadline(timestampToCalendar((Timestamp) rs.getObject(2)));
-				board.setPrice(rs.getInt(3));
-				board.setOwnerId(rs.getInt(4));
-				board.setBidderId(rs.getInt(5));
+				board.setHouseId(rs.getInt("house_id"));
+				board.setDeadline(timestampToCalendar((Timestamp) rs.getObject("deadline")));
+				board.setPrice(rs.getInt("price"));
+				board.setOwnerId(rs.getInt("owner_id"));
+				board.setOwnerName(CharacterTable.getInstance().getCharName(board.getOwnerId()));
+				board.setBidderId(rs.getInt("bidder_id"));
+				board.setBidderName(CharacterTable.getInstance().getCharName(board.getBidderId()));
 				_boards.put(board.getHouseId(), board);
 			}
 		} catch (SQLException e) {

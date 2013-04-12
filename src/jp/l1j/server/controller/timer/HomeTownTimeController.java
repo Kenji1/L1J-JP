@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
+import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.TownTable;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTime;
@@ -99,8 +100,9 @@ public class HomeTownTimeController {
 		}
 		
 		for (int townId = 1; townId <= 10; townId++) {
-			String leaderName = totalContribution(townId);
-			if (leaderName != null) {
+			int leaderId = totalContribution(townId);
+			if (leaderId > 0) {
+				String leaderName = CharacterTable.getInstance().getCharName(leaderId);
 				S_PacketBox packet = new S_PacketBox(S_PacketBox.MSG_TOWN_LEADER, leaderName);
 				for (L1PcInstance pc : players) {
 					if (pc.getHomeTownId() == townId) {
@@ -127,7 +129,7 @@ public class HomeTownTimeController {
 		L1World.getInstance().setProcessingContributionTotal(false);
 	}
 
-	private static String totalContribution(int townId) {
+	private static int totalContribution(int townId) {
 		Connection con = null;
 		PreparedStatement pstm1 = null;
 		ResultSet rs1 = null;
@@ -138,7 +140,6 @@ public class HomeTownTimeController {
 		PreparedStatement pstm4 = null;
 		PreparedStatement pstm5 = null;
 		int leaderId = 0;
-		String leaderName = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm1 = con.prepareStatement("SELECT id, name FROM characters WHERE hometown_id = ? ORDER BY contribution DESC");
@@ -146,7 +147,6 @@ public class HomeTownTimeController {
 			rs1 = pstm1.executeQuery();
 			if (rs1.next()) {
 				leaderId = rs1.getInt("id");
-				leaderName = rs1.getString("name");
 			}
 			double totalContribution = 0;
 			pstm2 = con.prepareStatement("SELECT SUM(contribution) AS total_contribution FROM characters WHERE hometown_id = ?");
@@ -170,10 +170,9 @@ public class HomeTownTimeController {
 			pstm4.setDouble(1, contributionUnit);
 			pstm4.setInt(2, townId);
 			pstm4.execute();
-			pstm5 = con.prepareStatement("UPDATE towns SET leader_id = ?, leader_name = ?, tax_rate = 0, tax_rate_reserved = 0, sales_money = 0, sales_money_yesterday = sales_money, town_tax = 0, town_fix_tax = 0 WHERE id = ?");
+			pstm5 = con.prepareStatement("UPDATE towns SET leader_id = ?, tax_rate = 0, tax_rate_reserved = 0, sales_money = 0, sales_money_yesterday = sales_money, town_tax = 0, town_fix_tax = 0 WHERE id = ?");
 			pstm5.setInt(1, leaderId);
-			pstm5.setString(2, leaderName);
-			pstm5.setInt(3, townId);
+			pstm5.setInt(2, townId);
 			pstm5.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -188,7 +187,7 @@ public class HomeTownTimeController {
 			SqlUtil.close(pstm5);
 			SqlUtil.close(con);
 		}
-		return leaderName;
+		return leaderId;
 	}
 
 	private static void clearHomeTownID() {

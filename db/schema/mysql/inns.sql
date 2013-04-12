@@ -3,8 +3,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for `inns`
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `inns` (
-  `name` varchar(255) DEFAULT NULL,
   `npc_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `room_number` int(10) unsigned NOT NULL,
   `key_id` int(10) unsigned NOT NULL DEFAULT '0',
   `lodger_id` int(10) unsigned NOT NULL DEFAULT '0',

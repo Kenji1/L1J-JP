@@ -62,7 +62,7 @@ public class TownTable {
 				town.setTownId(townid);
 				town.setName(rs.getString("name"));
 				town.setLeaderId(rs.getInt("leader_id"));
-				town.setLeaderName(rs.getString("leader_name"));
+				town.setLeaderName(CharacterTable.getInstance().getCharName(town.getLeaderId()));
 				town.setTaxRate(rs.getInt("tax_rate"));
 				town.setTaxRateReserved(rs.getInt("tax_rate_reserved"));
 				town.setSalesMoney(rs.getInt("sales_money"));

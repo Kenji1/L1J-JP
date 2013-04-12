@@ -94,8 +94,7 @@ public class L1Quest {
 				rs = pstm.executeQuery();
 
 				while (rs.next()) {
-					_quest.put(new Integer(rs.getInt(2)), new Integer(rs
-							.getInt(3)));
+					_quest.put(new Integer(rs.getInt("quest_id")), new Integer(rs.getInt("quest_step")));
 				}
 
 			} catch (SQLException e) {

@@ -151,7 +151,7 @@ public class UbTable {
 			pstm.setInt(1, ubId);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
-				n = rs.getInt(1);
+				n = rs.getInt("ub_id");
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

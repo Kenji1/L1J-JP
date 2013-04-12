@@ -65,14 +65,14 @@ public class HouseTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1House house = new L1House();
-				house.setHouseId(rs.getInt(1));
-				house.setHouseName(rs.getString(2));
-				house.setHouseArea(rs.getInt(3));
-				house.setLocation(rs.getString(4));
-				house.setKeeperId(rs.getInt(5));
-				house.setOnSale(rs.getInt(6) == 1 ? true : false);
-				house.setPurchaseBasement(rs.getInt(7) == 1 ? true : false);
-				house.setTaxDeadline(timestampToCalendar((Timestamp) rs.getObject(8)));
+				house.setHouseId(rs.getInt("id"));
+				house.setHouseName(rs.getString("name"));
+				house.setHouseArea(rs.getInt("area"));
+				house.setLocation(rs.getString("location"));
+				house.setKeeperId(rs.getInt("npc_id"));
+				house.setOnSale(rs.getInt("is_on_sale") == 1 ? true : false);
+				house.setPurchaseBasement(rs.getInt("is_purchase_basement") == 1 ? true : false);
+				house.setTaxDeadline(timestampToCalendar((Timestamp) rs.getObject("tax_deadline")));
 				_house.put(house.getHouseId(), house);
 			}
 		} catch (SQLException e) {
@@ -107,7 +107,7 @@ public class HouseTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement(String.format("UPDATE houses SET %s, %s, %s, %s, %s, %s, %s WHERE id=?",
-				"name=?", "area=?", "location=?", "keeper_id=?",
+				"name=?", "area=?", "location=?", "npc_id=?",
 				"is_on_sale=?", "is_purchase_basement=?", "tax_deadline=?"));
 			pstm.setString(1, house.getHouseName());
 			pstm.setInt(2, house.getHouseArea());

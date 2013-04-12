@@ -56,7 +56,7 @@ public class MagicDollTable {
 				L1MagicDoll doll = new L1MagicDoll();
 				int itemId = rs.getInt("item_id");
 				doll.setItemId(itemId);
-				doll.setDollId(rs.getInt("doll_id"));
+				doll.setDollId(rs.getInt("npc_id"));
 				doll.setAc(rs.getInt("ac"));
 				doll.setStr(rs.getInt("str"));
 				doll.setCon(rs.getInt("con"));

@@ -54,20 +54,20 @@ public class SpawnUbMobTable {
 			pstm = con.prepareStatement("SELECT * FROM spawn_ub_mobs");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1Npc npcTemp = NpcTable.getInstance().getTemplate(rs.getInt(6));
+				L1Npc npcTemp = NpcTable.getInstance().getTemplate(rs.getInt("npc_id"));
 				if (npcTemp == null) {
 					continue;
 				}
 				L1UbSpawn spawnDat = new L1UbSpawn();
-				spawnDat.setId(rs.getInt(1));
-				spawnDat.setUbId(rs.getInt(2));
-				spawnDat.setPattern(rs.getInt(3));
-				spawnDat.setGroup(rs.getInt(4));
+				spawnDat.setId(rs.getInt("id"));
+				spawnDat.setUbId(rs.getInt("ub_id"));
+				spawnDat.setPattern(rs.getInt("pattern"));
+				spawnDat.setGroup(rs.getInt("group_id"));
 				spawnDat.setName(npcTemp.getName());
-				spawnDat.setNpcTemplateId(rs.getInt(6));
-				spawnDat.setAmount(rs.getInt(7));
-				spawnDat.setSpawnDelay(rs.getInt(8));
-				spawnDat.setSealCount(rs.getInt(9));
+				spawnDat.setNpcTemplateId(rs.getInt("npc_id"));
+				spawnDat.setAmount(rs.getInt("count"));
+				spawnDat.setSpawnDelay(rs.getInt("spawn_delay"));
+				spawnDat.setSealCount(rs.getInt("seal_count"));
 				_spawnTable.put(spawnDat.getId(), spawnDat);
 			}
 		} catch (SQLException e) {

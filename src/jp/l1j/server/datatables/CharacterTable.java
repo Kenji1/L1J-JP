@@ -266,4 +266,13 @@ public class CharacterTable {
 	public L1CharName[] getCharNameList() {
 		return _charNameList.values().toArray(new L1CharName[_charNameList.size()]);
 	}
+	
+	public String getCharName(int charId) {
+		for (L1CharName cn : getCharNameList()) {
+			if (charId == cn.getId()) {
+				return cn.getName();
+			}
+		}
+		return null;
+	}
 }

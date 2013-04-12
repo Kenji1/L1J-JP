@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `spawn_ub_mobs` (
   `pattern` int(10) unsigned NOT NULL,
   `group_id` int(10) unsigned NOT NULL,
   `npc_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `count` int(10) unsigned NOT NULL DEFAULT '0',
   `spawn_delay` int(10) unsigned NOT NULL DEFAULT '0',
   `seal_count` int(10) unsigned NOT NULL DEFAULT '0',

@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS `accelerator_logs` (
   `loc_y` int(10) unsigned NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `name` varchar(255) DEFAULT NULL,
   `area` int(10) unsigned NOT NULL DEFAULT '0',
   `location` varchar(255) DEFAULT NULL,
-  `keeper_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `npc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `is_on_sale` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `is_purchase_basement` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `tax_deadline` datetime DEFAULT NULL,

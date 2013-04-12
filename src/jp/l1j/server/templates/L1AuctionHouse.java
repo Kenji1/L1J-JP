@@ -16,6 +16,7 @@
 package jp.l1j.server.templates;
 
 import java.util.Calendar;
+import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.HouseTable;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -86,9 +87,14 @@ public class L1AuctionHouse {
 	}
 
 	// 所有者名
-	public String getOwner() {
-		L1PcInstance owner = (L1PcInstance) L1World.getInstance().findObject(_ownerId);
-		return owner != null ? owner.getName() : null;
+	private String _ownerName;
+	
+	public String getOwnerName() {
+		return _ownerName;
+	}
+	
+	public void setOwnerName(String s) {
+		_ownerName = s;
 	}
 
 	// 入札者ID
@@ -103,8 +109,13 @@ public class L1AuctionHouse {
 	}
 
 	// 入札者名
-	public String getBidder() {
-		L1PcInstance bidder = (L1PcInstance) L1World.getInstance().findObject(_bidderId);
-		return bidder != null ? bidder.getName() : null;
+	private String _bidderName;
+	
+	public String getBidderName() {
+		return _bidderName;
+	}
+	
+	public void setBidderName(String s) {
+		_bidderName = s;
 	}
 }

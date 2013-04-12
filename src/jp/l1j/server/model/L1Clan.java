@@ -65,48 +65,51 @@ public class L1Clan {
 		return _clanName;
 	}
 
-	public void setClanName(String clan_name) {
-		_clanName = clan_name;
+	public void setClanName(String clanName) {
+		_clanName = clanName;
 	}
 
 	public int getLeaderId() {
 		return _leaderId;
 	}
 
-	public void setLeaderId(int leader_id) {
-		_leaderId = leader_id;
+	public void setLeaderId(int leaderId) {
+		_leaderId = leaderId;
 	}
 
 	public String getLeaderName() {
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(_leaderId);
-		return pc != null ? pc.getName() : null;
+		return _leaderName;
 	}
 
+	public void setLeaderName(String leaderName) {
+		_leaderName = leaderName;
+	}
+	
 	public int getCastleId() {
 		return _castleId;
 	}
 
-	public void setCastleId(int hasCastle) {
-		_castleId = hasCastle;
+	public void setCastleId(int castleId) {
+		_castleId = castleId;
 	}
 
 	public int getHouseId() {
 		return _houseId;
 	}
 
-	public void setHouseId(int hasHideout) {
-		_houseId = hasHideout;
+	public void setHouseId(int houseId) {
+		_houseId = houseId;
 	}
 
-	public void addMemberName(String member_name) {
-		if (!membersNameList.contains(member_name)) {
-			membersNameList.add(member_name);
+	public void addMemberName(String memberName) {
+		if (!membersNameList.contains(memberName)) {
+			membersNameList.add(memberName);
 		}
 	}
 
-	public void delMemberName(String member_name) {
-		if (membersNameList.contains(member_name)) {
-			membersNameList.remove(member_name);
+	public void delMemberName(String memberName) {
+		if (membersNameList.contains(memberName)) {
+			membersNameList.remove(memberName);
 		}
 	}
 

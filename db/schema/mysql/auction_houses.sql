@@ -4,6 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `auction_houses` (
   `house_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `deadline` datetime DEFAULT NULL,
   `price` int(10) unsigned NOT NULL DEFAULT '0',
   `owner_id` int(10) unsigned NOT NULL DEFAULT '0',

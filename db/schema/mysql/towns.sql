@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `towns` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `leader_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `leader_name` varchar(255) DEFAULT NULL,
   `tax_rate` int(10) unsigned NOT NULL DEFAULT '0',
   `tax_rate_reserved` int(10) unsigned NOT NULL DEFAULT '0',
   `sales_money` int(10) unsigned NOT NULL DEFAULT '0',

@@ -5,6 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `weapon_skills`;
 CREATE TABLE IF NOT EXISTS `weapon_skills` (
   `item_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `probability` int(10) unsigned NOT NULL DEFAULT '0',
   `prob_enchant` int(10) NOT NULL DEFAULT '0',
   `fix_damage` int(10) unsigned NOT NULL DEFAULT '0',

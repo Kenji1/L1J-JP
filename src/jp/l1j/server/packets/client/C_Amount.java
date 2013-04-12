@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.AuctionHouseTable;
+import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.HouseTable;
 import jp.l1j.server.datatables.InnKeyTable;
 import jp.l1j.server.datatables.InnTable;
@@ -81,7 +82,7 @@ public class C_Amount extends ClientBasePacket {
 			String pcName = pc.getName();
 			AuctionHouseTable boardTable = new AuctionHouseTable();
 			for (L1AuctionHouse board : boardTable.getAuctionBoardTableList()) {
-				if (pcName.equalsIgnoreCase(board.getBidder())) {
+				if (pcName.equalsIgnoreCase(board.getBidderName())) {
 					pc.sendPackets(new S_ServerMessage(523)); // すでに他の家の競売に参加しています。
 					return;
 				}
@@ -95,6 +96,7 @@ public class C_Amount extends ClientBasePacket {
 					// 競売掲示板を更新
 					board.setPrice(amount);
 					board.setBidderId(pc.getId());
+					board.setBidderName(pc.getName());
 					boardTable.updateAuctionBoard(board);
 					if (nowBidderId != 0) {
 						// 入札者にアデナを返金
@@ -135,8 +137,10 @@ public class C_Amount extends ClientBasePacket {
 				cal.set(Calendar.SECOND, 0);
 				board.setDeadline(cal);
 				board.setPrice(amount);
-				board.setOwnerId(pc.getId());
+				board.setOwnerId(pc.getId());	
+				board.setOwnerName(pc.getName());
 				board.setBidderId(0);
+				board.setBidderName(null);
 				boardTable.insertAuctionBoard(board);
 
 				house.setOnSale(true); // 競売中に設定

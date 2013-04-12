@@ -129,7 +129,7 @@ ALTER TABLE `pets` MODIFY `name` varchar(255) NOT NULL DEFAULT '' after `id`;
 -- ----------------------------
 ALTER TABLE `polymorphs` CHANGE `poly_id` `gfx_id` int(10) unsigned DEFAULT NULL;
 -- ----------------------------
--- pet_resolvents
+-- resolvents
 -- ----------------------------
 ALTER TABLE `resolvents` DROP `note`;
 -- ----------------------------

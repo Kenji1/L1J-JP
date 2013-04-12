@@ -47,8 +47,8 @@ public class S_ApplyAuction extends ServerBasePacket {
 			pstm.setInt(1, number);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int nowPrice = rs.getInt(5);
-				int bidderId = rs.getInt(10);
+				int nowPrice = rs.getInt("price");
+				int bidderId = rs.getInt("bidder_id");
 				writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
 				writeD(objectId);
 				writeD(0); // ?

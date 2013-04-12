@@ -5,6 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `item_rates`;
 CREATE TABLE `item_rates` (
   `item_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `selling_price` int(10) NOT NULL DEFAULT '-1',
   `purchasing_price` int(10) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`item_id`)

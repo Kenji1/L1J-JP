@@ -50,11 +50,11 @@ public class NpcTalkDataTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1NpcTalkData l1npctalkdata = new L1NpcTalkData();
-				l1npctalkdata.setNpcID(rs.getInt(1));
-				l1npctalkdata.setNormalAction(rs.getString(2));
-				l1npctalkdata.setChaoticAction(rs.getString(3));
-				l1npctalkdata.setTeleportURL(rs.getString(4));
-				l1npctalkdata.setTeleportURLA(rs.getString(5));
+				l1npctalkdata.setNpcID(rs.getInt("npc_id"));
+				l1npctalkdata.setNormalAction(rs.getString("normal_action"));
+				l1npctalkdata.setChaoticAction(rs.getString("chaotic_action"));
+				l1npctalkdata.setTeleportURL(rs.getString("teleport_url"));
+				l1npctalkdata.setTeleportURLA(rs.getString("teleport_urla"));
 				_datatable.put(new Integer(l1npctalkdata.getNpcID()), l1npctalkdata);
 			}
 			_log.fine("loaded npc action: " + _datatable.size() + " records");

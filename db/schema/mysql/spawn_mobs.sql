@@ -5,9 +5,10 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `spawn_mobs`;
 CREATE TABLE `spawn_mobs` (
   `id` int(10) unsigned NOT NULL,
-  `count` int(10) unsigned NOT NULL DEFAULT '0',
   `npc_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `count` int(10) unsigned NOT NULL DEFAULT '0',
   `loc_x` int(10) unsigned NOT NULL DEFAULT '0',
   `loc_y` int(10) unsigned NOT NULL DEFAULT '0',
   `random_x` int(10) unsigned NOT NULL DEFAULT '0',

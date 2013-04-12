@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.codes.Opcodes;
+import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.SqlUtil;
 
@@ -44,7 +45,7 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 		try {
 			int number = Integer.valueOf(house_number);
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM auction_houses WHERE house_id=?");
+			pstm = con.prepareStatement("SELECT * FROM auction_houses LEFT JOIN houses ON auction_houses.house_id=houses.id WHERE house_id=?");
 			pstm.setInt(1, number);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -53,14 +54,13 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 				writeS("agsel");
 				writeS(house_number); // アジトの番号
 				writeH(9); // 以下の文字列の個数
-				writeS(rs.getString(2)); // アジトの名前
-				writeS(rs.getString(6)); // アジトの位置
-				writeS(String.valueOf(rs.getString(3))); // アジトの広さ
-				writeS(rs.getString(7)); // 以前の所有者
-				writeS(rs.getString(9)); // 現在の入札者
-				writeS(String.valueOf(rs.getInt(5))); // 現在の入札価格
-				Calendar cal = timestampToCalendar((Timestamp) rs.
-						getObject(4));
+				writeS(rs.getString("name")); // アジトの名前
+				writeS(rs.getString("location")); // アジトの位置
+				writeS(String.valueOf(rs.getString("area"))); // アジトの広さ
+				writeS(CharacterTable.getInstance().getCharName(rs.getInt("owner_id"))); // 以前の所有者
+				writeS(CharacterTable.getInstance().getCharName(rs.getInt("bidder_id"))); // 現在の入札者
+				writeS(String.valueOf(rs.getInt("price"))); // 現在の入札価格
+				Calendar cal = timestampToCalendar((Timestamp) rs.getObject("deadline"));
 				int month = cal.get(Calendar.MONTH) + 1;
 				int day = cal.get(Calendar.DATE);
 				int hour = cal.get(Calendar.HOUR_OF_DAY);

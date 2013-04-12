@@ -58,7 +58,7 @@ public class S_AuctionBoard extends ServerBasePacket {
 			pstm = con.prepareStatement("SELECT * FROM auction_houses");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				houseId = rs.getInt(1);
+				houseId = rs.getInt("house_id");
 				if (board.getX() == 33421 && board.getY() == 32823) { // 競売掲示板(ギラン)
 					if (houseId >= 262145 && houseId <= 262189) {
 						houseList.add(houseId);
@@ -89,19 +89,18 @@ public class S_AuctionBoard extends ServerBasePacket {
 			price = new int[count];
 
 			for (int i = 0; i < count; ++i) {
-				pstm = con.prepareStatement("SELECT * FROM auction_houses WHERE house_id=?");
+				pstm = con.prepareStatement("SELECT * FROM auction_houses LEFT JOIN houses ON auction_houses.house_id=houses.id WHERE house_id=?");
 				houseId = houseList.get(i);
 				pstm.setInt(1, houseId);
 				rs = pstm.executeQuery();
 				while (rs.next()) {
-					id[i] = rs.getInt(1);
-					name[i] = rs.getString(2);
-					area[i] = rs.getInt(3);
-					Calendar cal = timestampToCalendar((Timestamp) rs.
-							getObject(4));
+					id[i] = rs.getInt("house_id");
+					name[i] = rs.getString("name");
+					area[i] = rs.getInt("area");
+					Calendar cal = timestampToCalendar((Timestamp) rs.getObject("deadline"));
 					month[i] = cal.get(Calendar.MONTH) + 1;
 					day[i] = cal.get(Calendar.DATE);
-					price[i] = rs.getInt(5);
+					price[i] = rs.getInt("price");
 				}
 			}
 		} catch (SQLException e) {

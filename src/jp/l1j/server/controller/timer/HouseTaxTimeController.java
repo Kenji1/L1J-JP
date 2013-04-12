@@ -81,7 +81,9 @@ public class HouseTaxTimeController implements Runnable {
 			board.setDeadline(cal);
 			board.setPrice(100000);
 			board.setOwnerId(0);
+			board.setOwnerName(null);
 			board.setBidderId(0);
+			board.setBidderName(null);
 			boardTable.insertAuctionBoard(board);
 			house.setOnSale(true); // 競売中に設定
 			house.setPurchaseBasement(true); // 地下アジト未購入に設定

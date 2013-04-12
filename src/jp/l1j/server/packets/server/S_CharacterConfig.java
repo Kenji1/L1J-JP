@@ -48,8 +48,8 @@ public class S_CharacterConfig extends ServerBasePacket {
 			pstm.setInt(1, objectId);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				length = rs.getInt(2);
-				data = rs.getBytes(3);
+				length = rs.getInt("length");
+				data = rs.getBytes("data");
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

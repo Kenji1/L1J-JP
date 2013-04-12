@@ -25,6 +25,7 @@ import jp.l1j.server.ClientThread;
 import jp.l1j.server.controller.timer.HomeTownTimeController;
 import jp.l1j.server.controller.timer.WarTimeController;
 import jp.l1j.server.datatables.CastleTable;
+import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.DoorTable;
 import jp.l1j.server.datatables.ExpTable;
 import jp.l1j.server.datatables.HouseTable;
@@ -2354,10 +2355,12 @@ public class C_NpcAction extends ClientBasePacket {
 
 				if (town_id >= 1 && town_id <= 10) {
 					L1Town town = TownTable.getInstance().getTownTable(town_id);
-					String leader = town.getLeaderName();
-					if (leader != null && leader.length() != 0) {
+					// String leader = town.getLeaderName();
+					// TODO
+					String leaderName = CharacterTable.getInstance().getCharName(town.getLeaderId());
+					if (leaderName != null && leaderName.length() != 0) {
 						htmlid = "owner";
-						htmldata = new String[] { leader };
+						htmldata = new String[] { leaderName };
 					} else {
 						htmlid = "noowner";
 					}

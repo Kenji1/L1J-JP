@@ -5,8 +5,9 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `spawn_npcs`;
 CREATE TABLE `spawn_npcs` (
   `id` int(10) unsigned NOT NULL,
-  `count` int(10) unsigned NOT NULL DEFAULT '0',
   `npc_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `count` int(10) unsigned NOT NULL DEFAULT '0',
   `loc_x` int(10) unsigned NOT NULL DEFAULT '0',
   `loc_y` int(10) unsigned NOT NULL DEFAULT '0',
   `random_x` int(10) unsigned NOT NULL DEFAULT '0',

@@ -74,7 +74,7 @@ public class AuctionTimeController implements Runnable {
 		int houseId = board.getHouseId();
 		int price = board.getPrice();
 		int oldOwnerId = board.getOwnerId();
-		String bidder = board.getBidder();
+		String bidderName = board.getBidderName();
 		int bidderId = board.getBidderId();
 
 		if (oldOwnerId != 0 && bidderId != 0) { // 以前の所有者あり・落札者あり
@@ -96,7 +96,7 @@ public class AuctionTimeController implements Runnable {
 			if (bidderPc != null) { // 落札者がオンライン中
 				// おめでとうございます。%nあなたが参加された競売は最終価格%0アデナの価格で落札されました。%n
 				// 様がご購入された家はすぐにご利用できます。%nありがとうございました。%n%n
-				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidder));
+				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidderName));
 			}
 			deleteHouseInfo(houseId);
 			setHouseInfo(houseId, bidderId);
@@ -106,7 +106,7 @@ public class AuctionTimeController implements Runnable {
 			if (bidderPc != null) { // 落札者がオンライン中
 				// おめでとうございます。%nあなたが参加された競売は最終価格%0アデナの価格で落札されました。%n
 				// 様がご購入された家はすぐにご利用できます。%nありがとうございました。%n%n
-				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidder));
+				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidderName));
 			}
 			setHouseInfo(houseId, bidderId);
 			deleteNote(houseId);

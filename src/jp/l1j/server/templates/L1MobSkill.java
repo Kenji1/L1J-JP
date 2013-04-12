@@ -23,7 +23,6 @@ import jp.l1j.server.utils.L1QueryUtil.EntityFactory;
 public class L1MobSkill {
 	private int _npcId;
 	private int _actionNo;
-	private String _name;
 	private int _type;
 	private int _triRnd;
 	private int _triHp;
@@ -64,10 +63,6 @@ public class L1MobSkill {
 
 	public int getActionNo() {
 		return _actionNo;
-	}
-
-	public String getName() {
-		return _name;
 	}
 
 	/**
@@ -232,7 +227,6 @@ public class L1MobSkill {
 			L1MobSkill result = new L1MobSkill();
 			result._npcId = rs.getInt("npc_id");
 			result._actionNo = rs.getInt("act_no");
-			result._name = rs.getString("mob_name");
 			result._type = rs.getInt("type");
 			result._triRnd = rs.getInt("tri_rnd");
 			result._triHp = rs.getInt("tri_hp");

@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS `drop_items`;
 CREATE TABLE IF NOT EXISTS `drop_items`(
   `npc_id` int(10) unsigned NOT NULL,
   `item_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `min` int(10) unsigned NOT NULL DEFAULT '0',
   `max` int(10) unsigned NOT NULL DEFAULT '0',
   `chance` int(10) unsigned NOT NULL DEFAULT '0',

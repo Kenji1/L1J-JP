@@ -3,9 +3,10 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for `magic_dolls`
 -- ----------------------------
 DROP TABLE IF EXISTS `magic_dolls`;
-CREATE TABLE IF NOT EXISTS `magic_dolls` (
+CREATE TABLE `magic_dolls` (
   `item_id` int(10) unsigned NOT NULL,
-  `doll_id` int(10) unsigned NOT NULL,
+  `npc_id` int(10) unsigned NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `ac` tinyint(3) NOT NULL DEFAULT '0',
   `str` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `con` tinyint(3) unsigned NOT NULL DEFAULT '0',

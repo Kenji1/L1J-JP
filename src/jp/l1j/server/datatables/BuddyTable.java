@@ -63,8 +63,7 @@ public class BuddyTable {
 					buddysRS = buddysPS.executeQuery();
 					while (buddysRS.next()) {
 						int id = buddysRS.getInt("buddy_id");
-						L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(id);
-						String name = pc != null ? pc.getName() : null;
+						String name = CharacterTable.getInstance().getCharName(id);
 						buddy.add(id, name);
 					}
 					_buddys.put(buddy.getCharId(), buddy);
