@@ -19,5 +19,3 @@ INSERT INTO `weapon_skills` VALUES (306, '숨겨 지은 마족의 스태프', 8,
 INSERT INTO `weapon_skills` VALUES (307, '숨겨진 마족의 크로우', 8, 0, 0, 0, 167, 0, 1, 1);
 INSERT INTO `weapon_skills` VALUES (308, '숨겨진 마족의 체인 소드', 8, 0, 35, 25, 6006, 0, 1, 1);
 INSERT INTO `weapon_skills` VALUES (309, '숨겨진 마족의 키 링크', 8, 0, 35, 25, 6006, 0, 1, 1);
-INSERT INTO `weapon_skills` VALUES (310, NULL, 8, 0, 0, 0, 167, 0, 1, 1);
-INSERT INTO `weapon_skills` VALUES (311, NULL, 8, 0, 0, 0, 167, 0, 1, 1);

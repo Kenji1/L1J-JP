@@ -106,7 +106,7 @@ UPDATE `spawn_npcs` T1, `npcs` T2 SET T1.`note` = T2.`name` WHERE T1.`npc_id` = 
 -- spawn_times
 -- ----------------------------
 ALTER TABLE `spawn_times` ADD `note` varchar(255) DEFAULT NULL AFTER `npc_id`;
-UPDATE `spawn_times` T1, `npcs` T2 SET T1.`note` = T2.`name` WHERE T1.`npc_id` = T2.`id`;
+UPDATE `spawn_times` T1, `spawn_mobs` T2 SET T1.`note` = T2.`note` WHERE T1.`npc_id` = T2.`id`;
 -- ----------------------------
 -- spawn_traps
 -- ----------------------------

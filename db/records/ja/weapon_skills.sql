@@ -19,5 +19,3 @@ INSERT INTO `weapon_skills` VALUES (306, '隠された魔族のスタッフ', 8,
 INSERT INTO `weapon_skills` VALUES (307, '隠された魔族のクロウ', 8, 0, 0, 0, 167, 0, 1, 1);
 INSERT INTO `weapon_skills` VALUES (308, '隠された魔族のチェーンソード', 8, 0, 35, 25, 6006, 0, 1, 1);
 INSERT INTO `weapon_skills` VALUES (309, '隠された魔族のキーリンク', 8, 0, 35, 25, 6006, 0, 1, 1);
-INSERT INTO `weapon_skills` VALUES (310, NULL, 8, 0, 0, 0, 167, 0, 1, 1);
-INSERT INTO `weapon_skills` VALUES (311, NULL, 8, 0, 0, 0, 167, 0, 1, 1);

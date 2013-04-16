@@ -153,7 +153,6 @@ INSERT INTO `resolvents` VALUES (20104, '라스타바드 징박힌 레더 아머
 INSERT INTO `resolvents` VALUES (20105, '라스타바드 체인 메일', 500);
 INSERT INTO `resolvents` VALUES (20110, '마법 방어 사슬 갑옷', 800);
 INSERT INTO `resolvents` VALUES (20125, '사슬 갑옷', 600);
-INSERT INTO `resolvents` VALUES (120125, NULL, 600);
 INSERT INTO `resolvents` VALUES (220125, '사슬 갑옷', 600);
 INSERT INTO `resolvents` VALUES (20135, '오크족 고리 갑옷', 20);
 INSERT INTO `resolvents` VALUES (220135, '오크족 고리 갑옷', 20);
@@ -199,7 +198,6 @@ INSERT INTO `resolvents` VALUES (20205, '부츠', 200);
 INSERT INTO `resolvents` VALUES (20207, '수중 부츠', 200);
 INSERT INTO `resolvents` VALUES (20210, '어둠의 부츠', 1000);
 INSERT INTO `resolvents` VALUES (20213, '짧은 부츠', 30);
-INSERT INTO `resolvents` VALUES (120213, NULL, 30);
 INSERT INTO `resolvents` VALUES (220213, '짧은 부츠', 30);
 INSERT INTO `resolvents` VALUES (20217, '푸른 해적 부츠', 300);
 INSERT INTO `resolvents` VALUES (20223, '난쟁이족 둥근 방패', 25);
@@ -208,7 +206,6 @@ INSERT INTO `resolvents` VALUES (20224, '라스타바드 라운드 실드', 100)
 INSERT INTO `resolvents` VALUES (20229, '반사 방패', 1000);
 INSERT INTO `resolvents` VALUES (20231, '사각 방패', 700);
 INSERT INTO `resolvents` VALUES (20237, '우럭하이 방패', 9);
-INSERT INTO `resolvents` VALUES (120237, NULL, 9);
 INSERT INTO `resolvents` VALUES (220237, '우럭하이 방패', 9);
 INSERT INTO `resolvents` VALUES (20239, '작은 방패', 6);
 INSERT INTO `resolvents` VALUES (20242, '큰 방패', 120);

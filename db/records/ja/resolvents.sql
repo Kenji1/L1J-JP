@@ -153,7 +153,6 @@ INSERT INTO `resolvents` VALUES (20104, 'ラスタバド スタデッドレザ�
 INSERT INTO `resolvents` VALUES (20105, 'ラスタバド チェーンメイル', 500);
 INSERT INTO `resolvents` VALUES (20110, 'マジック チェーン メイル', 800);
 INSERT INTO `resolvents` VALUES (20125, 'チェーン メイル', 600);
-INSERT INTO `resolvents` VALUES (120125, NULL, 600);
 INSERT INTO `resolvents` VALUES (220125, 'チェーン メイル', 600);
 INSERT INTO `resolvents` VALUES (20135, 'オーキッシュ リング メイル', 20);
 INSERT INTO `resolvents` VALUES (220135, 'オーキッシュ リング メイル', 20);
@@ -199,7 +198,6 @@ INSERT INTO `resolvents` VALUES (20205, 'ブーツ', 200);
 INSERT INTO `resolvents` VALUES (20207, 'ウォーター ブーツ', 200);
 INSERT INTO `resolvents` VALUES (20210, 'ダーク ブーツ', 1000);
 INSERT INTO `resolvents` VALUES (20213, 'ロウ ブーツ', 30);
-INSERT INTO `resolvents` VALUES (120213, NULL, 30);
 INSERT INTO `resolvents` VALUES (220213, 'ロウ ブーツ', 30);
 INSERT INTO `resolvents` VALUES (20217, 'パイレーツ ブーツ', 300);
 INSERT INTO `resolvents` VALUES (20223, 'ドワヴィッシュ ラウンド シールド', 25);
@@ -208,7 +206,6 @@ INSERT INTO `resolvents` VALUES (20224, 'ラスタバド ラウンドシール�
 INSERT INTO `resolvents` VALUES (20229, 'リフレクション シールド', 1000);
 INSERT INTO `resolvents` VALUES (20231, 'タワー シールド', 700);
 INSERT INTO `resolvents` VALUES (20237, 'オーキッシュ シールド', 9);
-INSERT INTO `resolvents` VALUES (120237, NULL, 9);
 INSERT INTO `resolvents` VALUES (220237, 'オーキッシュ シールド', 9);
 INSERT INTO `resolvents` VALUES (20239, 'スモール シールド', 6);
 INSERT INTO `resolvents` VALUES (20242, 'ラージ シールド', 120);
