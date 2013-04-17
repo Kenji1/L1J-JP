@@ -37,7 +37,7 @@ set dd=%tempdate:~6,2%
 set hh=%temptime:~0,2%
 set ii=%temptime:~3,2%
 set ss=%temptime:~6,2%
-set datetime=%yyyy%-%mm%-%dd%_%hh%%ii%%ss%
+set datetime=%yyyy%-%mm%-%dd%_%hh%h%ii%m%ss%s
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Create dump directory
