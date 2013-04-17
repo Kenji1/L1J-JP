@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `ubs`
 -- ----------------------------
 DROP TABLE IF EXISTS `ubs`;
-CREATE TABLE IF NOT EXISTS `ubs` (
+CREATE TABLE `ubs` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `map_id` int(10) unsigned NOT NULL,

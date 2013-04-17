@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `beginner_items`
 -- ----------------------------
 DROP TABLE IF EXISTS `beginner_items`;
-CREATE TABLE IF NOT EXISTS `beginner_items` (
+CREATE TABLE `beginner_items` (
   `id` int(10) unsigned NOT NULL,
   `item_id` int(10) unsigned NOT NULL DEFAULT '0',
   `note` varchar(255) DEFAULT NULL,

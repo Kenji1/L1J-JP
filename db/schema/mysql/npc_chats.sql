@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `npc_chats`
 -- ----------------------------
 DROP TABLE IF EXISTS `npc_chats`;
-CREATE TABLE IF NOT EXISTS `npc_chats` (
+CREATE TABLE `npc_chats` (
   `npc_id` int(10) unsigned NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `chat_timing` tinyint(1) unsigned NOT NULL DEFAULT '0',

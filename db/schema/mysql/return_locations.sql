@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `return_locations`
 -- ----------------------------
 DROP TABLE IF EXISTS `return_locations`;
-CREATE TABLE IF NOT EXISTS `return_locations` (
+CREATE TABLE `return_locations` (
   `area_x1` int(10) unsigned NOT NULL DEFAULT '0',
   `area_y1` int(10) unsigned NOT NULL DEFAULT '0',
   `area_x2` int(10) unsigned NOT NULL DEFAULT '0',

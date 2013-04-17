@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `cooking_recipes`
 -- ----------------------------
 DROP TABLE IF EXISTS `cooking_recipes`;
-CREATE TABLE IF NOT EXISTS `cooking_recipes` (
+CREATE TABLE `cooking_recipes` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
   `dish_id` int(10) unsigned NOT NULL,

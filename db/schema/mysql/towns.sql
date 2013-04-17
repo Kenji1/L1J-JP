@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `towns`
 -- ----------------------------
 DROP TABLE IF EXISTS `towns`;
-CREATE TABLE IF NOT EXISTS `towns` (
+CREATE TABLE `towns` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `leader_id` int(10) unsigned NOT NULL DEFAULT '0',

@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for polymorphs
 -- ----------------------------
 DROP TABLE IF EXISTS `polymorphs`;
-CREATE TABLE IF NOT EXISTS `polymorphs` (
+CREATE TABLE `polymorphs` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `gfx_id` int(10) unsigned NOT NULL,

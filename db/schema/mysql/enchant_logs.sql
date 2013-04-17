@@ -1,4 +1,3 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `enchant_logs`
 -- ----------------------------
@@ -10,4 +9,4 @@ CREATE TABLE IF NOT EXISTS `enchant_logs` (
   `new_enchant_level` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `key_id` (`char_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

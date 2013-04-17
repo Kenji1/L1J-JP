@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `weapons`
 -- ----------------------------
 DROP TABLE IF EXISTS `weapons`;
-CREATE TABLE IF NOT EXISTS `weapons` (
+CREATE TABLE `weapons` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `unidentified_name_id` varchar(255) NOT NULL,

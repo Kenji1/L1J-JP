@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `random_dungeons`
 -- ----------------------------
 DROP TABLE IF EXISTS `random_dungeons`;
-CREATE TABLE IF NOT EXISTS `random_dungeons` (
+CREATE TABLE `random_dungeons` (
   `src_x` int(10) unsigned NOT NULL,
   `src_y` int(10) unsigned NOT NULL,
   `src_map_id` int(10) unsigned NOT NULL,

@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `pet_items`
 -- ----------------------------
 DROP TABLE IF EXISTS `pet_items`;
-CREATE TABLE IF NOT EXISTS `pet_items` (
+CREATE TABLE `pet_items` (
   `item_id` int(10) unsigned NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `hit_modifier` tinyint(3) NOT NULL DEFAULT '0',

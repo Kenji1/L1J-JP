@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `castles`
 -- ----------------------------
 DROP TABLE IF EXISTS `castles`;
-CREATE TABLE IF NOT EXISTS `castles` (
+CREATE TABLE `castles` (
   `id` tinyint(3) unsigned NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `war_time` datetime DEFAULT NULL,

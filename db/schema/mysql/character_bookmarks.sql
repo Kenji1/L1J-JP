@@ -1,4 +1,3 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `character_bookmarks`
 -- ----------------------------
@@ -11,4 +10,4 @@ CREATE TABLE IF NOT EXISTS `character_bookmarks` (
   `map_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `char_id` (`char_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

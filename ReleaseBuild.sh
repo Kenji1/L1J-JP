@@ -1,16 +1,40 @@
 #!/bin/bash
+################################################################################
+# Create the L1J release build package
+################################################################################
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Copyright (c) L1J-JP Project All Rights Reserved.
+
+################################################################################
+# Ant build
+################################################################################
 ant
-cd db
-sh MakeCreateTables.sh
-sh MakeUpdateTables.sh
-cd ..
+
+################################################################################
+# Copy the files
+################################################################################
 mkdir -p release-build
 cp -ivR config release-build/config
 cp -ivR data release-build/data
 mkdir -p release-build/db
-mv -fvR db/templates release-build/db/templates
-mv -fv db/create_tables.sql release-build/db/create_tables.sql
-mv -fv db/update_tables.sql release-build/db/update_tables.sql
+cp -ivR db/csv release-build/db/csv
+cp -ivR db/schema release-build/db/schema
+cp -fv db/ExportDatabase.bat release-build/db/ExportDatabase.bat
+cp -fv db/ImportDatabase.bat release-build/db/ImportDatabase.bat
+cp -fv db/UpdateDatabase.bat release-build/db/UpdateDatabase.bat
 cp -fv db/create_db.sql release-build/db/create_db.sql
 mkdir -p release-build/emblem
 cp -fvR lib release-build/lib

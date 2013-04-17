@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `drop_rates`
 -- ----------------------------
 DROP TABLE IF EXISTS `drop_rates`;
-CREATE TABLE IF NOT EXISTS `drop_rates` (
+CREATE TABLE `drop_rates` (
   `item_id` int(10) unsigned NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `drop_rate` float unsigned NOT NULL DEFAULT '1',

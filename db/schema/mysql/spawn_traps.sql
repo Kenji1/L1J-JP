@@ -1,9 +1,8 @@
-SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for `spawn_traps`
 -- ----------------------------
 DROP TABLE IF EXISTS `spawn_traps`;
-CREATE TABLE IF NOT EXISTS `spawn_traps` (
+CREATE TABLE `spawn_traps` (
   `id` int(10) NOT NULL,
   `trap_id` int(10) NOT NULL,
   `note` varchar(255) DEFAULT NULL,
