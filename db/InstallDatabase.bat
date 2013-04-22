@@ -1,5 +1,5 @@
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Import the L1J database
+:: Install the L1J database
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::
 :: This program is free software: you can redistribute it and/or modify
@@ -17,45 +17,78 @@
 ::
 :: Copyright (c) L1J-JP Project All Rights Reserved.
 @echo off
-echo "Import the L1J database Copyright (c) L1J-JP <http://l1j.org/>"
+echo Install the database...
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Config
+:: MySQL Config
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 set database=l1jdb
 set username=root
 set password=
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Check existence of CSV directory
+:: CSV Config
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-set /p d="Enter the CSV directory > "
-if not exist %d% exit
+set delimiter=,
+set enclosed=\'
+set newline=\n
+set skipline=1
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Backup the database
+:: Enter the CSV directory
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-call .\ExportDatabase.bat
+:RETRY
+echo Enter the CSV directory (Cancel: Press the Enter key without entering)
+set D=
+set /p D=^>
+if not defined D goto :CANCEL
+if not exist %D% goto RETRY
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Create the database
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-echo "Drop the database and Create the database"
+echo Drop the database and Create the database.
 mysql -u %username% -p%password% < .\create_db.sql
+if errorlevel 1 goto ERR
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Create the tables
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-for %%f in (.\schema\mysql\*.sql) do echo "Create table %%~nf" && mysql -u %username% -p%password% %database% < %%f
+echo Create the tables...
+for %%F in (.\schema\mysql\*.sql) do (
+  echo %%~fF
+  mysql -u %username% -p%password% %database% < %%F
+  if errorlevel 1 goto ERR
+)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Store the csv data
+:: Store the CSV data
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-for %%f in (%d%\*.csv) do mysqlimport -u %username% -p%password% %database% %%f --fields-enclosed-by= --fields-terminated-by=, --lines-terminated-by=\n
+echo Store the CSV data...
+for %%F in (%D%\*.csv) do (
+  echo %%~fF
+  mysqlimport -u %username% -p%password% -L %database% %%F ^
+  --fields-enclosed_by=%enclosed% ^
+  --fields-terminated_by=%delimiter% ^
+  --lines-terminated_by=%newline% ^
+  --ignore-lines=%skipline%
+  if errorlevel 1 goto ERR
+)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :END
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-echo "Import the database is complete."
+echo Install is complete.
 pause
-exit
+exit \b 0
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:CANCEL
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+echo Canceled the install.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:ERR
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+pause
+exit \b 1
