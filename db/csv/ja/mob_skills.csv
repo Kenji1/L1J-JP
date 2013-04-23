@@ -1,4 +1,4 @@
-﻿'npc_id','note','act_no','type','tri_rnd','tri_hp','tri_companion_hp','tri_range','tri_count','change_target','range','area_width','area_height','leverage','skill_id','gfx_id','act_id','summon_id','summon_min','summon_max','poly_id','chat_id'
+'npc_id','note','act_no','type','tri_rnd','tri_hp','tri_companion_hp','tri_range','tri_count','change_target','range','area_width','area_height','leverage','skill_id','gfx_id','act_id','summon_id','summon_min','summon_max','poly_id','chat_id'
 '45039','キャット(チルタッチ)','0','2','100','0','0','-3','0','0','0','0','0','0','10','-1','30','0','0','0','0','0'
 '45044','ラクーン(スロー)','0','2','100','0','0','-6','0','0','0','0','0','20','29','-1','18','0','0','0','0','0'
 '45046','ビーグル(スタラック)','0','2','100','0','0','-6','0','0','0','0','0','0','16','-1','30','0','0','0','0','0'
