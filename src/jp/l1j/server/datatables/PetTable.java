@@ -64,8 +64,8 @@ public class PetTable {
 				int itemobjid = rs.getInt(1);
 				pet.setItemObjId(itemobjid);
 				pet.setObjId(rs.getInt(2));
-				pet.setNpcId(rs.getInt(3));
-				pet.setName(rs.getString(4));
+				pet.setName(rs.getString(3));
+				pet.setNpcId(rs.getInt(4));
 				pet.setLevel(rs.getInt(5));
 				pet.setHp(rs.getInt(6));
 				pet.setMp(rs.getInt(7));
@@ -88,8 +88,8 @@ public class PetTable {
 		L1Pet l1pet = new L1Pet();
 		l1pet.setItemObjId(itemobjid);
 		l1pet.setObjId(objid);
-		l1pet.setNpcId(pet.getNpcTemplate().getNpcId());
 		l1pet.setName(pet.getNpcTemplate().getName());
+		l1pet.setNpcId(pet.getNpcTemplate().getNpcId());
 		l1pet.setLevel(pet.getNpcTemplate().getLevel());
 		l1pet.setHp(pet.getMaxHp());
 		l1pet.setMp(pet.getMaxMp());
