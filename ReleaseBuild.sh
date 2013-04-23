@@ -32,8 +32,8 @@ cp -ivR data release-build/data
 mkdir -p release-build/db
 cp -ivR db/csv release-build/db/csv
 cp -ivR db/schema release-build/db/schema
-cp -fv db/ExportDatabase.bat release-build/db/BackupDatabase.bat
-cp -fv db/ImportDatabase.bat release-build/db/InstallDatabase.bat
+cp -fv db/BackupDatabase.bat release-build/db/BackupDatabase.bat
+cp -fv db/InstallDatabase.bat release-build/db/InstallDatabase.bat
 cp -fv db/UpdateDatabase.bat release-build/db/UpdateDatabase.bat
 cp -fv db/create_db.sql release-build/db/create_db.sql
 mkdir -p release-build/emblem

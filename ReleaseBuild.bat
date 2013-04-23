@@ -33,8 +33,8 @@ xcopy .\data .\release-build\data /D /E /I /-Y
 if not exist .\release-build\db md .\release-build\db
 xcopy .\db\csv .\release-build\db\csv /D /E /I /-Y
 xcopy .\db\schema .\release-build\db\schema /D /E /I /-Y
-copy .\db\ExportDatabase.bat .\release-build\db\BackupDatabase.bat /Y
-copy .\db\ImportDatabase.bat .\release-build\db\InstallDatabase.bat /Y
+copy .\db\BackupDatabase.bat .\release-build\db\BackupDatabase.bat /Y
+copy .\db\InstallDatabase.bat .\release-build\db\InstallDatabase.bat /Y
 copy .\db\UpdateDatabase.bat .\release-build\db\UpdateDatabase.bat /Y
 copy .\db\create_db.sql .\release-build\db\create_db.sql /Y
 xcopy .\emblem .\release-build\emblem /D /E /I /Y
