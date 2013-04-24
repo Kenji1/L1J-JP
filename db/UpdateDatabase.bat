@@ -80,6 +80,7 @@ set t[40]=ub_times
 set t[41]=ubs
 set t[42]=weapon_skills
 set t[43]=weapons
+set max=43
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Enter the CSV directory
@@ -96,7 +97,7 @@ if not exist %D% goto RETRY
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo Update the tables...
 setlocal ENABLEDELAYEDEXPANSION
-for /L %%i in (1,1,48) do (
+for /L %%i in (1,1,%max%) do (
   call set F=.\schema\mysql\%%t[%%i]%%.sql
   echo !F!
   mysql -u %username% -p%password% %database% < !F!
@@ -109,7 +110,7 @@ endlocal
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo Store the CSV data...
 setlocal ENABLEDELAYEDEXPANSION
-for /L %%i in (1,1,48) do (
+for /L %%i in (1,1,%max%) do (
   call set F=%D%\%%t[%%i]%%.csv
   echo !F!
   mysqlimport -u %username% -p%password% -L %database% !F! ^
