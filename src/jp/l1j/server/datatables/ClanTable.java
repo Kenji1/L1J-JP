@@ -80,7 +80,7 @@ public class ClanTable {
 			ResultSet rs = null;
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con.prepareStatement("SELECT name FROM characters WHERE id = ?");
+				pstm = con.prepareStatement("SELECT name FROM characters WHERE clan_id = ?");
 				pstm.setInt(1, clan.getClanId());
 				rs = pstm.executeQuery();
 				while (rs.next()) {
