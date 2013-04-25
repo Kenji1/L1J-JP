@@ -48,6 +48,7 @@ public class ShopTable {
 
 	private ShopTable() {
 		loadShops();
+		loadGeneralShops(); // アデン商団の買取リスト（item_ratesテーブルに登録されている全アイテム）
 	}
 
 	private ArrayList<Integer> enumNpcIds() {
@@ -112,6 +113,47 @@ public class ShopTable {
 		}
 	}
 
+	private L1Shop loadGeneralShop(int npcId, ResultSet rs) throws SQLException {
+		List<L1ShopItem> sellingList = new ArrayList<L1ShopItem>();
+		List<L1ShopItem> purchasingList = new ArrayList<L1ShopItem>();
+		while (rs.next()) {
+			int itemId = rs.getInt("item_id");
+			int sellingPrice = rs.getInt("selling_price");
+			int purchasingPrice = rs.getInt("purchasing_price");
+			int packCount = 1;
+			if (0 <= sellingPrice) {
+				L1ShopItem item = new L1ShopItem(itemId, sellingPrice, packCount);
+				sellingList.add(item);
+			}
+			if (0 <= purchasingPrice) {
+				L1ShopItem item = new L1ShopItem(itemId, purchasingPrice, packCount);
+				purchasingList.add(item);
+			}
+		}
+		return new L1Shop(npcId, sellingList, purchasingList);
+	}
+
+	private void loadGeneralShops() {
+		int[] generalMerchantIds = { 70023, 70037, 70064, 70076 }; // アデン商団
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT item_id, selling_price, purchasing_price FROM item_rates");
+			for (int npcId : generalMerchantIds) {
+				rs = pstm.executeQuery();
+				L1Shop shop = loadGeneralShop(npcId, rs);
+				_allShops.put(npcId, shop);
+				rs.close();
+			}
+		} catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SqlUtil.close(rs, pstm, con);
+		}
+	}
+	
 	public L1Shop get(int npcId) {
 		return _allShops.get(npcId);
 	}
