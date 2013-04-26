@@ -427,7 +427,7 @@ public class L1NpcInstance extends L1Character {
 					attackTarget(target);
 				}
 			} else { // 攻撃不可能位置
-				if (_mobSkill.useRandomSkill(target)) { // ランダムにスキル使用(mob_skills.sqlのTriRndに従わず、発動確率は100%。ただしサモン、強制変身は常にTriRndに従う。)
+				if (useSkill(target)) { // ランダムにスキル使用
 					setSleepTime(calcSleepTime(_mobSkill.getSleepTime(),
 							MAGIC_SPEED));
 					return;
