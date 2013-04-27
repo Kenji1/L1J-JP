@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,6 +35,7 @@ import jp.l1j.server.templates.L1Item;
 import jp.l1j.server.templates.L1Weapon;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class ItemTable {
@@ -54,14 +56,18 @@ public class ItemTable {
 	private static final Map<String, Integer> _useTypes = new HashMap<String, Integer>();
 
 	private static ItemTable _instance;
+	
+	private static Map<Integer, L1Item> _allTemplates;
 
-	private L1Item _allTemplates[];
+	private static Map<Integer, L1EtcItem> _allEtcItems;
 
-	private final Map<Integer, L1EtcItem> _etcitems;
+	private static Map<Integer, L1Armor> _allArmors;
 
-	private final Map<Integer, L1Armor> _armors;
-
-	private final Map<Integer, L1Weapon> _weapons;
+	private static Map<Integer, L1Weapon> _allWeapons;
+	
+	private static Map<String, Integer> _allNames;
+	
+	private static Map<String, Integer> _allWithoutSpaceNames;
 
 	static {
 		_etcItemTypes.put("arrow", new Integer(0));
@@ -238,10 +244,7 @@ public class ItemTable {
 	}
 
 	private ItemTable() {
-		_etcitems = allEtcItem();
-		_weapons = allWeapon();
-		_armors = allArmor();
-		buildFastLookupTable();
+		load();
 	}
 
 	private Map<Integer, L1EtcItem> allEtcItem() {
@@ -468,47 +471,71 @@ public class ItemTable {
 		return result;
 	}
 
-	private void buildFastLookupTable() {
-		int highestId = 0;
-		Collection<L1EtcItem> items = _etcitems.values();
-		for (L1EtcItem item : items) {
-			if (item.getItemId() > highestId) {
-				highestId = item.getItemId();
-			}
-		}
-		Collection<L1Weapon> weapons = _weapons.values();
-		for (L1Weapon weapon : weapons) {
-			if (weapon.getItemId() > highestId) {
-				highestId = weapon.getItemId();
-			}
-		}
-		Collection<L1Armor> armors = _armors.values();
-		for (L1Armor armor : armors) {
-			if (armor.getItemId() > highestId) {
-				highestId = armor.getItemId();
-			}
-		}
-		_allTemplates = new L1Item[highestId + 1];
-		for (Iterator<Integer> iter = _etcitems.keySet().iterator(); iter.hasNext();) {
+	private void load() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading items...");
+		_allEtcItems = allEtcItem();
+		_allWeapons = allWeapon();
+		_allArmors = allArmor();
+		_allTemplates = new HashMap<Integer, L1Item>();
+		_allNames = new HashMap<String, Integer>();
+		_allWithoutSpaceNames = new HashMap<String, Integer>();
+		buildFastLookupTable(_allTemplates, _allEtcItems, _allWeapons, _allArmors,
+				_allNames, _allWithoutSpaceNames);
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading items...");
+		Map<Integer, L1EtcItem> allEtcItems = allEtcItem();
+		Map<Integer, L1Weapon> allWeapons = allWeapon();
+		Map<Integer, L1Armor> allArmors = allArmor();
+		Map<Integer, L1Item> allTemplates = new HashMap<Integer, L1Item>();
+		Map<String, Integer> allNames = new HashMap<String, Integer>();
+		Map<String, Integer> allWithoutSpaceNames = new HashMap<String, Integer>();
+		buildFastLookupTable(allTemplates, allEtcItems, allWeapons, allArmors,
+				allNames, allWithoutSpaceNames);
+		_allEtcItems = allEtcItems;
+		_allWeapons = allWeapons;
+		_allArmors = allArmors;
+		_allTemplates = allTemplates;
+		_allNames = allNames;
+		_allWithoutSpaceNames = allWithoutSpaceNames;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
+	private void buildFastLookupTable(Map<Integer, L1Item> allTemplates,
+			Map<Integer, L1EtcItem> allEtcItems,
+			Map<Integer, L1Weapon> allWeapons,
+			Map<Integer, L1Armor> allArmors,
+			Map<String, Integer> allNames,
+			Map<String, Integer> allWithoutSpaceNames) {
+		for (Iterator<Integer> iter = allEtcItems.keySet().iterator(); iter.hasNext();) {
 			Integer id = iter.next();
-			L1EtcItem item = _etcitems.get(id);
-			_allTemplates[id.intValue()] = item;
+			L1EtcItem item = allEtcItems.get(id);
+			allTemplates.put(new Integer(id.intValue()), item);
+			allNames.put(item.getName(), new Integer(id.intValue()));
+			allWithoutSpaceNames.put(item.getName().replace(" ", ""), new Integer(id.intValue()));
 		}
-		for (Iterator<Integer> iter = _weapons.keySet().iterator(); iter.hasNext();) {
+		for (Iterator<Integer> iter = allWeapons.keySet().iterator(); iter.hasNext();) {
 			Integer id = iter.next();
-			L1Weapon item = _weapons.get(id);
-			_allTemplates[id.intValue()] = item;
+			L1Weapon item = allWeapons.get(id);
+			allTemplates.put(new Integer(id.intValue()), item);
+			allNames.put(item.getName(), new Integer(id.intValue()));
+			allWithoutSpaceNames.put(item.getName().replace(" ", ""), new Integer(id.intValue()));
 		}
-
-		for (Iterator<Integer> iter = _armors.keySet().iterator(); iter.hasNext();) {
+		for (Iterator<Integer> iter = allArmors.keySet().iterator(); iter.hasNext();) {
 			Integer id = iter.next();
-			L1Armor item = _armors.get(id);
-			_allTemplates[id.intValue()] = item;
+			L1Armor item = allArmors.get(id);
+			allTemplates.put(new Integer(id.intValue()), item);
+			allNames.put(item.getName(), new Integer(id.intValue()));
+			allWithoutSpaceNames.put(item.getName().replace(" ", ""), new Integer(id.intValue()));
 		}
 	}
 
 	public L1Item getTemplate(int id) {
-		return _allTemplates[id];
+		return _allTemplates.get(id);
 	}
 
 	public L1ItemInstance createItem(int itemId) {
@@ -524,24 +551,11 @@ public class ItemTable {
 	}
 
 	public int findItemIdByName(String name) {
-		int itemid = 0;
-		for (L1Item item : _allTemplates) {
-			if (item != null && item.getName().equals(name)) {
-				itemid = item.getItemId();
-				break;
-			}
-		}
-		return itemid;
+		return _allNames.containsKey(name) ? _allNames.get(name) : 0;
 	}
 
 	public int findItemIdByNameWithoutSpace(String name) {
-		int itemid = 0;
-		for (L1Item item : _allTemplates) {
-			if (item != null && item.getName().replace(" ", "").equals(name)) {
-				itemid = item.getItemId();
-				break;
-			}
-		}
-		return itemid;
+		String n = name.replace(" ", "");
+		return _allWithoutSpaceNames.containsKey(n) ? _allWithoutSpaceNames.get(n) : 0;
 	}
 }

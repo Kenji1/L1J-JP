@@ -39,13 +39,23 @@ public class NpcActionTable {
 	
 	private static NpcActionTable _instance;
 	
-	private final List<L1NpcAction> _actions = new ArrayList<L1NpcAction>();
+	private static List<L1NpcAction> _actions = new ArrayList<L1NpcAction>();
 	
-	private final List<L1NpcAction> _talkActions = new ArrayList<L1NpcAction>();
+	private static List<L1NpcAction> _talkActions = new ArrayList<L1NpcAction>();
 
-	private List<L1NpcAction> loadAction(File file, String nodeName)
+	public static NpcActionTable getInstance() {
+		if (_instance == null) {
+			_instance = new NpcActionTable();
+		}
+		return _instance;
+	}
 
-	throws ParserConfigurationException, SAXException, IOException {
+	private NpcActionTable() {
+		loadAllActions(_actions, _talkActions);
+	}
+
+	private List<L1NpcAction> loadActions(File file, String nodeName)
+			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document doc = builder.parse(file);
 		if (!doc.getDocumentElement().getNodeName().equalsIgnoreCase(nodeName)) {
@@ -54,48 +64,42 @@ public class NpcActionTable {
 		return L1NpcXmlParser.listActions(doc.getDocumentElement());
 	}
 
-	private void loadAction(File file) throws Exception {
-		_actions.addAll(loadAction(file, "NpcActionList"));
-	}
-
-	private void loadTalkAction(File file) throws Exception {
-		_talkActions.addAll(loadAction(file, "NpcTalkActionList"));
-	}
-
-	private void loadDirectoryActions(File dir) throws Exception {
+	private void loadDirectoryActions(List<L1NpcAction> actions,
+			List<L1NpcAction> talkActions, File dir) throws Exception {
 		for (String file : dir.list()) {
 			File f = new File(dir, file);
 			if (FileUtil.getExtension(f).equalsIgnoreCase("xml")) {
-				loadAction(f);
-				loadTalkAction(f);
+				actions.addAll(loadActions(f, "NpcActionList"));
+				talkActions.addAll(loadActions(f, "NpcTalkActionList"));
 			}
 		}
 	}
 
-	private NpcActionTable() throws Exception {
-		File usersDir = new File("./data/xml/NpcActions/users/");
-		if (usersDir.exists()) {
-			loadDirectoryActions(usersDir);
-		}
-		loadDirectoryActions(new File("./data/xml/NpcActions/"));
-	}
-
-	public static void load() {
+	public void loadAllActions(List<L1NpcAction> actions,
+			List<L1NpcAction> talkActions) {
 		try {
-			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading npc action...");
-			_instance = new NpcActionTable();
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			File usersDir = new File("./data/xml/NpcActions/users/");
+			if (usersDir.exists()) {
+				loadDirectoryActions(actions, talkActions, usersDir);
+			}
+			loadDirectoryActions(actions, talkActions, new File("./data/xml/NpcActions/"));
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, String.format(I18N_LOAD_FAILED, "NpcAction"), e);
 			System.exit(0);
 		}
 	}
 
-	public static NpcActionTable getInstance() {
-		return _instance;
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading npc actions...");
+		List<L1NpcAction> actions = new ArrayList<L1NpcAction>();
+		List<L1NpcAction> talkActions = new ArrayList<L1NpcAction>();
+		loadAllActions(actions, talkActions);
+		_actions = actions;
+		_talkActions = talkActions;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
-
+	
 	public L1NpcAction get(String actionName, L1PcInstance pc, L1Object obj) {
 		for (L1NpcAction action : _actions) {
 			if (action.acceptsRequest(actionName, pc, obj)) {

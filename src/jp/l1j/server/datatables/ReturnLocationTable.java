@@ -12,7 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jp.l1j.server.model;
+
+package jp.l1j.server.datatables;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,20 +22,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.model.L1TownLocation;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
+import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
-public class Getback {
-
-	private static Logger _log = Logger.getLogger(Getback.class.getName());
+public class ReturnLocationTable {
+	private static Logger _log = Logger.getLogger(ReturnLocationTable.class.getName());
 
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
 
-	private static HashMap<Integer, ArrayList<Getback>> _getback = new HashMap<Integer, ArrayList<Getback>>();
+	private static HashMap<Integer, ArrayList<ReturnLocationTable>> _returnLocations =
+			new HashMap<Integer, ArrayList<ReturnLocationTable>>();
 
 	private int _areaX1;
 	private int _areaY1;
@@ -53,15 +55,11 @@ public class Getback {
 	private int _getbackTownIdForDarkelf;
 	private boolean _escapable; // 未使用(map_idsに持っているし、ここに来る前にチェックされている)
 
-	private Getback() {
-	}
-
 	private boolean isSpecifyArea() {
 		return (_areaX1 != 0 && _areaY1 != 0 && _areaX2 != 0 && _areaY2 != 0);
 	}
 
-	public static void loadGetBack() {
-		_getback.clear();
+	public static void loadReturnLocations(HashMap<Integer, ArrayList<ReturnLocationTable>> returnLocations) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -72,7 +70,7 @@ public class Getback {
 			pstm = con.prepareStatement(sSQL);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				Getback getback = new Getback();
+				ReturnLocationTable getback = new ReturnLocationTable();
 				getback._areaX1 = rs.getInt("area_x1");
 				getback._areaY1 = rs.getInt("area_y1");
 				getback._areaX2 = rs.getInt("area_x2");
@@ -87,24 +85,34 @@ public class Getback {
 				getback._getbackMapId = rs.getInt("getback_map_id");
 				getback._getbackTownId = rs.getInt("getback_town_id");
 				getback._getbackTownIdForElf = rs.getInt("getback_town_id_elf");
-				getback._getbackTownIdForDarkelf = rs
-						.getInt("getback_town_id_darkelf");
+				getback._getbackTownIdForDarkelf = rs.getInt("getback_town_id_darkelf");
 				getback._escapable = rs.getBoolean("scroll_escape");
-				ArrayList<Getback> getbackList = _getback
-						.get(getback._areaMapId);
+				ArrayList<ReturnLocationTable> getbackList = returnLocations.get(getback._areaMapId);
 				if (getbackList == null) {
-					getbackList = new ArrayList<Getback>();
-					_getback.put(getback._areaMapId, getbackList);
+					getbackList = new ArrayList<ReturnLocationTable>();
+					returnLocations.put(getback._areaMapId, getbackList);
 				}
 				getbackList.add(getback);
 			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "could not Get Getback data", e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
+	}
+
+	public static void load() {
+		loadReturnLocations(_returnLocations);
+	}
+	
+	public static void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading return locations...");
+		HashMap<Integer, ArrayList<ReturnLocationTable>> returnLocations =
+				new HashMap<Integer, ArrayList<ReturnLocationTable>>();
+		loadReturnLocations(returnLocations);
+		_returnLocations = returnLocations;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	/**
@@ -115,20 +123,16 @@ public class Getback {
 	 *            (未使用)
 	 * @return locx,locy,mapidの順に格納されている配列
 	 */
-	public static int[] GetBack_Location(L1PcInstance pc, boolean bScroll_Escape) {
-
+	public static int[] getReturnLocation(L1PcInstance pc, boolean bScroll_Escape) {
 		int[] loc = new int[3];
-
 		int nPosition = _random.nextInt(3);
-
 		int pcLocX = pc.getX();
 		int pcLocY = pc.getY();
 		int pcMapId = pc.getMapId();
-		ArrayList<Getback> getbackList = _getback.get(pcMapId);
-
+		ArrayList<ReturnLocationTable> getbackList = _returnLocations.get(pcMapId);
 		if (getbackList != null) {
-			Getback getback = null;
-			for (Getback gb : getbackList) {
+			ReturnLocationTable getback = null;
+			for (ReturnLocationTable gb : getbackList) {
 				if (gb.isSpecifyArea()) {
 					if (gb._areaX1 <= pcLocX && pcLocX <= gb._areaX2
 							&& gb._areaY1 <= pcLocY && pcLocY <= gb._areaY2) {
@@ -140,16 +144,12 @@ public class Getback {
 					break;
 				}
 			}
-
 			loc = ReadGetbackInfo(getback, nPosition);
-
 			// town_idが指定されている場合はそこへ帰還させる
 			if (pc.isElf() && getback._getbackTownIdForElf > 0) {
-				loc = L1TownLocation
-						.getGetBackLoc(getback._getbackTownIdForElf);
+				loc = L1TownLocation.getGetBackLoc(getback._getbackTownIdForElf);
 			} else if (pc.isDarkelf() && getback._getbackTownIdForDarkelf > 0) {
-				loc = L1TownLocation
-						.getGetBackLoc(getback._getbackTownIdForDarkelf);
+				loc = L1TownLocation.getGetBackLoc(getback._getbackTownIdForDarkelf);
 			} else if (getback._getbackTownId > 0) {
 				loc = L1TownLocation.getGetBackLoc(getback._getbackTownId);
 			}
@@ -163,26 +163,23 @@ public class Getback {
 		return loc;
 	}
 
-	private static int[] ReadGetbackInfo(Getback getback, int nPosition) {
+	private static int[] ReadGetbackInfo(ReturnLocationTable getback, int nPosition) {
 		int[] loc = new int[3];
 		switch (nPosition) {
 		case 0:
 			loc[0] = getback._getbackX1;
 			loc[1] = getback._getbackY1;
 			break;
-
 		case 1:
 			loc[0] = getback._getbackX2;
 			loc[1] = getback._getbackY2;
 			break;
-
 		case 2:
 			loc[0] = getback._getbackX3;
 			loc[1] = getback._getbackY3;
 			break;
 		}
 		loc[2] = getback._getbackMapId;
-
 		return loc;
 	}
 }

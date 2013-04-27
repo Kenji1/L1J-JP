@@ -16,28 +16,46 @@
 package jp.l1j.server.datatables;
 
 import java.util.Map;
+import java.util.logging.Logger;
 import jp.l1j.server.templates.L1CookingRecipe;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.collections.Maps;
 
 public class CookingRecipeTable {
+	private static Logger _log = Logger.getLogger(ArmorSetTable.class.getName());
+
+	private static CookingRecipeTable _instance;
+
 	private static Map<Integer, L1CookingRecipe> _recipes = null;
 
-	private CookingRecipeTable() {
-	}
-
-	public static void initialize() {
-		if (_recipes != null) {
-			throw new DataTableAlreadyInitializedException(CookingRecipeTable.class);
+	public static CookingRecipeTable getInstance() {
+		if (_instance == null) {
+			_instance = new CookingRecipeTable();
 		}
-		_recipes = load();
+		return _instance;
 	}
 
-	private static Map<Integer, L1CookingRecipe> load() {
+	private CookingRecipeTable() {
+		load();
+	}
+
+	private static Map<Integer, L1CookingRecipe> loadRecipes() {
 		Map<Integer, L1CookingRecipe> result = Maps.newHashMap();
 		for (L1CookingRecipe recipe : L1CookingRecipe.all()) {
 			result.put(recipe.getId(), recipe);
 		}
 		return result;
+	}
+
+	private void load() {
+		_recipes = loadRecipes();
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading cooking recipes...");
+		load();
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static L1CookingRecipe findById(int id) {

@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jp.l1j.server.model;
+package jp.l1j.server.datatables;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,26 +24,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.datatables.InnTable;
+import jp.l1j.server.model.L1DragonSlayer;
+import jp.l1j.server.model.L1Teleport;
+import jp.l1j.server.model.gametime.L1GameTimeClock;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.gametime.L1GameTimeClock;
 import jp.l1j.server.model.skill.L1BuffUtil;
-import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.templates.L1Inn;
+import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
-import static jp.l1j.server.model.skill.L1SkillId.*;
 
-// Referenced classes of package jp.l1j.server.model:
-// L1Teleport, L1PcInstance
+public class DungeonTable {
 
-public class Dungeon {
+	private static Logger _log = Logger.getLogger(DungeonTable.class.getName());
 
-	private static Logger _log = Logger.getLogger(Dungeon.class.getName());
-
-	private static Dungeon _instance = null;
+	private static DungeonTable _instance = null;
 
 	private static Map<String, NewDungeon> _dungeonMap = new HashMap<String, NewDungeon>();
 
@@ -66,29 +63,30 @@ public class Dungeon {
 		LAIR_OF_LINDVIOR
 	};
 
-	public static Dungeon getInstance() {
+	public static DungeonTable getInstance() {
 		if (_instance == null) {
-			_instance = new Dungeon();
+			_instance = new DungeonTable();
 		}
 		return _instance;
 	}
 
-	private Dungeon() {
+	private DungeonTable() {
+		load();
+	}
+	
+	private void loadDungeons(Map<String, NewDungeon> dungeonMap) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-
 			pstm = con.prepareStatement("SELECT * FROM dungeons");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int srcMapId = rs.getInt("src_map_id");
 				int srcX = rs.getInt("src_x");
 				int srcY = rs.getInt("src_y");
-				String key = new StringBuilder().append(srcMapId).append(srcX)
-						.append(srcY).toString();
+				String key = new StringBuilder().append(srcMapId).append(srcX).append(srcY).toString();
 				int newX = rs.getInt("new_x");
 				int newY = rs.getInt("new_y");
 				int newMapId = rs.getInt("new_map_id");
@@ -165,27 +163,37 @@ public class Dungeon {
 				// ヴァラカスレア(未実装)
 				NewDungeon newDungeon = new NewDungeon(newX, newY,
 						(short) newMapId, heading, dungeonType);
-				if (_dungeonMap.containsKey(key)) {
+				if (dungeonMap.containsKey(key)) {
 					_log.log(Level.WARNING, "同じキーのdungeonデータがあります。key=" + key);
 				}
-				_dungeonMap.put(key, newDungeon);
+				dungeonMap.put(key, newDungeon);
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
+	private void load() {
+		loadDungeons(_dungeonMap);
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading dungeons...");
+		Map<String, NewDungeon> dungeonMap = new HashMap<String, NewDungeon>();
+		loadDungeons(dungeonMap);
+		_dungeonMap = dungeonMap;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	private static class NewDungeon {
 		int _newX;
 		int _newY;
 		short _newMapId;
 		int _heading;
 		DungeonType _dungeonType;
-
 		private NewDungeon(int newX, int newY, short newMapId, int heading,
 				DungeonType dungeonType) {
 			_newX = newX;
@@ -193,16 +201,13 @@ public class Dungeon {
 			_newMapId = newMapId;
 			_heading = heading;
 			_dungeonType = dungeonType;
-
 		}
 	}
 
 	public boolean dg(int locX, int locY, int mapId, L1PcInstance pc) {
-		int servertime = L1GameTimeClock.getInstance().currentTime()
-				.getSeconds();
+		int servertime = L1GameTimeClock.getInstance().currentTime().getSeconds();
 		int nowtime = servertime % 86400;
-		String key = new StringBuilder().append(mapId).append(locX)
-				.append(locY).toString();
+		String key = new StringBuilder().append(mapId).append(locX).append(locY).toString();
 		if (_dungeonMap.containsKey(key)) {
 			NewDungeon newDungeon = _dungeonMap.get(key);
 			short newMap = newDungeon._newMapId;
@@ -211,7 +216,6 @@ public class Dungeon {
 			int heading = newDungeon._heading;
 			DungeonType dungeonType = newDungeon._dungeonType;
 			boolean teleportable = false;
-
 			if (dungeonType == DungeonType.NONE) {
 				teleportable = true;
 			} else if (dungeonType == DungeonType.LAIR_OF_ANTHARAS
@@ -233,36 +237,27 @@ public class Dungeon {
 					int[] data = null;
 					if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL) {
 						npcid = 70012;
-						data = new int[] { 32745, 32803, 16384, 32743, 32808,
-								16896 };
+						data = new int[] { 32745, 32803, 16384, 32743, 32808, 16896 };
 					} else if (dungeonType == DungeonType.GLUDIO_HOTEL) {
 						npcid = 70019;
-						data = new int[] { 32743, 32803, 17408, 32744, 32807,
-								17920 };
+						data = new int[] { 32743, 32803, 17408, 32744, 32807, 17920 };
 					} else if (dungeonType == DungeonType.GIRAN_HOTEL) {
 						npcid = 70031;
-						data = new int[] { 32744, 32803, 18432, 32744, 32807,
-								18944 };
+						data = new int[] { 32744, 32803, 18432, 32744, 32807, 18944 };
 					} else if (dungeonType == DungeonType.OREN_HOTEL) {
 						npcid = 70065;
-						data = new int[] { 32744, 32803, 19456, 32744, 32807,
-								19968 };
+						data = new int[] { 32744, 32803, 19456, 32744, 32807, 19968 };
 					} else if (dungeonType == DungeonType.WINDAWOOD_HOTEL) {
 						npcid = 70070;
-						data = new int[] { 32744, 32803, 20480, 32744, 32807,
-								20992 };
+						data = new int[] { 32744, 32803, 20480, 32744, 32807, 20992 };
 					} else if (dungeonType == DungeonType.SILVER_KNIGHT_HOTEL) {
 						npcid = 70075;
-						data = new int[] { 32744, 32803, 21504, 32744, 32807,
-								22016 };
+						data = new int[] { 32744, 32803, 21504, 32744, 32807, 22016 };
 					} else if (dungeonType == DungeonType.HEINE_HOTEL) {
 						npcid = 70084;
-						data = new int[] { 32744, 32803, 22528, 32744, 32807,
-								23040 };
+						data = new int[] { 32744, 32803, 22528, 32744, 32807, 23040 };
 					}
-
 					int type = checkInnKey(pc, npcid);
-
 					if (type == 1) { // 小部屋
 						newX = data[0];
 						newY = data[1];
@@ -308,7 +303,6 @@ public class Dungeon {
 					}
 				}
 			}
-
 			if (teleportable) {
 				// 3秒間は無敵（アブソルートバリア状態）にする。
 				L1BuffUtil.barrier(pc, 3000);
@@ -343,5 +337,4 @@ public class Dungeon {
 		}
 		return 0;
 	}
-
 }

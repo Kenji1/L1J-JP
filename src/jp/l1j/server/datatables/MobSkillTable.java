@@ -22,27 +22,24 @@ import java.util.Map;
 import jp.l1j.server.templates.L1MobSkill;
 import jp.l1j.server.utils.L1QueryUtil;
 import jp.l1j.server.utils.L1QueryUtil.EntityFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.collections.Lists;
 import jp.l1j.server.utils.collections.Maps;
 
 public class MobSkillTable {
 	private static MobSkillTable _instance;
 
-	private final Map<Integer, List<L1MobSkill>> _mobskills = Maps.newHashMap();
-
-	public static void initialize() {
-		if (_instance != null) {
-			throw new DataTableAlreadyInitializedException(MobSkillTable.class);
-		}
-		_instance = new MobSkillTable();
-	}
+	private static Map<Integer, List<L1MobSkill>> _mobSkills = Maps.newHashMap();
 
 	public static MobSkillTable getInstance() {
+		if (_instance == null) {
+			_instance = new MobSkillTable();
+		}
 		return _instance;
 	}
-
+	
 	private MobSkillTable() {
-		load();
+		loadMobSkills(_mobSkills);
 	}
 
 	private static class NpcIdFactory implements EntityFactory<Integer> {
@@ -52,18 +49,27 @@ public class MobSkillTable {
 		}
 	}
 
-	private void load() {
+	private void loadMobSkills(Map<Integer, List<L1MobSkill>> mobSkills) {
 		List<Integer> npcIds = L1QueryUtil.selectAll(new NpcIdFactory(),
-				"SELECT DISTINCT npc_id FROM mob_skills");
+			"SELECT DISTINCT npc_id FROM mob_skills");
 		for (int npcId : npcIds) {
 			List<L1MobSkill> skills = L1QueryUtil.selectAll(new L1MobSkill.Factory(),
 				"SELECT * FROM mob_skills where npc_id = ? order by act_no", npcId);
-			_mobskills.put(npcId, skills);
+			mobSkills.put(npcId, skills);
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading mob skills...");
+		Map<Integer, List<L1MobSkill>> mobSkills = Maps.newHashMap();
+		loadMobSkills(mobSkills);
+		_mobSkills = mobSkills;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public List<L1MobSkill> get(int id) {
-		List<L1MobSkill> result = _mobskills.get(id);
+		List<L1MobSkill> result = _mobSkills.get(id);
 		if (result == null) {
 			result = Lists.newArrayList();
 		}

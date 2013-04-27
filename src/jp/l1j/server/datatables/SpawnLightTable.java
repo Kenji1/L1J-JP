@@ -66,7 +66,6 @@ public class SpawnLightTable {
 					Object parameters[] = { l1npc };
 					L1FieldObjectInstance field =
 							(L1FieldObjectInstance) constructor.newInstance(parameters);
-					field = (L1FieldObjectInstance) constructor.newInstance(parameters);
 					field.setId(IdFactory.getInstance().nextId());
 					field.setX(rs.getInt("loc_x"));
 					field.setY(rs.getInt("loc_y"));

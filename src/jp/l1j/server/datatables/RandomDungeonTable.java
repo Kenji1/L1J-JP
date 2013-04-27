@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jp.l1j.server.model;
+package jp.l1j.server.datatables;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,49 +22,49 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.L1BuffUtil;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
-// Referenced classes of package jp.l1j.server.model:
-// L1Teleport, L1PcInstance
+public class RandomDungeonTable {
 
-public class RandomDungeon {
+	private static Logger _log = Logger.getLogger(RandomDungeonTable.class.getName());
 
-	private static Logger _log = Logger
-			.getLogger(RandomDungeon.class.getName());
-
-	private static RandomDungeon _instance = null;
-
-	private static Map<String, NewDungeonRandom> _dungeonMap = new HashMap<String, NewDungeonRandom>();
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
 
-	public static RandomDungeon getInstance() {
+	private static RandomDungeonTable _instance = null;
+
+	private static Map<String, NewDungeonRandom> _dungeons = new HashMap<String, NewDungeonRandom>();
+
+	public static RandomDungeonTable getInstance() {
 		if (_instance == null) {
-			_instance = new RandomDungeon();
+			_instance = new RandomDungeonTable();
 		}
 		return _instance;
 	}
 
-	private RandomDungeon() {
+	private RandomDungeonTable() {
+		loadRandomDungeons(_dungeons);
+	}
+	
+	private void loadRandomDungeons(Map<String, NewDungeonRandom> dungeons) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-
 			pstm = con.prepareStatement("SELECT * FROM random_dungeons");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int srcMapId = rs.getInt("src_map_id");
 				int srcX = rs.getInt("src_x");
 				int srcY = rs.getInt("src_y");
-				String key = new StringBuilder().append(srcMapId).append(srcX)
-						.append(srcY).toString();
+				String key = new StringBuilder().append(srcMapId).append(srcX).append(srcY).toString();
 				int[] newX = new int[5];
 				int[] newY = new int[5];
 				short[] newMapId = new short[5];
@@ -86,26 +86,32 @@ public class RandomDungeon {
 				int heading = rs.getInt("new_heading");
 				NewDungeonRandom newDungeonRandom = new NewDungeonRandom(newX,
 						newY, newMapId, heading);
-				if (_dungeonMap.containsKey(key)) {
+				if (dungeons.containsKey(key)) {
 					_log.log(Level.WARNING, "同じキーのdungeonデータがあります。key=" + key);
 				}
-				_dungeonMap.put(key, newDungeonRandom);
+				dungeons.put(key, newDungeonRandom);
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading random dungeons...");
+		Map<String, NewDungeonRandom> dungeons = new HashMap<String, NewDungeonRandom>();
+		loadRandomDungeons(dungeons);
+		_dungeons = dungeons;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	private static class NewDungeonRandom {
 		int[] _newX = new int[5];
 		int[] _newY = new int[5];
 		short[] _newMapId = new short[5];
 		int _heading;
-
 		private NewDungeonRandom(int[] newX, int[] newY, short[] newMapId,
 				int heading) {
 			for (int i = 0; i < 5; i++) {
@@ -118,16 +124,14 @@ public class RandomDungeon {
 	}
 
 	public boolean dg(int locX, int locY, int mapId, L1PcInstance pc) {
-		String key = new StringBuilder().append(mapId).append(locX)
-				.append(locY).toString();
-		if (_dungeonMap.containsKey(key)) {
+		String key = new StringBuilder().append(mapId).append(locX).append(locY).toString();
+		if (_dungeons.containsKey(key)) {
 			int rnd = _random.nextInt(5);
-			NewDungeonRandom newDungeonRandom = _dungeonMap.get(key);
+			NewDungeonRandom newDungeonRandom = _dungeons.get(key);
 			short newMap = newDungeonRandom._newMapId[rnd];
 			int newX = newDungeonRandom._newX[rnd];
 			int newY = newDungeonRandom._newY[rnd];
 			int heading = newDungeonRandom._heading;
-
 			// 3秒間は無敵（アブソルートバリア状態）にする。
 			L1BuffUtil.barrier(pc, 3000);
 			L1Teleport.teleport(pc, newX, newY, newMap, heading, false);

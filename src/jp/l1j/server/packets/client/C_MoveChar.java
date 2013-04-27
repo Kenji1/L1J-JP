@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.model.AcceleratorChecker;
-import jp.l1j.server.model.Dungeon;
-import jp.l1j.server.model.RandomDungeon;
+import jp.l1j.server.datatables.DungeonTable;
+import jp.l1j.server.datatables.RandomDungeonTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import static jp.l1j.server.model.instance.L1PcInstance.REGENSTATE_MOVE;
 import static jp.l1j.server.model.skill.L1SkillId.*;
@@ -88,10 +88,10 @@ public class C_MoveChar extends ClientBasePacket {
 		locx += HEADING_TABLE_X[heading];
 		locy += HEADING_TABLE_Y[heading];
 
-		if (Dungeon.getInstance().dg(locx, locy, pc.getMap().getId(), pc)) { // ダンジョンにテレポートした場合
+		if (DungeonTable.getInstance().dg(locx, locy, pc.getMap().getId(), pc)) { // ダンジョンにテレポートした場合
 			return;
 		}
-		if (RandomDungeon.getInstance().dg(locx, locy, pc.getMap().getId(),
+		if (RandomDungeonTable.getInstance().dg(locx, locy, pc.getMap().getId(),
 				pc)) { // テレポート先がランダムなテレポート地点
 			return;
 		}

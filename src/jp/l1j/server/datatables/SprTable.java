@@ -24,11 +24,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static jp.l1j.server.codes.ActionCodes.*;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class SprTable {
 
 	private static Logger _log = Logger.getLogger(SprTable.class.getName());
+
+	private static SprTable _instance;
+
+	private static HashMap<Integer, Spr> _sprActions = new HashMap<Integer, Spr>();
 
 	private static class Spr {
 		private final HashMap<Integer, Integer> moveSpeed = new HashMap<Integer, Integer>();
@@ -40,22 +45,21 @@ public class SprTable {
 		private int dirSpellSpeed = 1200;
 	}
 
-	private static final HashMap<Integer, Spr> _dataMap = new HashMap<Integer, Spr>();
-
-	private static final SprTable _instance = new SprTable();
-
-	private SprTable() {
-		loadSprAction();
+	public static SprTable getInstance() {
+		if (_instance == null) {
+			_instance = new SprTable();
+		}
+		return _instance;
 	}
 
-	public static SprTable getInstance() {
-		return _instance;
+	private SprTable() {
+		loadSprActions(_sprActions);
 	}
 
 	/**
 	 * spr_actionsテーブルをロードする。
 	 */
-	public void loadSprAction() {
+	public void loadSprActions(HashMap<Integer, Spr> sprActions) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -66,11 +70,11 @@ public class SprTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int key = rs.getInt("spr_id");
-				if (!_dataMap.containsKey(key)) {
+				if (!sprActions.containsKey(key)) {
 					spr = new Spr();
-					_dataMap.put(key, spr);
+					sprActions.put(key, spr);
 				} else {
-					spr = _dataMap.get(key);
+					spr = sprActions.get(key);
 				}
 				int actid = rs.getInt("act_id");
 				int frameCount = rs.getInt("frame_count");
@@ -115,11 +119,18 @@ public class SprTable {
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
-		_log.fine("loaded spr: " + _dataMap.size() + " records");
+		_log.fine("loaded spr: " + sprActions.size() + " records");
+	}
+
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading spr actions...");
+		HashMap<Integer, Spr> sprActions = new HashMap<Integer, Spr>();
+		loadSprActions(sprActions);
+		_sprActions = sprActions;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	/**
@@ -139,41 +150,41 @@ public class SprTable {
 	 * @return 指定されたsprの攻撃速度(ms)
 	 */
 	public int getAttackSpeed(int sprid, int actid) {
-		if (_dataMap.containsKey(sprid)) {
-			if (_dataMap.get(sprid).attackSpeed.containsKey(actid)) {
-				return _dataMap.get(sprid).attackSpeed.get(actid);
+		if (_sprActions.containsKey(sprid)) {
+			if (_sprActions.get(sprid).attackSpeed.containsKey(actid)) {
+				return _sprActions.get(sprid).attackSpeed.get(actid);
 			} else if (actid == ACTION_Attack) {
 				return 0;
 			} else {
-				return _dataMap.get(sprid).attackSpeed.get(ACTION_Attack);
+				return _sprActions.get(sprid).attackSpeed.get(ACTION_Attack);
 			}
 		}
 		return 0;
 	}
 
 	public int getMoveSpeed(int sprid, int actid) {
-		if (_dataMap.containsKey(sprid)) {
-			if (_dataMap.get(sprid).moveSpeed.containsKey(actid)) {
-				return _dataMap.get(sprid).moveSpeed.get(actid);
+		if (_sprActions.containsKey(sprid)) {
+			if (_sprActions.get(sprid).moveSpeed.containsKey(actid)) {
+				return _sprActions.get(sprid).moveSpeed.get(actid);
 			} else if (actid == ACTION_Walk) {
 				return 0;
 			} else {
-				return _dataMap.get(sprid).moveSpeed.get(ACTION_Walk);
+				return _sprActions.get(sprid).moveSpeed.get(ACTION_Walk);
 			}
 		}
 		return 0;
 	}
 
 	public int getDirSpellSpeed(int sprid) {
-		if (_dataMap.containsKey(sprid)) {
-			return _dataMap.get(sprid).dirSpellSpeed;
+		if (_sprActions.containsKey(sprid)) {
+			return _sprActions.get(sprid).dirSpellSpeed;
 		}
 		return 0;
 	}
 
 	public int getNodirSpellSpeed(int sprid) {
-		if (_dataMap.containsKey(sprid)) {
-			return _dataMap.get(sprid).nodirSpellSpeed;
+		if (_sprActions.containsKey(sprid)) {
+			return _sprActions.get(sprid).nodirSpellSpeed;
 		}
 		return 0;
 	}

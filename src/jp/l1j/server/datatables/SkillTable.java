@@ -27,6 +27,7 @@ import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.templates.L1Skill;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 import jp.l1j.server.utils.collections.Lists;
 import jp.l1j.server.utils.collections.Maps;
@@ -36,27 +37,22 @@ public class SkillTable {
 
 	private static SkillTable _instance;
 
-	private final Map<Integer, L1Skill> _skills = Maps.newHashMap();
+	private static Map<Integer, L1Skill> _skills = Maps.newHashMap();
 
-	private final List<Integer> _buffSkillIds;
-
-	public static void initialize() {
-		if (_instance != null) {
-			throw new IllegalStateException("Already SkillTable has been initialized.");
-		}
-		_instance = new SkillTable();
-	}
+	private static List<Integer> _buffSkillIds;
 
 	public static SkillTable getInstance() {
+		if (_instance == null) {
+			_instance = new SkillTable();
+		}
 		return _instance;
 	}
 
 	private SkillTable() {
-		loadSkills();
-		_buffSkillIds = cacheBuffSkillIds();
+		load();
 	}
 
-	private void loadSkills() {
+	private void loadSkills(Map<Integer, L1Skill> skills) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -66,25 +62,40 @@ public class SkillTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1Skill skill = L1Skill.fromResultSet(rs);
-				_skills.put(skill.getSkillId(), skill);
+				skills.put(skill.getSkillId(), skill);
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException("Unable to load SkillTable.", e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
-
-	private List<Integer> cacheBuffSkillIds() {
+	
+	private List<Integer> loadBuffSkillIds(Map<Integer, L1Skill> skills) {
 		List<Integer> result = Lists.newArrayList();
-		for (L1Skill skill : _skills.values()) {
+		for (L1Skill skill : skills.values()) {
 			if (skill.isBuff()) {
 				result.add(skill.getSkillId());
 			}
 		}
 		return result;
+	}
+
+	private void load() {
+		loadSkills(_skills);
+		_buffSkillIds = loadBuffSkillIds(_skills);
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading skills...");
+		Map<Integer, L1Skill> skills = Maps.newHashMap();
+		List<Integer> buffSkillIds;
+		loadSkills(skills);
+		buffSkillIds = loadBuffSkillIds(skills);
+		_skills = skills;
+		_buffSkillIds = buffSkillIds;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public void spellMastery(int playerobjid, int skillid, String skillname, int active, int time) {

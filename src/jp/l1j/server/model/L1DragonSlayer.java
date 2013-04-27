@@ -14,6 +14,7 @@
  */
 package jp.l1j.server.model;
 
+import jp.l1j.server.datatables.ReturnLocationTable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -623,7 +624,7 @@ public class L1DragonSlayer {
 	private void reStartPlayer(L1PcInstance pc) {
 		pc.stopPcDeleteTimer();
 
-		int[] loc = Getback.GetBack_Location(pc, true);
+		int[] loc = ReturnLocationTable.getReturnLocation(pc, true);
 
 		pc.removeAllKnownObjects();
 		pc.broadcastPacket(new S_RemoveObject(pc));

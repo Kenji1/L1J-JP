@@ -24,33 +24,34 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
-public final class DropItemTable {
+public final class DropRateTable {
 	private class dropItemData {
 		public double dropRate = 1;
 		public double dropAmount = 1;
 		public double uniqueRate = 1;
 	}
 
-	private static Logger _log = Logger.getLogger(DropItemTable.class.getName());
+	private static Logger _log = Logger.getLogger(DropRateTable.class.getName());
 
-	private static DropItemTable _instance;
+	private static DropRateTable _instance;
 
-	private final Map<Integer, dropItemData> _dropItem = new HashMap<Integer, dropItemData>();
+	private static Map<Integer, dropItemData> _dropItems = new HashMap<Integer, dropItemData>();
 
-	public static DropItemTable getInstance() {
+	public static DropRateTable getInstance() {
 		if (_instance == null) {
-			_instance = new DropItemTable();
+			_instance = new DropRateTable();
 		}
 		return _instance;
 	}
 
-	private DropItemTable() {
-		loadMapsFromDatabase();
+	private DropRateTable() {
+		load();
 	}
 
-	private void loadMapsFromDatabase() {
+	private void loadDropItems(Map<Integer, dropItemData> dropItems) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -63,20 +64,31 @@ public final class DropItemTable {
 				data.dropRate = rs.getDouble("drop_rate");
 				data.dropAmount = rs.getDouble("drop_amount");
 				data.uniqueRate = rs.getDouble("unique_rate");
-				_dropItem.put(new Integer(itemId), data);
+				dropItems.put(new Integer(itemId), data);
 			}
-			_log.config("drop_rates " + _dropItem.size());
+			_log.config("drop_rates " + dropItems.size());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
+	private void load() {
+		loadDropItems(_dropItems);
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading drop rates...");
+		Map<Integer, dropItemData> dropItems = new HashMap<Integer, dropItemData>();
+		loadDropItems(dropItems);
+		_dropItems = dropItems;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public double getDropRate(int itemId) {
-		dropItemData data = _dropItem.get(itemId);
+		dropItemData data = _dropItems.get(itemId);
 		if (data == null) {
 			return 1;
 		}
@@ -84,7 +96,7 @@ public final class DropItemTable {
 	}
 
 	public double getDropAmount(int itemId) {
-		dropItemData data = _dropItem.get(itemId);
+		dropItemData data = _dropItems.get(itemId);
 		if (data == null) {
 			return 1;
 		}
@@ -92,7 +104,7 @@ public final class DropItemTable {
 	}
 
 	public double getUniqueRate(int itemId) {
-		dropItemData data = _dropItem.get(itemId);
+		dropItemData data = _dropItems.get(itemId);
 		if (data == null) {
 			return 1;
 		}

@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.model.item.L1ItemRate;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class ItemRateTable {
@@ -34,7 +35,7 @@ public class ItemRateTable {
 
 	private static ItemRateTable _instance;
 
-	private final Map<Integer, L1ItemRate> _itemRates = new HashMap<Integer, L1ItemRate>();
+	private static Map<Integer, L1ItemRate> _itemRates = new HashMap<Integer, L1ItemRate>();
 
 	public static ItemRateTable getInstance() {
 		if (_instance == null) {
@@ -44,10 +45,10 @@ public class ItemRateTable {
 	}
 
 	private ItemRateTable() {
-		loadItemRates();
+		loadItemRates(_itemRates);
 	}
 
-	private void loadItemRates() {
+	private void loadItemRates(Map<Integer, L1ItemRate> itemRates) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -60,7 +61,7 @@ public class ItemRateTable {
 					rs.getInt("selling_price"),
 					rs.getInt("purchasing_price")	
 				);
-				_itemRates.put(rate.getItemId(), rate);
+				itemRates.put(rate.getItemId(), rate);
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -69,6 +70,15 @@ public class ItemRateTable {
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading item rates...");
+		Map<Integer, L1ItemRate> itemRates = new HashMap<Integer, L1ItemRate>();
+		loadItemRates(itemRates);
+		_itemRates = itemRates;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public L1ItemRate get(int itemId) {
 		return _itemRates.get(itemId);
 	}

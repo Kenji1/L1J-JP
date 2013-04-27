@@ -54,7 +54,7 @@ public class SpawnTable {
 
 	private SpawnTable() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading mob...");
+		System.out.print("loading mobs...");
 		fillSpawnTable();
 		_log.fine("loaded mob: " + _spawntable.size() + " records");
 		System.out.println("OK! " + timer.elapsedTimeMillis() + " ms");
@@ -88,7 +88,7 @@ public class SpawnTable {
 					if (rs.getInt("count") == 0) {
 						continue;
 					}
-					double amount_rate = MapsTable.getInstance()
+					double amount_rate = MapTable.getInstance()
 							.getMonsterAmount(rs.getShort("map_id"));
 					count = calcCount(template1, rs.getInt("count"),
 							amount_rate);

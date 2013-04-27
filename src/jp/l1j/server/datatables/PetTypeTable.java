@@ -29,6 +29,7 @@ import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.templates.L1PetType;
 import jp.l1j.server.utils.IntRange;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class PetTypeTable {
@@ -40,19 +41,18 @@ public class PetTypeTable {
 	
 	private Set<String> _defaultNames = new HashSet<String>();
 
-	public static void load() {
-		_instance = new PetTypeTable();
-	}
-
 	public static PetTypeTable getInstance() {
+		if (_instance == null) {
+			_instance = new PetTypeTable();
+		}
 		return _instance;
 	}
 
 	private PetTypeTable() {
-		loadTypes();
+		loadPetTypes(_types, _defaultNames);
 	}
 
-	private void loadTypes() {
+	private void loadPetTypes(Map<Integer, L1PetType> types, Set<String> defaultNames) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -79,18 +79,27 @@ public class PetTypeTable {
 				boolean useEquipment = rs.getBoolean("use_equipment");
 				IntRange hpUpRange = new IntRange(minHpUp, maxHpUp);
 				IntRange mpUpRange = new IntRange(minMpUp, maxMpUp);
-				_types.put(npcId, new L1PetType(npcId, name,
+				types.put(npcId, new L1PetType(npcId, name,
 						tameItemId, hpUpRange, mpUpRange, transformItemId,
 						transformNpcId, msgIds, defyMsgId, useEquipment));
-				_defaultNames.add(name.toLowerCase());
+				defaultNames.add(name.toLowerCase());
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
+	}
+
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading pet types...");
+		Map<Integer, L1PetType> types = new HashMap<Integer, L1PetType>();
+		Set<String> defaultNames = new HashSet<String>();
+		loadPetTypes(types, defaultNames);
+		_types = types;
+		_defaultNames = defaultNames;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public L1PetType get(int baseNpcId) {

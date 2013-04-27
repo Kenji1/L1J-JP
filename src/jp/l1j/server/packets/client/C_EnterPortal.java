@@ -17,7 +17,7 @@ package jp.l1j.server.packets.client;
 
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.model.Dungeon;
+import jp.l1j.server.datatables.DungeonTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 
 // Referenced classes of package jp.l1j.server.clientpackets:
@@ -39,7 +39,7 @@ public class C_EnterPortal extends ClientBasePacket {
 			return;
 		}
 		// ダンジョンにテレポート
-		Dungeon.getInstance().dg(locx, locy, pc.getMap().getId(), pc);
+		DungeonTable.getInstance().dg(locx, locy, pc.getMap().getId(), pc);
 	}
 
 	@Override

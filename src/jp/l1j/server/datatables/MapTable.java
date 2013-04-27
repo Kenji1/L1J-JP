@@ -25,9 +25,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.model.map.executor.L1MapLimiter;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
-public final class MapsTable {
+public final class MapTable {
 	private class MapData {
 		public String locationname = null;// TODO　マップ名称検索用
 		public int startX = 0;
@@ -50,26 +51,26 @@ public final class MapsTable {
 		public boolean isUsableSkill = false;
 	}
 
-	private static Logger _log = Logger.getLogger(MapsTable.class.getName());
+	private static Logger _log = Logger.getLogger(MapTable.class.getName());
 
-	private static MapsTable _instance;
+	private static MapTable _instance;
 
 	/**
 	 * KeyにマップID、Valueにテレポート可否フラグが格納されるHashMap
 	 */
-	private final Map<Integer, MapData> _maps = new HashMap<Integer, MapData>();
+	private static Map<Integer, MapData> _maps = new HashMap<Integer, MapData>();
 
 	/**
 	 * 新しくMapsTableオブジェクトを生成し、マップのテレポート可否フラグを読み込む。
 	 */
-	private MapsTable() {
-		loadMapsFromDatabase();
+	private MapTable() {
+		loadMaps(_maps);
 	}
 
 	/**
 	 * マップのテレポート可否フラグをデータベースから読み込み、HashMap _mapsに格納する。
 	 */
-	private void loadMapsFromDatabase() {
+	private void loadMaps(Map<Integer, MapData> maps) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -99,26 +100,33 @@ public final class MapsTable {
 				data.isRecallPets = rs.getBoolean("recall_pets");
 				data.isUsableItem = rs.getBoolean("usable_item");
 				data.isUsableSkill = rs.getBoolean("usable_skill");
-				_maps.put(new Integer(mapId), data);
+				maps.put(new Integer(mapId), data);
 			}
-			_log.config("Maps " + _maps.size());
+			_log.config("Maps " + maps.size());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading map ids...");
+		Map<Integer, MapData> maps = new HashMap<Integer, MapData>();
+		loadMaps(maps);
+		_maps = maps;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	/**
 	 * MapsTableのインスタンスを返す。
 	 *
 	 * @return MapsTableのインスタンス
 	 */
-	public static MapsTable getInstance() {
+	public static MapTable getInstance() {
 		if (_instance == null) {
-			_instance = new MapsTable();
+			_instance = new MapTable();
 		}
 		return _instance;
 	}

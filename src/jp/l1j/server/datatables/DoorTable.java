@@ -26,6 +26,7 @@ import jp.l1j.server.model.instance.L1DoorInstance;
 import jp.l1j.server.templates.L1DoorGfx;
 import jp.l1j.server.templates.L1DoorSpawn;
 import jp.l1j.server.utils.IdFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.collections.Lists;
 import jp.l1j.server.utils.collections.Maps;
 
@@ -34,43 +35,58 @@ public class DoorTable {
 	
 	private static DoorTable _instance;
 
-	private final Map<L1Location, L1DoorInstance> _doors = Maps.newConcurrentHashMap();
+	private static Map<L1Location, L1DoorInstance> _doors = Maps.newConcurrentHashMap();
 	
-	private final Map<L1Location, L1DoorInstance> _doorDirections = Maps.newConcurrentHashMap();
-
-	public static void initialize() {
-		_instance = new DoorTable();
-	}
+	private static Map<L1Location, L1DoorInstance> _doorDirections = Maps.newConcurrentHashMap();
 
 	public static DoorTable getInstance() {
+		if (_instance == null) {
+			_instance = new DoorTable();
+		}
 		return _instance;
 	}
 
 	private DoorTable() {
-		loadDoors();
+		load();
 	}
 
-	private void loadDoors() {
+	private void loadDoors(Map<L1Location, L1DoorInstance> doors,
+			Map<L1Location, L1DoorInstance> doorDirections) {
 		for (L1DoorSpawn spawn : L1DoorSpawn.all()) {
 			L1Location loc = spawn.getLocation();
-			if (_doors.containsKey(loc)) {
+			if (doors.containsKey(loc)) {
 				_log.log(Level.WARNING, String.format("Duplicate door location: id = %d", spawn.getId()));
 				continue;
 			}
-			createDoor(spawn.getId(), spawn.getGfx(), loc, spawn.getHp(),
+			createDoor(doors, doorDirections, spawn.getId(), spawn.getGfx(), loc, spawn.getHp(),
 					spawn.getKeeper(), spawn.DoorOpen());
 		}
 	}
 
-	private void putDirections(L1DoorInstance door) {
+	private void load() {
+		loadDoors(_doors, _doorDirections);
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading doors...");
+		Map<L1Location, L1DoorInstance> doors = Maps.newConcurrentHashMap();
+		Map<L1Location, L1DoorInstance> doorDirections = Maps.newConcurrentHashMap();
+		loadDoors(doors, doorDirections);
+		_doors = doors;
+		_doorDirections = doorDirections;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
+	private void putDirections(Map<L1Location, L1DoorInstance> doorDirections, L1DoorInstance door) {
 		for (L1Location key : makeDirectionsKeys(door)) {
-			_doorDirections.put(key, door);
+			doorDirections.put(key, door);
 		}
 	}
 
-	private void removeDirections(L1DoorInstance door) {
+	private void removeDirections(Map<L1Location, L1DoorInstance> doorDirections, L1DoorInstance door) {
 		for (L1Location key : makeDirectionsKeys(door)) {
-			_doorDirections.remove(key);
+			doorDirections.remove(key);
 		}
 	}
 
@@ -92,22 +108,28 @@ public class DoorTable {
 
 	public L1DoorInstance createDoor(int doorId, L1DoorGfx gfx, L1Location loc,
 			int hp, int keeper, boolean Open) {
-		if (_doors.containsKey(loc)) {
+		return createDoor(_doors, _doorDirections, doorId, gfx, loc, hp, keeper, Open);
+	}
+	
+	public L1DoorInstance createDoor(Map<L1Location, L1DoorInstance> doors,
+			Map<L1Location, L1DoorInstance> doorDirections, int doorId,
+			L1DoorGfx gfx, L1Location loc, int hp, int keeper, boolean Open) {
+		if (doors.containsKey(loc)) {
 			return null;
 		}
 		L1DoorInstance door = new L1DoorInstance(doorId, gfx, loc, hp, keeper, Open);
 		door.setId(IdFactory.getInstance().nextId());
 		L1World.getInstance().storeObject(door);
 		L1World.getInstance().addVisibleObject(door);
-		_doors.put(door.getLocation(), door);
-		putDirections(door);
+		doors.put(door.getLocation(), door);
+		putDirections(doorDirections, door);
 		return door;
 	}
 
 	public void deleteDoorByLocation(L1Location loc) {
 		L1DoorInstance door = _doors.remove(loc);
 		if (door != null) {
-			removeDirections(door);
+			removeDirections(_doorDirections, door);
 			door.deleteMe();
 		}
 	}

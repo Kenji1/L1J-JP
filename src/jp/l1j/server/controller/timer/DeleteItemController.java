@@ -13,25 +13,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jp.l1j.server.model;
+package jp.l1j.server.controller.timer;
 
 import java.util.List;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.GeneralThreadPool;
+import jp.l1j.server.model.L1HouseLocation;
+import jp.l1j.server.model.L1Object;
+import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
-public class L1DeleteItemOnGround {
+public class DeleteItemController {
 	private DeleteTimer _deleteTimer;
 
-	private static Logger _log = Logger.getLogger(L1DeleteItemOnGround.class.getName());
+	private static Logger _log = Logger.getLogger(DeleteItemController.class.getName());
 
-	public L1DeleteItemOnGround() {
+	public DeleteItemController() {
 	}
 
 	private class DeleteTimer implements Runnable {

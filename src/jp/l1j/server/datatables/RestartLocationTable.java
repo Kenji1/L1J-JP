@@ -24,23 +24,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.templates.L1GetBackRestart;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
-public class GetBackRestartTable {
-	private static Logger _log = Logger.getLogger(GetBackRestartTable.class.getName());
+public class RestartLocationTable {
+	private static Logger _log = Logger.getLogger(RestartLocationTable.class.getName());
 
-	private static GetBackRestartTable _instance;
+	private static RestartLocationTable _instance;
 
-	private final HashMap<Integer, L1GetBackRestart> _getbackrestart = new HashMap<Integer, L1GetBackRestart>();
+	private static HashMap<Integer, L1GetBackRestart> _restartLocations = new HashMap<Integer, L1GetBackRestart>();
 
-	public static GetBackRestartTable getInstance() {
+	public static RestartLocationTable getInstance() {
 		if (_instance == null) {
-			_instance = new GetBackRestartTable();
+			_instance = new RestartLocationTable();
 		}
 		return _instance;
 	}
 
-	public GetBackRestartTable() {
+	private RestartLocationTable() {
+		loadRestartLocations(_restartLocations);
+	}
+	
+	public void loadRestartLocations(HashMap<Integer, L1GetBackRestart> restartLocations) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -55,18 +60,25 @@ public class GetBackRestartTable {
 				gbr.setLocX(rs.getInt("loc_x"));
 				gbr.setLocY(rs.getInt("loc_y"));
 				gbr.setMapId(rs.getShort("map_id"));
-				_getbackrestart.put(new Integer(area), gbr);
+				restartLocations.put(new Integer(area), gbr);
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading restart locations...");
+		HashMap<Integer, L1GetBackRestart> restartLocations = new HashMap<Integer, L1GetBackRestart>();
+		loadRestartLocations(restartLocations);
+		_restartLocations = restartLocations;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public L1GetBackRestart[] getGetBackRestartTableList() {
-		return _getbackrestart.values().toArray(new L1GetBackRestart[_getbackrestart.size()]);
+		return _restartLocations.values().toArray(new L1GetBackRestart[_restartLocations.size()]);
 	}
 }

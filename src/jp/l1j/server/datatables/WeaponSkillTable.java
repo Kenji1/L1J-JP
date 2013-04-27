@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.model.L1WeaponSkill;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class WeaponSkillTable {
@@ -31,7 +32,7 @@ public class WeaponSkillTable {
 
 	private static WeaponSkillTable _instance;
 
-	private final HashMap<Integer, L1WeaponSkill> _weaponIdIndex = new HashMap<Integer, L1WeaponSkill>();
+	private static HashMap<Integer, L1WeaponSkill> _weaponSkills = new HashMap<Integer, L1WeaponSkill>();
 
 	public static WeaponSkillTable getInstance() {
 		if (_instance == null) {
@@ -41,10 +42,10 @@ public class WeaponSkillTable {
 	}
 
 	private WeaponSkillTable() {
-		loadWeaponSkill();
+		loadWeaponSkills(_weaponSkills);
 	}
 
-	private void loadWeaponSkill() {
+	private void loadWeaponSkills(HashMap<Integer, L1WeaponSkill> weaponSkills) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -52,36 +53,39 @@ public class WeaponSkillTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM weapon_skills");
 			rs = pstm.executeQuery();
-			fillWeaponSkillTable(rs);
+			while (rs.next()) {
+				int weaponId = rs.getInt("item_id");
+				int probability = rs.getInt("probability");
+				int probEnchant = rs.getInt("prob_enchant");
+				int fixDamage = rs.getInt("fix_damage");
+				int randomDamage = rs.getInt("random_damage");
+				int skillId = rs.getInt("skill_id");
+				boolean isArrowType = rs.getBoolean("arrow_type");
+				boolean enableMr = rs.getBoolean("enable_mr");
+				boolean enableAttrMr = rs.getBoolean("enable_attr_mr");
+				L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId,
+						probability, probEnchant, fixDamage, randomDamage,
+						skillId, isArrowType, enableMr, enableAttrMr);
+				weaponSkills.put(weaponId, weaponSkill);
+			}
+			_log.fine("Loaded weapon skill: " + weaponSkills.size() + "records");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating weapon_skills table", e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
-	private void fillWeaponSkillTable(ResultSet rs) throws SQLException {
-		while (rs.next()) {
-			int weaponId = rs.getInt("item_id");
-			int probability = rs.getInt("probability");
-			int probEnchant = rs.getInt("prob_enchant");
-			int fixDamage = rs.getInt("fix_damage");
-			int randomDamage = rs.getInt("random_damage");
-			int skillId = rs.getInt("skill_id");
-			boolean isArrowType = rs.getBoolean("arrow_type");
-			boolean enableMr = rs.getBoolean("enable_mr");
-			boolean enableAttrMr = rs.getBoolean("enable_attr_mr");
-			L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId,
-					probability, probEnchant, fixDamage, randomDamage,
-					skillId, isArrowType, enableMr, enableAttrMr);
-			_weaponIdIndex.put(weaponId, weaponSkill);
-		}
-		_log.fine("Loaded weapon skill: " + _weaponIdIndex.size() + "records");
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading weapon skills...");
+		HashMap<Integer, L1WeaponSkill> weaponSkills = new HashMap<Integer, L1WeaponSkill>();
+		loadWeaponSkills(weaponSkills);
+		_weaponSkills = weaponSkills;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public L1WeaponSkill getTemplate(int weaponId) {
-		return _weaponIdIndex.get(weaponId);
+		return _weaponSkills.get(weaponId);
 	}
 }

@@ -45,42 +45,43 @@ import jp.l1j.server.datatables.ChatLogTable;
 import jp.l1j.server.datatables.ClanTable;
 import jp.l1j.server.datatables.CookingRecipeTable;
 import jp.l1j.server.datatables.DoorTable;
-import jp.l1j.server.datatables.DropItemTable;
+import jp.l1j.server.datatables.DropRateTable;
 import jp.l1j.server.datatables.DropTable;
-import jp.l1j.server.datatables.SpawnFurnitureTable;
-import jp.l1j.server.datatables.GetBackRestartTable;
+import jp.l1j.server.datatables.DungeonTable;
 import jp.l1j.server.datatables.InnTable;
 import jp.l1j.server.datatables.IpTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.MagicDollTable;
 import jp.l1j.server.datatables.MailTable;
-import jp.l1j.server.datatables.MapsTable;
+import jp.l1j.server.datatables.MapTable;
 import jp.l1j.server.datatables.MobGroupTable;
 import jp.l1j.server.datatables.MobSkillTable;
 import jp.l1j.server.datatables.NpcActionTable;
 import jp.l1j.server.datatables.NpcChatTable;
-import jp.l1j.server.datatables.SpawnNpcTable;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.NpcTalkDataTable;
 import jp.l1j.server.datatables.PetTable;
 import jp.l1j.server.datatables.PetTypeTable;
 import jp.l1j.server.datatables.PolyTable;
 import jp.l1j.server.datatables.RaceTicketTable;
+import jp.l1j.server.datatables.RandomDungeonTable;
 import jp.l1j.server.datatables.ResolventTable;
+import jp.l1j.server.datatables.RestartLocationTable;
+import jp.l1j.server.datatables.ReturnLocationTable;
 import jp.l1j.server.datatables.ShopTable;
 import jp.l1j.server.datatables.SkillTable;
+import jp.l1j.server.datatables.SpawnFurnitureTable;
+import jp.l1j.server.datatables.SpawnNpcTable;
 import jp.l1j.server.datatables.SpawnTable;
+import jp.l1j.server.datatables.SpawnUbMobTable;
 import jp.l1j.server.datatables.SprListTable;
 import jp.l1j.server.datatables.SprTable;
-import jp.l1j.server.datatables.SpawnUbMobTable;
 import jp.l1j.server.datatables.WeaponSkillTable;
-import jp.l1j.server.model.Dungeon;
 import jp.l1j.server.model.ElementalStoneGenerator;
-import jp.l1j.server.model.Getback;
 import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.L1BugBearRace;
 import jp.l1j.server.model.L1CastleLocation;
-import jp.l1j.server.model.L1DeleteItemOnGround;
+import jp.l1j.server.controller.timer.DeleteItemController;
 import jp.l1j.server.model.L1NpcRegenerationTimer;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
@@ -124,14 +125,6 @@ import jp.l1j.server.model.trap.L1WorldTraps;
 import jp.l1j.server.utils.IdFactory;
 import jp.l1j.server.utils.SystemUtil;
 
-
-// Referenced classes of package jp.l1j.server:
-// ClientThread, Logins, RateTable, IdFactory,
-// LoginController, GameTimeController, Announcements,
-// MobTable, SpawnTable, SkillsTable, PolyTable,
-// TeleportLocations, ShopTable, NpcTalkDataTable, NpcSpawnTable,
-// IpTable, Shutdown, NpcTable, MobGroupTable, NpcShoutTable
-
 public class GameServer extends Thread {
 	private ServerSocket _serverSocket;
 	private static Logger _log = Logger.getLogger(GameServer.class.getName());
@@ -172,8 +165,7 @@ public class GameServer extends Thread {
 	}
 
 	private void puts(String message, Object... args) {
-		String msg = (args.length == 0) ? message : String
-				.format(message, args);
+		String msg = (args.length == 0) ? message : String.format(message, args);
 		System.out.println(msg);
 	}
 
@@ -220,7 +212,11 @@ public class GameServer extends Thread {
 		}
 
 		IdFactory.getInstance();
+		
+		// テキストマップデータをロード
 		L1WorldMap.getInstance();
+		
+		// ログインコントローラー
 		_loginController = LoginController.getInstance();
 		_loginController.setMaxAllowedOnlinePlayers(Config.MAX_ONLINE_USERS);
 
@@ -254,7 +250,7 @@ public class GameServer extends Thread {
 			GeneralThreadPool.getInstance().execute(elementalStoneGenerator);
 		}
 
-		// ホームタウン
+		// ホームタウンシステムコントローラー
 		HomeTownTimeController.getInstance();
 
 		// アジト競売タイムコントローラー
@@ -282,9 +278,12 @@ public class GameServer extends Thread {
 				.getInstance();
 		GeneralThreadPool.getInstance().execute(lightTimeController);
 
+		// アイテム削除コントローラー
+		new DeleteItemController().initialize();
+		
 		// マップタイムコントローラー
 		MapTimeController mapTimeController = MapTimeController.getInstance();
-		MapTimeController.load();
+		mapTimeController.load();
 		GeneralThreadPool.getInstance().execute(mapTimeController);
 
 		// 自動シャットダウンコントローラー
@@ -294,45 +293,57 @@ public class GameServer extends Thread {
 			GeneralThreadPool.getInstance().execute(shutdownTimeController);
 		}
 
+		// 定期アナウンスコントローラー
 		Announcements.getInstance();
 		AnnouncementsCycle.getInstance();
 
-		MobSkillTable.initialize();
-		NpcTable.initialize();
-		new L1DeleteItemOnGround().initialize();
-
-		DoorTable.initialize();
+		MobSkillTable.getInstance();
+		NpcTable.getInstance();
+		DoorTable.getInstance();
 		SpawnTable.getInstance();
 		MobGroupTable.getInstance();
-		SkillTable.initialize();
+		SkillTable.getInstance();
 		PolyTable.getInstance();
 		ItemTable.getInstance();
 		DropTable.getInstance();
-		DropItemTable.getInstance();
+		DropRateTable.getInstance();
 		ShopTable.getInstance();
 		NpcTalkDataTable.getInstance();
 		L1World.getInstance();
 		L1WorldTraps.getInstance();
-		Dungeon.getInstance();
+		DungeonTable.getInstance();
+		RandomDungeonTable.getInstance();
 		SpawnNpcTable.getInstance();
 		IpTable.getInstance();
-		MapsTable.getInstance();
+		MapTable.getInstance();
 		SpawnUbMobTable.getInstance();
 		PetTable.getInstance();
 		ClanTable.getInstance();
 		CastleTable.getInstance();
 		L1CastleLocation.setCastleTaxRate(); // これはCastleTable初期化後でなければいけない
-		GetBackRestartTable.getInstance();
-		// DoorSpawnTable.getInstance();
+		RestartLocationTable.getInstance();
 		GeneralThreadPool.getInstance();
 		L1NpcRegenerationTimer.getInstance();
 		ChatLogTable.getInstance();
 		WeaponSkillTable.getInstance();
-		NpcActionTable.load();
+		NpcActionTable.getInstance();
+		ReturnLocationTable.load();
 		GMCommandsConfig.load();
-		Getback.loadGetBack();
-		PetTypeTable.load();
+		PetTypeTable.getInstance();
 		L1BossCycle.load();
+		SprTable.getInstance();
+		ResolventTable.getInstance();
+		SpawnFurnitureTable.getInstance();
+		NpcChatTable.getInstance();
+		MailTable.getInstance();
+		SprListTable.getInstance();
+		RaceTicketTable.getInstance();
+		L1BugBearRace.getInstance();
+		InnTable.getInstance();
+		MagicDollTable.getInstance();
+		CookingRecipeTable.getInstance();
+		
+		// Loading the XML files
 		L1BeginnerItem.load();
 		L1BlankScroll.load();
 		L1BlessOfEva.load();
@@ -340,6 +351,7 @@ public class GameServer extends Thread {
 		L1BravePotion.load();
 		L1CurePotion.load();
 		L1Elixir.load();
+		L1EnchantBonus.load();
 		L1EnchantProtectScroll.load();
 		L1ExtraPotion.load();
 		L1FireCracker.load();
@@ -349,7 +361,6 @@ public class GameServer extends Thread {
 		L1HealingPotion.load();
 		L1MagicEye.load();
 		L1MagicPotion.load();
-		L1EnchantBonus.load();
 		L1MapLimiter.load();
 		L1Material.load();
 		L1MaterialChoice.load();
@@ -367,20 +378,9 @@ public class GameServer extends Thread {
 		L1TreasureBox.load();
 		L1UnknownMaliceWeapon.load();
 		L1WisdomPotion.load();
-		SprTable.getInstance();
-		ResolventTable.getInstance();
-		SpawnFurnitureTable.getInstance();
-		NpcChatTable.getInstance();
-		MailTable.getInstance();
-		SprListTable.getInstance();
-		RaceTicketTable.getInstance();
-		L1BugBearRace.getInstance();
-		InnTable.getInstance();
-		MagicDollTable.getInstance();
-		CookingRecipeTable.initialize();
+		
 		System.out.println(I18N_LOADING_COMPLETE);
 		Runtime.getRuntime().addShutdownHook(ShutdownController.getInstance());
-
 		this.start();
 	}
 

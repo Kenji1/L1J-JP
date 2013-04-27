@@ -17,7 +17,7 @@ package jp.l1j.server.packets.client;
 
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
-import jp.l1j.server.model.Getback;
+import jp.l1j.server.datatables.ReturnLocationTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Clan;
@@ -62,7 +62,7 @@ public class C_Restart extends ClientBasePacket {
 			// 攻城戦時、城主血盟に所属するキャラクターは内城からリスタート
 			loc = L1CastleLocation.getCastleLoc(castle_id);
 		} else {
-			loc = Getback.GetBack_Location(pc, true);
+			loc = ReturnLocationTable.getReturnLocation(pc, true);
 		}
 
 		pc.removeAllKnownObjects();

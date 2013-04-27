@@ -25,7 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import jp.l1j.server.datatables.MapsTable;
+import jp.l1j.server.datatables.MapTable;
 
 /**
  * テキストマップをキャッシングして読み込み時間を短縮する.
@@ -108,18 +108,18 @@ public class CachedMapReader extends MapReader {
 		}
 
 		in.close();
-		L1V1Map map = new L1V1Map(id, tiles, xLoc, yLoc, MapsTable
+		L1V1Map map = new L1V1Map(id, tiles, xLoc, yLoc, MapTable
 				.getInstance().locationname(mapId),// TODO マップ名称検索用
-				MapsTable.getInstance().isUnderwater(mapId), MapsTable
-						.getInstance().isMarkable(mapId), MapsTable
-						.getInstance().isTeleportable(mapId), MapsTable
-						.getInstance().isEscapable(mapId), MapsTable
-						.getInstance().isUseResurrection(mapId), MapsTable
-						.getInstance().isUsePainwand(mapId), MapsTable
-						.getInstance().isEnabledDeathPenalty(mapId), MapsTable
-						.getInstance().isTakePets(mapId), MapsTable
-						.getInstance().isRecallPets(mapId), MapsTable
-						.getInstance().isUsableItem(mapId), MapsTable
+				MapTable.getInstance().isUnderwater(mapId), MapTable
+						.getInstance().isMarkable(mapId), MapTable
+						.getInstance().isTeleportable(mapId), MapTable
+						.getInstance().isEscapable(mapId), MapTable
+						.getInstance().isUseResurrection(mapId), MapTable
+						.getInstance().isUsePainwand(mapId), MapTable
+						.getInstance().isEnabledDeathPenalty(mapId), MapTable
+						.getInstance().isTakePets(mapId), MapTable
+						.getInstance().isRecallPets(mapId), MapTable
+						.getInstance().isUsableItem(mapId), MapTable
 						.getInstance().isUsableSkill(mapId));
 		return map;
 	}

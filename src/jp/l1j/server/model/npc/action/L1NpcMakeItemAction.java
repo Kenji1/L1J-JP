@@ -17,9 +17,9 @@ package jp.l1j.server.model.npc.action;
 import java.util.ArrayList;
 import java.util.List;
 import jp.l1j.configure.Config;
-import jp.l1j.server.datatables.DropItemTable;
+import jp.l1j.server.datatables.DropRateTable;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.datatables.MapsTable;
+import jp.l1j.server.datatables.MapTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -146,7 +146,7 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 					item = pc.getInventory().storeItem(makingItem.getObject(), 1);
 					if (item != null) {
 						// ユニークオプションを付加
-						double uniqueRateOfItem = DropItemTable.getInstance().getUniqueRate(item.getItemId());
+						double uniqueRateOfItem = DropRateTable.getInstance().getUniqueRate(item.getItemId());
 						double uniqueRate = uniqueMakeRate * uniqueRateOfItem;
 						item.setUniqueOptions(uniqueRate);
 					}

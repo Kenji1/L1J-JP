@@ -104,7 +104,7 @@ public class L1WorldTraps {
 	}
 
 	public static void reloadTraps() {
-		TrapTable.reload();
+		TrapTable.getInstance().reload();
 		L1WorldTraps oldInstance = _instance;
 		_instance = new L1WorldTraps();
 		oldInstance.resetTimer();

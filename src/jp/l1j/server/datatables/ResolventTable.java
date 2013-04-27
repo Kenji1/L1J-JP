@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public final class ResolventTable {
@@ -31,7 +32,7 @@ public final class ResolventTable {
 
 	private static ResolventTable _instance;
 
-	private final Map<Integer, Integer> _resolvent = new HashMap<Integer, Integer>();
+	private static Map<Integer, Integer> _resolvents = new HashMap<Integer, Integer>();
 
 	public static ResolventTable getInstance() {
 		if (_instance == null) {
@@ -41,10 +42,10 @@ public final class ResolventTable {
 	}
 
 	private ResolventTable() {
-		loadMapsFromDatabase();
+		loadResolvents(_resolvents);
 	}
 
-	private void loadMapsFromDatabase() {
+	private void loadResolvents(Map<Integer, Integer> resolvents) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -54,22 +55,29 @@ public final class ResolventTable {
 			for (rs = pstm.executeQuery(); rs.next();) {
 				int itemId = rs.getInt("item_id");
 				int crystalCount = rs.getInt("crystal_count");
-				_resolvent.put(new Integer(itemId), crystalCount);
+				resolvents.put(new Integer(itemId), crystalCount);
 			}
-			_log.config("resolvent " + _resolvent.size());
+			_log.config("resolvent " + resolvents.size());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading resolvents...");
+		Map<Integer, Integer> resolvents = new HashMap<Integer, Integer>();
+		loadResolvents(resolvents);
+		_resolvents = resolvents;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public int getCrystalCount(int itemId) {
 		int crystalCount = 0;
-		if (_resolvent.containsKey(itemId)) {
-			crystalCount = _resolvent.get(itemId);
+		if (_resolvents.containsKey(itemId)) {
+			crystalCount = _resolvents.get(itemId);
 		}
 		return crystalCount;
 	}

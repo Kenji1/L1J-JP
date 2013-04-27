@@ -34,7 +34,7 @@ import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.codes.Opcodes;
 import jp.l1j.server.controller.LoginController;
 import jp.l1j.server.datatables.CharBuffTable;
-import jp.l1j.server.model.Getback;
+import jp.l1j.server.datatables.ReturnLocationTable;
 import jp.l1j.server.model.L1DeathMatch;
 import jp.l1j.server.model.L1DragonSlayer;
 import jp.l1j.server.model.L1HardinQuest;
@@ -523,7 +523,7 @@ public class ClientThread implements Runnable, PacketOutput {
 	public static void quitGame(L1PcInstance pc) {
 		// 死亡していたら街に戻し、空腹状態にする
 		if (pc.isDead()) {
-			int[] loc = Getback.GetBack_Location(pc, true);
+			int[] loc = ReturnLocationTable.getReturnLocation(pc, true);
 			pc.setX(loc[0]);
 			pc.setY(loc[1]);
 			pc.setMap((short) loc[2]);

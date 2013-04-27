@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.model.trap.L1Trap;
 import jp.l1j.server.storage.TrapStorage;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class TrapTable {
@@ -77,10 +78,13 @@ public class TrapTable {
 		return _instance;
 	}
 
-	public static void reload() {
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading traps...");
 		TrapTable oldInstance = _instance;
 		_instance = new TrapTable();
 		oldInstance._traps.clear();
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public L1Trap getTemplate(int id) {

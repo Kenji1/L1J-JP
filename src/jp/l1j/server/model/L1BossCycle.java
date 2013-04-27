@@ -349,8 +349,6 @@ public class L1BossCycle {
 	}
 
 	public static void load() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading boss cycle...");
 		try {
 			// BookOrder クラスをバインディングするコンテキストを生成
 			JAXBContext context = JAXBContext
@@ -384,7 +382,6 @@ public class L1BossCycle {
 			_log.log(Level.SEVERE, "BossCycleを読み込めませんでした", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	/**

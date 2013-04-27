@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.templates.L1Npc;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class NpcTable {
@@ -34,25 +35,21 @@ public class NpcTable {
 
 	private static NpcTable _instance;
 
-	private final HashMap<Integer, L1Npc> _npcs = new HashMap<Integer, L1Npc>();
+	private static HashMap<Integer, L1Npc> _npcs = new HashMap<Integer, L1Npc>();
 	
-	private final HashMap<String, Constructor<?>> _constructorCache = new HashMap<String, Constructor<?>>();
+	private static HashMap<String, Constructor<?>> _constructorCache = new HashMap<String, Constructor<?>>();
 
 	private final Map<String, Integer> _familyTypes = buildFamily();
 
-	public static void initialize() {
-		if (_instance != null) {
-			throw new DataTableAlreadyInitializedException(NpcTable.class);
-		}
-		_instance = new NpcTable();
-	}
-
 	public static NpcTable getInstance() {
+		if (_instance == null) {
+			_instance = new NpcTable();
+		}
 		return _instance;
 	}
 
 	private NpcTable() {
-		loadNpcData();
+		loadNpcs(_npcs, _constructorCache);
 	}
 
 	private Constructor<?> getConstructor(String implName) {
@@ -66,18 +63,20 @@ public class NpcTable {
 		return null;
 	}
 
-	private void registerConstructorCache(String implName) {
-		if (implName.isEmpty() || _constructorCache.containsKey(implName)) {
+	private void registerConstructorCache(HashMap<String, Constructor<?>> constructorCache, String implName) {
+		if (implName.isEmpty() || constructorCache.containsKey(implName)) {
 			return;
 		}
-		_constructorCache.put(implName, getConstructor(implName));
+		constructorCache.put(implName, getConstructor(implName));
 	}
 
-	private void loadNpcData() {
+	private void loadNpcs(HashMap<Integer, L1Npc> npcs, HashMap<String, Constructor<?>> constructorCache) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading npcs...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM npcs");
 			rs = pstm.executeQuery();
@@ -159,16 +158,23 @@ public class NpcTable {
 				npc.setCantResurrect(rs.getBoolean("cant_resurrect"));
 				npc.setEqualityDrop(rs.getBoolean("is_equality_drop"));
 				npc.setBoss(rs.getBoolean("boss")); // TODO boss_endlog用
-				registerConstructorCache(npc.getImpl());
-				_npcs.put(npcId, npc);
+				registerConstructorCache(constructorCache, npc.getImpl());
+				npcs.put(npcId, npc);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			throw new RuntimeException("Unable to load NpcTable", e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
+	}
+	
+	public void reload() {
+		HashMap<Integer, L1Npc> npcs = new HashMap<Integer, L1Npc>();
+		HashMap<String, Constructor<?>> constructorCache = new HashMap<String, Constructor<?>>();
+		loadNpcs(npcs, constructorCache);
+		_npcs = npcs;
+		_constructorCache = constructorCache;
 	}
 
 	public L1Npc getTemplate(int id) {
@@ -210,9 +216,7 @@ public class NpcTable {
 		} catch (SQLException e) {
 			throw new RuntimeException("Unable to load NpcTable", e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 		return result;
 	}

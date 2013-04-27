@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.templates.L1MobGroup;
 import jp.l1j.server.templates.L1NpcCount;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 import jp.l1j.server.utils.collections.Lists;
 
@@ -34,7 +35,7 @@ public class MobGroupTable {
 
 	private static MobGroupTable _instance;
 
-	private final HashMap<Integer, L1MobGroup> _mobGroupIndex = new HashMap<Integer, L1MobGroup>();
+	private static HashMap<Integer, L1MobGroup> _mobGroups = new HashMap<Integer, L1MobGroup>();
 
 	public static MobGroupTable getInstance() {
 		if (_instance == null) {
@@ -44,10 +45,10 @@ public class MobGroupTable {
 	}
 
 	private MobGroupTable() {
-		loadMobGroup();
+		loadMobGroups(_mobGroups);
 	}
 
-	private void loadMobGroup() {
+	private void loadMobGroups(HashMap<Integer, L1MobGroup> mobGroups) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -67,19 +68,26 @@ public class MobGroupTable {
 				}
 				L1MobGroup mobGroup = new L1MobGroup(mobGroupId, leaderId,
 						minions, isRemoveGroup);
-				_mobGroupIndex.put(mobGroupId, mobGroup);
+				mobGroups.put(mobGroupId, mobGroup);
 			}
-			_log.config("Mob Groups: " + _mobGroupIndex.size() + "groups");
+			_log.config("Mob Groups: " + mobGroups.size() + "groups");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating mob_groups table", e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading mob groups...");
+		HashMap<Integer, L1MobGroup> mobGroups = new HashMap<Integer, L1MobGroup>();
+		loadMobGroups(mobGroups);
+		_mobGroups = mobGroups;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public L1MobGroup getTemplate(int mobGroupId) {
-		return _mobGroupIndex.get(mobGroupId);
+		return _mobGroups.get(mobGroupId);
 	}
 }

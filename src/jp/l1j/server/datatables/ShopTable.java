@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.model.shop.L1Shop;
 import jp.l1j.server.templates.L1ShopItem;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class ShopTable {
@@ -37,7 +38,7 @@ public class ShopTable {
 
 	private static ShopTable _instance;
 
-	private final Map<Integer, L1Shop> _allShops = new HashMap<Integer, L1Shop>();
+	private static Map<Integer, L1Shop> _allShops = new HashMap<Integer, L1Shop>();
 
 	public static ShopTable getInstance() {
 		if (_instance == null) {
@@ -47,8 +48,7 @@ public class ShopTable {
 	}
 
 	private ShopTable() {
-		loadShops();
-		loadGeneralShops(); // アデン商団の買取リスト（item_ratesテーブルに登録されている全アイテム）
+		load();
 	}
 
 	private ArrayList<Integer> enumNpcIds() {
@@ -92,7 +92,7 @@ public class ShopTable {
 		return new L1Shop(npcId, sellingList, purchasingList);
 	}
 
-	private void loadShops() {
+	private void loadShops(Map<Integer, L1Shop> allShops) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -103,7 +103,7 @@ public class ShopTable {
 				pstm.setInt(1, npcId);
 				rs = pstm.executeQuery();
 				L1Shop shop = loadShop(npcId, rs);
-				_allShops.put(npcId, shop);
+				allShops.put(npcId, shop);
 				rs.close();
 			}
 		} catch (SQLException e) {
@@ -133,7 +133,8 @@ public class ShopTable {
 		return new L1Shop(npcId, sellingList, purchasingList);
 	}
 
-	private void loadGeneralShops() {
+	// アデン商団の買取リスト（item_ratesテーブルに登録されている全アイテム）
+	private void loadGeneralShops(Map<Integer, L1Shop> allShops) {
 		int[] generalMerchantIds = { 70023, 70037, 70064, 70076 }; // アデン商団
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -144,7 +145,7 @@ public class ShopTable {
 			for (int npcId : generalMerchantIds) {
 				rs = pstm.executeQuery();
 				L1Shop shop = loadGeneralShop(npcId, rs);
-				_allShops.put(npcId, shop);
+				allShops.put(npcId, shop);
 				rs.close();
 			}
 		} catch (SQLException e) {
@@ -153,7 +154,22 @@ public class ShopTable {
 			SqlUtil.close(rs, pstm, con);
 		}
 	}
+
+	private void load() {
+		loadShops(_allShops);
+		loadGeneralShops(_allShops);
+	}
 	
+	public void reload() {
+		Map<Integer, L1Shop> allShops = new HashMap<Integer, L1Shop>();
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading shops...");
+		loadShops(allShops);
+		loadGeneralShops(allShops);
+		_allShops = allShops;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+		
 	public L1Shop get(int npcId) {
 		return _allShops.get(npcId);
 	}

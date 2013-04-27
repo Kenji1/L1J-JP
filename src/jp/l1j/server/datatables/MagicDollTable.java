@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.templates.L1MagicDoll;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class MagicDollTable {
@@ -31,7 +32,7 @@ public class MagicDollTable {
 
 	private static MagicDollTable _instance;
 
-	private final HashMap<Integer, L1MagicDoll> _dolls = new HashMap<Integer, L1MagicDoll>();
+	private static HashMap<Integer, L1MagicDoll> _dolls = new HashMap<Integer, L1MagicDoll>();
 
 	public static MagicDollTable getInstance() {
 		if (_instance == null) {
@@ -41,10 +42,10 @@ public class MagicDollTable {
 	}
 
 	private MagicDollTable() {
-		load();
+		loadDolls(_dolls);
 	}
 
-	private void load() {
+	private void loadDolls(HashMap<Integer, L1MagicDoll> dolls) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -92,7 +93,7 @@ public class MagicDollTable {
 				doll.setSkillId(rs.getByte("skill_id"));
 				doll.setSkillChance(rs.getByte("skill_chance"));
 				doll.setSummonTime(rs.getInt("summon_time"));
-				_dolls.put(new Integer(itemId), doll);
+				dolls.put(new Integer(itemId), doll);
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -103,6 +104,15 @@ public class MagicDollTable {
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading magic dolls...");
+		HashMap<Integer, L1MagicDoll> dolls = new HashMap<Integer, L1MagicDoll>();
+		loadDolls(dolls);
+		_dolls = dolls;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public L1MagicDoll getTemplate(int itemId) {
 		if (_dolls.containsKey(itemId)) {
 			return _dolls.get(itemId);

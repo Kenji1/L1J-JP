@@ -37,7 +37,7 @@ import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.PetTable;
 import jp.l1j.server.datatables.ResolventTable;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.Getback;
+import jp.l1j.server.datatables.ReturnLocationTable;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Character;
 import jp.l1j.server.model.L1Clan;
@@ -316,7 +316,7 @@ public class C_UseItem extends ClientBasePacket {
 				pc.getInventory().removeItem(item, 1);
 			} else if (itemId == 40079 || itemId == 40095) { // 帰還スクロール
 				if (pc.getMap().isEscapable() || pc.isGm()) {
-					int[] loc = Getback.GetBack_Location(pc, true);
+					int[] loc = ReturnLocationTable.getReturnLocation(pc, true);
 					L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
 					pc.getInventory().removeItem(item, 1);
 				} else {
@@ -1892,7 +1892,7 @@ public class C_UseItem extends ClientBasePacket {
 					int[] loc = L1TownLocation.getGetBackLoc(pc.getHomeTownId());
 					L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
 				} else {
-					int[] loc = Getback.GetBack_Location(pc, true);
+					int[] loc = ReturnLocationTable.getReturnLocation(pc, true);
 					L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
 				}
 			}

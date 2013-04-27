@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.model.L1PolyMorph;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class PolyTable {
@@ -31,9 +32,9 @@ public class PolyTable {
 
 	private static PolyTable _instance;
 
-	private final HashMap<String, L1PolyMorph> _polymorphs = new HashMap<String, L1PolyMorph>();
+	private static HashMap<String, L1PolyMorph> _polymorphs = new HashMap<String, L1PolyMorph>();
 	
-	private final HashMap<Integer, L1PolyMorph> _polyIdIndex = new HashMap<Integer, L1PolyMorph>();
+	private static HashMap<Integer, L1PolyMorph> _polyIds = new HashMap<Integer, L1PolyMorph>();
 
 	public static PolyTable getInstance() {
 		if (_instance == null) {
@@ -43,10 +44,11 @@ public class PolyTable {
 	}
 
 	private PolyTable() {
-		loadPolymorphs();
+		loadPolymorphs(_polymorphs, _polyIds);
 	}
 
-	private void loadPolymorphs() {
+	private void loadPolymorphs(HashMap<String, L1PolyMorph> polymorphs,
+			HashMap<Integer, L1PolyMorph> polyIds) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -54,39 +56,44 @@ public class PolyTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM polymorphs");
 			rs = pstm.executeQuery();
-			fillPolyTable(rs);
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				int gfxId = rs.getInt("gfx_id");
+				int minLevel = rs.getInt("min_level");
+				int weaponEquipFlg = rs.getInt("weapon_equip");
+				int armorEquipFlg = rs.getInt("armor_equip");
+				boolean canUseSkill = rs.getBoolean("can_use_skill");
+				int causeFlg = rs.getInt("cause");
+				L1PolyMorph poly = new L1PolyMorph(id, name, gfxId, minLevel,
+						weaponEquipFlg, armorEquipFlg, canUseSkill, causeFlg);
+				polymorphs.put(name, poly);
+				polyIds.put(gfxId, poly);
+			}
+			_log.fine("loaded poly: " + polymorphs.size() + " records");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating polymorph table", e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
-	private void fillPolyTable(ResultSet rs) throws SQLException {
-		while (rs.next()) {
-			int id = rs.getInt("id");
-			String name = rs.getString("name");
-			int gfxId = rs.getInt("gfx_id");
-			int minLevel = rs.getInt("min_level");
-			int weaponEquipFlg = rs.getInt("weapon_equip");
-			int armorEquipFlg = rs.getInt("armor_equip");
-			boolean canUseSkill = rs.getBoolean("can_use_skill");
-			int causeFlg = rs.getInt("cause");
-			L1PolyMorph poly = new L1PolyMorph(id, name, gfxId, minLevel,
-					weaponEquipFlg, armorEquipFlg, canUseSkill, causeFlg);
-			_polymorphs.put(name, poly);
-			_polyIdIndex.put(gfxId, poly);
-		}
-		_log.fine("loaded poly: " + _polymorphs.size() + " records");
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading polymorphs...");
+		HashMap<String, L1PolyMorph> polymorphs = new HashMap<String, L1PolyMorph>();
+		HashMap<Integer, L1PolyMorph> polyIds = new HashMap<Integer, L1PolyMorph>();
+		loadPolymorphs(polymorphs, polyIds);
+		_polymorphs = polymorphs;
+		_polyIds = polyIds;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
-
+	
 	public L1PolyMorph getTemplate(String name) {
 		return _polymorphs.get(name);
 	}
 
 	public L1PolyMorph getTemplate(int polyId) {
-		return _polyIdIndex.get(polyId);
+		return _polyIds.get(polyId);
 	}
 }

@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.templates.L1NpcChat;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class NpcChatTable {
@@ -48,10 +49,13 @@ public class NpcChatTable {
 	}
 
 	private NpcChatTable() {
-		FillNpcChatTable();
+		loadNpcChats(_npcChatAppearance, _npcChatDead, _npcChatHide, _npcChatGameTime);
 	}
 
-	private void FillNpcChatTable() {
+	private void loadNpcChats(HashMap<Integer, L1NpcChat> npcChatAppearance,
+			HashMap<Integer, L1NpcChat> npcChatDead,
+			HashMap<Integer, L1NpcChat> npcChatHide,
+			HashMap<Integer, L1NpcChat> npcChatGameTime) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -76,24 +80,37 @@ public class NpcChatTable {
 				npcChat.setRepeatInterval(rs.getInt("repeat_interval"));
 				npcChat.setGameTime(rs.getInt("game_time"));
 				if (npcChat.getChatTiming() == L1NpcInstance.CHAT_TIMING_APPEARANCE) {
-					_npcChatAppearance.put(new Integer(npcChat.getNpcId()), npcChat);
+					npcChatAppearance.put(new Integer(npcChat.getNpcId()), npcChat);
 				} else if (npcChat.getChatTiming() == L1NpcInstance.CHAT_TIMING_DEAD) {
-					_npcChatDead.put(new Integer(npcChat.getNpcId()), npcChat);
+					npcChatDead.put(new Integer(npcChat.getNpcId()), npcChat);
 				} else if (npcChat.getChatTiming() == L1NpcInstance.CHAT_TIMING_HIDE) {
-					_npcChatHide.put(new Integer(npcChat.getNpcId()), npcChat);
+					npcChatHide.put(new Integer(npcChat.getNpcId()), npcChat);
 				} else if (npcChat.getChatTiming() == L1NpcInstance.CHAT_TIMING_GAME_TIME) {
-					_npcChatGameTime.put(new Integer(npcChat.getNpcId()), npcChat);
+					npcChatGameTime.put(new Integer(npcChat.getNpcId()), npcChat);
 				}
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading npc chats...");
+		HashMap<Integer, L1NpcChat> npcChatAppearance = new HashMap<Integer, L1NpcChat>();
+		HashMap<Integer, L1NpcChat> npcChatDead = new HashMap<Integer, L1NpcChat>();
+		HashMap<Integer, L1NpcChat> npcChatHide = new HashMap<Integer, L1NpcChat>();
+		HashMap<Integer, L1NpcChat> npcChatGameTime = new HashMap<Integer, L1NpcChat>();
+		loadNpcChats(npcChatAppearance, npcChatDead, npcChatHide, npcChatGameTime);
+		_npcChatAppearance = npcChatAppearance;
+		_npcChatDead = npcChatDead;
+		_npcChatHide = npcChatHide;
+		_npcChatGameTime = npcChatGameTime;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public L1NpcChat getTemplateAppearance(int i) {
 		return _npcChatAppearance.get(new Integer(i));
 	}

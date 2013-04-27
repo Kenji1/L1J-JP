@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.templates.L1PetItem;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class PetItemTable {
@@ -31,7 +32,7 @@ public class PetItemTable {
 
 	private static PetItemTable _instance;
 
-	private final HashMap<Integer, L1PetItem> _petItemIdIndex = new HashMap<Integer, L1PetItem>();
+	private static HashMap<Integer, L1PetItem> _petItems = new HashMap<Integer, L1PetItem>();
 
 	public static PetItemTable getInstance() {
 		if (_instance == null) {
@@ -41,10 +42,10 @@ public class PetItemTable {
 	}
 
 	private PetItemTable() {
-		loadPetItem();
+		loadPetItems(_petItems);
 	}
 
-	private void loadPetItem() {
+	private void loadPetItems(HashMap<Integer, L1PetItem> petItems) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -52,38 +53,41 @@ public class PetItemTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM pet_items");
 			rs = pstm.executeQuery();
-			fillPetItemTable(rs);
+			while (rs.next()) {
+				L1PetItem petItem = new L1PetItem();
+				petItem.setItemId(rs.getInt("item_id"));
+				petItem.setHitModifier(rs.getInt("hit_modifier"));
+				petItem.setDamageModifier(rs.getInt("dmg_modifier"));
+				petItem.setAddAc(rs.getInt("ac"));
+				petItem.setAddStr(rs.getInt("str"));
+				petItem.setAddCon(rs.getInt("con"));
+				petItem.setAddDex(rs.getInt("dex"));
+				petItem.setAddInt(rs.getInt("int"));
+				petItem.setAddWis(rs.getInt("wis"));
+				petItem.setAddHp(rs.getInt("hp"));
+				petItem.setAddMp(rs.getInt("mp"));
+				petItem.setAddSp(rs.getInt("sp"));
+				petItem.setAddMr(rs.getInt("mr"));
+				petItem.setUseType(rs.getInt("use_type"));
+				petItems.put(petItem.getItemId(), petItem);
+			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating pet_items table", e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 	}
 
-	private void fillPetItemTable(ResultSet rs) throws SQLException {
-		while (rs.next()) {
-			L1PetItem petItem = new L1PetItem();
-			petItem.setItemId(rs.getInt("item_id"));
-			petItem.setHitModifier(rs.getInt("hit_modifier"));
-			petItem.setDamageModifier(rs.getInt("dmg_modifier"));
-			petItem.setAddAc(rs.getInt("ac"));
-			petItem.setAddStr(rs.getInt("str"));
-			petItem.setAddCon(rs.getInt("con"));
-			petItem.setAddDex(rs.getInt("dex"));
-			petItem.setAddInt(rs.getInt("int"));
-			petItem.setAddWis(rs.getInt("wis"));
-			petItem.setAddHp(rs.getInt("hp"));
-			petItem.setAddMp(rs.getInt("mp"));
-			petItem.setAddSp(rs.getInt("sp"));
-			petItem.setAddMr(rs.getInt("mr"));
-			petItem.setUseType(rs.getInt("use_type"));
-			_petItemIdIndex.put(petItem.getItemId(), petItem);
-		}
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading pet items...");
+		HashMap<Integer, L1PetItem> petItems = new HashMap<Integer, L1PetItem>();
+		loadPetItems(petItems);
+		_petItems = petItems;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public L1PetItem getTemplate(int itemId) {
-		return _petItemIdIndex.get(itemId);
+		return _petItems.get(itemId);
 	}
 }

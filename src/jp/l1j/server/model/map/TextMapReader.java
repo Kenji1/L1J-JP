@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.datatables.MapsTable;
+import jp.l1j.server.datatables.MapTable;
 
 /**
  * テキストマップ(maps/\d*.txt)を読み込む.
@@ -115,18 +115,18 @@ public class TextMapReader extends MapReader {
 						this.read(mapId, xSize, ySize),
 						info[MAPINFO_START_X],
 						info[MAPINFO_START_Y],
-						MapsTable.getInstance().locationname(mapId),// TODO
+						MapTable.getInstance().locationname(mapId),// TODO
 						// マップ名称検索用
-						MapsTable.getInstance().isUnderwater(mapId), MapsTable
-								.getInstance().isMarkable(mapId), MapsTable
-								.getInstance().isTeleportable(mapId), MapsTable
-								.getInstance().isEscapable(mapId), MapsTable
+						MapTable.getInstance().isUnderwater(mapId), MapTable
+								.getInstance().isMarkable(mapId), MapTable
+								.getInstance().isTeleportable(mapId), MapTable
+								.getInstance().isEscapable(mapId), MapTable
 								.getInstance().isUseResurrection(mapId),
-						MapsTable.getInstance().isUsePainwand(mapId), MapsTable
+						MapTable.getInstance().isUsePainwand(mapId), MapTable
 								.getInstance().isEnabledDeathPenalty(mapId),
-						MapsTable.getInstance().isTakePets(mapId), MapsTable
-								.getInstance().isRecallPets(mapId), MapsTable
-								.getInstance().isUsableItem(mapId), MapsTable
+						MapTable.getInstance().isTakePets(mapId), MapTable
+								.getInstance().isRecallPets(mapId), MapTable
+								.getInstance().isUsableItem(mapId), MapTable
 								.getInstance().isUsableSkill(mapId));
 				return map;
 			}
@@ -154,18 +154,18 @@ public class TextMapReader extends MapReader {
 						this.read(mapId, xSize, ySize),
 						info[MAPINFO_START_X],
 						info[MAPINFO_START_Y],
-						MapsTable.getInstance().locationname(mapId),// TODO
+						MapTable.getInstance().locationname(mapId),// TODO
 						// マップ名称検索用
-						MapsTable.getInstance().isUnderwater(mapId), MapsTable
-								.getInstance().isMarkable(mapId), MapsTable
-								.getInstance().isTeleportable(mapId), MapsTable
-								.getInstance().isEscapable(mapId), MapsTable
+						MapTable.getInstance().isUnderwater(mapId), MapTable
+								.getInstance().isMarkable(mapId), MapTable
+								.getInstance().isTeleportable(mapId), MapTable
+								.getInstance().isEscapable(mapId), MapTable
 								.getInstance().isUseResurrection(mapId),
-						MapsTable.getInstance().isUsePainwand(mapId), MapsTable
+						MapTable.getInstance().isUsePainwand(mapId), MapTable
 								.getInstance().isEnabledDeathPenalty(mapId),
-						MapsTable.getInstance().isTakePets(mapId), MapsTable
-								.getInstance().isRecallPets(mapId), MapsTable
-								.getInstance().isUsableItem(mapId), MapsTable
+						MapTable.getInstance().isTakePets(mapId), MapTable
+								.getInstance().isRecallPets(mapId), MapTable
+								.getInstance().isUsableItem(mapId), MapTable
 								.getInstance().isUsableSkill(mapId));
 
 				maps.put(mapId, map);

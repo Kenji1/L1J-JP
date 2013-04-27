@@ -25,24 +25,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.model.L1UltimateBattle;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class UbTable {
 	private static Logger _log = Logger.getLogger(UbTable.class.getName());
 
-	private static UbTable _instance = new UbTable();
+	private static UbTable _instance;
 
-	private HashMap<Integer, L1UltimateBattle> _ub = new HashMap<Integer, L1UltimateBattle>();
+	private HashMap<Integer, L1UltimateBattle> _ubs = new HashMap<Integer, L1UltimateBattle>();
 
 	public static UbTable getInstance() {
+		if (_instance == null) {
+			_instance = new UbTable();
+		}
 		return _instance;
 	}
 
 	private UbTable() {
-		loadTable();
+		loadUbs(_ubs);
 	}
 
-	private void loadTable() {
+	private void loadUbs(HashMap<Integer, L1UltimateBattle> ubs) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -74,7 +78,7 @@ public class UbTable {
 				ub.setHpr(rs.getInt("hpr_bonus"));
 				ub.setMpr(rs.getInt("mpr_bonus"));
 				ub.resetLoc();
-				_ub.put(ub.getUbId(), ub);
+				ubs.put(ub.getUbId(), ub);
 			}
 		} catch (SQLException e) {
 			_log.warning("ubsettings couldnt be initialized:" + e);
@@ -113,19 +117,28 @@ public class UbTable {
 		} finally {
 			SqlUtil.close(rs, pstm, con);
 		}
-		_log.fine("loaded ub: " + _ub.size() + " records");
+		_log.fine("loaded ub: " + ubs.size() + " records");
 	}
 
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading ubs...");
+		HashMap<Integer, L1UltimateBattle> ubs = new HashMap<Integer, L1UltimateBattle>();
+		loadUbs(ubs);
+		_ubs = ubs;
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	public L1UltimateBattle getUb(int ubId) {
-		return _ub.get(ubId);
+		return _ubs.get(ubId);
 	}
 
 	public Collection<L1UltimateBattle> getAllUb() {
-		return Collections.unmodifiableCollection(_ub.values());
+		return Collections.unmodifiableCollection(_ubs.values());
 	}
 
 	public L1UltimateBattle getUbForNpcId(int npcId) {
-		for (L1UltimateBattle ub : _ub.values()) {
+		for (L1UltimateBattle ub : _ubs.values()) {
 			if (ub.containsManager(npcId)) {
 				return ub;
 			}

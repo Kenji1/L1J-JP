@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.InflaterInputStream;
-import jp.l1j.server.datatables.MapsTable;
+import jp.l1j.server.datatables.MapTable;
 import jp.l1j.server.utils.BinaryInputStream;
 import jp.l1j.server.utils.FileUtil;
 
@@ -115,17 +115,17 @@ public class V2MapReader extends MapReader {
 		in.close();
 
 		L1V2Map map = new L1V2Map(id, tiles, xLoc, yLoc, width, height,
-				MapsTable.getInstance().isUnderwater(mapId),
-				MapsTable.getInstance().isMarkable(mapId),
-				MapsTable.getInstance().isTeleportable(mapId),
-				MapsTable.getInstance().isEscapable(mapId),
-				MapsTable.getInstance().isUseResurrection(mapId),
-				MapsTable.getInstance().isUsePainwand(mapId),
-				MapsTable.getInstance().isEnabledDeathPenalty(mapId),
-				MapsTable.getInstance().isTakePets(mapId),
-				MapsTable.getInstance().isRecallPets(mapId),
-				MapsTable.getInstance().isUsableItem(mapId),
-				MapsTable.getInstance().isUsableSkill(mapId));
+				MapTable.getInstance().isUnderwater(mapId),
+				MapTable.getInstance().isMarkable(mapId),
+				MapTable.getInstance().isTeleportable(mapId),
+				MapTable.getInstance().isEscapable(mapId),
+				MapTable.getInstance().isUseResurrection(mapId),
+				MapTable.getInstance().isUsePainwand(mapId),
+				MapTable.getInstance().isEnabledDeathPenalty(mapId),
+				MapTable.getInstance().isTakePets(mapId),
+				MapTable.getInstance().isRecallPets(mapId),
+				MapTable.getInstance().isUsableItem(mapId),
+				MapTable.getInstance().isUsableSkill(mapId));
 		return map;
 	}
 }

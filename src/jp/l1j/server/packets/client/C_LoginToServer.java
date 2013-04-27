@@ -31,9 +31,9 @@ import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.controller.timer.WarTimeController;
 import jp.l1j.server.datatables.CharBuffTable;
 import jp.l1j.server.datatables.CharacterTable;
-import jp.l1j.server.datatables.GetBackRestartTable;
+import jp.l1j.server.datatables.RestartLocationTable;
 import jp.l1j.server.datatables.SkillTable;
-import jp.l1j.server.model.Getback;
+import jp.l1j.server.datatables.ReturnLocationTable;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1Cube;
@@ -155,7 +155,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			pc.setMiniGamePlaying(0);
 		}
 		// リスタート先がgetback_restartテーブルで指定されていたら移動させる
-		GetBackRestartTable gbrTable = GetBackRestartTable.getInstance();
+		RestartLocationTable gbrTable = RestartLocationTable.getInstance();
 		L1GetBackRestart[] gbrList = gbrTable.getGetBackRestartTableList();
 		for (L1GetBackRestart gbr : gbrList) {
 			if (pc.getMapId() == gbr.getArea()) {
@@ -167,7 +167,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 		// altsettings.propertiesでGetBackがtrueなら街に移動させる
 		if (Config.GET_BACK) {
-			int[] loc = Getback.GetBack_Location(pc, true);
+			int[] loc = ReturnLocationTable.getReturnLocation(pc, true);
 			pc.setX(loc[0]);
 			pc.setY(loc[1]);
 			pc.setMap((short) loc[2]);

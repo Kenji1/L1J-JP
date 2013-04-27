@@ -41,6 +41,7 @@ import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Drop;
 import jp.l1j.server.types.Point;
 import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
 
 public class DropTable {
@@ -48,7 +49,7 @@ public class DropTable {
 
 	private static DropTable _instance;
 
-	private final HashMap<Integer, ArrayList<L1Drop>> _droplists; // モンスター毎のドロップリスト
+	private static HashMap<Integer, ArrayList<L1Drop>> _droplists; // モンスター毎のドロップリスト
 
 	public static DropTable getInstance() {
 		if (_instance == null) {
@@ -58,7 +59,7 @@ public class DropTable {
 	}
 
 	private DropTable() {
-		_droplists = allDropList();
+		load();
 	}
 
 	private HashMap<Integer, ArrayList<L1Drop>> allDropList() {
@@ -87,11 +88,20 @@ public class DropTable {
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
-			SqlUtil.close(rs);
-			SqlUtil.close(pstm);
-			SqlUtil.close(con);
+			SqlUtil.close(rs, pstm, con);
 		}
 		return droplistMap;
+	}
+
+	private void load() {
+		_droplists = allDropList();
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading drop items...");
+		load();
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	// インベントリにドロップを設定
@@ -119,7 +129,7 @@ public class DropTable {
 		if (uniqueDropRate <= 0) {
 			uniqueDropRate = 0;
 		}
-		double uniqueRateOfMapId = MapsTable.getInstance().getUniqueRate(npc.getMap().getBaseMapId());
+		double uniqueRateOfMapId = MapTable.getInstance().getUniqueRate(npc.getMap().getBaseMapId());
 		if (uniqueRateOfMapId <= 0) {
 			uniqueRateOfMapId = 0;
 		}
@@ -137,13 +147,13 @@ public class DropTable {
 			}
 			// ドロップチャンス判定
 			randomChance = random.nextInt(0xf4240) + 1;
-			double rateOfMapId = MapsTable.getInstance().getDropRate(npc.getMap().getBaseMapId());
-			double rateOfItem = DropItemTable.getInstance().getDropRate(itemId);
+			double rateOfMapId = MapTable.getInstance().getDropRate(npc.getMap().getBaseMapId());
+			double rateOfItem = DropRateTable.getInstance().getDropRate(itemId);
 			if (droprate == 0 || drop.getChance() * droprate * rateOfMapId * rateOfItem < randomChance) {
 				continue;
 			}
 			// ドロップ個数を設定
-			double amount = DropItemTable.getInstance().getDropAmount(itemId);
+			double amount = DropRateTable.getInstance().getDropAmount(itemId);
 			int min = (int) (drop.getMin() * amount);
 			int max = (int) (drop.getMax() * amount);
 			itemCount = min;
@@ -166,7 +176,7 @@ public class DropTable {
 			// アイテム格納
 			item = inventory.storeItem(item);	
 			// ユニークオプションを付加
-			double uniqueRateOfItem = DropItemTable.getInstance().getUniqueRate(itemId);
+			double uniqueRateOfItem = DropRateTable.getInstance().getUniqueRate(itemId);
 			double uniqueRate = uniqueDropRate * uniqueRateOfMapId * uniqueRateOfItem;
 			item.setUniqueOptions(uniqueRate);
 		}

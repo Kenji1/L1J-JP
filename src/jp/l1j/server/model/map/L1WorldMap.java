@@ -41,7 +41,7 @@ public class L1WorldMap {
 		}
 
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading map...");
+		System.out.print("loading maps...");
 
 		try {
 			_maps = MapReader.getDefaultReader().read();

@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.datatables.MapsTable;
+import jp.l1j.server.datatables.MapTable;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -218,7 +218,7 @@ public class L1TeleportAmulet {
 			return false;
 		}
 		for (Effect each : getEffects()) {
-			if (MapsTable.getInstance().locationname(each.getMapId()) == null) {
+			if (MapTable.getInstance().locationname(each.getMapId()) == null) {
 				System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, each.getMapId()));
 				// %s はマップリストに存在しません。
 				return false;
