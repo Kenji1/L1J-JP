@@ -50,6 +50,40 @@ import jp.l1j.server.datatables.UbTable;
 import jp.l1j.server.datatables.WeaponSkillTable;
 import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.item.executor.L1BeginnerItem;
+import jp.l1j.server.model.item.executor.L1BlankScroll;
+import jp.l1j.server.model.item.executor.L1BlessOfEva;
+import jp.l1j.server.model.item.executor.L1BluePotion;
+import jp.l1j.server.model.item.executor.L1BravePotion;
+import jp.l1j.server.model.item.executor.L1CurePotion;
+import jp.l1j.server.model.item.executor.L1Elixir;
+import jp.l1j.server.model.item.executor.L1EnchantBonus;
+import jp.l1j.server.model.item.executor.L1EnchantProtectScroll;
+import jp.l1j.server.model.item.executor.L1ExtraPotion;
+import jp.l1j.server.model.item.executor.L1FireCracker;
+import jp.l1j.server.model.item.executor.L1FloraPotion;
+import jp.l1j.server.model.item.executor.L1Furniture;
+import jp.l1j.server.model.item.executor.L1GreenPotion;
+import jp.l1j.server.model.item.executor.L1HealingPotion;
+import jp.l1j.server.model.item.executor.L1MagicEye;
+import jp.l1j.server.model.item.executor.L1MagicPotion;
+import jp.l1j.server.model.item.executor.L1Material;
+import jp.l1j.server.model.item.executor.L1MaterialChoice;
+import jp.l1j.server.model.item.executor.L1PolyPotion;
+import jp.l1j.server.model.item.executor.L1PolyScroll;
+import jp.l1j.server.model.item.executor.L1PolyWand;
+import jp.l1j.server.model.item.executor.L1Roulette;
+import jp.l1j.server.model.item.executor.L1ShowMessage;
+import jp.l1j.server.model.item.executor.L1SpawnWand;
+import jp.l1j.server.model.item.executor.L1SpeedUpClock;
+import jp.l1j.server.model.item.executor.L1SpellIcon;
+import jp.l1j.server.model.item.executor.L1SpellItem;
+import jp.l1j.server.model.item.executor.L1TeleportAmulet;
+import jp.l1j.server.model.item.executor.L1ThirdSpeedPotion;
+import jp.l1j.server.model.item.executor.L1TreasureBox;
+import jp.l1j.server.model.item.executor.L1UnknownMaliceWeapon;
+import jp.l1j.server.model.item.executor.L1WisdomPotion;
+import jp.l1j.server.model.map.executor.L1MapLimiter;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1ReloadConfig implements L1CommandExecutor {
@@ -65,7 +99,7 @@ public class L1ReloadConfig implements L1CommandExecutor {
 	@Override
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		pc.sendPackets(new S_SystemMessage("reloading the configs..."));
-
+		// configs
 		Config.load();
 		GMCommandConfigs.getInstance().reload();
 		L1BossCycle.reload();
@@ -73,7 +107,7 @@ public class L1ReloadConfig implements L1CommandExecutor {
 		if (Config.AUTO_SHUTDOWN) {
 			ShutdownTimeController.getInstance().reload();
 		}
-		
+		// datatables
 		ArmorSetTable.getInstance().reload();
 		CookingRecipeTable.getInstance().reload();
 		DoorTable.getInstance().reload();
@@ -102,7 +136,41 @@ public class L1ReloadConfig implements L1CommandExecutor {
 		TrapTable.getInstance().reload();
 		UbTable.getInstance().reload();
 		WeaponSkillTable.getInstance().reload();
-		
+		// xml files
+		L1BeginnerItem.reload();
+		L1BlankScroll.reload();
+		L1BlessOfEva.reload();
+		L1BluePotion.reload();
+		L1BravePotion.reload();
+		L1CurePotion.reload();
+		L1Elixir.reload();
+		L1EnchantBonus.reload();
+		L1EnchantProtectScroll.reload();
+		L1ExtraPotion.reload();
+		L1FireCracker.reload();
+		L1FloraPotion.reload();
+		L1Furniture.reload();
+		L1GreenPotion.reload();
+		L1HealingPotion.reload();
+		L1MagicEye.reload();
+		L1MagicPotion.reload();
+		L1MapLimiter.reload();
+		L1Material.reload();
+		L1MaterialChoice.reload();
+		L1PolyPotion.reload();
+		L1PolyScroll.reload();
+		L1PolyWand.reload();
+		L1Roulette.reload();
+		L1ShowMessage.reload();
+		L1SpawnWand.reload();
+		L1SpeedUpClock.reload();
+		L1SpellIcon.reload();
+		L1SpellItem.reload();
+		L1TeleportAmulet.reload();
+		L1ThirdSpeedPotion.reload();
+		L1TreasureBox.reload();
+		L1UnknownMaliceWeapon.reload();
+		L1WisdomPotion.reload();
 		pc.sendPackets(new S_SystemMessage("reload the configs is complete."));
 	}
 }

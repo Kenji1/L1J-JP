@@ -67,9 +67,9 @@ public class L1UnknownMaliceWeapon {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/UnknownMaliceWeapon.xml";
+	private static final String _path = "./data/xml/Item/UnknownMaliceWeapon.xml";
 
-	private static final HashMap<Integer, L1UnknownMaliceWeapon> _dataMap = new HashMap<Integer, L1UnknownMaliceWeapon>();
+	private static HashMap<Integer, L1UnknownMaliceWeapon> _dataMap = new HashMap<Integer, L1UnknownMaliceWeapon>();
 
 	public static L1UnknownMaliceWeapon get(int id) {
 		return _dataMap.get(id);
@@ -111,27 +111,37 @@ public class L1UnknownMaliceWeapon {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1UnknownMaliceWeapon> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading unknown malice weapon...");
+		System.out.print("loading unknown malice weapons...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1UnknownMaliceWeapon.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1UnknownMaliceWeapon each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1UnknownMaliceWeapon> dataMap = new HashMap<Integer, L1UnknownMaliceWeapon>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item) {

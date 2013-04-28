@@ -74,9 +74,9 @@ public class L1MagicEye {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/MagicEye.xml";
+	private static final String _path = "./data/xml/Item/MagicEye.xml";
 
-	private static final HashMap<Integer, L1MagicEye> _dataMap = new HashMap<Integer, L1MagicEye>();
+	private static HashMap<Integer, L1MagicEye> _dataMap = new HashMap<Integer, L1MagicEye>();
 
 	public static L1MagicEye get(int id) {
 		return _dataMap.get(id);
@@ -111,27 +111,37 @@ public class L1MagicEye {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1MagicEye> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading magic eye...");
+		System.out.print("loading magic eyes...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1MagicEye.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1MagicEye each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1MagicEye> dataMap = new HashMap<Integer, L1MagicEye>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc) {

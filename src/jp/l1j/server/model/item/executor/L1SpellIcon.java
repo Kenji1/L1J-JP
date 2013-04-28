@@ -65,9 +65,9 @@ public class L1SpellIcon {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/SpellIcon.xml";
+	private static final String _path = "./data/xml/Item/SpellIcon.xml";
 
-	private static final HashMap<Integer, L1SpellIcon> _dataMap = new HashMap<Integer, L1SpellIcon>();
+	private static HashMap<Integer, L1SpellIcon> _dataMap = new HashMap<Integer, L1SpellIcon>();
 
 	public static L1SpellIcon get(int id) {
 		return _dataMap.get(id);
@@ -111,27 +111,37 @@ public class L1SpellIcon {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1SpellIcon> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading spell icon...");
+		System.out.print("loading spell icons...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1SpellIcon.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1SpellIcon each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1SpellIcon> dataMap = new HashMap<Integer, L1SpellIcon>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item, int spellsc_objid,

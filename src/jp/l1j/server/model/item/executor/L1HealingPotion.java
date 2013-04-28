@@ -94,9 +94,9 @@ public class L1HealingPotion {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/HealingPotion.xml";
+	private static final String _path = "./data/xml/Item/HealingPotion.xml";
 
-	private static final HashMap<Integer, L1HealingPotion> _dataMap = new HashMap<Integer, L1HealingPotion>();
+	private static HashMap<Integer, L1HealingPotion> _dataMap = new HashMap<Integer, L1HealingPotion>();
 
 	public static L1HealingPotion get(int id) {
 		return _dataMap.get(id);
@@ -123,15 +123,15 @@ public class L1HealingPotion {
 		return _effects;
 	}
 
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1HealingPotion> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading healing potion...");
+		System.out.print("loading healing potions...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1HealingPotion.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1HealingPotion each : list) {
@@ -139,14 +139,24 @@ public class L1HealingPotion {
 					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, each.getItemId()));
 					// %s はアイテムリストに存在しません。
 				} else {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1HealingPotion> dataMap = new HashMap<Integer, L1HealingPotion>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item) {

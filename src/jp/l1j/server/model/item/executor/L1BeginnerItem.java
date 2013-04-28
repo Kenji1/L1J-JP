@@ -82,9 +82,9 @@ public class L1BeginnerItem {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/BeginnerItems.xml";
+	private static final String _path = "./data/xml/Item/BeginnerItems.xml";
 
-	private static final HashMap<String, L1BeginnerItem> _dataMap = new HashMap<String, L1BeginnerItem>();
+	private static HashMap<String, L1BeginnerItem> _dataMap = new HashMap<String, L1BeginnerItem>();
 
 	public static L1BeginnerItem get(String classInitial) {
 		return _dataMap.get(classInitial);
@@ -115,27 +115,37 @@ public class L1BeginnerItem {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<String, L1BeginnerItem> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading beginner item...");
+		System.out.print("loading beginner items...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1BeginnerItem.ItemList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemList list = (ItemList) um.unmarshal(file);
 
 			for (L1BeginnerItem each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getClassInitial(), each);
+					dataMap.put(each.getClassInitial(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<String, L1BeginnerItem> dataMap = new HashMap<String, L1BeginnerItem>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean storeToInventory(L1PcInstance pc) {
@@ -164,5 +174,4 @@ public class L1BeginnerItem {
 		}
 		return result;
 	}
-
 }

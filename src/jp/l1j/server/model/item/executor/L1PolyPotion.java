@@ -110,9 +110,9 @@ public class L1PolyPotion {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/PolyPotion.xml";
+	private static final String _path = "./data/xml/Item/PolyPotion.xml";
 
-	private static final HashMap<Integer, L1PolyPotion> _dataMap = new HashMap<Integer, L1PolyPotion>();
+	private static HashMap<Integer, L1PolyPotion> _dataMap = new HashMap<Integer, L1PolyPotion>();
 
 	public static L1PolyPotion get(int id) {
 		return _dataMap.get(id);
@@ -162,27 +162,37 @@ public class L1PolyPotion {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1PolyPotion> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading poly potion...");
+		System.out.print("loading poly potions...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1PolyPotion.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1PolyPotion each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1PolyPotion> dataMap = new HashMap<Integer, L1PolyPotion>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item) {

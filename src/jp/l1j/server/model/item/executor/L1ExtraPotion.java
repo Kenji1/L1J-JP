@@ -188,9 +188,9 @@ public class L1ExtraPotion {
 
 	}
 
-	private static final String PATH = "./data/xml/Item/ExtraPotion.xml";
+	private static final String _path = "./data/xml/Item/ExtraPotion.xml";
 
-	private static final HashMap<Integer, L1ExtraPotion> _dataMap = new HashMap<Integer, L1ExtraPotion>();
+	private static HashMap<Integer, L1ExtraPotion> _dataMap = new HashMap<Integer, L1ExtraPotion>();
 
 	public static L1ExtraPotion get(int id) {
 		return _dataMap.get(id);
@@ -217,15 +217,15 @@ public class L1ExtraPotion {
 		return _effect;
 	}
 
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1ExtraPotion> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading extra potion...");
+		System.out.print("loading extra potions...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1ExtraPotion.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1ExtraPotion each : list) {
@@ -233,14 +233,24 @@ public class L1ExtraPotion {
 					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, each.getItemId()));
 					// %s はアイテムリストに存在しません。
 				} else {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1ExtraPotion> dataMap = new HashMap<Integer, L1ExtraPotion>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item) {

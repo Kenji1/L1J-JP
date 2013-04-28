@@ -111,7 +111,7 @@ public class L1MapLimiter implements Runnable  {
 
 	private static final String PATH = "./data/xml/etc/MapLimiter.xml";
 
-	private static final HashMap<Integer, L1MapLimiter> _dataMap = new HashMap<Integer, L1MapLimiter>();
+	private static HashMap<Integer, L1MapLimiter> _dataMap = new HashMap<Integer, L1MapLimiter>();
 
 	public static L1MapLimiter get(int _mapId) {
 		return _dataMap.get(_mapId);
@@ -142,7 +142,7 @@ public class L1MapLimiter implements Runnable  {
 		return _mapTimerTable.getEnterTime();
 	}
 	
-	public static void load() {
+	public static void loadXml(HashMap<Integer, L1MapLimiter> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("loading map limiter...");
 		try {
@@ -157,7 +157,7 @@ public class L1MapLimiter implements Runnable  {
 				if (MapTable.getInstance().locationname(each.getMapId()) == null) {
 					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, each.getMapId()));
 				} else {
-					_dataMap.put(each.getMapId(), each);
+					dataMap.put(each.getMapId(), each);
 				}
 			}
 		} catch (Exception e) {
@@ -165,6 +165,16 @@ public class L1MapLimiter implements Runnable  {
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1MapLimiter> dataMap = new HashMap<Integer, L1MapLimiter>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public void execute(L1PcInstance pc) {

@@ -72,9 +72,9 @@ public class L1BlankScroll {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/BlankScroll.xml";
+	private static final String _path = "./data/xml/Item/BlankScroll.xml";
 
-	private static final HashMap<Integer, L1BlankScroll> _dataMap = new HashMap<Integer, L1BlankScroll>();
+	private static HashMap<Integer, L1BlankScroll> _dataMap = new HashMap<Integer, L1BlankScroll>();
 
 	public static L1BlankScroll get(int id) {
 		return _dataMap.get(id);
@@ -129,27 +129,37 @@ public class L1BlankScroll {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1BlankScroll> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading blank scroll...");
+		System.out.print("loading blank scrolls...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1BlankScroll.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1BlankScroll each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1BlankScroll> dataMap = new HashMap<Integer, L1BlankScroll>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item, int skillId) {

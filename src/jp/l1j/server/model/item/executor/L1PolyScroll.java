@@ -64,9 +64,9 @@ public class L1PolyScroll {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/PolyScroll.xml";
+	private static final String _path = "./data/xml/Item/PolyScroll.xml";
 
-	private static final HashMap<Integer, L1PolyScroll> _dataMap = new HashMap<Integer, L1PolyScroll>();
+	private static HashMap<Integer, L1PolyScroll> _dataMap = new HashMap<Integer, L1PolyScroll>();
 
 	public static L1PolyScroll get(int id) {
 		return _dataMap.get(id);
@@ -93,15 +93,15 @@ public class L1PolyScroll {
 		return _effect;
 	}
 
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1PolyScroll> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading poly scroll...");
+		System.out.print("loading poly scrolls...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1PolyScroll.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1PolyScroll each : list) {
@@ -109,14 +109,24 @@ public class L1PolyScroll {
 					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, each.getItemId()));
 					// %s はアイテムリストに存在しません。
 				} else {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1PolyScroll> dataMap = new HashMap<Integer, L1PolyScroll>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item, String s) {

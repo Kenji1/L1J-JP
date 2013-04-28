@@ -126,9 +126,9 @@ public class L1TeleportAmulet {
 				
 	}
 
-	private static final String PATH = "./data/xml/Item/TeleportAmulet.xml";
+	private static final String _path = "./data/xml/Item/TeleportAmulet.xml";
 
-	private static final HashMap<Integer, L1TeleportAmulet> _dataMap = new HashMap<Integer, L1TeleportAmulet>();
+	private static HashMap<Integer, L1TeleportAmulet> _dataMap = new HashMap<Integer, L1TeleportAmulet>();
 
 	public static L1TeleportAmulet get(int id) {
 		return _dataMap.get(id);
@@ -227,27 +227,37 @@ public class L1TeleportAmulet {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1TeleportAmulet> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading teleport amulet...");
+		System.out.print("loading teleport amulets...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1TeleportAmulet.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1TeleportAmulet each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1TeleportAmulet> dataMap = new HashMap<Integer, L1TeleportAmulet>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item) {

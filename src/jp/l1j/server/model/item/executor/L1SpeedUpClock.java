@@ -71,9 +71,9 @@ public class L1SpeedUpClock {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/SpeedUpClock.xml";
+	private static final String _path = "./data/xml/Item/SpeedUpClock.xml";
 
-	private static final HashMap<Integer, L1SpeedUpClock> _dataMap = new HashMap<Integer, L1SpeedUpClock>();
+	private static HashMap<Integer, L1SpeedUpClock> _dataMap = new HashMap<Integer, L1SpeedUpClock>();
 
 	public static L1SpeedUpClock get(int id) {
 		return _dataMap.get(id);
@@ -123,27 +123,37 @@ public class L1SpeedUpClock {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1SpeedUpClock> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading speed up clock...");
+		System.out.print("loading speed up clocks...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1SpeedUpClock.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1SpeedUpClock each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1SpeedUpClock> dataMap = new HashMap<Integer, L1SpeedUpClock>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {

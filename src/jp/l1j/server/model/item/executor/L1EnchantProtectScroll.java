@@ -69,9 +69,9 @@ public class L1EnchantProtectScroll {
 		}
 	}
 
-	private static final String PATH = "./data/xml/Item/EnchantProtectScroll.xml";
+	private static final String _path = "./data/xml/Item/EnchantProtectScroll.xml";
 
-	private static final HashMap<Integer, L1EnchantProtectScroll> _dataMap = new HashMap<Integer, L1EnchantProtectScroll>();
+	private static HashMap<Integer, L1EnchantProtectScroll> _dataMap = new HashMap<Integer, L1EnchantProtectScroll>();
 
 	public static L1EnchantProtectScroll get(int id) {
 		return _dataMap.get(id);
@@ -114,27 +114,37 @@ public class L1EnchantProtectScroll {
 		return true;
 	}
 	
-	public static void load() {
+	private static void loadXml(HashMap<Integer, L1EnchantProtectScroll> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading enchant protect scroll...");
+		System.out.print("loading enchant protect scrolls...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1EnchantProtectScroll.ItemEffectList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
+			File file = new File(_path);
 			ItemEffectList list = (ItemEffectList) um.unmarshal(file);
 
 			for (L1EnchantProtectScroll each : list) {
 				if (each.init()) {
-					_dataMap.put(each.getItemId(), each);
+					dataMap.put(each.getItemId(), each);
 				}
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "load failed.", e);
+			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+
+	public static void load() {
+		loadXml(_dataMap);
+	}
+	
+	public static void reload() {
+		HashMap<Integer, L1EnchantProtectScroll> dataMap = new HashMap<Integer, L1EnchantProtectScroll>();
+		loadXml(dataMap);
+		_dataMap = dataMap;
 	}
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
