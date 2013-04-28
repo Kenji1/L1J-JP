@@ -473,7 +473,6 @@ public class ItemTable {
 
 	private void load() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading items...");
 		_allEtcItems = allEtcItem();
 		_allWeapons = allWeapon();
 		_allArmors = allArmor();
@@ -482,12 +481,11 @@ public class ItemTable {
 		_allWithoutSpaceNames = new HashMap<String, Integer>();
 		buildFastLookupTable(_allTemplates, _allEtcItems, _allWeapons, _allArmors,
 				_allNames, _allWithoutSpaceNames);
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading items...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public void reload() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading items...");
 		Map<Integer, L1EtcItem> allEtcItems = allEtcItem();
 		Map<Integer, L1Weapon> allWeapons = allWeapon();
 		Map<Integer, L1Armor> allArmors = allArmor();
@@ -502,7 +500,7 @@ public class ItemTable {
 		_allTemplates = allTemplates;
 		_allNames = allNames;
 		_allWithoutSpaceNames = allWithoutSpaceNames;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading items...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	private void buildFastLookupTable(Map<Integer, L1Item> allTemplates,

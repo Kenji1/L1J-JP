@@ -53,11 +53,7 @@ public class SpawnTable {
 	}
 
 	private SpawnTable() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading mobs...");
 		fillSpawnTable();
-		_log.fine("loaded mob: " + _spawntable.size() + " records");
-		System.out.println("OK! " + timer.elapsedTimeMillis() + " ms");
 	}
 
 	private void fillSpawnTable() {
@@ -66,6 +62,7 @@ public class SpawnTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM spawn_mobs");
 			rs = pstm.executeQuery();
@@ -139,6 +136,8 @@ public class SpawnTable {
 					_highestId = spawnDat.getId();
 				}
 			}
+			_log.fine("loaded mob: " + _spawntable.size() + " records");
+			System.out.println("loading mobs...OK! " + timer.elapsedTimeMillis() + " ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

@@ -63,4 +63,4 @@
 'pcbuff','200','L1PcBuff'
 'config','200','L1CheckConfig'
 'atklog','200','L1AttackLog'
-'reloadtbl','200','L1ReloadTable'
+'reloadcnf','200','L1ReloadConfig'

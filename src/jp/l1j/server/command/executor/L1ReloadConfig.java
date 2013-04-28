@@ -47,14 +47,14 @@ import jp.l1j.server.datatables.WeaponSkillTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
-public class L1ReloadTable implements L1CommandExecutor {
-	private static Logger _log = Logger.getLogger(L1ReloadTable.class.getName());
+public class L1ReloadConfig implements L1CommandExecutor {
+	private static Logger _log = Logger.getLogger(L1ReloadConfig.class.getName());
 
-	private L1ReloadTable() {
+	private L1ReloadConfig() {
 	}
 
 	public static L1CommandExecutor getInstance() {
-		return new L1ReloadTable();
+		return new L1ReloadConfig();
 	}
 
 	@Override

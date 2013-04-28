@@ -29,6 +29,7 @@ import jp.l1j.server.controller.AnnouncementsCycle;
 import jp.l1j.server.controller.LoginController;
 import jp.l1j.server.controller.ShutdownController;
 import jp.l1j.server.controller.timer.AuctionTimeController;
+import jp.l1j.server.controller.timer.DeleteItemController;
 import jp.l1j.server.controller.timer.FishingTimeController;
 import jp.l1j.server.controller.timer.HomeTownTimeController;
 import jp.l1j.server.controller.timer.HouseTaxTimeController;
@@ -81,7 +82,6 @@ import jp.l1j.server.model.ElementalStoneGenerator;
 import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.L1BugBearRace;
 import jp.l1j.server.model.L1CastleLocation;
-import jp.l1j.server.controller.timer.DeleteItemController;
 import jp.l1j.server.model.L1NpcRegenerationTimer;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
@@ -245,8 +245,7 @@ public class GameServer extends Thread {
 		
 		// 精霊の石生成
 		if (Config.ELEMENTAL_STONE_AMOUNT > 0) {
-			ElementalStoneGenerator elementalStoneGenerator = ElementalStoneGenerator
-					.getInstance();
+			ElementalStoneGenerator elementalStoneGenerator = ElementalStoneGenerator.getInstance();
 			GeneralThreadPool.getInstance().execute(elementalStoneGenerator);
 		}
 
@@ -254,28 +253,23 @@ public class GameServer extends Thread {
 		HomeTownTimeController.getInstance();
 
 		// アジト競売タイムコントローラー
-		AuctionTimeController auctionTimeController = AuctionTimeController
-				.getInstance();
+		AuctionTimeController auctionTimeController = AuctionTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(auctionTimeController);
 
 		// アジト税金タイムコントローラー
-		HouseTaxTimeController houseTaxTimeController = HouseTaxTimeController
-				.getInstance();
+		HouseTaxTimeController houseTaxTimeController = HouseTaxTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(houseTaxTimeController);
 
 		// 釣りタイムコントローラー
-		FishingTimeController fishingTimeController = FishingTimeController
-				.getInstance();
+		FishingTimeController fishingTimeController = FishingTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(fishingTimeController);
 
 		// NPCチャットタイムコントローラー
-		NpcChatTimeController npcChatTimeController = NpcChatTimeController
-				.getInstance();
+		NpcChatTimeController npcChatTimeController = NpcChatTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(npcChatTimeController);
 
 		// ライトタイムコントローラー
-		LightTimeController lightTimeController = LightTimeController
-				.getInstance();
+		LightTimeController lightTimeController = LightTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(lightTimeController);
 
 		// アイテム削除コントローラー
@@ -388,8 +382,7 @@ public class GameServer extends Thread {
 	 * オンライン中のプレイヤー全てに対してkick、キャラクター情報の保存をする。
 	 */
 	public void disconnectAllCharacters() {
-		Collection<L1PcInstance> players = L1World.getInstance()
-				.getAllPlayers();
+		Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
 		for (L1PcInstance pc : players) {
 			pc.getNetConnection().setActiveChar(null);
 			pc.getNetConnection().kick();
@@ -457,7 +450,6 @@ public class GameServer extends Thread {
 			// TODO エラー通知が必要かもしれない
 			return;
 		}
-
 		_shutdownThread.interrupt();
 		_shutdownThread = null;
 	}

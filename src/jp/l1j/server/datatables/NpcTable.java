@@ -76,7 +76,6 @@ public class NpcTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading npcs...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM npcs");
 			rs = pstm.executeQuery();
@@ -161,7 +160,7 @@ public class NpcTable {
 				registerConstructorCache(constructorCache, npc.getImpl());
 				npcs.put(npcId, npc);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading npcs...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			throw new RuntimeException("Unable to load NpcTable", e);
 		} finally {
