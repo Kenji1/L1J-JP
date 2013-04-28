@@ -16,15 +16,18 @@
 package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
+import jp.l1j.configure.Config;
+import jp.l1j.server.command.GMCommandConfigs;
+import jp.l1j.server.controller.timer.MapTimeController;
+import jp.l1j.server.controller.timer.ShutdownTimeController;
 import jp.l1j.server.datatables.ArmorSetTable;
 import jp.l1j.server.datatables.CookingRecipeTable;
 import jp.l1j.server.datatables.DoorTable;
 import jp.l1j.server.datatables.DropRateTable;
 import jp.l1j.server.datatables.DropTable;
+import jp.l1j.server.datatables.DungeonTable;
 import jp.l1j.server.datatables.ItemRateTable;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.datatables.ShopTable;
-import jp.l1j.server.datatables.DungeonTable;
 import jp.l1j.server.datatables.MagicDollTable;
 import jp.l1j.server.datatables.MapTable;
 import jp.l1j.server.datatables.MobGroupTable;
@@ -39,11 +42,13 @@ import jp.l1j.server.datatables.RandomDungeonTable;
 import jp.l1j.server.datatables.ResolventTable;
 import jp.l1j.server.datatables.RestartLocationTable;
 import jp.l1j.server.datatables.ReturnLocationTable;
+import jp.l1j.server.datatables.ShopTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.datatables.SprTable;
 import jp.l1j.server.datatables.TrapTable;
 import jp.l1j.server.datatables.UbTable;
 import jp.l1j.server.datatables.WeaponSkillTable;
+import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
@@ -59,7 +64,16 @@ public class L1ReloadConfig implements L1CommandExecutor {
 
 	@Override
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
-		pc.sendPackets(new S_SystemMessage("reloading the tables..."));
+		pc.sendPackets(new S_SystemMessage("reloading the configs..."));
+
+		Config.load();
+		GMCommandConfigs.getInstance().reload();
+		L1BossCycle.reload();
+		MapTimeController.getInstance().reload();
+		if (Config.AUTO_SHUTDOWN) {
+			ShutdownTimeController.getInstance().reload();
+		}
+		
 		ArmorSetTable.getInstance().reload();
 		CookingRecipeTable.getInstance().reload();
 		DoorTable.getInstance().reload();
@@ -88,6 +102,7 @@ public class L1ReloadConfig implements L1CommandExecutor {
 		TrapTable.getInstance().reload();
 		UbTable.getInstance().reload();
 		WeaponSkillTable.getInstance().reload();
-		pc.sendPackets(new S_SystemMessage("reload the tables is complete."));
+		
+		pc.sendPackets(new S_SystemMessage("reload the configs is complete."));
 	}
 }

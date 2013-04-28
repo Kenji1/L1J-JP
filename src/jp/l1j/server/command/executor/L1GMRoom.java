@@ -17,7 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
-import jp.l1j.server.command.GMCommandsConfig;
+import jp.l1j.server.command.GMCommandConfigs;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -53,7 +53,7 @@ public class L1GMRoom implements L1CommandExecutor {
 			} else if (i == 5) {
 				L1Teleport.teleport(pc, 32894, 32535, (short) 300, 5, false);
 			} else {
-				L1Location loc = GMCommandsConfig.ROOMS.get(arg.toLowerCase());
+				L1Location loc = GMCommandConfigs.getInstance().getRooms().get(arg.toLowerCase());
 				if (loc == null) {
 					pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_THE_ROOM, arg)));
 					// ルーム: %s は存在しません。

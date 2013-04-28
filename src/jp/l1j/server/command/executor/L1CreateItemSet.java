@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
-import jp.l1j.server.command.GMCommandsConfig;
+import jp.l1j.server.command.GMCommandConfigs;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -41,7 +41,7 @@ public class L1CreateItemSet implements L1CommandExecutor {
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		try {
 			String name = new StringTokenizer(arg).nextToken();
-			List<L1ItemSetItem> list = GMCommandsConfig.ITEM_SETS.get(name);
+			List<L1ItemSetItem> list = GMCommandConfigs.getInstance().getItemSets().get(name);
 			if (list == null) {
 				pc.sendPackets(new S_SystemMessage(I18N_DOES_NOT_EXIST_ITEM_SET));
 				// アイテムセットが存在しません。

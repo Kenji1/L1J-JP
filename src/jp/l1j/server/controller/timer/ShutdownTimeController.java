@@ -33,9 +33,9 @@ public class ShutdownTimeController implements Runnable {
 
 	private static Logger _log = Logger.getLogger(ShutdownTimeController.class.getName());
 
-	private static final String PATH = "./data/xml/Cycle/ShutdownCycle.xml";
+	private static final String _path = "./data/xml/Cycle/ShutdownCycle.xml";
 
-	private static final HashMap<String, ShutdownTimeController> _dataMap =
+	private static HashMap<String, ShutdownTimeController> _dataMap =
 			new HashMap<String, ShutdownTimeController>();
 
 	private static ShutdownTimeController _instance;
@@ -76,29 +76,33 @@ public class ShutdownTimeController implements Runnable {
 		return _dataMap.get(time);
 	}
 
-	public static void load() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading shutdown cycle...");
+	private static void loadShutdownCycles(HashMap<String, ShutdownTimeController> dataMap) {
 		try {
-			JAXBContext context = JAXBContext.newInstance(
-					ShutdownTimeController.ShutdownCycleList.class);
-
+			JAXBContext context = JAXBContext.newInstance(ShutdownTimeController.ShutdownCycleList.class);
 			Unmarshaller um = context.createUnmarshaller();
-
-			File file = new File(PATH);
-			ShutdownTimeController.ShutdownCycleList list =
-					(ShutdownTimeController.ShutdownCycleList) um.unmarshal(file);
-
+			File file = new File(_path);
+			ShutdownTimeController.ShutdownCycleList list = (ShutdownTimeController.ShutdownCycleList) um.unmarshal(file);
 			for (ShutdownTimeController each : list) {
-				_dataMap.put(each.getTime(), each);
+				dataMap.put(each.getTime(), each);
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, "Load " + PATH + "failed!", e);
+			_log.log(Level.SEVERE, "Load " + _path + "failed!", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
+	public void load() {
+		loadShutdownCycles(_dataMap);
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		HashMap<String, ShutdownTimeController> dataMap = new HashMap<String, ShutdownTimeController>();
+		loadShutdownCycles(dataMap);
+		_dataMap = dataMap;
+		System.out.println("loading shutdown cycles...OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	@Override
 	public void run() {
 		try {

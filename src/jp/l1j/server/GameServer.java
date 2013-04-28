@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import static jp.l1j.locale.I18N.*;
-import jp.l1j.server.command.GMCommandsConfig;
+import jp.l1j.server.command.GMCommandConfigs;
 import jp.l1j.server.controller.Announcements;
 import jp.l1j.server.controller.AnnouncementsCycle;
 import jp.l1j.server.controller.LoginController;
@@ -283,7 +283,7 @@ public class GameServer extends Thread {
 		// 自動シャットダウンコントローラー
 		if (Config.AUTO_SHUTDOWN) {
 			ShutdownTimeController shutdownTimeController = ShutdownTimeController.getInstance();
-			ShutdownTimeController.load();
+			shutdownTimeController.load();
 			GeneralThreadPool.getInstance().execute(shutdownTimeController);
 		}
 
@@ -322,7 +322,7 @@ public class GameServer extends Thread {
 		WeaponSkillTable.getInstance();
 		NpcActionTable.getInstance();
 		ReturnLocationTable.load();
-		GMCommandsConfig.load();
+		GMCommandConfigs.getInstance();
 		PetTypeTable.getInstance();
 		L1BossCycle.load();
 		SprTable.getInstance();

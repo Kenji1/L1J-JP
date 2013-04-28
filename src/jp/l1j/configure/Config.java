@@ -20,6 +20,7 @@ import jp.l1j.configure.Annotations.Configure;
 import jp.l1j.configure.CustomLoaders.WarTimeLoader;
 import jp.l1j.configure.CustomLoaders.WarTimeUnitLoader;
 import jp.l1j.server.utils.IntRange;
+import jp.l1j.server.utils.PerformanceTimer;
 
 public final class Config {
 	private static final String SERVER = "./config/server.properties.xml";
@@ -1439,9 +1440,11 @@ public final class Config {
 	}
 
 	public static void load() {
+		PerformanceTimer timer = new PerformanceTimer();
 		new ConfigLoader().load(Config.class);
 		afterLoad();
 		validate();
+		System.out.println("loading configs...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 		
 	private Config() {

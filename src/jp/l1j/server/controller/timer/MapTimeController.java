@@ -34,9 +34,9 @@ public class MapTimeController implements Runnable {
 
 	private static Logger _log = Logger.getLogger(MapTimeController.class.getName());
 
-	private static final String PATH = "./data/xml/Cycle/ResetMapTimeCycle.xml";
+	private static final String _path = "./data/xml/Cycle/ResetMapTimeCycle.xml";
 
-	private static final HashMap<String, MapTimeController> _dataMap = new HashMap<String, MapTimeController>();
+	private static HashMap<String, MapTimeController> _dataMap = new HashMap<String, MapTimeController>();
 
 	private static MapTimeController _instance;
 
@@ -46,7 +46,7 @@ public class MapTimeController implements Runnable {
 		}
 		return _instance;
 	}
-
+	
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "ResetCycleList")
 	private static class ResetCycleList implements Iterable<MapTimeController> {
@@ -93,26 +93,33 @@ public class MapTimeController implements Runnable {
 		return _dataMap.get(time);
 	}
 
-	public static void load() {
+	private static void loadMapTimers(HashMap<String, MapTimeController> dataMap) {
 		try {
-			JAXBContext context =
-					JAXBContext.newInstance(MapTimeController.ResetCycleList.class);
-
+			JAXBContext context = JAXBContext.newInstance(MapTimeController.ResetCycleList.class);
 			Unmarshaller um = context.createUnmarshaller();
-
-			File file = new File(PATH);
-			MapTimeController.ResetCycleList list =
-					(MapTimeController.ResetCycleList) um.unmarshal(file);
-
+			File file = new File(_path);
+			MapTimeController.ResetCycleList list = (MapTimeController.ResetCycleList) um.unmarshal(file);
 			for (MapTimeController each : list) {
-				_dataMap.put(each.getTime(), each);
+				dataMap.put(each.getTime(), each);
 			}
 		} catch (Exception e) {
-			_log.log(Level.SEVERE, "Load " + PATH + "failed!", e);
+			_log.log(Level.SEVERE, "Load " + _path + "failed!", e);
 			System.exit(0);
 		}
 	}
 
+	public void load() {
+		loadMapTimers(_dataMap);
+	}
+	
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		HashMap<String, MapTimeController> dataMap = new HashMap<String, MapTimeController>();
+		loadMapTimers(dataMap);
+		_dataMap = dataMap;
+		System.out.println("loading map timers...OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	@Override
 	public void run() {
 		try {
@@ -130,8 +137,7 @@ public class MapTimeController implements Runnable {
 		MapTimeController timer = get(String.format("%1$TH:%1$TM",cal));
 		if (timer != null) {
 			for(Area each : timer.getAreas()) {
-				if (each.getWeek() > 0
-						& each.getWeek() != cal.get(Calendar.DAY_OF_WEEK)) {
+				if (each.getWeek() > 0 & each.getWeek() != cal.get(Calendar.DAY_OF_WEEK)) {
 					continue;
 				}
 				MapTimerTable.reset(each.getAreaId());

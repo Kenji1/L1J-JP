@@ -25,7 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -33,7 +32,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import jp.l1j.server.datatables.BossSpawnTable;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
@@ -43,6 +41,7 @@ import jp.l1j.server.utils.PerformanceTimer;
 public class L1BossCycle {
 	@XmlAttribute(name = "Name")
 	private String _name;
+	
 	@XmlElement(name = "Base")
 	private Base _base;
 
@@ -50,6 +49,7 @@ public class L1BossCycle {
 	private static class Base {
 		@XmlAttribute(name = "Date")
 		private String _date;
+		
 		@XmlAttribute(name = "Time")
 		private String _time;
 
@@ -77,8 +77,10 @@ public class L1BossCycle {
 	private static class Cycle {
 		@XmlAttribute(name = "Period")
 		private String _period;
+		
 		@XmlAttribute(name = "Start")
 		private String _start;
+		
 		@XmlAttribute(name = "End")
 		private String _end;
 
@@ -111,20 +113,33 @@ public class L1BossCycle {
 	}
 
 	private static RandomGenerator _rnd = RandomGeneratorFactory.newRandom();
+
+	private static HashMap<String, L1BossCycle> _cycleMap = new HashMap<String, L1BossCycle>();
+	
 	private Calendar _baseDate;
+	
 	private int _period; // 分換算
+	
 	private int _periodDay;
+	
 	private int _periodHour;
+	
 	private int _periodMinute;
 
 	private int _startTime; // 分換算
+	
 	private int _endTime; // 分換算
+	
 	private static SimpleDateFormat _sdfYmd = new SimpleDateFormat("yyyy/MM/dd");
+	
 	private static SimpleDateFormat _sdfTime = new SimpleDateFormat("HH:mm");
-	private static SimpleDateFormat _sdf = new SimpleDateFormat(
-			"yyyy/MM/dd HH:mm");
+	
+	private static SimpleDateFormat _sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+	
 	private static Date _initDate = new Date();
+	
 	private static String _initTime = "0:00";
+	
 	private final Calendar START_UP = Calendar.getInstance();
 
 	public final void init() throws Exception {
@@ -151,18 +166,15 @@ public class L1BossCycle {
 		// 基準日時を決定
 		Calendar baseCal = Calendar.getInstance();
 		baseCal.setTime(_sdf.parse(base.getDate() + " " + base.getTime()));
-
 		// 出現周期の初期化,チェック
 		Cycle spawn = getCycle();
 		if (spawn == null || spawn.getPeriod() == null) {
 			throw new Exception("CycleのPeriodは必須");
 		}
-
 		String period = spawn.getPeriod();
 		_periodDay = getTimeParse(period, "d");
 		_periodHour = getTimeParse(period, "h");
 		_periodMinute = getTimeParse(period, "m");
-
 		String start = spawn.getStart();
 		int sDay = getTimeParse(start, "d");
 		int sHour = getTimeParse(start, "h");
@@ -171,7 +183,6 @@ public class L1BossCycle {
 		int eDay = getTimeParse(end, "d");
 		int eHour = getTimeParse(end, "h");
 		int eMinute = getTimeParse(end, "m");
-
 		// 分換算
 		_period = (_periodDay * 24 * 60) + (_periodHour * 60) + _periodMinute;
 		_startTime = (sDay * 24 * 60) + (sHour * 60) + sMinute;
@@ -199,7 +210,6 @@ public class L1BossCycle {
 				_endTime++;
 			}
 		}
-
 		// 最近の周期まで補正(再計算するときに厳密に算出するので、ここでは近くまで適当に補正するだけ)
 		while (!(baseCal.after(START_UP))) {
 			baseCal.add(Calendar.DAY_OF_MONTH, _periodDay);
@@ -316,7 +326,6 @@ public class L1BossCycle {
 			latestStart.add(Calendar.HOUR_OF_DAY, -_periodHour);
 			latestStart.add(Calendar.MINUTE, -_periodMinute);
 		}
-
 		return latestStart;
 	}
 
@@ -348,32 +357,26 @@ public class L1BossCycle {
 		}
 	}
 
-	public static void load() {
+	private static void loadBossCycles(HashMap<String, L1BossCycle> cycleMap) {
 		try {
 			// BookOrder クラスをバインディングするコンテキストを生成
-			JAXBContext context = JAXBContext
-					.newInstance(L1BossCycle.L1BossCycleList.class);
-
+			JAXBContext context = JAXBContext.newInstance(L1BossCycle.L1BossCycleList.class);
 			// XML -> POJO 変換を行うアンマーシャラを生成
 			Unmarshaller um = context.createUnmarshaller();
-
 			// XML -> POJO 変換
 			File file = new File("./data/xml/Cycle/BossCycle.xml");
 			L1BossCycleList bossList = (L1BossCycleList) um.unmarshal(file);
-
 			for (L1BossCycle cycle : bossList.getBossCycles()) {
 				cycle.init();
-				_cycleMap.put(cycle.getName(), cycle);
+				cycleMap.put(cycle.getName(), cycle);
 			}
-
 			// userデータがあれば上書き
 			File userFile = new File("./data/xml/Cycle/users/BossCycle.xml");
 			if (userFile.exists()) {
 				bossList = (L1BossCycleList) um.unmarshal(userFile);
-
 				for (L1BossCycle cycle : bossList.getBossCycles()) {
 					cycle.init();
-					_cycleMap.put(cycle.getName(), cycle);
+					cycleMap.put(cycle.getName(), cycle);
 				}
 			}
 			// spawn_boss_mobsから読み込んで配置
@@ -384,6 +387,18 @@ public class L1BossCycle {
 		}
 	}
 
+	public static void load() {
+		loadBossCycles(_cycleMap);
+	}
+	
+	public static void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		HashMap<String, L1BossCycle> cycleMap = new HashMap<String, L1BossCycle>();
+		loadBossCycles(cycleMap);
+		_cycleMap = cycleMap;
+		System.out.println("loading boss cycles...OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
 	/**
 	 * 周期名と指定日時に対する出現期間、出現時間をコンソール出力
 	 *
@@ -396,8 +411,6 @@ public class L1BossCycle {
 		System.out.print(_sdf.format(getSpawnStartTime(now).getTime()) + " - ");
 		System.out.println(_sdf.format(getSpawnEndTime(now).getTime()));
 	}
-
-	private static HashMap<String, L1BossCycle> _cycleMap = new HashMap<String, L1BossCycle>();
 
 	public static L1BossCycle getBossCycle(final String type) {
 		return _cycleMap.get(type);

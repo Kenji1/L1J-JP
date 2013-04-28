@@ -28,13 +28,35 @@ import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.templates.L1ItemSetItem;
 import jp.l1j.server.utils.IterableElementList;
+import jp.l1j.server.utils.PerformanceTimer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class GMCommandsConfig {
-	private static Logger _log = Logger.getLogger(GMCommandsConfig.class.getName());
+public class GMCommandConfigs {
+	private static Logger _log = Logger.getLogger(GMCommandConfigs.class.getName());
+
+	private static GMCommandConfigs _instance;
+
+	private static HashMap<String, ConfigLoader> _loaders = new HashMap<String, ConfigLoader>();
+
+	public static HashMap<String, L1Location> _rooms = new HashMap<String, L1Location>();
+	
+	public static HashMap<String, List<L1ItemSetItem>> _itemSets = new HashMap<String, List<L1ItemSetItem>>();
+
+	public static GMCommandConfigs getInstance() {
+		if (_instance == null) {
+			_instance = new GMCommandConfigs();
+		}
+		return _instance;
+	}
+
+	private GMCommandConfigs() {	
+		_loaders.put("roomlist", new RoomLoader());
+		_loaders.put("itemsetlist", new ItemSetLoader());
+		loadCommands(_loaders);
+	}
 
 	private interface ConfigLoader {
 		public void load(Element element);
@@ -71,7 +93,7 @@ public class GMCommandsConfig {
 			int locX = Integer.valueOf(element.getAttribute("LocX"));
 			int locY = Integer.valueOf(element.getAttribute("LocY"));
 			int mapId = Integer.valueOf(element.getAttribute("MapId"));
-			ROOMS.put(name.toLowerCase(), new L1Location(locX, locY, mapId));
+			_rooms.put(name.toLowerCase(), new L1Location(locX, locY, mapId));
 		}
 	}
 
@@ -101,20 +123,9 @@ public class GMCommandsConfig {
 				}
 			}
 			String name = element.getAttribute("Name");
-			ITEM_SETS.put(name.toLowerCase(), list);
+			_itemSets.put(name.toLowerCase(), list);
 		}
 	}
-
-	private static HashMap<String, ConfigLoader> _loaders = new HashMap<String, ConfigLoader>();
-	static {
-		GMCommandsConfig instance = new GMCommandsConfig();
-		_loaders.put("roomlist", instance.new RoomLoader());
-		_loaders.put("itemsetlist", instance.new ItemSetLoader());
-	}
-
-	public static HashMap<String, L1Location> ROOMS = new HashMap<String, L1Location>();
-	public static HashMap<String, List<L1ItemSetItem>> ITEM_SETS =
-			new HashMap<String, List<L1ItemSetItem>>();
 
 	private static Document loadXml(String file)
 			throws ParserConfigurationException, SAXException, IOException {
@@ -122,12 +133,12 @@ public class GMCommandsConfig {
 		return builder.parse(file);
 	}
 
-	public static void load() {
+	public static void loadCommands(HashMap<String, ConfigLoader> loaders) {
 		try {
 			Document doc = loadXml("./data/xml/GmCommands/GMCommands.xml");
 			NodeList nodes = doc.getDocumentElement().getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {
-				ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName().toLowerCase());
+				ConfigLoader loader = loaders.get(nodes.item(i).getNodeName().toLowerCase());
 				if (loader != null) {
 					loader.load((Element) nodes.item(i));
 				}
@@ -136,5 +147,25 @@ public class GMCommandsConfig {
 			_log.log(Level.SEVERE, String.format(I18N_LOAD_FAILED, "GMCommands.xml"), e);
 			// %s の読み込みに失敗しました。
 		}
+	}
+
+	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
+		HashMap<String, ConfigLoader> loaders = new HashMap<String, ConfigLoader>();
+		_rooms.clear();
+		_itemSets.clear();
+		loaders.put("roomlist", _instance.new RoomLoader());
+		loaders.put("itemsetlist", _instance.new ItemSetLoader());
+		loadCommands(loaders);
+		_loaders = loaders;
+		System.out.println("loading gm commands...OK! " + timer.elapsedTimeMillis() + "ms");
+	}
+	
+	public HashMap<String, List<L1ItemSetItem>> getItemSets() {
+		return _itemSets;
+	}
+	
+	public HashMap<String, L1Location> getRooms() {
+		return _rooms;
 	}
 }
