@@ -63,6 +63,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- 0-35791(0を指定すると自動切断しない) -->
 <entry key="AutomaticKick">10</entry>
 
+<!-- キャラクター情報および所持アイテムの自動保存機能 -->
+<!-- 【注意】trueにしないでください。DUPEが発生する可能性があります。 -->
+<!-- サーバーとクライアントともに、何らかの問題でハングアップしてもデータの保全性は保たれています。 -->
+<!-- 定期的に、保存処理を実行する必要はありません。 -->
+<entry key="Autosave">false</entry>
+
 <!-- キャラクター情報を自動保存する間隔（秒）-->
 <entry key="AutosaveInterval">1200</entry>
 

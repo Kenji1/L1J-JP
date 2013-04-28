@@ -276,7 +276,9 @@ public class ClientThread implements Runnable, PacketOutput {
 			_cipher = new Cipher(key);
 
 			while (true) {
-				doAutoSave();
+				if (Config.AUTOSAVE) {
+					doAutoSave();
+				}
 
 				byte data[] = null;
 				try {

@@ -161,6 +161,9 @@ public final class Config {
 	@Configure(file = SERVER, key = "LoggingChatChatParty")
 	public static boolean LOGGING_CHAT_CHAT_PARTY = false;
 
+	@Configure(file = SERVER, key = "Autosave")
+	public static boolean AUTOSAVE = false;
+	
 	@Configure(file = SERVER, key = "AutosaveInterval")
 	public static int AUTOSAVE_INTERVAL = 1200;
 
