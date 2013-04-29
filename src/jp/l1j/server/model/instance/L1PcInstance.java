@@ -300,7 +300,7 @@ public class L1PcInstance extends L1Character {
 	public void stopMpRegenerationByDoll() {
 		for (Object _doll : getDollList().values().toArray()) {
 			L1DollInstance doll = (L1DollInstance) _doll;
-			if (L1MagicDoll.enableHpr(doll)) {
+			if (L1MagicDoll.enableMpr(doll)) {
 				doll.stopMprTimer();
 			}
 		}
