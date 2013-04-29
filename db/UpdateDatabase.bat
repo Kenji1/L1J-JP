@@ -30,7 +30,7 @@ set password=
 :: CSV Config
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 set delimiter=,
-set enclosed=\'
+set enclosed=
 set newline=\n
 set skipline=1
 

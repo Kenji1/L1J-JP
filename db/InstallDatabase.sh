@@ -30,7 +30,7 @@ password=
 # CSV Config
 ################################################################################
 delimiter=','
-enclosed="\'"
+enclosed=
 newline='\n'
 skipline=1
 

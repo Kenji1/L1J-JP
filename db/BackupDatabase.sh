@@ -30,7 +30,7 @@ password=
 # CSV Config
 ################################################################################
 delimiter=','
-enclosed="\'"
+enclosed=
 newline='\n'
 tmpdir=$(cd $(dirname $0);pwd)
 outdir="$tmpdir/backup"
