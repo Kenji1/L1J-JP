@@ -1495,6 +1495,46 @@
 			<Material Amount="100000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
+	<!--触媒抽出の袋 / 魔法の触媒 錬金術師-->
+	<Action Name="request elemental box">
+		<MakeItem>
+			<Item Amount="1" ItemId="41484"/>
+			<Material Amount="10000" ItemId="40308"/>
+			<Material Amount="1" ItemId="40524"/>
+		</MakeItem>
+	</Action>
+	<!--魔力の石 / 魔法の触媒 錬金術師-->
+	<Action Name="request magic gem">
+		<MakeItem>
+			<Item Amount="100" ItemId="40318"/>
+			<Material Amount="10000" ItemId="40308"/>
+			<Material Amount="1" ItemId="40524"/>
+		</MakeItem>
+	</Action>
+	<!--精霊の玉 / 魔法の触媒 錬金術師-->
+	<Action Name="request elemental orb">
+		<MakeItem>
+			<Item Amount="180" ItemId="40319"/>
+			<Material Amount="10000" ItemId="40308"/>
+			<Material Amount="1" ItemId="40524"/>
+		</MakeItem>
+	</Action>
+	<!--黒魔石 / 魔法の触媒 錬金術師-->
+	<Action Name="request bring stone">
+		<MakeItem>
+			<Item Amount="60" ItemId="40320"/>
+			<Material Amount="10000" ItemId="40308"/>
+			<Material Amount="1" ItemId="40524"/>
+		</MakeItem>
+	</Action>
+	<!--イビルブラッド / 魔法の触媒 錬金術師-->
+	<Action Name="request blood of evil">
+		<MakeItem>
+			<Item Amount="5" ItemId="40031"/>
+			<Material Amount="10000" ItemId="40308"/>
+			<Material Amount="1" ItemId="40524"/>
+		</MakeItem>
+	</Action>
 	<!--隠れ里帰還スクロール / 隠れ里の錬金術師-->
 	<Action Name="request recluse teleport scroll">
 		<MakeItem>

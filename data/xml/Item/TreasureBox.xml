@@ -986,6 +986,32 @@
 		<Item ItemId="40297" Count="1" Chance="75" />
 		<Item ItemId="41446" Count="1" Chance="25" />
 	</TreasureBox>
+	<!--触媒抽出の袋-->
+	<TreasureBox Type="SPECIFIC" ItemId="41484">
+		<Item ItemId="40304" Count="1" />
+		<Item ItemId="40305" Count="1" />
+		<Item ItemId="40306" Count="1" />
+		<Item ItemId="40307" Count="1" />
+	</TreasureBox>
+	<!--マーブルの遺産-->
+	<TreasureBox Type="SPECIFIC" ItemId="40304">
+		<Item ItemId="40318" Min="5" Max="10" />
+	</TreasureBox>
+	<!--ファアグリオの遺産-->
+	<TreasureBox Type="SPECIFIC" ItemId="40305">
+		<Item ItemId="40320" Min="5" Max="10" />
+	</TreasureBox>
+	<!--エヴァの遺産-->
+	<TreasureBox Type="SPECIFIC" ItemId="40306">
+		<Item ItemId="40319" Min="10" Max="15" />
+	</TreasureBox>
+	<!--サイハの遺産-->
+	<TreasureBox Type="SPECIFIC" ItemId="40307">
+		<Item ItemId="40318" Min="1" Max="20" />
+		<Item ItemId="40319" Min="2" Max="30" />
+		<Item ItemId="40320" Min="1" Max="20" />
+		<Item ItemId="40031" Min="1" Max="5" />
+	</TreasureBox>
 	<!--開かれた下級オシリスの宝箱-->
 	<TreasureBox Type="RANDOM" ItemId="49096">
 		<Item ItemId="40044" Count="3" Chance="13" />

@@ -44,6 +44,8 @@ public class L1TreasureBox {
 
 	private static Logger _log = Logger.getLogger(L1TreasureBox.class.getName());
 
+	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
+	
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "TreasureBoxList")
 	private static class TreasureBoxList implements Iterable<L1TreasureBox> {
@@ -69,6 +71,20 @@ public class L1TreasureBox {
 
 		public int getCount() {
 			return _count;
+		}
+
+		@XmlAttribute(name = "Min")
+		private int _min;
+
+		public int getMin() {
+			return _min;
+		}
+
+		@XmlAttribute(name = "Max")
+		private int _max;
+
+		public int getMax() {
+			return _max;
 		}
 
 		private int _chance;
@@ -212,8 +228,16 @@ public class L1TreasureBox {
 			for (Item each : getItems()) {
 				item = ItemTable.getInstance().createItem(each.getItemId());
 				if (item != null) {
-					item.setCount(each.getCount());
-					storeItem(pc, item);
+					if (each.getCount() > 0) {
+						item.setCount(each.getCount());
+						storeItem(pc, item);
+					} else if (each.getMax() > 0 && each.getMin() > 0
+							&& each.getMax() > each.getMin()) {
+						int rnd = each.getMax() - each.getMin();
+						int count = each.getMin() + _random.nextInt(rnd) + 1;
+						item.setCount(count);
+						storeItem(pc, item);
+					}
 				}
 			}
 
@@ -230,8 +254,16 @@ public class L1TreasureBox {
 				if (r < chance) {
 					item = ItemTable.getInstance().createItem(each.getItemId());
 					if (item != null) {
-						item.setCount(each.getCount());
-						storeItem(pc, item);
+						if (each.getCount() > 0) {
+							item.setCount(each.getCount());
+							storeItem(pc, item);
+						} else if (each.getMax() > 0 && each.getMin() > 0
+								&& each.getMax() > each.getMin()) {
+							int rnd = each.getMax() - each.getMin();
+							int count = each.getMin() + _random.nextInt(rnd) + 1;
+							item.setCount(count);
+							storeItem(pc, item);
+						}
 					}
 					break;
 				}
