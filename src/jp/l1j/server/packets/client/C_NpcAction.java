@@ -5456,6 +5456,30 @@ public class C_NpcAction extends ClientBasePacket {
 			} else {
 				htmlid = "dsecret3";
 			}
+                // ネットカフェマップ
+		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 51000) {
+			// 正確なテレポート位置が不明
+		       if (s.equalsIgnoreCase("a")) {
+				L1Teleport.teleport(pc, 32549, 32532, (short) 7002, 5, true);
+		} else if (s.equalsIgnoreCase("b")) {
+				L1Teleport.teleport(pc, 32549, 32532, (short) 7003, 5, true);
+                } else if (s.equalsIgnoreCase("c")) {
+				L1Teleport.teleport(pc, 32549, 32532, (short) 7004, 5, true);
+		} else if (s.equalsIgnoreCase("d")) {
+				L1Teleport.teleport(pc, 32549, 32532, (short) 7005, 5, true);
+		} else if (s.equalsIgnoreCase("e")) {
+				L1Teleport.teleport(pc, 32549, 32532, (short) 7006, 5, true);
+		} else if (s.equalsIgnoreCase("f")) {
+				L1Teleport.teleport(pc, 32732, 32928, (short) 7007, 5, true);
+		} else if (s.equalsIgnoreCase("g")) {
+				L1Teleport.teleport(pc, 32732, 32928, (short) 7008, 5, true);
+		} else if (s.equalsIgnoreCase("h")) {
+				L1Teleport.teleport(pc, 32732, 32928, (short) 7009, 5, true);
+		} else if (s.equalsIgnoreCase("i")) {
+				L1Teleport.teleport(pc, 32732, 32928, (short) 7010, 5, true);
+		} else if (s.equalsIgnoreCase("j")) {
+				L1Teleport.teleport(pc, 32732, 32928, (short) 7011, 5, true);
+			}
 		// アイテム制作師 シュエルメ
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91061) {
 			if (s.equalsIgnoreCase("e")) { // 誕生の魔眼を作る
