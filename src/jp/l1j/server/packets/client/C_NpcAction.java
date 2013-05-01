@@ -5390,17 +5390,19 @@ public class C_NpcAction extends ClientBasePacket {
 		// 強化ウィザード
 		} else if ((((L1NpcInstance) obj).getNpcTemplate().getNpcId() >= 81352)
 				&& (((L1NpcInstance) obj).getNpcTemplate().getNpcId() <= 81362)) {
-			if (s.equalsIgnoreCase("a") || s.equalsIgnoreCase("b")){
+			if (s.equalsIgnoreCase("a") || s.equalsIgnoreCase("b") || s.equalsIgnoreCase("c")){
 				int[] skills = new int[10];
-				// ヘイスト、アドバンスドスピリッツ、アーススキン、
-				// ネイチャーズタッチ、アクアプロテクター、コンセントレーション、
-				// ペイシェンス、インサイト、シャイニングオーラ、
+				// リムーブカーズ、フルヒール、ヘイスト、アドバンスドスピリッツ、、
+				// アクアプロテクター、アイアンスキン、ペイシェンス、インサイト、
 				if (s.equalsIgnoreCase("a")) { // 「強烈な炎の魔法」をもらう
-					skills = new int[] {43, 79, 151, 158, 160, 206, 211, 216, 115, 148};
+					skills = new int[] {37, 57, 43, 79, 160, 168, 211, 216, 148};
 					// ファイアーウェポン
 				} else if (s.equalsIgnoreCase("b")) { // 「強烈な風の魔法」をもらう
-					skills = new int[] {43, 79, 151, 158, 160, 206, 211, 216, 115, 149};
+					skills = new int[] {37, 57, 43, 79, 160, 168, 211, 216, 149};
 					// ウィンドショット
+				} else if (s.equalsIgnoreCase("c")) { // 「強烈な魂の魔法」をもらう
+					// コンセントレーション
+					skills = new int[] {37, 57, 43, 79, 160, 168, 211, 216, 206};
 				}
 				if(pc.getInventory().consumeItem(40308, 3000)){ // 3000アデナ
 					L1SkillUse l1skilluse = new L1SkillUse();
