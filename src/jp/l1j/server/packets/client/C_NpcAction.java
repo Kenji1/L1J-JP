@@ -5390,17 +5390,17 @@ public class C_NpcAction extends ClientBasePacket {
 		// 強化ウィザード
 		} else if ((((L1NpcInstance) obj).getNpcTemplate().getNpcId() >= 81352)
 				&& (((L1NpcInstance) obj).getNpcTemplate().getNpcId() <= 81362)) {
-			if (s.equalsIgnoreCase("a") || s.equalsIgnoreCase("b") || s.equalsIgnoreCase("c")){
+			if (s.equals("a") || s.equals("b") || s.equals("c")){
 				int[] skills = new int[10];
 				// リムーブカーズ、フルヒール、ヘイスト、アドバンスドスピリッツ、、
 				// アクアプロテクター、アイアンスキン、ペイシェンス、インサイト、
-				if (s.equalsIgnoreCase("a")) { // 「強烈な炎の魔法」をもらう
+				if (s.equals("a")) { // 「強烈な炎の魔法」をもらう
 					skills = new int[] {37, 57, 43, 79, 160, 168, 211, 216, 148};
 					// ファイアーウェポン
-				} else if (s.equalsIgnoreCase("b")) { // 「強烈な風の魔法」をもらう
+				} else if (s.equals("b")) { // 「強烈な風の魔法」をもらう
 					skills = new int[] {37, 57, 43, 79, 160, 168, 211, 216, 149};
 					// ウィンドショット
-				} else if (s.equalsIgnoreCase("c")) { // 「強烈な魂の魔法」をもらう
+				} else if (s.equals("c")) { // 「強烈な魂の魔法」をもらう
 					// コンセントレーション
 					skills = new int[] {37, 57, 43, 79, 160, 168, 211, 216, 206};
 				}
@@ -5414,8 +5414,108 @@ public class C_NpcAction extends ClientBasePacket {
 				} else {
 					htmlid = "bs_adena";
 				}
-			} else if (s.equalsIgnoreCase("0")) {
+			} else if (s.equals("0")) {
 				htmlid = "bs_01";
+			// スペルスクロール製作（個数選択）
+			} else if (s.equals("1") || s.equals("2") || s.equals("3")
+					|| s.equals("4") || s.equals("5")) {
+				int[] cost = { 50, 100, 100, 200, 200 };
+				int amount = 0;
+				if (s.equals("1")) {
+					amount = 1;
+				} else if (s.equals("2")) {
+					amount = 5;
+				} else if (s.equals("3")) {
+					amount = 10;
+				} else if (s.equals("4")) {
+					amount = 100;
+				} else if (s.equals("5")) {
+					amount = 500;
+				}
+				if (amount > 0) {
+					htmlid = "bs_m4";
+					htmldata = new String[] {
+						String.valueOf(cost[0] * amount), String.valueOf(cost[1] * amount),
+						String.valueOf(cost[2] * amount), String.valueOf(cost[3] * amount),
+						String.valueOf(cost[4] * amount), String.valueOf(amount)
+					};
+				}
+				pc.setCreateScrollAmount(amount);
+			// スペルスクロール製作（ライト）
+			} else if (s.equals("A")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40860, 50, 40090, 0);
+			// スペルスクロール製作（シールド）
+			} else if (s.equals("B")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40861, 50, 40090, 0);
+			// スペルスクロール製作（エネルギー ボルト）
+			} else if (s.equals("C")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40862, 50, 40090, 0);
+			// スペルスクロール製作（ホーリー ウェポン）
+			} else if (s.equals("D")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40866, 50, 40090, 0);
+			// スペルスクロール製作（ヒール）
+			} else if (s.equals("E")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40859, 50, 40090, 0);
+			// スペルスクロール製作（ディクリース ウェイト）
+			} else if (s.equals("F")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40872, 100, 40091, 0);
+			// スペルスクロール製作（ディテクション）
+			} else if (s.equals("G")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40871, 100, 40091, 0);
+			// スペルスクロール製作（エンチャント ウェポン）
+			} else if (s.equals("H")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40870, 100, 40091, 0);
+			// スペルスクロール製作（キュア ポイズン）
+			} else if (s.equals("I")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40867, 100, 40091, 0);
+			// スペルスクロール製作（ファイアー アロー）
+			} else if (s.equals("J")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40873, 100, 40091, 0);
+			// スペルスクロール製作（ライトニング）
+			} else if (s.equals("K")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40875, 100, 40092, 0);
+			// スペルスクロール製作（ブレスド アーマー）
+			} else if (s.equals("L")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40879, 100, 40092, 0);
+			// スペルスクロール製作（エキストラ ヒール）
+			} else if (s.equals("M")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40877, 100, 40092, 0);
+			// スペルスクロール製作（フローズン クラウド）
+			} else if (s.equals("N")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40880, 100, 40092, 0);
+			// スペルスクロール製作（ターン アンデッド）
+			} else if (s.equals("O")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40876, 100, 40092, 0);
+			// スペルスクロール製作（メディテーション）
+			} else if (s.equals("P")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40890, 200, 40093, 0);
+			// スペルスクロール製作（ファイアー ボール）
+			} else if (s.equals("Q")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40883, 200, 40093, 0);
+			// スペルスクロール製作（フィジカル エンチャント：DEX）
+			} else if (s.equals("R")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40884, 200, 40093, 0);
+			// スペルスクロール製作（カウンター マジック）
+			} else if (s.equals("S")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40889, 200, 40093, 40318);
+			// スペルスクロール製作（スロー）
+			} else if (s.equals("T")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40887, 200, 40093, 40318);
+			// スペルスクロール製作（グレーター ヒール）
+			} else if (s.equals("U")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40893, 200, 40094, 0);
+			// スペルスクロール製作（リムーブ カーズ）
+			} else if (s.equals("V")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40894, 200, 40094, 0);
+			// スペルスクロール製作（マナ ドレイン）
+			} else if (s.equals("W")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40897, 200, 40094, 0);
+			// スペルスクロール製作（コーン オブ コールド）
+			} else if (s.equals("X")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40896, 200, 40094, 0);
+			// スペルスクロール製作（コール ライトニング）
+			} else if (s.equals("Y")) {
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40892, 200, 40094, 0);
 			}
 		// ドラゴンポータル(隠された竜の地)
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 91066) {
@@ -5456,28 +5556,28 @@ public class C_NpcAction extends ClientBasePacket {
 			} else {
 				htmlid = "dsecret3";
 			}
-                // ネットカフェマップ
+		// ネットカフェマップ
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 51000) {
 			// 正確なテレポート位置が不明
-		       if (s.equalsIgnoreCase("a")) {
+			if (s.equalsIgnoreCase("a")) {
 				L1Teleport.teleport(pc, 32549, 32532, (short) 7002, 5, true);
-		} else if (s.equalsIgnoreCase("b")) {
+			} else if (s.equalsIgnoreCase("b")) {
 				L1Teleport.teleport(pc, 32549, 32532, (short) 7003, 5, true);
-                } else if (s.equalsIgnoreCase("c")) {
+			} else if (s.equalsIgnoreCase("c")) {
 				L1Teleport.teleport(pc, 32549, 32532, (short) 7004, 5, true);
-		} else if (s.equalsIgnoreCase("d")) {
+			} else if (s.equalsIgnoreCase("d")) {
 				L1Teleport.teleport(pc, 32549, 32532, (short) 7005, 5, true);
-		} else if (s.equalsIgnoreCase("e")) {
+			} else if (s.equalsIgnoreCase("e")) {
 				L1Teleport.teleport(pc, 32549, 32532, (short) 7006, 5, true);
-		} else if (s.equalsIgnoreCase("f")) {
+			} else if (s.equalsIgnoreCase("f")) {
 				L1Teleport.teleport(pc, 32732, 32928, (short) 7007, 5, true);
-		} else if (s.equalsIgnoreCase("g")) {
+			} else if (s.equalsIgnoreCase("g")) {
 				L1Teleport.teleport(pc, 32732, 32928, (short) 7008, 5, true);
-		} else if (s.equalsIgnoreCase("h")) {
+			} else if (s.equalsIgnoreCase("h")) {
 				L1Teleport.teleport(pc, 32732, 32928, (short) 7009, 5, true);
-		} else if (s.equalsIgnoreCase("i")) {
+			} else if (s.equalsIgnoreCase("i")) {
 				L1Teleport.teleport(pc, 32732, 32928, (short) 7010, 5, true);
-		} else if (s.equalsIgnoreCase("j")) {
+			} else if (s.equalsIgnoreCase("j")) {
 				L1Teleport.teleport(pc, 32732, 32928, (short) 7011, 5, true);
 			}
 		// アイテム制作師 シュエルメ
@@ -7116,6 +7216,34 @@ public class C_NpcAction extends ClientBasePacket {
 			htmlid = "mopo5";
 		}
 		
+		return htmlid;
+	}
+
+	private String getSpellScroll(L1PcInstance pc, L1NpcInstance npc,
+			int spellScrollId, int cost, int blankScrollId, int needItemId) {
+		String htmlid = "";
+		int amount = pc.getCreateScrollAmount();
+		pc.setCreateScrollAmount(0);
+		int price = cost * amount;
+		if (pc.getInventory().checkItem(40308, price)
+				&& pc.getInventory().checkItem(blankScrollId, amount)
+				&& (needItemId == 0 || (needItemId > 0 && pc.getInventory().checkItem(needItemId, amount)))) {
+			L1ItemInstance item = ItemTable.getInstance().createItem(spellScrollId);
+			if (pc.getInventory().checkAddItem(item, amount, true) == L1Inventory.OK) {
+				if (needItemId > 0) {
+					pc.getInventory().consumeItem(needItemId, amount);
+				}
+				pc.getInventory().consumeItem(40308, price);
+				pc.getInventory().consumeItem(blankScrollId, amount);
+				item.setCount(amount);
+				pc.getInventory().storeItem(item);
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().getName(), item.getLogName()));
+				// \f1%0が%1をくれました。
+				htmlid = "bs_m1";
+			}
+		} else {
+			htmlid = "bs_m2";
+		}
 		return htmlid;
 	}
 	

@@ -4884,7 +4884,7 @@ public class L1PcInstance extends L1Character {
 		_potionRecoveryRate += i;
 	}
 	
-	public int _monsterKill = 0; // モンスター討伐数
+	private int _monsterKill = 0; // モンスター討伐数
 	
 	public int getMonsterKill() {
 		return _monsterKill;
@@ -4900,4 +4900,13 @@ public class L1PcInstance extends L1Character {
 		sendPackets(new S_OwnCharStatus(this));
 	}
 	
+	private int _createScrollAmount = 0; // スペルスクロール製作個数
+	
+	public int getCreateScrollAmount() {
+		return _createScrollAmount;
+	}
+	
+	public void setCreateScrollAmount(int i) {
+		_createScrollAmount = i;
+	}
 }
