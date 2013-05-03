@@ -19,7 +19,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.L1OrimQuest;
 import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.controller.timer.HomeTownTimeController;
@@ -39,14 +38,6 @@ import jp.l1j.server.datatables.PolyTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.datatables.TownTable;
 import jp.l1j.server.datatables.UbTable;
-import jp.l1j.server.model.instance.L1DoorInstance;
-import jp.l1j.server.model.instance.L1HousekeeperInstance;
-import jp.l1j.server.model.instance.L1ItemInstance;
-import jp.l1j.server.model.instance.L1MerchantInstance;
-import jp.l1j.server.model.instance.L1NpcInstance;
-import jp.l1j.server.model.instance.L1PcInstance;
-import jp.l1j.server.model.instance.L1PetInstance;
-import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.L1BugBearRace;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Character;
@@ -57,6 +48,7 @@ import jp.l1j.server.model.L1HauntedHouse;
 import jp.l1j.server.model.L1HouseLocation;
 import jp.l1j.server.model.L1Location;
 import jp.l1j.server.model.L1Object;
+import jp.l1j.server.model.L1OrimQuest;
 import jp.l1j.server.model.L1PetMatch;
 import jp.l1j.server.model.L1PolyMorph;
 import jp.l1j.server.model.L1PolyRace;
@@ -65,6 +57,15 @@ import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1TownLocation;
 import jp.l1j.server.model.L1UltimateBattle;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1DoorInstance;
+import jp.l1j.server.model.instance.L1HousekeeperInstance;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1MerchantInstance;
+import jp.l1j.server.model.instance.L1NpcInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.model.instance.L1PetInstance;
+import jp.l1j.server.model.instance.L1SummonInstance;
+import jp.l1j.server.model.instance.L1TownAdvisorInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.item.L1ItemId;
@@ -2125,26 +2126,9 @@ public class C_NpcAction extends ClientBasePacket {
 				|| ((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 70806
 				|| ((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 70830
 				|| ((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 70876) {
-			L1ItemInstance item = null;
-			if (s.equalsIgnoreCase("0")) { // 村人のブレイブポーションを作る
-				getTownItem(pc, (L1NpcInstance) obj, 41480, 3, 1000);
-			} else if (s.equalsIgnoreCase("1")) { // 村人の集中ポーションを作る
-				getTownItem(pc, (L1NpcInstance) obj, 41479, 3, 1000);
-			} else if (s.equalsIgnoreCase("2")) { // 村人のウィズダムポーションを作る
-				getTownItem(pc, (L1NpcInstance) obj, 41482, 3, 500);
-			} else if (s.equalsIgnoreCase("3")) { // 村人の魔力ポーションを作る
-				getTownItem(pc, (L1NpcInstance) obj, 41481, 3, 1000);
-			} else if (s.equalsIgnoreCase("4")) { // 村人のヘイストポーションを作る
-				getTownItem(pc, (L1NpcInstance) obj, 41477, 3, 500);
-			} else if (s.equalsIgnoreCase("5")) { // 村人の呼吸ポーションを作る
-				getTownItem(pc, (L1NpcInstance) obj, 41478, 3, 500);
-			} else if (s.equalsIgnoreCase("6")) { // 村人の変身ポーションを作る
-				getTownItem(pc, (L1NpcInstance) obj, 41483, 3, 1000);
-			} else if (s.equalsIgnoreCase("a")) { // 村人の帰還スクロールを購入する
-				int[] ids = {41467, 41472, 41468, 41471, 41470, 41469, 41473,
-					41474, 41476, 41475};
-				getTownItem(pc, (L1NpcInstance) obj, ids[pc.getHomeTownId() - 1], 1, 400);
-			}
+			L1TownAdvisorInstance advisor =
+				new L1TownAdvisorInstance(((L1NpcInstance) obj).getNpcTemplate());
+			advisor.create(pc, s);
 			htmlid = "";
 		}
 		// ドロモンド
@@ -7245,21 +7229,6 @@ public class C_NpcAction extends ClientBasePacket {
 			htmlid = "bs_m2";
 		}
 		return htmlid;
-	}
-	
-	private void getTownItem(L1PcInstance pc, L1NpcInstance npc, int itemId, int count, int price) {
-		L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
-		
-		if (pc.getInventory().checkItem(40308, price)) {
-			if (pc.getInventory().checkAddItem(item, count, true) == L1Inventory.OK) {
-				pc.getInventory().consumeItem(40308, price);
-				pc.addContribution(price / 100); // 貢献度
-				TownTable.getInstance().addSalesMoney(pc.getHomeTownId(), price); // 町の売上
-				pc.getInventory().storeItem(itemId, count);
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().getName(),
-						item.getItem().getName())); // \f1%0が%1をくれました。
-			}
-		}
 	}
 	
 	private String teleportToi(L1PcInstance pc, String s) {
