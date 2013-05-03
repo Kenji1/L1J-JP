@@ -626,7 +626,7 @@ public class L1Magic {
 		int dmg = 0;
 		double attrDeffence = calcAttrResistance(L1Skill.ATTR_FIRE);
 		L1Skill l1skills = SkillTable.getInstance().findBySkillId(FIRE_WALL);
-		dmg = (int) ((1.0 - attrDeffence) * l1skills.getDamageValue());
+		dmg = (int) ((1.0 + attrDeffence) * l1skills.getDamageValue());
 
 		if (_targetPc.isFreeze()) {
 			dmg = 0;
@@ -644,7 +644,7 @@ public class L1Magic {
 		int dmg = 0;
 		double attrDeffence = calcAttrResistance(L1Skill.ATTR_FIRE);
 		L1Skill l1skills = SkillTable.getInstance().findBySkillId(FIRE_WALL);
-		dmg = (int) ((1.0 - attrDeffence) * l1skills.getDamageValue());
+		dmg = (int) ((1.0 + attrDeffence) * l1skills.getDamageValue());
 
 		if (_targetNpc.isFreeze()) {
 			dmg = 0;
@@ -909,7 +909,7 @@ public class L1Magic {
 
 		double attrDeffence = calcAttrResistance(l1skills.getAttr());
 
-		double coefficient = (1.0 - attrDeffence + charaIntelligence * 3.0 / 32.0);
+		double coefficient = (1.0 + attrDeffence + charaIntelligence * 3.0 / 32.0);
 		if (coefficient < 0) {
 			coefficient = 0;
 		}
