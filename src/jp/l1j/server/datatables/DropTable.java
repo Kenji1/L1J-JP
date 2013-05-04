@@ -164,8 +164,8 @@ public class DropTable {
 			if (itemId == L1ItemId.ADENA) { // ドロップがアデナの場合はアデナレートを掛ける
 				itemCount *= adenarate;
 			}
-			if (itemCount < 0) {
-				itemCount = 0;
+			if (itemCount <= 0) {
+				continue;	// 個数が0以下の場合は、アイテムを生成しない
 			}
 			if (itemCount > 2000000000) {
 				itemCount = 2000000000;
