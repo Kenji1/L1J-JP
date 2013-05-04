@@ -22,14 +22,16 @@ import jp.l1j.server.templates.L1BookMark;
 
 public class C_DeleteBookmark extends ClientBasePacket {
 	private static final String C_DETELE_BOOKMARK = "[C] C_DeleteBookmark";
-	private static Logger _log = Logger.getLogger(C_DeleteBookmark.class
-			.getName());
+	
+	private static Logger _log = Logger.getLogger(C_DeleteBookmark.class.getName());
 
 	public C_DeleteBookmark(byte[] decrypt, ClientThread client) {
 		super(decrypt);
 		String bookmarkname = readS();
-		L1PcInstance pc = client.getActiveChar();
-		L1BookMark.deleteBookmark(pc, bookmarkname);
+		if (!bookmarkname.isEmpty()) {
+			L1PcInstance pc = client.getActiveChar();
+			L1BookMark.deleteBookmark(pc, bookmarkname);
+		}
 	}
 
 	@Override
