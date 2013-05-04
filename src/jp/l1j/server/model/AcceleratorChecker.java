@@ -16,18 +16,15 @@
 package jp.l1j.server.model;
 
 import java.util.EnumMap;
-import java.util.List;
 import java.util.logging.Logger;
-import static jp.l1j.locale.I18N.*;
 import jp.l1j.configure.Config;
-import jp.l1j.server.datatables.SprTable;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.AcceleratorLogTable;
+import jp.l1j.server.datatables.SprTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Disconnect;
 import jp.l1j.server.packets.server.S_Paralysis;
-import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SystemMessage;
-import jp.l1j.server.templates.L1Account;
 
 /**
  * 加速器の使用をチェックするクラス。
@@ -35,7 +32,7 @@ import jp.l1j.server.templates.L1Account;
 public class AcceleratorChecker {
 
 	private static Logger _log =
-			Logger.getLogger(AcceleratorChecker.class.getName());
+		Logger.getLogger(AcceleratorChecker.class.getName());
 
 	private final L1PcInstance _pc;
 
@@ -49,11 +46,14 @@ public class AcceleratorChecker {
 
 	// 実際には移動と攻撃のパケット間隔はsprの理論値より5%ほど遅い。
 	// それを考慮して-5としている。
-	private static final double CHECK_STRICTNESS = (Config.CHECK_STRICTNESS - 5) / 100D;
+	private static final double CHECK_STRICTNESS =
+			(Config.CHECK_STRICTNESS - 5) / 100D;
 
 	private static final double HASTE_RATE = 0.75; // 速度 * 1.33
 
 	private static final double WAFFLE_RATE = 0.87; // 速度 * 1.15
+
+	private static final double STANDARD_RATE = 1.00;
 	
 	private final EnumMap<ACT_TYPE, Long> _actTimers =
 			new EnumMap<ACT_TYPE, Long>(ACT_TYPE.class);
@@ -95,10 +95,9 @@ public class AcceleratorChecker {
 		long now = System.currentTimeMillis();
 		long interval = now - _actTimers.get(type);
 		int rightInterval = getRightInterval(type);
-
 		interval *= CHECK_STRICTNESS;
-
-		if (0 < interval && interval < rightInterval) {
+		double rate = (double) interval / rightInterval;
+		if (0 < rate && rate < STANDARD_RATE) {
 			_injusticeCount++;
 			_justiceCount = 0;
 			if (_injusticeCount >= INJUSTICE_COUNT_LIMIT) {
@@ -106,20 +105,13 @@ public class AcceleratorChecker {
 				return R_DISPOSED;
 			}
 			result = R_DETECTED;
-		} else if (interval >= rightInterval) {
+		} else if (rate >= STANDARD_RATE) {
 			_justiceCount++;
 			if (_justiceCount >= JUSTICE_COUNT_LIMIT) {
 				_injusticeCount = 0;
 				_justiceCount = 0;
 			}
 		}
-
-		// 検証用
-		// double rate = (double) interval / rightInterval;
-		// System.out.println(String.format("%s: %d / %d = %.2f (o-%d x-%d)",
-		// type.toString(), interval, rightInterval, rate,
-		// _justiceCount, _injusticeCount));
-
 		_actTimers.put(type, now);
 		return result;
 	}
@@ -132,7 +124,6 @@ public class AcceleratorChecker {
 		int punishment_type = Math.abs(Config.PUNISHMENT_TYPE);
 		int punishment_time = Math.abs(Config.PUNISHMENT_TIME);
 		int punishment_mapid = Math.abs(Config.PUNISHMENT_MAP_ID);
-		
 		if (!_pc.isGm()) {// 一般ユーザーに対する処罰
 			int x = _pc.getX() ,y = _pc.getY() ,mapid = _pc.getMapId();// 座標
 			switch (punishment_type) {
@@ -176,9 +167,10 @@ public class AcceleratorChecker {
 				_pc.sendPackets(new S_SystemMessage("加速器検知にひっかかっています。"));
 				_pc.sendPackets(new S_SystemMessage(I18N_ACCELERRATOR_OVERSPEED_DETECTED));
 				// 速度超過を検出しました。
-				_injusticeCount = 0;
 			}
 		}
+		_injusticeCount = 0;
+		_justiceCount = 0;
 		if (Config.LOGGING_ACCELERATOR) {
 			AcceleratorLogTable logaccelerator = new AcceleratorLogTable();
 			logaccelerator.storeLogAccelerator(_pc);// 加速器検知ログ
@@ -196,28 +188,24 @@ public class AcceleratorChecker {
 	 */
 	private int getRightInterval(ACT_TYPE type) {
 		int interval;
-
 		switch (type) {
 		case ATTACK:
-			interval = SprTable.getInstance().getAttackSpeed(
-					_pc.getTempCharGfx(), _pc.getCurrentWeapon() + 1);
+			interval = SprTable.getInstance().getAttackSpeed(_pc.getTempCharGfx(),
+					_pc.getCurrentWeapon() + 1);
 			break;
 		case MOVE:
-			interval = SprTable.getInstance().getMoveSpeed(
-					_pc.getTempCharGfx(), _pc.getCurrentWeapon());
+			interval = SprTable.getInstance().getMoveSpeed(_pc.getTempCharGfx(),
+					_pc.getCurrentWeapon());
 			break;
 		case SPELL_DIR:
-			interval = SprTable.getInstance().getDirSpellSpeed(
-							_pc.getTempCharGfx());
+			interval = SprTable.getInstance().getDirSpellSpeed(_pc.getTempCharGfx());
 			break;
 		case SPELL_NODIR:
-			interval = SprTable.getInstance().getNodirSpellSpeed(
-							_pc.getTempCharGfx());
+			interval = SprTable.getInstance().getNodirSpellSpeed(_pc.getTempCharGfx());
 			break;
 		default:
 			return 0;
 		}
-
 		if (_pc.isHaste()) { // ヘイスト
 			interval *= HASTE_RATE;
 		}
@@ -250,7 +238,6 @@ public class AcceleratorChecker {
 		if(_pc.getMapId() == 5143) { // 例外：ペットレース
 			interval *= 0.1;
 		}
-
 		return interval;
 	}
 }
