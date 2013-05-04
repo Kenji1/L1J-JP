@@ -234,7 +234,7 @@ public class L1Inventory extends L1Object {
 		if (itemId == 40006 || itemId == 40007 || itemId == 40008
 				|| itemId == 140006 || itemId == 140008 || itemId == 41401) {
 			RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
-			chargeCount -= random.nextInt(5);
+			chargeCount = Math.max( chargeCount - random.nextInt(5), 1 );
 		}
 		if (itemId == 20383) {
 			chargeCount = 50;
