@@ -623,6 +623,11 @@ public class L1Attack {
 		}
 		if (_weaponType2 == 14) {
 			_hitRate = 100; // キーリンクの命中率は100%
+			// 特定条件有攻可能 NPC判定
+			if (_pc.isAttackMiss(_pc, _targetNpc.getNpcTemplate().getNpcId())) {
+				_hitRate = 0;
+				return false;
+			}
 			return true;
 		}
 
