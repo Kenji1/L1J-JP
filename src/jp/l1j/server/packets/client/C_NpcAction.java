@@ -7329,7 +7329,7 @@ public class C_NpcAction extends ClientBasePacket {
 
 	private String teleportToi(L1PcInstance pc, String s, int n) {
 		// TOIテレポートスクロール 無し, 11F, 21F, 31F, 41F, 51F, 61F, 71F, 81F, 91F
-		int[] itemid = {0, 40104, 40105, 40106, 40107, 40108, 40109, 40110, 40111, 40112};
+		int[] itemId = {0, 40104, 40105, 40106, 40107, 40108, 40109, 40110, 40111, 40112};
 		
 		// TOI 10F, 20F, 30F, 40F, 50F, 60F, 70F, 80F, 90F, 100F
 		int[] x1 = {32800, 32800, 32800, 32800, 32796, 32720, 32720, 32724, 32722, 32731};
@@ -7344,16 +7344,11 @@ public class C_NpcAction extends ClientBasePacket {
 		String htmlid = "";
 		
 		if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる
-			boolean flag = false;
-			
-			if (n == 0) {
-				flag = true;
-			} else if (n > 0 && pc.getInventory().checkItem(itemid[n], 2)) {
-				flag = true;
-			}
-			
-			if (flag && pc.getInventory().checkItem(40308, 2400)) {
-				pc.getInventory().consumeItem(itemid[n], 2);
+			if (pc.getInventory().checkItem(40308, 2400) && (itemId[n] == 0
+					|| (itemId[n] > 0 && pc.getInventory().checkItem(itemId[n], 2)))) {
+				if (itemId[n] > 0) {
+					pc.getInventory().consumeItem(itemId[n], 2);
+				}
 				pc.getInventory().consumeItem(40308, 2400);
 				L1Teleport.teleport(pc, x1[n], y1[n], m1[n], 6, true);
 			} else {
