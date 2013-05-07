@@ -23,10 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="GameserverPort">2000</entry>
 
 <!-- LoginとPasswordは変更すべきだが、わからなければ変えない -->
-<!-- settings for H2 -->
-<!-- <entry key="Driver">org.h2.Driver</entry> -->
-<!-- <entry key="URL">jdbc:h2:C:\workspace\db\l1jdb</entry> -->
-<!-- settings for MySQL -->
 <entry key="Driver">com.mysql.jdbc.Driver</entry>
 <entry key="URL">jdbc:mysql://localhost/l1jdb?useUnicode=true&amp;characterEncoding=utf8</entry>
 <entry key="Login">root</entry>
