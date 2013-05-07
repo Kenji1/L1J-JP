@@ -507,19 +507,6 @@ mysql -u %username% -p%password% -e "%query%" --local-infile=1
 if errorlevel 1 goto ERR
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Dump letters table
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-echo %outdir%/%datetime%/letters.csv
-set query=^
-SELECT 'item_obj_id','code','sender','receiver','date','template_id','subject','content' ^
-UNION SELECT * INTO OUTFILE '%outdir%/%datetime%/letters.csv' ^
-FIELDS TERMINATED BY '%delimiter%' ENCLOSED BY '%enclosed%' ^
-LINES TERMINATED BY '%newline%' ^
-FROM %database%.letters
-mysql -u %username% -p%password% -e "%query%" --local-infile=1
-if errorlevel 1 goto ERR
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Dump magic_dolls table
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo %outdir%/%datetime%/magic_dolls.csv

@@ -104,8 +104,6 @@ public class ItemTable {
 		_useTypes.put("ntele", new Integer(6));
 		_useTypes.put("identify", new Integer(7));
 		_useTypes.put("res", new Integer(8));
-		_useTypes.put("letter", new Integer(12));
-		_useTypes.put("letter_w", new Integer(13));
 		_useTypes.put("choice", new Integer(14));
 		_useTypes.put("instrument", new Integer(15));
 		_useTypes.put("sosc", new Integer(16));
@@ -124,13 +122,6 @@ public class ItemTable {
 		_useTypes.put("blank", new Integer(28));
 		_useTypes.put("btele", new Integer(29));
 		_useTypes.put("spell_buff", new Integer(30)); // オブジェクト選択(遠距離)
-		// Ctrlを押さないとパケットが飛ばない？
-		_useTypes.put("ccard", new Integer(31));
-		_useTypes.put("ccard_w", new Integer(32));
-		_useTypes.put("vcard", new Integer(33));
-		_useTypes.put("vcard_w", new Integer(34));
-		_useTypes.put("wcard", new Integer(35));
-		_useTypes.put("wcard_w", new Integer(36));
 		_useTypes.put("belt", new Integer(37));
 		_useTypes.put("spell_point", new Integer(39)); // 地面選択
 		_useTypes.put("earring", new Integer(40));

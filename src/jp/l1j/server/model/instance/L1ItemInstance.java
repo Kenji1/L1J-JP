@@ -23,13 +23,12 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 import jp.l1j.configure.Config;
-import jp.l1j.server.datatables.SpawnFurnitureTable;
 import jp.l1j.server.datatables.InnKeyTable;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.datatables.LetterTable;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.PetTable;
 import jp.l1j.server.datatables.RaceTicketTable;
+import jp.l1j.server.datatables.SpawnFurnitureTable;
 import jp.l1j.server.model.L1ChargeTimer;
 import jp.l1j.server.model.L1ExpirationTimer;
 import jp.l1j.server.model.L1ItemOwnerTimer;
@@ -2221,9 +2220,6 @@ public class L1ItemInstance extends L1Object {
 		int itemId = getItem().getItemId();
 		if (itemId == 40314 || itemId == 40316) { // ペットのアミュレット
 			PetTable.getInstance().deletePet(getId());
-		} else if (itemId >= 49016 && itemId <= 49025) { // 便箋
-			LetterTable lettertable = new LetterTable();
-			lettertable.deleteLetter(getId());
 		} else if (itemId >= 41383 && itemId <= 41400) { // 家具
 			for (L1Object l1object : L1World.getInstance().getObject()) {
 				if (l1object instanceof L1FurnitureInstance) {

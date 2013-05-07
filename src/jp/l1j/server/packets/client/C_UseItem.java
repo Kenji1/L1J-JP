@@ -31,13 +31,12 @@ import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.controller.timer.FishingTimeController;
 import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.ItemTable;
-import jp.l1j.server.datatables.LetterTable;
 import jp.l1j.server.datatables.MagicDollTable;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.PetTable;
 import jp.l1j.server.datatables.ResolventTable;
-import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.datatables.ReturnLocationTable;
+import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Character;
 import jp.l1j.server.model.L1Clan;
@@ -181,9 +180,6 @@ public class C_UseItem extends ClientBasePacket {
 		int locy = 0;
 		int cookStatus = 0;
 		int cookNo = 0;
-		int letterCode = 0;
-		String letterReceiver = "";
-		byte[] letterText = null;
 
 		int use_type = item.getItem().getUseType();
 		if (use_type == 16) { // 変身スクロール(sosc)
@@ -209,13 +205,6 @@ public class C_UseItem extends ClientBasePacket {
 			locy = readH();
 		} else if (use_type == 8) { // 復活スクロール、祝福された復活スクロール(res)
 			objid = readD();
-		} else if (use_type == 12 || use_type == 31 || use_type == 32
-				|| use_type == 33) {
-			// 便箋、血盟便箋(letter)、クリスマスカード(ccard)、
-			// バレンタインカード(vcard)、ホワイトデーカード(wcard)
-			letterCode = readH();
-			letterReceiver = readS();
-			letterText = readByte();
 		} else if (use_type == 53) { // 料理の本(cookbook)
 			cookStatus = readC();
 			cookNo = readC();
@@ -755,35 +744,6 @@ public class C_UseItem extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
 					// \f1%0は使用できません。
 				}
-// 旧メールシステムの名残なのでコメントアウト
-//			} else if (itemId >= 40373 && itemId <= 40382 // 地図各種
-//					|| itemId >= 40385 && itemId <= 40390) {
-//				pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
-//				// \f1%0は使用できません。
-//				// pc.sendPackets(new S_UseMap(pc, item.getId(),
-//				// item.getItem().getItemId()));
-//			} else if (itemId == 40310 || itemId == 40730
-//					|| itemId == 40731 || itemId == 40732) { // 便箋(未使用)
-//				if (writeLetter(itemId, pc, letterCode, letterReceiver,
-//						letterText)) {
-//					pc.getInventory().removeItem(item, 1);
-//				}
-//			} else if (itemId == 40311) { // 血盟便箋(未使用)
-//				if (writeClanLetter(itemId, pc, letterCode, letterReceiver,
-//						letterText)) {
-//					pc.getInventory().removeItem(item, 1);
-//				}
-//			} else if (itemId == 49016 || itemId == 49018
-//					|| itemId == 49020 || itemId == 49022
-//					|| itemId == 49024) { // 便箋(未開封)
-//				pc.sendPackets(new S_Letter(item));
-//				item.setItemId(itemId + 1);
-//				pc.getInventory().updateItem(item, L1PcInventory.COL_ITEMID);
-//				pc.getInventory().saveItem(item);
-//			} else if (itemId == 49017 || itemId == 49019
-//					|| itemId == 49021 || itemId == 49023
-//					|| itemId == 49025) { // 便箋(開封済み)
-//				pc.sendPackets(new S_Letter(item));
 
 // L1J-JP2プロジェクトのオリジナル仕様？なのでコメントアウト
 //			} else if (itemId == 43000) { // 復活のポーション（Lv99キャラのみが使用可能/Lv1に戻る効果）
@@ -1349,143 +1309,6 @@ public class C_UseItem extends ClientBasePacket {
 			// \f1%0が手にくっつきました。
 		}
 		pcInventory.setEquipped(weapon, true, false, false);
-	}
-
-	private boolean writeLetter(int itemId, L1PcInstance pc, int letterCode,
-			String letterReceiver, byte[] letterText) {
-
-		int newItemId = 0;
-		if (itemId == 40310) {
-			newItemId = 49016;
-		} else if (itemId == 40730) {
-			newItemId = 49020;
-		} else if (itemId == 40731) {
-			newItemId = 49022;
-		} else if (itemId == 40732) {
-			newItemId = 49024;
-		}
-		L1ItemInstance item = ItemTable.getInstance().createItem(newItemId);
-		item.setCount(1);
-		if (item == null) {
-			return false;
-		}
-
-		if (sendLetter(pc, letterReceiver, item, true)) {
-			saveLetter(item.getId(), letterCode, pc.getName(), letterReceiver,
-					letterText);
-		} else {
-			return false;
-		}
-		return true;
-	}
-
-	private boolean writeClanLetter(int itemId, L1PcInstance pc,
-			int letterCode, String letterReceiver, byte[] letterText) {
-		L1Clan targetClan = null;
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
-			if (clan.getClanName().toLowerCase().equals(
-					letterReceiver.toLowerCase())) {
-				targetClan = clan;
-				break;
-			}
-		}
-		if (targetClan == null) {
-			pc.sendPackets(new S_ServerMessage(434)); // 受信者がいません。
-			return false;
-		}
-
-		String memberName[] = targetClan.getAllMembers();
-		for (int i = 0; i < memberName.length; i++) {
-			L1ItemInstance item = ItemTable.getInstance().createItem(49016);
-			item.setCount(1);
-			if (item == null) {
-				return false;
-			}
-			if (sendLetter(pc, memberName[i], item, false)) {
-				saveLetter(item.getId(), letterCode, pc.getName(),
-						memberName[i], letterText);
-			}
-		}
-		return true;
-	}
-
-	private boolean sendLetter(L1PcInstance pc, String name,
-			L1ItemInstance item, boolean isFailureMessage) {
-		L1PcInstance target = L1World.getInstance().getPlayer(name);
-		if (target != null) {
-			if (target.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {
-				target.getInventory().storeItem(item);
-				target.sendPackets(new S_SkillSound(target.getId(), 1091));
-				target.sendPackets(new S_ServerMessage(428)); // 手紙が届きました。
-			} else {
-				if (isFailureMessage) {
-					// 相手のアイテムが重すぎるため、これ以上あげられません。
-					pc.sendPackets(new S_ServerMessage(942));
-				}
-				return false;
-			}
-		} else {
-			if (CharacterTable.doesCharNameExist(name)) {
-				try {
-					int targetId = CharacterTable.getInstance().restoreCharacter(name).getId();
-
-					if (L1InventoryItem.countByOwnerId(targetId) < 180) {
-						item.setOwner(targetId, L1InventoryItem.LOC_CHARACTER);
-						item.save();
-					} else {
-						if (isFailureMessage) {
-							// 相手のアイテムが重すぎるため、これ以上あげられません。
-							pc.sendPackets(new S_ServerMessage(942));
-						}
-						return false;
-					}
-				} catch (Exception e) {
-					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				}
-			} else {
-				if (isFailureMessage) {
-					pc.sendPackets(new S_ServerMessage(109, name));
-					// %0という名前の人はいません。
-				}
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private void saveLetter(int itemObjectId, int code, String sender,
-			String receiver, byte[] text) {
-		// 日付を取得する
-		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		String date = sdf.format(Calendar.getInstance(tz).getTime());
-
-		// subjectとcontentの区切り(0x00 0x00)位置を見つける
-		int spacePosition1 = 0;
-		int spacePosition2 = 0;
-		for (int i = 0; i < text.length; i += 2) {
-			if (text[i] == 0 && text[i + 1] == 0) {
-				if (spacePosition1 == 0) {
-					spacePosition1 = i;
-				} else if (spacePosition1 != 0 && spacePosition2 == 0) {
-					spacePosition2 = i;
-					break;
-				}
-			}
-		}
-
-		// letterテーブルに書き込む
-		int subjectLength = spacePosition1 + 2;
-		int contentLength = spacePosition2 - spacePosition1;
-		if (contentLength <= 0) {
-			contentLength = 1;
-		}
-		byte[] subject = new byte[subjectLength];
-		byte[] content = new byte[contentLength];
-		System.arraycopy(text, 0, subject, 0, subjectLength);
-		System.arraycopy(text, subjectLength, content, 0, contentLength);
-		LetterTable.getInstance().writeLetter(itemObjectId, code, sender,
-				receiver, date, 0, subject, content);
 	}
 
 	private void eatFood(L1PcInstance pc, L1ItemInstance item) {

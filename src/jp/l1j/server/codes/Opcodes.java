@@ -294,8 +294,6 @@ public class Opcodes {
 	public static final int S_OPCODE_INITPACKET = 30;
 	/** 存入資金城堡寶庫 */
 	public static final int S_OPCODE_DEPOSIT = 31;
-	/** 未使用 - 閱讀郵件(舊). */
-	public static final int S_OPCODE_LETTER = 33;
 	/** 角色皇冠 */
 	public static final int S_OPCODE_CASTLEMASTER = 34;
 	/** 一般聊天頻道 */
