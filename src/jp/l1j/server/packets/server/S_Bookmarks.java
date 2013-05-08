@@ -24,15 +24,17 @@ public class S_Bookmarks extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_Bookmarks(String name, int map, int id) {
-		buildPacket(name, map, id);
+	public S_Bookmarks(String name, int map, int id, int x, int y) {
+		buildPacket(name, map, id, x, y);
 	}
 
-	private void buildPacket(String name, int map, int id) {
+	private void buildPacket(String name, int map, int id, int x, int y) {
 		writeC(Opcodes.S_OPCODE_BOOKMARKS);
 		writeS(name);
 		writeH(map);
 		writeD(id);
+		writeH(x);
+		writeH(y);
 	}
 
 	@Override

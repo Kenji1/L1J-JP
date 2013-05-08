@@ -106,7 +106,8 @@ public class L1BookMark {
 				SqlUtil.close(con);
 			}
 			pc.addBookMark(bookmark);
-			pc.sendPackets(new S_Bookmarks(s, bookmark.getMapId(), bookmark.getId()));
+			pc.sendPackets(new S_Bookmarks(s, bookmark.getMapId(), bookmark.getId(),
+					bookmark.getLocX(), bookmark.getLocY()));
 		} else {
 			pc.sendPackets(new S_ServerMessage(327)); // 同じ名前がすでに存在しています。
 		}

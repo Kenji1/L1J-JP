@@ -55,6 +55,7 @@ import jp.l1j.server.model.skill.executor.L1BuffSkillExecutor;
 import jp.l1j.server.packets.server.S_ActiveSpells;
 import jp.l1j.server.packets.server.S_AddSkill;
 import jp.l1j.server.packets.server.S_BonusStats;
+import jp.l1j.server.packets.server.S_BookmarkLoad;
 import jp.l1j.server.packets.server.S_Bookmarks;
 import jp.l1j.server.packets.server.S_CharTitle;
 import jp.l1j.server.packets.server.S_CharacterConfig;
@@ -209,6 +210,8 @@ public class C_LoginToServer extends ClientBasePacket {
 		pc.sendVisualEffectAtLogin(); // クラウン、毒、水中等の視覚効果を表示
 		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather()));
 		items(pc);
+		bookmarks(pc);
+		//pc.sendPackets(new S_BookmarkLoad(pc)); // TODO 効果不明
 		skills(pc);
 		buff(client, pc);
 		buffBlessOfAin(pc); // アインハザードの祝福
@@ -292,7 +295,6 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 		pc.startExpirationTimer(); // 有効期限付きアイテムのタイマーを開始
 		pc.startMapLimiter(); // マップリミッターを開始
-		bookmarks(pc);
 	}
 
 	private void items(L1PcInstance pc) {
@@ -320,7 +322,8 @@ public class C_LoginToServer extends ClientBasePacket {
 				bookmark.setLocY(rs.getInt("loc_y"));
 				bookmark.setMapId(rs.getShort("map_id"));
 				S_Bookmarks s_bookmarks = new S_Bookmarks(bookmark.getName(),
-						bookmark.getMapId(), bookmark.getId());
+						bookmark.getMapId(), bookmark.getId(),
+						bookmark.getLocX(), bookmark.getLocY());
 				pc.addBookMark(bookmark);
 				pc.sendPackets(s_bookmarks);
 			}
