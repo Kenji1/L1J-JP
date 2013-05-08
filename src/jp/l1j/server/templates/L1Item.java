@@ -590,9 +590,9 @@ public abstract class L1Item implements Cloneable, Serializable {
 		if (_itemId == 40001) { // ランプ
 			return 11;
 		} else if (_itemId == 40002) { // ランタン
-			return 14;
-		} else if (_itemId == 40004) { // マジックランタン
-			return 14;
+			return 13;
+		} else if (_itemId == 40004) { // パンプキンランタン
+			return 13;
 		} else if (_itemId == 40005) { // キャンドル
 			return 8;
 		} else {
