@@ -49,11 +49,11 @@ public class L1DollInstance extends L1NpcInstance {
 	
 	private ScheduledFuture<?> _summonFuture;
 
-	private HpRegenerationByDoll _hprTask;
+	private static HpRegenerationByDoll _hprTask;
 	
-	private MpRegenerationByDoll _mprTask;
+	private static MpRegenerationByDoll _mprTask;
 	
-	private MakeItemByDoll _makeTask;
+	private static MakeItemByDoll _makeTask;
 
 	private int sleeptime_PT = 10;
 	
