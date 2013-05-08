@@ -45,8 +45,7 @@ public class S_BookmarkLoad extends ServerBasePacket {
 			rs.last();
 			int count = rs.getRow();
 			rs.beforeFirst();
-			// TODO OPCODEが不明
-			//writeC(Opcodes.S_OPCODE_RETURNEDSTAT);
+			writeC(Opcodes.S_OPCODE_CHARRESET);
 			writeC(42); // type
 			writeC(105);
 			writeC(0x00); 
