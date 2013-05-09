@@ -23,8 +23,8 @@ public class S_ServerVersion extends ServerBasePacket {
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
 
 	/** システム時間検証 */
-	// private static final int UPTIME = (int) (System.currentTimeMillis() / 1000); // 3.52C
-	private static final int UPTIME = 1327204035; // 3.53C
+	// private static final int UPTIME = 1327204035;
+	private static final int UPTIME = (int) (System.currentTimeMillis() / 1000); // TODO
 
 	/** サーバーバージョン */
 	// private static final int SERVER_VERSION = 12022011; // 3.52C
