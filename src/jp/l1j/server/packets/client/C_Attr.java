@@ -795,10 +795,12 @@ public class C_Attr extends ClientBasePacket {
 			pc.sendPackets(new S_ServerMessage(327)); // 同じ名前がすでに存在しています。
 			return;
 		}
-		L1Npc l1npc = NpcTable.getInstance().getTemplate(pet.getNpcId());
-		if (!(pet.getName().equalsIgnoreCase(l1npc.getName())) ) {
-			pc.sendPackets(new S_ServerMessage(326)); // 一度決めた名前は変更できません。
-			return;
+		if (!Config.RENAME_PET_NAME) {
+			L1Npc l1npc = NpcTable.getInstance().getTemplate(pet.getNpcId());
+			if (!(pet.getName().equalsIgnoreCase(l1npc.getName())) ) {
+				pc.sendPackets(new S_ServerMessage(326)); // 一度決めた名前は変更できません。
+				return;
+			}
 		}
  		pet.setName(name);
 		petTemplate.setName(name);

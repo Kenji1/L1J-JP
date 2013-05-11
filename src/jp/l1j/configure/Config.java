@@ -520,6 +520,9 @@ public final class Config {
 	@Configure(file = ALT, key = "PkCountLimit")
 	public static int PK_COUNT_LIMIT = 10;
 
+	@Configure(file = ALT, key = "RenamePetName")
+	public static boolean RENAME_PET_NAME = false;
+	
 	@Configure(file = ALT, key = "PetRaceMinPlayer")
 	public static int PET_RACE_MIN_PLAYER = 1;
 

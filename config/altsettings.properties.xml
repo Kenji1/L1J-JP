@@ -161,6 +161,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- PKリミット数  *地獄使用無しの場合無効 *ブルーメッセージはlimit-5から表示 -->
 <entry key="PkCountLimit">8</entry>
 
+<!-- ペット名の変更 -->
+<entry key="RenamePetName">false</entry>
+
 <!-- ペットレース参加最小人数　*1～9で設定 -->
 <entry key="PetRaceMinPlayer">1</entry>
 
