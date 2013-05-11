@@ -383,7 +383,7 @@ public class C_Attr extends ClientBasePacket {
 
 		case 325: // 動物の名前を決めてください：
 			c = readH(); // ?
-			name = readS();
+			name = readS(-1); // TODO 名前が1byte分欠けてしまう不具合の対応
 			L1PetInstance pet = (L1PetInstance) L1World.getInstance()
 					.findObject(pc.getTempID());
 			pc.setTempID(0);

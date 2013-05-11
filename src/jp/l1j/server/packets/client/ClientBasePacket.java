@@ -80,9 +80,13 @@ public abstract class ClientBasePacket {
 	}
 
 	public String readS() {
+		return readS(0);
+	}
+	
+	public String readS(int adjust) {
 		String s = null;
 		try {
-			s = new String(_decrypt, _off, _decrypt.length - _off, CLIENT_LANGUAGE_CODE);
+			s = new String(_decrypt, _off + adjust, _decrypt.length - _off, CLIENT_LANGUAGE_CODE);
 			s = s.substring(0, s.indexOf('\0'));
 			_off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
 		} catch (StringIndexOutOfBoundsException e) {
