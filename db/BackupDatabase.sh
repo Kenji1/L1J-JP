@@ -31,7 +31,7 @@ password=
 ################################################################################
 delimiter=','
 enclosed=
-newline='\n'
+newline='\r\n'
 tmpdir=$(cd $(dirname $0);pwd)
 outdir="$tmpdir/backup"
 

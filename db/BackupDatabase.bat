@@ -31,7 +31,7 @@ set password=
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 set delimiter=,
 set enclosed=
-set newline=\n
+set newline=\r\n
 set tmpdir=%~dp0
 set outdir=%tmpdir:\=/%backup
 
