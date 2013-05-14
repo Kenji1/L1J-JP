@@ -168,22 +168,21 @@ public class SpawnTable {
 			int maxRespawnDelay = 120;
 			String note = npc.getName();
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement(String.format("INSERT INTO spawn_mobs SET ",
-				"location=?", "count=?", "npc_id=?", "group_id=?",
-				"loc_x=?", "loc_y=?", "random_x=?", "random_y=?", "heading=?",
+			pstm = con.prepareStatement(String.format("INSERT INTO spawn_mobs SET %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s", 
+				"npc_id=?", "note=?", "count=?", "loc_x=?", "loc_y=?", 
+				"random_x=?", "random_y=?", "heading=?",
 				"min_respawn_delay=?", "max_respawn_delay=?", "map_id=?"));
-			pstm.setString(1, note);
-			pstm.setInt(2, count);
-			pstm.setInt(3, npc.getNpcId());
-			pstm.setInt(4, 0);
-			pstm.setInt(5, pc.getX());
-			pstm.setInt(6, pc.getY());
+			pstm.setInt(1, npc.getNpcId());
+			pstm.setString(2, note);
+			pstm.setInt(3, count);
+			pstm.setInt(4, pc.getX());
+			pstm.setInt(5, pc.getY());
+			pstm.setInt(6, randomXY);
 			pstm.setInt(7, randomXY);
-			pstm.setInt(8, randomXY);
-			pstm.setInt(9, pc.getHeading());
-			pstm.setInt(10, minRespawnDelay);
-			pstm.setInt(11, maxRespawnDelay);
-			pstm.setInt(12, pc.getMapId());
+			pstm.setInt(8, pc.getHeading());
+			pstm.setInt(9, minRespawnDelay);
+			pstm.setInt(10, maxRespawnDelay);
+			pstm.setInt(11, pc.getMapId());
 			pstm.execute();
 		} catch (Exception e) {
 			NpcTable._log.log(Level.SEVERE, e.getLocalizedMessage(), e);

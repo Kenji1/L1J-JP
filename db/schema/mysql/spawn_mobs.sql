@@ -3,7 +3,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `spawn_mobs`;
 CREATE TABLE `spawn_mobs` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `npc_id` int(10) unsigned NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `group_id` int(10) unsigned NOT NULL DEFAULT '0',
