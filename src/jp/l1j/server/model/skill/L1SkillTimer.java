@@ -229,7 +229,7 @@ class L1SkillStop {
 			}
 		} else if (skillId == BURNING_WEAPON) { // バーニング ウェポン
 			cha.addDmgup(-6);
-			cha.addHitup(-3);
+			cha.addHitup(-6);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_SkillIconAura(162, 0));
@@ -252,8 +252,8 @@ class L1SkillStop {
 				pc.sendPackets(new S_SkillIconAura(155, 0));
 			}
 		} else if (skillId == STORM_SHOT) { // ストーム ショット
-			cha.addBowDmgup(-5);
-			cha.addBowHitup(1);
+			cha.addBowDmgup(-6);
+			cha.addBowHitup(-3);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_SkillIconAura(165, 0));

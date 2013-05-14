@@ -3137,7 +3137,7 @@ public class L1SkillUse {
 					} else if (_skillId == BURNING_WEAPON) { // バーニング ウェポン
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.addDmgup(6);
-						pc.addHitup(3);
+						pc.addHitup(6);
 						pc.sendPackets(new S_SkillIconAura(162,
 								buffIconDuration));
 					} else if (_skillId == WIND_SHOT) { // ウィンド ショット
@@ -3153,8 +3153,8 @@ public class L1SkillUse {
 								buffIconDuration));
 					} else if (_skillId == STORM_SHOT) { // ストーム ショット
 						L1PcInstance pc = (L1PcInstance) cha;
-						pc.addBowDmgup(5);
-						pc.addBowHitup(-1);
+						pc.addBowDmgup(6);
+						pc.addBowHitup(3);
 						pc.sendPackets(new S_SkillIconAura(165,
 								buffIconDuration));
 					} else if (_skillId == BERSERKERS) { // バーサーカー
