@@ -153,7 +153,7 @@ public class L1PcInstance extends L1Character {
 	}
 	
 	public short getHpr() {
-		return (short) (_hpr + getHprByDoll());
+		return (short) _hpr;
 	}
 
 	// 3.3C start
@@ -183,7 +183,7 @@ public class L1PcInstance extends L1Character {
 	}
 	
 	public short getMpr() {
-		return (short) (_mpr + getMprByDoll());
+		return (short) _mpr;
 	}
 
 	public void addMpr(int i) {
