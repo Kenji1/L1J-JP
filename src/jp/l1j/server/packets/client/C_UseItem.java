@@ -525,7 +525,7 @@ public class C_UseItem extends ClientBasePacket {
 				if (pc.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
 					pc.removeSkillEffect(STATUS_HOLY_MITHRIL_POWDER);
 				}
-				pc.setSkillEffect(STATUS_HOLY_WATER, 900 * 1000);
+				pc.setSkillEffect(STATUS_HOLY_WATER, 912 * 1000);
 				pc.sendPackets(new S_SkillSound(pc.getId(), 190));
 				pc.broadcastPacket(new S_SkillSound(pc.getId(), 190));
 				pc.sendPackets(new S_ServerMessage(1141));
@@ -539,7 +539,7 @@ public class C_UseItem extends ClientBasePacket {
 				if (pc.hasSkillEffect(STATUS_HOLY_WATER)) {
 					pc.removeSkillEffect(STATUS_HOLY_WATER);
 				}
-				pc.setSkillEffect(STATUS_HOLY_MITHRIL_POWDER, 900 * 1000);
+				pc.setSkillEffect(STATUS_HOLY_MITHRIL_POWDER, 912 * 1000);
 				pc.sendPackets(new S_SkillSound(pc.getId(), 190));
 				pc.broadcastPacket(new S_SkillSound(pc.getId(), 190));
 				pc.sendPackets(new S_ServerMessage(1142));
@@ -551,8 +551,8 @@ public class C_UseItem extends ClientBasePacket {
 					// \f1何も起きませんでした。
 					return;
 				}
-				pc.setSkillEffect(STATUS_HOLY_WATER_OF_EVA, 900 * 1000);
-				pc.sendPackets(new S_SkillIconAura(221, 900, 5));
+				pc.setSkillEffect(STATUS_HOLY_WATER_OF_EVA, 912 * 1000);
+				pc.sendPackets(new S_SkillIconAura(221, 912, 5));
 				pc.sendPackets(new S_SkillSound(pc.getId(), 190));
 				pc.broadcastPacket(new S_SkillSound(pc.getId(), 190));
 				pc.sendPackets(new S_ServerMessage(1140));

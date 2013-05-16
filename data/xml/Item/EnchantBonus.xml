@@ -12,6 +12,10 @@
 	<Item ItemId="20110">
 		<Effect Mr="1" />
 	</Item>
+	<!-- バフォメットアーマー -->
+	<Item ItemId="20117">
+		<Effect Mr="1" />
+	</Item>
 	<!-- キャラクター名の魔法抵抗のTシャツ -->
 	<Item ItemId="21108">
 		<Effect Mr="1" />
