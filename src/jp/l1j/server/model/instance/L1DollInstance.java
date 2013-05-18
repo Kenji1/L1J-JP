@@ -49,11 +49,14 @@ public class L1DollInstance extends L1NpcInstance {
 	
 	private ScheduledFuture<?> _summonFuture;
 
-	private static HpRegenerationByDoll _hprTask;
+	private HpRegenerationByDoll _hprTask;
+	private boolean _hpRegenActive;
 	
-	private static MpRegenerationByDoll _mprTask;
-	
-	private static MakeItemByDoll _makeTask;
+	private MpRegenerationByDoll _mprTask;
+	private boolean _mpRegenActive;
+
+	private MakeItemByDoll _makeTask;
+	private boolean _makeActive;
 
 	private int sleeptime_PT = 10;
 	
@@ -230,40 +233,58 @@ public class L1DollInstance extends L1NpcInstance {
 	// TODO マジックドール　アイテム製作開始
 	public void startMakeTimer() {
 		int interval = L1MagicDoll.getMakeTimeByDoll(this) * 1000;
-		_makeTask = new MakeItemByDoll((L1PcInstance) _master, this);
-		_timer.scheduleAtFixedRate(_makeTask, interval, interval);
+		if (!_makeActive) {
+			_makeTask = new MakeItemByDoll((L1PcInstance) _master, this);
+			_timer.scheduleAtFixedRate(_makeTask, interval, interval);
+			_makeActive = true;
+		}
 	}
 
 	// TODO マジックドール　アイテム製作停止
 	public void stopMakeTimer() {
-		_makeTask.cancel();
-		_makeTask = null;
+		if (_makeActive) {
+			_makeTask.cancel();
+			_makeTask = null;
+			_makeActive = false;
+		}
 	}
 
 	// TODO マジックドール　HPR開始
 	public void startHprTimer() {
 		int interval = L1MagicDoll.getHprTimeByDoll(this) * 1000;
-		_hprTask = new HpRegenerationByDoll((L1PcInstance) _master, this);
-		_timer.scheduleAtFixedRate(_hprTask, interval, interval);
+		if (!_hpRegenActive) {
+			_hprTask = new HpRegenerationByDoll((L1PcInstance) _master, this);
+			_timer.scheduleAtFixedRate(_hprTask, interval, interval);
+			_hpRegenActive = true;
+		}
 	}
 
 	// TODO マジックドール　HPR停止
 	public void stopHprTimer() {
-		_hprTask.cancel();
-		_hprTask = null;
+		if (_hpRegenActive) {
+			_hprTask.cancel();
+			_hprTask = null;
+			_hpRegenActive = false;
+		}
 	}
 
 	// TODO マジックドール　MPR開始
 	public void startMprTimer() {
 		int interval = L1MagicDoll.getMprTimeByDoll(this) * 1000;
-		_mprTask = new MpRegenerationByDoll((L1PcInstance) _master, this);
-		_timer.scheduleAtFixedRate(_mprTask, interval, interval);
+		if (!_mpRegenActive) {
+			_mprTask = new MpRegenerationByDoll((L1PcInstance) _master, this);
+			_timer.scheduleAtFixedRate(_mprTask, interval, interval);
+			_mpRegenActive = true;
+		}
 	}
 
 	// TODO マジックドール　MPR停止
 	public void stopMprTimer() {
-		_mprTask.cancel();
-		_mprTask = null;
+		if (_mpRegenActive) {
+			_mprTask.cancel();
+			_mprTask = null;
+			_mpRegenActive = false;
+		}
 	}
 
 	public int getItemObjId() {

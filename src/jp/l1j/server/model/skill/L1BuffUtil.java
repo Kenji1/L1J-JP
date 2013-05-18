@@ -91,18 +91,12 @@ public class L1BuffUtil {
 	
 	public static void barrier(L1PcInstance pc, int timeMillis) {
 		pc.setSkillEffect(ABSOLUTE_BARRIER, timeMillis);
-		pc.stopHpRegeneration();
-		pc.stopMpRegeneration();
-		pc.stopHpRegenerationByDoll();
-		pc.stopMpRegenerationByDoll();
 	}
 	
 	public static void cancelBarrier(L1PcInstance pc) {
-		pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
-		pc.startHpRegeneration();
-		pc.startMpRegeneration();
-		pc.startHpRegenerationByDoll();
-		pc.startMpRegenerationByDoll();
+		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
+			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
+		}
 	}
 	
 	public static void thirdSpeed(L1PcInstance pc) {
