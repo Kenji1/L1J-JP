@@ -1818,7 +1818,7 @@ public class L1Attack {
 					L1SilencePoison.doInfection(target);
 				} else if (_npc.getNpcTemplate().getPoisonAtk() == 4) { // 麻痺毒
 					// 20秒後に45秒間麻痺
-					L1ParalysisPoison.doInfection(target, 20000, 45000);
+					L1ParalysisPoison.doInfection(target, 8000, 16000);
 				}
 			}
 		} else if (_npc.getNpcTemplate().getParalysIsAtk() != 0) { // 麻痺攻撃あり

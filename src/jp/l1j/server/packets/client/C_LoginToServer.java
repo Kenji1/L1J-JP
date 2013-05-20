@@ -420,11 +420,11 @@ public class C_LoginToServer extends ClientBasePacket {
 			} else if (skillId == STATUS_POISON_SILENCE) { // 沈黙毒
 				L1SilencePoison.doInfection(pc);
 			} else if (skillId == STATUS_POISON_PARALYZING) { // 麻痺毒(麻痺前)
-				L1ParalysisPoison.doInfection(pc, remainingTime * 1000, 4500);
+				L1ParalysisPoison.doInfection(pc, remainingTime * 1000, 16000);
 			} else if (skillId == STATUS_POISON_PARALYZED) { // 麻痺毒(麻痺後)
 				L1ParalysisPoison.doInfection(pc, 0, remainingTime * 1000);
 			} else if (skillId == STATUS_CURSE_PARALYZING) { // 呪い麻痺(麻痺前)
-				L1CurseParalysis.curse(pc, remainingTime * 1000, 4500);
+				L1CurseParalysis.curse(pc, remainingTime * 1000, 16000);
 			} else if (skillId == STATUS_CURSE_PARALYZED) { // 呪い麻痺(麻痺後)
 				L1CurseParalysis.curse(pc, 0, remainingTime * 1000);
 			} else if (skillId == STATUS_FLOATING_EYE) { // フローティングアイ肉
