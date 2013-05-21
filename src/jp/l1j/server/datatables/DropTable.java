@@ -178,7 +178,7 @@ public class DropTable {
 			// ユニークオプションを付加
 			double uniqueRateOfItem = DropRateTable.getInstance().getUniqueRate(itemId);
 			double uniqueRate = uniqueDropRate * uniqueRateOfMapId * uniqueRateOfItem;
-			item.setUniqueOptions(uniqueRate);
+			item.setUniqueOptions((int) uniqueRate);
 		}
 	}
 

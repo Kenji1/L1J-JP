@@ -148,7 +148,7 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 						// ユニークオプションを付加
 						double uniqueRateOfItem = DropRateTable.getInstance().getUniqueRate(item.getItemId());
 						double uniqueRate = uniqueMakeRate * uniqueRateOfItem;
-						item.setUniqueOptions(uniqueRate);
+						item.setUniqueOptions((int) uniqueRate);
 					}
 				}
 			}

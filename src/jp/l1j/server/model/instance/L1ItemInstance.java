@@ -1523,7 +1523,11 @@ public class L1ItemInstance extends L1Object {
 		_isRunning = true;
 	}
 
-	public void setUniqueOptions(double uniqueRate) {
+	public void setUniqueOptions(int uniqueRate) {
+		if (uniqueRate <= 0) {
+			return;
+		}
+		
 		if (getItem().getType2() != 1 && getItem().getType2() != 2) { // 武器・防具以外
 			return;
 		}
