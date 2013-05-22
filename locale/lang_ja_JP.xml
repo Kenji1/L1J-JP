@@ -83,7 +83,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="ShutdownTheServer">サーバーをシャットダウンします。</entry>
 <entry key="PleaseLogout">安全な場所でログアウトしてください。</entry>
 <entry key="ShutdownAfterFewMinutes">サーバーが%d分後にシャットダウンします。</entry>
-<entry key="ShutdownAfterFewSeconds">サーバーが%d秒後にシャットダウンします。速やかにログアウトしてください。</entry>
+<entry key="ShutdownAfterFewSeconds">サーバーが%d秒後��シャットダウンします。速やかにログアウトしてください。</entry>
 <entry key="ShutdownAbort">シャットダウンが中断されました。サーバーは正常に稼働中です。</entry>
 
 <!-- jp/l1j/server/ClientThread.java -->
@@ -313,9 +313,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- jp/l1j/server/model/L1DeathMatch.java -->
 <entry key="DeathMatchLessThanMinPlayers">最小参加人数の%d名に満たなかったため、デスマッチを強制終了します。 1,000アデナをお返ししました。</entry>
 
-<!-- jp/l1j/server/model/L1DeathMatch.java -->
+<!-- jp/l1j/server/model/L1PolyRace.java -->
 <entry key="PolyRaceLessThanMinPlayers">最小参加人数の%d名に満たなかったため、レースを強制終了します。 1,000アデナをお返ししました。</entry>
 <entry key="PolyRaceReachedToMaxPlayers">Reached the max participants.</entry>
+
+<!-- jp/l1j/server/model/L1SpellBook.java -->
+<entry key="SpellBookName">魔法書(%s)</entry>
+<entry key="SpiritCrystalName">精霊の水晶(%s)</entry>
+<entry key="DarkSpiritCrystalName">闇精霊の水晶(%s)</entry>
+<entry key="TechnicalDocumentName">技術書(%s)</entry>
+<entry key="DragonTabletName">ドラゴンナイトの書板(%s)</entry>
+<entry key="MemoryCrystalName">記憶の水晶(%s)</entry>
 
 <!-- jp/l1j/server/model/instance/L1HousekeeperInstance.java -->
 <entry key="TaxHasAllreadyPaid">次回分の税金は既に支払われています。</entry>

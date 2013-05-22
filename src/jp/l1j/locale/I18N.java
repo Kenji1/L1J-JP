@@ -429,6 +429,16 @@ public class I18N {
 	 */
 	public static final String I18N_POLYRACE_LESS_THAN_MIN_PLAYERS = bundle.getString("PolyRaceLessThanMinPlayers");
 	public static final String I18N_POLYRACE_REACHED_TO_MAX_PLAYERS = bundle.getString("PolyRaceReachedToMaxPlayers");
+
+	/*
+	 * jp.l1j.server.model.L1SpellBook.java
+	 */
+	public static final String I18N_SPELL_BOOK_NAME = bundle.getString("SpellBookName");
+	public static final String I18N_SPIRIT_CRYSTAL_NAME = bundle.getString("SpiritCrystalName");
+	public static final String I18N_DARK_SPIRIT_CRYSTAL_NAME = bundle.getString("DarkSpiritCrystalName");
+	public static final String I18N_TECHNICAL_DOCUMENT_NAME = bundle.getString("TechnicalDocumentName");
+	public static final String I18N_DRAGON_TABLET_NAME = bundle.getString("DragonTabletName");
+	public static final String I18N_MEMORY_CRYSTAL_NAME = bundle.getString("MemoryCrystalName");
 	
 	/*
 	 * jp.l1j.server.model.instance.L1HousekeeperInstance.java

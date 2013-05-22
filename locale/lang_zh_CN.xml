@@ -313,10 +313,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- jp/l1j/server/model/L1DeathMatch.java -->
 <entry key="DeathMatchLessThanMinPlayers">Because less than minimum participants number (%d players), End the deathmatch. Returned the 1,000 adena.</entry>
 
-<!-- jp/l1j/server/model/L1DeathMatch.java -->
+<!-- jp/l1j/server/model/L1PolyRace.java -->
 <entry key="PolyRaceLessThanMinPlayers">Because less than minimum participants number (%d players), End the race. Returned the 1,000 adena.</entry>
 <entry key="PolyRaceReachedToMaxPlayers">Reached the maximum number of participants.
 </entry>
+
+<!-- jp/l1j/server/model/L1SpellBook.java -->
+<entry key="SpellBookName">魔法书(%s)</entry>
+<entry key="SpiritCrystalName">精灵水晶(%s)</entry>
+<entry key="DarkSpiritCrystalName">黑暗精灵水晶(%s)</entry>
+<entry key="TechnicalDocumentName">技术书(%s)</entry>
+<entry key="DragonTabletName">龙骑士书板(%s)</entry>
+<entry key="MemoryCrystalName">记忆水晶(%s)</entry>
 
 <!-- jp/l1j/server/model/instance/L1HousekeeperInstance.java -->
 <entry key="TaxHasAllreadyPaid">The next minute tax has already paid.</entry>

@@ -14,16 +14,14 @@
  */
 package jp.l1j.server.model;
 
-import static jp.l1j.server.model.L1MessageId.*;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.SkillTable;
+import static jp.l1j.server.model.L1MessageId.*;
 import jp.l1j.server.model.instance.L1ItemInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.inventory.L1Inventory;
@@ -41,7 +39,6 @@ public class L1SpellBook {
 				40182, 40194, 40197, 40202, 40206, 40213, 40220, 40222 };
 		int chaotics[] = { 45009, 45010, 45019, 40172, 40173, 40178, 40185,
 				40186, 40192, 40196, 40201, 40204, 40211, 40221, 40225 };
-
 		if (ArrayUtil.contains(lawfuls, itemId)) {
 			return L1Alignment.LAWFUL;
 		}
@@ -53,8 +50,10 @@ public class L1SpellBook {
 
 	private static L1MapArea LAWFUL_TEMPLE1 = new L1MapArea(33117, 32931,
 			33127, 32941, 4);
+	
 	private static L1MapArea LAWFUL_TEMPLE2 = new L1MapArea(33136, 32236,
 			33146, 32246, 4);
+	
 	private static L1MapArea LAWFUL_TEMPLE3 = new L1MapArea(32783, 32831,
 			32803, 32851, 77);
 
@@ -126,8 +125,7 @@ public class L1SpellBook {
 		throw new IllegalArgumentException("itemId is not spell's one.");
 	}
 
-	private static boolean isValidAlignment(L1Alignment spell,
-			L1Alignment temple) {
+	private static boolean isValidAlignment(L1Alignment spell, L1Alignment temple) {
 		return spell == temple || spell == L1Alignment.NEUTRAL;
 	}
 
@@ -148,8 +146,7 @@ public class L1SpellBook {
 			pc.sendPackets(new S_ServerMessage(NOTHING_HAPPENED));
 			return false;
 		}
-		if (pc.getLevel() < spellLevel
-				* pc.getClassFeature().getSpellLearningInterval()) {
+		if (pc.getLevel() < spellLevel * pc.getClassFeature().getSpellLearningInterval()) {
 			pc.sendPackets(new S_ServerMessage(MAGIC_LEVEL_TOO_LOW));
 			return false;
 		}
@@ -184,7 +181,6 @@ public class L1SpellBook {
 			pc.sendPackets(new S_ServerMessage(NOTHING_HAPPENED));
 			return;
 		}
-
 		if (isValidAlignment(spellAlignment, templeAlignment)) {
 			if (tryToLearnSpell(pc, item)) {
 				sendLearningEffect(pc, templeAlignment);
@@ -196,31 +192,25 @@ public class L1SpellBook {
 
 	private static void learnSpell(L1PcInstance pc, L1ItemInstance item) {	
 		int itemId = item.getItem().getItemId();
-		int spellLevel = getSpellLevel(itemId);
-		
+		int spellLevel = getSpellLevel(itemId);	
 		if ((pc.isCrown() || pc.isElf()) && spellLevel > 6) {
 			createSpellIcon(pc, item);
 			return;
-		}
-		
+		}	
 		if (pc.isKnight() && spellLevel > 1) {
 			createSpellIcon(pc, item);
 			return;
-		}
-		
+		}	
 		if (pc.isDarkelf() && spellLevel > 2) {
 			createSpellIcon(pc, item);
 			return;
-		}
-		
+		}	
 		if (pc.isDragonKnight() || pc.isIllusionist()) {
 			createSpellIcon(pc, item);
 			return;
-		}
-		
+		}	
 		pc.getInventory().removeItem(item, 1);
-		L1Skill skill = SkillTable.getInstance().findByItemName(
-				item.getItem().getName());
+		L1Skill skill = SkillTable.getInstance().findByItemName(item.getItem().getName());
 		pc.sendPackets(new S_AddSkill(skill));
 		SkillTable.getInstance().spellMastery(pc.getId(), skill.getSkillId(),
 				skill.getName(), 0, 0);
@@ -230,7 +220,6 @@ public class L1SpellBook {
 		int itemId = _iconMap.get(item.getItem().getItemId());
 		L1ItemInstance icon = ItemTable.getInstance().createItem(itemId);
 		L1Inventory inventory = pc.getInventory();
-		
 		if(inventory.checkAddItem(icon, 1) == L1Inventory.OK) {
 			icon.setIdentified(true);
 			inventory.storeItem(icon);
@@ -239,8 +228,7 @@ public class L1SpellBook {
 	}
 	
 	/*------------------------------ ここから未整理 ------------------------------*/
-	public static void useElfSpellBook(L1PcInstance pc, L1ItemInstance item,
-			int itemId) {
+	public static void useElfSpellBook(L1PcInstance pc, L1ItemInstance item, int itemId) {
 		int level = pc.getLevel();
 		if ((pc.isElf() || pc.isGm()) && isLearnElfMagic(pc)) {
 			if (itemId >= 40232 && itemId <= 40234 && level >= 10) {
@@ -294,18 +282,15 @@ public class L1SpellBook {
 		int pcX = pc.getX();
 		int pcY = pc.getY();
 		int pcMapId = pc.getMapId();
-		if (pcX >= 32786 && pcX <= 32797 && pcY >= 32842
-				&& pcY <= 32859
-				&& pcMapId == 75 // 象牙の塔
-				|| pc.getLocation().isInScreen(new Point(33055, 32336))
-				&& pcMapId == 4) { // マザーツリー
+		if (pcX >= 32786 && pcX <= 32797 && pcY >= 32842 && pcY <= 32859 && pcMapId == 75 // 象牙の塔
+				|| pc.getLocation().isInScreen(new Point(33055, 32336)) && pcMapId == 4) { // マザーツリー
 			return true;
 		}
 		return false;
 	}
 
-	public static void SpellBook1(L1PcInstance pc,
-			L1ItemInstance l1iteminstance, ClientThread clientthread) {
+	public static void SpellBook1(L1PcInstance pc, L1ItemInstance l1iteminstance,
+			ClientThread clientthread) {
 		String s = "";
 		int i = 0;
 		int j = 0;
@@ -334,7 +319,7 @@ public class L1SpellBook {
 		int i6 = 0;
 		for (int j6 = 97; j6 < 112; j6++) {
 			L1Skill l1skills = SkillTable.getInstance().findBySkillId(j6);
-			String s1 = "闇精霊の水晶(" + l1skills.getName() + ")";
+			String s1 = String.format(I18N_DARK_SPIRIT_CRYSTAL_NAME, l1skills.getName());
 			if (l1iteminstance.getItem().getName().equalsIgnoreCase(s1)) {
 				int l6 = l1skills.getSkillLevel();
 				int i7 = l1skills.getId();
@@ -344,107 +329,81 @@ public class L1SpellBook {
 				case 1: // '\001'
 					j = i7;
 					break;
-
 				case 2: // '\002'
 					k = i7;
 					break;
-
 				case 3: // '\003'
 					l = i7;
 					break;
-
 				case 4: // '\004'
 					i1 = i7;
 					break;
-
 				case 5: // '\005'
 					j1 = i7;
 					break;
-
 				case 6: // '\006'
 					k1 = i7;
 					break;
-
 				case 7: // '\007'
 					l1 = i7;
 					break;
-
 				case 8: // '\b'
 					i2 = i7;
 					break;
-
 				case 9: // '\t'
 					j2 = i7;
 					break;
-
 				case 10: // '\n'
 					k2 = i7;
 					break;
-
 				case 11: // '\013'
 					l2 = i7;
 					break;
-
 				case 12: // '\f'
 					i3 = i7;
 					break;
-
 				case 13: // '\r'
 					j3 = i7;
 					break;
-
 				case 14: // '\016'
 					k3 = i7;
 					break;
-
 				case 15: // '\017'
 					l3 = i7;
 					break;
-
 				case 16: // '\020'
 					i4 = i7;
 					break;
-
 				case 17: // '\021'
 					j4 = i7;
 					break;
-
 				case 18: // '\022'
 					k4 = i7;
 					break;
-
 				case 19: // '\023'
 					l4 = i7;
 					break;
-
 				case 20: // '\024'
 					i5 = i7;
 					break;
-
 				case 21: // '\025'
 					j5 = i7;
 					break;
-
 				case 22: // '\026'
 					k5 = i7;
 					break;
-
 				case 23: // '\027'
 					l5 = i7;
 					break;
-
 				case 24: // '\030'
 					i6 = i7;
 					break;
 				}
 			}
 		}
-
 		int k6 = pc.getId();
-		pc
-				.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2,
-						k2, l2, i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5,
-						i6, 0, 0, 0, 0));
+		pc.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2, k2, l2,
+				i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5, i6, 0, 0, 0, 0));
 		S_SkillSound s_skillSound = new S_SkillSound(k6, 231);
 		pc.sendPackets(s_skillSound);
 		pc.broadcastPacket(s_skillSound);
@@ -481,7 +440,7 @@ public class L1SpellBook {
 		int i6 = 0;
 		for (int j6 = 129; j6 <= 176; j6++) {
 			L1Skill l1skills = SkillTable.getInstance().findBySkillId(j6);
-			String s1 = "精霊の水晶(" + l1skills.getName() + ")";
+			String s1 = String.format(I18N_SPIRIT_CRYSTAL_NAME, l1skills.getName());
 			if (l1iteminstance.getItem().getName().equalsIgnoreCase(s1)) {
 				if (!pc.isGm() && !Config.LEARN_ALL_ELF_SKILLS
 						&& l1skills.getAttr() != 0 && pc.getElfAttr() != l1skills.getAttr()) {
@@ -502,107 +461,81 @@ public class L1SpellBook {
 				case 1: // '\001'
 					j = i7;
 					break;
-
 				case 2: // '\002'
 					k = i7;
 					break;
-
 				case 3: // '\003'
 					l = i7;
 					break;
-
 				case 4: // '\004'
 					i1 = i7;
 					break;
-
 				case 5: // '\005'
 					j1 = i7;
 					break;
-
 				case 6: // '\006'
 					k1 = i7;
 					break;
-
 				case 7: // '\007'
 					l1 = i7;
 					break;
-
 				case 8: // '\b'
 					i2 = i7;
 					break;
-
 				case 9: // '\t'
 					j2 = i7;
 					break;
-
 				case 10: // '\n'
 					k2 = i7;
 					break;
-
 				case 11: // '\013'
 					l2 = i7;
 					break;
-
 				case 12: // '\f'
 					i3 = i7;
 					break;
-
 				case 13: // '\r'
 					j3 = i7;
 					break;
-
 				case 14: // '\016'
 					k3 = i7;
 					break;
-
 				case 15: // '\017'
 					l3 = i7;
 					break;
-
 				case 16: // '\020'
 					i4 = i7;
 					break;
-
 				case 17: // '\021'
 					j4 = i7;
 					break;
-
 				case 18: // '\022'
 					k4 = i7;
 					break;
-
 				case 19: // '\023'
 					l4 = i7;
 					break;
-
 				case 20: // '\024'
 					i5 = i7;
 					break;
-
 				case 21: // '\025'
 					j5 = i7;
 					break;
-
 				case 22: // '\026'
 					k5 = i7;
 					break;
-
 				case 23: // '\027'
 					l5 = i7;
 					break;
-
 				case 24: // '\030'
 					i6 = i7;
 					break;
 				}
 			}
 		}
-
 		int k6 = pc.getId();
-		pc
-				.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2,
-						k2, l2, i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5,
-						i6, 0, 0, 0, 0));
+		pc.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2, k2, l2,
+				i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5, i6, 0, 0, 0, 0));
 		S_SkillSound s_skillSound = new S_SkillSound(k6, 224);
 		pc.sendPackets(s_skillSound);
 		pc.broadcastPacket(s_skillSound);
@@ -610,8 +543,8 @@ public class L1SpellBook {
 		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
 
-	public static void SpellBook3(L1PcInstance pc,
-			L1ItemInstance l1iteminstance, ClientThread clientthread) {
+	public static void SpellBook3(L1PcInstance pc, L1ItemInstance l1iteminstance,
+			ClientThread clientthread) {
 		String s = "";
 		int i = 0;
 		int j = 0;
@@ -640,8 +573,7 @@ public class L1SpellBook {
 		int i6 = 0;
 		for (int j6 = 87; j6 <= 91; j6++) {
 			L1Skill l1skills = SkillTable.getInstance().findBySkillId(j6);
-			String s1 = (new StringBuilder()).append("技術書(").append(
-					l1skills.getName()).append(")").toString();
+			String s1 = String.format(I18N_TECHNICAL_DOCUMENT_NAME, l1skills.getName());
 			if (l1iteminstance.getItem().getName().equalsIgnoreCase(s1)) {
 				int l6 = l1skills.getSkillLevel();
 				int i7 = l1skills.getId();
@@ -651,107 +583,81 @@ public class L1SpellBook {
 				case 1: // '\001'
 					j = i7;
 					break;
-
 				case 2: // '\002'
 					k = i7;
 					break;
-
 				case 3: // '\003'
 					l = i7;
 					break;
-
 				case 4: // '\004'
 					i1 = i7;
 					break;
-
 				case 5: // '\005'
 					j1 = i7;
 					break;
-
 				case 6: // '\006'
 					k1 = i7;
 					break;
-
 				case 7: // '\007'
 					l1 = i7;
 					break;
-
 				case 8: // '\b'
 					i2 = i7;
 					break;
-
 				case 9: // '\t'
 					j2 = i7;
 					break;
-
 				case 10: // '\n'
 					k2 = i7;
 					break;
-
 				case 11: // '\013'
 					l2 = i7;
 					break;
-
 				case 12: // '\f'
 					i3 = i7;
 					break;
-
 				case 13: // '\r'
 					j3 = i7;
 					break;
-
 				case 14: // '\016'
 					k3 = i7;
 					break;
-
 				case 15: // '\017'
 					l3 = i7;
 					break;
-
 				case 16: // '\020'
 					i4 = i7;
 					break;
-
 				case 17: // '\021'
 					j4 = i7;
 					break;
-
 				case 18: // '\022'
 					k4 = i7;
 					break;
-
 				case 19: // '\023'
 					l4 = i7;
 					break;
-
 				case 20: // '\024'
 					i5 = i7;
 					break;
-
 				case 21: // '\025'
 					j5 = i7;
 					break;
-
 				case 22: // '\026'
 					k5 = i7;
 					break;
-
 				case 23: // '\027'
 					l5 = i7;
 					break;
-
 				case 24: // '\030'
 					i6 = i7;
 					break;
 				}
 			}
 		}
-
 		int k6 = pc.getId();
-		pc
-				.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2,
-						k2, l2, i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5,
-						i6, 0, 0, 0, 0));
+		pc.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2, k2, l2,
+				i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5, i6, 0, 0, 0, 0));
 		S_SkillSound s_skillSound = new S_SkillSound(k6, 224);
 		pc.sendPackets(s_skillSound);
 		pc.broadcastPacket(s_skillSound);
@@ -759,8 +665,8 @@ public class L1SpellBook {
 		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
 
-	public static void SpellBook4(L1PcInstance pc,
-			L1ItemInstance l1iteminstance, ClientThread clientthread) {
+	public static void SpellBook4(L1PcInstance pc, L1ItemInstance l1iteminstance,
+			ClientThread clientthread) {
 		String s = "";
 		int i = 0;
 		int j = 0;
@@ -789,7 +695,7 @@ public class L1SpellBook {
 		int i6 = 0;
 		for (int j6 = 113; j6 < 121; j6++) {
 			L1Skill l1skills = SkillTable.getInstance().findBySkillId(j6);
-			String s1 = "魔法書(" + l1skills.getName() + ")";
+			String s1 = String.format(I18N_SPELL_BOOK_NAME, l1skills.getName());
 			if (l1iteminstance.getItem().getName().equalsIgnoreCase(s1)) {
 				int l6 = l1skills.getSkillLevel();
 				int i7 = l1skills.getId();
@@ -799,107 +705,81 @@ public class L1SpellBook {
 				case 1: // '\001'
 					j = i7;
 					break;
-
 				case 2: // '\002'
 					k = i7;
 					break;
-
 				case 3: // '\003'
 					l = i7;
 					break;
-
 				case 4: // '\004'
 					i1 = i7;
 					break;
-
 				case 5: // '\005'
 					j1 = i7;
 					break;
-
 				case 6: // '\006'
 					k1 = i7;
 					break;
-
 				case 7: // '\007'
 					l1 = i7;
 					break;
-
 				case 8: // '\b'
 					i2 = i7;
 					break;
-
 				case 9: // '\t'
 					j2 = i7;
 					break;
-
 				case 10: // '\n'
 					k2 = i7;
 					break;
-
 				case 11: // '\013'
 					l2 = i7;
 					break;
-
 				case 12: // '\f'
 					i3 = i7;
 					break;
-
 				case 13: // '\r'
 					j3 = i7;
 					break;
-
 				case 14: // '\016'
 					k3 = i7;
 					break;
-
 				case 15: // '\017'
 					l3 = i7;
 					break;
-
 				case 16: // '\020'
 					i4 = i7;
 					break;
-
 				case 17: // '\021'
 					j4 = i7;
 					break;
-
 				case 18: // '\022'
 					k4 = i7;
 					break;
-
 				case 19: // '\023'
 					l4 = i7;
 					break;
-
 				case 20: // '\024'
 					i5 = i7;
 					break;
-
 				case 21: // '\025'
 					j5 = i7;
 					break;
-
 				case 22: // '\026'
 					k5 = i7;
 					break;
-
 				case 23: // '\027'
 					l5 = i7;
 					break;
-
 				case 24: // '\030'
 					i6 = i7;
 					break;
 				}
 			}
 		}
-
 		int k6 = pc.getId();
-		pc
-				.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2,
-						k2, l2, i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5,
-						i6, 0, 0, 0, 0));
+		pc.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2, k2, l2,
+				i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5, i6, 0, 0, 0, 0));
 		S_SkillSound s_skillSound = new S_SkillSound(k6, 224);
 		pc.sendPackets(s_skillSound);
 		pc.broadcastPacket(s_skillSound);
@@ -907,8 +787,8 @@ public class L1SpellBook {
 		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
 
-	public static void SpellBook5(L1PcInstance pc,
-			L1ItemInstance l1iteminstance, ClientThread clientthread) {
+	public static void SpellBook5(L1PcInstance pc, L1ItemInstance l1iteminstance,
+			ClientThread clientthread) {
 		String s = "";
 		int i = 0;
 		int j = 0;
@@ -941,7 +821,7 @@ public class L1SpellBook {
 		int l8 = 0;
 		for (int j6 = 181; j6 <= 195; j6++) {
 			L1Skill l1skills = SkillTable.getInstance().findBySkillId(j6);
-			String s1 = "ドラゴンナイトの書板（" + l1skills.getName() + "）";
+			String s1 = String.format(I18N_DRAGON_TABLET_NAME, l1skills.getName());
 			if (l1iteminstance.getItem().getName().equalsIgnoreCase(s1)) {
 				int l6 = l1skills.getSkillLevel();
 				int i7 = l1skills.getId();
@@ -951,107 +831,81 @@ public class L1SpellBook {
 				case 1: // '\001'
 					j = i7;
 					break;
-
 				case 2: // '\002'
 					k = i7;
 					break;
-
 				case 3: // '\003'
 					l = i7;
 					break;
-
 				case 4: // '\004'
 					i1 = i7;
 					break;
-
 				case 5: // '\005'
 					j1 = i7;
 					break;
-
 				case 6: // '\006'
 					k1 = i7;
 					break;
-
 				case 7: // '\007'
 					l1 = i7;
 					break;
-
 				case 8: // '\b'
 					i2 = i7;
 					break;
-
 				case 9: // '\t'
 					j2 = i7;
 					break;
-
 				case 10: // '\n'
 					k2 = i7;
 					break;
-
 				case 11: // '\013'
 					l2 = i7;
 					break;
-
 				case 12: // '\f'
 					i3 = i7;
 					break;
-
 				case 13: // '\r'
 					j3 = i7;
 					break;
-
 				case 14: // '\016'
 					k3 = i7;
 					break;
-
 				case 15: // '\017'
 					l3 = i7;
 					break;
-
 				case 16: // '\020'
 					i4 = i7;
 					break;
-
 				case 17: // '\021'
 					j4 = i7;
 					break;
-
 				case 18: // '\022'
 					k4 = i7;
 					break;
-
 				case 19: // '\023'
 					l4 = i7;
 					break;
-
 				case 20: // '\024'
 					i5 = i7;
 					break;
-
 				case 21: // '\025'
 					j5 = i7;
 					break;
-
 				case 22: // '\026'
 					k5 = i7;
 					break;
-
 				case 23: // '\027'
 					l5 = i7;
 					break;
-
 				case 24: // '\030'
 					i6 = i7;
 					break;
-
 				case 25: // '\031'
 					j8 = i7;
 					break;
-
 				case 26: // '\032'
 					k8 = i7;
 					break;
-
 				case 27: // '\033'
 					l8 = i7;
 					break;
@@ -1061,11 +915,9 @@ public class L1SpellBook {
 				}
 			}
 		}
-
 		int k6 = pc.getId();
 		pc.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2, k2, l2,
-				i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5, i6, j8, k8, l8,
-				i8));
+				i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5, i6, j8, k8, l8, i8));
 		S_SkillSound s_skillSound = new S_SkillSound(k6, 224);
 		pc.sendPackets(s_skillSound);
 		pc.broadcastPacket(s_skillSound);
@@ -1073,8 +925,8 @@ public class L1SpellBook {
 		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
 
-	public static void SpellBook6(L1PcInstance pc,
-			L1ItemInstance l1iteminstance, ClientThread clientthread) {
+	public static void SpellBook6(L1PcInstance pc, L1ItemInstance l1iteminstance,
+			ClientThread clientthread) {
 		String s = "";
 		int i = 0;
 		int j = 0;
@@ -1107,7 +959,7 @@ public class L1SpellBook {
 		int l8 = 0;
 		for (int j6 = 201; j6 <= 220; j6++) {
 			L1Skill l1skills = SkillTable.getInstance().findBySkillId(j6);
-			String s1 = "記憶の水晶（" + l1skills.getName() + "）";
+			String s1 = String.format(I18N_MEMORY_CRYSTAL_NAME, l1skills.getName());
 			if (l1iteminstance.getItem().getName().equalsIgnoreCase(s1)) {
 				int l6 = l1skills.getSkillLevel();
 				int i7 = l1skills.getId();
@@ -1117,107 +969,81 @@ public class L1SpellBook {
 				case 1: // '\001'
 					j = i7;
 					break;
-
 				case 2: // '\002'
 					k = i7;
 					break;
-
 				case 3: // '\003'
 					l = i7;
 					break;
-
 				case 4: // '\004'
 					i1 = i7;
 					break;
-
 				case 5: // '\005'
 					j1 = i7;
 					break;
-
 				case 6: // '\006'
 					k1 = i7;
 					break;
-
 				case 7: // '\007'
 					l1 = i7;
 					break;
-
 				case 8: // '\b'
 					i2 = i7;
 					break;
-
 				case 9: // '\t'
 					j2 = i7;
 					break;
-
 				case 10: // '\n'
 					k2 = i7;
 					break;
-
 				case 11: // '\013'
 					l2 = i7;
 					break;
-
 				case 12: // '\f'
 					i3 = i7;
 					break;
-
 				case 13: // '\r'
 					j3 = i7;
 					break;
-
 				case 14: // '\016'
 					k3 = i7;
 					break;
-
 				case 15: // '\017'
 					l3 = i7;
 					break;
-
 				case 16: // '\020'
 					i4 = i7;
 					break;
-
 				case 17: // '\021'
 					j4 = i7;
 					break;
-
 				case 18: // '\022'
 					k4 = i7;
 					break;
-
 				case 19: // '\023'
 					l4 = i7;
 					break;
-
 				case 20: // '\024'
 					i5 = i7;
 					break;
-
 				case 21: // '\025'
 					j5 = i7;
 					break;
-
 				case 22: // '\026'
 					k5 = i7;
 					break;
-
 				case 23: // '\027'
 					l5 = i7;
 					break;
-
 				case 24: // '\030'
 					i6 = i7;
 					break;
-
 				case 25: // '\031'
 					j8 = i7;
 					break;
-
 				case 26: // '\032'
 					k8 = i7;
 					break;
-
 				case 27: // '\033'
 					l8 = i7;
 					break;
@@ -1227,16 +1053,13 @@ public class L1SpellBook {
 				}
 			}
 		}
-
 		int k6 = pc.getId();
 		pc.sendPackets(new S_AddSkill(j, k, l, i1, j1, k1, l1, i2, j2, k2, l2,
-				i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5, i6, j8, k8, l8,
-				i8));
+				i3, j3, k3, l3, i4, j4, k4, l4, i5, j5, k5, l5, i6, j8, k8, l8, i8));
 		S_SkillSound s_skillSound = new S_SkillSound(k6, 224);
 		pc.sendPackets(s_skillSound);
 		pc.broadcastPacket(s_skillSound);
 		SkillTable.getInstance().spellMastery(k6, i, s, 0, 0);
 		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
-
 }
