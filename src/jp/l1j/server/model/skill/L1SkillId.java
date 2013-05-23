@@ -209,7 +209,7 @@ public class L1SkillId {
 
 	public static final int BURNING_SPIRIT = 102;
 
-	public static final int DARK_BLIND = 103;
+	public static final int SHADOW_SLEEP = 103; // 旧 DARK_BLIND
 
 	public static final int VENOM_RESIST = 104;
 
@@ -353,7 +353,7 @@ public class L1SkillId {
 
 	public static final int RESIST_FEAR = 188;
 
-	public static final int SHOCK_SKIN = 189;
+	public static final int MAGMA_ARROW = 189; // 旧 SHOCK_SKIN
 
 	public static final int AWAKEN_FAFURION = 190;
 
@@ -363,7 +363,7 @@ public class L1SkillId {
 
 	public static final int HORROR_OF_DEATH = 193;
 
-	public static final int FREEZING_BREATH = 194;
+	public static final int EYE_OF_DRAGON = 194; // 旧 FREEZING_BREATH
 
 	public static final int AWAKEN_VALAKAS = 195;
 
@@ -375,7 +375,7 @@ public class L1SkillId {
 
 	public static final int CONFUSION = 202;
 
-	public static final int SMASH = 203;
+	public static final int SMASH_ENERGY = 203; // 旧 SMASH
 
 	public static final int ILLUSION_OGRE = 204;
 
@@ -395,7 +395,7 @@ public class L1SkillId {
 
 	public static final int PHANTASM = 212;
 
-	public static final int ARM_BREAKER = 213;
+	public static final int EYES_BREAKER = 213; // 旧 ARM_BREAKER
 
 	public static final int ILLUSION_DIA_GOLEM = 214;
 

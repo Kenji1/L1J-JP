@@ -1035,7 +1035,7 @@ public class L1Attack {
 		}
 
 		if (_weaponType2 != 14
-				&& (_skillId == BONE_BREAK || _skillId == SMASH)) {
+				&& (_skillId == BONE_BREAK || _skillId == SMASH_ENERGY)) {
 			dmg += _skillDamage;
 		}
 
@@ -1082,7 +1082,7 @@ public class L1Attack {
 			}
 		}
 
-		if (_pc.hasSkillEffect(ARM_BREAKER)) { // ＰＣがアームブレイカ—中。
+		if (_pc.hasSkillEffect(EYES_BREAKER)) { // ＰＣがアイズブレイカ—中。
 			dmg -= 5;
 		}
 
@@ -1351,7 +1351,7 @@ public class L1Attack {
 		}
 
 		if (_weaponType2 != 14
-				&& (_skillId == BONE_BREAK || _skillId == SMASH || _skillId == ARM_BREAKER)) {
+				&& (_skillId == BONE_BREAK || _skillId == SMASH_ENERGY || _skillId == EYES_BREAKER)) {
 			dmg += _skillDamage;
 		}
 
@@ -1398,7 +1398,7 @@ public class L1Attack {
 			}
 		}
 
-		if (_pc.hasSkillEffect(ARM_BREAKER)) { // ＰＣがアームブレイカ—中。
+		if (_pc.hasSkillEffect(EYES_BREAKER)) { // ＰＣがアイズブレイカ—中。
 			dmg -= 5;
 		}
 
@@ -1515,7 +1515,7 @@ public class L1Attack {
 			dmg /= 2;
 		}
 
-		if (_npc.hasSkillEffect(ARM_BREAKER)) { // ＮＰＣがアームブレイカ—中。
+		if (_npc.hasSkillEffect(EYES_BREAKER)) { // ＮＰＣがアイズブレイカ—中。
 			dmg -= 5;
 		}
 
@@ -1614,7 +1614,7 @@ public class L1Attack {
 			dmg /= 2;
 		}
 
-		if (_npc.hasSkillEffect(ARM_BREAKER)) { // ＮＰＣがアームブレイカ—中。
+		if (_npc.hasSkillEffect(EYES_BREAKER)) { // ＮＰＣがアイズブレイカ—中。
 			dmg -= 5;
 		}
 

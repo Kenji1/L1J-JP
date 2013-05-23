@@ -414,13 +414,13 @@ public class L1SkillUse {
 			// 覚醒状態では覚醒スキル以外使用不可
 			if (pc.getAwakeSkillId() == AWAKEN_ANTHARAS
 					&& _skillId != AWAKEN_ANTHARAS && _skillId != MAGMA_BREATH
-					&& _skillId != SHOCK_SKIN && _skillId != FREEZING_BREATH
+					&& _skillId != MAGMA_ARROW && _skillId != EYE_OF_DRAGON
 					|| pc.getAwakeSkillId() == AWAKEN_FAFURION
 					&& _skillId != AWAKEN_FAFURION && _skillId != MAGMA_BREATH
-					&& _skillId != SHOCK_SKIN && _skillId != FREEZING_BREATH
+					&& _skillId != MAGMA_ARROW && _skillId != EYE_OF_DRAGON
 					|| pc.getAwakeSkillId() == AWAKEN_VALAKAS
 					&& _skillId != AWAKEN_VALAKAS && _skillId != MAGMA_BREATH
-					&& _skillId != SHOCK_SKIN && _skillId != FREEZING_BREATH) {
+					&& _skillId != MAGMA_ARROW && _skillId != EYE_OF_DRAGON) {
 				pc.sendPackets(new S_ServerMessage(1385)); // 現在の状態では覚醒魔法が使えません。
 				return false;
 			}
@@ -702,18 +702,18 @@ public class L1SkillUse {
 		}
 
 		if (cha.hasSkillEffect(ICE_LANCE)
-				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == FREEZING_BREATH)) {
-			return false; // アイスランス中にアイスランス、フリージングブリザード、フリージングブレス
+				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == EYE_OF_DRAGON)) {
+			return false; // アイスランス中にアイスランス、フリージングブリザード、アイオブドラゴン
 		}
 
 		if (cha.hasSkillEffect(FREEZING_BLIZZARD)
-				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == FREEZING_BREATH)) {
-			return false; // フリージングブリザード中にアイスランス、フリージングブリザード、フリージングブレス
+				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == EYE_OF_DRAGON)) {
+			return false; // フリージングブリザード中にアイスランス、フリージングブリザード、アイオブドラゴン
 		}
 
-		if (cha.hasSkillEffect(FREEZING_BREATH)
-				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == FREEZING_BREATH)) {
-			return false; // フリージングブレス中にアイスランス、フリージングブリザード、フリージングブレス
+		if (cha.hasSkillEffect(EYE_OF_DRAGON)
+				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == EYE_OF_DRAGON)) {
+			return false; // アイオブドラゴン中にアイスランス、フリージングブリザード、アイオブドラゴン
 		}
 
 		if (cha.hasSkillEffect(EARTH_BIND) && _skillId == EARTH_BIND) {
@@ -728,8 +728,8 @@ public class L1SkillUse {
 			return false; // アース バインド中にコンフュージョン
 		}
 
-		if (cha.hasSkillEffect(EARTH_BIND) && _skillId == ARM_BREAKER) {
-			return false; // アース バインド中にアームブレイカ―
+		if (cha.hasSkillEffect(EARTH_BIND) && _skillId == EYES_BREAKER) {
+			return false; // アース バインド中にアイズブレイカ―
 		}
 
 		if (cha.hasSkillEffect(FOG_OF_SLEEPING) && _skillId == PHANTASM) {
@@ -875,7 +875,7 @@ public class L1SkillUse {
 				return;
 			}
 
-			if (_skillId == LIGHTNING || _skillId == FREEZING_BREATH) { // ライトニング、フリージングブレス直線的に範囲を決める
+			if (_skillId == LIGHTNING || _skillId == EYE_OF_DRAGON) { // ライトニング、アイオブドラゴン直線的に範囲を決める
 				ArrayList<L1Object> al1object = L1World.getInstance()
 						.getVisibleLineObjects(_user, _target);
 
@@ -1207,7 +1207,7 @@ public class L1SkillUse {
 				|| _skillId == SHADOW_FANG) {
 			return;
 		}
-		if ((_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == FREEZING_BREATH)
+		if ((_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == EYE_OF_DRAGON)
 				&& !_isFreeze) { // 凍結失敗
 			return;
 		}
@@ -1343,11 +1343,11 @@ public class L1SkillUse {
 				return;
 			}
 
-			if (_skillId == SMASH) {
+			if (_skillId == SMASH_ENERGY) {
 				return;
 			}
 
-			if (_skillId == ARM_BREAKER) {
+			if (_skillId == EYES_BREAKER) {
 				return;
 			}
 
@@ -1660,8 +1660,8 @@ public class L1SkillUse {
 		// NPCにショックスタンを使用させるとonActionでNullPointerExceptionが発生するため
 		// とりあえずPCが使用した時のみ
 		if ((_skillId == SHOCK_STUN || _skillId == BONE_BREAK || _skillId == MASS_SHOCK_STUN)
-				|| _skillId == SMASH
-				|| _skillId == ARM_BREAKER
+				|| _skillId == SMASH_ENERGY
+				|| _skillId == EYES_BREAKER
 				&& _user instanceof L1PcInstance) {
 			_target.onAction(_player, _skillId);
 		}
@@ -1791,7 +1791,7 @@ public class L1SkillUse {
 				// すでにスキルを使用済みの場合なにもしない
 				// ただしショックスタンは重ねがけ出来るため例外
 				if (cha.hasSkillEffect(_skillId) && _skillId != SHOCK_STUN
-						&& _skillId != BONE_BREAK && _skillId != ARM_BREAKER
+						&& _skillId != BONE_BREAK && _skillId != EYES_BREAKER
 						&& _skillId != MASS_SHOCK_STUN) {
 					addMagicList(cha, true); // ターゲットに魔法の効果時間を上書き
 					if (_skillId != SHAPE_CHANGE) { // シェイプ チェンジは変身を上書き出来るため例外
@@ -2128,7 +2128,7 @@ public class L1SkillUse {
 					if (!cha.hasSkillEffect(EARTH_BIND)
 							&& !cha.hasSkillEffect(ICE_LANCE)
 							&& !cha.hasSkillEffect(FREEZING_BLIZZARD)
-							&& !cha.hasSkillEffect(FREEZING_BREATH)) {
+							&& !cha.hasSkillEffect(EYE_OF_DRAGON)) {
 						if (cha instanceof L1PcInstance) {
 							L1CurseParalysis.curse(cha, 8000, 16000);
 						} else if (cha instanceof L1MonsterInstance) {
@@ -2141,7 +2141,7 @@ public class L1SkillUse {
 					_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
 				} else if (_skillId == ICE_LANCE // アイスランス
 						|| _skillId == FREEZING_BLIZZARD // フリージングブリザード
-						|| _skillId == FREEZING_BREATH) { // フリージングブレス
+						|| _skillId == EYE_OF_DRAGON) { // アイオブドラゴン
 					_isFreeze = _magic.calcProbabilityMagic(_skillId);
 					if (_isFreeze) {
 						int time = _skill.getBuffDuration() * 1000;
@@ -2529,7 +2529,7 @@ public class L1SkillUse {
 							npc.setParalysisTime(_boneBreakDuration);
 						}
 					}
-				} else if (_skillId == SMASH) { // スマッシュ
+				} else if (_skillId == SMASH_ENERGY) { // スマッシュエネルギー
 					if (cha instanceof L1PcInstance) {
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.sendPackets(new S_SkillSound(pc.getId(), 6526));
@@ -2581,7 +2581,7 @@ public class L1SkillUse {
 						npc.setSkillEffect(FOG_OF_SLEEPING, time);
 						npc.setSleeped(true);
 					}
-				} else if (_skillId == ARM_BREAKER) { // アームブレイカ―
+				} else if (_skillId == EYES_BREAKER) { // アイズブレイカ―
 					if (cha instanceof L1PcInstance) {
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.sendPackets(new S_SkillSound(pc.getId(), 6551));
@@ -2608,7 +2608,7 @@ public class L1SkillUse {
 						if (cha instanceof L1PcInstance) {
 							if (cha instanceof L1PcInstance) {
 								L1PcInstance pc = (L1PcInstance) cha;
-								pc.setSkillEffect(ARM_BREAKER, time);
+								pc.setSkillEffect(EYES_BREAKER, time);
 								pc.sendPackets(new S_SkillIconGFX(74,
 										(time / 3)));
 							}
@@ -2616,7 +2616,7 @@ public class L1SkillUse {
 								|| cha instanceof L1SummonInstance
 								|| cha instanceof L1PetInstance) {
 							L1NpcInstance npc = (L1NpcInstance) cha;
-							npc.setSkillEffect(ARM_BREAKER, time);
+							npc.setSkillEffect(EYES_BREAKER, time);
 						}
 					}
 				} else if (_skillId == ELIZABE_AREA_POISON) {
