@@ -46,7 +46,6 @@ import jp.l1j.server.datatables.ShopTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.datatables.SprTable;
 import jp.l1j.server.datatables.TrapTable;
-import jp.l1j.server.datatables.UbTable;
 import jp.l1j.server.datatables.WeaponSkillTable;
 import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.instance.L1PcInstance;
@@ -134,7 +133,6 @@ public class L1ReloadConfig implements L1CommandExecutor {
 		SkillTable.getInstance().reload();
 		SprTable.getInstance().reload();
 		TrapTable.getInstance().reload();
-		UbTable.getInstance().reload();
 		WeaponSkillTable.getInstance().reload();
 		// xml files
 		L1BeginnerItem.reload();
