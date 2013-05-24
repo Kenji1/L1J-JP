@@ -1332,7 +1332,7 @@ public class L1Attack {
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
 		} else if (_weaponId == 707) { //破壊のロングボウ
-			L1WeaponSkill.getVenomBlazeDamage(_pc, _target, _arrow);
+			L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
 		} else if (_weaponId == 15) { //カーツソード リニューアル
 			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
 		} else if (_weaponType2 != 14) {
