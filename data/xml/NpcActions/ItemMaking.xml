@@ -567,6 +567,54 @@
 			<Material Amount="20000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
+	<!--極寒のドレスの布地 / エバート-->
+	<Action Name="request arctic fabric">
+		<MakeItem>
+			<Item Amount="1" ItemId="50640"/>
+			<Material Amount="1" ItemId="20134"/>
+		</MakeItem>
+	</Action>
+	<!--極寒のティアラの原石 / ディオ-->
+	<Action Name="request arctic stone1">
+		<MakeItem>
+			<Item Amount="1" ItemId="50638"/>
+			<Material Amount="1" ItemId="21291"/>
+		</MakeItem>
+	</Action>
+	<!--極寒のサンダルの原石 / ディオ-->
+	<Action Name="request arctic stone2">
+		<MakeItem>
+			<Item Amount="1" ItemId="50639"/>
+			<Material Amount="1" ItemId="20211"/>
+		</MakeItem>
+	</Action>
+	<!--極寒のヘルム / ヘクター-->
+	<Action Name="request arctic of helm">
+		<MakeItem>
+			<Item Amount="1" ItemId="21292"/>
+			<Material Amount="1" ItemId="20006"/>
+			<Material Amount="1" ItemId="50638"/>
+			<Material Amount="50000" ItemId="41246"/>
+		</MakeItem>
+	</Action>
+	<!--極寒のメイル / ヘクター-->
+	<Action Name="request arctic of armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="21293"/>
+			<Material Amount="1" ItemId="20154"/>
+			<Material Amount="1" ItemId="50640"/>
+			<Material Amount="50000" ItemId="41246"/>
+		</MakeItem>
+	</Action>
+	<!--極寒のブーツ / ヘクター-->
+	<Action Name="request arctic of boots">
+		<MakeItem>
+			<Item Amount="1" ItemId="21294"/>
+			<Material Amount="1" ItemId="20205"/>
+			<Material Amount="1" ItemId="50639"/>
+			<Material Amount="50000" ItemId="41246"/>
+		</MakeItem>
+	</Action>
 	<!--アイアン グローブ / ヘクター-->
 	<Action Name="request iron gloves">
 		<MakeItem>
