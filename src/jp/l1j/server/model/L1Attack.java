@@ -1665,6 +1665,21 @@ public class L1Attack {
 		}
 
 		// チェーンソードによる弱点露出
+		if (_pc.getExposureTargetId() != _target.getId()) { // ターゲットが違う場合、弱点露出削除
+			if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
+				_pc.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV1);
+				_pc.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1);
+			}
+			if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
+				_pc.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV2);
+				_pc.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV2);
+			}
+			if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
+				_pc.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV3);
+				_pc.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV3);
+			}
+			_pc.sendPackets(new S_SkillIconGFX(75, 0));
+		}
 		if (_pc.isFoeSlayer()) {
 			if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
 				dmg += 20;
@@ -1689,6 +1704,7 @@ public class L1Attack {
 				// LV3の場合は上書きしない。
 			} else {
 				_pc.setSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1, 15000);
+				_pc.setExposureTargetId(_target.getId());
 				_pc.sendPackets(new S_SkillIconGFX(75, 1));
 			}
 		}

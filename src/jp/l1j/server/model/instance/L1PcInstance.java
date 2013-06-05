@@ -151,7 +151,7 @@ public class L1PcInstance extends L1Character {
 		}
 		return hprByDoll;
 	}
-	
+
 	public short getHpr() {
 		return (short) _hpr;
 	}
@@ -181,7 +181,7 @@ public class L1PcInstance extends L1Character {
 		}
 		return mprByDoll;
 	}
-	
+
 	public short getMpr() {
 		return (short) _mpr;
 	}
@@ -275,7 +275,7 @@ public class L1PcInstance extends L1Character {
 			}
 		}
 	}
-	
+
 	// TODO マジックドールによるHP回復タイマーを停止
 	public void stopHpRegenerationByDoll() {
 		for (Object _doll : getDollList().values().toArray()) {
@@ -295,7 +295,7 @@ public class L1PcInstance extends L1Character {
 			}
 		}
 	}
-	
+
 	// TODO マジックドールによるMP回復タイマーを停止
 	public void stopMpRegenerationByDoll() {
 		for (Object _doll : getDollList().values().toArray()) {
@@ -305,7 +305,7 @@ public class L1PcInstance extends L1Character {
 			}
 		}
 	}
-	
+
 	// TODO マジックドールのアイテム生成タイマーを開始
 	public void startMakeItemByDoll() {
 		for (Object _doll : getDollList().values().toArray()) {
@@ -315,7 +315,7 @@ public class L1PcInstance extends L1Character {
 			}
 		}
 	}
-	
+
 	// TODO マジックドールのアイテム生成タイマーを停止
 	public void stopMakeItemByDoll() {
 		for (Object _doll : getDollList().values().toArray()) {
@@ -325,7 +325,7 @@ public class L1PcInstance extends L1Character {
 			}
 		}
 	}
-	
+
 	// TODO パプリオンハイドロエフェクト開始
 	public void startFafurionHydroEffect() {
 		if (!_fafurionHydroActiveEffect) {
@@ -383,7 +383,7 @@ public class L1PcInstance extends L1Character {
 	public L1MapLimiter getMapLimiter() {
 		return _mapLimiter;
 	}
-	
+
 	public void setMapLimiter(L1MapLimiter mapLimiter) {
 		_mapLimiter = mapLimiter;
 	}
@@ -422,7 +422,7 @@ public class L1PcInstance extends L1Character {
 			time = limiter.getEnterTime() / 60;
 		} else {
 			limiter = L1MapLimiter.get(mapid);
-			if (limiter != null) {	
+			if (limiter != null) {
 				MapTimerTable timer = MapTimerTable.find(getId(), limiter.getAreaId());
 				if (timer != null) {
 					time = timer.getEnterTime() / 60;
@@ -3192,12 +3192,12 @@ public class L1PcInstance extends L1Character {
 			setServivalScream(time);
 		}
 	}
-	
+
 	public void setServivalScream(long time) {
 		_servivalScream = time;
 	}
 	// TODO 生存の叫び end
-	
+
 	@Override
 	public int getMagicLevel() {
 		return getClassFeature().getMagicLevel(getLevel());
@@ -3518,7 +3518,7 @@ public class L1PcInstance extends L1Character {
 		setInCharReset(true);
 		sendPackets(new S_CharReset(this));
 	}
-	
+
 	/**
 	 * 初期ステータスから現在のボーナスを再計算して設定する 初期設定時、再配分時に呼び出す
 	 */
@@ -4822,6 +4822,16 @@ public class L1PcInstance extends L1Character {
 		return _Droplog;
 	}
 
+	private int _exposureTargetId = 0; // 弱点露出時の相手のID
+
+	public int getExposureTargetId() {
+		return _exposureTargetId;
+	}
+
+	public void setExposureTargetId(int i) {
+		_exposureTargetId = i;
+	}
+
 	private boolean _FoeSlayer = false;
 
 	public void setFoeSlayer(boolean FoeSlayer) {
@@ -4883,29 +4893,29 @@ public class L1PcInstance extends L1Character {
 	public void addPotionRecoveryRatePct(int i) {
 		_potionRecoveryRate += i;
 	}
-	
+
 	private int _monsterKill = 0; // モンスター討伐数
-	
+
 	public int getMonsterKill() {
 		return _monsterKill;
 	}
-	
+
 	public void setMonsterKill(int i) {
 		_monsterKill = i;
 		sendPackets(new S_OwnCharStatus(this));
 	}
-	
+
 	public void addMonsterKill(int i) {
 		_monsterKill += i;
 		sendPackets(new S_OwnCharStatus(this));
 	}
-	
+
 	private int _createScrollAmount = 0; // スペルスクロール製作個数
-	
+
 	public int getCreateScrollAmount() {
 		return _createScrollAmount;
 	}
-	
+
 	public void setCreateScrollAmount(int i) {
 		_createScrollAmount = i;
 	}
