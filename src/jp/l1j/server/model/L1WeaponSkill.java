@@ -882,7 +882,6 @@ public class L1WeaponSkill {
 				bsk = 0.2;
 			}
 			dmg = (intel + sp) * (2 + bsk) + _random.nextInt(intel + sp) * 2;
-			L1DamagePoison.doInfection(pc, cha, 3000, 5);
 			pc.sendPackets(new S_SkillSound(cha.getId(), 9359));
 			pc.broadcastPacket(new S_SkillSound(cha.getId(), 9359));
 		}
