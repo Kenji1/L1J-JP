@@ -258,13 +258,13 @@ public class L1Attack {
 		dexDmg[23] = 5;
 		int dmg = 5;
 		for (int dex = 24; dex <= 35; dex++) { // 24〜35は3毎に+1
-			if (dex % 3 == 1) {
+			if (dex % 3 == 0) {
 				dmg++;
 			}
 			dexDmg[dex] = dmg;
 		}
 		for (int dex = 36; dex <= 127; dex++) { // 36〜127は4毎に1
-			if (dex % 4 == 1) {
+			if (dex % 4 == 0) {
 				dmg++;
 			}
 			dexDmg[dex] = dmg;
