@@ -667,7 +667,7 @@ public class L1SkillId {
 	public static final int BLESS_OF_CRAY = 4056; // クレイの祝福
 
 	public static final int BLESS_OF_SAEL = 4057; // サエルの祝福
-	
+
 	public static final int BLESS_OF_GUNTER = 4058; // グンターの助言
 
 	public static final int MAGIC_EYE_OF_ANTHARAS = 4060; // 地竜の魔眼
@@ -685,6 +685,10 @@ public class L1SkillId {
 	public static final int MAGIC_EYE_OF_LIFE = 4066; // 生命の魔眼
 
 	public static final int STONE_OF_DRAGON = 4071; // ドラゴンの石
+
+	public static final int CHASER_OF_THEBES = 10146; // テーベチェイサー
+
+	public static final int CHASER_OF_KUKULCAN = 10146; // ククルカンチェイサー
 
 	public static final int CURSE_PARALYZE2 = 11011;
 

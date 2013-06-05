@@ -1015,8 +1015,6 @@ public class L1Attack {
 			L1WeaponSkill.getIceQueenStaffDamage(_pc, _targetPc, weapon);
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
-		} else if (_weaponId == 707) { //破壊のロングボウ
-			L1WeaponSkill.getVenomBlazeDamage(_pc, _targetPc, _arrow);
 		} else if (_weaponId == 15) { //カーツソード リニューアル
 			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
 		} else if (_weaponType2 != 14) {
@@ -1331,8 +1329,6 @@ public class L1Attack {
 			L1WeaponSkill.getIceQueenStaffDamage(_pc, _target, weapon);
 		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
 			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
-		} else if (_weaponId == 707) { //破壊のロングボウ
-			L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
 		} else if (_weaponId == 15) { //カーツソード リニューアル
 			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
 		} else if (_weaponType2 != 14) {
@@ -1881,21 +1877,20 @@ public class L1Attack {
 	public void addChaserAttack() {
 		if (5 > _random.nextInt(100) + 1) {
 			if (_weaponId == 265 || _weaponId == 266 || _weaponId == 267
-					|| _weaponId == 268) {
-				// テーベ武器
-				L1Chaser chaser = new L1Chaser(_pc, _target,
-						L1Skill.ATTR_EARTH, 7025);
-				chaser.begin();
-			} else if (_weaponId == 282 || _weaponId == 283) {
-				// ククルカン武器
-				L1Chaser chaser = new L1Chaser(_pc, _target,
-						L1Skill.ATTR_WATER, 7179);
-				chaser.begin();
-			} else if (_weaponId == 263) {
-				// フリージングランサー
-				L1Chaser chaser = new L1Chaser(_pc, _target,
-						L1Skill.ATTR_WATER, 1804); // 暫定で以前のエフェクトのまま
-				chaser.begin();
+					|| _weaponId == 268) { // テーベ武器
+				if (!_target.hasSkillEffect(CHASER_OF_THEBES)) {
+					_target.setSkillEffect(CHASER_OF_THEBES, 0);
+					L1Chaser chaser = new L1Chaser(_pc, _target,
+							L1Skill.ATTR_EARTH, 7025);
+					chaser.begin();
+				}
+			} else if (_weaponId == 282 || _weaponId == 283) { // ククルカン武器
+				if (!_target.hasSkillEffect(CHASER_OF_KUKULCAN)) {
+					_target.setSkillEffect(CHASER_OF_KUKULCAN, 0);
+					L1Chaser chaser = new L1Chaser(_pc, _target,
+							L1Skill.ATTR_WATER, 7179);
+					chaser.begin();
+				}
 			}
 		}
 	}
