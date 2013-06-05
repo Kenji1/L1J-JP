@@ -1092,10 +1092,10 @@ public class C_UseItem extends ClientBasePacket {
 				} else {
 					// S_ServerMessageでは引数が%dの場合表示されない。
 					// pc.sendPackets(new S_ServerMessage(673, String.valueOf(max)));
-					
+
 					// pc.sendPackets(new S_SystemMessage("このアイテムは" + max
 					//		+ "レベル以下のみ使用できます。"));
-					
+
 					// TODO
 					pc.sendPackets(new S_SystemMessage(String.format(I18N_CAN_BE_USED_BELOW_THE_MAX_LEVEL, max)));
 					// このアイテムは%dレベル以下のみ使用できます。
@@ -1199,7 +1199,7 @@ public class C_UseItem extends ClientBasePacket {
 				}
 			}
 
-			if (type == 3 && pcInventory.getTypeEquipped(2, 4) >= 1) {
+/*			if (type == 3 && pcInventory.getTypeEquipped(2, 4) >= 1) {
 				// シャツの場合、マントを着てないか確認
 				activeChar.sendPackets(new S_ServerMessage(126, "$224", "$225"));
 				// \f1%1上に%0を着ることはできません。
@@ -1215,7 +1215,7 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1%1上に%0を着ることはできません。
 				return;
 			}
-
+*/
 			L1BuffUtil.cancelBarrier(activeChar); // アブソルート バリアの解除
 
 			pcInventory.setEquipped(armor, true);
@@ -1226,7 +1226,7 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1はずすことができません。呪いをかけられているようです。
 				return;
 			}
-			if (type == 3 && pcInventory.getTypeEquipped(2, 2) >= 1) {
+/*			if (type == 3 && pcInventory.getTypeEquipped(2, 2) >= 1) {
 				// シャツの場合、メイルを着てないか確認
 				activeChar.sendPackets(new S_ServerMessage(127));
 				// \f1それは脱ぐことができません
@@ -1238,7 +1238,7 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1それは脱ぐことができません
 				return;
 			}
-			if (type == 7) { // シールドの場合、ソリッドキャリッジの効果消失
+*/			if (type == 7) { // シールドの場合、ソリッドキャリッジの効果消失
 				if (activeChar.hasSkillEffect(SOLID_CARRIAGE)) {
 					activeChar.removeSkillEffect(SOLID_CARRIAGE);
 				}
