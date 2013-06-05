@@ -1498,7 +1498,7 @@ public class L1SkillUse {
 				return;
 			}
 
-			if (_skill.getTarget().equals("attack") && _skillId != 18 
+			if (_skill.getTarget().equals("attack") && _skillId != 18
 					   && _skillId != 10157 && _skillId != 10159) {
 				if (_skill.getArea() == 0) { // 単体攻撃魔法
 					_user.broadcastPacket(new S_UseAttackSkill(_user, targetid,
@@ -2996,7 +2996,7 @@ public class L1SkillUse {
 								buffIconDuration));
 					} else if (_skillId == SHADOW_ARMOR) { // シャドウ アーマー
 						L1PcInstance pc = (L1PcInstance) cha;
-						pc.addAc(-3);
+						pc.addMr(-5);
 						pc.sendPackets(new S_SkillIconShield(3,
 								buffIconDuration));
 					} else if (_skillId == DRESS_DEXTERITY) { // ドレス デクスタリティー
