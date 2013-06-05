@@ -403,7 +403,7 @@ public class L1Attack {
 			} else if (_calcType == PC_NPC) {
 				_isHit = calcPcNpcHit();
 			}
-			if (_calcType == PC_NPC && _weaponId != 246 && 
+			if (_calcType == PC_NPC && _weaponId != 246 &&
 					_targetNpc.getNpcTemplate().getNpcId() == 45878) {
 				_isHit = false; // 試練の剣A以外でドレイクの幽霊への攻撃を無効
 			}
@@ -953,8 +953,8 @@ public class L1Attack {
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
-		if (_weaponId == 702  && _random.nextInt(100) + 1 <= 70) {
-			// 極寒のチェーンソード装備かつ成功確率 (暫定)70%
+		if (_weaponId == 729  && _random.nextInt(100) + 1 <= 70) {
+			// ブラッド サッカー装備かつ成功確率 (暫定)70%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
@@ -1207,7 +1207,7 @@ public class L1Attack {
 			weaponDamage = weaponMaxDamage;
 			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3671));
 			_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 3671));
-		} else if (_weaponType == 0 || _weaponType == 20 || _weaponType == 62) { 
+		} else if (_weaponType == 0 || _weaponType == 20 || _weaponType == 62) {
 			// 素手 、 弓、ガントトレット
 			weaponDamage = 0;
 			if (_weaponId == 190) { // 弓-矢が無くてサイハの場合
@@ -1254,8 +1254,8 @@ public class L1Attack {
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
-		if (_weaponId == 702  && _random.nextInt(100) + 1 <= 70) {
-			// 極寒のチェーンソード装備かつ成功確率 (暫定)70%
+		if (_weaponId == 729  && _random.nextInt(100) + 1 <= 70) {
+			// ブラッドサッカー装備かつ成功確率 (暫定)70%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
