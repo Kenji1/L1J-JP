@@ -126,9 +126,10 @@ class L1SkillStop {
 				pc.delBlindHiding();
 			}
 		} else if (skillId == SHADOW_ARMOR) { // シャドウ アーマー
-			cha.addMr(5);
+			cha.addMr(-5);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
+				pc.sendPackets(new S_SpMr(pc));
 				pc.sendPackets(new S_SkillIconShield(3, 0));
 			}
 		} else if (skillId == DRESS_DEXTERITY) { // ドレス デクスタリティー

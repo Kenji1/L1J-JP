@@ -2996,7 +2996,8 @@ public class L1SkillUse {
 								buffIconDuration));
 					} else if (_skillId == SHADOW_ARMOR) { // シャドウ アーマー
 						L1PcInstance pc = (L1PcInstance) cha;
-						pc.addMr(-5);
+						pc.addMr(5);
+						pc.sendPackets(new S_SpMr(pc));
 						pc.sendPackets(new S_SkillIconShield(3,
 								buffIconDuration));
 					} else if (_skillId == DRESS_DEXTERITY) { // ドレス デクスタリティー
