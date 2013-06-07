@@ -939,7 +939,7 @@ public class L1Attack {
 			_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 3398));
 		}
 
-		weaponTotalDamage += calcPcPcAttrDamage(); // 属性強化ダメージボーナス
+		weaponTotalDamage += calcAttrEnchantDmg(); // 属性強化ダメージボーナス
 
 		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
 				&& (_weaponType == 54 || _weaponType == 58)) {
@@ -987,7 +987,15 @@ public class L1Attack {
 
 		dmg = calcBuffDamage(dmg);
 
-		if (_weaponId == 124) { // バフォメットスタッフ
+		if ((_weaponId == 701 || _weaponId == 702)) { // 極寒シリーズ
+			L1WeaponSkill.getIceWeaponDamage(_pc, _targetPc, weapon);
+		} else if (_weaponId == 121 || _weaponId == 703) { // アイスクイーンスタッフ
+			L1WeaponSkill.getIceQueenStaffDamage(_pc, _targetPc, weapon);
+		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
+			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
+		} else if (_weaponId == 15) { //カーツソード リニューアル
+			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
+		} else if (_weaponId == 124) { // バフォメットスタッフ
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _targetPc);
 		} else if (_weaponId == 2 || _weaponId == 200002) { // ダイスダガー
 			dmg = L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
@@ -1006,17 +1014,6 @@ public class L1Attack {
 		} else if (_weaponId == 276 || _weaponId == 277 || _weaponId == 278
 				|| _weaponId == 279 || _weaponId == 280 || _weaponId == 281) { // マリスエレメント武器
 			L1WeaponSkill.getMaliceWeaponDamage(_pc, _targetPc, weapon);
-		} else {
-			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
-		}
-		if ((_weaponId == 701 || _weaponId == 702)) { //極寒シリーズ
-			L1WeaponSkill.getIceWeaponDamage(_pc, _targetPc, weapon);
-		} else if (_weaponId == 121 || _weaponId == 703) { //アイスクイーンスタッフ
-			L1WeaponSkill.getIceQueenStaffDamage(_pc, _targetPc, weapon);
-		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
-			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
-		} else if (_weaponId == 15) { //カーツソード リニューアル
-			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
 		} else if (_weaponType2 != 14) {
 			// キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
@@ -1113,8 +1110,6 @@ public class L1Attack {
 			}
 		}*/
 		if (_targetPc.hasSkillEffect(DRAGON_SKIN)) {
-			//dmg -= 2;
-			//dmg -= 3;  リニューアル後
 			dmg -= 5; // キャラクターケアアップデート
 		}
 		if (_targetPc.hasSkillEffect(PATIENCE)) {
@@ -1165,27 +1160,6 @@ public class L1Attack {
 		return (int) dmg;
 	}
 
-	private int calcPcPcAttrDamage() {
-
-		int weaponAttrDamage = 0;
-
-		calcAttrEnchantDmg(); // 属性強化ダメージボーナス
-		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
-				&& (_weaponType == 54 || _weaponType == 58)) {
-			if ((_random.nextInt(100) + 1) <= 33) {
-				weaponAttrDamage *= 2;
-			}
-		}
-
-		double dmg = 0;
-		dmg = calcBuffDamage(dmg);
-
-
-			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
-
-		return weaponAttrDamage;
-	}
-
 	// ●●●● プレイヤー から ＮＰＣ へのダメージ算出 ●●●●
 	public int calcPcNpcDamage() {
 
@@ -1229,8 +1203,6 @@ public class L1Attack {
 
 		int weaponTotalDamage = weaponDamage + _weaponAddDmg + _weaponEnchant;
 
-		weaponTotalDamage += calcPcNpcAttrDamage(); // 属性強化ダメージ
-
 		weaponTotalDamage += calcMaterialBlessDmg(); // 銀祝福ダメージボーナス
 		if (_weaponType == 54
 				&& (_random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // ダブルヒット
@@ -1240,6 +1212,7 @@ public class L1Attack {
 		}
 
 		weaponTotalDamage += calcAttrEnchantDmg(); // 属性強化ダメージボーナス
+
 		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
 				&& (_weaponType == 54 || _weaponType == 58)) {
 			if ((_random.nextInt(100) + 1) <= 33) {
@@ -1301,7 +1274,15 @@ public class L1Attack {
 
 		dmg = calcBuffDamage(dmg);
 
-		if (_weaponId == 124) { // バフォメットスタッフ
+		if ((_weaponId == 701 || _weaponId == 702)) { //極寒シリーズ
+			L1WeaponSkill.getIceWeaponDamage(_pc, _target, weapon);
+		} else if (_weaponId == 121 || _weaponId == 703) { //アイスクイーンスタッフ
+			L1WeaponSkill.getIceQueenStaffDamage(_pc, _target, weapon);
+		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
+			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
+		} else if (_weaponId == 15) { //カーツソード リニューアル
+			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
+		} else if (_weaponId == 124) { // バフォメットスタッフ
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		} else if (_weaponId == 2 || _weaponId == 200002) { // ダイスダガー
 			dmg = L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
@@ -1320,17 +1301,6 @@ public class L1Attack {
 		} else if (_weaponId == 276 || _weaponId == 277 || _weaponId == 278
 				|| _weaponId == 279 || _weaponId == 280 || _weaponId == 281) { // マリスエレメント武器
 			L1WeaponSkill.getMaliceWeaponDamage(_pc, _target, weapon);
-		} else {
-			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
-		}
-		if ((_weaponId == 701 || _weaponId == 702)) { //極寒シリーズ
-			L1WeaponSkill.getIceWeaponDamage(_pc, _target, weapon);
-		} else if (_weaponId == 121 || _weaponId == 703) { //アイスクイーンスタッフ
-			L1WeaponSkill.getIceQueenStaffDamage(_pc, _target, weapon);
-		} else if ((_weaponId == 705) || (_weaponId == 706)) { // DE破壊シリーズ ベノムブレイズ
-			dmg += L1WeaponSkill.getVenomBlazeDamage(_pc, _target, weapon);
-		} else if (_weaponId == 15) { //カーツソード リニューアル
-			L1WeaponSkill.getKurtzWeaponDamage(_pc, _target, weapon);
 		} else if (_weaponType2 != 14) {
 			// キーリング以外の武器にＤＢでスキルが設定されている場合
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId, _weaponEnchant);
@@ -1462,24 +1432,6 @@ public class L1Attack {
 
 
 		return (int) dmg;
-	}
-
-	private int calcPcNpcAttrDamage() {
-
-		int weaponAttrDamage = 0;
-
-		calcAttrEnchantDmg(); // 属性強化ダメージボーナス
-		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
-				&& (_weaponType == 54 || _weaponType == 58)) {
-			if ((_random.nextInt(100) + 1) <= 33) {
-				weaponAttrDamage *= 2;
-			}
-		}
-
-		double dmg = 0;
-		dmg = calcBuffDamage(dmg);
-
-		return weaponAttrDamage;
 	}
 
 	// ●●●● ＮＰＣ から プレイヤー へのダメージ算出 ●●●●
