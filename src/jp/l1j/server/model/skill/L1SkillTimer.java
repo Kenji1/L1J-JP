@@ -289,6 +289,17 @@ class L1SkillStop {
 				pc.sendPackets(new S_SkillBrave(pc.getId(), 0, 0));
 				pc.broadcastPacket(new S_SkillBrave(pc.getId(), 0, 0));
 			}
+		} else if (skillId == AWAKEN_ANTHARAS) { // 覚醒：アンタラス
+			L1PcInstance pc = (L1PcInstance) cha;
+			pc.addResistHold(-10);
+			pc.addAc(3);
+		} else if (skillId == AWAKEN_FAFURION) { // 覚醒：パプリオン
+			L1PcInstance pc = (L1PcInstance) cha;
+			pc.addResistFreeze(-10);
+		} else if (skillId == AWAKEN_VALAKAS) { // 覚醒：ヴァラカス
+			L1PcInstance pc = (L1PcInstance) cha;
+			pc.addResistStun(-10);
+			pc.addHitup(-5);
 		} else if (skillId == ILLUSION_LICH) { // イリュージョン：リッチ
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;

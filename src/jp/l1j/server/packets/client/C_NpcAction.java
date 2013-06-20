@@ -180,14 +180,6 @@ public class C_NpcAction extends ClientBasePacket {
 						target.setSummonMonster(false);
 					}
 				} else {
-					int awakeSkillId = target.getAwakeSkillId();
-					if (awakeSkillId == AWAKEN_ANTHARAS
-							|| awakeSkillId == AWAKEN_FAFURION
-							|| awakeSkillId == AWAKEN_VALAKAS) {
-						target.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません
-
-						return;
-					}
 					if (target.isShapeChange()) {
 						L1PolyMorph.handleCommands(target, s);
 						target.setShapeChange(false);
@@ -1137,15 +1129,7 @@ public class C_NpcAction extends ClientBasePacket {
 			}
 			// TODO 善の使者　ミリエル　変身 　start
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80167) { // 善の使者
-			// 　
 			// ミリエル
-			int awakeSkillId = pc.getAwakeSkillId();
-			if (awakeSkillId == AWAKEN_ANTHARAS
-					|| awakeSkillId == AWAKEN_FAFURION
-					|| awakeSkillId == AWAKEN_VALAKAS) {
-				pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
-				return;
-			}
 
 			if (pc.getInventory().checkItem(L1ItemId.ADENA, 1000)) { // check
 				pc.getInventory().consumeItem(L1ItemId.ADENA, 1000); // del
@@ -6495,12 +6479,6 @@ public class C_NpcAction extends ClientBasePacket {
 
 	private void poly(ClientThread clientthread, int polyId) {
 		L1PcInstance pc = clientthread.getActiveChar();
-		int awakeSkillId = pc.getAwakeSkillId();
-		if (awakeSkillId == AWAKEN_ANTHARAS || awakeSkillId == AWAKEN_FAFURION
-				|| awakeSkillId == AWAKEN_VALAKAS) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
-			return;
-		}
 
 		if (pc.getInventory().checkItem(L1ItemId.ADENA, 100)) { // check
 			pc.getInventory().consumeItem(L1ItemId.ADENA, 100); // del
@@ -6513,12 +6491,6 @@ public class C_NpcAction extends ClientBasePacket {
 
 	private void polyByKeplisha(ClientThread clientthread, int polyId) {
 		L1PcInstance pc = clientthread.getActiveChar();
-		int awakeSkillId = pc.getAwakeSkillId();
-		if (awakeSkillId == AWAKEN_ANTHARAS || awakeSkillId == AWAKEN_FAFURION
-				|| awakeSkillId == AWAKEN_VALAKAS) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
-			return;
-		}
 
 		if (pc.getInventory().checkItem(L1ItemId.ADENA, 100)) { // check
 			pc.getInventory().consumeItem(L1ItemId.ADENA, 100); // del
@@ -7175,10 +7147,10 @@ public class C_NpcAction extends ClientBasePacket {
 
 		return result;
 	}
-	
+
 	private String getDwarfPotion(L1PcInstance pc, int itemId, int price) {
 		String htmlid = "";
-		
+
 		if (pc.getInventory().checkItem(50579, 1)
 				|| pc.getInventory().checkItem(50580, 1)
 				|| pc.getInventory().checkItem(50581, 1)
@@ -7199,7 +7171,7 @@ public class C_NpcAction extends ClientBasePacket {
 		} else {
 			htmlid = "mopo5";
 		}
-		
+
 		return htmlid;
 	}
 
@@ -7230,7 +7202,7 @@ public class C_NpcAction extends ClientBasePacket {
 		}
 		return htmlid;
 	}
-	
+
 	private String teleportToi(L1PcInstance pc, String s) {
 		String htmlid = "";
 
@@ -7330,19 +7302,19 @@ public class C_NpcAction extends ClientBasePacket {
 	private String teleportToi(L1PcInstance pc, String s, int n) {
 		// TOIテレポートスクロール 無し, 11F, 21F, 31F, 41F, 51F, 61F, 71F, 81F, 91F
 		int[] itemId = {0, 40104, 40105, 40106, 40107, 40108, 40109, 40110, 40111, 40112};
-		
+
 		// TOI 10F, 20F, 30F, 40F, 50F, 60F, 70F, 80F, 90F, 100F
 		int[] x1 = {32800, 32800, 32800, 32800, 32796, 32720, 32720, 32724, 32722, 32731};
 		int[] y1 = {32800, 32800, 32800, 32800, 32796, 32821, 32821, 32822, 32827, 32856};
 		short[] m1 = {110, 120, 130, 140, 150, 160, 170, 180, 190, 200};
-		
+
 		// TOI 1F, 11F, 21F, 31F, 41F, 51F, 61F, 71F, 81F, 91F
 		int[] x2 = {32724, 32631, 32631, 32631, 32631, 32669, 32669, 32669, 32669, 32669};
 		int[] y2 = {32799, 32935, 32935, 32935, 32935, 32814, 32814, 32814, 32814, 32814};
 		short[] m2 = {101, 111, 121, 131, 141, 151, 161, 171, 181, 191};
-					
+
 		String htmlid = "";
-		
+
 		if (s.equalsIgnoreCase("A")) { // ここの一番上の階に上がる
 			if (pc.getInventory().checkItem(40308, 2400) && (itemId[n] == 0
 					|| (itemId[n] > 0 && pc.getInventory().checkItem(itemId[n], 2)))) {

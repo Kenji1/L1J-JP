@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -122,7 +122,7 @@ public class L1PolyScroll {
 	public static void load() {
 		loadXml(_dataMap);
 	}
-	
+
 	public static void reload() {
 		HashMap<Integer, L1PolyScroll> dataMap = new HashMap<Integer, L1PolyScroll>();
 		loadXml(dataMap);
@@ -131,7 +131,7 @@ public class L1PolyScroll {
 
 	public boolean use(L1PcInstance pc, L1ItemInstance item, String s) {
 		boolean result = false;
-		
+
 		int maxChargeCount = item.getItem().getMaxChargeCount();
 		int chargeCount = item.getChargeCount();
 		if (maxChargeCount > 0 && chargeCount <= 0) {
@@ -139,15 +139,8 @@ public class L1PolyScroll {
 			pc.sendPackets(new S_ServerMessage(79));
 			return result;
 		}
-		
+
 		Effect effect = getEffect();
-		
-		int awakeSkillId = pc.getAwakeSkillId();
-		if (awakeSkillId == AWAKEN_ANTHARAS || awakeSkillId == AWAKEN_FAFURION
-				|| awakeSkillId == AWAKEN_VALAKAS) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
-			return result;
-		}
 
 		L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
 		if (poly != null || s.equals("")) {
@@ -164,7 +157,7 @@ public class L1PolyScroll {
 				result = true;
 			}
 		}
-		
+
 		if (result) {
 			if (getRemove() > 0) {
 				if (chargeCount > 0) {

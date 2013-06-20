@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -55,7 +55,7 @@ import jp.l1j.server.utils.PerformanceTimer;
 public class L1PolyWand {
 
 	private static Logger _log = Logger.getLogger(L1PolyWand.class.getName());
-	
+
 	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
 
 	@XmlAccessorType(XmlAccessType.FIELD)
@@ -169,7 +169,7 @@ public class L1PolyWand {
 	public static void load() {
 		loadXml(_dataMap);
 	}
-	
+
 	public static void reload() {
 		HashMap<Integer, L1PolyWand> dataMap = new HashMap<Integer, L1PolyWand>();
 		loadXml(dataMap);
@@ -179,7 +179,7 @@ public class L1PolyWand {
 	public boolean use(L1PcInstance pc, L1ItemInstance item, int objid) {
 		// アブソルート バリアの解除
 		L1BuffUtil.cancelBarrier(pc);
-		
+
 		if (pc.getMapId() == 63 || pc.getMapId() == 552
 					|| pc.getMapId() == 555 || pc.getMapId() == 557
 					|| pc.getMapId() == 558 || pc.getMapId() == 779) { // 水中では使用不可
@@ -202,7 +202,7 @@ public class L1PolyWand {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 			return false;
 		}
-		
+
 		pc.sendPackets(new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand));
 		pc.broadcastPacket(new S_AttackPacket(pc, 0,ActionCodes.ACTION_Wand));
 
@@ -237,17 +237,9 @@ public class L1PolyWand {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 			return false;
 		}
-			
+
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance target = (L1PcInstance) cha;
-			int awakeSkillId = target.getAwakeSkillId();
-			if (awakeSkillId == AWAKEN_ANTHARAS
-					|| awakeSkillId == AWAKEN_FAFURION
-					|| awakeSkillId == AWAKEN_VALAKAS) {
-				target.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
-				removeItem(pc, item, chargeCount);
-				return true;
-			}
 
 			if (target.getInventory().checkEquipped(20281)) {
 				target.sendPackets(new S_ShowPolyList(target.getId()));
@@ -287,7 +279,7 @@ public class L1PolyWand {
 		removeItem(pc, item, chargeCount);
 		return true;
 	}
-	
+
 	private void removeItem(L1PcInstance pc, L1ItemInstance item, int chargeCount) {
 		if (getRemove() > 0) {
 			if (chargeCount > 0) {

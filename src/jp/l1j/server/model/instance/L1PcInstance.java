@@ -62,7 +62,6 @@ import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.L1TownLocation;
 import jp.l1j.server.model.L1War;
 import jp.l1j.server.model.L1World;
-import jp.l1j.server.model.MpReductionByAwake;
 import jp.l1j.server.model.MpRegeneration;
 import jp.l1j.server.model.classes.L1ClassFeature;
 import jp.l1j.server.model.gametime.L1RealTimeCarrier;
@@ -238,24 +237,6 @@ public class L1PcInstance extends L1Character {
 			_mpRegen.cancel();
 			_mpRegen = null;
 			_mpRegenActive = false;
-		}
-	}
-
-	public void startMpReductionByAwake() {
-		final int INTERVAL_BY_AWAKE = 4000;
-		if (!_mpReductionActiveByAwake) {
-			_mpReductionByAwake = new MpReductionByAwake(this);
-			_timer.scheduleAtFixedRate(_mpReductionByAwake,
-					INTERVAL_BY_AWAKE, INTERVAL_BY_AWAKE);
-			_mpReductionActiveByAwake = true;
-		}
-	}
-
-	public void stopMpReductionByAwake() {
-		if (_mpReductionActiveByAwake) {
-			_mpReductionByAwake.cancel();
-			_mpReductionByAwake = null;
-			_mpReductionActiveByAwake = false;
 		}
 	}
 
@@ -2125,11 +2106,9 @@ public class L1PcInstance extends L1Character {
 	private final ArrayList<L1BookMark> _bookmarks;
 	private L1Quest _quest;
 	private MpRegeneration _mpRegen;
-	private MpReductionByAwake _mpReductionByAwake;
 	private HpRegeneration _hpRegen;
 	private static Timer _timer = new Timer(true);
 	private boolean _mpRegenActive;
-	private boolean _mpReductionActiveByAwake;
 	private boolean _hpRegenActive;
 	private L1EquipmentSlot _equipSlot;
 	private L1PcDeleteTimer _pcDeleteTimer;
@@ -4702,7 +4681,7 @@ public class L1PcInstance extends L1Character {
 	public void setTempMaxLevel(int i) {
 		_tempMaxLevel = i;
 	}
-
+/*
 	private int _awakeSkillId = 0;
 
 	public int getAwakeSkillId() {
@@ -4712,7 +4691,7 @@ public class L1PcInstance extends L1Character {
 	public void setAwakeSkillId(int i) {
 		_awakeSkillId = i;
 	}
-
+*/
 	// 　TODO ペットレース処理　start
 	private int _lap = 1;
 

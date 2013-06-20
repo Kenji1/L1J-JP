@@ -3,12 +3,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -52,7 +52,7 @@ public abstract class L1ArmorSet {
 
 		for (L1ArmorSets armorSets : ArmorSetTable.getInstance().getAllList()) {
 			try {
-				
+
 				impl = new L1ArmorSetImpl(getArray(armorSets.getSets(), ","));
 				if (armorSets.getPolyId() != -1) {
 					impl.addEffect(new PolymorphEffect(armorSets.getPolyId()));
@@ -433,13 +433,6 @@ class PolymorphEffect implements L1ArmorSetEffect {
 
 	@Override
 	public void giveEffect(L1PcInstance pc) {
-		int awakeSkillId = pc.getAwakeSkillId();
-		if (awakeSkillId == AWAKEN_ANTHARAS
-				|| awakeSkillId == AWAKEN_FAFURION
-				|| awakeSkillId == AWAKEN_VALAKAS) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
-			return;
-		}
 		if (_gfxId == 6080 || _gfxId == 6094) {
 			if (pc.getSex() == 0) {
 				_gfxId = 6094;
@@ -455,13 +448,6 @@ class PolymorphEffect implements L1ArmorSetEffect {
 
 	@Override
 	public void cancelEffect(L1PcInstance pc) {
-		int awakeSkillId = pc.getAwakeSkillId();
-		if (awakeSkillId == AWAKEN_ANTHARAS
-				|| awakeSkillId == AWAKEN_FAFURION
-				|| awakeSkillId == AWAKEN_VALAKAS) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
-			return;
-		}
 		if (_gfxId == 6080) {
 			if (pc.getSex() == 0) {
 				_gfxId = 6094;

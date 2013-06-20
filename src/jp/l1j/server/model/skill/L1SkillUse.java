@@ -46,7 +46,6 @@ import jp.l1j.server.model.instance.L1PetInstance;
 import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.instance.L1TeleporterInstance;
 import jp.l1j.server.model.instance.L1TowerInstance;
-import jp.l1j.server.model.L1Awake;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Character;
 import jp.l1j.server.model.L1Clan;
@@ -409,20 +408,6 @@ public class L1SkillUse {
 					pc.sendPackets(new S_ServerMessage(1412)); // すでに床にキューブが召喚されています。
 					return false;
 				}
-			}
-
-			// 覚醒状態では覚醒スキル以外使用不可
-			if (pc.getAwakeSkillId() == AWAKEN_ANTHARAS
-					&& _skillId != AWAKEN_ANTHARAS && _skillId != MAGMA_BREATH
-					&& _skillId != MAGMA_ARROW && _skillId != EYE_OF_DRAGON
-					|| pc.getAwakeSkillId() == AWAKEN_FAFURION
-					&& _skillId != AWAKEN_FAFURION && _skillId != MAGMA_BREATH
-					&& _skillId != MAGMA_ARROW && _skillId != EYE_OF_DRAGON
-					|| pc.getAwakeSkillId() == AWAKEN_VALAKAS
-					&& _skillId != AWAKEN_VALAKAS && _skillId != MAGMA_BREATH
-					&& _skillId != MAGMA_ARROW && _skillId != EYE_OF_DRAGON) {
-				pc.sendPackets(new S_ServerMessage(1385)); // 現在の状態では覚醒魔法が使えません。
-				return false;
 			}
 
 			if (_skillId == SOLID_CARRIAGE
@@ -1211,10 +1196,6 @@ public class L1SkillUse {
 				&& !_isFreeze) { // 凍結失敗
 			return;
 		}
-		if (_skillId == AWAKEN_ANTHARAS || _skillId == AWAKEN_FAFURION
-				|| _skillId == AWAKEN_VALAKAS) { // 覚醒の効果処理はL1Awakeに移譲。
-			return;
-		}
 
 		cha.setSkillEffect(_skillId, buffDuration);
 
@@ -1454,17 +1435,6 @@ public class L1SkillUse {
 						.sendPackets(new S_SkillSound(targetid, castgfx));
 					} else if (_skillId == TRUE_TARGET) { // トゥルーターゲットは個別処理で送信済
 						return;
-					} else if (_skillId == AWAKEN_ANTHARAS // 覚醒：アンタラス
-							|| _skillId == AWAKEN_FAFURION // 覚醒：パプリオン
-							|| _skillId == AWAKEN_VALAKAS) { // 覚醒：ヴァラカス
-						if (_skillId == _player.getAwakeSkillId()) { // 再詠唱なら解除でエフェクトなし
-							_player.sendPackets(new S_SkillSound(targetid,
-									castgfx));
-							_player.broadcastPacket(new S_SkillSound(targetid,
-									castgfx));
-						} else {
-							return;
-						}
 					} else {
 						_player
 						.sendPackets(new S_SkillSound(targetid, castgfx));
@@ -1564,7 +1534,9 @@ public class L1SkillUse {
 							// フィジカル エンチャント：STR、ドレス マイティー
 							{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY, STATUS_FLORA_POTION_STR },
 							// グローウィングオーラ、シャイニングオーラ
-							{ GLOWING_AURA, SHINING_AURA } };
+							{ GLOWING_AURA, SHINING_AURA },
+							// 覚醒各種
+							{ AWAKEN_ANTHARAS, AWAKEN_FAFURION, AWAKEN_VALAKAS } };
 
 		for (int[] skills : repeatedSkills) {
 			for (int id : skills) {
@@ -3222,13 +3194,15 @@ public class L1SkillUse {
 						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 6, 0));
 					} else if (_skillId == AWAKEN_ANTHARAS) { // 覚醒：アンタラス
 						L1PcInstance pc = (L1PcInstance) cha;
-						L1Awake.start(pc, _skillId);
+						pc.addResistHold(10);
+						pc.addAc(-3);
 					} else if (_skillId == AWAKEN_FAFURION) { // 覚醒：パプリオン
 						L1PcInstance pc = (L1PcInstance) cha;
-						L1Awake.start(pc, _skillId);
+						pc.addResistFreeze(10);
 					} else if (_skillId == AWAKEN_VALAKAS) { // 覚醒：ヴァラカス
 						L1PcInstance pc = (L1PcInstance) cha;
-						L1Awake.start(pc, _skillId);
+						pc.addResistStun(10);
+						pc.addHitup(5);
 					} else if (_skillId == ILLUSION_OGRE) { // イリュージョン：オーガ
 						_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
 					} else if (_skillId == ILLUSION_LICH) { // イリュージョン：リッチ
