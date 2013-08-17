@@ -87,14 +87,10 @@ public class ClientThread implements Runnable, PacketOutput {
 
 	private int _loginStatus = 0;
 
-	private static final byte[] FIRST_PACKET = { // 3.5C
-	// (byte) 0xf4, (byte) 0x0a, (byte) 0x8d, (byte) 0x23, (byte) 0x6f,
-	// (byte) 0x7f, (byte) 0x04, (byte) 0x00, (byte) 0x05, (byte) 0x08,
-	// (byte) 0x00 };
-	// 3.52C, 3.53C
-	(byte) 0xf9, (byte) 0xb0, (byte) 0x2a, (byte) 0x73, (byte) 0x01,
-    (byte) 0x80, (byte) 0xff, (byte) 0xce, (byte) 0xc6, (byte) 0xc1,
-    (byte) 0xfa };
+	private static final byte[] FIRST_PACKET = {//TODO 3.53C
+		(byte) 0x4d, (byte) 0xa7, (byte) 0x32, (byte) 0x5b, (byte) 0x2e,
+		(byte) 0x7e, (byte) 0xed, (byte) 0x25, (byte) 0xa5, (byte) 0x54,
+		(byte) 0xb3};
 
 	/**
 	 * for Test

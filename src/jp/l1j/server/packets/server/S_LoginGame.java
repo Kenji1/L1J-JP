@@ -23,26 +23,14 @@ import jp.l1j.server.codes.Opcodes;
 
 public class S_LoginGame extends ServerBasePacket {
 	public S_LoginGame() {
-	
-		// 3.5c
 		writeC(Opcodes.S_OPCODE_LOGINTOGAME);
 		writeC(0x03);
-		writeC(0x00);
-		writeC(0xAC);
-		writeC(0xC2);
-		writeC(0x7C);
-		writeC(0x00);
-		writeC(0xC1);
-		
-		// 3.3c
-		// writeC(Opcodes.S_OPCODE_LOGINTOGAME);
-		// writeC(0x03);
-		// writeC(0x00);
-		// writeC(0xF7);
-		// writeC(0xAD);
-		// writeC(0x74);
-		// writeC(0x00);
-		// writeC(0xE5);
+		writeC(0x15);;//TODO 3.63封包變更
+		writeC(0x8b);;//TODO 3.63封包變更
+		writeC(0x7b);;//TODO 3.63封包變更
+		writeC(0x94);;//TODO 3.63封包變更
+		writeC(0xf0);;//TODO 3.63封包變更
+		writeC(0x2f);;//TODO 3.63封包變更
 	}
 
 	@Override
