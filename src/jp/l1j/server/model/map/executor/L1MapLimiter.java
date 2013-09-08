@@ -139,7 +139,7 @@ public class L1MapLimiter implements Runnable  {
 	}
 
 	public int getEnterTime() {
-		return _mapTimerTable.getEnterTime();
+		return _mapTimerTable == null ? 0 : _mapTimerTable.getEnterTime();
 	}
 	
 	public static void loadXml(HashMap<Integer, L1MapLimiter> dataMap) {

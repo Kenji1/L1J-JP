@@ -396,13 +396,13 @@ public class L1PcInstance extends L1Character {
 	}
 
 	// 時間制限付きマップの残り時間を取得
-	public int getEnterTime(int mapid) {
+	public int getEnterTime(int areaId) {
 		int time = 0;
 		L1MapLimiter limiter = getMapLimiter();
-		if (limiter != null && limiter.getMapId() == mapid) {
+		if (limiter != null && limiter.getAreaId() == areaId) {
 			time = limiter.getEnterTime() / 60;
 		} else {
-			limiter = L1MapLimiter.get(mapid);
+			limiter = L1MapLimiter.get(areaId);
 			if (limiter != null) {
 				MapTimerTable timer = MapTimerTable.find(getId(), limiter.getAreaId());
 				if (timer != null) {

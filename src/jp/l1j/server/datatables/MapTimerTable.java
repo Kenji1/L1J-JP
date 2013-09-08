@@ -29,13 +29,13 @@ import jp.l1j.server.utils.SqlUtil;
 public class MapTimerTable {
 	private static Logger _log = Logger.getLogger(MapTimerTable.class.getName());
 
-	private static int _charId;
+	private int _charId;
 	
-	private static int _mapId;
+	private int _mapId;
 	
-	private static int _areaId;
+	private int _areaId;
 	
-	private static int _enterTime;
+	private int _enterTime;
 
 	public MapTimerTable() {
 	}
@@ -96,12 +96,12 @@ public class MapTimerTable {
 		return L1QueryUtil.selectFirst(new Factory(), sql, charId, areaId);
 	}
 
-	private static void store(Connection con) {
+	private void store(Connection con) {
 		String sql = "INSERT INTO map_timers SET char_id=?, map_id=?, area_id=?, enter_time=?";
 		L1QueryUtil.execute(con, sql, _charId, _mapId, _areaId, _enterTime);
 	}
 
-	public static void save() {
+	public void save() {
 		Connection con = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
