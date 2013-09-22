@@ -135,7 +135,7 @@ public class Opcodes {
 	public static final int C_OPCODE_FIX_WEAPON_LIST = 106;//151;//183;
 	
 	/** 要求傳送位置 */
-	public static final int C_OPCODE_SENDLOCATION = 128;
+	public static final int C_OPCODE_SENDLOCATION = 41;
 
 	/** 要求學習魔法(金幣) */
 	public static final int C_OPCODE_SKILLBUY = 173;//9;//140;
