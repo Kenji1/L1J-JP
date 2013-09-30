@@ -262,7 +262,9 @@ public class L1MapLimiter implements Runnable  {
 	}
 	
 	public void save() {
-		_mapTimerTable.save();
+		if (_mapTimerTable != null) {
+			_mapTimerTable.save();
+		}
 	}
 	
 }
