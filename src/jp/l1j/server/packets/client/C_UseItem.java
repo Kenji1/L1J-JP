@@ -1169,9 +1169,9 @@ public class C_UseItem extends ClientBasePacket {
 		L1PcInventory pcInventory = activeChar.getInventory();
 		boolean equipeSpace; // 装備する箇所が空いているか
 		if (type == 11) { // リングの場合
-			equipeSpace = pcInventory.getTypeEquipped(2, type) <= 1;
+			equipeSpace = pcInventory.getTypeEquipped(2, type) < 4; //最多装备4个戒指,小于4代表是否还有空间
 		} else {
-			equipeSpace = pcInventory.getTypeEquipped(2, type) <= 0;
+			equipeSpace = pcInventory.getTypeEquipped(2, type) < 1;
 		}
 
 		if (equipeSpace && !armor.isEquipped()) {

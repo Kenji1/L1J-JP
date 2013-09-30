@@ -14,6 +14,26 @@
  */
 package jp.l1j.server.model.inventory;
 
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_T;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_BELT;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_BOOTS;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_CLOAK;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_EARRING;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_GLOVE;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_HEML;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_NECKLACE;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RING1;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RING2;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RING3;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RING4;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RUNE1;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RUNE2;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RUNE3;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RUNE4;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RUNE5;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_SHIELD;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_ARMOR;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_WEAPON;
 import java.text.DecimalFormat;
 import java.util.List;
 import jp.l1j.configure.Config;
@@ -27,6 +47,7 @@ import jp.l1j.server.model.item.L1ItemId;
 import jp.l1j.server.packets.server.S_AddItem;
 import jp.l1j.server.packets.server.S_CharVisualUpdate;
 import jp.l1j.server.packets.server.S_DeleteInventoryItem;
+import jp.l1j.server.packets.server.S_EquipmentWindow;
 import jp.l1j.server.packets.server.S_ItemAmount;
 import jp.l1j.server.packets.server.S_ItemColor;
 import jp.l1j.server.packets.server.S_ItemName;
@@ -325,6 +346,9 @@ public class L1PcInventory extends L1Inventory {
 			if (equipped) { // 装着
 				item.setEquipped(true);
 				_owner.getEquipSlot().set(item);
+				if (!loaded) {
+					Equipped(item, true); //3.63
+				}
 			} else { // 脱着
 				if (!loaded) {
 					// インビジビリティクローク バルログブラッディクローク装備中でインビジ状態の場合はインビジ状態の解除
@@ -335,6 +359,7 @@ public class L1PcInventory extends L1Inventory {
 							return;
 						}
 					}
+					Equipped(item, false); //3.63
 				}
 				item.setEquipped(false);
 				_owner.getEquipSlot().remove(item);
@@ -354,7 +379,100 @@ public class L1PcInventory extends L1Inventory {
 			}
 		}
 	}
+	/** 登陆时重刷新装备栏显示 */
+	public void showEquipped() {
+		for (L1ItemInstance item : _owner.getInventory().getItems()) {
+			if (item.isEquipped()) {
+				this.Equipped(item, true);
+			}
+		}
+	}
 
+	public void Equipped(L1ItemInstance item, boolean isEq) {
+		// 3.63　新增裝備欄
+		if ((item.getItem().getType2() == 2) && (item.isEquipped())) { // 判斷是否可用裝備
+			int idx = 0; // 装配位置
+			if ((item.getItem().getType() == 1)) {
+				idx = EQUIPMENT_INDEX_HEML;
+			} else if ((item.getItem().getType() == 2)) {
+				idx = EQUIPMENT_INDEX_T;
+			} else if ((item.getItem().getType() == 3)) {
+				idx = EQUIPMENT_INDEX_ARMOR;
+			} else if ((item.getItem().getType() == 4)) {
+				idx = EQUIPMENT_INDEX_CLOAK;
+			} else if ((item.getItem().getType() == 5)) {
+				idx = EQUIPMENT_INDEX_GLOVE;
+			} else if ((item.getItem().getType() == 6)) {
+				idx = EQUIPMENT_INDEX_BOOTS;
+			} else if ((item.getItem().getType() == 7)) {
+				idx = EQUIPMENT_INDEX_SHIELD;
+			} else if ((item.getItem().getType() == 8)) {
+				idx = EQUIPMENT_INDEX_WEAPON;
+			} else if ((item.getItem().getType() == 9)) { // XXX 貌似没有9了吧。
+				idx = 0;
+			} else if ((item.getItem().getType() == 10)) {
+				idx = EQUIPMENT_INDEX_NECKLACE;
+			} else if ((item.getItem().getType() == 11)) { // 戒指
+				if (isEq) {// 装备时,从左至右 18~21
+					if (!checkIdx(18)) {
+						idx = EQUIPMENT_INDEX_RING1;
+						item.setEquippedIdx(18);
+
+					} else if (!checkIdx(19)) {
+						idx = EQUIPMENT_INDEX_RING2;
+						item.setEquippedIdx(19);
+
+					} else if (!checkIdx(20)) {
+						idx = EQUIPMENT_INDEX_RING3;
+						item.setEquippedIdx(20);
+
+					} else if (!checkIdx(21)) {
+						idx = EQUIPMENT_INDEX_RING4;
+						item.setEquippedIdx(21);
+					}
+				} else { // 脱下时,清空戒指所在位置
+					idx = item.getEquippedIdx();
+					item.setEquippedIdx(0);
+				}
+			} else if ((item.getItem().getType() == 12)) {
+				idx = EQUIPMENT_INDEX_EARRING;
+			} else if ((item.getItem().getType() == 13)) {
+				idx = EQUIPMENT_INDEX_BELT;
+			} else if ((item.getItem().getType() == 14)) {
+				idx = EQUIPMENT_INDEX_RUNE1;
+			} else if ((item.getItem().getType() == 15)) {
+				idx = EQUIPMENT_INDEX_RUNE2;
+			} else if ((item.getItem().getType() == 16)) {
+				idx = EQUIPMENT_INDEX_RUNE3;
+			} else if ((item.getItem().getType() == 17)) {
+				idx = EQUIPMENT_INDEX_RUNE4;
+			} else if ((item.getItem().getType() == 18)) {
+				idx = EQUIPMENT_INDEX_RUNE5;
+			}
+			_owner.sendPackets(new S_EquipmentWindow(_owner, item.getId(), idx, isEq));
+		}
+
+		if ((item.getItem().getType2() == 1) && (item.isEquipped())) { // 判斷是否可用裝備
+			int items = 8;
+			_owner.sendPackets(new S_EquipmentWindow(_owner, item.getId(), items, isEq));
+		}
+		// 3.63　新增裝備欄
+	}
+	
+	/**
+	 * 返回指定位置上是否已有装备
+	 * @return True 有,Flash 无
+	 */
+	public boolean checkIdx(int idx){
+		for (Object itemObject : _items) {
+			L1ItemInstance item = (L1ItemInstance) itemObject;
+			if (item.getEquippedIdx() == idx && item.isEquipped()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	// 特定のアイテムを装備しているか確認
 	public boolean checkEquipped(int id) {
 		for (Object itemObject : _items) {

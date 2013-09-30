@@ -72,6 +72,9 @@ public class L1ItemInstance extends L1Object {
 	private EnchantTimer _timer;
 
 	private int _bless;
+	
+	/** 3.63界面,装备显示窗口内装备位置号 */
+	private int _equippedIdx;
 
 	@Override
 	public int getId() {
@@ -2218,6 +2221,21 @@ public class L1ItemInstance extends L1Object {
 
 	public int getOwnerLocation() {
 		return _inventoryItem.getLocation();
+	}
+	
+	/**
+	 * 取回装备在界面显示的位置号
+	 * @return
+	 */
+	public int getEquippedIdx(){
+		return _equippedIdx;
+	}
+	/**
+	 * 设置装备在界面显示的位置号
+	 * @return
+	 */
+	public void setEquippedIdx(int _equippedIdx) {
+		this._equippedIdx = _equippedIdx;
 	}
 
 	private void onDelete() {

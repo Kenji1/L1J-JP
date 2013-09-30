@@ -210,6 +210,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		pc.sendVisualEffectAtLogin(); // クラウン、毒、水中等の視覚効果を表示
 		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather()));
 		items(pc);
+		pc.getInventory().showEquipped();//setEquipped(pc, true); //3.63
 		//bookmarks(pc);
 		pc.sendPackets(new S_BookmarkLoad(pc)); // TODO
 		skills(pc);
