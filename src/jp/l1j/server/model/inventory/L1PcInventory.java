@@ -346,9 +346,7 @@ public class L1PcInventory extends L1Inventory {
 			if (equipped) { // 装着
 				item.setEquipped(true);
 				_owner.getEquipSlot().set(item);
-				if (!loaded) {
-					Equipped(item, true); //3.63
-				}
+				Equipped(item, true);
 			} else { // 脱着
 				if (!loaded) {
 					// インビジビリティクローク バルログブラッディクローク装備中でインビジ状態の場合はインビジ状態の解除
@@ -359,8 +357,8 @@ public class L1PcInventory extends L1Inventory {
 							return;
 						}
 					}
-					Equipped(item, false); //3.63
 				}
+				Equipped(item, false);
 				item.setEquipped(false);
 				_owner.getEquipSlot().remove(item);
 			}
@@ -379,100 +377,133 @@ public class L1PcInventory extends L1Inventory {
 			}
 		}
 	}
-	/** 登陆时重刷新装备栏显示 */
-	public void showEquipped() {
-		for (L1ItemInstance item : _owner.getInventory().getItems()) {
-			if (item.isEquipped()) {
-				this.Equipped(item, true);
-			}
-		}
-	}
 
-	public void Equipped(L1ItemInstance item, boolean isEq) {
-		// 3.63　新增裝備欄
-		if ((item.getItem().getType2() == 2) && (item.isEquipped())) { // 判斷是否可用裝備
-			int idx = 0; // 装配位置
-			if ((item.getItem().getType() == 1)) {
-				idx = EQUIPMENT_INDEX_HEML;
-			} else if ((item.getItem().getType() == 2)) {
-				idx = EQUIPMENT_INDEX_T;
-			} else if ((item.getItem().getType() == 3)) {
-				idx = EQUIPMENT_INDEX_ARMOR;
-			} else if ((item.getItem().getType() == 4)) {
-				idx = EQUIPMENT_INDEX_CLOAK;
-			} else if ((item.getItem().getType() == 5)) {
-				idx = EQUIPMENT_INDEX_GLOVE;
-			} else if ((item.getItem().getType() == 6)) {
-				idx = EQUIPMENT_INDEX_BOOTS;
-			} else if ((item.getItem().getType() == 7)) {
-				idx = EQUIPMENT_INDEX_SHIELD;
-			} else if ((item.getItem().getType() == 8)) {
-				idx = EQUIPMENT_INDEX_WEAPON;
-			} else if ((item.getItem().getType() == 9)) { // XXX 貌似没有9了吧。
-				idx = 0;
-			} else if ((item.getItem().getType() == 10)) {
-				idx = EQUIPMENT_INDEX_NECKLACE;
-			} else if ((item.getItem().getType() == 11)) { // 戒指
-				if (isEq) {// 装备时,从左至右 18~21
-					if (!checkIdx(18)) {
-						idx = EQUIPMENT_INDEX_RING1;
-						item.setEquippedIdx(18);
-
-					} else if (!checkIdx(19)) {
-						idx = EQUIPMENT_INDEX_RING2;
-						item.setEquippedIdx(19);
-
-					} else if (!checkIdx(20)) {
-						idx = EQUIPMENT_INDEX_RING3;
-						item.setEquippedIdx(20);
-
-					} else if (!checkIdx(21)) {
-						idx = EQUIPMENT_INDEX_RING4;
-						item.setEquippedIdx(21);
-					}
-				} else { // 脱下时,清空戒指所在位置
-					idx = item.getEquippedIdx();
-					item.setEquippedIdx(0);
-				}
-			} else if ((item.getItem().getType() == 12)) {
-				idx = EQUIPMENT_INDEX_EARRING;
-			} else if ((item.getItem().getType() == 13)) {
-				idx = EQUIPMENT_INDEX_BELT;
-			} else if ((item.getItem().getType() == 14)) {
-				idx = EQUIPMENT_INDEX_RUNE1;
-			} else if ((item.getItem().getType() == 15)) {
-				idx = EQUIPMENT_INDEX_RUNE2;
-			} else if ((item.getItem().getType() == 16)) {
-				idx = EQUIPMENT_INDEX_RUNE3;
-			} else if ((item.getItem().getType() == 17)) {
-				idx = EQUIPMENT_INDEX_RUNE4;
-			} else if ((item.getItem().getType() == 18)) {
-				idx = EQUIPMENT_INDEX_RUNE5;
-			}
-			_owner.sendPackets(new S_EquipmentWindow(_owner, item.getId(), idx, isEq));
-		}
-
-		if ((item.getItem().getType2() == 1) && (item.isEquipped())) { // 判斷是否可用裝備
-			int items = 8;
-			_owner.sendPackets(new S_EquipmentWindow(_owner, item.getId(), items, isEq));
-		}
-		// 3.63　新增裝備欄
-	}
-	
 	/**
-	 * 返回指定位置上是否已有装备
-	 * @return True 有,Flash 无
+	 *檢查戒指確認  這是Copy 
+	 *(checkEquipped(int id)) 
+	 *日方原有程式 
+	 * @param id
+	 * @return
 	 */
-	public boolean checkIdx(int idx){
+	public boolean checkRingEquipped(int id) {
 		for (Object itemObject : _items) {
 			L1ItemInstance item = (L1ItemInstance) itemObject;
-			if (item.getEquippedIdx() == idx && item.isEquipped()) {
+			if (item.getRingID() == id && item.isEquipped()) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
+	/**
+	 * 3.63裝備顯示裝備類
+	 * @param item
+	 * @param isEq
+	 */
+	public void Equipped(L1ItemInstance item, boolean isEq) {
+		int RingID = item.getRingID();
+		if ((item.getItem().getType2() == 2) && (item.isEquipped())) {
+			int items = 0;
+			if ((item.getItem().getType() == 1)) {
+				items = 1;
+			} else if ((item.getItem().getType() == 2)) {
+				items = 2;
+			} else if ((item.getItem().getType() == 3)) {
+				items = 3;
+			} else if ((item.getItem().getType() == 4)) {
+				items = 4;
+			} else if ((item.getItem().getType() == 5)) {
+				items = 6;
+			} else if ((item.getItem().getType() == 6)) {
+				items = 5;
+			} else if ((item.getItem().getType() == 7)) {
+				items = 7;
+			} else if ((item.getItem().getType() == 8)) {
+				items = 10;
+			} else if ((item.getItem().getType() == 9)) {
+				if (isEq == true){
+					//TODO 第一顆&二顆戒指
+					if (checkRingEquipped(18)){
+						items = 19;	
+						item.setRingID(19);
+					} else {
+						items = 18;
+						item.setRingID(18);
+					}
+					//TODO 第三顆戒指
+					if(getTypeEquipped(2, 9) == 3){ 
+						if(!checkRingEquipped(18)){  
+							items = 18;
+							item.setRingID(18);
+						} else if (!checkRingEquipped(19)){ 
+							items = 19;
+							item.setRingID(19);
+						} else if (!checkRingEquipped(20)){ 
+							items = 20;
+							item.setRingID(20);
+						}
+					}
+					//TODO 第四顆戒指
+					if(getTypeEquipped(2, 9) == 4){
+						if(!checkRingEquipped(18)){  
+							items = 18;
+							item.setRingID(18);
+						} else if (!checkRingEquipped(19)){ 
+							items = 19;
+							item.setRingID(19);
+						} else if (!checkRingEquipped(20)){ 
+							items = 20;
+							item.setRingID(20);
+						}else if (!checkRingEquipped(21)){ 
+							items = 21;
+							item.setRingID(21);
+						}
+					}
+				} else {
+					if (RingID ==18){
+						items = 18;
+						item.setRingID(0);
+					} else if  (RingID ==19){
+						items = 19;
+						item.setRingID(0);
+					} else if (RingID ==20){      
+						items = 20;
+						item.setRingID(0);
+					} else if  (RingID ==21){
+						items = 21;
+						item.setRingID(0);
+					}                             
+				}
+			} else if ((item.getItem().getType() == 10)) {
+				items = 11;
+			} else if ((item.getItem().getType() == 12)) {
+				items = 12;
+			} else if ((item.getItem().getType() == 13)) {
+				items = 7;	
+			} else if ((item.getItem().getType() == 14)) {
+				items = 22;
+			} else if ((item.getItem().getType() == 15)) {
+				items = 23;
+			} else if ((item.getItem().getType() == 16)) {
+				items = 24;
+			} else if ((item.getItem().getType() == 17)) {
+				items = 25;
+			} else if ((item.getItem().getType() == 18)) {
+				items = 26;
+			} else if ((item.getItem().getType() == 19)) {
+				items = 20;
+			} else if ((item.getItem().getType() == 20)) {
+				items = 21;
+			}
+			_owner.sendPackets(new S_EquipmentWindow(_owner, item.getId(),items,isEq)); 
+		}
+		if ((item.getItem().getType2() == 1) && (item.isEquipped())) {
+			int items = 8;
+			_owner.sendPackets(new S_EquipmentWindow(_owner, item.getId(),items,isEq)); 
+		}
+	}
+
+
 	// 特定のアイテムを装備しているか確認
 	public boolean checkEquipped(int id) {
 		for (Object itemObject : _items) {

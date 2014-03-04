@@ -87,6 +87,7 @@ import jp.l1j.server.packets.server.S_Disconnect;
 import jp.l1j.server.packets.server.S_DoActionGFX;
 import jp.l1j.server.packets.server.S_DoActionShop;
 import jp.l1j.server.packets.server.S_Emblem;
+import jp.l1j.server.packets.server.S_EquipmentWindow;
 import jp.l1j.server.packets.server.S_Exp;
 import jp.l1j.server.packets.server.S_Fishing;
 import jp.l1j.server.packets.server.S_HpMeter;
@@ -1086,35 +1087,35 @@ public class L1PcInstance extends L1Character {
 			boolean isStormBarrier = false;
 			int rnd = _random.nextInt(100) + 1;
 			L1Attack attack = new L1Attack(attacker, this);
-				if (this.getInventory().checkEquipped(21180) // リンドビオルストームシリーズ
+			if (this.getInventory().checkEquipped(21180) // リンドビオルストームシリーズ
 					|| this.getInventory().checkEquipped(21181)
 					|| this.getInventory().checkEquipped(21182)
 					|| this.getInventory().checkEquipped(21183)) {
-					boolean isStormProbability = (rnd <= 8); // 8%の確率
-					boolean isLongDistance = attack.isLongDistance();
-					if (isStormProbability && isLongDistance) {
-						isStormBarrier = true;
+				boolean isStormProbability = (rnd <= 8); // 8%の確率
+				boolean isLongDistance = attack.isLongDistance();
+				if (isStormProbability && isLongDistance) {
+					isStormBarrier = true;
+				}
+			}
+			if (attack.calcHit()) {
+				if (hasSkillEffect(COUNTER_BARRIER)) {
+					L1Magic magic = new L1Magic(this, attacker);
+					boolean isProbability = magic
+							.calcProbabilityMagic(COUNTER_BARRIER);
+					boolean isShortDistance = attack.isShortDistance();
+					if (isProbability && isShortDistance) {
+						isCounterBarrier = true;
 					}
 				}
-				if (attack.calcHit()) {
-					if (hasSkillEffect(COUNTER_BARRIER)) {
-						L1Magic magic = new L1Magic(this, attacker);
-						boolean isProbability = magic
-								.calcProbabilityMagic(COUNTER_BARRIER);
-						boolean isShortDistance = attack.isShortDistance();
-						if (isProbability && isShortDistance) {
-							isCounterBarrier = true;
-						}
-					}
-					if (!isCounterBarrier || !isStormBarrier) {
-						attacker.setPetTarget(this);
-						attack.calcDamage();
-						attack.calcStaffOfMana();
-						attack.addPcPoisonAttack(attacker, this);
-						attack.addChaserAttack();
-						attack.addEvilAttack();
-					}
+				if (!isCounterBarrier || !isStormBarrier) {
+					attacker.setPetTarget(this);
+					attack.calcDamage();
+					attack.calcStaffOfMana();
+					attack.addPcPoisonAttack(attacker, this);
+					attack.addChaserAttack();
+					attack.addEvilAttack();
 				}
+			}
 			if (isCounterBarrier) {
 				attack.actionCounterBarrier();
 				attack.commitCounterBarrier();
@@ -1252,6 +1253,66 @@ public class L1PcInstance extends L1Character {
 				newMp = 0;
 			}
 			setCurrentMp(newMp);
+		}
+	}
+
+
+	/**
+	 * 3.63裝備顯示裝備類
+	 * @param pc
+	 * @param isEq
+	 */
+	public void setEquipped(L1PcInstance pc, boolean isEq) {
+		for (L1ItemInstance item : pc.getInventory().getItems()) {
+			if ((item.getItem().getType2() == 2) && (item.isEquipped())) {
+				int items = 0;
+				if ((item.getItem().getType() == 1)) {
+					items = 1;
+				} else if ((item.getItem().getType() == 2)) {
+					items = 2;
+				} else if ((item.getItem().getType() == 3)) {
+					items = 3;
+				} else if ((item.getItem().getType() == 4)) {
+					items = 4;
+				} else if ((item.getItem().getType() == 5)) {
+					items = 6;
+				} else if ((item.getItem().getType() == 6)) {
+					items = 5;
+				} else if ((item.getItem().getType() == 7)) {
+					items = 7;
+				} else if ((item.getItem().getType() == 8)) {
+					items = 10;
+				} else if ((item.getItem().getType() == 9) && item.getRingID() == 18) {
+					items = 18;
+				} else if ((item.getItem().getType() == 9) && item.getRingID() == 19) {
+					items = 19;	
+				} else if ((item.getItem().getType() == 9) && item.getRingID() == 20) {
+					items = 20;
+				} else if ((item.getItem().getType() == 9) && item.getRingID() == 21) {
+					items = 21;
+				} else if ((item.getItem().getType() == 10)) {
+					items = 11;
+				} else if ((item.getItem().getType() == 12)) {
+					items = 12;
+				} else if ((item.getItem().getType() == 13)) {
+					items = 7;	
+				} else if ((item.getItem().getType() == 14)) {
+					items = 22;
+				} else if ((item.getItem().getType() == 15)) {
+					items = 23;
+				} else if ((item.getItem().getType() == 16)) {
+					items = 24;
+				} else if ((item.getItem().getType() == 17)) {
+					items = 25;
+				} else if ((item.getItem().getType() == 18)) {
+					items = 26;
+				}
+				pc.sendPackets(new S_EquipmentWindow(pc, item.getId(),items,isEq)); 
+			}
+			if ((item.getItem().getType2() == 1) && (item.isEquipped())) {
+				int items = 8;
+				pc.sendPackets(new S_EquipmentWindow(pc, item.getId(),items,isEq)); 
+			}
 		}
 	}
 
@@ -1476,7 +1537,7 @@ public class L1PcInstance extends L1Character {
 					ActionCodes.ACTION_Die));
 
 			if (// getMap().getBaseMapId()==5153
-			getMapId() == 5153) {// デスマッチ
+					getMapId() == 5153) {// デスマッチ
 				for (Object doll : getDollList().values().toArray()) {
 					if (((L1DollInstance) doll).isChargeDoll()) { // 課金マジックドールのタイマーを停止
 						L1ItemInstance item = getInventory().getItem(((L1DollInstance) doll).getItemObjId());
@@ -1635,7 +1696,7 @@ public class L1PcInstance extends L1Character {
 						isChangePkCount = true;
 						if (player.isElf() && isElf()) {
 							player
-									.setPkCountForElf(player.getPkCountForElf() + 1);
+							.setPkCountForElf(player.getPkCountForElf() + 1);
 							isChangePkCountForElf = true;
 						}
 					}
@@ -1753,8 +1814,8 @@ public class L1PcInstance extends L1Character {
 				getInventory().tradeItem(
 						item,
 						item.isStackable() ? item.getCount() : 1,
-						L1World.getInstance().getInventory(getX(), getY(),
-								getMapId()));
+								L1World.getInstance().getInventory(getX(), getY(),
+										getMapId()));
 				sendPackets(new S_ServerMessage(638, item.getLogName()));
 				// %0を失いました
 			} else {
@@ -4681,7 +4742,7 @@ public class L1PcInstance extends L1Character {
 	public void setTempMaxLevel(int i) {
 		_tempMaxLevel = i;
 	}
-/*
+	/*
 	private int _awakeSkillId = 0;
 
 	public int getAwakeSkillId() {
@@ -4691,7 +4752,7 @@ public class L1PcInstance extends L1Character {
 	public void setAwakeSkillId(int i) {
 		_awakeSkillId = i;
 	}
-*/
+	 */
 	// 　TODO ペットレース処理　start
 	private int _lap = 1;
 

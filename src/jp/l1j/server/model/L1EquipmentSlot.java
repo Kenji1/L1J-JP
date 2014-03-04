@@ -88,8 +88,8 @@ public class L1EquipmentSlot {
 		for (L1ArmorSet armorSet : L1ArmorSet.getAllSet()) {
 			if (armorSet.isPartOfSet(itemId) && armorSet.isValid(_owner)) {
 				if (armor.getItem().getType2() == 2
-						&& armor.getItem().getType() == 11) { // ring
-					if (!armorSet.isEquippedRingOfArmorSet(_owner)) {
+						&& armor.getItem().getType() == 9) {//ring
+					if(!_currentArmorSet.contains(armorSet)) {//TODO リングを2つ装備していて、それが両方セット装備か調べる
 						armorSet.giveEffect(_owner);
 						_currentArmorSet.add(armorSet);
 					}
@@ -387,9 +387,9 @@ public class L1EquipmentSlot {
 			if (!SkillTable.getInstance().spellCheck(objectId, DETECTION)) {
 				_owner.removeSkillMastery(DETECTION);
 				_owner
-						.sendPackets(new S_DelSkill(0, 16, 0, 0, 0, 0, 0, 0, 0,
-								0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-								0, 0, 0));
+				.sendPackets(new S_DelSkill(0, 16, 0, 0, 0, 0, 0, 0, 0,
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						0, 0, 0));
 			}
 			if (!SkillTable.getInstance().spellCheck(objectId,
 					PHYSICAL_ENCHANT_STR)) {
@@ -409,9 +409,9 @@ public class L1EquipmentSlot {
 			if (!SkillTable.getInstance().spellCheck(objectId, GREATER_HASTE)) {
 				_owner.removeSkillMastery(GREATER_HASTE);
 				_owner
-						.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 0, 32, 0, 0,
-								0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-								0, 0, 0));
+				.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 0, 32, 0, 0,
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						0, 0, 0));
 			}
 			break;
 		}

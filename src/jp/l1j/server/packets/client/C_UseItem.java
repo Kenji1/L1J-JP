@@ -186,8 +186,8 @@ public class C_UseItem extends ClientBasePacket {
 			s = readS();
 		} else if (use_type == 7 || use_type == 14 || use_type == 26
 				|| use_type == 27) {
-				// 確認スクロール(identify)、choice、武器強化スクロール(dai)、
-				// 防具強化スクロール(zel)
+			// 確認スクロール(identify)、choice、武器強化スクロール(dai)、
+			// 防具強化スクロール(zel)
 			objid = readD();
 		} else if (use_type == 6 || use_type == 29) {
 			// テレポートスクロール(ntele)、祝福されたテレポートスクロール(btele)
@@ -681,7 +681,7 @@ public class C_UseItem extends ClientBasePacket {
 				L1ItemInstance target = pc.getInventory().getItem(objid);
 				if ((Config.CAN_USE_UNIQUE_SCROLL_WITHIN_SAFETY
 						&& target.getEnchantLevel() <= target.getItem().getSafeEnchant())
-					|| !Config.CAN_USE_UNIQUE_SCROLL_WITHIN_SAFETY) {
+						|| !Config.CAN_USE_UNIQUE_SCROLL_WITHIN_SAFETY) {
 					target.setUniqueOptions(Config.RATE_MAKE_UNIQUE_ITEMS);
 					pc.getInventory().updateItem(target, L1PcInventory.COL_EQUIPPED);
 					pc.getInventory().saveItem(target);
@@ -745,21 +745,21 @@ public class C_UseItem extends ClientBasePacket {
 					// \f1%0は使用できません。
 				}
 
-// L1J-JP2プロジェクトのオリジナル仕様？なのでコメントアウト
-//			} else if (itemId == 43000) { // 復活のポーション（Lv99キャラのみが使用可能/Lv1に戻る効果）
-//				pc.setExp(1);
-//				pc.resetLevel();
-//				pc.setBonusStats(0);
-//				pc.sendPackets(new S_SkillSound(pcObjid, 191));
-//				pc.broadcastPacket(new S_SkillSound(pcObjid, 191));
-//				pc.sendPackets(new S_OwnCharStatus(pc));
-//				pc.getInventory().removeItem(item, 1);
-//				pc.sendPackets(new S_ServerMessage(822)); // 独自アイテムですので、メッセージは適当です。
-//				pc.save(); // DBにキャラクター情報を書き込む
-//			} else if (itemId == 240100) { // 呪われたテレポートスクロール(オリジナルアイテム)
-//				L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), true);
-//				pc.getInventory().removeItem(item, 1);
-//				L1BuffUtil.cancelBarrier(pc); // アブソルート バリアの解除
+				// L1J-JP2プロジェクトのオリジナル仕様？なのでコメントアウト
+				//			} else if (itemId == 43000) { // 復活のポーション（Lv99キャラのみが使用可能/Lv1に戻る効果）
+				//				pc.setExp(1);
+				//				pc.resetLevel();
+				//				pc.setBonusStats(0);
+				//				pc.sendPackets(new S_SkillSound(pcObjid, 191));
+				//				pc.broadcastPacket(new S_SkillSound(pcObjid, 191));
+				//				pc.sendPackets(new S_OwnCharStatus(pc));
+				//				pc.getInventory().removeItem(item, 1);
+				//				pc.sendPackets(new S_ServerMessage(822)); // 独自アイテムですので、メッセージは適当です。
+				//				pc.save(); // DBにキャラクター情報を書き込む
+				//			} else if (itemId == 240100) { // 呪われたテレポートスクロール(オリジナルアイテム)
+				//				L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), true);
+				//				pc.getInventory().removeItem(item, 1);
+				//				L1BuffUtil.cancelBarrier(pc); // アブソルート バリアの解除
 
 			} else if (item.getItem().getType() == 0) { // アロー
 				pc.getInventory().setArrow(item.getItem().getItemId());
@@ -1164,14 +1164,14 @@ public class C_UseItem extends ClientBasePacket {
 	}
 
 	private void UseArmor(L1PcInstance activeChar, L1ItemInstance armor) {
-		// int itemid = armor.getItem().getItemId();
+		int itemid = armor.getItem().getItemId();
 		int type = armor.getItem().getType();
 		L1PcInventory pcInventory = activeChar.getInventory();
 		boolean equipeSpace; // 装備する箇所が空いているか
-		if (type == 11) { // リングの場合
-			equipeSpace = pcInventory.getTypeEquipped(2, type) < 4; //最多装备4个戒指,小于4代表是否还有空间
+		if (type == 9) { // リングの場合
+			equipeSpace = pcInventory.getTypeEquipped(2, type) < 3;//TODO 特定のタイプのアイテムを装備している数
 		} else {
-			equipeSpace = pcInventory.getTypeEquipped(2, type) < 1;
+			equipeSpace = pcInventory.getTypeEquipped(2, type) < 0;
 		}
 
 		if (equipeSpace && !armor.isEquipped()) {
@@ -1180,6 +1180,38 @@ public class C_UseItem extends ClientBasePacket {
 
 			if (!L1PolyMorph.isEquipableArmor(polyid, type)) { // その変身では装備不可
 				return;
+			}
+
+			//TODO 修正判斷76等戒指&81等戒指等級判斷
+			if (type == 9 && pcInventory.getTypeEquipped(2, 9) == 2) {
+				L1ItemInstance ring[] = new L1ItemInstance[2];
+				ring = pcInventory.getRingEquipped();
+				if (activeChar.getLevel()< 76){
+					activeChar.sendPackets(new S_SystemMessage("因等級76不足無法在此欄位裝備戒指。"));
+					return;
+				} else if ((ring[0].getItem().getItemId() == itemid
+						&& ring[1].getItem().getItemId() == itemid)) {
+					activeChar.sendPackets(new S_SystemMessage("同種類的戒指不可再裝備。"));
+					return;
+				}
+			}
+
+			if (type == 9 && pcInventory.getTypeEquipped(2, 9) == 3) {
+				L1ItemInstance ring[] = new L1ItemInstance[2];
+				ring = pcInventory.getRingEquipped();
+				if (activeChar.getLevel()< 81){
+					activeChar.sendPackets(new S_SystemMessage("因等級81不足無法在此欄位裝備戒指。"));
+					return;
+				} else if ((ring[0].getItem().getItemId() == itemid
+						&& ring[1].getItem().getItemId() == itemid) 
+						|| (ring[0].getItem().getItemId() == itemid
+						&& ring[2].getItem().getItemId() == itemid)
+						|| (ring[1].getItem().getItemId() == itemid
+						&& ring[2].getItem().getItemId() == itemid)) {
+					activeChar.sendPackets(new S_SystemMessage("同種類的戒指不可再裝備。"));
+					return;
+				}
+				//TODO 修正判斷76等戒指&81等戒指等級判斷
 			}
 
 			if (type == 7 && pcInventory.getTypeEquipped(2, 8) >= 1
@@ -1199,7 +1231,7 @@ public class C_UseItem extends ClientBasePacket {
 				}
 			}
 
-/*			if (type == 3 && pcInventory.getTypeEquipped(2, 4) >= 1) {
+			/*			if (type == 3 && pcInventory.getTypeEquipped(2, 4) >= 1) {
 				// シャツの場合、マントを着てないか確認
 				activeChar.sendPackets(new S_ServerMessage(126, "$224", "$225"));
 				// \f1%1上に%0を着ることはできません。
@@ -1215,7 +1247,7 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1%1上に%0を着ることはできません。
 				return;
 			}
-*/
+			 */
 			L1BuffUtil.cancelBarrier(activeChar); // アブソルート バリアの解除
 
 			pcInventory.setEquipped(armor, true);
@@ -1226,7 +1258,7 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1はずすことができません。呪いをかけられているようです。
 				return;
 			}
-/*			if (type == 3 && pcInventory.getTypeEquipped(2, 2) >= 1) {
+			/*			if (type == 3 && pcInventory.getTypeEquipped(2, 2) >= 1) {
 				// シャツの場合、メイルを着てないか確認
 				activeChar.sendPackets(new S_ServerMessage(127));
 				// \f1それは脱ぐことができません
@@ -1238,12 +1270,12 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1それは脱ぐことができません
 				return;
 			}
-*/			if (type == 7) { // シールドの場合、ソリッドキャリッジの効果消失
-				if (activeChar.hasSkillEffect(SOLID_CARRIAGE)) {
-					activeChar.removeSkillEffect(SOLID_CARRIAGE);
-				}
-			}
-			pcInventory.setEquipped(armor, false);
+			 */			if (type == 7) { // シールドの場合、ソリッドキャリッジの効果消失
+				 if (activeChar.hasSkillEffect(SOLID_CARRIAGE)) {
+					 activeChar.removeSkillEffect(SOLID_CARRIAGE);
+				 }
+			 }
+			 pcInventory.setEquipped(armor, false);
 		} else {
 			activeChar.sendPackets(new S_ServerMessage(124));
 			// \f1すでに何かを装備しています。
@@ -1606,21 +1638,21 @@ public class C_UseItem extends ClientBasePacket {
 
 	private boolean enchantMagicDoll(L1PcInstance pc, L1ItemInstance target) {
 		int[] curDollId = new int[] { // 強化前のマジックドール
-			49320, 49321, 49322, 49323, 49324, // ジャイアント
-			49326, 49327, 49328, 49329, 49330, // サイクロプス
-			49332, 49333, 49334, 49335, 49336, // マーメイド
-			49338, 49339, 49340, 49341, 49342, // ブルート
-			49365, 49366, 49367, 49368, 49369, // ペンギン(兄)
-			49371, 49372, 49373, 49374, 49375  // ペンギン(妹)
+				49320, 49321, 49322, 49323, 49324, // ジャイアント
+				49326, 49327, 49328, 49329, 49330, // サイクロプス
+				49332, 49333, 49334, 49335, 49336, // マーメイド
+				49338, 49339, 49340, 49341, 49342, // ブルート
+				49365, 49366, 49367, 49368, 49369, // ペンギン(兄)
+				49371, 49372, 49373, 49374, 49375  // ペンギン(妹)
 		};
 
 		int[] newDollId = new int[] { // 強化後のマジックドール
-			49321, 49322, 49323, 49324, 49325, // ジャイアント
-			49327, 49328, 49329, 49330, 49331, // サイクロプス
-			49333, 49334, 49335, 49336, 49337, // マーメイド
-			49339, 49340, 49341, 49342, 49343, // ブルート
-			49366, 49367, 49368, 49369, 49370, // ペンギン(兄)
-			49372, 49373, 49374, 49375, 49376  // ペンギン(妹)
+				49321, 49322, 49323, 49324, 49325, // ジャイアント
+				49327, 49328, 49329, 49330, 49331, // サイクロプス
+				49333, 49334, 49335, 49336, 49337, // マーメイド
+				49339, 49340, 49341, 49342, 49343, // ブルート
+				49366, 49367, 49368, 49369, 49370, // ペンギン(兄)
+				49372, 49373, 49374, 49375, 49376  // ペンギン(妹)
 		};
 
 		int i = Arrays.binarySearch(curDollId, target.getItemId());

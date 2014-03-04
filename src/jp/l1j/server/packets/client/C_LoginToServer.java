@@ -96,7 +96,7 @@ import jp.l1j.server.utils.SqlUtil;
 
 public class C_LoginToServer extends ClientBasePacket {
 	private static final String C_LOGIN_TO_SERVER = "[C] C_LoginToServer";
-	
+
 	private static Logger _log = Logger.getLogger(C_LoginToServer.class.getName());
 
 	public C_LoginToServer(byte abyte0[], ClientThread client)
@@ -210,9 +210,8 @@ public class C_LoginToServer extends ClientBasePacket {
 		pc.sendVisualEffectAtLogin(); // クラウン、毒、水中等の視覚効果を表示
 		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather()));
 		items(pc);
-		pc.getInventory().showEquipped();//setEquipped(pc, true); //3.63
-		//bookmarks(pc);
-		pc.sendPackets(new S_BookmarkLoad(pc)); // TODO
+		pc.setEquipped(pc, true);//TODO 3.63装着脱着
+		pc.sendPackets(new S_BookmarkLoad(pc));
 		skills(pc);
 		buff(client, pc);
 		buffBlessOfAin(pc); // アインハザードの祝福
@@ -603,11 +602,11 @@ public class C_LoginToServer extends ClientBasePacket {
 					L1BuffUtil.bloodstain(pc, (byte) 2,
 							(remainingTime - differenceTime) / 60, false);
 				}
-			//} else if (skillId == BLOODSTAIN_OF_VALAKAS) { // ヴァラカスの血痕(未実装)
-			//	if (remainingTime - differenceTime > 0) {
-			//		L1BuffUtil.bloodstain(pc, (byte) 3,
-			//				(remainingTime - differenceTime) / 60, false);
-			//	}
+				//} else if (skillId == BLOODSTAIN_OF_VALAKAS) { // ヴァラカスの血痕(未実装)
+				//	if (remainingTime - differenceTime > 0) {
+				//		L1BuffUtil.bloodstain(pc, (byte) 3,
+				//				(remainingTime - differenceTime) / 60, false);
+				//	}
 			} else if (skillId == BLESS_OF_CRAY) { // クレイの祝福
 				L1BuffUtil.effectBlessOfDragonSlayer(pc, skillId, 2400, 7681);
 			} else if (skillId == BLESS_OF_SAEL) { // サエルの祝福
@@ -698,7 +697,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 		pc.sendPackets(new S_PacketBox(S_PacketBox.BLESS_OF_AIN, pc.getBlessOfAin()));
 	}
-	
+
 	@Override
 	public String getType() {
 		return C_LOGIN_TO_SERVER;
