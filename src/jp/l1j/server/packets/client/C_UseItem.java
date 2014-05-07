@@ -1163,7 +1163,7 @@ public class C_UseItem extends ClientBasePacket {
 		int type = armor.getItem().getType();
 		L1PcInventory pcInventory = activeChar.getInventory();
 		boolean equipeSpace; // 装備する箇所が空いているか
-		if (type == 9) { // リングの場合
+		if (type == 11) { // リングの場合
 			equipeSpace = pcInventory.getTypeEquipped(2, type) <= 3;//TODO 特定のタイプのアイテムを装備している数
 		} else {
 			equipeSpace = pcInventory.getTypeEquipped(2, type) <= 0;
@@ -1178,24 +1178,27 @@ public class C_UseItem extends ClientBasePacket {
 			}
 
 			//TODO 修正判斷76等戒指&81等戒指等級判斷
-			if (type == 9 && pcInventory.getTypeEquipped(2, 9) == 2) {
+			if (type == 11 && pcInventory.getTypeEquipped(2, 11) == 2) {
 				L1ItemInstance ring[] = new L1ItemInstance[2];
 				ring = pcInventory.getRingEquipped();
-				if (activeChar.getLevel()< 76){
-					activeChar.sendPackets(new S_SystemMessage("因等級76不足無法在此欄位裝備戒指。"));
+				if (activeChar.getLevel() < 76){
+					activeChar.sendPackets(new S_ServerMessage(124));
+          // \f1すでに何かを装備しています。
 					return;
 				} else if ((ring[0].getItem().getItemId() == itemid
 						&& ring[1].getItem().getItemId() == itemid)) {
-					activeChar.sendPackets(new S_SystemMessage("同種類的戒指不可再裝備。"));
+					activeChar.sendPackets(new S_ServerMessage(124));
+          // \f1すでに何かを装備しています。
 					return;
 				}
 			}
 
-			if (type == 9 && pcInventory.getTypeEquipped(2, 9) == 3) {
+			if (type == 11 && pcInventory.getTypeEquipped(2, 11) == 3) {
 				L1ItemInstance ring[] = new L1ItemInstance[2];
 				ring = pcInventory.getRingEquipped();
-				if (activeChar.getLevel()< 81){
-					activeChar.sendPackets(new S_SystemMessage("因等級81不足無法在此欄位裝備戒指。"));
+				if (activeChar.getLevel() < 81){
+					activeChar.sendPackets(new S_ServerMessage(124));
+          // \f1すでに何かを装備しています。
 					return;
 				} else if ((ring[0].getItem().getItemId() == itemid
 						&& ring[1].getItem().getItemId() == itemid) 
@@ -1203,11 +1206,12 @@ public class C_UseItem extends ClientBasePacket {
 						&& ring[2].getItem().getItemId() == itemid)
 						|| (ring[1].getItem().getItemId() == itemid
 						&& ring[2].getItem().getItemId() == itemid)) {
-					activeChar.sendPackets(new S_SystemMessage("同種類的戒指不可再裝備。"));
+					activeChar.sendPackets(new S_ServerMessage(124));
+          // \f1すでに何かを装備しています。
 					return;
 				}
-				//TODO 修正判斷76等戒指&81等戒指等級判斷
 			}
+			//TODO 修正判斷76等戒指&81等戒指等級判斷
 
 			if (type == 7 && pcInventory.getTypeEquipped(2, 8) >= 1
 					|| type == 8 && pcInventory.getTypeEquipped(2, 7) >= 1) {

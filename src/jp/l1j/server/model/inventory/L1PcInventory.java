@@ -20,8 +20,8 @@ import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_BOO
 import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_CLOAK;
 import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_EARRING;
 import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_GLOVE;
-import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_HEML;
-import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_NECKLACE;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_HELM;
+import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_AMULET;
 import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RING1;
 import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RING2;
 import static jp.l1j.server.packets.server.S_EquipmentWindow.EQUIPMENT_INDEX_RING3;
@@ -405,100 +405,103 @@ public class L1PcInventory extends L1Inventory {
 		if ((item.getItem().getType2() == 2) && (item.isEquipped())) {
 			int items = 0;
 			if ((item.getItem().getType() == 1)) {
-				items = 1;
+				items = EQUIPMENT_INDEX_HELM;
 			} else if ((item.getItem().getType() == 2)) {
-				items = 2;
+				items = EQUIPMENT_INDEX_T;
 			} else if ((item.getItem().getType() == 3)) {
-				items = 3;
+				items = EQUIPMENT_INDEX_ARMOR;
 			} else if ((item.getItem().getType() == 4)) {
-				items = 4;
+				items = EQUIPMENT_INDEX_CLOAK;
 			} else if ((item.getItem().getType() == 5)) {
-				items = 6;
+				items = EQUIPMENT_INDEX_GLOVE;
 			} else if ((item.getItem().getType() == 6)) {
-				items = 5;
+				items = EQUIPMENT_INDEX_BOOTS;
 			} else if ((item.getItem().getType() == 7)) {
-				items = 7;
+        // sheild
+				items = EQUIPMENT_INDEX_SHIELD;
 			} else if ((item.getItem().getType() == 8)) {
-				items = 10;
-			} else if ((item.getItem().getType() == 9)) {
+        // guarder
+				items = EQUIPMENT_INDEX_SHIELD;
+			} else if ((item.getItem().getType() == 11)) {
 				if (isEq == true){
 					//TODO 第一顆&二顆戒指
-					if (checkRingEquipped(18)){
-						items = 19;	
-						item.setRingID(19);
+					if (checkRingEquipped(EQUIPMENT_INDEX_RING1)){
+						items = EQUIPMENT_INDEX_RING2;	
+						item.setRingID(items);
 					} else {
-						items = 18;
-						item.setRingID(18);
+						items = EQUIPMENT_INDEX_RING1;
+						item.setRingID(items);
 					}
 					//TODO 第三顆戒指
-					if(getTypeEquipped(2, 9) == 3){ 
-						if(!checkRingEquipped(18)){  
-							items = 18;
-							item.setRingID(18);
-						} else if (!checkRingEquipped(19)){ 
-							items = 19;
-							item.setRingID(19);
-						} else if (!checkRingEquipped(20)){ 
-							items = 20;
-							item.setRingID(20);
+					if(getTypeEquipped(2, 11) == 3){ 
+						if(!checkRingEquipped(EQUIPMENT_INDEX_RING1)){  
+							items = EQUIPMENT_INDEX_RING1;
+							item.setRingID(items);
+						} else if (!checkRingEquipped(EQUIPMENT_INDEX_RING2)){ 
+							items = EQUIPMENT_INDEX_RING2;
+							item.setRingID(items);
+						} else if (!checkRingEquipped(EQUIPMENT_INDEX_RING3)){ 
+							items = EQUIPMENT_INDEX_RING3;
+							item.setRingID(items);
 						}
 					}
 					//TODO 第四顆戒指
-					if(getTypeEquipped(2, 9) == 4){
-						if(!checkRingEquipped(18)){  
-							items = 18;
-							item.setRingID(18);
-						} else if (!checkRingEquipped(19)){ 
-							items = 19;
-							item.setRingID(19);
-						} else if (!checkRingEquipped(20)){ 
-							items = 20;
-							item.setRingID(20);
-						}else if (!checkRingEquipped(21)){ 
-							items = 21;
-							item.setRingID(21);
+					if(getTypeEquipped(2, 11) == 4){
+						if(!checkRingEquipped(EQUIPMENT_INDEX_RING1)){  
+							items = EQUIPMENT_INDEX_RING1;
+							item.setRingID(items);
+						} else if (!checkRingEquipped(EQUIPMENT_INDEX_RING2)){ 
+							items = EQUIPMENT_INDEX_RING2;
+							item.setRingID(items);
+						} else if (!checkRingEquipped(EQUIPMENT_INDEX_RING3)){ 
+							items = EQUIPMENT_INDEX_RING3;
+							item.setRingID(items);
+						}else if (!checkRingEquipped(EQUIPMENT_INDEX_RING4)){ 
+							items = EQUIPMENT_INDEX_RING4;
+							item.setRingID(items);
 						}
 					}
 				} else {
-					if (RingID ==18){
-						items = 18;
+					if (RingID == EQUIPMENT_INDEX_RING1){
+						items = EQUIPMENT_INDEX_RING1;
 						item.setRingID(0);
-					} else if  (RingID ==19){
-						items = 19;
+					} else if  (RingID == EQUIPMENT_INDEX_RING2){
+						items = EQUIPMENT_INDEX_RING2;
 						item.setRingID(0);
-					} else if (RingID ==20){      
-						items = 20;
+					} else if (RingID == EQUIPMENT_INDEX_RING3){      
+						items = EQUIPMENT_INDEX_RING3;
 						item.setRingID(0);
-					} else if  (RingID ==21){
-						items = 21;
+					} else if  (RingID == EQUIPMENT_INDEX_RING4){
+						items = EQUIPMENT_INDEX_RING4;
 						item.setRingID(0);
 					}                             
 				}
 			} else if ((item.getItem().getType() == 10)) {
-				items = 11;
+				items = EQUIPMENT_INDEX_AMULET;
 			} else if ((item.getItem().getType() == 12)) {
-				items = 12;
+				items = EQUIPMENT_INDEX_EARRING;
 			} else if ((item.getItem().getType() == 13)) {
-				items = 7;	
+				items = EQUIPMENT_INDEX_BELT;	
 			} else if ((item.getItem().getType() == 14)) {
-				items = 22;
+        // pattern_back
+				items = EQUIPMENT_INDEX_RUNE1;
 			} else if ((item.getItem().getType() == 15)) {
-				items = 23;
+        // pattern_left
+				items = EQUIPMENT_INDEX_RUNE2;
 			} else if ((item.getItem().getType() == 16)) {
-				items = 24;
+        // pattern_right
+				items = EQUIPMENT_INDEX_RUNE3;
 			} else if ((item.getItem().getType() == 17)) {
-				items = 25;
+        // talisman_left
+				items = EQUIPMENT_INDEX_RUNE4;
 			} else if ((item.getItem().getType() == 18)) {
-				items = 26;
-			} else if ((item.getItem().getType() == 19)) {
-				items = 20;
-			} else if ((item.getItem().getType() == 20)) {
-				items = 21;
+        // talisman_right
+				items = EQUIPMENT_INDEX_RUNE5;
 			}
 			_owner.sendPackets(new S_EquipmentWindow(_owner, item.getId(),items,isEq)); 
 		}
 		if ((item.getItem().getType2() == 1) && (item.isEquipped())) {
-			int items = 8;
+			int items = EQUIPMENT_INDEX_WEAPON;
 			_owner.sendPackets(new S_EquipmentWindow(_owner, item.getId(),items,isEq)); 
 		}
 	}

@@ -31,11 +31,11 @@ public class S_EquipmentWindow extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	/** 頭盔 */
-	public static final byte EQUIPMENT_INDEX_HEML = 1;
+	public static final byte EQUIPMENT_INDEX_HELM = 1;
 	/** 盔甲 */
-	public static final byte EQUIPMENT_INDEX_ARMOR = 2;
+	public static final byte EQUIPMENT_INDEX_ARMOR = 3;
 	/** T恤 */
-	public static final byte EQUIPMENT_INDEX_T = 3;
+	public static final byte EQUIPMENT_INDEX_T = 2;
 	/** 斗篷 */
 	public static final byte EQUIPMENT_INDEX_CLOAK = 4;
 	/** 靴子 */
@@ -47,7 +47,7 @@ public class S_EquipmentWindow extends ServerBasePacket {
 	/** 武器 */
 	public static final byte EQUIPMENT_INDEX_WEAPON = 8;
 	/** 項鏈 */
-	public static final byte EQUIPMENT_INDEX_NECKLACE = 10;
+	public static final byte EQUIPMENT_INDEX_AMULET = 10;
 	/** 腰帶 */
 	public static final byte EQUIPMENT_INDEX_BELT = 11;
 	/** 耳環 */
