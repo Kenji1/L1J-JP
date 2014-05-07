@@ -16,20 +16,16 @@
 package jp.l1j.server.packets.client;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.TimeZone;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.controller.timer.FishingTimeController;
-import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.datatables.MagicDollTable;
 import jp.l1j.server.datatables.NpcTable;
@@ -123,7 +119,6 @@ import jp.l1j.server.templates.L1Account;
 import jp.l1j.server.templates.L1Armor;
 import jp.l1j.server.templates.L1BookMark;
 import jp.l1j.server.templates.L1EtcItem;
-import jp.l1j.server.templates.L1InventoryItem;
 import jp.l1j.server.templates.L1Item;
 import jp.l1j.server.templates.L1MagicDoll;
 import jp.l1j.server.templates.L1Npc;
@@ -1169,9 +1164,9 @@ public class C_UseItem extends ClientBasePacket {
 		L1PcInventory pcInventory = activeChar.getInventory();
 		boolean equipeSpace; // 装備する箇所が空いているか
 		if (type == 9) { // リングの場合
-			equipeSpace = pcInventory.getTypeEquipped(2, type) < 3;//TODO 特定のタイプのアイテムを装備している数
+			equipeSpace = pcInventory.getTypeEquipped(2, type) <= 3;//TODO 特定のタイプのアイテムを装備している数
 		} else {
-			equipeSpace = pcInventory.getTypeEquipped(2, type) < 0;
+			equipeSpace = pcInventory.getTypeEquipped(2, type) <= 0;
 		}
 
 		if (equipeSpace && !armor.isEquipped()) {
@@ -1230,8 +1225,8 @@ public class C_UseItem extends ClientBasePacket {
 					return;
 				}
 			}
-
-			/*			if (type == 3 && pcInventory.getTypeEquipped(2, 4) >= 1) {
+			/*
+      if (type == 3 && pcInventory.getTypeEquipped(2, 4) >= 1) {
 				// シャツの場合、マントを着てないか確認
 				activeChar.sendPackets(new S_ServerMessage(126, "$224", "$225"));
 				// \f1%1上に%0を着ることはできません。
@@ -1247,7 +1242,7 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1%1上に%0を着ることはできません。
 				return;
 			}
-			 */
+			*/
 			L1BuffUtil.cancelBarrier(activeChar); // アブソルート バリアの解除
 
 			pcInventory.setEquipped(armor, true);
@@ -1258,7 +1253,8 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1はずすことができません。呪いをかけられているようです。
 				return;
 			}
-			/*			if (type == 3 && pcInventory.getTypeEquipped(2, 2) >= 1) {
+			/*
+      if (type == 3 && pcInventory.getTypeEquipped(2, 2) >= 1) {
 				// シャツの場合、メイルを着てないか確認
 				activeChar.sendPackets(new S_ServerMessage(127));
 				// \f1それは脱ぐことができません
@@ -1270,7 +1266,8 @@ public class C_UseItem extends ClientBasePacket {
 				// \f1それは脱ぐことができません
 				return;
 			}
-			 */			if (type == 7) { // シールドの場合、ソリッドキャリッジの効果消失
+			*/
+      if (type == 7) { // シールドの場合、ソリッドキャリッジの効果消失
 				 if (activeChar.hasSkillEffect(SOLID_CARRIAGE)) {
 					 activeChar.removeSkillEffect(SOLID_CARRIAGE);
 				 }
