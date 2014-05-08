@@ -19,7 +19,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,7 +120,7 @@ public final class MapTable {
 		_maps = maps;
 		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
-	
+
 	/**
 	 * MapsTableのインスタンスを返す。
 	 *
@@ -131,6 +133,28 @@ public final class MapTable {
 		return _instance;
 	}
 
+	/**
+	 * マップの全座標情報を返す。
+	 *
+	 * @return マップid,X開始座標,X終了座標,Y開始座標,Y終了座標
+	 */
+	public ArrayList<ArrayList<Integer>> getMapInfo() {
+		ArrayList<ArrayList<Integer>> maps = new ArrayList<ArrayList<Integer>>();
+    for (Iterator<Map.Entry<Integer, MapData>> it = _maps.entrySet().iterator(); it.hasNext(); ) {
+			Map.Entry<Integer, MapData> entry = it.next();
+			Integer key = entry.getKey();
+			MapData val = entry.getValue();
+			ArrayList<Integer> map = new ArrayList<Integer>();
+			map.add(key);
+			map.add(val.startX);
+			map.add(val.endX);
+			map.add(val.startY);
+			map.add(val.endY);
+			maps.add(map);
+		}
+		return maps;
+	}
+	
 	// TODO マップ名称検索　start
 	/**
 	 * マップ名称を返す。
@@ -146,8 +170,8 @@ public final class MapTable {
 		}
 		return _maps.get(mapId).locationname;
 	}
-
 	// TODO マップ名称検索 end
+	
 	/**
 	 * マップのX開始座標を返す。
 	 *
