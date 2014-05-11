@@ -172,7 +172,7 @@ public class GameServer extends Thread {
 	private void printStartupMessage() {
 			puts(I18N_GENERATE_SERVER_SOCKET);
 			puts("/***********************************************************");
-			puts("*                L1J-JP 3.60C  For All User                *");
+			puts("*                L1J-JP 3.63C  For All User                *");
 			puts("***********************************************************/");
 			puts("");
 			puts(I18N_SERVER_SETTINGS);
