@@ -332,6 +332,7 @@ public class L1EnchantScroll {
 		// 0:無属性 1:地 2:火 4:水 8:風
 		int oldAttrEnchantKind = target.getAttrEnchantKind();
 		int oldAttrEnchantLevel = target.getAttrEnchantLevel();
+		int enchantLevel = target.getEnchantLevel();
 
 		boolean isSameAttr = false; // スクロールと強化済みの属性が同一か
 		if (itemId == 41429 && oldAttrEnchantKind == 8
@@ -340,7 +341,13 @@ public class L1EnchantScroll {
 				|| itemId == 41432 && oldAttrEnchantKind == 2) { // 同じ属性
 			isSameAttr = true;
 		}
-		if (isSameAttr && oldAttrEnchantLevel >= 3) {
+		if (isSameAttr && oldAttrEnchantLevel == 3 && enchantLevel <= 9) {
+			pc.sendPackets(new S_ServerMessage(1453)); // これ以上は強化できません。
+			return false;
+		} else if (isSameAttr && oldAttrEnchantLevel == 4 && enchantLevel <= 10) {
+			pc.sendPackets(new S_ServerMessage(1453)); // これ以上は強化できません。
+			return false;
+		} else if (isSameAttr && oldAttrEnchantLevel >= 5) {
 			pc.sendPackets(new S_ServerMessage(1453)); // これ以上は強化できません。
 			return false;
 		}

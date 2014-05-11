@@ -1719,6 +1719,10 @@ public class L1Attack {
 			damage = 3;
 		} else if (_weaponAttrEnchantLevel == 3) {
 			damage = 5;
+		} else if (_weaponAttrEnchantLevel == 4) {
+			damage = 7;
+		} else if (_weaponAttrEnchantLevel == 5) {
+			damage = 9;
 		}
 
 		// 耐性処理は本来、耐性合計値ではなく、各値を個別に処理して総和する。

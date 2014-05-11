@@ -1004,6 +1004,10 @@ public class L1ItemInstance extends L1Object {
 							attrStr = "$6125";
 						} else if (attrEnchantLevel == 3) {
 							attrStr = "$6126";
+						} else if (attrEnchantLevel == 4) {
+							attrStr = "$14364";
+						} else if (attrEnchantLevel == 5) {
+							attrStr = "$14368";
 						}
 						break;
 					case 2: // 火
@@ -1013,6 +1017,10 @@ public class L1ItemInstance extends L1Object {
 							attrStr = "$6116";
 						} else if (attrEnchantLevel == 3) {
 							attrStr = "$6117";
+						} else if (attrEnchantLevel == 4) {
+							attrStr = "$14361";
+						} else if (attrEnchantLevel == 5) {
+							attrStr = "$14365";
 						}
 						break;
 					case 4: // 水
@@ -1022,6 +1030,10 @@ public class L1ItemInstance extends L1Object {
 							attrStr = "$6119";
 						} else if (attrEnchantLevel == 3) {
 							attrStr = "$6120";
+						} else if (attrEnchantLevel == 4) {
+							attrStr = "$14362";
+						} else if (attrEnchantLevel == 5) {
+							attrStr = "$14366";
 						}
 						break;
 					case 8: // 風
@@ -1031,6 +1043,10 @@ public class L1ItemInstance extends L1Object {
 							attrStr = "$6122";
 						} else if (attrEnchantLevel == 3) {
 							attrStr = "$6123";
+						} else if (attrEnchantLevel == 4) {
+							attrStr = "$14363";
+						} else if (attrEnchantLevel == 5) {
+							attrStr = "$14367";
 						}
 						break;
 					default:
