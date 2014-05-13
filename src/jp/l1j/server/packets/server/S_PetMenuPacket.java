@@ -69,7 +69,8 @@ public class S_PetMenuPacket extends ServerBasePacket {
 			// pet_name = "ハイ セントバー";
 			// }
 			// writeS(pet_name);
-			writeS(""); // ペットの名前を表示させると不安定になるので、非表示にする
+			//writeS(""); // ペットの名前を表示させると不安定になるので、非表示にする
+			writeS(pet.getName());
 
 			String s = "$610";
 			if (pet.getFood() > 80) {
