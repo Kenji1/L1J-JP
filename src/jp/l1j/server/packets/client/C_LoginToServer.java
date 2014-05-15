@@ -32,8 +32,8 @@ import jp.l1j.server.controller.timer.WarTimeController;
 import jp.l1j.server.datatables.CharBuffTable;
 import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.RestartLocationTable;
-import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.datatables.ReturnLocationTable;
+import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1Clan;
 import jp.l1j.server.model.L1Cube;
@@ -73,6 +73,7 @@ import jp.l1j.server.packets.server.S_OwnCharPack;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_Paralysis;
+import jp.l1j.server.packets.server.S_PlayTime;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SkillBrave;
 import jp.l1j.server.packets.server.S_SkillHaste;
@@ -295,6 +296,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 		pc.startExpirationTimer(); // 有効期限付きアイテムのタイマーを開始
 		pc.startMapLimiter(); // マップリミッターを開始
+		pc.sendPackets(new S_PlayTime()); // プレイ時間を初期化
 	}
 
 	private void items(L1PcInstance pc) {
