@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
 import jp.l1j.server.model.shop.L1Shop;
 import jp.l1j.server.templates.L1ShopItem;
 import jp.l1j.server.utils.L1DatabaseFactory;
@@ -76,6 +77,15 @@ public class ShopTable {
 		List<L1ShopItem> purchasingList = new ArrayList<L1ShopItem>();
 		while (rs.next()) {
 			int itemId = rs.getInt("item_id");
+			boolean isErr = false;
+			if (ItemTable.getInstance().getTemplate(itemId) == null) {
+				System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+				// %s はアイテムリストに存在しません。
+				isErr = true;
+			}
+			if (isErr) {
+				continue;
+			}
 			int sellingPrice = rs.getInt("selling_price");
 			int purchasingPrice = rs.getInt("purchasing_price");
 			int packCount = rs.getInt("pack_count");
@@ -118,6 +128,15 @@ public class ShopTable {
 		List<L1ShopItem> purchasingList = new ArrayList<L1ShopItem>();
 		while (rs.next()) {
 			int itemId = rs.getInt("item_id");
+			boolean isErr = false;
+			if (ItemTable.getInstance().getTemplate(itemId) == null) {
+				System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+				// %s はアイテムリストに存在しません。
+				isErr = true;
+			}
+			if (isErr) {
+				continue;
+			}
 			int sellingPrice = rs.getInt("selling_price");
 			int purchasingPrice = rs.getInt("purchasing_price");
 			int packCount = 1;
@@ -140,8 +159,6 @@ public class ShopTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading shops...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT item_id, selling_price, purchasing_price FROM item_rates");
 			for (int npcId : generalMerchantIds) {
@@ -150,7 +167,6 @@ public class ShopTable {
 				allShops.put(npcId, shop);
 				rs.close();
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -159,15 +175,19 @@ public class ShopTable {
 	}
 
 	private void load() {
+		PerformanceTimer timer = new PerformanceTimer();
 		loadShops(_allShops);
 		loadGeneralShops(_allShops);
+		System.out.println("loading shops...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public void reload() {
+		PerformanceTimer timer = new PerformanceTimer();
 		Map<Integer, L1Shop> allShops = new HashMap<Integer, L1Shop>();
 		loadShops(allShops);
 		loadGeneralShops(allShops);
 		_allShops = allShops;
+		System.out.println("loading shops...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 		
 	public L1Shop get(int npcId) {

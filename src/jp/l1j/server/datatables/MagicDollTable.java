@@ -22,6 +22,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_NPC_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_SKILL_LIST;
 import jp.l1j.server.templates.L1MagicDoll;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -51,15 +54,41 @@ public class MagicDollTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading magic dolls...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM magic_dolls");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1MagicDoll doll = new L1MagicDoll();
 				int itemId = rs.getInt("item_id");
+				int npcId = rs.getInt("npc_id");
+				int makeItemId = rs.getInt("make_item_id");
+				int skillId = rs.getByte("skill_id");
+				boolean isErr = false;
+				if (ItemTable.getInstance().getTemplate(itemId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+					// %s はアイテムリストに存在しません。
+					isErr = true;
+				}
+				if (makeItemId != 0 && ItemTable.getInstance().getTemplate(makeItemId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, makeItemId));
+					// %s はアイテムリストに存在しません。
+					isErr = true;
+				}
+				if (NpcTable.getInstance().getTemplate(npcId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_NPC_LIST, npcId));
+					// %s はNPCリストに存在しません。
+					isErr = true;
+				}
+				if (skillId != 0 && SkillTable.getInstance().findBySkillId(skillId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_SKILL_LIST, skillId));
+					// %s はスキルリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
+				L1MagicDoll doll = new L1MagicDoll();
 				doll.setItemId(itemId);
-				doll.setDollId(rs.getInt("npc_id"));
+				doll.setDollId(npcId);
 				doll.setAc(rs.getInt("ac"));
 				doll.setStr(rs.getInt("str"));
 				doll.setCon(rs.getInt("con"));
@@ -90,14 +119,14 @@ public class MagicDollTable {
 				doll.setResistHold(rs.getInt("resist_hold"));
 				doll.setResistBlind(rs.getInt("resist_blind"));
 				doll.setExpBonus(rs.getInt("exp_bonus"));
-				doll.setMakeItemId(rs.getInt("make_item_id"));
+				doll.setMakeItemId(makeItemId);
 				doll.setMakeTime(rs.getInt("make_time"));
-				doll.setSkillId(rs.getByte("skill_id"));
+				doll.setSkillId(skillId);
 				doll.setSkillChance(rs.getByte("skill_chance"));
 				doll.setSummonTime(rs.getInt("summon_time"));
 				dolls.put(new Integer(itemId), doll);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading magic dolls...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

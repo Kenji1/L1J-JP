@@ -113,7 +113,6 @@ public class L1UnknownMaliceWeapon {
 	
 	private static void loadXml(HashMap<Integer, L1UnknownMaliceWeapon> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading unknown malice weapons...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1UnknownMaliceWeapon.ItemEffectList.class);
 
@@ -131,7 +130,7 @@ public class L1UnknownMaliceWeapon {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading unknown malice weapons...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

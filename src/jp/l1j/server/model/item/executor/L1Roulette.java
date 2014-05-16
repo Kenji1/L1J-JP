@@ -104,7 +104,6 @@ public class L1Roulette {
 
 	private static void loadXml(HashMap<Integer, L1Roulette> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading roulettes...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1Roulette.ItemEffectList.class);
 
@@ -125,7 +124,7 @@ public class L1Roulette {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading roulettes...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

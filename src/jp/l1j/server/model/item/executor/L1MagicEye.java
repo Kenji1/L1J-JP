@@ -113,7 +113,6 @@ public class L1MagicEye {
 	
 	private static void loadXml(HashMap<Integer, L1MagicEye> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading magic eyes...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1MagicEye.ItemEffectList.class);
 
@@ -131,7 +130,7 @@ public class L1MagicEye {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading magic eyes...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

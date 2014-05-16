@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
 import jp.l1j.server.templates.L1PetItem;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -51,13 +52,22 @@ public class PetItemTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading pet items...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM pet_items");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
+				int itemId = rs.getInt("item_id");
+				boolean isErr = false;
+				if (ItemTable.getInstance().getTemplate(itemId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+					// %s はアイテムリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				L1PetItem petItem = new L1PetItem();
-				petItem.setItemId(rs.getInt("item_id"));
+				petItem.setItemId(itemId);
 				petItem.setHitModifier(rs.getInt("hit_modifier"));
 				petItem.setDamageModifier(rs.getInt("dmg_modifier"));
 				petItem.setAddAc(rs.getInt("ac"));
@@ -73,7 +83,7 @@ public class PetItemTable {
 				petItem.setUseType(rs.getInt("use_type"));
 				petItems.put(petItem.getItemId(), petItem);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading pet items...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating pet_items table", e);
 		} finally {

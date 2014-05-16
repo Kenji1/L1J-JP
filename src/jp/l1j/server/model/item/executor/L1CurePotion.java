@@ -94,7 +94,6 @@ public class L1CurePotion {
 
 	private static void loadXml(HashMap<Integer, L1CurePotion> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading cure potions...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1CurePotion.ItemEffectList.class);
 
@@ -115,7 +114,7 @@ public class L1CurePotion {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading cure potions...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

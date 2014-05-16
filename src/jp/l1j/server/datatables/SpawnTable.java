@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_MAP_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_NPC_LIST;
 import jp.l1j.server.model.L1Spawn;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.random.RandomGenerator;
@@ -76,6 +78,21 @@ public class SpawnTable {
 					}
 				}
 				int npcTemplateId = rs.getInt("npc_id");
+				short mapId = rs.getShort("map_id");
+				boolean isErr = false;
+				if (NpcTable.getInstance().getTemplate(npcTemplateId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_NPC_LIST, npcTemplateId));
+					// %s はNPCリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(mapId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, mapId));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				template1 = NpcTable.getInstance().getTemplate(npcTemplateId);
 				int count;
 				if (template1 == null) {
@@ -86,7 +103,7 @@ public class SpawnTable {
 						continue;
 					}
 					double amount_rate = MapTable.getInstance()
-							.getMonsterAmount(rs.getShort("map_id"));
+							.getMonsterAmount(mapId);
 					count = calcCount(template1, rs.getInt("count"),
 							amount_rate);
 					if (count == 0) {
@@ -111,7 +128,7 @@ public class SpawnTable {
 					spawnDat.setHeading(heading);
 					spawnDat.setMinRespawnDelay(rs.getInt("min_respawn_delay"));
 					spawnDat.setMaxRespawnDelay(rs.getInt("max_respawn_delay"));
-					spawnDat.setMapId(rs.getShort("map_id"));
+					spawnDat.setMapId(mapId);
 					spawnDat.setRespawnScreen(rs.getBoolean("respawn_screen"));
 					spawnDat.setMovementDistance(rs.getInt("movement_distance"));
 					spawnDat.setRest(rs.getBoolean("rest"));

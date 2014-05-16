@@ -22,6 +22,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_POLY_LIST;
 import jp.l1j.server.templates.L1ArmorSets;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -51,15 +53,32 @@ public class ArmorSetTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading armor sets...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM armor_sets");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
+				String sets = rs.getString("sets");
+				int polyId = rs.getInt("poly_id");
+				boolean isErr = false;
+				for (String itemId : sets.split(",")) {
+					if (ItemTable.getInstance().getTemplate(Integer.parseInt(itemId)) == null) {
+						System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+						// %s はアイテムリストに存在しません。
+						isErr = true;
+					}
+				}
+				if (PolyTable.getInstance().getTemplate(polyId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_POLY_LIST, polyId));
+					// %s は変身リストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				L1ArmorSets as = new L1ArmorSets();
 				as.setId(rs.getInt("id"));
-				as.setSets(rs.getString("sets"));
-				as.setPolyId(rs.getInt("poly_id"));
+				as.setSets(sets);
+				as.setPolyId(polyId);
 				as.setAc(rs.getInt("ac"));
 				as.setStr(rs.getInt("str"));
 				as.setDex(rs.getInt("dex"));
@@ -94,7 +113,7 @@ public class ArmorSetTable {
 				as.setPotionRecoveryRate(rs.getInt("potion_recovery_rate"));			
 				armorSets.add(as);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading armor sets...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

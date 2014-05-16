@@ -219,7 +219,6 @@ public class L1ExtraPotion {
 
 	private static void loadXml(HashMap<Integer, L1ExtraPotion> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading extra potions...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1ExtraPotion.ItemEffectList.class);
 
@@ -240,7 +239,7 @@ public class L1ExtraPotion {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading extra potions...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

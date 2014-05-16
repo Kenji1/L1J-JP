@@ -125,7 +125,6 @@ public class L1SpeedUpClock {
 	
 	private static void loadXml(HashMap<Integer, L1SpeedUpClock> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading speed up clocks...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1SpeedUpClock.ItemEffectList.class);
 
@@ -143,7 +142,7 @@ public class L1SpeedUpClock {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading speed up clocks...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

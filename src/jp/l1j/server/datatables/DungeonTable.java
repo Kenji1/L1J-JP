@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_MAP_LIST;
 import jp.l1j.server.datatables.InnTable;
 import jp.l1j.server.model.L1DragonSlayer;
 import jp.l1j.server.model.L1Teleport;
@@ -80,7 +81,6 @@ public class DungeonTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading dungeons...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM dungeons");
 			rs = pstm.executeQuery();
@@ -93,6 +93,20 @@ public class DungeonTable {
 				int newY = rs.getInt("new_y");
 				int newMapId = rs.getInt("new_map_id");
 				int heading = rs.getInt("new_heading");
+				boolean isErr = false;
+				if (MapTable.getInstance().locationname(srcMapId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, srcMapId));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(newMapId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, newMapId));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				DungeonType dungeonType = DungeonType.NONE;
 				if ((srcX == 33423 || srcX == 33424 || srcX == 33425 || srcX == 33426)
 						&& srcY == 33502
@@ -170,7 +184,7 @@ public class DungeonTable {
 				}
 				dungeonMap.put(key, newDungeon);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading dungeons...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

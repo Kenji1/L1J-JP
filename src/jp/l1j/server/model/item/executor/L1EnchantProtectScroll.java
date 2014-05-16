@@ -116,7 +116,6 @@ public class L1EnchantProtectScroll {
 	
 	private static void loadXml(HashMap<Integer, L1EnchantProtectScroll> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading enchant protect scrolls...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1EnchantProtectScroll.ItemEffectList.class);
 
@@ -134,7 +133,7 @@ public class L1EnchantProtectScroll {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading enchant protect scrolls...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

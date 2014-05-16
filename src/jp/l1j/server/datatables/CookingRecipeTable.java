@@ -41,12 +41,11 @@ public class CookingRecipeTable {
 
 	private static Map<Integer, L1CookingRecipe> loadRecipes() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading cooking recipes...");
 		Map<Integer, L1CookingRecipe> result = Maps.newHashMap();
 		for (L1CookingRecipe recipe : L1CookingRecipe.all()) {
 			result.put(recipe.getId(), recipe);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading cooking recipes...OK! " + timer.elapsedTimeMillis() + "ms");
 		return result;
 	}
 

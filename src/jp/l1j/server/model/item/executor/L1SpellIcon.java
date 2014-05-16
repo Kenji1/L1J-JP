@@ -113,7 +113,6 @@ public class L1SpellIcon {
 	
 	private static void loadXml(HashMap<Integer, L1SpellIcon> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading spell icons...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1SpellIcon.ItemEffectList.class);
 
@@ -131,7 +130,7 @@ public class L1SpellIcon {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading spell icons...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

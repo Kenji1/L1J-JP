@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_NPC_LIST;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
@@ -57,19 +59,27 @@ public final class DropRateTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading drop rates...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM drop_rates");
 			for (rs = pstm.executeQuery(); rs.next();) {
-				dropItemData data = new dropItemData();
 				int itemId = rs.getInt("item_id");
+				boolean isErr = false;
+				if (ItemTable.getInstance().getTemplate(itemId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+					// %s はアイテムリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
+				dropItemData data = new dropItemData();
 				data.dropRate = rs.getDouble("drop_rate");
 				data.dropAmount = rs.getDouble("drop_amount");
 				data.uniqueRate = rs.getDouble("unique_rate");
 				dropItems.put(new Integer(itemId), data);
 			}
 			_log.config("drop_rates " + dropItems.size());
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading drop rates...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

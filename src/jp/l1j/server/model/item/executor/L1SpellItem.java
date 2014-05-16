@@ -110,7 +110,6 @@ public class L1SpellItem {
 	
 	private static void loadXml(HashMap<Integer, L1SpellItem> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading spell items...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1SpellItem.ItemEffectList.class);
 
@@ -128,7 +127,7 @@ public class L1SpellItem {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading spell items...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

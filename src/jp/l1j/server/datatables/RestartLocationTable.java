@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_MAP_LIST;
 import jp.l1j.server.templates.L1GetBackRestart;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -51,20 +52,34 @@ public class RestartLocationTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading restart locations...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM restart_locations");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1GetBackRestart gbr = new L1GetBackRestart();
 				int area = rs.getInt("area");
+				short mapId = rs.getShort("map_id");
+				boolean isErr = false;
+				if (MapTable.getInstance().locationname(area) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, area));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(mapId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, mapId));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
+				L1GetBackRestart gbr = new L1GetBackRestart();
 				gbr.setArea(area);
 				gbr.setLocX(rs.getInt("loc_x"));
 				gbr.setLocY(rs.getInt("loc_y"));
-				gbr.setMapId(rs.getShort("map_id"));
+				gbr.setMapId(mapId);
 				restartLocations.put(new Integer(area), gbr);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading restart locations...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

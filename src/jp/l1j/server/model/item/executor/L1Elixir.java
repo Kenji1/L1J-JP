@@ -129,7 +129,6 @@ public class L1Elixir {
 
 	private static void loadXml(HashMap<Integer, L1Elixir> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading elixirs...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1Elixir.ItemEffectList.class);
 
@@ -150,7 +149,7 @@ public class L1Elixir {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading elixirs...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

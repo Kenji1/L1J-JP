@@ -111,7 +111,6 @@ public class L1ThirdSpeedPotion {
 
 	private static void loadXml(HashMap<Integer, L1ThirdSpeedPotion> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading third speed potions...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1ThirdSpeedPotion.ItemEffectList.class);
 
@@ -132,7 +131,7 @@ public class L1ThirdSpeedPotion {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading third speed potions...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

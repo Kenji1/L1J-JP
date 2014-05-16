@@ -98,7 +98,6 @@ public class L1ShowMessage {
 
 	private static void loadXml(HashMap<Integer, L1ShowMessage> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading show messages...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1ShowMessage.ItemEffectList.class);
 
@@ -119,7 +118,7 @@ public class L1ShowMessage {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading show messages...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

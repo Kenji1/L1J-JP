@@ -53,7 +53,6 @@ public class TrapTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading traps...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM traps");
 			rs = pstm.executeQuery();
@@ -62,7 +61,7 @@ public class TrapTable {
 				L1Trap trap = createTrapInstance(typeName, new SqlTrapStorage(rs));
 				_traps.put(trap.getId(), trap);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading traps...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} catch (Exception e) {

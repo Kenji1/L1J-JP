@@ -95,7 +95,6 @@ public class L1PolyScroll {
 
 	private static void loadXml(HashMap<Integer, L1PolyScroll> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading poly scrolls...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1PolyScroll.ItemEffectList.class);
 
@@ -116,7 +115,7 @@ public class L1PolyScroll {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading poly scrolls...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

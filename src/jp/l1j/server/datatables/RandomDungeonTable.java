@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_MAP_LIST;
 import jp.l1j.server.model.L1Teleport;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.skill.L1BuffUtil;
@@ -58,12 +59,50 @@ public class RandomDungeonTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading random dungeons...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM random_dungeons");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int srcMapId = rs.getInt("src_map_id");
+				short newMapId1 = rs.getShort("new_map_id1");
+				short newMapId2 = rs.getShort("new_map_id2");
+				short newMapId3 = rs.getShort("new_map_id3");
+				short newMapId4 = rs.getShort("new_map_id4");
+				short newMapId5 = rs.getShort("new_map_id5");
+				boolean isErr = false;
+				if (MapTable.getInstance().locationname(srcMapId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, srcMapId));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(newMapId1) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, newMapId1));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(newMapId2) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, newMapId2));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(newMapId3) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, newMapId3));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(newMapId4) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, newMapId4));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(newMapId5) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, newMapId5));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				int srcX = rs.getInt("src_x");
 				int srcY = rs.getInt("src_y");
 				String key = new StringBuilder().append(srcMapId).append(srcX).append(srcY).toString();
@@ -72,19 +111,19 @@ public class RandomDungeonTable {
 				short[] newMapId = new short[5];
 				newX[0] = rs.getInt("new_x1");
 				newY[0] = rs.getInt("new_y1");
-				newMapId[0] = rs.getShort("new_map_id1");
+				newMapId[0] = newMapId1;
 				newX[1] = rs.getInt("new_x2");
 				newY[1] = rs.getInt("new_y2");
-				newMapId[1] = rs.getShort("new_map_id2");
+				newMapId[1] = newMapId2;
 				newX[2] = rs.getInt("new_x3");
 				newY[2] = rs.getInt("new_y3");
-				newMapId[2] = rs.getShort("new_map_id3");
+				newMapId[2] = newMapId3;
 				newX[3] = rs.getInt("new_x4");
 				newY[3] = rs.getInt("new_y4");
-				newMapId[3] = rs.getShort("new_map_id4");
+				newMapId[3] = newMapId4;
 				newX[4] = rs.getInt("new_x5");
 				newY[4] = rs.getInt("new_y5");
-				newMapId[4] = rs.getShort("new_map_id5");
+				newMapId[4] = newMapId5;
 				int heading = rs.getInt("new_heading");
 				NewDungeonRandom newDungeonRandom = new NewDungeonRandom(newX,
 						newY, newMapId, heading);
@@ -93,7 +132,7 @@ public class RandomDungeonTable {
 				}
 				dungeons.put(key, newDungeonRandom);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading random dungeons...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

@@ -93,7 +93,6 @@ public class L1FireCracker {
 
 	private static void loadXml(HashMap<Integer, L1FireCracker> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading fire crackers...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1FireCracker.ItemEffectList.class);
 
@@ -114,7 +113,7 @@ public class L1FireCracker {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading fire crackers...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

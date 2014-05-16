@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
 import jp.l1j.server.utils.SqlUtil;
@@ -51,16 +52,24 @@ public final class ResolventTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading resolvents...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM resolvents");
 			for (rs = pstm.executeQuery(); rs.next();) {
 				int itemId = rs.getInt("item_id");
+				boolean isErr = false;
+				if (ItemTable.getInstance().getTemplate(itemId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+					// %s はアイテムリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				int crystalCount = rs.getInt("crystal_count");
 				resolvents.put(new Integer(itemId), crystalCount);
 			}
 			_log.config("resolvent " + resolvents.size());
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading resolvents...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

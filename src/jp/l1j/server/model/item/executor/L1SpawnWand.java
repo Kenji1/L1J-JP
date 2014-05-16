@@ -205,7 +205,6 @@ public class L1SpawnWand {
 
 	private static void loadXml(HashMap<Integer, L1SpawnWand> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading spawn wands...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1SpawnWand.ItemEffectList.class);
 
@@ -223,7 +222,7 @@ public class L1SpawnWand {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading spawn wands...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

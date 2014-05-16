@@ -83,22 +83,20 @@ public class SkillTable {
 
 	private void load() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading skills...");
 		loadSkills(_skills);
 		_buffSkillIds = loadBuffSkillIds(_skills);
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading skills...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public void reload() {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading skills...");
 		Map<Integer, L1Skill> skills = Maps.newHashMap();
 		List<Integer> buffSkillIds;
 		loadSkills(skills);
 		buffSkillIds = loadBuffSkillIds(skills);
 		_skills = skills;
 		_buffSkillIds = buffSkillIds;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading skills...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public void spellMastery(int playerobjid, int skillid, String skillname, int active, int time) {

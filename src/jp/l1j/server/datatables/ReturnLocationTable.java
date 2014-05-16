@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_MAP_LIST;
 import jp.l1j.server.model.L1TownLocation;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.random.RandomGenerator;
@@ -64,12 +65,29 @@ public class ReturnLocationTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
 			con = L1DatabaseFactory.getInstance().getConnection();
 			// 同マップでエリア指定と無指定が混在していたら、エリア指定を先に読み込む為にarea_x1 DESC
 			String sSQL = "SELECT * FROM return_locations ORDER BY area_map_id,area_x1 DESC ";
 			pstm = con.prepareStatement(sSQL);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
+				int areaMapId = rs.getInt("area_map_id");
+				int getbackMapId = rs.getInt("getback_map_id");
+				boolean isErr = false;
+				if (MapTable.getInstance().locationname(areaMapId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, areaMapId));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (MapTable.getInstance().locationname(getbackMapId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, getbackMapId));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				ReturnLocationTable getback = new ReturnLocationTable();
 				getback._areaX1 = rs.getInt("area_x1");
 				getback._areaY1 = rs.getInt("area_y1");
@@ -94,6 +112,7 @@ public class ReturnLocationTable {
 				}
 				getbackList.add(getback);
 			}
+			System.out.println("loading return locations...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "could not Get Getback data", e);
 		} finally {
@@ -106,13 +125,10 @@ public class ReturnLocationTable {
 	}
 	
 	public static void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading return locations...");
 		HashMap<Integer, ArrayList<ReturnLocationTable>> returnLocations =
 				new HashMap<Integer, ArrayList<ReturnLocationTable>>();
 		loadReturnLocations(returnLocations);
 		_returnLocations = returnLocations;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	/**

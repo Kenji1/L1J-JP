@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_MAP_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_NPC_LIST;
 import jp.l1j.server.model.L1UltimateBattle;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -52,14 +54,23 @@ public class UbTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading ubs...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM ubs");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
+				short mapId = rs.getShort("map_id");
+				boolean isErr = false;
+				if (MapTable.getInstance().locationname(mapId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_MAP_LIST, mapId));
+					// %s はマップリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				L1UltimateBattle ub = new L1UltimateBattle();
 				ub.setUbId(rs.getInt("id"));
-				ub.setMapId(rs.getShort("map_id"));
+				ub.setMapId(mapId);
 				ub.setLocX1(rs.getInt("area_x1"));
 				ub.setLocY1(rs.getInt("area_y1"));
 				ub.setLocX2(rs.getInt("area_x2"));
@@ -82,7 +93,7 @@ public class UbTable {
 				ub.resetLoc();
 				ubs.put(ub.getUbId(), ub);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading ubs...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.warning("ubsettings couldnt be initialized:" + e);
 		} finally {
@@ -92,16 +103,25 @@ public class UbTable {
 		// ub_managers load
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading ub managers...");
 			pstm = con.prepareStatement("SELECT * FROM ub_managers");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
 				if (ub != null) {
-					ub.addManager(rs.getInt("npc_id"));
+					int npcId = rs.getInt("npc_id");
+					boolean isErr = false;
+					if (NpcTable.getInstance().getTemplate(npcId) == null) {
+						System.out.println(String.format(I18N_DOES_NOT_EXIST_NPC_LIST, npcId));
+						// %s はNPCリストに存在しません。
+						isErr = true;
+					}
+					if (isErr) {
+						continue;
+					}
+					ub.addManager(npcId);
 				}
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading ub managers...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.warning("ub_managers couldnt be initialized:" + e);
 		} finally {

@@ -22,6 +22,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_NPC_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_SKILL_LIST;
 import jp.l1j.server.model.L1WeaponSkill;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -51,17 +54,30 @@ public class WeaponSkillTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading weapon skills...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM weapon_skills");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int weaponId = rs.getInt("item_id");
+				int skillId = rs.getInt("skill_id");
+				boolean isErr = false;
+				if (ItemTable.getInstance().getTemplate(weaponId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, weaponId));
+					// %s はアイテムリストに存在しません。
+					isErr = true;
+				}
+				if (SkillTable.getInstance().findBySkillId(skillId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_SKILL_LIST, skillId));
+					// %s はスキルリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				int probability = rs.getInt("probability");
 				int probEnchant = rs.getInt("prob_enchant");
 				int fixDamage = rs.getInt("fix_damage");
 				int randomDamage = rs.getInt("random_damage");
-				int skillId = rs.getInt("skill_id");
 				boolean isArrowType = rs.getBoolean("arrow_type");
 				boolean enableMr = rs.getBoolean("enable_mr");
 				boolean enableAttrMr = rs.getBoolean("enable_attr_mr");
@@ -71,7 +87,7 @@ public class WeaponSkillTable {
 				weaponSkills.put(weaponId, weaponSkill);
 			}
 			_log.fine("Loaded weapon skill: " + weaponSkills.size() + "records");
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading weapon skills...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating weapon_skills table", e);
 		} finally {

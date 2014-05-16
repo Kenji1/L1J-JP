@@ -104,7 +104,6 @@ public class L1MagicPotion {
 
 	private static void loadXml(HashMap<Integer, L1MagicPotion> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading magic potions...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1MagicPotion.ItemEffectList.class);
 
@@ -125,7 +124,7 @@ public class L1MagicPotion {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading magic potions...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

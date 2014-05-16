@@ -153,7 +153,6 @@ public class L1MaterialChoice {
 
 	private static void loadXml(HashMap<Integer, L1MaterialChoice> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading material choices...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1MaterialChoice.ItemEffectList.class);
 
@@ -171,7 +170,7 @@ public class L1MaterialChoice {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading material choices...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

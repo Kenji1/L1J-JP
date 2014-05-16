@@ -169,7 +169,6 @@ public class L1TreasureBox {
 
 	private static void loadXml(HashMap<Integer, L1TreasureBox> dataMap) {
 		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading treasure boxes...");
 		try {
 			JAXBContext context = JAXBContext.newInstance(L1TreasureBox.TreasureBoxList.class);
 
@@ -187,7 +186,7 @@ public class L1TreasureBox {
 			_log.log(Level.SEVERE, _path + "load failed.", e);
 			System.exit(0);
 		}
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+		System.out.println("loading treasure boxes...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public static void load() {

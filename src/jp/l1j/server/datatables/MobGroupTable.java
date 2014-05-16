@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_NPC_LIST;
 import jp.l1j.server.templates.L1MobGroup;
 import jp.l1j.server.templates.L1NpcCount;
 import jp.l1j.server.utils.L1DatabaseFactory;
@@ -54,7 +55,6 @@ public class MobGroupTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading mob groups...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM mob_groups");
 			rs = pstm.executeQuery();
@@ -62,18 +62,31 @@ public class MobGroupTable {
 				int mobGroupId = rs.getInt("id");
 				boolean isRemoveGroup = (rs.getBoolean("remove_group_if_leader_die"));
 				int leaderId = rs.getInt("leader_id");
+				boolean isErr = false;
+				if (NpcTable.getInstance().getTemplate(leaderId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_NPC_LIST, leaderId));
+					// %s はNPCリストに存在しません。
+					isErr = true;
+				}
 				List<L1NpcCount> minions = Lists.newArrayList();
 				for (int i = 1; i <= 7; i++) {
 					int id = rs.getInt("minion" + i + "_id");
 					int count = rs.getInt("minion" + i + "_count");
+					if (id != 0 && NpcTable.getInstance().getTemplate(id) == null) {
+						System.out.println(String.format(I18N_DOES_NOT_EXIST_NPC_LIST, id));
+						// %s はNPCリストに存在しません。
+						isErr = true;
+					}
 					minions.add(new L1NpcCount(id, count));
 				}
-				L1MobGroup mobGroup = new L1MobGroup(mobGroupId, leaderId,
-						minions, isRemoveGroup);
+				if (isErr) {
+					continue;
+				}
+				L1MobGroup mobGroup = new L1MobGroup(mobGroupId, leaderId, minions, isRemoveGroup);
 				mobGroups.put(mobGroupId, mobGroup);
 			}
 			_log.config("Mob Groups: " + mobGroups.size() + "groups");
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading mob groups...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating mob_groups table", e);
 		} finally {

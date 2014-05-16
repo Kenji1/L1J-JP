@@ -79,13 +79,12 @@ public class NpcActionTable {
 			List<L1NpcAction> talkActions) {
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading npc actions...");
 			File usersDir = new File("./data/xml/NpcActions/users/");
 			if (usersDir.exists()) {
 				loadDirectoryActions(actions, talkActions, usersDir);
 			}
 			loadDirectoryActions(actions, talkActions, new File("./data/xml/NpcActions/"));
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading npc actions...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, String.format(I18N_LOAD_FAILED, "NpcAction"), e);
 			System.exit(0);

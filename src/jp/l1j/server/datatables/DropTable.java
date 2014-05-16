@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_NPC_LIST;
 import jp.l1j.server.model.L1Character;
 import jp.l1j.server.model.L1Quest;
 import jp.l1j.server.model.L1World;
@@ -69,7 +71,6 @@ public class DropTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading drop items...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("select * from drop_items");
 			rs = pstm.executeQuery();
@@ -79,6 +80,20 @@ public class DropTable {
 				int min = rs.getInt("min");
 				int max = rs.getInt("max");
 				int chance = rs.getInt("chance");
+				boolean isErr = false;
+				if (NpcTable.getInstance().getTemplate(mobId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_NPC_LIST, mobId));
+					// %s はNPCリストに存在しません。
+					isErr = true;
+				}
+				if (ItemTable.getInstance().getTemplate(itemId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+					// %s はアイテムリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				L1Drop drop = new L1Drop(mobId, itemId, min, max, chance);
 				ArrayList<L1Drop> dropList = droplistMap.get(drop.getMobid());
 				if (dropList == null) {
@@ -87,7 +102,7 @@ public class DropTable {
 				}
 				dropList.add(drop);
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading drop items...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

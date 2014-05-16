@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
 import jp.l1j.server.model.item.L1ItemRate;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -57,8 +58,18 @@ public class ItemRateTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT item_id, selling_price, purchasing_price FROM item_rates ORDER BY item_id");		
 			for (rs = pstm.executeQuery(); rs.next();) {
+				int itemId = rs.getInt("item_id");
+				boolean isErr = false;
+				if (ItemTable.getInstance().getTemplate(itemId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_ITEM_LIST, itemId));
+					// %s はアイテムリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				L1ItemRate rate = new L1ItemRate(
-					rs.getInt("item_id"),
+					itemId,
 					rs.getInt("selling_price"),
 					rs.getInt("purchasing_price")	
 				);

@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_NPC_LIST;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.templates.L1NpcChat;
 import jp.l1j.server.utils.L1DatabaseFactory;
@@ -61,13 +62,22 @@ public class NpcChatTable {
 		ResultSet rs = null;
 		try {
 			PerformanceTimer timer = new PerformanceTimer();
-			System.out.print("loading npc chats...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM npc_chats");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
+				int npcId = rs.getInt("npc_id");
+				boolean isErr = false;
+				if (NpcTable.getInstance().getTemplate(npcId) == null) {
+					System.out.println(String.format(I18N_DOES_NOT_EXIST_NPC_LIST, npcId));
+					// %s はNPCリストに存在しません。
+					isErr = true;
+				}
+				if (isErr) {
+					continue;
+				}
 				L1NpcChat npcChat = new L1NpcChat();
-				npcChat.setNpcId(rs.getInt("npc_id"));
+				npcChat.setNpcId(npcId);
 				npcChat.setChatTiming(rs.getInt("chat_timing"));
 				npcChat.setStartDelayTime(rs.getInt("start_delay_time"));
 				npcChat.setChatId1(rs.getString("chat_id1"));
@@ -91,7 +101,7 @@ public class NpcChatTable {
 					npcChatGameTime.put(new Integer(npcChat.getNpcId()), npcChat);
 				}
 			}
-			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
+			System.out.println("loading npc chats...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

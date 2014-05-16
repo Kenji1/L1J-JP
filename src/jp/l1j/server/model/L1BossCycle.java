@@ -359,6 +359,7 @@ public class L1BossCycle {
 
 	private static void loadBossCycles(HashMap<String, L1BossCycle> cycleMap) {
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
 			// BookOrder クラスをバインディングするコンテキストを生成
 			JAXBContext context = JAXBContext.newInstance(L1BossCycle.L1BossCycleList.class);
 			// XML -> POJO 変換を行うアンマーシャラを生成
@@ -381,6 +382,7 @@ public class L1BossCycle {
 			}
 			// spawn_boss_mobsから読み込んで配置
 			BossSpawnTable.fillSpawnTable();
+			System.out.println("loading boss cycles...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "BossCycleを読み込めませんでした", e);
 			System.exit(0);
@@ -392,11 +394,9 @@ public class L1BossCycle {
 	}
 	
 	public static void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
 		HashMap<String, L1BossCycle> cycleMap = new HashMap<String, L1BossCycle>();
 		loadBossCycles(cycleMap);
 		_cycleMap = cycleMap;
-		System.out.println("loading boss cycles...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	/**
