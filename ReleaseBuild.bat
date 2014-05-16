@@ -49,6 +49,8 @@ copy .\l1jserver.jar .\release-build\l1jserver.jar /Y
 copy .\license.txt .\release-build\license.txt /Y
 copy .\ServerStart.bat .\release-build\ServerStart.bat /Y
 copy .\ServerStart.sh .\release-build\ServerStart.sh /Y
+copy .\ServerDebug.bat .\release-build\ServerDebug.bat /Y
+copy .\ServerDebug.sh .\release-build\ServerDebug.sh /Y
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :END
