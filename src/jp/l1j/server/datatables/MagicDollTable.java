@@ -50,6 +50,8 @@ public class MagicDollTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading magic dolls...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM magic_dolls");
 			rs = pstm.executeQuery();
@@ -95,6 +97,7 @@ public class MagicDollTable {
 				doll.setSummonTime(rs.getInt("summon_time"));
 				dolls.put(new Integer(itemId), doll);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -105,12 +108,9 @@ public class MagicDollTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading magic dolls...");
 		HashMap<Integer, L1MagicDoll> dolls = new HashMap<Integer, L1MagicDoll>();
 		loadDolls(dolls);
 		_dolls = dolls;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1MagicDoll getTemplate(int itemId) {

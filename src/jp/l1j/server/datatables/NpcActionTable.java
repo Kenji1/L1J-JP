@@ -78,11 +78,14 @@ public class NpcActionTable {
 	public void loadAllActions(List<L1NpcAction> actions,
 			List<L1NpcAction> talkActions) {
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading npc actions...");
 			File usersDir = new File("./data/xml/NpcActions/users/");
 			if (usersDir.exists()) {
 				loadDirectoryActions(actions, talkActions, usersDir);
 			}
 			loadDirectoryActions(actions, talkActions, new File("./data/xml/NpcActions/"));
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, String.format(I18N_LOAD_FAILED, "NpcAction"), e);
 			System.exit(0);
@@ -90,14 +93,11 @@ public class NpcActionTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading npc actions...");
 		List<L1NpcAction> actions = new ArrayList<L1NpcAction>();
 		List<L1NpcAction> talkActions = new ArrayList<L1NpcAction>();
 		loadAllActions(actions, talkActions);
 		_actions = actions;
 		_talkActions = talkActions;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1NpcAction get(String actionName, L1PcInstance pc, L1Object obj) {

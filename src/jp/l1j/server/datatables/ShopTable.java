@@ -140,6 +140,8 @@ public class ShopTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading shops...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT item_id, selling_price, purchasing_price FROM item_rates");
 			for (int npcId : generalMerchantIds) {
@@ -148,6 +150,7 @@ public class ShopTable {
 				allShops.put(npcId, shop);
 				rs.close();
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -162,12 +165,9 @@ public class ShopTable {
 	
 	public void reload() {
 		Map<Integer, L1Shop> allShops = new HashMap<Integer, L1Shop>();
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading shops...");
 		loadShops(allShops);
 		loadGeneralShops(allShops);
 		_allShops = allShops;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 		
 	public L1Shop get(int npcId) {

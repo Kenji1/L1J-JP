@@ -50,6 +50,8 @@ public class RestartLocationTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading restart locations...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM restart_locations");
 			rs = pstm.executeQuery();
@@ -62,6 +64,7 @@ public class RestartLocationTable {
 				gbr.setMapId(rs.getShort("map_id"));
 				restartLocations.put(new Integer(area), gbr);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -70,12 +73,9 @@ public class RestartLocationTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading restart locations...");
 		HashMap<Integer, L1GetBackRestart> restartLocations = new HashMap<Integer, L1GetBackRestart>();
 		loadRestartLocations(restartLocations);
 		_restartLocations = restartLocations;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1GetBackRestart[] getGetBackRestartTableList() {

@@ -50,6 +50,8 @@ public class PetItemTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading pet items...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM pet_items");
 			rs = pstm.executeQuery();
@@ -71,6 +73,7 @@ public class PetItemTable {
 				petItem.setUseType(rs.getInt("use_type"));
 				petItems.put(petItem.getItemId(), petItem);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating pet_items table", e);
 		} finally {
@@ -79,12 +82,9 @@ public class PetItemTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading pet items...");
 		HashMap<Integer, L1PetItem> petItems = new HashMap<Integer, L1PetItem>();
 		loadPetItems(petItems);
 		_petItems = petItems;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public L1PetItem getTemplate(int itemId) {

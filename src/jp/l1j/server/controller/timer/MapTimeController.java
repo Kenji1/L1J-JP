@@ -95,6 +95,7 @@ public class MapTimeController implements Runnable {
 
 	private static void loadMapTimers(HashMap<String, MapTimeController> dataMap) {
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
 			JAXBContext context = JAXBContext.newInstance(MapTimeController.ResetCycleList.class);
 			Unmarshaller um = context.createUnmarshaller();
 			File file = new File(_path);
@@ -102,6 +103,7 @@ public class MapTimeController implements Runnable {
 			for (MapTimeController each : list) {
 				dataMap.put(each.getTime(), each);
 			}
+			System.out.println("loading map timers...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "Load " + _path + "failed!", e);
 			System.exit(0);
@@ -113,11 +115,9 @@ public class MapTimeController implements Runnable {
 	}
 	
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
 		HashMap<String, MapTimeController> dataMap = new HashMap<String, MapTimeController>();
 		loadMapTimers(dataMap);
 		_dataMap = dataMap;
-		System.out.println("loading map timers...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	@Override

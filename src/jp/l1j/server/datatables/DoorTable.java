@@ -52,6 +52,8 @@ public class DoorTable {
 
 	private void loadDoors(Map<L1Location, L1DoorInstance> doors,
 			Map<L1Location, L1DoorInstance> doorDirections) {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading doors...");
 		for (L1DoorSpawn spawn : L1DoorSpawn.all()) {
 			L1Location loc = spawn.getLocation();
 			if (doors.containsKey(loc)) {
@@ -61,6 +63,7 @@ public class DoorTable {
 			createDoor(doors, doorDirections, spawn.getId(), spawn.getGfx(), loc, spawn.getHp(),
 					spawn.getKeeper(), spawn.DoorOpen());
 		}
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	private void load() {
@@ -68,14 +71,11 @@ public class DoorTable {
 	}
 	
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading doors...");
 		Map<L1Location, L1DoorInstance> doors = Maps.newConcurrentHashMap();
 		Map<L1Location, L1DoorInstance> doorDirections = Maps.newConcurrentHashMap();
 		loadDoors(doors, doorDirections);
 		_doors = doors;
 		_doorDirections = doorDirections;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	private void putDirections(Map<L1Location, L1DoorInstance> doorDirections, L1DoorInstance door) {

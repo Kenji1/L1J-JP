@@ -65,6 +65,8 @@ public class SprTable {
 		ResultSet rs = null;
 		Spr spr = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading spr actions...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM spr_actions");
 			rs = pstm.executeQuery();
@@ -116,6 +118,7 @@ public class SprTable {
 					break;
 				}
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -125,12 +128,9 @@ public class SprTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading spr actions...");
 		HashMap<Integer, Spr> sprActions = new HashMap<Integer, Spr>();
 		loadSprActions(sprActions);
 		_sprActions = sprActions;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	/**

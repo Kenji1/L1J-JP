@@ -50,6 +50,8 @@ public class WeaponSkillTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading weapon skills...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM weapon_skills");
 			rs = pstm.executeQuery();
@@ -69,6 +71,7 @@ public class WeaponSkillTable {
 				weaponSkills.put(weaponId, weaponSkill);
 			}
 			_log.fine("Loaded weapon skill: " + weaponSkills.size() + "records");
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating weapon_skills table", e);
 		} finally {
@@ -77,12 +80,9 @@ public class WeaponSkillTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading weapon skills...");
 		HashMap<Integer, L1WeaponSkill> weaponSkills = new HashMap<Integer, L1WeaponSkill>();
 		loadWeaponSkills(weaponSkills);
 		_weaponSkills = weaponSkills;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public L1WeaponSkill getTemplate(int weaponId) {

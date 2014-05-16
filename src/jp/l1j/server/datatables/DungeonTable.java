@@ -79,6 +79,8 @@ public class DungeonTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading dungeons...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM dungeons");
 			rs = pstm.executeQuery();
@@ -168,6 +170,7 @@ public class DungeonTable {
 				}
 				dungeonMap.put(key, newDungeon);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -180,12 +183,9 @@ public class DungeonTable {
 	}
 	
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading dungeons...");
 		Map<String, NewDungeon> dungeonMap = new HashMap<String, NewDungeon>();
 		loadDungeons(dungeonMap);
 		_dungeonMap = dungeonMap;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	private static class NewDungeon {

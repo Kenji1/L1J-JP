@@ -57,6 +57,8 @@ public class PetTypeTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading pet types...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM pet_types");
 			rs = pstm.executeQuery();
@@ -84,6 +86,7 @@ public class PetTypeTable {
 						transformNpcId, msgIds, defyMsgId, useEquipment));
 				defaultNames.add(name.toLowerCase());
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -92,14 +95,11 @@ public class PetTypeTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading pet types...");
 		Map<Integer, L1PetType> types = new HashMap<Integer, L1PetType>();
 		Set<String> defaultNames = new HashSet<String>();
 		loadPetTypes(types, defaultNames);
 		_types = types;
 		_defaultNames = defaultNames;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public L1PetType get(int baseNpcId) {

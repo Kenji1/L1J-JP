@@ -53,6 +53,8 @@ public class PolyTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading polymorphs...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM polymorphs");
 			rs = pstm.executeQuery();
@@ -71,6 +73,7 @@ public class PolyTable {
 				polyIds.put(gfxId, poly);
 			}
 			_log.fine("loaded poly: " + polymorphs.size() + " records");
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating polymorph table", e);
 		} finally {
@@ -79,14 +82,11 @@ public class PolyTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading polymorphs...");
 		HashMap<String, L1PolyMorph> polymorphs = new HashMap<String, L1PolyMorph>();
 		HashMap<Integer, L1PolyMorph> polyIds = new HashMap<Integer, L1PolyMorph>();
 		loadPolymorphs(polymorphs, polyIds);
 		_polymorphs = polymorphs;
 		_polyIds = polyIds;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1PolyMorph getTemplate(String name) {

@@ -68,6 +68,8 @@ public class DropTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading drop items...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("select * from drop_items");
 			rs = pstm.executeQuery();
@@ -85,6 +87,7 @@ public class DropTable {
 				}
 				dropList.add(drop);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -98,10 +101,7 @@ public class DropTable {
 	}
 	
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading drop items...");
 		load();
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	// インベントリにドロップを設定

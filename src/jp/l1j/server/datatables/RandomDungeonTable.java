@@ -57,6 +57,8 @@ public class RandomDungeonTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading random dungeons...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM random_dungeons");
 			rs = pstm.executeQuery();
@@ -91,6 +93,7 @@ public class RandomDungeonTable {
 				}
 				dungeons.put(key, newDungeonRandom);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -99,12 +102,9 @@ public class RandomDungeonTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading random dungeons...");
 		Map<String, NewDungeonRandom> dungeons = new HashMap<String, NewDungeonRandom>();
 		loadRandomDungeons(dungeons);
 		_dungeons = dungeons;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	private static class NewDungeonRandom {

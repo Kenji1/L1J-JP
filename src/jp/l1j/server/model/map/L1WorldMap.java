@@ -40,21 +40,18 @@ public class L1WorldMap {
 			System.out.println("Warning: テスト用V2Mapをロードしています");
 		}
 
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading maps...");
-
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
 			_maps = MapReader.getDefaultReader().read();
 			if (_maps == null) {
 				throw new RuntimeException("マップの読み込みに失敗");
 			}
+			System.out.println("loading maps...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (FileNotFoundException e) {
 			handleException(e, "maps.zipを展開し忘れていませんか？");
 		} catch (Exception e) {
 			handleException(e, null);
 		}
-
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	private void handleException(Exception e, String hint) {

@@ -56,6 +56,8 @@ public final class DropRateTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading drop rates...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM drop_rates");
 			for (rs = pstm.executeQuery(); rs.next();) {
@@ -67,6 +69,7 @@ public final class DropRateTable {
 				dropItems.put(new Integer(itemId), data);
 			}
 			_log.config("drop_rates " + dropItems.size());
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -79,12 +82,9 @@ public final class DropRateTable {
 	}
 	
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading drop rates...");
 		Map<Integer, dropItemData> dropItems = new HashMap<Integer, dropItemData>();
 		loadDropItems(dropItems);
 		_dropItems = dropItems;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public double getDropRate(int itemId) {

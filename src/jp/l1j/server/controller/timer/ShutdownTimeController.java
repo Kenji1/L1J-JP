@@ -78,6 +78,7 @@ public class ShutdownTimeController implements Runnable {
 
 	private static void loadShutdownCycles(HashMap<String, ShutdownTimeController> dataMap) {
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
 			JAXBContext context = JAXBContext.newInstance(ShutdownTimeController.ShutdownCycleList.class);
 			Unmarshaller um = context.createUnmarshaller();
 			File file = new File(_path);
@@ -85,6 +86,7 @@ public class ShutdownTimeController implements Runnable {
 			for (ShutdownTimeController each : list) {
 				dataMap.put(each.getTime(), each);
 			}
+			System.out.println("loading shutdown cycles...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, "Load " + _path + "failed!", e);
 			System.exit(0);
@@ -96,11 +98,9 @@ public class ShutdownTimeController implements Runnable {
 	}
 	
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
 		HashMap<String, ShutdownTimeController> dataMap = new HashMap<String, ShutdownTimeController>();
 		loadShutdownCycles(dataMap);
 		_dataMap = dataMap;
-		System.out.println("loading shutdown cycles...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	@Override

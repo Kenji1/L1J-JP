@@ -60,6 +60,8 @@ public class NpcChatTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading npc chats...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM npc_chats");
 			rs = pstm.executeQuery();
@@ -89,6 +91,7 @@ public class NpcChatTable {
 					npcChatGameTime.put(new Integer(npcChat.getNpcId()), npcChat);
 				}
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -97,8 +100,6 @@ public class NpcChatTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading npc chats...");
 		HashMap<Integer, L1NpcChat> npcChatAppearance = new HashMap<Integer, L1NpcChat>();
 		HashMap<Integer, L1NpcChat> npcChatDead = new HashMap<Integer, L1NpcChat>();
 		HashMap<Integer, L1NpcChat> npcChatHide = new HashMap<Integer, L1NpcChat>();
@@ -108,7 +109,6 @@ public class NpcChatTable {
 		_npcChatDead = npcChatDead;
 		_npcChatHide = npcChatHide;
 		_npcChatGameTime = npcChatGameTime;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1NpcChat getTemplateAppearance(int i) {

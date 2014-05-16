@@ -82,8 +82,11 @@ public class SkillTable {
 	}
 
 	private void load() {
+		PerformanceTimer timer = new PerformanceTimer();
+		System.out.print("loading skills...");
 		loadSkills(_skills);
 		_buffSkillIds = loadBuffSkillIds(_skills);
+		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public void reload() {

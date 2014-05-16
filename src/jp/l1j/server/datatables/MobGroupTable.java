@@ -53,6 +53,8 @@ public class MobGroupTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading mob groups...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM mob_groups");
 			rs = pstm.executeQuery();
@@ -71,6 +73,7 @@ public class MobGroupTable {
 				mobGroups.put(mobGroupId, mobGroup);
 			}
 			_log.config("Mob Groups: " + mobGroups.size() + "groups");
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating mob_groups table", e);
 		} finally {
@@ -79,12 +82,9 @@ public class MobGroupTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading mob groups...");
 		HashMap<Integer, L1MobGroup> mobGroups = new HashMap<Integer, L1MobGroup>();
 		loadMobGroups(mobGroups);
 		_mobGroups = mobGroups;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1MobGroup getTemplate(int mobGroupId) {

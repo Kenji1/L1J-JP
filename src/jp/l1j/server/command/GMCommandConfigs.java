@@ -135,6 +135,7 @@ public class GMCommandConfigs {
 
 	public static void loadCommands(HashMap<String, ConfigLoader> loaders) {
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
 			Document doc = loadXml("./data/xml/GmCommands/GMCommands.xml");
 			NodeList nodes = doc.getDocumentElement().getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {
@@ -143,14 +144,15 @@ public class GMCommandConfigs {
 					loader.load((Element) nodes.item(i));
 				}
 			}
+			System.out.println("loading gm commands...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, String.format(I18N_LOAD_FAILED, "GMCommands.xml"), e);
 			// %s の読み込みに失敗しました。
+			System.out.println("loading gm commands...NG!");
 		}
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
 		HashMap<String, ConfigLoader> loaders = new HashMap<String, ConfigLoader>();
 		_rooms.clear();
 		_itemSets.clear();
@@ -158,7 +160,6 @@ public class GMCommandConfigs {
 		loaders.put("itemsetlist", _instance.new ItemSetLoader());
 		loadCommands(loaders);
 		_loaders = loaders;
-		System.out.println("loading gm commands...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public HashMap<String, List<L1ItemSetItem>> getItemSets() {

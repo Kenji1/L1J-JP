@@ -50,6 +50,7 @@ public class MobSkillTable {
 	}
 
 	private void loadMobSkills(Map<Integer, List<L1MobSkill>> mobSkills) {
+		PerformanceTimer timer = new PerformanceTimer();
 		List<Integer> npcIds = L1QueryUtil.selectAll(new NpcIdFactory(),
 			"SELECT DISTINCT npc_id FROM mob_skills");
 		for (int npcId : npcIds) {
@@ -57,15 +58,13 @@ public class MobSkillTable {
 				"SELECT * FROM mob_skills where npc_id = ? order by act_no", npcId);
 			mobSkills.put(npcId, skills);
 		}
+		System.out.println("loading mob skills...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading mob skills...");
 		Map<Integer, List<L1MobSkill>> mobSkills = Maps.newHashMap();
 		loadMobSkills(mobSkills);
 		_mobSkills = mobSkills;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public List<L1MobSkill> get(int id) {

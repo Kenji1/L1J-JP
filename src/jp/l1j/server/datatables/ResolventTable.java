@@ -50,6 +50,8 @@ public final class ResolventTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading resolvents...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM resolvents");
 			for (rs = pstm.executeQuery(); rs.next();) {
@@ -58,6 +60,7 @@ public final class ResolventTable {
 				resolvents.put(new Integer(itemId), crystalCount);
 			}
 			_log.config("resolvent " + resolvents.size());
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -66,12 +69,9 @@ public final class ResolventTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading resolvents...");
 		Map<Integer, Integer> resolvents = new HashMap<Integer, Integer>();
 		loadResolvents(resolvents);
 		_resolvents = resolvents;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public int getCrystalCount(int itemId) {

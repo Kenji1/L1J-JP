@@ -77,6 +77,8 @@ public final class MapTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading map ids...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM map_ids");
 			for (rs = pstm.executeQuery(); rs.next();) {
@@ -105,6 +107,7 @@ public final class MapTable {
 				maps.put(new Integer(mapId), data);
 			}
 			_log.config("Maps " + maps.size());
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -113,12 +116,9 @@ public final class MapTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading map ids...");
 		Map<Integer, MapData> maps = new HashMap<Integer, MapData>();
 		loadMaps(maps);
 		_maps = maps;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
 	/**

@@ -51,6 +51,8 @@ public class UbTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading ubs...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM ubs");
 			rs = pstm.executeQuery();
@@ -80,6 +82,7 @@ public class UbTable {
 				ub.resetLoc();
 				ubs.put(ub.getUbId(), ub);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.warning("ubsettings couldnt be initialized:" + e);
 		} finally {
@@ -88,6 +91,8 @@ public class UbTable {
 		}
 		// ub_managers load
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading ub managers...");
 			pstm = con.prepareStatement("SELECT * FROM ub_managers");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -96,6 +101,7 @@ public class UbTable {
 					ub.addManager(rs.getInt("npc_id"));
 				}
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.warning("ub_managers couldnt be initialized:" + e);
 		} finally {
@@ -121,12 +127,9 @@ public class UbTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading ubs...");
 		HashMap<Integer, L1UltimateBattle> ubs = new HashMap<Integer, L1UltimateBattle>();
 		loadUbs(ubs);
 		_ubs = ubs;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1UltimateBattle getUb(int ubId) {

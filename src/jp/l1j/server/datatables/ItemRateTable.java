@@ -53,6 +53,7 @@ public class ItemRateTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT item_id, selling_price, purchasing_price FROM item_rates ORDER BY item_id");		
 			for (rs = pstm.executeQuery(); rs.next();) {
@@ -63,6 +64,7 @@ public class ItemRateTable {
 				);
 				itemRates.put(rate.getItemId(), rate);
 			}
+			System.out.println("loading item rates...OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -71,12 +73,9 @@ public class ItemRateTable {
 	}
 
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading item rates...");
 		Map<Integer, L1ItemRate> itemRates = new HashMap<Integer, L1ItemRate>();
 		loadItemRates(itemRates);
 		_itemRates = itemRates;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1ItemRate get(int itemId) {

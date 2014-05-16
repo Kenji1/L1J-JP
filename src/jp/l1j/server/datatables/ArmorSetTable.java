@@ -50,6 +50,8 @@ public class ArmorSetTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
+			PerformanceTimer timer = new PerformanceTimer();
+			System.out.print("loading armor sets...");
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM armor_sets");
 			rs = pstm.executeQuery();
@@ -92,6 +94,7 @@ public class ArmorSetTable {
 				as.setPotionRecoveryRate(rs.getInt("potion_recovery_rate"));			
 				armorSets.add(as);
 			}
+			System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -104,12 +107,9 @@ public class ArmorSetTable {
 	}
 	
 	public void reload() {
-		PerformanceTimer timer = new PerformanceTimer();
-		System.out.print("loading armor sets...");
 		ArrayList<L1ArmorSets> armorSets = new ArrayList<L1ArmorSets>();
 		loadArmorSets(armorSets);
 		_armorSets = armorSets;
-		System.out.println("OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 	
 	public L1ArmorSets[] getAllList() {
