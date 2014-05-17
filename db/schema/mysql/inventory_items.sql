@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `inventory_items` (
   `last_used` datetime DEFAULT NULL,
   `is_sealed` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_protected` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `protect_item_id` int(10) unsigned NOT NULL DEFAULT '0',
   `attr_enchant_kind` tinyint(3) NOT NULL DEFAULT '0',
   `attr_enchant_level` tinyint(3) NOT NULL DEFAULT '0',
   `ac` tinyint(3) NOT NULL DEFAULT '0',

@@ -516,6 +516,7 @@ public class L1InventoryItem {
 			result._lastUsed = rs.getTimestamp("last_used");
 			result._isSealed = rs.getBoolean("is_sealed");
 			result._isProtected = rs.getBoolean("is_protected");
+			result._protectItemId = rs.getInt("protect_item_id");
 			result._attrEnchantKind = rs.getInt("attr_enchant_kind");
 			result._attrEnchantLevel = rs.getInt("attr_enchant_level");
 			result._ac = rs.getInt("ac");
@@ -588,6 +589,7 @@ public class L1InventoryItem {
 		qb.addColumn("last_used", _lastUsed);
 		qb.addColumn("is_sealed", _isSealed);
 		qb.addColumn("is_protected", _isProtected);
+		qb.addColumn("protect_item_id", _protectItemId);
 		qb.addColumn("attr_enchant_kind", _attrEnchantKind);
 		qb.addColumn("attr_enchant_level", _attrEnchantLevel);
 		qb.addColumn("ac", _ac);
@@ -627,11 +629,11 @@ public class L1InventoryItem {
 	}
 
 	private void insert(Connection con) {
-		String sql = "INSERT INTO inventory_items VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO inventory_items VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		L1QueryUtil.execute(con, sql, _id, _ownerId, _location, _itemId,
 				_itemCount, _isEquipped, _enchantLevel, _isIdentified,
 				_durability, _chargeCount, _chargeTime, _expirationTime, _lastUsed,
-				_isSealed, _isProtected, _attrEnchantKind, _attrEnchantLevel,
+				_isSealed, _isProtected, _protectItemId, _attrEnchantKind, _attrEnchantLevel,
 				_ac, _str, _con, _dex, _wis, _cha, _int, _hp, _hpr, _mp, _mpr, _mr, _sp,
 				_hitModifier, _dmgModifier, _bowHitModifier, _bowDmgModifier,
 				_defenseEarth, _defenseWater, _defenseFire, _defenseWind,
