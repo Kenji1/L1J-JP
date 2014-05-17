@@ -50,6 +50,7 @@ public class L1InventoryItem {
 	private Timestamp _lastUsed;
 	private boolean _isSealed;
 	private boolean _isProtected;
+	private int _protectItemId;
 	private int _attrEnchantKind;
 	private int _attrEnchantLevel;
 	private int _ac;
@@ -215,6 +216,14 @@ public class L1InventoryItem {
 		_isProtected = isProtected;
 	}
 
+	public int getProtectItemId() {
+		return _protectItemId;
+	}
+	
+	public void setProtectItemId(int protectItemId) {
+		_protectItemId = protectItemId;
+	}
+	
 	public int getAttrEnchantKind() {
 		return _attrEnchantKind;
 	}

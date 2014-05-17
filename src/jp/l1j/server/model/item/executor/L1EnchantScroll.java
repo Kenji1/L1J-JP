@@ -694,6 +694,7 @@ public class L1EnchantScroll {
 		
 		item.setEnchantLevel(newEnchantLvl);
 		item.setProtected(false);
+		item.setProtectItemId(0);
 		pc.getInventory().updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 		
 		if (newEnchantLvl > safe_enchant) {
@@ -891,16 +892,15 @@ public class L1EnchantScroll {
 	}
 
 	private void protectEnchant(L1PcInstance pc, L1ItemInstance item, L1ItemInstance target) {
-		L1EnchantProtectScroll scroll = L1EnchantProtectScroll.get(item.getItemId());
-		
-		if (scroll != null) {
-			target.setEnchantLevel(target.getEnchantLevel()
-					- scroll.getDownLevel(target.getItemId()));
-		}
-		
+	System.out.println(target.getProtectItemId());
+		L1EnchantProtectScroll scroll = L1EnchantProtectScroll.get(
+						target.getProtectItemId());
+		target.setEnchantLevel(target.getEnchantLevel()
+						- scroll.getDownLevel(target.getItemId()));
 		pc.sendPackets(new S_ServerMessage(1310));
 		// 強烈な光りを放ちましたが、装備が蒸発しませんでした。
 		target.setProtected(false);
+		target.setProtectItemId(0);
 		pc.getInventory().updateItem(target, L1PcInventory.COL_ENCHANTLVL);
 	}
 	

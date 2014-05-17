@@ -155,6 +155,25 @@ public class L1ItemInstance extends L1Object {
 		_inventoryItem.setProtected(isProtected);
 	}
 
+	/**
+	 * 蒸発保護スクロールのアイテムIDを返す。
+	 * 
+	 * @return 蒸発保護スクロールのアイテムID
+	 */
+	public int getProtectItemId() {
+		return _inventoryItem.getProtectItemId();
+	}
+
+	/**
+	 * 蒸発保護スクロールのアイテムIDを設定する。
+	 * 
+	 * @param protectItemId
+	 *            蒸発保護スクロールのアイテムID
+	 */
+	public void setProtectItemId(int protectItemId) {
+		_inventoryItem.setProtectItemId(protectItemId);
+	}
+	
 	public String getName() {
 		return _item.getName();
 	}

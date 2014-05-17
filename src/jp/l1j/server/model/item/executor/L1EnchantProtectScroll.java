@@ -177,6 +177,7 @@ public class L1EnchantProtectScroll {
 		}
 
 		target.setProtected(true); // 保護中
+		target.setProtectItemId(getItemId()); // 蒸発保護スクロールのアイテムID
 		pc.getInventory().updateItem(target, L1PcInventory.COL_EQUIPPED);
 		pc.sendPackets(new S_ServerMessage(1308, target.getLogName()));
 		// %0が魔力の力で蒸発から守られます。
