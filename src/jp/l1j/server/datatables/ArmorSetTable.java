@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_ITEM_LIST;
-import static jp.l1j.locale.I18N.I18N_DOES_NOT_EXIST_POLY_LIST;
 import jp.l1j.server.templates.L1ArmorSets;
 import jp.l1j.server.utils.L1DatabaseFactory;
 import jp.l1j.server.utils.PerformanceTimer;
@@ -66,11 +65,6 @@ public class ArmorSetTable {
 						// %s はアイテムリストに存在しません。
 						isErr = true;
 					}
-				}
-				if (PolyTable.getInstance().getTemplate(polyId) == null) {
-					System.out.println(String.format(I18N_DOES_NOT_EXIST_POLY_LIST, polyId));
-					// %s は変身リストに存在しません。
-					isErr = true;
 				}
 				if (isErr) {
 					continue;
