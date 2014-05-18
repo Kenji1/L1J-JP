@@ -40,6 +40,7 @@ import jp.l1j.server.controller.timer.ShutdownTimeController;
 import jp.l1j.server.controller.timer.UbTimeController;
 import jp.l1j.server.controller.timer.WarTimeController;
 import jp.l1j.server.controller.timer.WeatherTimeController;
+import jp.l1j.server.datatables.ArmorSetTable;
 import jp.l1j.server.datatables.CastleTable;
 import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.datatables.ChatLogTable;
@@ -299,6 +300,7 @@ public class GameServer extends Thread {
 		SkillTable.getInstance();
 		PolyTable.getInstance();
 		ItemTable.getInstance();
+		ArmorSetTable.getInstance();
 		DropTable.getInstance();
 		DropRateTable.getInstance();
 		ShopTable.getInstance();
