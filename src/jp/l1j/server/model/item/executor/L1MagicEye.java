@@ -31,6 +31,7 @@ import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.datatables.ItemTable;
 import jp.l1j.server.model.instance.L1PcInstance;
 import static jp.l1j.server.model.skill.L1SkillId.*;
+import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_SkillSound;
 import jp.l1j.server.utils.PerformanceTimer;
 
@@ -165,7 +166,8 @@ public class L1MagicEye {
 
 		if (effect.getSkillId() == MAGIC_EYE_OF_ANTHARAS) { // 地竜の魔眼
 			pc.addResistHold(5);
-			// 一定確率で攻撃回避(L1Attackで計算)
+			pc.addDodge((byte) 1); // 回避率 + 10%
+			pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 		} else if (effect.getSkillId() == MAGIC_EYE_OF_FAFURION) { // 水竜の魔眼
 			pc.addResistFreeze(5);
 			// 一定確率で魔法ダメージ -50%(L1Magicで計算)
@@ -178,21 +180,24 @@ public class L1MagicEye {
 		} else if (effect.getSkillId() == MAGIC_EYE_OF_BIRTH) { // 誕生の魔眼
 			pc.addResistHold(5);
 			pc.addResistFreeze(5);
-			// 一定確率で攻撃回避(L1Attackで計算)
+			pc.addDodge((byte) 1); // 回避率 + 10%
+			pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 			// 一定確率で魔法ダメージ -50%(L1Magicで計算)
 		} else if (effect.getSkillId() == MAGIC_EYE_OF_SHAPE) { // 形象の魔眼
 			pc.addResistHold(5);
 			pc.addResistFreeze(5);
 			pc.addResistSleep(5);
-			// 一定確率で攻撃回避(L1Attackで計算)
+			pc.addDodge((byte) 1); // 回避率 + 10%
+			pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 			// 一定確率で魔法ダメージ -50%(L1Magicで計算)
 		} else if (effect.getSkillId() == MAGIC_EYE_OF_LIFE) { // 生命の魔眼
 			pc.addResistHold(5);
 			pc.addResistFreeze(5);
 			pc.addResistSleep(5);
 			pc.addResistStun(5);
+			pc.addDodge((byte) 1); // 回避率 + 10%
+			pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 			// 毒無効(L1Attackで計算)
-			// 一定確率で攻撃回避(L1Attackで計算)
 			// 一定確率で魔法ダメージ -50%(L1Magicで計算)
 			// 一定確率でSP +2(L1Magicで計算)
 			// 一定確率で追加打撃 +2(L1Attackで計算)

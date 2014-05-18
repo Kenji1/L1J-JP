@@ -185,6 +185,12 @@ public class S_PacketBox extends ServerBasePacket {
 
 	/** アインハザードの祝福 **/
 	public static final int BLESS_OF_AIN = 82;
+		
+	/** 回避率 正*/
+	public static final int DODGE_RATE_PLUS = 88;
+	
+	/** 回避率 負*/
+	public static final int DODGE_RATE_MINUS = 101;
 	
 	/** マップタイマーの残り時間を表示 **/
 	public static final int MAP_TIMER = 153;
@@ -253,6 +259,14 @@ public class S_PacketBox extends ServerBasePacket {
 		case BLESS_OF_AIN:
 			value /= 10000;
 			writeD(value); //1%〜200%
+			break;
+		case DODGE_RATE_PLUS: // + 近距離回避率
+			writeC(value);
+			writeC(0x00);
+			break;
+		case DODGE_RATE_MINUS: // - 近距離回避率
+			writeC(value);
+			break;
 		default:
 			break;
 		}

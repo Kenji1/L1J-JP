@@ -25,6 +25,19 @@ import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.datatables.NpcTable;
 import jp.l1j.server.datatables.PolyTable;
 import jp.l1j.server.datatables.SkillTable;
+import jp.l1j.server.model.L1CastleLocation;
+import jp.l1j.server.model.L1Character;
+import jp.l1j.server.model.L1Clan;
+import jp.l1j.server.model.L1CurseParalysis;
+import jp.l1j.server.model.L1EffectSpawn;
+import jp.l1j.server.model.L1Location;
+import jp.l1j.server.model.L1Magic;
+import jp.l1j.server.model.L1Object;
+import jp.l1j.server.model.L1PinkName;
+import jp.l1j.server.model.L1PolyMorph;
+import jp.l1j.server.model.L1Teleport;
+import jp.l1j.server.model.L1War;
+import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1AddWarehouseInstance;
 import jp.l1j.server.model.instance.L1AuctionBoardInstance;
 import jp.l1j.server.model.instance.L1BoardInstance;
@@ -46,19 +59,6 @@ import jp.l1j.server.model.instance.L1PetInstance;
 import jp.l1j.server.model.instance.L1SummonInstance;
 import jp.l1j.server.model.instance.L1TeleporterInstance;
 import jp.l1j.server.model.instance.L1TowerInstance;
-import jp.l1j.server.model.L1CastleLocation;
-import jp.l1j.server.model.L1Character;
-import jp.l1j.server.model.L1Clan;
-import jp.l1j.server.model.L1CurseParalysis;
-import jp.l1j.server.model.L1EffectSpawn;
-import jp.l1j.server.model.L1Location;
-import jp.l1j.server.model.L1Magic;
-import jp.l1j.server.model.L1Object;
-import jp.l1j.server.model.L1PinkName;
-import jp.l1j.server.model.L1PolyMorph;
-import jp.l1j.server.model.L1Teleport;
-import jp.l1j.server.model.L1War;
-import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.inventory.L1PcInventory;
 import jp.l1j.server.model.poison.L1DamagePoison;
 import static jp.l1j.server.model.skill.L1SkillId.*;
@@ -79,6 +79,7 @@ import jp.l1j.server.packets.server.S_MpUpdate;
 import jp.l1j.server.packets.server.S_NpcChatPacket;
 import jp.l1j.server.packets.server.S_OwnCharAttrDef;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
+import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_Paralysis;
 import jp.l1j.server.packets.server.S_Poison;
 import jp.l1j.server.packets.server.S_RangeSkill;
@@ -2455,6 +2456,12 @@ public class L1SkillUse {
 					_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
 				} else if (_skillId == HORROR_OF_DEATH) { // ホラーオブデス
 					_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
+				} else if (_skillId == RESIST_FEAR) { // フィアー
+					cha.addNdodge((byte) 5); // 回避率 - 50%
+					if (cha instanceof L1PcInstance) {
+						L1PcInstance pc = (L1PcInstance) cha;
+						pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_MINUS, pc.getNdodge()));
+					}
 				} else if (_skillId == THUNDER_GRAB) { // サンダーグラップ
 					boolean isFetter = _magic.calcProbabilityMagic(_skillId);
 					if (isFetter && !(cha.hasSkillEffect(STATUS_HOLD))) {
@@ -3230,6 +3237,13 @@ public class L1SkillUse {
 						pc.addDex(-1);
 						pc.addWis(-1);
 						pc.addInt(-1);
+					} else if (_skillId == MIRROR_IMAGE || _skillId == UNCANNY_DODGE) {
+						// ミラーイメージ、アンキャニードッジ
+						if (cha instanceof L1PcInstance) {
+							L1PcInstance pc = (L1PcInstance) cha;
+							pc.addDodge((byte) 5); // 回避率 + 50%
+							pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
+						}
 					}
 				}
 

@@ -433,17 +433,6 @@ public class L1Attack {
 			_hitRate = 0;
 			return false;
 		}
-		// 魔眼によるダメージ回避
-		if (_targetPc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
-			int _avoidChance = _random.nextInt(100) + 1;
-			if (_avoidChance <= 10) {
-				_hitRate = 0;
-				return false;
-			}
-		}
 
 		if (_weaponType2 == 14) {
 			_hitRate = 100; // キーリンクの命中率は100%
@@ -511,17 +500,9 @@ public class L1Attack {
 
 		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 10;
 
-		if (_targetPc.hasSkillEffect(UNCANNY_DODGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetPc.hasSkillEffect(MIRROR_IMAGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetPc.hasSkillEffect(RESIST_FEAR)) {
-			attackerDice += 5;
-		}
+		// 回避率
+		attackerDice -= _targetPc.getDodge();
+		attackerDice += _targetPc.getNdodge();
 
 		int defenderDice = 0;
 
@@ -693,17 +674,9 @@ public class L1Attack {
 
 		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 10;
 
-		if (_targetNpc.hasSkillEffect(UNCANNY_DODGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetNpc.hasSkillEffect(MIRROR_IMAGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetNpc.hasSkillEffect(RESIST_FEAR)) {
-			attackerDice += 5;
-		}
+		// 回避率
+		attackerDice -= _targetPc.getDodge();
+		attackerDice += _targetPc.getNdodge();
 
 		int defenderDice = 10 - _targetNpc.getAc();
 
@@ -755,17 +728,6 @@ public class L1Attack {
 			_hitRate = 0;
 			return false;
 		}
-		// 魔眼によるダメージ回避
-		if (_targetPc.hasSkillEffect(MAGIC_EYE_OF_ANTHARAS)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_BIRTH)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_SHAPE)
-				|| _targetPc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
-			int _avoidChance = _random.nextInt(100) + 1;
-			if (_avoidChance <= 10) {
-				_hitRate = 0;
-				return false;
-			}
-		}
 
 		_hitRate += _npc.getLevel();
 
@@ -777,17 +739,9 @@ public class L1Attack {
 
 		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 1;
 
-		if (_targetPc.hasSkillEffect(UNCANNY_DODGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetPc.hasSkillEffect(MIRROR_IMAGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetPc.hasSkillEffect(RESIST_FEAR)) {
-			attackerDice += 5;
-		}
+		// 回避率
+		attackerDice -= _targetPc.getDodge();
+		attackerDice += _targetPc.getNdodge();
 
 		int defenderDice = 0;
 
@@ -844,17 +798,9 @@ public class L1Attack {
 
 		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 1;
 
-		if (_targetNpc.hasSkillEffect(UNCANNY_DODGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetNpc.hasSkillEffect(MIRROR_IMAGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetNpc.hasSkillEffect(RESIST_FEAR)) {
-			attackerDice += 5;
-		}
+		// 回避率
+		attackerDice -= _targetPc.getDodge();
+		attackerDice += _targetPc.getNdodge();
 
 		int defenderDice = 0;
 

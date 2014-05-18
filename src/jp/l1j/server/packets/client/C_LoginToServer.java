@@ -217,6 +217,8 @@ public class C_LoginToServer extends ClientBasePacket {
 		buff(client, pc);
 		buffBlessOfAin(pc); // アインハザードの祝福
 		pc.setServivalScream(); // TODO 生存の叫び
+		pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge())); // 近距離回避率 正
+		pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_MINUS, pc.getNdodge())); // 近距離回避率 負
 		pc.sendPackets(new S_ActiveSpells(pc));
 		if (pc.getCurrentHp() > 0) {
 			pc.setDead(false);
@@ -467,6 +469,14 @@ public class C_LoginToServer extends ClientBasePacket {
 				pc.broadcastPacket(new S_Liquor(pc.getId(), 8));
 				pc.sendPackets(new S_SkillIconThirdSpeed(remainingTime / 4));
 				pc.setSkillEffect(skillId, remainingTime * 1000);
+			} else if (skillId == MIRROR_IMAGE || skillId == UNCANNY_DODGE) { // ミラーイメージ、アンキャニードッジ
+				pc.addDodge((byte) 5); // 近距離回避率 + 50%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
+				pc.setSkillEffect(skillId, remainingTime * 1000);
+			} else if (skillId == RESIST_FEAR) { // フィアー
+				pc.addNdodge((byte) 5); // 近距離回避率 - 50%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_MINUS, pc.getNdodge()));
+				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else if (skillId == STATUS_FLORA_POTION_STR) { // 激励、フローラポーション
 				L1FloraPotion potion = L1FloraPotion.get(40922);
 				int str = potion.getEffect(pc).getStr();
@@ -617,6 +627,8 @@ public class C_LoginToServer extends ClientBasePacket {
 				L1BuffUtil.effectBlessOfDragonSlayer(pc, skillId, 2400, 7683);
 			} else if (skillId == MAGIC_EYE_OF_ANTHARAS) { // 地竜の魔眼
 				pc.addResistHold(5);
+				pc.addDodge((byte) 1); // 回避率 + 10%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else if (skillId == MAGIC_EYE_OF_FAFURION) { // 水竜の魔眼
 				pc.addResistFreeze(5);
@@ -630,17 +642,23 @@ public class C_LoginToServer extends ClientBasePacket {
 			} else if (skillId == MAGIC_EYE_OF_BIRTH) { // 誕生の魔眼
 				pc.addResistHold(5);
 				pc.addResistFreeze(5);
+				pc.addDodge((byte) 1); // 回避率 + 10%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else if (skillId == MAGIC_EYE_OF_SHAPE) { // 形象の魔眼
 				pc.addResistHold(5);
 				pc.addResistFreeze(5);
 				pc.addResistSleep(5);
+				pc.addDodge((byte) 1); // 回避率 + 10%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else if (skillId == MAGIC_EYE_OF_LIFE) { // 生命の魔眼
 				pc.addResistHold(5);
 				pc.addResistFreeze(5);
 				pc.addResistSleep(5);
 				pc.addResistStun(5);
+				pc.addDodge((byte) 1); // 回避率 + 10%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 				pc.setSkillEffect(skillId, remainingTime * 1000);
 			} else if (skillId == STONE_OF_DRAGON) { // ドラゴンの石
 				L1FloraPotion potion = L1FloraPotion.get(50555);

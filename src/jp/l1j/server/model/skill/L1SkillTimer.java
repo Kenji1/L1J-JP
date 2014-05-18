@@ -19,13 +19,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.GeneralThreadPool;
 import jp.l1j.server.datatables.SkillTable;
+import jp.l1j.server.model.L1Character;
+import jp.l1j.server.model.L1PolyMorph;
 import jp.l1j.server.model.instance.L1MonsterInstance;
 import jp.l1j.server.model.instance.L1NpcInstance;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.instance.L1PetInstance;
 import jp.l1j.server.model.instance.L1SummonInstance;
-import jp.l1j.server.model.L1Character;
-import jp.l1j.server.model.L1PolyMorph;
 import jp.l1j.server.model.item.executor.L1ExtraPotion;
 import jp.l1j.server.model.item.executor.L1FloraPotion;
 import static jp.l1j.server.model.skill.L1SkillId.*;
@@ -37,6 +37,7 @@ import jp.l1j.server.packets.server.S_Liquor;
 import jp.l1j.server.packets.server.S_MpUpdate;
 import jp.l1j.server.packets.server.S_OwnCharAttrDef;
 import jp.l1j.server.packets.server.S_OwnCharStatus;
+import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_Paralysis;
 import jp.l1j.server.packets.server.S_Poison;
 import jp.l1j.server.packets.server.S_ServerMessage;
@@ -335,6 +336,18 @@ class L1SkillStop {
 				pc.addWis(1);
 				pc.addInt(1);
 			}
+		} else if (skillId == MIRROR_IMAGE || skillId == UNCANNY_DODGE) { // 鏡像、暗影閃避
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addDodge((byte) -5); // 回避率 - 50%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
+			}
+		} else if (skillId == RESIST_FEAR) { // 恐懼無助
+			cha.addNdodge((byte) -5); // 回避率 + 50%
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_MINUS, pc.getNdodge()));
+			}
 		}
 
 		// ****** 状態変化が解けた場合
@@ -506,6 +519,8 @@ class L1SkillStop {
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.addResistHold(-5);
+				pc.addDodge((byte) -1); // 回避率 - 10%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 			}
 		} else if (skillId == MAGIC_EYE_OF_FAFURION) { // 水竜の魔眼
 			if (cha instanceof L1PcInstance) {
@@ -527,6 +542,8 @@ class L1SkillStop {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.addResistHold(-5);
 				pc.addResistFreeze(-5);
+				pc.addDodge((byte) -1); // 回避率 - 10%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 			}
 		} else if (skillId == MAGIC_EYE_OF_SHAPE) { // 形象の魔眼
 			if (cha instanceof L1PcInstance) {
@@ -534,6 +551,8 @@ class L1SkillStop {
 				pc.addResistHold(-5);
 				pc.addResistFreeze(-5);
 				pc.addResistSleep(-5);
+				pc.addDodge((byte) -1); // 回避率 - 10%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 			}
 		} else if (skillId == MAGIC_EYE_OF_LIFE) { // 生命の魔眼
 			if (cha instanceof L1PcInstance) {
@@ -542,6 +561,8 @@ class L1SkillStop {
 				pc.addResistFreeze(-5);
 				pc.addResistSleep(-5);
 				pc.addResistStun(-5);
+				pc.addDodge((byte) -1); // 回避率 - 10%
+				pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge()));
 			}
 		} else if (skillId == STATUS_FLORA_POTION_STR) { // フローラ系ポーション：STR
 			L1FloraPotion potion = L1FloraPotion.get(40922);
