@@ -226,6 +226,8 @@ public class L1SkillId {
 	public static final int DRESS_DEXTERITY = 110;
 
 	public static final int DRESS_EVASION = 111;
+	
+	public static final int ARMOR_BREAK = 112;
 
 	// none = 112
 	/*

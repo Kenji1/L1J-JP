@@ -317,7 +317,7 @@ public class L1SpellBook {
 		int k5 = 0;
 		int l5 = 0;
 		int i6 = 0;
-		for (int j6 = 97; j6 < 112; j6++) {
+		for (int j6 = 97; j6 < 113; j6++) {
 			L1Skill l1skills = SkillTable.getInstance().findBySkillId(j6);
 			String s1 = String.format(I18N_DARK_SPIRIT_CRYSTAL_NAME, l1skills.getName());
 			if (l1iteminstance.getItem().getName().equalsIgnoreCase(s1)) {

@@ -675,8 +675,8 @@ public class L1Attack {
 		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 10;
 
 		// 回避率
-		attackerDice -= _targetPc.getDodge();
-		attackerDice += _targetPc.getNdodge();
+		attackerDice -= _targetNpc.getDodge();
+		attackerDice += _targetNpc.getNdodge();
 
 		int defenderDice = 10 - _targetNpc.getAc();
 
@@ -799,8 +799,8 @@ public class L1Attack {
 		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 1;
 
 		// 回避率
-		attackerDice -= _targetPc.getDodge();
-		attackerDice += _targetPc.getNdodge();
+		attackerDice -= _targetNpc.getDodge();
+		attackerDice += _targetNpc.getNdodge();
 
 		int defenderDice = 0;
 
@@ -1049,12 +1049,9 @@ public class L1Attack {
 			}
 			dmg -= (targetPcLvl - 50) / 5 + 1;
 		}
-/*		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
-			boolean isJudgment = _magic.calcProbabilityMagic(ARMOR_BREAK);
-			if (isJudgment) {
-				dmg *= 1.53; // 対象の被ダメージ53%増加
-			}
-		}*/
+		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
+			dmg *= 1.58; // 対象の被ダメージ58%増加
+		}
 		if (_targetPc.hasSkillEffect(DRAGON_SKIN)) {
 			dmg -= 5; // キャラクターケアアップデート
 		}
@@ -1316,6 +1313,10 @@ public class L1Attack {
 
 		dmg -= calcNpcDamageReduction();
 
+		if (_targetNpc.hasSkillEffect(ARMOR_BREAK)) {
+			dmg *= 1.58; // 対象の被ダメージ58%増加
+		}
+
 		// プレイヤーからペット、サモンに攻撃
 		boolean isNowWar = false;
 		int castleId = L1CastleLocation.getCastleIdByArea(_targetNpc);
@@ -1434,12 +1435,9 @@ public class L1Attack {
 			}
 			dmg -= (targetPcLvl - 50) / 5 + 1;
 		}
-/*		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
-			boolean isJudgment = _magic.calcProbabilityMagic(ARMOR_BREAK);
-			if (isJudgment) {
-				dmg *= 1.53; // 対象の被ダメージ53%増加
-			}
-		}*/
+		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
+			dmg *= 1.58; // 対象の被ダメージ58%増加
+		}
 		if (_targetPc.hasSkillEffect(DRAGON_SKIN)) {
 			//dmg -= 2;
 			//dmg -= 3;  リニューアル後
@@ -1512,12 +1510,10 @@ public class L1Attack {
 			dmg -= 5;
 		}
 
-/*		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
-			boolean isJudgment = _magic.calcProbabilityMagic(ARMOR_BREAK);
-			if (isJudgment) {
-				dmg *= 1.53; // 対象の被ダメージ53%増加
-			}
-		}*/
+		if (_targetNpc.hasSkillEffect(ARMOR_BREAK)) {
+			dmg *= 1.58; // 対象の被ダメージ58%増加
+		}
+		
 		addNpcPoisonAttack(_npc, _targetNpc);
 
 		// 特定NPC 固定ダメージ判定

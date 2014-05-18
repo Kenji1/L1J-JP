@@ -374,7 +374,7 @@ public class C_UseItem extends ClientBasePacket {
 			} else if (itemId >= 40232 && itemId <= 40264 // 精霊の水晶
 					|| itemId >= 41149 && itemId <= 41153) {
 				L1SpellBook.useElfSpellBook(pc, item, itemId);
-			} else if (itemId > 40264 && itemId < 40280) { // 闇精霊の水晶
+			} else if ((itemId > 40264 && itemId < 40280) || itemId == 42106) { // 闇精霊の水晶
 				if (pc.isDarkelf() || pc.isGm()) {
 					if (itemId >= 40265 && itemId <= 40269
 							&& pc.getLevel() >= 15) {
@@ -384,6 +384,8 @@ public class C_UseItem extends ClientBasePacket {
 						L1SpellBook.SpellBook1(pc, item, client);
 					} else if (itemId >= 40275 && itemId <= 40279
 							&& pc.getLevel() >= 45) {
+						L1SpellBook.SpellBook1(pc, item, client);
+					} else if (itemId == 42106 && pc.getLevel() >= 60) {
 						L1SpellBook.SpellBook1(pc, item, client);
 					} else {
 						pc.sendPackets(new S_ServerMessage(312));

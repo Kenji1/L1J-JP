@@ -98,7 +98,7 @@ public class L1AddSkill implements L1CommandExecutor {
 				pc.sendPackets(new S_AddSkill(s0, s1, s2, s3, s4, s5, s6, s7, s8, s9,
 						0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 				learnMagic(pc, max_level); // 一般魔法
-				for (cnt = 97; cnt <= 111; cnt++) // DE魔法
+				for (cnt = 97; cnt <= 112; cnt++) // DE魔法
 				{
 					L1Skill l1skills = SkillTable.getInstance().findBySkillId(cnt); // スキル情報を取得
 					skill_name = l1skills.getName();
