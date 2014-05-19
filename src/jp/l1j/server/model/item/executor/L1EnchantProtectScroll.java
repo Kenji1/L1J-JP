@@ -60,6 +60,20 @@ public class L1EnchantProtectScroll {
 		public int getItemId() {
 			return _itemId;
 		}
+
+		@XmlAttribute(name = "UseMin")
+		private String _useMin;
+
+		public String getUseMin() {
+			return _useMin;
+		}
+
+		@XmlAttribute(name = "UseMax")
+		private String _useMax;
+
+		public String getUseMax() {
+			return _useMax;
+		}
 		
 		@XmlAttribute(name = "DownLevel")
 		private int _downLevel;
@@ -164,7 +178,13 @@ public class L1EnchantProtectScroll {
 			}
 		}
 		
-		if (effect == null) {
+		if (effect == null) { // 対象外のアイテム
+			pc.sendPackets(new S_ServerMessage(1309));
+			// この装備には蒸発保護スクロールが使えません。
+			return false;
+		}
+		
+		if (target.isSealed()) { // 封印された装備
 			pc.sendPackets(new S_ServerMessage(1309));
 			// この装備には蒸発保護スクロールが使えません。
 			return false;
@@ -176,6 +196,22 @@ public class L1EnchantProtectScroll {
 			return false;
 		}
 
+		int enchantLevel = target.getEnchantLevel();
+		String useMin = effect.getUseMin();
+		String useMax = effect.getUseMax();
+		
+		if (useMin != null && enchantLevel < Integer.parseInt(useMin)) {
+			pc.sendPackets(new S_ServerMessage(1309));
+			// この装備には蒸発保護スクロールが使えません。
+			return false;
+		}
+		
+		if (useMax != null && enchantLevel > Integer.parseInt(useMax)) {
+			pc.sendPackets(new S_ServerMessage(1309));
+			// この装備には蒸発保護スクロールが使えません。
+			return false;
+		}
+		
 		target.setProtected(true); // 保護中
 		target.setProtectItemId(getItemId()); // 蒸発保護スクロールのアイテムID
 		pc.getInventory().updateItem(target, L1PcInventory.COL_EQUIPPED);
