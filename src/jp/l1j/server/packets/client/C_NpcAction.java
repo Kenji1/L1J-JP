@@ -126,7 +126,7 @@ public class C_NpcAction extends ClientBasePacket {
 		super(abyte0);
 		int objid = readD();
 		String s = readS();
-
+System.out.println(s);
 		String s2 = null;
 		if (s.equalsIgnoreCase("select") // 競売掲示板のリストを選択
 				|| s.equalsIgnoreCase("map") // アジトの位置を確かめる
@@ -5182,49 +5182,49 @@ public class C_NpcAction extends ClientBasePacket {
 		} else if (((L1NpcInstance) obj).getNpcTemplate().getNpcId() == 80180) {
 			int level = pc.getLevel();
 			if (level < 46) {
-				if (s.equalsIgnoreCase("A")) { // ゲレンのところにテレポートする
-					L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true);
+				if (s.equals("a")) { // ゲレンのところにテレポートする
+					L1Teleport.teleport(pc, 32592, 32957, (short) 0, 5, true);
 					htmlid = "";
-				} else if (s.equalsIgnoreCase("B")) { // ロウフルテンプルにテレポートする
+				} else if (s.equals("b")) { // ロウフルテンプルにテレポートする
 					L1Teleport.teleport(pc, 33119, 32933, (short) 4, 5, true);
 					htmlid = "";
-				} else if (s.equalsIgnoreCase("C")) { // カオティックテンプルにテレポートする
+				} else if (s.equals("c")) { // カオティックテンプルにテレポートする
 					L1Teleport.teleport(pc, 32887, 32652, (short) 4, 5, true);
 					htmlid = "";
-				} else if (s.equalsIgnoreCase("D")) { // リンダのところにテレポートする
+				} else if (s.equals("d")) { // リンダのところにテレポートする
 					L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true);
 					htmlid = "";
-				} else if (s.equalsIgnoreCase("E")) { // 精霊魔法修練室にテレポートする
+				} else if (s.equals("e")) { // 精霊魔法修練室にテレポートする
 					L1Teleport.teleport(pc, 32789, 32851, (short) 76, 5, true);
 					htmlid = "";
-				} else if (s.equalsIgnoreCase("F")) { // エリオンのところにテレポートする
+				} else if (s.equals("f")) { // エリオンのところにテレポートする
 					L1Teleport.teleport(pc, 32750, 32847, (short) 76, 5, true);
 					htmlid = "";
-				} else if (s.equalsIgnoreCase("G")) { // セディアのところにテレポートする
+				} else if (s.equals("g")) { // セディアのところにテレポートする
 					if (pc.isDarkelf()) {
 						L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true);
 						htmlid = "";
 					} else {
 						htmlid = "lowlv40";
 					}
-				} else if (s.equalsIgnoreCase("H")) { // ジェパールのところにテレポートする
+				} else if (s.equals("h")) { // ジェパールのところにテレポートする
 					if (pc.isDragonKnight()) {
 						L1Teleport.teleport(pc, 32811, 32873, (short) 1001, 5, true);
 						htmlid = "";
 					} else {
 						htmlid = "lowlv41";
 					}
-				} else if (s.equalsIgnoreCase("I")) { // スビエルのところにテレポートする
+				} else if (s.equals("i")) { // スビエルのところにテレポートする
 					if (pc.isIllusionist()) {
 						L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true);
 						htmlid = "";
 					} else {
 						htmlid = "lowlv42";
 					}
-				} else if (s.equalsIgnoreCase("J")) { // グンターのところにテレポートする
+				} else if (s.equals("j")) { // グンターのところにテレポートする
 					L1Teleport.teleport(pc, 32509, 32867, (short) 0, 5, true);
 					htmlid = "";
-				} else if (s.equalsIgnoreCase("K")) { // 象牙の塔のアクセサリー
+				} else if (s.equals("k")) { // 象牙の塔のアクセサリー
 					if ((level > 34)) {
 						createitem = new int[] { 21155, 21169, 21223, 21224, 21225 };
 						// 象牙の塔のタリスマン, 象牙の塔のイアリング, 修行者のアミュレット,
@@ -5245,7 +5245,7 @@ public class C_NpcAction extends ClientBasePacket {
 					} else {
 						htmlid = "lowlv44";
 					}
-				} else if (s.equalsIgnoreCase("0")) { // 戻る
+				} else if (s.equals("0")) { // 戻る
 					if (level < 13) {
 						htmlid = "lowlvS1";
 					} else if ((level > 12) && (level < 46)) {
@@ -5253,7 +5253,7 @@ public class C_NpcAction extends ClientBasePacket {
 					} else {
 						htmlid = "lowlvno";
 					}
-				} else if (s.equalsIgnoreCase("1")) { // 他の助言を聞く
+				} else if (s.equals("1")) { // 他の助言を聞く
 					if (level < 13) {
 						htmlid = "lowlv14";
 					} else if ((level > 12) && (level < 46)) {
@@ -5261,13 +5261,13 @@ public class C_NpcAction extends ClientBasePacket {
 					} else {
 						htmlid = "lowlvno";
 					}
-				} else if (s.equalsIgnoreCase("2")) { // 象牙の塔の装備を再度受け取る
+				} else if (s.equals("2")) { // 象牙の塔の装備を再度受け取る
 					if (giveBeginnerItems(pc)) {
 						success_htmlid = "lowlv16";
 					} else {
 						htmlid = "lowlv17";
 					}
-				} else if (s.equalsIgnoreCase("6")) { // 象牙の塔の魔法の袋を購入する
+				} else if (s.equals("6")) { // 象牙の塔の魔法の袋を購入する
 					if (!pc.getInventory().checkItem(50544, 1)
 							&& !pc.getInventory().checkItem(50545, 1)) {
 						createitem = new int[] { 50544 };
@@ -5282,6 +5282,20 @@ public class C_NpcAction extends ClientBasePacket {
 					} else {
 						htmlid = "lowlvno";
 					}
+				} else if (s.equals("<")) { // 防具魔法スクロール(7個)
+					createitem = new int[] { 50541 };
+					createcount = new int[] { 5 };
+					materials = new int[] { 40308 };
+					counts = new int[] { 5000 };
+					success_htmlid = "lowlv18";
+					failure_htmlid = "lowlv20";
+				} else if (s.equals(">")) { // 防具魔法スクロール(7個)
+					createitem = new int[] { 50541 };
+					createcount = new int[] { 7 };
+					materials = new int[] { 40308 };
+					counts = new int[] { 7000 };
+					success_htmlid = "lowlv18";
+					failure_htmlid = "lowlv20";
 				}
 			}
 		// 鍛冶屋 クス

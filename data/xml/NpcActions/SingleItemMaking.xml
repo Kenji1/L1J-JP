@@ -748,7 +748,7 @@
 		</MakeItem>
 	</Action>
 	<!--防具魔法スクロール / 旅人案内人-->
-	<Action Name="3" NpcId="80180">
+	<Action Name="8" NpcId="80180">
 		<MakeItem AmountInputable="false">
 			<Item Amount="1" ItemId="50541"/>
 			<Material Amount="1000" ItemId="40308"/>
@@ -760,11 +760,443 @@
 			</Fail>
 		</MakeItem>
 	</Action>
+	<Action Name="9" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="2" ItemId="50541"/>
+			<Material Amount="2000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name=":" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="3" ItemId="50541"/>
+			<Material Amount="3000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name=";" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="4" ItemId="50541"/>
+			<Material Amount="4000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="=" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="6" ItemId="50541"/>
+			<Material Amount="6000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="?" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="8" ItemId="50541"/>
+			<Material Amount="8000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="@" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="9" ItemId="50541"/>
+			<Material Amount="9000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="A" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="50541"/>
+			<Material Amount="10000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="B" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="11" ItemId="50541"/>
+			<Material Amount="11000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="C" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="12" ItemId="50541"/>
+			<Material Amount="12000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="D" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="13" ItemId="50541"/>
+			<Material Amount="13000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="E" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="14" ItemId="50541"/>
+			<Material Amount="14000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="F" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="15" ItemId="50541"/>
+			<Material Amount="15000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="G" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="16" ItemId="50541"/>
+			<Material Amount="16000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="H" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="17" ItemId="50541"/>
+			<Material Amount="17000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="I" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="18" ItemId="50541"/>
+			<Material Amount="18000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="J" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="19" ItemId="50541"/>
+			<Material Amount="19000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="K" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="20" ItemId="50541"/>
+			<Material Amount="20000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
 	<!--武器魔法スクロール / 旅人案内人-->
-	<Action Name="4" NpcId="80180">
+	<Action Name="L" NpcId="80180">
 		<MakeItem AmountInputable="false">
 			<Item Amount="1" ItemId="50542"/>
 			<Material Amount="1500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="M" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="2" ItemId="50542"/>
+			<Material Amount="3000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="N" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="3" ItemId="50542"/>
+			<Material Amount="4500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="O" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="4" ItemId="50542"/>
+			<Material Amount="6000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="P" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="5" ItemId="50542"/>
+			<Material Amount="7500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="Q" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="6" ItemId="50542"/>
+			<Material Amount="9000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="R" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="7" ItemId="50542"/>
+			<Material Amount="10500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="S" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="8" ItemId="50542"/>
+			<Material Amount="12000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="T" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="9" ItemId="50542"/>
+			<Material Amount="13500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="U" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="50542"/>
+			<Material Amount="15000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="V" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="11" ItemId="50542"/>
+			<Material Amount="16500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="W" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="12" ItemId="50542"/>
+			<Material Amount="18000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="X" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="13" ItemId="50542"/>
+			<Material Amount="19500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="Y" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="14" ItemId="50542"/>
+			<Material Amount="21000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="Z" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="15" ItemId="50542"/>
+			<Material Amount="22500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="[" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="16" ItemId="50542"/>
+			<Material Amount="24000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="\" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="17" ItemId="50542"/>
+			<Material Amount="25500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="]" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="18" ItemId="50542"/>
+			<Material Amount="27000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="^" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="19" ItemId="50542"/>
+			<Material Amount="28500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+  <Action Name="_" NpcId="80180">
+		<MakeItem AmountInputable="false">
+			<Item Amount="20" ItemId="50542"/>
+			<Material Amount="30000" ItemId="40308"/>
 			<Succeed>
 				<ShowHtml HtmlId="lowlv19"/>
 			</Succeed>
