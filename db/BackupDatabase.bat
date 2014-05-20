@@ -493,7 +493,7 @@ echo %outdir%/%datetime%/inventory_items.csv
 set query=^
 SELECT 'id','owner_id','location','item_id','item_count','is_equipped',^
 'enchant_level','is_identified','durability','charge_count','charge_time',^
-'expiration_time','last_used','is_sealed','is_protected','attr_enchant_kind',^
+'expiration_time','last_used','is_sealed','is_protected','protect_item_id','attr_enchant_kind',^
 'attr_enchant_level','ac','str','con','dex','wis','cha','int','hp','hpr','mp',^
 'mpr','mr','sp','hit_modifier','dmg_modifier','bow_hit_modifier',^
 'bow_dmg_modifier','defense_earth','defense_water','defense_fire',^
