@@ -137,6 +137,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!-- 血盟倉庫に格納可能なアイテム数 -->
 <entry key="MaxClanWarehouseItem">200</entry>
 
+<!-- 血盟倉庫使用履歴の保存日数 ... デフォルト3日、0を指定した場合削除しない(非推奨) -->
+<entry key="MaxClanWarehouseHistoryDays">3</entry>
+
 <!-- Lv30以上のキャラクターを削除する際、7日間の猶予を設けるか True to On, False to Off -->
 <entry key="DeleteCharacterAfter7Days">True</entry>
 

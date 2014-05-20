@@ -91,6 +91,7 @@ import jp.l1j.server.packets.server.S_MpUpdate;
 import jp.l1j.server.packets.server.S_NpcTalkReturn;
 import jp.l1j.server.packets.server.S_PetCtrlMenu;
 import jp.l1j.server.packets.server.S_PetList;
+import jp.l1j.server.packets.server.S_PledgeWarehouseHistory;
 import jp.l1j.server.packets.server.S_RetrieveAdditionalList;
 import jp.l1j.server.packets.server.S_RetrieveElfList;
 import jp.l1j.server.packets.server.S_RetrieveList;
@@ -338,6 +339,8 @@ public class C_NpcAction extends ClientBasePacket {
 					// お客様名義であずかっている荷物はありませんが。もう一度お確かめ下さい。
 				}
 			}
+		} else if(s.equalsIgnoreCase("history")){ // 血盟倉庫の使用履歴を表示 
+			pc.sendPackets(new S_PledgeWarehouseHistory(pc.getClanId()));
 		} else if (s.equalsIgnoreCase("get")) {
 			L1NpcInstance npc = (L1NpcInstance) obj;
 			int npcId = npc.getNpcTemplate().getNpcId();

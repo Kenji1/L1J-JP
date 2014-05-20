@@ -296,6 +296,7 @@ public class C_Result extends ClientBasePacket {
 						if (tradable) {
 							pc.getInventory().tradeItem(objectId, count,
 									clan.getWarehouse());
+							clan.getWarehouse().writeHistory(pc, item, count, 0); // クラン倉庫使用履歴(預入)
 							pc.updateLight();
 						}
 					}
@@ -321,6 +322,7 @@ public class C_Result extends ClientBasePacket {
 						if (pc.getInventory().consumeItem(L1ItemId.ADENA, 30)) {
 							clan.getWarehouse().tradeItem(item, count,
 									pc.getInventory());
+							clan.getWarehouse().writeHistory(pc, item, count, 1); // クラン倉庫使用履歴(受取)
 						} else {
 							pc.sendPackets(new S_ServerMessage(189)); // \f1アデナが不足しています。
 							break;

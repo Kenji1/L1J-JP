@@ -1112,6 +1112,105 @@ public class L1ItemInstance extends L1Object {
 		return name.toString();
 	}
 
+	/**
+	 * 血盟倉庫使用履歴に表示する名前
+	 */
+	public String getWarehouseHistoryName() {
+		StringBuilder name = new StringBuilder();
+
+		if (isUnique()) { // ユニークアイテムの接頭詞
+			name.append(Config.UNIQUE_PREFIX + " ");
+		}
+
+		if (isIdentified()) {
+			if (getItem().getType2() == 1) { // 武器
+				int attrEnchantLevel = getAttrEnchantLevel();
+				if (attrEnchantLevel > 0) {
+					String attrStr = null;
+					switch (getAttrEnchantKind()) {
+					case 1: // 地
+						if (attrEnchantLevel == 1) {
+							attrStr = "$6124";
+						} else if (attrEnchantLevel == 2) {
+							attrStr = "$6125";
+						} else if (attrEnchantLevel == 3) {
+							attrStr = "$6126";
+						} else if (attrEnchantLevel == 4) {
+							attrStr = "$14364";
+						} else if (attrEnchantLevel == 5) {
+							attrStr = "$14368";
+						}
+						break;
+					case 2: // 火
+						if (attrEnchantLevel == 1) {
+							attrStr = "$6115";
+						} else if (attrEnchantLevel == 2) {
+							attrStr = "$6116";
+						} else if (attrEnchantLevel == 3) {
+							attrStr = "$6117";
+						} else if (attrEnchantLevel == 4) {
+							attrStr = "$14361";
+						} else if (attrEnchantLevel == 5) {
+							attrStr = "$14365";
+						}
+						break;
+					case 4: // 水
+						if (attrEnchantLevel == 1) {
+							attrStr = "$6118";
+						} else if (attrEnchantLevel == 2) {
+							attrStr = "$6119";
+						} else if (attrEnchantLevel == 3) {
+							attrStr = "$6120";
+						} else if (attrEnchantLevel == 4) {
+							attrStr = "$14362";
+						} else if (attrEnchantLevel == 5) {
+							attrStr = "$14366";
+						}
+						break;
+					case 8: // 風
+						if (attrEnchantLevel == 1) {
+							attrStr = "$6121";
+						} else if (attrEnchantLevel == 2) {
+							attrStr = "$6122";
+						} else if (attrEnchantLevel == 3) {
+							attrStr = "$6123";
+						} else if (attrEnchantLevel == 4) {
+							attrStr = "$14363";
+						} else if (attrEnchantLevel == 5) {
+							attrStr = "$14367";
+						}
+						break;
+					default:
+						break;
+					}
+					name.append(attrStr + " ");
+				}
+			}
+			if (getItem().getType2() == 1 || getItem().getType2() == 2) { // 武器・防具
+				if (getEnchantLevel() >= 0) {
+					name.append("+" + getEnchantLevel() + " ");
+				} else if (getEnchantLevel() < 0) {
+					name.append(String.valueOf(getEnchantLevel()) + " ");
+				}
+			}
+		}
+		if (isIdentified()) {
+			name.append(_item.getIdentifiedNameId());
+		} else {
+			name.append(_item.getUnidentifiedNameId());
+		}
+		if (isIdentified()) {
+			if (getItem().getMaxChargeCount() > 0) {
+				name.append(" (" + getChargeCount() + ")");
+			}
+			if (getItem().getItemId() == 20383) { // 騎馬用ヘルム
+				name.append(" (" + getChargeCount() + ")");
+			}
+		}
+
+		return name.toString();
+	}
+
 	// 宿屋のキー名称
 	public String getInnKeyName() {
 		StringBuilder name = new StringBuilder();

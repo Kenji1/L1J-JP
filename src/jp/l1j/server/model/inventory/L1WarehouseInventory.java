@@ -14,12 +14,23 @@
  */
 package jp.l1j.server.model.inventory;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
-import jp.l1j.server.model.instance.L1ItemInstance;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jp.l1j.Server;
 import jp.l1j.server.model.L1World;
+import jp.l1j.server.model.instance.L1ItemInstance;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.templates.L1InventoryItem;
+import jp.l1j.server.utils.L1DatabaseFactory;
+import jp.l1j.server.utils.SqlUtil;
 
 public class L1WarehouseInventory extends L1Inventory {
+	private static Logger _log = Logger.getLogger(L1WarehouseInventory.class.getName());
 	private static final long serialVersionUID = 1L;
 	private final int _ownerId;
 	private final int _ownerLocation;
@@ -60,7 +71,37 @@ public class L1WarehouseInventory extends L1Inventory {
 	public synchronized void deleteAllItems() {
 		L1InventoryItem.deleteAll(_ownerId);
 	}
-
+	
+	/**
+	 * クラン倉庫の使用履歴を記録
+	 * @param pc    クラン倉庫の使用者
+	 * @param item  取引するアイテム
+	 * @param count アイテム数量
+	 * @param type  受領区分(0:預入, 1:受取)
+	 */
+	public void writeHistory(L1PcInstance pc, L1ItemInstance item, int count, int type){
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("INSERT INTO clan_warehouse_histories SET clan_id=?, char_name=?, type=?, item_name=?, item_count=?, record_time=?");
+			pstm.setInt(1, pc.getClanId());
+			pstm.setString(2, pc.getName());
+			pstm.setInt(3, type);
+			pstm.setString(4, item.getWarehouseHistoryName());
+			pstm.setInt(5, count);
+			pstm.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+		finally {
+			SqlUtil.close(pstm);
+			SqlUtil.close(con);
+		}
+	}
+	
 	@Override
 	public int getOwnerLocation() {
 		return _ownerLocation;

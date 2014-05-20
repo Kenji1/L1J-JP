@@ -496,6 +496,9 @@ public final class Config {
 	@Configure(file = ALT, key = "MaxClanWarehouseItem")
 	public static int MAX_CLAN_WAREHOUSE_ITEM = 200;
 
+	@Configure(file = ALT, key = "MaxClanWarehouseHistoryDays")
+	public static int MAX_CLAN_WAREHOUSE_HISTORY_DAYS = 3;
+
 	@Configure(file = ALT, key = "DeleteCharacterAfter7Days")
 	public static boolean DELETE_CHARACTER_AFTER_7DAYS = true;
 

@@ -301,6 +301,19 @@ mysql -u %username% -p%password% -e "%query%" --local-infile=1
 if errorlevel 1 goto ERR
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Dump clan_warehouse_histories table
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+echo %outdir%/%datetime%/clan_warehouse_histories.csv
+set query=^
+SELECT 'id','clan_id','char_name','type','item_name','item_count','record_time' ^
+UNION SELECT * INTO OUTFILE '%outdir%/%datetime%/clan_warehouse_histories.csv' ^
+FIELDS TERMINATED BY '%delimiter%' ENCLOSED BY '%enclosed%' ^
+LINES TERMINATED BY '%newline%' ^
+FROM %database%.clan_warehouse_histories
+mysql -u %username% -p%password% -e "%query%" --local-infile=1
+if errorlevel 1 goto ERR
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Dump clans table
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo %outdir%/%datetime%/clans.csv

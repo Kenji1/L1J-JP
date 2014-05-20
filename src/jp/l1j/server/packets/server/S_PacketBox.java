@@ -192,6 +192,9 @@ public class S_PacketBox extends ServerBasePacket {
 	/** 回避率 負*/
 	public static final int DODGE_RATE_MINUS = 101;
 	
+	/** 血盟倉庫使用記録 */
+	public static final int HTML_CLAN_WARHOUSE_RECORD = 117;
+	
 	/** マップタイマーの残り時間を表示 **/
 	public static final int MAP_TIMER = 153;
 	public static final int DISPLAY_MAP_TIME = 159;
