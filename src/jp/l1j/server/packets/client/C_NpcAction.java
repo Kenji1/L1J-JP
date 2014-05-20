@@ -126,7 +126,7 @@ public class C_NpcAction extends ClientBasePacket {
 		super(abyte0);
 		int objid = readD();
 		String s = readS();
-System.out.println(s);
+
 		String s2 = null;
 		if (s.equalsIgnoreCase("select") // 競売掲示板のリストを選択
 				|| s.equalsIgnoreCase("map") // アジトの位置を確かめる
