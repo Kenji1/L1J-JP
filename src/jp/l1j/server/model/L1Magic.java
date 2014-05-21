@@ -691,11 +691,7 @@ public class L1Magic {
 		}
 
 		if (_targetPc.hasSkillEffect(REDUCTION_ARMOR)) {
-			int targetPcLvl = _targetPc.getLevel();
-			if (targetPcLvl < 50) {
-				targetPcLvl = 50;
-			}
-			dmg -= (targetPcLvl - 50) / 5 + 1;
+			dmg -= _targetPc.getLevel() / 10;
 		}
 		if (_targetPc.hasSkillEffect(DRAGON_SKIN)) {
 			//dmg -= 2;

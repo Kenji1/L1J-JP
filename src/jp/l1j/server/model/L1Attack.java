@@ -1043,11 +1043,7 @@ public class L1Attack {
 		}
 
 		if (_targetPc.hasSkillEffect(REDUCTION_ARMOR)) {
-			int targetPcLvl = _targetPc.getLevel();
-			if (targetPcLvl < 50) {
-				targetPcLvl = 50;
-			}
-			dmg -= (targetPcLvl - 50) / 5 + 1;
+			dmg -= _targetPc.getLevel() / 10;
 		}
 		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
 			dmg *= 1.58; // 対象の被ダメージ58%増加
@@ -1429,11 +1425,7 @@ public class L1Attack {
 		}
 
 		if (_targetPc.hasSkillEffect(REDUCTION_ARMOR)) {
-			int targetPcLvl = _targetPc.getLevel();
-			if (targetPcLvl < 50) {
-				targetPcLvl = 50;
-			}
-			dmg -= (targetPcLvl - 50) / 5 + 1;
+			dmg -= _targetPc.getLevel() / 10;
 		}
 		if (_targetPc.hasSkillEffect(ARMOR_BREAK)) {
 			dmg *= 1.58; // 対象の被ダメージ58%増加
