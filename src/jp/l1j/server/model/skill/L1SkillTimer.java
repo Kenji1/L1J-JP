@@ -103,7 +103,7 @@ class L1SkillStop {
 				pc.sendPackets(new S_SpMr(pc));
 				pc.sendPackets(new S_SkillIconAura(113, 0));
 			}
-		} else if (skillId == SHINING_AURA) { // シャイニング オーラ
+		} else if (skillId == SHINING_SHIELD) { // シャイニング シールド
 			cha.addAc(8);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;

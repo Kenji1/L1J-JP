@@ -237,7 +237,7 @@ public class L1SkillId {
 
 	public static final int GLOWING_AURA = 114;
 
-	public static final int SHINING_AURA = 115;
+	public static final int SHINING_SHIELD = 115;
 
 	public static final int CALL_CLAN = 116; // E: CALL_PLEDGE_MEMBER
 

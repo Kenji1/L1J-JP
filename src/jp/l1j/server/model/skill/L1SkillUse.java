@@ -1225,7 +1225,7 @@ public class L1SkillUse {
 			pc.sendPackets(new S_Strup(pc, 2, buffIconDuration));
 		} else if (_skillId == GLOWING_AURA) { // グローウィング オーラ
 			pc.sendPackets(new S_SkillIconAura(113, buffIconDuration));
-		} else if (_skillId == SHINING_AURA) { // シャイニング オーラ
+		} else if (_skillId == SHINING_SHIELD) { // シャイニング シールド
 			pc.sendPackets(new S_SkillIconAura(114, buffIconDuration));
 		} else if (_skillId == BRAVE_AURA) { // ブレイブ オーラ
 			pc.sendPackets(new S_SkillIconAura(116, buffIconDuration));
@@ -1534,8 +1534,8 @@ public class L1SkillUse {
 							STATUS_FLORA_POTION_DEX },
 							// フィジカル エンチャント：STR、ドレス マイティー
 							{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY, STATUS_FLORA_POTION_STR },
-							// グローウィングオーラ、シャイニングオーラ
-							{ GLOWING_AURA, SHINING_AURA },
+							// グローウィングオーラ、シャイニングシールド
+							{ GLOWING_AURA, SHINING_SHIELD },
 							// 覚醒各種
 							{ AWAKEN_ANTHARAS, AWAKEN_FAFURION, AWAKEN_VALAKAS } };
 
@@ -2958,7 +2958,7 @@ public class L1SkillUse {
 						pc.sendPackets(new S_SpMr(pc));
 						pc.sendPackets(new S_SkillIconAura(113,
 								buffIconDuration));
-					} else if (_skillId == SHINING_AURA) { // シャイニング オーラ
+					} else if (_skillId == SHINING_SHIELD) { // シャイニング シールド
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.addAc(-8);
 						pc.sendPackets(new S_SkillIconAura(114,
