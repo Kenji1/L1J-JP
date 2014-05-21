@@ -2065,8 +2065,10 @@ public class L1PcInstance extends L1Character {
 		int er = 0;
 		if (isKnight()) {
 			er = getLevel() / 4; // ナイト
-		} else if (isCrown() || isElf()) {
-			er = getLevel() / 8; // 君主・エルフ
+		} else if (isCrown()) {
+			er = getLevel() / 6; // 君主
+		} else if (isElf()) {
+			er = getLevel() / 8; // エルフ
 		} else if (isDarkelf()) {
 			er = getLevel() / 6; // ダークエルフ
 		} else if (isWizard()) {
