@@ -2072,7 +2072,7 @@ public class L1PcInstance extends L1Character {
 		} else if (isWizard()) {
 			er = getLevel() / 10; // ウィザード
 		} else if (isDragonKnight()) {
-			er = getLevel() / 7; // ドラゴンナイト
+			er = getLevel() / 5; // ドラゴンナイト
 		} else if (isIllusionist()) {
 			er = getLevel() / 9; // イリュージョニスト
 		}
