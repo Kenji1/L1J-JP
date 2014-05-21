@@ -957,7 +957,7 @@ public class L1Magic {
 		double criticalCoefficient = 1.5; // 魔法クリティカル
 		int rnd = _random.nextInt(100) + 1;
 		if (_calcType == PC_PC || _calcType == PC_NPC) {
-			if (l1skills.getSkillLevel() <= 6 || skillId == DISINTEGRATE) {
+			if (l1skills.getSkillLevel() <= 6) {
 				if (rnd <= (10 + getMagicCritical())) {
 					magicDamage *= criticalCoefficient;
 				}
