@@ -3066,7 +3066,7 @@ public class L1SkillUse {
 						pc.setCurrentMp(pc.getCurrentMp() + 2);
 					} else if (_skillId == BLOODY_SOUL) { // ブラッディ ソウル
 						L1PcInstance pc = (L1PcInstance) cha;
-						pc.setCurrentMp(pc.getCurrentMp() + 12);
+						pc.setCurrentMp(pc.getCurrentMp() + 15);
 					} else if (_skillId == ELEMENTAL_PROTECTION) { // エレメンタルプロテクション
 						L1PcInstance pc = (L1PcInstance) cha;
 						int attr = pc.getElfAttr();
