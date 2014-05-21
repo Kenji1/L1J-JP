@@ -3465,14 +3465,17 @@ public class L1PcInstance extends L1Character {
 		int newBaseHitup = 0;
 		int newBaseBowHitup = 0;
 		if (isCrown()) { // プリ
-			newBaseHitup = getLevel() / 5;
-			newBaseBowHitup = getLevel() / 5;
+			newBaseHitup = getLevel() / 4;
+			newBaseBowHitup = getLevel() / 4;
 		} else if (isKnight()) { // ナイト
 			newBaseHitup = getLevel() / 3;
 			newBaseBowHitup = getLevel() / 3;
 		} else if (isElf()) { // エルフ
 			newBaseHitup = getLevel() / 5;
 			newBaseBowHitup = getLevel() / 5;
+		} else if (isWizard()) { // ウィザード
+			newBaseHitup = getLevel() / 8;
+			newBaseBowHitup = getLevel() / 8;
 		} else if (isDarkelf()) { // ダークエルフ
 			newBaseHitup = getLevel() / 3;
 			newBaseBowHitup = getLevel() / 3;
