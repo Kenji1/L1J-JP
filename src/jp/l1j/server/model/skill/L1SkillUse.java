@@ -3416,7 +3416,9 @@ public class L1SkillUse {
 				|| skillNum == COUNTER_BARRIER || skillNum == AWAKEN_ANTHARAS
 				|| skillNum == AWAKEN_FAFURION || skillNum == AWAKEN_VALAKAS
 				|| skillNum == BONE_BREAK || skillNum == MASS_SHOCK_STUN
-				|| skillNum == CONFUSION;
+				|| skillNum == CONFUSION || skillNum == ARMOR_BREAK
+				|| skillNum == SHADOW_ARMOR || skillNum == UNCANNY_DODGE
+				|| skillNum == DRESS_EVASION;
 	}
 
 	private void detection(L1PcInstance pc) {
