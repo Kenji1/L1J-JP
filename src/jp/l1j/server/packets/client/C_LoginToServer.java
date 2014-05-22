@@ -74,6 +74,7 @@ import jp.l1j.server.packets.server.S_OwnCharStatus;
 import jp.l1j.server.packets.server.S_PacketBox;
 import jp.l1j.server.packets.server.S_Paralysis;
 import jp.l1j.server.packets.server.S_PlayTime;
+import jp.l1j.server.packets.server.S_RuneSlot;
 import jp.l1j.server.packets.server.S_ServerMessage;
 import jp.l1j.server.packets.server.S_SkillBrave;
 import jp.l1j.server.packets.server.S_SkillHaste;
@@ -200,6 +201,8 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 		L1World.getInstance().addVisibleObject(pc);
 		pc.beginGameTimeCarrier();
+		pc.sendPackets(new S_RuneSlot(S_RuneSlot.RUNE_CLOSE_SLOT, 3));
+		pc.sendPackets(new S_RuneSlot(S_RuneSlot.RUNE_OPEN_SLOT, 1));
 		pc.sendPackets(new S_OwnCharStatus(pc));
 		pc.sendPackets(new S_MapID(pc.getMap().getBaseMapId(), pc.getMap().isUnderwater()));
 		pc.sendPackets(new S_OwnCharPack(pc));
