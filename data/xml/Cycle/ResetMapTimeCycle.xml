@@ -5,7 +5,7 @@
 		<Area AreaId="53" />
 		<!-- 象牙の塔 MapId="78,79,80,81,82" -->
 		<Area AreaId="78" />
-		<!-- ラスタバト城(未実装) MapId="307..."-->
-		<!--<Area AreaId="307" Week="2" />-->
+		<!-- ラスタバト城 MapId="451..."-->
+		<Area AreaId="451" Week="2" />
 	</ResetCycle>
 </ResetCycleList>
