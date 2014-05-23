@@ -41,9 +41,9 @@ public class NpcTable {
 
 	private final Map<String, Integer> _familyTypes = buildFamily();
 
-	public static NpcTable getInstance() {
+	synchronized public static NpcTable getInstance() {
 		if (_instance == null) {
-			_instance = new NpcTable();
+				_instance = new NpcTable();
 		}
 		return _instance;
 	}
@@ -168,7 +168,7 @@ public class NpcTable {
 		}
 	}
 	
-	public void reload() {
+	synchronized public void reload() {
 		HashMap<Integer, L1Npc> npcs = new HashMap<Integer, L1Npc>();
 		HashMap<String, Constructor<?>> constructorCache = new HashMap<String, Constructor<?>>();
 		loadNpcs(npcs, constructorCache);

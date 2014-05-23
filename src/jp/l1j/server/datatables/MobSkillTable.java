@@ -31,7 +31,7 @@ public class MobSkillTable {
 
 	private static Map<Integer, List<L1MobSkill>> _mobSkills = Maps.newHashMap();
 
-	public static MobSkillTable getInstance() {
+	synchronized public static MobSkillTable getInstance() {
 		if (_instance == null) {
 			_instance = new MobSkillTable();
 		}
@@ -61,7 +61,7 @@ public class MobSkillTable {
 		System.out.println("loading mob skills...OK! " + timer.elapsedTimeMillis() + "ms");
 	}
 
-	public void reload() {
+	synchronized public void reload() {
 		Map<Integer, List<L1MobSkill>> mobSkills = Maps.newHashMap();
 		loadMobSkills(mobSkills);
 		_mobSkills = mobSkills;
