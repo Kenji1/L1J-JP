@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ResetCycleList>
 	<ResetCycle Time="08:00">
-		<!-- ギランプリズンダンジョン MapId="53,54,55,56" -->
+		<!-- ギランプリズン ダンジョン MapId="53,54,55,56" -->
 		<Area AreaId="53" />
 		<!-- 象牙の塔 MapId="78,79,80,81,82" -->
 		<Area AreaId="78" />
-		<!-- ラスタバト城 MapId="451..."-->
+		<!-- ラスタバト ダンジョン MapId="451..."-->
 		<Area AreaId="451" Week="2" />
+    <!-- ドラゴンバレー ダンジョン MapId="30,31,32,33,35,36,37" -->
+    <Area AreaId="30" />
 	</ResetCycle>
 </ResetCycleList>

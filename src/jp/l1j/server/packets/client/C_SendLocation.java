@@ -132,9 +132,10 @@ public class C_SendLocation extends ClientBasePacket {
 		else if (type == 0x09){ // マップタイマーの残り時間を表示
 			L1PcInstance pc = client.getActiveChar();
 			pc.sendPackets(new S_PacketBox(S_PacketBox.DISPLAY_MAP_TIME ,
-					pc.getEnterTime(53), // ギラン監獄
-					pc.getEnterTime(78), // 象牙の塔
-					pc.getEnterTime(451))); // ラスタバドダンジョン
+					pc.getEnterTime(53),   // ギラン監獄
+					pc.getEnterTime(78),   // 象牙の塔
+					pc.getEnterTime(451),  // ラスタバド ダンジョン
+					pc.getEnterTime(30))); // ドラゴンバレー ダンジョン
 		} else if (type == 0x13) { // web center
 			// not yet
 		} else if (type == 0x2C) { // モンスター討伐数をリセット

@@ -176,6 +176,34 @@
 	<MapLimiter MapId="535" AreaId="451">
 		<Effect Time="18000" Delay="10" X="32744" Y="32818" BackMapId="450" />
 	</MapLimiter>
+  <!-- ドラゴンバレー ダンジョン 1F -->
+	<MapLimiter MapId="30" AreaId="30">
+		<Effect Time="7200" Delay="10" X="33429" Y="32814" BackMapId="4" />
+	</MapLimiter>
+  <!-- ドラゴンバレー ダンジョン 2F -->
+	<MapLimiter MapId="31" AreaId="30">
+		<Effect Time="7200" Delay="10" X="33429" Y="32814" BackMapId="4" />
+	</MapLimiter>
+  <!-- ドラゴンバレー ダンジョン 3F -->
+	<MapLimiter MapId="32" AreaId="30">
+		<Effect Time="7200" Delay="10" X="33429" Y="32814" BackMapId="4" />
+	</MapLimiter>
+  <!-- ドラゴンバレー ダンジョン 4F -->
+	<MapLimiter MapId="33" AreaId="30">
+		<Effect Time="7200" Delay="10" X="33429" Y="32814" BackMapId="4" />
+	</MapLimiter>
+  <!-- ドラゴンバレー ダンジョン 5F -->
+	<MapLimiter MapId="35" AreaId="30">
+		<Effect Time="7200" Delay="10" X="33429" Y="32814" BackMapId="4" />
+	</MapLimiter>
+  <!-- ドラゴンバレー ダンジョン 6F -->
+	<MapLimiter MapId="36" AreaId="30">
+		<Effect Time="7200" Delay="10" X="33429" Y="32814" BackMapId="4" />
+	</MapLimiter>
+  <!-- ドラゴンバレー ダンジョン 7F -->
+	<MapLimiter MapId="37" AreaId="30">
+		<Effect Time="7200" Delay="10" X="33429" Y="32814" BackMapId="4" />
+	</MapLimiter>
 	<!-- 影の神殿 -->
 	<MapLimiter MapId="777" AreaId="777">
 		<Effect MaxLevel="51" X="34043" Y="32184" BackMapId="4" />

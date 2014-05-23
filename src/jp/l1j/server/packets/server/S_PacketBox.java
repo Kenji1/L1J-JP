@@ -366,12 +366,12 @@ public class S_PacketBox extends ServerBasePacket {
 	}
 	
 	// TODO マップタイマーの残り時間を表示 start
-	public S_PacketBox(int subCode, int time1, int time2, int time3) {
+	public S_PacketBox(int subCode, int time1, int time2, int time3, int time4) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
 		switch (subCode) {
 		case DISPLAY_MAP_TIME :
-			writeD(3);
+			writeD(4);
 			writeD(1);
 			writeS("$12125"); // ギラン監獄
 			writeD(time1);
@@ -381,6 +381,9 @@ public class S_PacketBox extends ServerBasePacket {
 			writeD(3);
 			writeS("$12126"); // ラスタバド ダンジョン
 			writeD(time3);
+			writeD(4);
+			writeS("$14250"); // ドラゴンバレー ダンジョン
+			writeD(time4);
 			break;
 		default:
 			break;

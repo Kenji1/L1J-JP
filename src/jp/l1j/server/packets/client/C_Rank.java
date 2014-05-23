@@ -222,9 +222,10 @@ public class C_Rank extends ClientBasePacket {
 			pc.broadcastPacket(spr);
 		} else if (data == 9){ // マップタイマーの残り時間を表示
 			pc.sendPackets(new S_PacketBox(S_PacketBox.DISPLAY_MAP_TIME ,
-					pc.getEnterTime(53), // ギラン監獄
-					pc.getEnterTime(78), // 象牙の塔
-					pc.getEnterTime(451))); // ラスタバドダンジョン
+					pc.getEnterTime(53),   // ギラン監獄
+					pc.getEnterTime(78),   // 象牙の塔
+					pc.getEnterTime(451),  // ラスタバド ダンジョン
+					pc.getEnterTime(30))); // ドラゴンバレー ダンジョン
 		}
 	}
 
