@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import jp.l1j.configure.Config;
 import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.packets.server.S_OutputRawString;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1CheckConfig implements L1CommandExecutor {
@@ -34,10 +35,7 @@ public class L1CheckConfig implements L1CommandExecutor {
 	@Override
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		try {
-			pc.sendPackets(new S_SystemMessage(I18N_SERVER_SETTINGS));
-
 			StringBuilder msg = new StringBuilder();
-
 			msg.append(String.format(I18N_EXP, Config.RATE_XP) + " / ");
 			msg.append(String.format(I18N_LAWFUL, Config.RATE_LA) + " / ");
 			msg.append(String.format(I18N_KARMA, Config.RATE_KARMA) + " / ");
@@ -50,8 +48,8 @@ public class L1CheckConfig implements L1CommandExecutor {
 			msg.append(String.format(I18N_ENCHANT_DOLL, Config.ENCHANT_CHANCE_DOLL) + " / ");
 			msg.append(String.format(I18N_WEIGHT_REDUCTION, Config.RATE_WEIGHT_LIMIT) + " / ");
 			msg.append(String.format(I18N_MAX_USERS, Config.MAX_ONLINE_USERS) + " / ");
-
-			pc.sendPackets(new S_SystemMessage(msg.toString()));
+			msg.append(Config.ALT_NONPVP ? I18N_PVP : I18N_NON_PVP);
+			pc.sendPackets(new S_OutputRawString(pc.getId(), I18N_SERVER_SETTINGS, msg.toString()));
 		} catch (Exception e) {
 			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_ERROR, cmdName)));
 			// .%s コマンドエラー

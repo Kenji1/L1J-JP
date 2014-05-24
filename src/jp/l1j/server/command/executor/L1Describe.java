@@ -18,6 +18,7 @@ package jp.l1j.server.command.executor;
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.packets.server.S_OutputRawString;
 import jp.l1j.server.packets.server.S_SystemMessage;
 
 public class L1Describe implements L1CommandExecutor {
@@ -34,7 +35,6 @@ public class L1Describe implements L1CommandExecutor {
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		try {
 			StringBuilder msg = new StringBuilder();
-			pc.sendPackets(new S_SystemMessage("-- describe: " + pc.getName() + " --"));
 			msg.append(String.format(I18N_DESC_DMG, pc.getDmgup()));
 			msg.append(String.format(I18N_DESC_HIT, pc.getHitup()));
 			msg.append(String.format(I18N_DESC_BOW_DMG, pc.getBowDmgup()));
@@ -51,7 +51,7 @@ public class L1Describe implements L1CommandExecutor {
 			msg.append(String.format(I18N_DESC_KARMA, pc.getKarma()));
 			msg.append(String.format(I18N_DESC_INVENTORY_SIZE, pc.getInventory().getSize()));
 			msg.append(String.format(I18N_DESC_EXP_BONUS, pc.getExpBonusPct()));
-			pc.sendPackets(new S_SystemMessage(msg.toString()));
+			pc.sendPackets(new S_OutputRawString(pc.getId(), pc.getName(), msg.toString()));
 		} catch (Exception e) {
 			pc.sendPackets(new S_SystemMessage(String.format(I18N_COMMAND_ERROR, cmdName)));
 			// .%s コマンドエラー

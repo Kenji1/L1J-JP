@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1PcInstance;
+import jp.l1j.server.packets.server.S_OutputRawString;
 import jp.l1j.server.packets.server.S_SystemMessage;
 import jp.l1j.server.packets.server.S_WhoAmount;
 
@@ -43,18 +44,13 @@ public class L1Who implements L1CommandExecutor {
 
 			// オンラインのプレイヤーリストを表示
 			if (arg.equalsIgnoreCase("all")) {
-				pc.sendPackets(new S_SystemMessage("-- Online Players --"));
 				StringBuilder buf = new StringBuilder();
 				for (L1PcInstance each : players) {
 					buf.append(each.getName());
 					buf.append(" / ");
-					if (buf.length() > 50) {
-						pc.sendPackets(new S_SystemMessage(buf.toString()));
-						buf.delete(0, buf.length() - 1);
-					}
 				}
 				if (buf.length() > 0) {
-					pc.sendPackets(new S_SystemMessage(buf.toString()));
+					pc.sendPackets(new S_OutputRawString(pc.getId(), "Online Players", buf.toString()));
 				}
 			}
 		} catch (Exception e) {
