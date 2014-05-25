@@ -318,6 +318,12 @@ public class I18N {
 	public static final String I18N_RECOVERED_BY_GM = bundle.getString("RecoveredByGM");
 	
 	/*
+	 * jp.l1j.server.command.executor.L1ShutdownRequest.java
+	 */
+	public static final String I18N_ACCEPTED_SHUTDOWN_REQUEST = bundle.getString("AcceptedShutdownRequest");
+	public static final String I18N_SHUTDOWN_REQUEST_MAX = bundle.getString("ShutdownRequestMax");
+	
+	/*
 	 * jp.l1j.server.command.executor.L1SKick.java
 	 */
 	public static final String I18N_DISCONNECTED_THE_CONNECTION = bundle.getString("DisconnectedTheConnection");

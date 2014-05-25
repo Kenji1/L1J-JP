@@ -209,6 +209,12 @@ public final class Config {
 	@Configure(file = SERVER, key = "AutoShutdown")
 	public static boolean AUTO_SHUTDOWN = false;
 
+	@Configure(file = SERVER, key = "ShutdownRequestMax")
+	public static int SHUTDOWN_REQUEST_MAX = 0;
+	
+	@Configure(file = SERVER, key = "ShutdownDelay")
+	public static int SHUTDOWN_DELAY = 300;
+	
 	/** Rate control */
 	@Configure(file = RATE, key = "RateXp")
 	public static double RATE_XP = 1.0;

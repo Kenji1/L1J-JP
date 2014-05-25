@@ -240,6 +240,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="ResuscitatedByGM">Resuscitated by GM.</entry>
 <entry key="RecoveredByGM">Recovered by GM.</entry>
 
+<!-- jp/l1j/server/command/executor/L1ShutdownRequest.java -->
+<entry key="AcceptedShutdownRequest">Accepted the your shutdown request.</entry>
+<entry key="ShutdownRequestMax">Shutdown request was reached a certain number. Start the shutdown.</entry>
+
 <!-- jp/l1j/server/command/executor/L1SKick.java -->
 <entry key="DisconnectedTheConnection">By %s command was disconnected the connection of %s(%s)</entry>
 

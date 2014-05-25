@@ -799,6 +799,19 @@ mysql -u %username% -p%password% -e "%query%" --local-infile=1
 if errorlevel 1 goto ERR
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Dump shutdown_requests table
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+echo %outdir%/%datetime%/shutdown_requests.csv
+set query=^
+SELECT 'char_id','char_name','ip','datetime' ^
+UNION SELECT * INTO OUTFILE '%outdir%/%datetime%/shutdown_requests.csv' ^
+FIELDS TERMINATED BY '%delimiter%' ENCLOSED BY '%enclosed%' ^
+LINES TERMINATED BY '%newline%' ^
+FROM %database%.shutdown_requests
+mysql -u %username% -p%password% -e "%query%" --local-infile=1
+if errorlevel 1 goto ERR
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Dump skills table
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo %outdir%/%datetime%/skills.csv

@@ -71,6 +71,7 @@ import jp.l1j.server.datatables.ResolventTable;
 import jp.l1j.server.datatables.RestartLocationTable;
 import jp.l1j.server.datatables.ReturnLocationTable;
 import jp.l1j.server.datatables.ShopTable;
+import jp.l1j.server.datatables.ShutdownRequestTable;
 import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.datatables.SpawnFurnitureTable;
 import jp.l1j.server.datatables.SpawnNpcTable;
@@ -326,7 +327,6 @@ public class GameServer extends Thread {
 		ReturnLocationTable.load();
 		GMCommandConfigs.getInstance();
 		PetTypeTable.getInstance();
-		L1BossCycle.load();
 		SprTable.getInstance();
 		ResolventTable.getInstance();
 		SpawnFurnitureTable.getInstance();
@@ -338,8 +338,10 @@ public class GameServer extends Thread {
 		InnTable.getInstance();
 		MagicDollTable.getInstance();
 		CookingRecipeTable.getInstance();
+		ShutdownRequestTable.removeAll();
 		
 		// Loading the XML files
+		L1BossCycle.load();
 		L1BeginnerItem.load();
 		L1BlankScroll.load();
 		L1BlessOfEva.load();

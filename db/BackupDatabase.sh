@@ -740,6 +740,18 @@ FROM $database.shops"
 mysql -u $username -p$password -e "$query" --local-infile=1 || { exit 1; }
 
 ################################################################################
+# Dump shutdown_requests table
+################################################################################
+echo $outdir/$datetime/shutdown_requests.csv
+query="\
+SELECT 'char_id','char_name','ip','datetime' \
+UNION SELECT * INTO OUTFILE '$outdir/$datetime/shutdown_requests.csv' \
+FIELDS TERMINATED BY '$delimiter' ENCLOSED BY '$enclosed' \
+LINES TERMINATED BY '$newline' \
+FROM $database.shutdown_requests"
+mysql -u $username -p$password -e "$query" --local-infile=1 || { exit 1; }
+
+################################################################################
 # Dump skills table
 ################################################################################
 echo $outdir/$datetime/skills.csv

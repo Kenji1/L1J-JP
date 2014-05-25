@@ -240,6 +240,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="ResuscitatedByGM">GMによって蘇生されました。</entry>
 <entry key="RecoveredByGM">GMによって回復されました。</entry>
 
+<!-- jp/l1j/server/command/executor/L1ShutdownRequest.java -->
+<entry key="AcceptedShutdownRequest">シャットダウン要求を受け付けました。</entry>
+<entry key="ShutdownRequestMax">シャットダウン要求が一定数に達しました。シャットダウンを開始します。</entry>
+
 <!-- jp/l1j/server/command/executor/L1SKick.java -->
 <entry key="DisconnectedTheConnection">%s コマンドにより %s(%s) の接続を切断しました。</entry>
 
