@@ -19,6 +19,8 @@
 @echo off
 echo Monitoring the L1J-Server process ...
 
+set srvdir=C:\workspace\l1jserver\
+
 tasklist | find "java.exe" > NUL
 if not errorlevel 1  (
 	goto END
@@ -28,7 +30,8 @@ if not errorlevel 1  (
 
 :NG
 echo Reboot the L1J-Server.
-call C:\workspace\l1jserver\ServerStart.bat
+cd %srvdir%
+call ServerStart.bat
 goto END
 
 :END

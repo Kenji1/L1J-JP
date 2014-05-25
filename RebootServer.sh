@@ -17,10 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Copyright (c) L1J-JP Project All Rights Reserved.
-echo 'Monitoring the L1J-Server process ...'
+echo "Monitoring the L1J-Server process ..."
 
-isAlive=`ps -ef | grep 'ServerStart.sh' | wc -l`
+srvdir="~/l1jserver"
+
+isAlive=`ps -ef | grep "ServerStart.sh" | wc -l`
 if [ $isAlive = 1 ]; then
 echo "Reboot the L1J-Server."
+cd $srvdir
 sh ServerStart.sh
 fi
