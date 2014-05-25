@@ -64,3 +64,4 @@ pcbuff,200,L1PcBuff
 config,200,L1CheckConfig
 atklog,200,L1AttackLog
 reloadcnf,200,L1ReloadConfig
+rminv,200,L1RemoveInventoryItem
