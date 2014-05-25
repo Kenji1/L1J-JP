@@ -34,11 +34,11 @@ if not exist .\release-build\db md .\release-build\db
 xcopy .\db\csv .\release-build\db\csv /D /E /I /-Y
 xcopy .\db\schema .\release-build\db\schema /D /E /I /-Y
 copy .\db\BackupDatabase.bat .\release-build\db\BackupDatabase.bat /Y
-copy .\db\BackupDatabase.bat .\release-build\db\BackupDatabase.sh /Y
+copy .\db\BackupDatabase.sh .\release-build\db\BackupDatabase.sh /Y
 copy .\db\InstallDatabase.bat .\release-build\db\InstallDatabase.bat /Y
-copy .\db\InstallDatabase.bat .\release-build\db\InstallDatabase.sh /Y
+copy .\db\InstallDatabase.sh .\release-build\db\InstallDatabase.sh /Y
 copy .\db\UpdateDatabase.bat .\release-build\db\UpdateDatabase.bat /Y
-copy .\db\UpdateDatabase.bat .\release-build\db\UpdateDatabase.sh /Y
+copy .\db\UpdateDatabase.sh .\release-build\db\UpdateDatabase.sh /Y
 copy .\db\create_db.sql .\release-build\db\create_db.sql /Y
 xcopy .\emblem .\release-build\emblem /D /E /I /Y
 xcopy .\lib .\release-build\lib /D /E /I /Y
@@ -47,6 +47,8 @@ xcopy .\log .\release-build\log /D /E /I /Y
 xcopy .\maps .\release-build\maps /D /E /I /Y
 copy .\l1jserver.jar .\release-build\l1jserver.jar /Y
 copy .\license.txt .\release-build\license.txt /Y
+copy .\RebootServer.bat .\release-build\RebootStart.bat /Y
+copy .\RebootServer.sh .\release-build\RebootStart.sh /Y
 copy .\ServerStart.bat .\release-build\ServerStart.bat /Y
 copy .\ServerStart.sh .\release-build\ServerStart.sh /Y
 copy .\ServerDebug.bat .\release-build\ServerDebug.bat /Y
