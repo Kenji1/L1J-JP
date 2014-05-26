@@ -305,6 +305,9 @@ public class Opcodes {
 	/** 要求寄送簡訊 未用 */
 	public static final int C_OPCODE_SMS = 45;//122;//82;
 
+	/** 血盟推薦 */
+	public static final int C_OPCODE_PLEDGE_RECOMMENDATION = 228;
+	
 	// 未知
 	/** 請求 配置已僱用的士兵. */
 	public static final int C_OPCODE_PUTSOLDIER = 3; // XXX
@@ -644,6 +647,9 @@ public class Opcodes {
 	/** 魔法購買 (材料製作)*/
 	public static final int S_OPCODE_SKILLMAKE = 68;
 
+	/** 血盟推薦 */
+	public static final int S_OPCODE_PLEDGE_RECOMMENDATION = 192;
+	
 	// 未知
 	/** 未使用 - 修理武器清單. */
 	public static final int S_OPCODE_FIX_WEAPON_MENU = 10;

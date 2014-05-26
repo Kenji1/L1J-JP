@@ -123,7 +123,8 @@ public class C_Attr extends ClientBasePacket {
 								maxMember = charisma * 2;
 							}
 						}
-						if (Config.MAX_CLAN_MEMBER > 0) { // Clan人数の上限の設定あり
+						if (Config.MAX_CLAN_MEMBER > 0 && Config.MAX_CLAN_MEMBER < maxMember) {
+							// Clan人数の上限の設定あり
 							maxMember = Config.MAX_CLAN_MEMBER;
 						}
 
@@ -747,6 +748,10 @@ public class C_Attr extends ClientBasePacket {
 					} else {
 						oldClanMember.setClanRank(L1Clan.CLAN_RANK_REGULAR);
 					}
+					oldClanMember.setTitle("");
+					oldClanMember.setRejoinClanTime(null);
+					oldClanMember.sendPackets(new S_CharTitle(joinPc.getId(), ""));
+					oldClanMember.broadcastPacket(new S_CharTitle(joinPc.getId(), ""));
 					try {
 						// DBにキャラクター情報を書き込む
 						oldClanMember.save();
@@ -759,11 +764,12 @@ public class C_Attr extends ClientBasePacket {
 				} else { // オフライン中の旧クランメンバー
 					try {
 						L1PcInstance offClanMember = CharacterTable
-								.getInstance().restoreCharacter(
-										oldClanMemberName[i]);
+										.getInstance().restoreCharacter(oldClanMemberName[i]);
 						offClanMember.setClanid(clanId);
 						offClanMember.setClanname(clanName);
 						offClanMember.setClanRank(L1Clan.CLAN_RANK_REGULAR);
+						offClanMember.setTitle("");
+						offClanMember.setRejoinClanTime(null);
 						offClanMember.save(); // DBにキャラクター情報を書き込む
 						clan.addMemberName(offClanMember.getName());
 					} catch (Exception e) {

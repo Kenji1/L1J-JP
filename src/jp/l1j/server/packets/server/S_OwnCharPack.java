@@ -86,7 +86,7 @@ public class S_OwnCharPack extends ServerBasePacket {
 		writeS(pc.getClanName());
 		writeS(null); // ペッホチング？
 
-		writeC(0); // 物件的狀態 (會使用到這個數值的物件有 Mob.哈維, 正在觀察....)
+		writeC(pc.getClanRank() > 0 ? pc.getClanRank() << 4 : 0xb0);
 
 		if (pc.isInParty()) // パーティー中
 		{

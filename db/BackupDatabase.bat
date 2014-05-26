@@ -301,6 +301,32 @@ mysql -u %username% -p%password% -e "%query%" --local-infile=1
 if errorlevel 1 goto ERR
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Dump clan_applies table
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+echo %outdir%/%datetime%/clan_applies.csv
+set query=^
+SELECT 'id','clan_id','clan_name','char_name' ^
+UNION SELECT * INTO OUTFILE '%outdir%/%datetime%/clan_applies.csv' ^
+FIELDS TERMINATED BY '%delimiter%' ENCLOSED BY '%enclosed%' ^
+LINES TERMINATED BY '%newline%' ^
+FROM %database%.clans
+mysql -u %username% -p%password% -e "%query%" --local-infile=1
+if errorlevel 1 goto ERR
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Dump clan_recommends table
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+echo %outdir%/%datetime%/clan_recommends.csv
+set query=^
+SELECT 'clan_id','clan_name','char_name','clan_type','message' ^
+UNION SELECT * INTO OUTFILE '%outdir%/%datetime%/clan_recommends.csv' ^
+FIELDS TERMINATED BY '%delimiter%' ENCLOSED BY '%enclosed%' ^
+LINES TERMINATED BY '%newline%' ^
+FROM %database%.clan_recommends
+mysql -u %username% -p%password% -e "%query%" --local-infile=1
+if errorlevel 1 goto ERR
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Dump clan_warehouse_histories table
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo %outdir%/%datetime%/clan_warehouse_histories.csv

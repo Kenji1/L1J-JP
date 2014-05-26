@@ -80,6 +80,7 @@ import jp.l1j.server.packets.client.C_Party;
 import jp.l1j.server.packets.client.C_PetMenu;
 import jp.l1j.server.packets.client.C_PickUpItem;
 import jp.l1j.server.packets.client.C_Pledge;
+import jp.l1j.server.packets.client.C_PledgeRecommendation;
 import jp.l1j.server.packets.client.C_Propose;
 import jp.l1j.server.packets.client.C_Rank;
 import jp.l1j.server.packets.client.C_Restart;
@@ -392,6 +393,9 @@ public class PacketHandler {
 			break;
 		case C_OPCODE_CLAN:
 			new C_Clan(abyte0, _client);
+			break;
+		case C_OPCODE_PLEDGE_RECOMMENDATION:
+			new C_PledgeRecommendation(abyte0, _client);
 			break;
 		}
 	}

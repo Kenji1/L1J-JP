@@ -31,6 +31,7 @@ import jp.l1j.server.codes.ActionCodes;
 import jp.l1j.server.controller.timer.WarTimeController;
 import jp.l1j.server.datatables.CharBuffTable;
 import jp.l1j.server.datatables.CharacterTable;
+import jp.l1j.server.datatables.ClanRecommendTable;
 import jp.l1j.server.datatables.RestartLocationTable;
 import jp.l1j.server.datatables.ReturnLocationTable;
 import jp.l1j.server.datatables.SkillTable;
@@ -222,6 +223,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		pc.setServivalScream(); // TODO 生存の叫び
 		pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_PLUS, pc.getDodge())); // 近距離回避率 正
 		pc.sendPackets(new S_PacketBox(S_PacketBox.DODGE_RATE_MINUS, pc.getNdodge())); // 近距離回避率 負
+		checkPledgeRecommendation(pc);
 		pc.sendPackets(new S_ActiveSpells(pc));
 		if (pc.getCurrentHp() > 0) {
 			pc.setDead(false);
@@ -720,7 +722,36 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 		pc.sendPackets(new S_PacketBox(S_PacketBox.BLESS_OF_AIN, pc.getBlessOfAin()));
 	}
-
+	
+	private void checkPledgeRecommendation(L1PcInstance pc){
+		if(pc.getClanId() > 0){
+			//pc.sendPackets(new S_ClanAttention());
+			//pc.sendPackets(new S_PacketBox(S_PacketBox.PLEDGE_EMBLEM_STATUS, pc.getClan().getEmblemStatus()));
+			if(pc.getClanRank() == L1Clan.CLAN_RANK_LEADER
+							|| pc.getClanRank() == L1Clan.CLAN_RANK_SUBLEADER
+							|| pc.getClanRank() == L1Clan.CLAN_RANK_GUARDIAN){
+				if(ClanRecommendTable.getInstance().isRecorded(pc.getClanId())){
+					if(ClanRecommendTable.getInstance().isClanApplyByPlayer(pc.getClanId())){
+						pc.sendPackets(new S_ServerMessage(3248)); // 血盟加入要請がきました！
+					}
+				} else {
+					//pc.sendPackets(new S_PacketBox(S_PacketBox.PLEDGE_EMBLEM_STATUS, pc.getClan().getEmblemStatus()));
+					//pc.sendPackets(new S_ClanAttention());
+					pc.sendPackets(new S_ServerMessage(3246)); // あなたを待っている血盟員がいます。
+				}
+			}
+		} else {
+			if(pc.isCrown()){
+				pc.sendPackets(new S_ServerMessage(3247)); // 血盟を創設して簡単にお知らせしてください。
+			} else {
+				if(ClanRecommendTable.getInstance().isApplied(pc.getName())){
+				} else {
+					pc.sendPackets(new S_ServerMessage(3245)); // あなたを待っている血盟があります。
+				}
+			}
+		}
+	}
+		
 	@Override
 	public String getType() {
 		return C_LOGIN_TO_SERVER;
