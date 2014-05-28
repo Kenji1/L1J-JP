@@ -183,6 +183,7 @@ public class C_PledgeRecommendation extends ClientBasePacket {
 						}
 					}
 				}
+				ClanRecommendTable.getInstance().removeRecommendApply(index);
 			} else if(type == 2){ // 加入を拒否
 				ClanRecommendTable.getInstance().removeRecommendApply(index);
 			} else if(type == 3){ // 申請を削除
