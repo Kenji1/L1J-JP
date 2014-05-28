@@ -19,13 +19,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.configure.Config;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.templates.L1Mail;
 import jp.l1j.server.utils.IdFactory;
@@ -64,8 +61,9 @@ public class MailTable {
 				mail.setType(rs.getInt("type"));
 				mail.setSenderName(rs.getString("sender"));
 				mail.setReceiverName(rs.getString("receiver"));
-				mail.setDate(rs.getString("date"));
+				mail.setDate(rs.getTimestamp("date"));
 				mail.setReadStatus(rs.getInt("read_status"));
+				mail.setInBoxId(rs.getInt("inbox_id"));
 				mail.setSubject(rs.getBytes("subject"));
 				mail.setContent(rs.getBytes("content"));
 				_allMail.add(mail);
@@ -85,9 +83,12 @@ public class MailTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			rs = con.createStatement().executeQuery("SELECT * FROM mails WHERE id=" + mailId);
+			pstm = con.prepareStatement("SELECT * FROM mails WHERE id=?");
+			pstm.setInt(1,mailId);
+			rs = pstm.executeQuery();
 			if (rs != null && rs.next()) {
-				pstm = con.prepareStatement("UPDATE mails SET read_status=? WHERE id=" + mailId);
+				pstm = con.prepareStatement("UPDATE mails SET read_status=? WHERE id=?");
+				pstm.setInt(1,mailId);
 				pstm.setInt(1, 1);
 				pstm.execute();
 				changeMailStatus(mailId);
@@ -107,9 +108,12 @@ public class MailTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			rs = con.createStatement().executeQuery("SELECT * FROM mails WHERE id=" + mailId);
+			pstm = con.prepareStatement("SELECT * FROM mails WHERE id=?");
+			pstm.setInt(1,mailId);
+			rs = pstm.executeQuery();
 			if (rs != null && rs.next()) {
-				pstm = con.prepareStatement("UPDATE mails SET type=? WHERE id=" + mailId);
+				pstm = con.prepareStatement("UPDATE mails SET type=? WHERE id=?");
+				pstm.setInt(1,mailId);
 				pstm.setInt(1, type);
 				pstm.execute();
 				changeMailType(mailId, type);
@@ -140,11 +144,10 @@ public class MailTable {
 		}
 	}
 
-	public void writeMail(int type, String receiver, L1PcInstance writer, byte[] text) {
+	public int writeMail(int type, String receiver, L1PcInstance writer, byte[] text, int inboxId) {
+		Timestamp date = new Timestamp(System.currentTimeMillis());
 		int readStatus = 0;
-		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		String date = sdf.format(Calendar.getInstance(tz).getTime());
+		int id = 0;
 		// subjectとcontentの区切り(0x00 0x00)位置を見つける
 		int spacePosition1 = 0;
 		int spacePosition2 = 0;
@@ -172,16 +175,17 @@ public class MailTable {
 		PreparedStatement pstm2 = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm2 = con.prepareStatement("INSERT INTO mails SET id=?, type=?, sender=?, receiver=?, date=?, read_status=?, subject=?, content=?");
-			int id = IdFactory.getInstance().nextId();
+			pstm2 = con.prepareStatement("INSERT INTO mails SET id=?, type=?, sender=?, receiver=?, date=?, read_status=?, inbox_id=?, subject=?, content=?");
+			id = IdFactory.getInstance().nextId();
 			pstm2.setInt(1, id);
 			pstm2.setInt(2, type);
 			pstm2.setString(3, writer.getName());
 			pstm2.setString(4, receiver);
-			pstm2.setString(5, date);
+			pstm2.setTimestamp(5, date);
 			pstm2.setInt(6, readStatus);
-			pstm2.setBytes(7, subject);
-			pstm2.setBytes(8, content);
+			pstm2.setInt(7, inboxId);
+			pstm2.setBytes(8, subject);
+			pstm2.setBytes(9, content);
 			pstm2.execute();
 			L1Mail mail =  new L1Mail();
 			mail.setId(id);
@@ -189,9 +193,10 @@ public class MailTable {
 			mail.setSenderName(writer.getName());
 			mail.setReceiverName(receiver);
 			mail.setDate(date);
+			mail.setReadStatus(readStatus);
+			mail.setInBoxId(inboxId);
 			mail.setSubject(subject);
 			mail.setContent(content);
-			mail.setReadStatus(readStatus);
 			_allMail.add(mail);
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -199,6 +204,7 @@ public class MailTable {
 			SqlUtil.close(pstm2);
 			SqlUtil.close(con);
 		}
+		return id;
 	}
 
 	public static ArrayList<L1Mail> getAllMail() {

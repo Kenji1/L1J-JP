@@ -20,6 +20,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Logger;
 import jp.l1j.server.codes.Opcodes;
 import jp.l1j.server.datatables.MailTable;
+import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.templates.L1Mail;
 
 // Referenced classes of package jp.l1j.server.serverpackets:
@@ -45,10 +46,10 @@ public class S_Mail extends ServerBasePacket {
  * 23321.1....=.y.M
  */
 	// 打開收信夾 ?封信件顯示標題
-	public S_Mail(String receiverName, int type) {
+	public S_Mail(L1PcInstance pc, int type) {
 		ArrayList<L1Mail> mails = new ArrayList<L1Mail>();
 		for (L1Mail mail : MailTable.getInstance().getAllMail()) {
-			if (mail.getReceiverName().equalsIgnoreCase(receiverName)) {
+			if(mail.getInBoxId() == pc.getId()){
 				if (mail.getType() == type) {
 					mails.add(mail);
 				}
@@ -61,27 +62,35 @@ public class S_Mail extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_MAIL);
 		writeC(type);
 		writeH(mails.size());
+		
 		for (int i = 0; i < mails.size(); i++) {
 			L1Mail mail = mails.get(i);
 			writeD(mail.getId());
 			writeC(mail.getReadStatus());
-
-			StringTokenizer st = new StringTokenizer(mail.getDate(),"/"); // yy/mm/dd
-			int size = st.countTokens();
-			for (int j = 0;j < size; j++) {
-				// XXX writeC(Year) writeC(Month) writeC(Day)
-				writeC(Integer.parseInt(st.nextToken()));
-			}
-			writeS(mail.getSenderName());
+			writeD((int) (mail.getDate().getTime() / 1000));
+			writeC(mail.getSenderName().equalsIgnoreCase(pc.getName()) ? 1 : 0);
+			writeS(mail.getSenderName().equalsIgnoreCase(pc.getName()) ? mail.getReceiverName() : mail.getSenderName());
 			writeBytes(mail.getSubject());
 		}
 	}
 /**
  * //無法傳送信件 [Server] opcode = 48 0000: 30 20 00 45 54 fa 00 b5
  */	
-	public S_Mail(int type) { // 受信者にメール通知
+	public S_Mail(int type, boolean isDelivered) { // 受信者にメール通知
 		writeC(Opcodes.S_OPCODE_MAIL);
 		writeC(type);
+		writeC(isDelivered ? 1 : 0);
+	}
+
+	public S_Mail(L1PcInstance pc, int mailId, boolean isDraft){
+		MailTable.getInstance();
+		L1Mail mail = MailTable.getMail(mailId);
+		writeC(Opcodes.S_OPCODE_MAIL);
+		writeC(0x50);
+		writeD(mailId);
+		writeC(isDraft ? 1 : 0);
+		writeS(pc.getName());
+		writeBytes(mail.getSubject());
 	}
 
 /**

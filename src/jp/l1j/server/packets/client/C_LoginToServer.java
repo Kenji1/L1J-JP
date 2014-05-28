@@ -67,6 +67,7 @@ import jp.l1j.server.packets.server.S_InvList;
 import jp.l1j.server.packets.server.S_Karma;
 import jp.l1j.server.packets.server.S_Liquor;
 import jp.l1j.server.packets.server.S_LoginGame;
+import jp.l1j.server.packets.server.S_Mail;
 import jp.l1j.server.packets.server.S_MapID;
 import jp.l1j.server.packets.server.S_MpUpdate;
 import jp.l1j.server.packets.server.S_OwnCharAttrDef;
@@ -201,6 +202,9 @@ public class C_LoginToServer extends ClientBasePacket {
 			}
 		}
 		L1World.getInstance().addVisibleObject(pc);
+		pc.sendPackets(new S_Mail(pc , 0));
+		pc.sendPackets(new S_Mail(pc , 1));
+		pc.sendPackets(new S_Mail(pc , 2));
 		pc.beginGameTimeCarrier();
 		pc.sendPackets(new S_RuneSlot(S_RuneSlot.RUNE_CLOSE_SLOT, 3));
 		pc.sendPackets(new S_RuneSlot(S_RuneSlot.RUNE_OPEN_SLOT, 1));
