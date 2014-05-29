@@ -16,7 +16,6 @@
 package jp.l1j.server.packets.client;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.datatables.CharacterTable;
@@ -115,14 +114,14 @@ public class C_Mail extends ClientBasePacket {
 			int mailId = readD();
 			MailTable.getInstance().deleteMail(mailId);
 			pc.sendPackets(new S_Mail(mailId, type));
-		} else if (type == 0x60) { // 複数削除
+		} else if (type == 0x60 || type == 0x61 || type == 0x62) { // 複数削除
 			int count = readD();
 			for (int i = 0; i < count; i++) {
 				int mailId = readD();
 				pc.sendPackets(new S_Mail(mailId, (MailTable.getMail(mailId).getType() + 0x30)));
 				MailTable.getInstance().deleteMail(mailId);
 			}
-		} else if(type == 0x40) { // 保管箱に保存
+		} else if(type == 0x40 || type == 0x41) { // 保管箱に保存
 			int mailId = readD();
 			MailTable.getInstance().setMailType(mailId, TYPE_MAIL_BOX);
 			pc.sendPackets(new S_Mail(mailId, type));
