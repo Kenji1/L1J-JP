@@ -88,8 +88,8 @@ public class MailTable {
 			rs = pstm.executeQuery();
 			if (rs != null && rs.next()) {
 				pstm = con.prepareStatement("UPDATE mails SET read_status=? WHERE id=?");
-				pstm.setInt(1,mailId);
 				pstm.setInt(1, 1);
+				pstm.setInt(2, mailId);
 				pstm.execute();
 				changeMailStatus(mailId);
 			}
@@ -113,8 +113,8 @@ public class MailTable {
 			rs = pstm.executeQuery();
 			if (rs != null && rs.next()) {
 				pstm = con.prepareStatement("UPDATE mails SET type=? WHERE id=?");
-				pstm.setInt(1,mailId);
 				pstm.setInt(1, type);
+				pstm.setInt(2, mailId);
 				pstm.execute();
 				changeMailType(mailId, type);
 			}
