@@ -135,6 +135,6 @@ UNIQUE RATES
 <entry key="UniqueHaste">True</entry>
 
 <!-- ユニークアイテムの接頭詞 -->
-<entry key="UniquePrefix">[HQ]</entry>
+<entry key="UniquePrefix">[U]</entry>
 
 </properties>
