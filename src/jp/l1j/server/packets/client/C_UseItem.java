@@ -88,6 +88,7 @@ import jp.l1j.server.model.item.executor.L1SpellItem;
 import jp.l1j.server.model.item.executor.L1TeleportAmulet;
 import jp.l1j.server.model.item.executor.L1ThirdSpeedPotion;
 import jp.l1j.server.model.item.executor.L1TreasureBox;
+import jp.l1j.server.model.item.executor.L1UniqueEnchantScroll;
 import jp.l1j.server.model.item.executor.L1UnknownMaliceWeapon;
 import jp.l1j.server.model.item.executor.L1WisdomPotion;
 import jp.l1j.server.model.poison.L1DamagePoison;
@@ -645,7 +646,7 @@ public class C_UseItem extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(79));
 					// \f1何も起きませんでした。
 				}
-			} else if (itemId == 43001) { // 男女変更スクロール(オリジナルアイテム)
+			} else if (itemId == 43001) { // 性別変更スクロール(オリジナルアイテム)
 				HashMap<Integer, Integer> maleToFemale = new HashMap<Integer, Integer>();
 				maleToFemale.put(0, 1);
 				maleToFemale.put(61, 48);
@@ -674,21 +675,6 @@ public class C_UseItem extends ClientBasePacket {
 				pc.save();
 				L1PolyMorph.doPoly(pc, pc.getClassId(), 0, L1PolyMorph.MORPH_BY_ITEMMAGIC);
 				pc.getInventory().removeItem(item, 1);
-			} else if (itemId == 43002) { // ユニーク強化スクロール
-				L1ItemInstance target = pc.getInventory().getItem(objid);
-				if ((Config.CAN_USE_UNIQUE_SCROLL_WITHIN_SAFETY
-						&& target.getEnchantLevel() <= target.getItem().getSafeEnchant())
-						|| !Config.CAN_USE_UNIQUE_SCROLL_WITHIN_SAFETY) {
-					target.setUniqueOptions(Config.RATE_MAKE_UNIQUE_ITEMS);
-					pc.getInventory().updateItem(target, L1PcInventory.COL_EQUIPPED);
-					pc.getInventory().saveItem(target);
-					pc.getInventory().removeItem(item, 1);
-					pc.sendPackets(new S_SpMr(pc));
-					pc.sendPackets(new S_OwnCharStatus(pc));
-				} else {
-					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
-					// \f1%0は使用できません。
-				}
 			} else if (itemId == 49168) { // 破壊の秘薬　
 				pc.setSkillEffect(STATUS_DESTRUCTION_NOSTRUM, 600 * 1000);
 				pc.sendPackets(new S_SkillIconAura(221, 600, 6));
@@ -824,6 +810,15 @@ public class C_UseItem extends ClientBasePacket {
 			} else if (item.getItem().getType() == 21) { // 蒸発保護スクロール
 				L1ItemInstance target = pc.getInventory().getItem(objid);
 				L1EnchantProtectScroll scroll = L1EnchantProtectScroll.get(item.getItemId());
+				if (scroll != null) {
+					scroll.use(pc, item, target);
+				} else {
+					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
+					// \f1%0は使用できません。
+				}
+			} else if (item.getItem().getType() == 22) { // ユニーク強化スクロール
+				L1ItemInstance target = pc.getInventory().getItem(objid);
+				L1UniqueEnchantScroll scroll = L1UniqueEnchantScroll.get(item.getItemId());
 				if (scroll != null) {
 					scroll.use(pc, item, target);
 				} else {

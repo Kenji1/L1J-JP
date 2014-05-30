@@ -1661,16 +1661,17 @@ public class L1ItemInstance extends L1Object {
 	}
 
 	public void setUniqueOptions(int uniqueRate) {
+
+		if(_pc == null) {
+			_pc = (L1PcInstance) L1World.getInstance().findObject(getOwnerId());
+		}
+
 		if (uniqueRate <= 0) {
 			return;
 		}
 
 		if (getItem().getType2() != 1 && getItem().getType2() != 2) { // 武器・防具以外
 			return;
-		}
-
-		if(_pc == null) {
-			_pc = (L1PcInstance) L1World.getInstance().findObject(getOwnerId());
 		}
 
 		if (isUnique()) {
@@ -1994,7 +1995,11 @@ public class L1ItemInstance extends L1Object {
 		setIsUnique(isUnique);
 	}
 
-	private void resetUniqueOptions() {
+	public void resetUniqueOptions() {
+
+		if(_pc == null) {
+			_pc = (L1PcInstance) L1World.getInstance().findObject(getOwnerId());
+		}
 
 		if (getAc() > 0) {
 			if (isEquipped()) {
@@ -2202,11 +2207,11 @@ public class L1ItemInstance extends L1Object {
 		setIsUnique(false);
 	}
 
-	private int calcUniqueOption(int n, double ratePct) {
+	public int calcUniqueOption(int n, double ratePct) {
 		int chance = random.nextInt(100) + 1 ;
 
 		if (ratePct >= (double) chance) {
-			return random.nextInt(n);
+			return random.nextInt(n + 1);
 		} else {
 			return 0;
 		}

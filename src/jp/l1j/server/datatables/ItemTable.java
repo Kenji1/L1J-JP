@@ -92,6 +92,7 @@ public class ItemTable {
 		_etcItemTypes.put("spellwand", new Integer(19));
 		_etcItemTypes.put("spellicon", new Integer(20));
 		_etcItemTypes.put("protect_scroll", new Integer(21));
+		_etcItemTypes.put("unique_scroll", new Integer(22));
 
 		_useTypes.put("none", new Integer(-1)); // 使用不可能
 		_useTypes.put("normal", new Integer(0));

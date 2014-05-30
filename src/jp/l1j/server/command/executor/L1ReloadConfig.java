@@ -80,6 +80,7 @@ import jp.l1j.server.model.item.executor.L1SpellItem;
 import jp.l1j.server.model.item.executor.L1TeleportAmulet;
 import jp.l1j.server.model.item.executor.L1ThirdSpeedPotion;
 import jp.l1j.server.model.item.executor.L1TreasureBox;
+import jp.l1j.server.model.item.executor.L1UniqueEnchantScroll;
 import jp.l1j.server.model.item.executor.L1UnknownMaliceWeapon;
 import jp.l1j.server.model.item.executor.L1WisdomPotion;
 import jp.l1j.server.model.map.executor.L1MapLimiter;
@@ -167,6 +168,7 @@ public class L1ReloadConfig implements L1CommandExecutor {
 		L1TeleportAmulet.reload();
 		L1ThirdSpeedPotion.reload();
 		L1TreasureBox.reload();
+		L1UniqueEnchantScroll.reload();
 		L1UnknownMaliceWeapon.reload();
 		L1WisdomPotion.reload();
 		pc.sendPackets(new S_SystemMessage("reload the configs is complete."));

@@ -119,6 +119,7 @@ import jp.l1j.server.model.item.executor.L1SpellItem;
 import jp.l1j.server.model.item.executor.L1TeleportAmulet;
 import jp.l1j.server.model.item.executor.L1ThirdSpeedPotion;
 import jp.l1j.server.model.item.executor.L1TreasureBox;
+import jp.l1j.server.model.item.executor.L1UniqueEnchantScroll;
 import jp.l1j.server.model.item.executor.L1UnknownMaliceWeapon;
 import jp.l1j.server.model.item.executor.L1WisdomPotion;
 import jp.l1j.server.model.map.L1WorldMap;
@@ -374,6 +375,7 @@ public class GameServer extends Thread {
 		L1TeleportAmulet.load();
 		L1ThirdSpeedPotion.load();
 		L1TreasureBox.load();
+		L1UniqueEnchantScroll.load();
 		L1UnknownMaliceWeapon.load();
 		L1WisdomPotion.load();
 		

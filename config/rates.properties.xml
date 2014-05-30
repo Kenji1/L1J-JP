@@ -89,11 +89,6 @@ UNIQUE RATES
 <!-- ユニークアイテムの制作率を % で指定(0 - 100) -->
 <entry key="RateMakeUniqueItems">0</entry>
 
-<!-- ユニークスクロールの使用制限 -->
-<!-- True: 未エンチャントまたは強化安全圏内の装備に対して使用可能 -->
-<!-- False: 装備の強化レベルを問わず使用可能 -->
-<entry key="CanUseUniqueScrollWithinSafety">True</entry>
-
 <!-- 最大付加オプション数 -->
 <!-- オプション数が多すぎるアイテムを所持しているとクライアント落ちする。-->
 <!-- 低めの設定が望ましい。-->
