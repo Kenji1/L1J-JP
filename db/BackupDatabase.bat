@@ -309,7 +309,7 @@ SELECT 'id','clan_id','clan_name','char_name' ^
 UNION SELECT * INTO OUTFILE '%outdir%/%datetime%/clan_applies.csv' ^
 FIELDS TERMINATED BY '%delimiter%' ENCLOSED BY '%enclosed%' ^
 LINES TERMINATED BY '%newline%' ^
-FROM %database%.clans
+FROM %database%.clan_applies
 mysql -u %username% -p%password% -e "%query%" --local-infile=1
 if errorlevel 1 goto ERR
 
@@ -344,7 +344,7 @@ if errorlevel 1 goto ERR
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo %outdir%/%datetime%/clans.csv
 set query=^
-SELECT 'id','name','leader_id','castle_id','house_id' ^
+SELECT 'id','name','leader_id','castle_id','house_id','created_at' ^
 UNION SELECT * INTO OUTFILE '%outdir%/%datetime%/clans.csv' ^
 FIELDS TERMINATED BY '%delimiter%' ENCLOSED BY '%enclosed%' ^
 LINES TERMINATED BY '%newline%' ^
@@ -568,7 +568,8 @@ if errorlevel 1 goto ERR
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 echo %outdir%/%datetime%/mails.csv
 set query=^
-SELECT 'id','type','sender','receiver','date','read_status','subject','content' ^
+SELECT 'id','type','sender','receiver','date','read_status','inbox_id',^
+'subject','content' ^
 UNION SELECT * INTO OUTFILE '%outdir%/%datetime%/mails.csv' ^
 FIELDS TERMINATED BY '%delimiter%' ENCLOSED BY '%enclosed%' ^
 LINES TERMINATED BY '%newline%' ^

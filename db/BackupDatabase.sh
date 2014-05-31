@@ -317,7 +317,7 @@ mysql -u $username -p$password -e "$query" --local-infile=1 || { exit 1; }
 ################################################################################
 echo $outdir/$datetime/clans.csv
 query="\
-SELECT 'id','name','leader_id','castle_id','house_id' \
+SELECT 'id','name','leader_id','castle_id','house_id','created_at' \
 UNION SELECT * INTO OUTFILE '$outdir/$datetime/clans.csv' \
 FIELDS TERMINATED BY '$delimiter' ENCLOSED BY '$enclosed' \
 LINES TERMINATED BY '$newline' \
@@ -525,7 +525,8 @@ mysql -u $username -p$password -e "$query" --local-infile=1 || { exit 1; }
 ################################################################################
 echo $outdir/$datetime/mails.csv
 query="\
-SELECT 'id','type','sender','receiver','date','read_status','subject','content' \
+SELECT 'id','type','sender','receiver','date','read_status','inbox_id'\
+'subject','content' \
 UNION SELECT * INTO OUTFILE '$outdir/$datetime/mails.csv' \
 FIELDS TERMINATED BY '$delimiter' ENCLOSED BY '$enclosed' \
 LINES TERMINATED BY '$newline' \

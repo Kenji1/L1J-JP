@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -61,6 +62,7 @@ public class ClanTable {
 					clan.setLeaderName(CharacterTable.getInstance().getCharName(clan.getLeaderId()));
 					clan.setCastleId(rs.getInt("castle_id"));
 					clan.setHouseId(rs.getInt("house_id"));
+					clan.setCreatedAt(rs.getTimestamp("created_at"));
 					L1World.getInstance().storeClan(clan);
 					_clans.put(clan_id, clan);
 				}
@@ -116,12 +118,13 @@ public class ClanTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO clans SET id=?, name=?, leader_id=?, castle_id=?, house_id=?");
+			pstm = con.prepareStatement("INSERT INTO clans SET id=?, name=?, leader_id=?, castle_id=?, house_id=?, created_at=?");
 			pstm.setInt(1, clan.getClanId());
 			pstm.setString(2, clan.getClanName());
 			pstm.setInt(3, clan.getLeaderId());
 			pstm.setInt(4, clan.getCastleId());
 			pstm.setInt(5, clan.getHouseId());
+			pstm.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -149,12 +152,13 @@ public class ClanTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE clans SET id=?, leader_id=?, castle_id=?, house_id=? WHERE name=?");
+			pstm = con.prepareStatement("UPDATE clans SET id=?, leader_id=?, castle_id=?, house_id=?, created_at=? WHERE name=?");
 			pstm.setInt(1, clan.getClanId());
 			pstm.setInt(2, clan.getLeaderId());
 			pstm.setInt(3, clan.getCastleId());
 			pstm.setInt(4, clan.getHouseId());
 			pstm.setString(5, clan.getClanName());
+			pstm.setTimestamp(6, clan.getCreatedAt());
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

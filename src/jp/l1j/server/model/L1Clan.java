@@ -15,6 +15,7 @@
 
 package jp.l1j.server.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +47,8 @@ public class L1Clan {
 	private int _houseId;
 
 	private int _warehouse = 0;
+	
+	private Timestamp _createdAt;
 
 	private final L1WarehouseInventory _clanWarehouse;
 
@@ -99,6 +102,14 @@ public class L1Clan {
 
 	public void setHouseId(int houseId) {
 		_houseId = houseId;
+	}
+
+	public Timestamp getCreatedAt() {
+		return _createdAt;
+	}
+
+	public void setCreatedAt(Timestamp createdAt) {
+		_createdAt = createdAt;
 	}
 
 	public void addMemberName(String memberName) {
