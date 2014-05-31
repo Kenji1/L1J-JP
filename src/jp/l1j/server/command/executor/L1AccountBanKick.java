@@ -17,6 +17,7 @@ package jp.l1j.server.command.executor;
 
 import java.util.logging.Logger;
 import static jp.l1j.locale.I18N.*;
+import jp.l1j.server.datatables.CharacterTable;
 import jp.l1j.server.model.L1World;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.packets.server.S_Disconnect;
@@ -37,12 +38,15 @@ public class L1AccountBanKick implements L1CommandExecutor {
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		try {
 			L1PcInstance target = L1World.getInstance().getPlayer(arg);
+			if (target == null) {
+				target = CharacterTable.getInstance().restoreCharacter(arg);
+			}
 
 			if (target != null) {
 				// アカウントをBANする
 				L1Account.ban(target.getAccountName());
-				pc.sendPackets(new S_SystemMessage(String.format(I18N_ACCOUNT_BAN,
-						target.getName())));
+					pc.sendPackets(new S_SystemMessage(String.format(I18N_ACCOUNT_BAN,
+									target.getName())));
 				// %s をBANしました。
 				target.sendPackets(new S_Disconnect());
 			} else {
