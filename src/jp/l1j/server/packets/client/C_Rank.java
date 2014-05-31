@@ -50,6 +50,14 @@ public class C_Rank extends ClientBasePacket {
 			if (pc == null) {
 				return;
 			}
+			if (targetPc == null) {
+				targetPc = CharacterTable.getInstance().restoreCharacter(name);
+				if (targetPc == null) {
+					pc.sendPackets(new S_ServerMessage(109, name));
+					// %0という名前の人はいません。
+					return;
+				}
+			}
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanName());
 			if (clan == null) {
 				return;
@@ -100,33 +108,20 @@ public class C_Rank extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(2068)); // 自分より低いランクのみ変更できます。
 				return;
 			}
-			if (targetPc != null) { // オンライン中
-				if (pc.getClanId() == targetPc.getClanId()) { // 同じクラン
-					try {
-						targetPc.setClanRank(rank);
-						targetPc.save(); // DBにキャラクター情報を書き込む
+			if (pc.getClanId() == targetPc.getClanId()) { // 同じクラン
+				try {
+					targetPc.setClanRank(rank);
+					targetPc.save(); // DBにキャラクター情報を書き込む
+					if (targetPc.getOnlineStatus() == 1) {
 						targetPc.sendPackets(new S_PacketBox(S_PacketBox.MSG_RANK_CHANGED, rank));
 						// あなたのランクが%sに変更されました。
-					} catch (Exception e) {
-						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 					}
-				} else {
-					pc.sendPackets(new S_ServerMessage(414)); // 同じ血盟員ではありません。
-					return;
+				} catch (Exception e) {
+					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
-			} else { // オフライン中
-				L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(name);
-				if (restorePc != null && restorePc.getClanId() == pc.getClanId()) { // 同じクラン
-					try {
-						restorePc.setClanRank(rank);
-						restorePc.save(); // DBにキャラクター情報を書き込む
-					} catch (Exception e) {
-						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-					}
-				} else {
-					pc.sendPackets(new S_ServerMessage(109, name)); // %0という名前の人はいません。
-					return;
-				}
+			} else {
+				pc.sendPackets(new S_ServerMessage(414)); // 同じ血盟員ではありません。
+				return;
 			}
 		} else if (data == 2) {
 			pc.sendPackets(new S_ServerMessage(74, I18N_CLAN_LIST)); // 血盟リスト
