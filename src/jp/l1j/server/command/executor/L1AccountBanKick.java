@@ -48,7 +48,9 @@ public class L1AccountBanKick implements L1CommandExecutor {
 					pc.sendPackets(new S_SystemMessage(String.format(I18N_ACCOUNT_BAN,
 									target.getName())));
 				// %s をBANしました。
-				target.sendPackets(new S_Disconnect());
+				if (target.getOnlineStatus() == 1) {
+					target.sendPackets(new S_Disconnect());
+				}
 			} else {
 				pc.sendPackets(new S_SystemMessage(String.format(I18N_DOES_NOT_EXIST_CHAR, arg)));
 				// %s はゲームワールド内に存在しません。
