@@ -1984,9 +1984,9 @@ public class L1ItemInstance extends L1Object {
 			} else if (option == OPT_AC) {
 				res = calcUniqueOption(Config.UNIQUE_MAX_AC, uniqueRate);
 				if (res > 0) {
-					setAc(res);
+					setAc(-res);
 					if (isEquipped()) {
-						_pc.addAc(res);
+						_pc.addAc(-res);
 					}
 					isUnique = true;
 				}
@@ -2001,7 +2001,7 @@ public class L1ItemInstance extends L1Object {
 			_pc = (L1PcInstance) L1World.getInstance().findObject(getOwnerId());
 		}
 
-		if (getAc() > 0) {
+		if (getAc() < 0) {
 			if (isEquipped()) {
 				_pc.addAc(-getAc());
 			}

@@ -403,9 +403,9 @@ public class L1UniqueEnchantScroll {
 		if (effect.getAc() > 0 && target.getItem().getType2() == 2) { // 防具のみ
 			res = target.calcUniqueOption(effect.getAc(), rate);
 			if (res > 0) {
-				target.setAc(res);
+				target.setAc(-res);
 				if (target.isEquipped()) { // 装備中
-					pc.addAc(res);
+					pc.addAc(-res);
 				}
 				target.setIsUnique(true);
 			}
