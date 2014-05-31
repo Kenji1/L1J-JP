@@ -298,10 +298,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- jp/l1j/server/model/L1Clan.java -->
 <entry key="ClanLeader">[君主]</entry>
-<entry key="ClanSubLeader">[福君主]</entry>
+<entry key="ClanSubLeader">[副君主]</entry>
 <entry key="ClanGuardian">[ガーディアン]</entry>
-<entry key="ClanElite">[エリート]</entry>
-<entry key="ClanRegular">[一般]</entry>
+<entry key="ClanElite">[一般]</entry>
+<entry key="ClanRegular">[修練]</entry>
 
 <!-- jp/l1j/server/model/L1DeleteItemOnGround.java -->
 <entry key="RemoveItemsAfterFewSeconds">ワールドマップ上のアイテムが、%d秒後に削除されます。.</entry>

@@ -29,8 +29,8 @@ public class L1Clan {
 	public static final int CLAN_RANK_LEADER = 4;	// 君主
 	public static final int CLAN_RANK_SUBLEADER = 3; // 副君主
 	public static final int CLAN_RANK_GUARDIAN = 6; // ガーディアン
-	public static final int CLAN_RANK_ELITE = 5;	// エリート
-	public static final int CLAN_RANK_REGULAR = 2;  // 一般血盟員
+	public static final int CLAN_RANK_ELITE = 5;	// 一般
+	public static final int CLAN_RANK_REGULAR = 2;  // 修練
 
 	private static Logger _log = Logger.getLogger(L1Clan.class.getName());
 
@@ -185,9 +185,9 @@ public class L1Clan {
 		String rank = "";
 		if (pc != null) {
 			if (pc.getClanRank() == CLAN_RANK_REGULAR) {
-				rank = I18N_CLAN_REGULAR; // [一般]
+				rank = I18N_CLAN_REGULAR; // [修練]
 			} else if (pc.getClanRank() == CLAN_RANK_ELITE) {
-				rank = I18N_CLAN_ELITE; // [エリート]
+				rank = I18N_CLAN_ELITE; // [一般]
 			} else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
 				rank = I18N_CLAN_GUARDIAN; // [ガーディアン]
 			} else if (pc.getClanRank() == CLAN_RANK_SUBLEADER) {

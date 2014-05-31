@@ -58,7 +58,7 @@ public class C_Rank extends ClientBasePacket {
 					&& rank != L1Clan.CLAN_RANK_GUARDIAN
 					&& rank != L1Clan.CLAN_RANK_ELITE
 					&& rank != L1Clan.CLAN_RANK_REGULAR) {
-				// ランクを変更する人の名前とランクを入力してください。[ランク = ガーディアン、エリート、一般]
+				// ランクを変更する人の名前とランクを入力してください。[ランク = ガーディアン、一般、修練]
 				pc.sendPackets(new S_ServerMessage(2150));
 				return;
 			}
@@ -76,7 +76,7 @@ public class C_Rank extends ClientBasePacket {
 			}
 			if (pcRank == L1Clan.CLAN_RANK_ELITE
 					|| pcRank == L1Clan.CLAN_RANK_REGULAR
-				// エリート、一般は、階級任命の権限はない
+				// 一般、修練は、階級任命の権限はない
 				|| (pcRank == L1Clan.CLAN_RANK_LEADER
 					&& rank == L1Clan.CLAN_RANK_LEADER)
 				|| (pcRank == L1Clan.CLAN_RANK_SUBLEADER
