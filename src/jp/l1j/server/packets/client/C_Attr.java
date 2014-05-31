@@ -19,6 +19,7 @@ import java.io.File;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import jp.l1j.configure.Config;
 import jp.l1j.server.ClientThread;
 import jp.l1j.server.controller.timer.WarTimeController;
@@ -172,29 +173,20 @@ public class C_Attr extends ClientBasePacket {
 			clan = L1World.getInstance().getClan(clan_name);
 			clan_member_name = clan.getAllMembers();
 			for (i = 0; i < clan_member_name.length; i++) { // クラン員のクラン情報をクリア
-				L1PcInstance online_pc = L1World.getInstance().getPlayer(clan_member_name[i]);
-				if (online_pc != null) { // オンライン中のクラン員
-					online_pc.setClanid(0);
-					online_pc.setClanname("");
-					online_pc.setClanRank(0);
-					online_pc.setTitle("");
-					online_pc.sendPackets(new S_CharTitle(online_pc.getId(), ""));
-					online_pc.broadcastPacket(new S_CharTitle(online_pc.getId(), ""));
-					online_pc.save(); // DBにキャラクター情報を書き込む
-					online_pc.sendPackets(new S_ServerMessage(269, pc.getName(), clan_name));
+				L1PcInstance target = L1World.getInstance().getPlayer(clan_member_name[i]);
+				if (target == null) {
+					target = CharacterTable.getInstance().restoreCharacter(clan_member_name[i]);
+				}
+				target.setClanid(0);
+				target.setClanname("");
+				target.setClanRank(0);
+				target.setTitle("");
+				target.save(); // DBにキャラクター情報を書き込む
+				if (target.getOnlineStatus() == 1) {
+					target.sendPackets(new S_CharTitle(target.getId(), ""));
+					target.broadcastPacket(new S_CharTitle(target.getId(), ""));
+					target.sendPackets(new S_ServerMessage(269, pc.getName(), clan_name));
 					// %1血盟の血盟主%0が血盟を解散させました。
-				} else { // オフライン中のクラン員
-					try {
-						L1PcInstance offline_pc = CharacterTable.getInstance().restoreCharacter(
-										clan_member_name[i]);
-						offline_pc.setClanid(0);
-						offline_pc.setClanname("");
-						offline_pc.setClanRank(0);
-						offline_pc.setTitle("");
-						offline_pc.save(); // DBにキャラクター情報を書き込む
-					} catch (Exception e) {
-						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-					}
 				}
 			}
 			String emblem_file = String.valueOf(pc.getClanId());
@@ -709,36 +701,38 @@ public class C_Attr extends ClientBasePacket {
 		clan.delMemberName(leavePc.getName());
 	}
 	
-	private void changeClan(ClientThread clientthread,
-			L1PcInstance pc, L1PcInstance joinPc, int maxMember) {
-		int clanId = pc.getClanId();
-		String clanName = pc.getClanName();
-		L1Clan clan = L1World.getInstance().getClan(clanName);
-		String clanMemberName[] = clan.getAllMembers();
-		int clanNum = clanMemberName.length;
+	private void changeClan(ClientThread clientthread, L1PcInstance pc,
+					L1PcInstance joinPc, int maxMember) {
+		try {
+			int clanId = pc.getClanId();
+			String clanName = pc.getClanName();
+			L1Clan clan = L1World.getInstance().getClan(clanName);
+			String clanMemberName[] = clan.getAllMembers();
+			int clanNum = clanMemberName.length;
 
-		int oldClanId = joinPc.getClanId();
-		String oldClanName = joinPc.getClanName();
-		L1Clan oldClan = L1World.getInstance().getClan(oldClanName);
-		String oldClanMemberName[] = oldClan.getAllMembers();
-		int oldClanNum = oldClanMemberName.length;
-		if (clan != null && oldClan != null && joinPc.isCrown() && // 自分が君主
-				joinPc.getId() == oldClan.getLeaderId()) {
-			if (maxMember < clanNum + oldClanNum) { // 空きがない
-				joinPc.sendPackets( // %0はあなたを血盟員として受け入れることができません。
-						new S_ServerMessage(188, pc.getName()));
-				return;
-			}
-			L1PcInstance clanMember[] = clan.getOnlineClanMember();
-			for (int cnt = 0; cnt < clanMember.length; cnt++) {
-				clanMember[cnt].sendPackets(new S_ServerMessage(94, joinPc
-						.getName())); // \f1%0が血盟の一員として受け入れられました。
-			}
+			int oldClanId = joinPc.getClanId();
+			String oldClanName = joinPc.getClanName();
+			L1Clan oldClan = L1World.getInstance().getClan(oldClanName);
+			String oldClanMemberName[] = oldClan.getAllMembers();
+			int oldClanNum = oldClanMemberName.length;
+			if (clan != null && oldClan != null && joinPc.isCrown() && // 自分が君主
+					joinPc.getId() == oldClan.getLeaderId()) {
+				if (maxMember < clanNum + oldClanNum) { // 空きがない
+					joinPc.sendPackets( // %0はあなたを血盟員として受け入れることができません。
+							new S_ServerMessage(188, pc.getName()));
+					return;
+				}
+				L1PcInstance clanMember[] = clan.getOnlineClanMember();
+				for (int cnt = 0; cnt < clanMember.length; cnt++) {
+					clanMember[cnt].sendPackets(new S_ServerMessage(94, joinPc
+							.getName())); // \f1%0が血盟の一員として受け入れられました。
+				}
 
-			for (int i = 0; i < oldClanMemberName.length; i++) {
-				L1PcInstance oldClanMember = L1World.getInstance().getPlayer(
-						oldClanMemberName[i]);
-				if (oldClanMember != null) { // オンライン中の旧クランメンバー
+				for (int i = 0; i < oldClanMemberName.length; i++) {
+					L1PcInstance oldClanMember = L1World.getInstance().getPlayer(oldClanMemberName[i]);
+					if (oldClanMember == null) {
+						oldClanMember = CharacterTable.getInstance().restoreCharacter(oldClanMemberName[i]);
+					}
 					oldClanMember.setClanid(clanId);
 					oldClanMember.setClanname(clanName);
 					// 血盟連合に加入した君主は、副君主
@@ -750,38 +744,23 @@ public class C_Attr extends ClientBasePacket {
 					}
 					oldClanMember.setTitle("");
 					oldClanMember.setRejoinClanTime(null);
-					oldClanMember.sendPackets(new S_CharTitle(joinPc.getId(), ""));
-					oldClanMember.broadcastPacket(new S_CharTitle(joinPc.getId(), ""));
-					try {
-						// DBにキャラクター情報を書き込む
-						oldClanMember.save();
-					} catch (Exception e) {
-						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-					}
+					oldClanMember.save();
 					clan.addMemberName(oldClanMember.getName());
-					oldClanMember.sendPackets(new S_ServerMessage(95,
-							clanName)); // \f1%0血盟に加入しました。
-				} else { // オフライン中の旧クランメンバー
-					try {
-						L1PcInstance offClanMember = CharacterTable
-										.getInstance().restoreCharacter(oldClanMemberName[i]);
-						offClanMember.setClanid(clanId);
-						offClanMember.setClanname(clanName);
-						offClanMember.setClanRank(L1Clan.CLAN_RANK_REGULAR);
-						offClanMember.setTitle("");
-						offClanMember.setRejoinClanTime(null);
-						offClanMember.save(); // DBにキャラクター情報を書き込む
-						clan.addMemberName(offClanMember.getName());
-					} catch (Exception e) {
-						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+					if (oldClanMember.getOnlineStatus() == 1) {
+						oldClanMember.sendPackets(new S_CharTitle(joinPc.getId(), ""));
+						oldClanMember.broadcastPacket(new S_CharTitle(joinPc.getId(), ""));
+						oldClanMember.sendPackets(new S_ServerMessage(95, clanName));
+						// \f1%0血盟に加入しました。
 					}
 				}
+				// 旧クラン削除
+				String emblem_file = String.valueOf(oldClanId);
+				File file = new File("emblem/" + emblem_file);
+				file.delete();
+				ClanTable.getInstance().deleteClan(oldClanName);
 			}
-			// 旧クラン削除
-			String emblem_file = String.valueOf(oldClanId);
-			File file = new File("emblem/" + emblem_file);
-			file.delete();
-			ClanTable.getInstance().deleteClan(oldClanName);
+		} catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
 
