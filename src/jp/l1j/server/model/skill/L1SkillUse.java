@@ -1429,8 +1429,7 @@ public class L1SkillUse {
 						_player.sendPackets(gfx);
 						_player.broadcastPacket(gfx);
 					}
-					if (_skillId == COUNTER_BARRIER
-							|| _skillId == COUNTER_MIRROR) {
+					if (_skillId == COUNTER_MIRROR) {
 						_player
 						.sendPackets(new S_SkillSound(targetid, castgfx));
 					} else if (_skillId == TRUE_TARGET) { // トゥルーターゲットは個別処理で送信済
