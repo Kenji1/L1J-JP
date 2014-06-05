@@ -568,8 +568,7 @@ public class L1NpcInstance extends L1Character {
 		if (isCounterBarrier) {
 			attack.actionCounterBarrier();
 			attack.commitCounterBarrier();
-		}
-		if (isStormBarrier) {
+		} else if (isStormBarrier) {
 			attack.actionStormBarrier();
 			attack.commitStormBarrier();
 		} else {
