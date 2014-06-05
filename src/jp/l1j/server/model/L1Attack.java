@@ -2088,6 +2088,8 @@ public class L1Attack {
 					ActionCodes.ACTION_Damage));
 			_pc.broadcastPacket(new S_DoActionGFX(_pc.getId(),
 					ActionCodes.ACTION_Damage));
+			_targetPc.sendPackets(new S_SkillSound(_targetPc.getId(), 10710));
+			_targetPc.broadcastPacket(new S_SkillSound(_targetPc.getId(), 10710));
 		} else if (_calcType == NPC_PC) {
 			int actId = 0;
 			_npc.setHeading(_npc.targetDirection(_targetX, _targetY)); // 向きのセット
@@ -2107,6 +2109,8 @@ public class L1Attack {
 			}
 			_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(),
 					ActionCodes.ACTION_Damage));
+			_targetPc.sendPackets(new S_SkillSound(_targetPc.getId(), 10710));
+			_targetPc.broadcastPacket(new S_SkillSound(_targetPc.getId(), 10710));
 		}
 	}
 
