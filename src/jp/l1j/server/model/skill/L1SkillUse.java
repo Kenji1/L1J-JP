@@ -1429,13 +1429,16 @@ public class L1SkillUse {
 						_player.sendPackets(gfx);
 						_player.broadcastPacket(gfx);
 					}
-					if (_skillId == TRUE_TARGET) { // トゥルーターゲットは個別処理で送信済
+					if (_skillId == COUNTER_MAGIC
+							|| _skillId == COUNTER_BARRIER
+							|| _skillId == COUNTER_MIRROR) {
+						_player.sendPackets(new S_SkillSound(targetid, castgfx));
+					} else if (_skillId == TRUE_TARGET) {
+						// トゥルーターゲットは個別処理で送信済
 						return;
 					} else {
-						_player
-						.sendPackets(new S_SkillSound(targetid, castgfx));
-						_player.broadcastPacket(new S_SkillSound(targetid,
-								castgfx));
+						_player.sendPackets(new S_SkillSound(targetid, castgfx));
+						_player.broadcastPacket(new S_SkillSound(targetid, castgfx));
 					}
 				}
 
