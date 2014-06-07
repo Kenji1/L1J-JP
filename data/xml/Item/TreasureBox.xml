@@ -315,6 +315,122 @@
     <Item ItemId="40395" Count="1" Chance="0.1" />
     <!-- ブルー ドラゴンの鱗 -->
   </TreasureBox>
+  <!--カリフの最高級福袋 ダイアモンド-->
+  <TreasureBox Type="RANDOM" ItemId="49001">
+    <Item ItemId="40019" Count="5" Chance="24.2" />
+    <!-- 濃縮体力回復剤 -->
+    <Item ItemId="40020" Count="5" Chance="9.8" />
+    <!-- 濃縮高級体力回復剤 -->
+    <Item ItemId="40021" Count="5" Chance="4.7" />
+    <!-- 濃縮強力体力回復剤 -->
+    <Item ItemId="40304" Count="1" Chance="4.6" />
+    <!-- マーブルの遺産 -->
+    <Item ItemId="40320" Count="1" Chance="24.2" />
+    <!-- 黒魔石 -->
+    <Item ItemId="40468" Count="1" Chance="4.5" />
+    <!--シルバーのピース-->
+    <Item ItemId="40489" Count="1" Chance="2.3" />
+    <!-- ゴールドのピース -->    
+    <Item ItemId="40441" Count="1" Chance="2.2" />
+    <!-- プラチナのピース -->
+    <Item ItemId="40444" Count="1" Chance="11.5" />
+    <!--ブラックミスリル原石-->
+    <Item ItemId="40458" Count="1" Chance="8.6" />
+    <!-- シャイニング スケイル -->
+    <Item ItemId="40513" Count="1" Chance="0.2" />
+    <!-- オーガの血 -->    
+    <Item ItemId="40460" Count="1" Chance="3.1" />
+    <!-- アシタジオの灰 -->
+    <Item ItemId="40396" Count="1" Chance="0.1" />
+    <!-- グリーン ドラゴンの鱗 -->
+  </TreasureBox>
+  <!--カリフの最高級福袋 ルビー-->
+  <TreasureBox Type="RANDOM" ItemId="49003">
+    <Item ItemId="40019" Count="5" Chance="24.2" />
+    <!-- 濃縮体力回復剤 -->
+    <Item ItemId="40020" Count="5" Chance="9.8" />
+    <!-- 濃縮高級体力回復剤 -->
+    <Item ItemId="40021" Count="5" Chance="4.7" />
+    <!-- 濃縮強力体力回復剤 -->
+    <Item ItemId="40305" Count="1" Chance="4.6" />
+    <!-- ファアグリオの遺産 -->
+    <Item ItemId="40320" Count="1" Chance="24.2" />
+    <!-- 黒魔石 -->
+    <Item ItemId="40468" Count="1" Chance="4.5" />
+    <!--シルバーのピース-->
+    <Item ItemId="40489" Count="1" Chance="2.3" />
+    <!-- ゴールドのピース -->    
+    <Item ItemId="40441" Count="1" Chance="2.2" />
+    <!-- プラチナのピース -->
+    <Item ItemId="40444" Count="1" Chance="11.5" />
+    <!--ブラックミスリル原石-->
+    <Item ItemId="40458" Count="1" Chance="8.6" />
+    <!-- シャイニング スケイル -->
+    <Item ItemId="40513" Count="1" Chance="0.2" />
+    <!-- オーガの血 -->    
+    <Item ItemId="40460" Count="1" Chance="3.1" />
+    <!-- アシタジオの灰 -->
+    <Item ItemId="40393" Count="1" Chance="0.1" />
+    <!-- レッド ドラゴンの鱗 -->
+  </TreasureBox>
+  <!--カリフの最高級福袋 サファイア-->
+  <TreasureBox Type="RANDOM" ItemId="49004">
+    <Item ItemId="40019" Count="5" Chance="24.2" />
+    <!-- 濃縮体力回復剤 -->
+    <Item ItemId="40020" Count="5" Chance="9.8" />
+    <!-- 濃縮高級体力回復剤 -->
+    <Item ItemId="40021" Count="5" Chance="4.7" />
+    <!-- 濃縮強力体力回復剤 -->
+    <Item ItemId="40307" Count="1" Chance="4.6" />
+    <!-- サイハの遺産 -->
+    <Item ItemId="40320" Count="1" Chance="24.2" />
+    <!-- 黒魔石 -->
+    <Item ItemId="40468" Count="1" Chance="4.5" />
+    <!--シルバーのピース-->
+    <Item ItemId="40489" Count="1" Chance="2.3" />
+    <!-- ゴールドのピース -->    
+    <Item ItemId="40441" Count="1" Chance="2.2" />
+    <!-- プラチナのピース -->
+    <Item ItemId="40444" Count="1" Chance="11.5" />
+    <!--ブラックミスリル原石-->
+    <Item ItemId="40458" Count="1" Chance="8.6" />
+    <!-- シャイニング スケイル -->
+    <Item ItemId="40513" Count="1" Chance="0.2" />
+    <!-- オーガの血 -->    
+    <Item ItemId="40460" Count="1" Chance="3.1" />
+    <!-- アシタジオの灰 -->
+    <Item ItemId="40394" Count="1" Chance="0.1" />
+    <!-- ホワイト ドラゴンの鱗 -->
+  </TreasureBox>
+  <!--カリフの最高級福袋 エメラルド-->
+  <TreasureBox Type="RANDOM" ItemId="49002">
+    <Item ItemId="40019" Count="5" Chance="24.2" />
+    <!-- 濃縮体力回復剤 -->
+    <Item ItemId="40020" Count="5" Chance="9.8" />
+    <!-- 濃縮高級体力回復剤 -->
+    <Item ItemId="40021" Count="5" Chance="4.7" />
+    <!-- 濃縮強力体力回復剤 -->
+    <Item ItemId="40306" Count="1" Chance="4.6" />
+    <!-- エヴァの遺産 -->
+    <Item ItemId="40320" Count="1" Chance="24.2" />
+    <!-- 黒魔石 -->
+    <Item ItemId="40468" Count="1" Chance="4.5" />
+    <!--シルバーのピース-->
+    <Item ItemId="40489" Count="1" Chance="2.3" />
+    <!-- ゴールドのピース -->    
+    <Item ItemId="40441" Count="1" Chance="2.2" />
+    <!-- プラチナのピース -->
+    <Item ItemId="40444" Count="1" Chance="11.5" />
+    <!--ブラックミスリル原石-->
+    <Item ItemId="40458" Count="1" Chance="8.6" />
+    <!-- シャイニング スケイル -->
+    <Item ItemId="40513" Count="1" Chance="0.2" />
+    <!-- オーガの血 -->    
+    <Item ItemId="40460" Count="1" Chance="3.1" />
+    <!-- アシタジオの灰 -->
+    <Item ItemId="40395" Count="1" Chance="0.1" />
+    <!-- ブルー ドラゴンの鱗 -->
+  </TreasureBox>
   <!--ドルーガ家1世の家宝-->
   <TreasureBox Type="RANDOM" ItemId="40623">
     <Item ItemId="40308" Count="1000000" Chance="9" />

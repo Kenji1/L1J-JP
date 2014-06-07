@@ -1235,6 +1235,34 @@
 			<Material Amount="1" ItemId="40050"/>
 		</MakeItem>
 	</Action>
+	<!--カリフの最高級福袋 最高級ダイア / カリフ-->
+	<Action Name="request karif bag9">
+		<MakeItem>
+			<Item Amount="1" ItemId="49001"/>
+			<Material Amount="1" ItemId="40052"/>
+		</MakeItem>
+	</Action>
+	<!--カリフの最高級福袋 最高級エメラルド / カリフ-->
+	<Action Name="request karif bag10">
+		<MakeItem>
+			<Item Amount="1" ItemId="49002"/>
+			<Material Amount="1" ItemId="40055"/>
+		</MakeItem>
+	</Action>
+	<!--カリフの最高級福袋 最高級ルビー / カリフ-->
+	<Action Name="request karif bag11">
+		<MakeItem>
+			<Item Amount="1" ItemId="49003"/>
+			<Material Amount="1" ItemId="40053"/>
+		</MakeItem>
+	</Action>
+	<!--カリフの最高級福袋 最高級サファイア / カリフ-->
+	<Action Name="request karif bag12">
+		<MakeItem>
+			<Item Amount="1" ItemId="49004"/>
+			<Material Amount="1" ItemId="40054"/>
+		</MakeItem>
+	</Action>
 	<!--シャイニング ボディベルト / リュミエール-->
 	<Action Name="request bright belt of body">
 		<MakeItem>
