@@ -1008,8 +1008,7 @@ public class L1WeaponSkill {
 		// カウンターマジック判定
 		if (cha.hasSkillEffect(COUNTER_MAGIC)) {
 			cha.removeSkillEffect(COUNTER_MAGIC);
-			int castgfx = SkillTable.getInstance().findBySkillId(COUNTER_MAGIC)
-					.getCastGfx2();
+			int castgfx = 10702;
 			cha.broadcastPacket(new S_SkillSound(cha.getId(), castgfx));
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
