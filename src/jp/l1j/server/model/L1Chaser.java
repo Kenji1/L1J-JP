@@ -57,7 +57,7 @@ public class L1Chaser extends TimerTask {
 			if (_cha.hasSkillEffect(COUNTER_MAGIC)) {
 				_cha.removeSkillEffect(COUNTER_MAGIC);
 				int castgfx = SkillTable.getInstance().findBySkillId(
-						COUNTER_MAGIC).getCastGfx();
+						COUNTER_MAGIC).getCastGfx2();
 				_cha.broadcastPacket(new S_SkillSound(_cha.getId(), castgfx));
 				if (_cha instanceof L1PcInstance) {
 					L1PcInstance pc = (L1PcInstance) _cha;
