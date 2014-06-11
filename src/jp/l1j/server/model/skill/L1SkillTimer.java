@@ -365,8 +365,7 @@ class L1SkillStop {
 						false));
 			}
 		} else if (skillId == ICE_LANCE // アイスランス
-				|| skillId == FREEZING_BLIZZARD // フリージングブリザード
-				|| skillId == EYE_OF_DRAGON) { // アイオブドラゴン
+				|| skillId == FREEZING_BLIZZARD) { // フリージングブリザード
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Poison(pc.getId(), 0));

@@ -688,18 +688,13 @@ public class L1SkillUse {
 		}
 
 		if (cha.hasSkillEffect(ICE_LANCE)
-				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == EYE_OF_DRAGON)) {
-			return false; // アイスランス中にアイスランス、フリージングブリザード、アイオブドラゴン
+				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD)) {
+			return false; // アイスランス中にアイスランス、フリージングブリザード
 		}
 
 		if (cha.hasSkillEffect(FREEZING_BLIZZARD)
-				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == EYE_OF_DRAGON)) {
-			return false; // フリージングブリザード中にアイスランス、フリージングブリザード、アイオブドラゴン
-		}
-
-		if (cha.hasSkillEffect(EYE_OF_DRAGON)
-				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == EYE_OF_DRAGON)) {
-			return false; // アイオブドラゴン中にアイスランス、フリージングブリザード、アイオブドラゴン
+				&& (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD)) {
+			return false; // フリージングブリザード中にアイスランス、フリージングブリザード
 		}
 
 		if (cha.hasSkillEffect(EARTH_BIND) && _skillId == EARTH_BIND) {
@@ -712,10 +707,6 @@ public class L1SkillUse {
 
 		if (cha.hasSkillEffect(EARTH_BIND) && _skillId == CONFUSION) {
 			return false; // アース バインド中にコンフュージョン
-		}
-
-		if (cha.hasSkillEffect(EARTH_BIND) && _skillId == EYES_BREAKER) {
-			return false; // アース バインド中にアイズブレイカ―
 		}
 
 		if (cha.hasSkillEffect(FOG_OF_SLEEPING) && _skillId == PHANTASM) {
@@ -758,6 +749,7 @@ public class L1SkillUse {
 						|| _skillId == CANCELLATION || _skillId == MASS_CANCELLATION
 						|| _skillId == SILENCE || _skillId == DECAY_POTION
 						|| _skillId == MASS_TELEPORT || _skillId == DETECTION
+						|| _skillId == EYE_OF_DRAGON || _skillId == EYES_BREAKER
 						|| _skillId == COUNTER_DETECTION
 						|| _skillId == ERASE_MAGIC || _skillId == ENTANGLE
 						|| _skillId == PHYSICAL_ENCHANT_DEX
@@ -775,7 +767,8 @@ public class L1SkillUse {
 		if (cha instanceof L1NpcInstance) {
 			int hiddenStatus = ((L1NpcInstance) cha).getHiddenStatus();
 			if (hiddenStatus == L1NpcInstance.HIDDEN_STATUS_SINK) {
-				if (_skillId == DETECTION || _skillId == COUNTER_DETECTION) { // ディテク、Cディテク
+				if (_skillId == DETECTION || _skillId == COUNTER_DETECTION
+						|| _skillId == EYE_OF_DRAGON || _skillId == EYES_BREAKER) {
 					return true;
 				} else {
 					return false;
@@ -861,7 +854,7 @@ public class L1SkillUse {
 				return;
 			}
 
-			if (_skillId == LIGHTNING || _skillId == EYE_OF_DRAGON) { // ライトニング、アイオブドラゴン直線的に範囲を決める
+			if (_skillId == LIGHTNING) { // ライトニング 直線的に範囲を決める
 				ArrayList<L1Object> al1object = L1World.getInstance()
 						.getVisibleLineObjects(_user, _target);
 
@@ -1193,7 +1186,7 @@ public class L1SkillUse {
 				|| _skillId == SHADOW_FANG) {
 			return;
 		}
-		if ((_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD || _skillId == EYE_OF_DRAGON)
+		if ((_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD)
 				&& !_isFreeze) { // 凍結失敗
 			return;
 		}
@@ -1326,10 +1319,6 @@ public class L1SkillUse {
 			}
 
 			if (_skillId == SMASH_ENERGY) {
-				return;
-			}
-
-			if (_skillId == EYES_BREAKER) {
 				return;
 			}
 
@@ -1630,7 +1619,6 @@ public class L1SkillUse {
 		// とりあえずPCが使用した時のみ
 		if ((_skillId == SHOCK_STUN || _skillId == BONE_BREAK || _skillId == MASS_SHOCK_STUN)
 				|| _skillId == SMASH_ENERGY
-				|| _skillId == EYES_BREAKER
 				&& _user instanceof L1PcInstance) {
 			_target.onAction(_player, _skillId);
 		}
@@ -1760,8 +1748,7 @@ public class L1SkillUse {
 				// すでにスキルを使用済みの場合なにもしない
 				// ただしショックスタンは重ねがけ出来るため例外
 				if (cha.hasSkillEffect(_skillId) && _skillId != SHOCK_STUN
-						&& _skillId != BONE_BREAK && _skillId != EYES_BREAKER
-						&& _skillId != MASS_SHOCK_STUN) {
+						&& _skillId != BONE_BREAK && _skillId != MASS_SHOCK_STUN) {
 					addMagicList(cha, true); // ターゲットに魔法の効果時間を上書き
 					if (_skillId != SHAPE_CHANGE) { // シェイプ チェンジは変身を上書き出来るため例外
 						continue;
@@ -1917,7 +1904,9 @@ public class L1SkillUse {
 							}
 						}
 					}
-				} else if (_skillId == DETECTION) { // ディテクション
+				} else if (_skillId == DETECTION || _skillId == EYE_OF_DRAGON
+								|| _skillId == EYES_BREAKER) {
+					// ディテクション、アイ オブ ドラゴン、アイズ ブレーカー
 					if (cha instanceof L1NpcInstance) {
 						L1NpcInstance npc = (L1NpcInstance) cha;
 						int hiddenStatus = npc.getHiddenStatus();
@@ -2096,8 +2085,7 @@ public class L1SkillUse {
 						|| _skillId == CURSE_PARALYZE2) {
 					if (!cha.hasSkillEffect(EARTH_BIND)
 							&& !cha.hasSkillEffect(ICE_LANCE)
-							&& !cha.hasSkillEffect(FREEZING_BLIZZARD)
-							&& !cha.hasSkillEffect(EYE_OF_DRAGON)) {
+							&& !cha.hasSkillEffect(FREEZING_BLIZZARD)) {
 						if (cha instanceof L1PcInstance) {
 							L1CurseParalysis.curse(cha, 8000, 16000);
 						} else if (cha instanceof L1MonsterInstance) {
@@ -2109,8 +2097,7 @@ public class L1SkillUse {
 				} else if (_skillId == DISEASE) { // ディジーズ
 					_skill.newBuffSkillExecutor().addEffect(_user, cha, 0);
 				} else if (_skillId == ICE_LANCE // アイスランス
-						|| _skillId == FREEZING_BLIZZARD // フリージングブリザード
-						|| _skillId == EYE_OF_DRAGON) { // アイオブドラゴン
+						|| _skillId == FREEZING_BLIZZARD) { // フリージングブリザード
 					_isFreeze = _magic.calcProbabilityMagic(_skillId);
 					if (_isFreeze) {
 						int time = _skill.getBuffDuration() * 1000;
@@ -2555,44 +2542,6 @@ public class L1SkillUse {
 						L1NpcInstance npc = (L1NpcInstance) cha;
 						npc.setSkillEffect(FOG_OF_SLEEPING, time);
 						npc.setSleeped(true);
-					}
-				} else if (_skillId == EYES_BREAKER) { // アイズブレイカ―
-					if (cha instanceof L1PcInstance) {
-						L1PcInstance pc = (L1PcInstance) cha;
-						pc.sendPackets(new S_SkillSound(pc.getId(), 6551));
-						pc.broadcastPacket(new S_SkillSound(pc.getId(), 6551));
-					} else if (cha instanceof L1MonsterInstance
-							|| cha instanceof L1SummonInstance
-							|| cha instanceof L1PetInstance
-							|| cha instanceof L1DwarfInstance
-							|| cha instanceof L1GuardInstance
-							|| cha instanceof L1MerchantInstance
-							|| cha instanceof L1TeleporterInstance
-							|| cha instanceof L1HousekeeperInstance) {
-						L1NpcInstance npc = (L1NpcInstance) cha;
-						npc
-						.broadcastPacket(new S_SkillSound(npc.getId(),
-								6551));
-					}
-					RandomGenerator random = RandomGeneratorFactory
-							.getSharedRandom();
-					int chance = (random.nextInt(100) + 1);
-					int probability = l1skills.getProbabilityValue();
-					int time = _skill.getBuffDuration();
-					if (chance <= probability) {
-						if (cha instanceof L1PcInstance) {
-							if (cha instanceof L1PcInstance) {
-								L1PcInstance pc = (L1PcInstance) cha;
-								pc.setSkillEffect(EYES_BREAKER, time);
-								pc.sendPackets(new S_SkillIconGFX(74,
-										(time / 3)));
-							}
-						} else if (cha instanceof L1MonsterInstance
-								|| cha instanceof L1SummonInstance
-								|| cha instanceof L1PetInstance) {
-							L1NpcInstance npc = (L1NpcInstance) cha;
-							npc.setSkillEffect(EYES_BREAKER, time);
-						}
 					}
 				} else if (_skillId == ELIZABE_AREA_POISON) {
 					L1PcInstance pc = (L1PcInstance) cha;
@@ -3392,7 +3341,9 @@ public class L1SkillUse {
 				}
 			}
 
-			if (_skillId == DETECTION || _skillId == COUNTER_DETECTION) { // ディテクション、カウンターディテクション
+			if (_skillId == DETECTION || _skillId == COUNTER_DETECTION
+							|| _skillId == EYE_OF_DRAGON || _skillId == EYES_BREAKER) {
+				// ディテクション、カウンターディテクション、アイ オブ ドラゴン、アイズ ブレイカー
 				detection(_player);
 			}
 

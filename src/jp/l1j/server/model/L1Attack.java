@@ -1023,10 +1023,6 @@ public class L1Attack {
 			}
 		}
 
-		if (_pc.hasSkillEffect(EYES_BREAKER)) { // ＰＣがアイズブレイカ—中。
-			dmg -= 5;
-		}
-
 		dmg -= _targetPc.getDamageReductionByArmor(); // 防具によるダメージ軽減
 
 		// マジックドール效果 - ダメージリダクション
@@ -1256,7 +1252,7 @@ public class L1Attack {
 		}
 
 		if (_weaponType2 != 14
-				&& (_skillId == BONE_BREAK || _skillId == SMASH_ENERGY || _skillId == EYES_BREAKER)) {
+				&& (_skillId == BONE_BREAK || _skillId == SMASH_ENERGY)) {
 			dmg += _skillDamage;
 		}
 
@@ -1301,10 +1297,6 @@ public class L1Attack {
 			if (_damageChance <= 10) {
 				dmg += 2;
 			}
-		}
-
-		if (_pc.hasSkillEffect(EYES_BREAKER)) { // ＰＣがアイズブレイカ—中。
-			dmg -= 5;
 		}
 
 		dmg -= calcNpcDamageReduction();
@@ -1406,10 +1398,6 @@ public class L1Attack {
 			dmg /= 2;
 		}
 
-		if (_npc.hasSkillEffect(EYES_BREAKER)) { // ＮＰＣがアイズブレイカ—中。
-			dmg -= 5;
-		}
-
 		dmg -= _targetPc.getDamageReductionByArmor(); // 防具によるダメージ軽減
 
 		// マジックドール效果 - ダメージリダクション
@@ -1496,10 +1484,6 @@ public class L1Attack {
 
 		if (_npc.isWeaponBreaked()) { // ＮＰＣがウェポンブレイク中。
 			dmg /= 2;
-		}
-
-		if (_npc.hasSkillEffect(EYES_BREAKER)) { // ＮＰＣがアイズブレイカ—中。
-			dmg -= 5;
 		}
 
 		if (_targetNpc.hasSkillEffect(ARMOR_BREAK)) {

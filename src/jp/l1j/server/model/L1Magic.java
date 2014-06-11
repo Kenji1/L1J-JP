@@ -377,7 +377,6 @@ public class L1Magic {
 						|| skillId == SHOCK_STUN || skillId == MASS_SHOCK_STUN
 						|| skillId == FOG_OF_SLEEPING || skillId == ICE_LANCE
 						|| skillId == FREEZING_BLIZZARD
-						|| skillId == EYE_OF_DRAGON
 						|| skillId == POLLUTE_WATER
 						|| skillId == ELEMENTAL_FALL_DOWN
 						|| skillId == RETURN_TO_NATURE || skillId == BONE_BREAK
@@ -556,8 +555,7 @@ public class L1Magic {
 			if (_calcType == PC_PC || _calcType == NPC_PC) {
 				probability -= _targetPc.getResistSleep();
 			}
-		} else if (skillId == ICE_LANCE || skillId == FREEZING_BLIZZARD
-				|| skillId == EYE_OF_DRAGON) {
+		} else if (skillId == ICE_LANCE || skillId == FREEZING_BLIZZARD) {
 			if (_calcType == PC_PC || _calcType == NPC_PC) {
 				probability -= _targetPc.getResistFreeze();
 			}
