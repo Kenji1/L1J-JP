@@ -964,7 +964,11 @@ public class L1WeaponSkill {
 			mrCoefficient = 0.6 - 0.01 * mrFloor;
 		}
 		dmg *= mrCoefficient;
-
+		
+		if (cha.hasSkillEffect(ERASE_MAGIC)) {
+			cha.removeSkillEffect(ERASE_MAGIC);
+		}
+		
 		// 属性によるダメージ軽減
 		int resist = 0;
 		if (attr == L1Skill.ATTR_EARTH) {
