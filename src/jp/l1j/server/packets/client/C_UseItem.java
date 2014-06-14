@@ -201,9 +201,6 @@ public class C_UseItem extends ClientBasePacket {
 			locy = readH();
 		} else if (use_type == 8) { // 復活スクロール、祝福された復活スクロール(res)
 			objid = readD();
-		} else if (use_type == 53) { // 料理の本(cookbook)
-			cookStatus = readC();
-			cookNo = readC();
 		} else if (use_type == 42) {
 			// スペルスクロール(spell_point)、釣り竿(fishing_rod)
 			locx = readH();
@@ -882,13 +879,6 @@ public class C_UseItem extends ClientBasePacket {
 				} else {
 					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
 					// \f1%0は使用できません。
-				}
-			} else if (use_type == 53) { // 料理の本(cookbook) // 料理の本
-				if (cookStatus == 0) {
-					pc.sendPackets(new S_PacketBox(S_PacketBox.COOK_WINDOW,
-							(itemId - 41255)));
-				} else {
-					L1Cooking.makeCooking(pc, cookNo);
 				}
 			} else if (use_type == 60) { // シアンポーション、エントの枝(cure)
 				L1CurePotion curePotion = L1CurePotion.get(itemId);

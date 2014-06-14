@@ -132,7 +132,6 @@ public class ItemTable {
 		_useTypes.put("pattern_right", new Integer(43));
 		_useTypes.put("talisman_left", new Integer(47));
 		_useTypes.put("talisman_right", new Integer(48));
-		_useTypes.put("cookbook", new Integer(53));
 		_useTypes.put("elixir", new Integer(58));
 		_useTypes.put("healing", new Integer(59));
 		_useTypes.put("cure", new Integer(60));
