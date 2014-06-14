@@ -1944,107 +1944,107 @@
   </TreasureBox>
   <!--料理の本：ステップ1-->
   <TreasureBox Type="RANDOM" ItemId="41255">
-    <Item ItemId="41277" Count="3" Chance="11.25" />
+    <Item ItemId="41277" Min="1" Max="3" Chance="11.25" />
     <!--フローティングアイステーキ-->
-    <Item ItemId="41278" Count="3" Chance="11.25" />
+    <Item ItemId="41278" Min="1" Max="3" Chance="11.25" />
     <!--ベアーステーキ-->
-    <Item ItemId="41279" Count="3" Chance="11.25" />
+    <Item ItemId="41279" Min="1" Max="3" Chance="11.25" />
     <!--ナッツ餅-->
-    <Item ItemId="41280" Count="3" Chance="11.25" />
+    <Item ItemId="41280" Min="1" Max="3" Chance="11.25" />
     <!--蟻脚のチーズ焼き-->
-    <Item ItemId="41281" Count="3" Chance="11.25" />
+    <Item ItemId="41281" Min="1" Max="3" Chance="11.25" />
     <!--フルーツサラダ-->
-    <Item ItemId="41282" Count="3" Chance="11.25" />
+    <Item ItemId="41282" Min="1" Max="3" Chance="11.25" />
     <!--フルーツ甘酢あんかけ-->
-    <Item ItemId="41283" Count="3" Chance="11.25" />
+    <Item ItemId="41283" Min="1" Max="3" Chance="11.25" />
     <!--猪肉の串焼き-->
-    <Item ItemId="41284" Count="3" Chance="11.25" />
+    <Item ItemId="41284" Min="1" Max="3" Chance="11.25" />
     <!--キノコスープ-->
-    <Item ItemId="41285" Count="3" Chance="1.25" />
+    <Item ItemId="41285" Min="1" Max="3" Chance="1.25" />
     <!--幻想のフローティングアイステーキ-->
-    <Item ItemId="41286" Count="3" Chance="1.25" />
+    <Item ItemId="41286" Min="1" Max="3" Chance="1.25" />
     <!--幻想のベアーステーキ-->
-    <Item ItemId="41287" Count="3" Chance="1.25" />
+    <Item ItemId="41287" Min="1" Max="3" Chance="1.25" />
     <!--幻想のナッツ餅-->
-    <Item ItemId="41288" Count="3" Chance="1.25" />
+    <Item ItemId="41288" Min="1" Max="3" Chance="1.25" />
     <!--幻想の蟻脚のチーズ焼き-->
-    <Item ItemId="41289" Count="3" Chance="1.25" />
+    <Item ItemId="41289" Min="1" Max="3" Chance="1.25" />
     <!--幻想のフルーツサラダ-->
-    <Item ItemId="41290" Count="3" Chance="1.25" />
+    <Item ItemId="41290" Min="1" Max="3" Chance="1.25" />
     <!--幻想のフルーツ甘酢あんかけ-->
-    <Item ItemId="41291" Count="3" Chance="1.25" />
+    <Item ItemId="41291" Min="1" Max="3" Chance="1.25" />
     <!--幻想の猪肉の串焼き-->
-    <Item ItemId="41292" Count="3" Chance="1.25" />
+    <Item ItemId="41292" Min="1" Max="3" Chance="1.25" />
     <!--幻想のキノコスープ-->
   </TreasureBox>
   <!--料理の本：ステップ2-->
   <TreasureBox Type="RANDOM" ItemId="41256">
-    <Item ItemId="49049" Count="3" Chance="11.25" />
+    <Item ItemId="49049" Min="1" Max="3" Chance="11.25" />
     <!--キャビアカナッペ-->
-    <Item ItemId="49050" Count="3" Chance="11.25" />
+    <Item ItemId="49050" Min="1" Max="3" Chance="11.25" />
     <!--アリゲーターステーキ-->
-    <Item ItemId="49051" Count="3" Chance="11.25" />
+    <Item ItemId="49051" Min="1" Max="3" Chance="11.25" />
     <!--タートルドラゴンの菓子-->
-    <Item ItemId="49052" Count="3" Chance="11.25" />
+    <Item ItemId="49052" Min="1" Max="3" Chance="11.25" />
     <!--キウィパロット焼き-->
-    <Item ItemId="49053" Count="3" Chance="11.25" />
+    <Item ItemId="49053" Min="1" Max="3" Chance="11.25" />
     <!--スコーピオン焼き-->
-    <Item ItemId="49054" Count="3" Chance="11.25" />
+    <Item ItemId="49054" Min="1" Max="3" Chance="11.25" />
     <!--イレッカドムシチュー-->
-    <Item ItemId="49055" Count="3" Chance="11.25" />
+    <Item ItemId="49055" Min="1" Max="3" Chance="11.25" />
     <!--クモ脚の串焼き-->
-    <Item ItemId="49056" Count="3" Chance="11.25" />
+    <Item ItemId="49056" Min="1" Max="3" Chance="11.25" />
     <!--クラブスープ-->
-    <Item ItemId="49057" Count="3" Chance="1.25" />
+    <Item ItemId="49057" Min="1" Max="3" Chance="1.25" />
     <!--幻想のキャビアカナッペ-->
-    <Item ItemId="49058" Count="3" Chance="1.25" />
+    <Item ItemId="49058" Min="1" Max="3" Chance="1.25" />
     <!--幻想のアリゲーターステーキ-->
-    <Item ItemId="49059" Count="3" Chance="1.25" />
+    <Item ItemId="49059" Min="1" Max="3" Chance="1.25" />
     <!--幻想のタートルドラゴンの菓子-->
-    <Item ItemId="49060" Count="3" Chance="1.25" />
+    <Item ItemId="49060" Min="1" Max="3" Chance="1.25" />
     <!--幻想のキウィパロット焼き-->
-    <Item ItemId="49061" Count="3" Chance="1.25" />
+    <Item ItemId="49061" Min="1" Max="3" Chance="1.25" />
     <!--幻想のスコーピオン焼き-->
-    <Item ItemId="49062" Count="3" Chance="1.25" />
+    <Item ItemId="49062" Min="1" Max="3" Chance="1.25" />
     <!--幻想のイレッカドムシチュー-->
-    <Item ItemId="49063" Count="3" Chance="1.25" />
+    <Item ItemId="49063" Min="1" Max="3" Chance="1.25" />
     <!--幻想のクモ脚の串焼き-->
-    <Item ItemId="49064" Count="3" Chance="1.25" />
+    <Item ItemId="49064" Min="1" Max="3" Chance="1.25" />
     <!--幻想のクラブスープ-->
   </TreasureBox>
   <!--料理の本：ステップ3-->
   <TreasureBox Type="RANDOM" ItemId="41257">
-    <Item ItemId="49244" Count="3" Chance="11.25" />
+    <Item ItemId="49244" Min="1" Max="3" Chance="11.25" />
     <!--クラスタシアンのハサミ焼き-->
-    <Item ItemId="49245" Count="3" Chance="11.25" />
+    <Item ItemId="49245" Min="1" Max="3" Chance="11.25" />
     <!--グリフォン焼き-->
-    <Item ItemId="49246" Count="3" Chance="11.25" />
+    <Item ItemId="49246" Min="1" Max="3" Chance="11.25" />
     <!--コカトリスステーキ-->
-    <Item ItemId="49247" Count="3" Chance="11.25" />
+    <Item ItemId="49247" Min="1" Max="3" Chance="11.25" />
     <!--タートルドラゴン焼き-->
-    <Item ItemId="49248" Count="3" Chance="11.25" />
+    <Item ItemId="49248" Min="1" Max="3" Chance="11.25" />
     <!--レッサードラゴンの手羽先-->
-    <Item ItemId="49249" Count="3" Chance="11.25" />
+    <Item ItemId="49249" Min="1" Max="3" Chance="11.25" />
     <!--ドレイク焼き-->
-    <Item ItemId="49250" Count="3" Chance="11.25" />
+    <Item ItemId="49250" Min="1" Max="3" Chance="11.25" />
     <!--深海魚のシチュー-->
-    <Item ItemId="49251" Count="3" Chance="11.25" />
+    <Item ItemId="49251" Min="1" Max="3" Chance="11.25" />
     <!--バシリスクの卵スープ-->
-    <Item ItemId="49252" Count="3" Chance="1.25" />
+    <Item ItemId="49252" Min="1" Max="3" Chance="1.25" />
     <!--幻想のクラスタシアンのハサミ焼き-->
-    <Item ItemId="49253" Count="3" Chance="1.25" />
+    <Item ItemId="49253" Min="1" Max="3" Chance="1.25" />
     <!--幻想のグリフォン焼き-->
-    <Item ItemId="49254" Count="3" Chance="1.25" />
+    <Item ItemId="49254" Min="1" Max="3" Chance="1.25" />
     <!--幻想のコカトリスステーキ-->
-    <Item ItemId="49255" Count="3" Chance="1.25" />
+    <Item ItemId="49255" Min="1" Max="3" Chance="1.25" />
     <!--幻想のタートルドラゴン焼き-->
-    <Item ItemId="49256" Count="3" Chance="1.25" />
+    <Item ItemId="49256" Min="1" Max="3" Chance="1.25" />
     <!--幻想のレッサードラゴンの手羽先-->
-    <Item ItemId="49257" Count="3" Chance="1.25" />
+    <Item ItemId="49257" Min="1" Max="3" Chance="1.25" />
     <!--幻想のドレイク焼き-->
-    <Item ItemId="49258" Count="3" Chance="1.25" />
+    <Item ItemId="49258" Min="1" Max="3" Chance="1.25" />
     <!--幻想の深海魚のシチュー-->
-    <Item ItemId="49259" Count="3" Chance="1.25" />
+    <Item ItemId="49259" Min="1" Max="3" Chance="1.25" />
     <!--幻想のバシリスクの卵スープ-->
   </TreasureBox>
 </TreasureBoxList>
