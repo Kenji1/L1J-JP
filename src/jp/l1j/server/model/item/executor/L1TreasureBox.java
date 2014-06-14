@@ -233,7 +233,7 @@ public class L1TreasureBox {
 					} else if (each.getMax() > 0 && each.getMin() > 0
 							&& each.getMax() > each.getMin()) {
 						int rnd = each.getMax() - each.getMin();
-						int count = each.getMin() + _random.nextInt(rnd) + 1;
+						int count = each.getMin() + _random.nextInt(rnd + 1);
 						item.setCount(count);
 						storeItem(pc, item);
 					}
@@ -259,7 +259,7 @@ public class L1TreasureBox {
 						} else if (each.getMax() > 0 && each.getMin() > 0
 								&& each.getMax() > each.getMin()) {
 							int rnd = each.getMax() - each.getMin();
-							int count = each.getMin() + _random.nextInt(rnd) + 1;
+							int count = each.getMin() + _random.nextInt(rnd + 1);
 							item.setCount(count);
 							storeItem(pc, item);
 						}
