@@ -649,9 +649,17 @@ public class L1SkillId {
 	public static final int COOKING_3_7_S = 3047;
 
 	public static final int ELIXIR_OF_IVORY_TOWER = 3048; // 象牙の塔の妙薬
+	
+	public static final int COOKING_4_1 = 3049; // 力強い和牛ステーキ
+	
+	public static final int COOKING_4_2 = 3050; // 素早い鮭の煮付
+	
+	public static final int COOKING_4_3 = 3051; // 賢い七面鳥焼き
+	
+	public static final int COOKING_4_4 = 3052; // 修練の鶏スープ
 
-	public static final int COOKING_END = 3048;
-
+	public static final int COOKING_END = 3052;
+ 
 	public static final int BLOODSTAIN_OF_ANTHARAS = 4011; // アンタラスの血痕
 
 	public static final int BLOODSTAIN_OF_FAFURION = 4012; // パプリオンの血痕

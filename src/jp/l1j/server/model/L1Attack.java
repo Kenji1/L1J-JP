@@ -478,7 +478,8 @@ public class L1Attack {
 		}
 
 		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理による追加命中
-				|| _pc.hasSkillEffect(COOKING_2_0_S)) {
+				|| _pc.hasSkillEffect(COOKING_2_0_S)
+				|| _pc.hasSkillEffect(COOKING_4_1)) {
 			if (_weaponType != 20 && _weaponType != 62) {
 				_hitRate += 1;
 			}
@@ -492,7 +493,8 @@ public class L1Attack {
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理による追加命中
 				|| _pc.hasSkillEffect(COOKING_2_3_S)
 				|| _pc.hasSkillEffect(COOKING_3_0_N)
-				|| _pc.hasSkillEffect(COOKING_3_0_S)) {
+				|| _pc.hasSkillEffect(COOKING_3_0_S)
+				|| _pc.hasSkillEffect(COOKING_4_2)) {
 			if (_weaponType == 20 || _weaponType == 62) {
 				_hitRate += 1;
 			}
@@ -652,7 +654,8 @@ public class L1Attack {
 		}
 
 		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理による追加命中
-				|| _pc.hasSkillEffect(COOKING_2_0_S)) {
+				|| _pc.hasSkillEffect(COOKING_2_0_S)
+				|| _pc.hasSkillEffect(COOKING_4_1)) {
 			if (_weaponType != 20 && _weaponType != 62) {
 				_hitRate += 1;
 			}
@@ -666,7 +669,8 @@ public class L1Attack {
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理による追加命中
 				|| _pc.hasSkillEffect(COOKING_2_3_S)
 				|| _pc.hasSkillEffect(COOKING_3_0_N)
-				|| _pc.hasSkillEffect(COOKING_3_0_S)) {
+				|| _pc.hasSkillEffect(COOKING_3_0_S)
+				|| _pc.hasSkillEffect(COOKING_4_2)) {
 			if (_weaponType == 20 || _weaponType == 62) {
 				_hitRate += 1;
 			}
@@ -1005,7 +1009,13 @@ public class L1Attack {
 				dmg += 1;
 			}
 		}
-
+		
+		if (_pc.hasSkillEffect(COOKING_4_1)) { // 料理による追加ダメージ
+			if (_weaponType != 20 && _weaponType != 62) {
+				dmg += 2;
+			}
+		}
+		
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理による追加ダメージ
 				|| _pc.hasSkillEffect(COOKING_2_3_S)
 				|| _pc.hasSkillEffect(COOKING_3_0_N)
@@ -1015,6 +1025,12 @@ public class L1Attack {
 			}
 		}
 
+		if (_pc.hasSkillEffect(COOKING_4_2)) { // 料理による追加ダメージ
+			if (_weaponType == 20 || _weaponType == 62) {
+				dmg += 2;
+			}
+		}
+		
 		if (_pc.hasSkillEffect(MAGIC_EYE_OF_VALAKAS) // 魔眼による追加ダメージ
 				|| _pc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
 			int _damageChance = _random.nextInt(100) + 1;
@@ -1027,6 +1043,13 @@ public class L1Attack {
 
 		// マジックドール效果 - ダメージリダクション
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
+
+		if (_targetPc.hasSkillEffect(COOKING_4_1) // 料理によるダメージ軽減
+				|| _targetPc.hasSkillEffect(COOKING_4_2)
+				|| _targetPc.hasSkillEffect(COOKING_4_3)
+				|| _targetPc.hasSkillEffect(COOKING_4_4)) {
+			dmg -= 2;
+		}
 
 		if (_targetPc.isCookingReduction()) { // 幻想料理によるダメージ軽減
 			dmg -= 5;
@@ -1281,7 +1304,13 @@ public class L1Attack {
 				dmg += 1;
 			}
 		}
-
+		
+		if (_pc.hasSkillEffect(COOKING_4_1)) { // 料理による追加ダメージ
+			if (_weaponType != 20 && _weaponType != 62) {
+				dmg += 2;
+			}
+		}
+		
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理による追加ダメージ
 				|| _pc.hasSkillEffect(COOKING_2_3_S)
 				|| _pc.hasSkillEffect(COOKING_3_0_N)
@@ -1290,7 +1319,13 @@ public class L1Attack {
 				dmg += 1;
 			}
 		}
-
+		
+		if (_pc.hasSkillEffect(COOKING_4_2)) { // 料理による追加ダメージ
+			if (_weaponType == 20 || _weaponType == 62) {
+				dmg += 2;
+			}
+		}
+		
 		if (_pc.hasSkillEffect(MAGIC_EYE_OF_VALAKAS) // 魔眼による追加ダメージ
 				|| _pc.hasSkillEffect(MAGIC_EYE_OF_LIFE)) {
 			int _damageChance = _random.nextInt(100) + 1;
@@ -1402,6 +1437,13 @@ public class L1Attack {
 
 		// マジックドール效果 - ダメージリダクション
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
+
+		if (_targetPc.hasSkillEffect(COOKING_4_1) // 料理によるダメージ軽減
+				|| _targetPc.hasSkillEffect(COOKING_4_2)
+				|| _targetPc.hasSkillEffect(COOKING_4_3)
+				|| _targetPc.hasSkillEffect(COOKING_4_4)) {
+			dmg -= 2;
+		}
 
 		if (_targetPc.isCookingReduction()) { // 幻想料理によるダメージ軽減
 			dmg -= 5;

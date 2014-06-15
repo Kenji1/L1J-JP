@@ -2047,4 +2047,24 @@
     <Item ItemId="49259" Min="1" Max="3" Chance="1.25" />
     <!--幻想のバシリスクの卵スープ-->
   </TreasureBox>
+  <!--腕力のお弁当かご-->
+  <TreasureBox Type="SPECIFIC" ItemId="50645">
+    <Item ItemId="50641" Min="1" Max="3" />
+    <!--力強い和牛ステーキ-->
+  </TreasureBox>
+  <!--機敏のお弁当かご-->
+  <TreasureBox Type="SPECIFIC" ItemId="50646">
+    <Item ItemId="50642" Min="1" Max="3" />
+    <!--素早い鮭の煮付-->
+  </TreasureBox>
+  <!--知力のお弁当かご-->
+  <TreasureBox Type="SPECIFIC" ItemId="50647">
+    <Item ItemId="50643" Min="1" Max="3" />
+    <!--賢い七面鳥焼き-->
+  </TreasureBox>
+  <!--成長のお弁当かご-->
+  <TreasureBox Type="SPECIFIC" ItemId="50648">
+    <Item ItemId="50644" Min="1" Max="3" />
+    <!--修練の鶏スープ-->
+  </TreasureBox>
 </TreasureBoxList>

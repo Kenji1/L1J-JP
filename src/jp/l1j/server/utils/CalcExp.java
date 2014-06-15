@@ -349,12 +349,19 @@ public class CalcExp {
 			foodBonus = 1.01;
 		}
 		if (pc.hasSkillEffect(COOKING_2_7_N)
-				|| pc.hasSkillEffect(COOKING_2_7_S)) {
+				|| pc.hasSkillEffect(COOKING_2_7_S)
+				|| pc.hasSkillEffect(COOKING_4_1)
+				|| pc.hasSkillEffect(COOKING_4_2)
+				|| pc.hasSkillEffect(COOKING_4_3)) {
 			foodBonus = 1.02;
 		}
 		if (pc.hasSkillEffect(COOKING_3_7_N)
 				|| pc.hasSkillEffect(COOKING_3_7_S)) {
 			foodBonus = 1.03;
+		}
+		if (pc.hasSkillEffect(COOKING_4_4)
+				|| pc.hasSkillEffect(COOKING_4_4)) {
+			foodBonus = 1.04;
 		}
 		double bonus = (pc.getExpBonusPct()
 				+ ExpBonusTable.getExpBonusRate(pc.getLevel())

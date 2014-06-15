@@ -679,9 +679,18 @@ public class L1Magic {
 		// TODO マジックドール効果 　ダメージリダクション
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
+
+		if (_targetPc.hasSkillEffect(COOKING_4_1) // 料理によるダメージ軽減
+				|| _targetPc.hasSkillEffect(COOKING_4_2)
+				|| _targetPc.hasSkillEffect(COOKING_4_3)
+				|| _targetPc.hasSkillEffect(COOKING_4_4)) {
+			dmg -= 2;
+		}
+
 		if (_targetPc.isCookingReduction()) { // 幻想料理によるダメージ軽減
 			dmg -= 5;
 		}
+		
 		if (_targetPc.hasSkillEffect(COOKING_1_7_S) // デザートによるダメージ軽減
 				|| _targetPc.hasSkillEffect(COOKING_2_7_S)
 				|| _targetPc.hasSkillEffect(COOKING_3_7_S)) {
@@ -1089,6 +1098,12 @@ public class L1Magic {
 			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
 		}
 		if (_targetPc.hasSkillEffect(COOKING_3_4_N) || _targetPc.hasSkillEffect(COOKING_3_4_S)) {
+			attrDeff = 10;
+			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
+		}
+		if (_targetPc.hasSkillEffect(COOKING_4_1)
+						|| _targetPc.hasSkillEffect(COOKING_4_2)
+						|| _targetPc.hasSkillEffect(COOKING_4_3)) {
 			attrDeff = 10;
 			sumCoeff += -1 / 32.0 * Math.floor(0.32 * Math.abs(attrDeff));
 		}

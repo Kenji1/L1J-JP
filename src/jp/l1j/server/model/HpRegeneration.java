@@ -157,7 +157,11 @@ public class HpRegeneration extends TimerTask {
 		if (_pc.hasSkillEffect(COOKING_2_4_N)
 				|| _pc.hasSkillEffect(COOKING_2_4_S)
 				|| _pc.hasSkillEffect(COOKING_3_6_N)
-				|| _pc.hasSkillEffect(COOKING_3_6_S)) {
+				|| _pc.hasSkillEffect(COOKING_3_6_S)
+				|| _pc.hasSkillEffect(COOKING_4_1)
+				|| _pc.hasSkillEffect(COOKING_4_2)
+				|| _pc.hasSkillEffect(COOKING_4_3)
+				|| _pc.hasSkillEffect(COOKING_4_4)) {
 			bonus += 2;
 		}
 		if (_pc.getOriginalHpr() > 0) { // オリジナルCON HPR補正

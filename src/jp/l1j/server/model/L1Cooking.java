@@ -123,6 +123,14 @@ public class L1Cooking {
 		putToMap(49259, COOKING_3_7_S);
 		// 象牙の塔の妙薬
 		putToMap(50543, ELIXIR_OF_IVORY_TOWER);
+		// 力強い和牛ステーキ
+		putToMap(50641, COOKING_4_1);
+		// 素早い鮭の煮付
+		putToMap(50642, COOKING_4_2);
+		// 賢い七面鳥焼き
+		putToMap(50643, COOKING_4_3);
+		// 修練の鶏スープ
+		putToMap(50644, COOKING_4_4);
 	}
 
 	private L1Cooking() {
@@ -150,6 +158,7 @@ public class L1Cooking {
 				|| itemId >= 49057 && itemId <= 49063 // Lv2幻想の料理
 				|| itemId >= 49244 && itemId <= 49250 // Lv3料理
 				|| itemId >= 49252 && itemId <= 49258 // Lv3幻想の料理
+				|| itemId >= 50641 && itemId <= 50644 // 新料理
 				|| itemId == 50543) { // 象牙の塔の妙薬
 			int cookingId = pc.getCookingId();
 			if (cookingId != 0) {

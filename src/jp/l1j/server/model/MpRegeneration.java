@@ -130,7 +130,10 @@ public class MpRegeneration extends TimerTask {
  		if (_pc.hasSkillEffect(COOKING_2_4_N)
 				|| _pc.hasSkillEffect(COOKING_2_4_S)
 				|| _pc.hasSkillEffect(COOKING_3_5_N)
-				|| _pc.hasSkillEffect(COOKING_3_5_S)) {
+				|| _pc.hasSkillEffect(COOKING_3_5_S)
+				|| _pc.hasSkillEffect(COOKING_4_1)
+				|| _pc.hasSkillEffect(COOKING_4_2)
+				|| _pc.hasSkillEffect(COOKING_4_3)) {
 			baseMpr += 2;
 		}
  		if (_pc.getOriginalMpr() > 0) { // オリジナルWIS MPR補正

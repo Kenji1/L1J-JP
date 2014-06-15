@@ -509,6 +509,7 @@ public class C_UseItem extends ClientBasePacket {
 			} else if (itemId >= 41277 && itemId <= 41292 // Lv1料理
 					|| itemId >= 49049 && itemId <= 49064 // Lv2料理
 					|| itemId >= 49244 && itemId <= 49259 // Lv3料理
+					|| itemId >= 50641 && itemId <= 50644 // 新料理
 					|| itemId == 50543) { // 象牙の塔の妙薬
 				L1Cooking.useCookingItem(pc, item);
 			} else if (itemId == 41315) { // 聖水

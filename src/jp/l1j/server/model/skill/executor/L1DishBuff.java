@@ -141,6 +141,35 @@ public class L1DishBuff extends L1BuffSkillExecutorImpl {
 			cookingType = 54;
 			pc.addHpr(10);
 			pc.addMpr(2);
+		} else if (cookingId == COOKING_4_1) { // 力強い和牛ステーキ
+			cookingType = 54; // TODO アイコンが不明
+			pc.addMr(10);
+			pc.addWind(10);
+			pc.addWater(10);
+			pc.addFire(10);
+			pc.addEarth(10);
+			pc.sendPackets(new S_SpMr(pc));
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+		} else if (cookingId == COOKING_4_2) { // 素早い鮭の煮付
+			cookingType = 54; // TODO アイコンが不明
+			pc.addMr(10);
+			pc.addWind(10);
+			pc.addWater(10);
+			pc.addFire(10);
+			pc.addEarth(10);
+			pc.sendPackets(new S_SpMr(pc));
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+		} else if (cookingId == COOKING_4_3) { // 賢い七面鳥焼き
+			cookingType = 54; // TODO アイコンが不明
+			pc.addSp(2);
+			pc.addWind(10);
+			pc.addWater(10);
+			pc.addFire(10);
+			pc.addEarth(10);
+			pc.sendPackets(new S_SpMr(pc));
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+		} else if (cookingId == COOKING_4_4) { // 修練の鶏スープ
+			cookingType = 54; // TODO アイコンが不明
 		}
 		pc.sendPackets(new S_PacketBox(53, cookingType, durationSeconds));
 		if (cookingId >= COOKING_1_0_N && cookingId <= COOKING_1_6_N
@@ -148,7 +177,9 @@ public class L1DishBuff extends L1BuffSkillExecutorImpl {
 				|| cookingId >= COOKING_2_0_N && cookingId <= COOKING_2_6_N
 				|| cookingId >= COOKING_2_0_S && cookingId <= COOKING_2_6_S
 				|| cookingId >= COOKING_3_0_N && cookingId <= COOKING_3_6_N
-				|| cookingId >= COOKING_3_0_S && cookingId <= COOKING_3_6_S) {
+				|| cookingId >= COOKING_3_0_S && cookingId <= COOKING_3_6_S
+				|| cookingId == COOKING_4_1 || cookingId == COOKING_4_2
+				|| cookingId == COOKING_4_3 || cookingId == COOKING_4_4) {
 			pc.setCookingId(cookingId);
 		} else if (cookingId == COOKING_1_7_N || cookingId == COOKING_1_7_S
 				|| cookingId == COOKING_2_7_N || cookingId == COOKING_2_7_S
@@ -294,6 +325,39 @@ public class L1DishBuff extends L1BuffSkillExecutorImpl {
 			pc.addMpr(-2);
 			pc.sendPackets(new S_PacketBox(53, 54, 0));
 			pc.setDessertId(0);
+		} else if (skillId == COOKING_4_1) { // 力強い和牛ステーキ
+			pc.addMr(-10);
+			pc.addWind(-10);
+			pc.addWater(-10);
+			pc.addFire(-10);
+			pc.addEarth(-10);
+			pc.sendPackets(new S_SpMr(pc));
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+			pc.sendPackets(new S_PacketBox(53, 54, 0)); // TODO アイコンが不明
+			pc.setCookingId(0);
+		} else if (skillId == COOKING_4_2) { // 素早い鮭の煮付
+			pc.addMr(-10);
+			pc.addWind(-10);
+			pc.addWater(-10);
+			pc.addFire(-10);
+			pc.addEarth(-10);
+			pc.sendPackets(new S_SpMr(pc));
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+			pc.sendPackets(new S_PacketBox(53, 54, 0)); // TODO アイコンが不明
+			pc.setCookingId(0);
+		} else if (skillId == COOKING_4_3) { // 賢い七面鳥焼き
+			pc.addSp(-2);
+			pc.addWind(-10);
+			pc.addWater(-10);
+			pc.addFire(-10);
+			pc.addEarth(-10);
+			pc.sendPackets(new S_SpMr(pc));
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+			pc.sendPackets(new S_PacketBox(53, 54, 0)); // TODO アイコンが不明
+			pc.setCookingId(0);
+		} else if (skillId == COOKING_4_4) { // 修練の鶏スープ
+			pc.sendPackets(new S_PacketBox(53, 54, 0)); // TODO アイコンが不明
+			pc.setCookingId(0);
 		}
 	}
 }
