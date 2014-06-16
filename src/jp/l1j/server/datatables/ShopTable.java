@@ -75,6 +75,7 @@ public class ShopTable {
 	private L1Shop loadShop(int npcId, ResultSet rs) throws SQLException {
 		List<L1ShopItem> sellingList = new ArrayList<L1ShopItem>();
 		List<L1ShopItem> purchasingList = new ArrayList<L1ShopItem>();
+		List<Integer> purchasingItemIds = new ArrayList<Integer>();
 		while (rs.next()) {
 			int itemId = rs.getInt("item_id");
 			boolean isErr = false;
@@ -86,8 +87,8 @@ public class ShopTable {
 			if (isErr) {
 				continue;
 			}
-			int sellingPrice = rs.getInt("selling_price");
-			int purchasingPrice = rs.getInt("purchasing_price");
+			double sellingPrice = rs.getDouble("selling_price");
+			double purchasingPrice = rs.getDouble("purchasing_price");
 			int packCount = rs.getInt("pack_count");
 			packCount = packCount == 0 ? 1 : packCount;
 			if (0 <= sellingPrice) {
@@ -95,8 +96,11 @@ public class ShopTable {
 				sellingList.add(item);
 			}
 			if (0 <= purchasingPrice) {
-				L1ShopItem item = new L1ShopItem(itemId, purchasingPrice, packCount);
-				purchasingList.add(item);
+				if (purchasingItemIds.indexOf(itemId) < 0) {
+					L1ShopItem item = new L1ShopItem(itemId, purchasingPrice, packCount);
+					purchasingList.add(item);
+					purchasingItemIds.add(itemId);
+				}
 			}
 		}
 		return new L1Shop(npcId, sellingList, purchasingList);
@@ -137,8 +141,8 @@ public class ShopTable {
 			if (isErr) {
 				continue;
 			}
-			int sellingPrice = rs.getInt("selling_price");
-			int purchasingPrice = rs.getInt("purchasing_price");
+			double sellingPrice = rs.getDouble("selling_price");
+			double purchasingPrice = rs.getDouble("purchasing_price");
 			int packCount = 1;
 			if (0 <= sellingPrice) {
 				L1ShopItem item = new L1ShopItem(itemId, sellingPrice, packCount);

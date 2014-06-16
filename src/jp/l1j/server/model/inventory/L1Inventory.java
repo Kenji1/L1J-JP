@@ -385,7 +385,7 @@ public class L1Inventory extends L1Object {
 
 		L1ItemRate rate = _itemRates.get(item.getItemId());
 		if (rate != null && rate.getPurchasingPrice() > 0) {
-			count = rate.getPurchasingPrice() * item.getCount();
+			count = (int) (rate.getPurchasingPrice() * item.getCount());
 			
 			if (count > MAX_AMOUNT) {
 				count = MAX_AMOUNT;

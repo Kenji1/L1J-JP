@@ -22,9 +22,9 @@ import jp.l1j.server.templates.L1RaceTicket;
 
 public class L1AssessedItem {
 	private final int _targetId;
-	private final int _assessedPrice;
+	private final double _assessedPrice;
 
-	L1AssessedItem(int targetId, int assessedPrice) {
+	L1AssessedItem(int targetId, double assessedPrice) {
 		_targetId = targetId;
 		//XXX
 		L1ItemInstance item = (L1ItemInstance) L1World.getInstance().findObject(getTargetId());
@@ -44,7 +44,7 @@ public class L1AssessedItem {
 		return _targetId;
 	}
 
-	public int getAssessedPrice() {
+	public double getAssessedPrice() {
 		return _assessedPrice;
 	}
 }

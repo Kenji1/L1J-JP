@@ -17,10 +17,10 @@ package jp.l1j.server.model.item;
 
 public class L1ItemRate {
 	private final int _itemId;
-	private final int _sellingPrice;
-	private final int _purchasingPrice;
+	private final double _sellingPrice;
+	private final double _purchasingPrice;
 
-	public L1ItemRate(int itemId, int sellingPrice, int purchasingPrice) {
+	public L1ItemRate(int itemId, double sellingPrice, double purchasingPrice) {
 		_itemId = itemId;
 		_sellingPrice = sellingPrice;
 		_purchasingPrice = purchasingPrice;
@@ -30,11 +30,11 @@ public class L1ItemRate {
 		return _itemId;
 	}
 
-	public int getSellingPrice() {
+	public double getSellingPrice() {
 		return _sellingPrice;
 	}
 
-	public int getPurchasingPrice() {
+	public double getPurchasingPrice() {
 		return _purchasingPrice;
 	}
 

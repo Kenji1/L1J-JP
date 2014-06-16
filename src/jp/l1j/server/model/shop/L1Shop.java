@@ -102,9 +102,8 @@ public class L1Shop {
 		return new L1AssessedItem(item.getId(), getAssessedPrice(shopItem));
 	}
 
-	private int getAssessedPrice(L1ShopItem item) {
-		return (int) (item.getPrice() * Config.RATE_SHOP_PURCHASING_PRICE / item
-				.getPackCount());
+	private double getAssessedPrice(L1ShopItem item) {
+		return item.getPrice() * Config.RATE_SHOP_PURCHASING_PRICE;
 	}
 
 	/**
@@ -293,7 +292,7 @@ public class L1Shop {
 				item.setItem(order.getItem().getItem());
 				L1BugBearRace.getInstance().setAllBet(
 						L1BugBearRace.getInstance().getAllBet()
-								+ (amount * order.getItem().getPrice()));
+								+ (int) (amount * order.getItem().getPrice()));
 				String[] runNum = item.getItem().getIdentifiedNameId().split(
 						"-");
 				int trueNum = 0;

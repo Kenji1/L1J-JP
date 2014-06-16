@@ -70,8 +70,8 @@ public class ItemRateTable {
 				}
 				L1ItemRate rate = new L1ItemRate(
 					itemId,
-					rs.getInt("selling_price"),
-					rs.getInt("purchasing_price")	
+					rs.getDouble("selling_price"),
+					rs.getDouble("purchasing_price")	
 				);
 				itemRates.put(rate.getItemId(), rate);
 			}

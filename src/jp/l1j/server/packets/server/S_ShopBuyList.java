@@ -62,7 +62,7 @@ public class S_ShopBuyList extends ServerBasePacket {
 
 		for (L1AssessedItem item : assessedItems) {
 			writeD(item.getTargetId());
-			writeD(item.getAssessedPrice());
+			writeD((int) item.getAssessedPrice());
 		}
 		writeH(0x0007);
 	}

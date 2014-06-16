@@ -24,11 +24,11 @@ public class L1ShopItem {
 
 	private L1Item _item;
 
-	private final int _price;
+	private final double _price;
 
 	private final int _packCount;
 
-	public L1ShopItem(int itemId, int price, int packCount) {
+	public L1ShopItem(int itemId, double price, int packCount) {
 		_itemId = itemId;
 		_item = ItemTable.getInstance().getTemplate(itemId);
 		_price = price;
@@ -43,7 +43,7 @@ public class L1ShopItem {
 		return _item;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return _price;
 	}
 

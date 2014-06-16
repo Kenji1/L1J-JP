@@ -63,7 +63,8 @@ public class L1ShopBuyOrderList {
 		}
 		L1ShopItem shopItem = _shop.getSellingItems().get(orderNumber);
 
-		int price = (int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE);
+		int price = (int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE
+						* shopItem.getPackCount());
 		// オーバーフローチェック
 		for (int j = 0; j < count; j++) {
 			if (price * j < 0) {
