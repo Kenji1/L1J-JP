@@ -2641,7 +2641,7 @@
 		</MakeItem>
 	</Action>
 	<!--王宮シェフのスパイス / アデンの王宮シェフ-->
-	<Action Name="request cook spice" NpcId="80127">
+	<Action Name="a" NpcId="80127">
 		<MakeItem>
 			<Item Amount="1" ItemId="41253"/>
 			<Material Amount="1" ItemId="41285"/>
@@ -2652,6 +2652,16 @@
 			<Material Amount="1" ItemId="41290"/>
 			<Material Amount="1" ItemId="41291"/>
 			<Material Amount="1" ItemId="41292"/>
+		</MakeItem>
+	</Action>
+	<!--王宮シェフのスパイス / アデンの王宮シェフ-->
+	<Action Name="b" NpcId="80127">
+		<MakeItem>
+			<Item Amount="1" ItemId="41253"/>
+			<Material Amount="1" ItemId="50641"/>
+			<Material Amount="1" ItemId="50642"/>
+			<Material Amount="1" ItemId="50643"/>
+			<Material Amount="1" ItemId="50644"/>
 		</MakeItem>
 	</Action>
 	<!--勝利の印章 / 印章販売人-->
