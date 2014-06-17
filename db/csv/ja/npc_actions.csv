@@ -964,7 +964,7 @@ npc_id,note,normal_action,chaotic_action,teleport_url,teleport_urla
 80103,競売管理者,auction1,auction1,,
 80104,アデン騎馬団員,horseseller1,horseseller0,,
 80105,アデン騎馬団員,horserestore,horserestore,,
-80127,調理師^アデンの王宮シェフ,cook1,cook1,,
+80127,アデンの王宮シェフ^オリーブ,cook1,cook1,,
 80128,アイテム交換人^印章販売人,cointrader,cointrader,,
 80132,テレポーター^デカビア,dekabia1,dekabia1,dekabia2,dekabia3
 80133,鍛冶屋^ピュアル,pual1,pual1,,
