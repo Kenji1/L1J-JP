@@ -1757,7 +1757,7 @@
   <TreasureBox Type="RANDOM" ItemId="50500">
     <Item ItemId="50501" Count="1" Chance="1" />
     <!-- ドラゴンキー -->
-    <Item ItemId="40524" Count="2" Chance="2" />
+    <Item ItemId="40524" Count="2" Chance="4" />
     <!-- 黒い血痕 -->
     <Item ItemId="120223" Count="1" Chance="4" />
     <!-- Bドワ盾 -->
@@ -1777,20 +1777,16 @@
     <!-- 水竜の乾いた涙 -->
     <Item ItemId="50523" Count="1" Chance="0.5" />
     <!-- 風竜の乾いた涙 -->
-    <Item ItemId="40024" Count="20" Chance="12.9" />
+    <Item ItemId="40024" Count="20" Chance="14.9" />
     <!-- 古代CP -->
-    <Item ItemId="40023" Count="30" Chance="12.9" />
+    <Item ItemId="40023" Count="30" Chance="14.9" />
     <!-- 古代OP -->
-    <Item ItemId="40021" Count="20" Chance="12.9" />
+    <Item ItemId="40021" Count="20" Chance="14.9" />
     <!-- 濃縮CP -->
-    <Item ItemId="40020" Count="30" Chance="12.9" />
+    <Item ItemId="40020" Count="30" Chance="14.9" />
     <!-- 濃縮OP -->
-    <Item ItemId="40499" Count="20" Chance="6" />
-    <!-- きのこの胞子液 -->
-    <Item ItemId="40506" Count="20" Chance="2" />
+    <Item ItemId="40506" Count="20" Chance="6" />
     <!-- エントの実 -->
-    <Item ItemId="41263" Count="20" Chance="8" />
-    <!-- ヒマワリの種 -->
     <Item ItemId="40015" Count="10" Chance="6" />
     <!-- ブルー ポーション -->
     <Item ItemId="41352" Count="1" Chance="0.4" />
