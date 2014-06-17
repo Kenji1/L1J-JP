@@ -5708,7 +5708,7 @@ public class C_NpcAction extends ClientBasePacket {
 					boolean isError = false;
 					for (int i = 0; i < 5; i++) {
 						amount = pc.getComaMaterialAmount(i);
-						if (!pc.getInventory().checkItem(50515 + i, amount)) {
+						if (amount > 0 && !pc.getInventory().checkItem(50515 + i, amount)) {
 							isError = true;
 							break;
 						}
@@ -5723,7 +5723,7 @@ public class C_NpcAction extends ClientBasePacket {
 						}
 						for (int i = 0; i < 5; i++) {
 							amount = pc.getComaMaterialAmount(i);
-							if (pc.getInventory().checkItem(50515 + i, amount)) {
+							if (amount > 0 && pc.getInventory().checkItem(50515 + i, amount)) {
 								pc.getInventory().consumeItem(50515 + i, amount);
 							}
 						}
