@@ -4988,4 +4988,34 @@ public class L1PcInstance extends L1Character {
 	public void setCreateScrollAmount(int i) {
 		_createScrollAmount = i;
 	}
+	
+	private int[] _comaMaterialAmount = new int[5]; // 勝利の欠片個数
+	
+	public int getComaMaterialAmount(int i) {
+		return _comaMaterialAmount[i];
+	}
+	
+	public void setComaMaterialAmount(int i, int amount) {
+		_comaMaterialAmount[i] = amount;
+	}
+	
+	public String[] getAllComaMaterialAmount() {
+		String amounts[] = new String[5];
+		for (int i = 0; i < _comaMaterialAmount.length; i++) {
+			amounts[i] = String.valueOf(_comaMaterialAmount[i]);
+		}
+		return amounts;
+	}
+	
+	public int getTotalComaMaterialAmount() {
+		int total = 0;
+		for (int amount : _comaMaterialAmount) {
+			total += amount;
+		}
+		return total;
+	}
+	
+	public void resetComaMaterialAmount() {
+		_comaMaterialAmount = new int[5];
+	}
 }
