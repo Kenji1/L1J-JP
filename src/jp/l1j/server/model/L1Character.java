@@ -397,9 +397,7 @@ public class L1Character extends L1Object {
 	 *            座標のY値
 	 * @return 障害物が無ければtrue、あればfalseを返す。
 	 */
-	public boolean glanceCheck(int tx, int ty) {
-		int chx = getX();
-		int chy = getY();
+	public boolean glanceCheck(int chx, int chy, int tx, int ty) {
 		for (int i = 0; i < 15; i++) {
 			if (chx == tx && chy == ty) {
 				break;
@@ -439,7 +437,7 @@ public class L1Character extends L1Object {
 				return false;
 			}
 		}
-		return glanceCheck(x, y);
+		return glanceCheck(getX(), getY(), x, y) || glanceCheck(x, y, getX(), getY());
 	}
 
 	/**

@@ -394,7 +394,8 @@ public class L1Attack {
 				_isHit = false; // 矢がない場合はミス
 			} else if (_weaponType == 62 && _sting == null) {
 				_isHit = false; // スティングがない場合はミス
-			} else if (!_pc.glanceCheck(_targetX, _targetY)) {
+			} else if (!(_pc.glanceCheck(_pc.getX(), _pc.getY(), _targetX, _targetY)
+							|| _pc.glanceCheck(_targetX, _targetY, _pc.getX(), _pc.getY()))) {
 				_isHit = false; // 攻撃者がプレイヤーの場合は障害物判定
 			} else if (_weaponId == 247 || _weaponId == 248 || _weaponId == 249) {
 				_isHit = false; // 試練の剣B〜C 攻撃無効

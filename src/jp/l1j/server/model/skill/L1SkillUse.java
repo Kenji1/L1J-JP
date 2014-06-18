@@ -678,8 +678,9 @@ public class L1SkillUse {
 			return false; // 攻撃スキルでPKモードじゃない場合
 		}
 
-		if (_user.glanceCheck(cha.getX(), cha.getY()) == false
-				&& _skill.isThrough() == false) {
+		if (!(_user.glanceCheck(_user.getX(), _user.getY(), cha.getX(), cha.getY())
+				|| _user.glanceCheck(cha.getX(), cha.getY(), _user.getX(), _user.getY()))
+				&& !_skill.isThrough()) {
 			// エンチャント、復活スキルは障害物の判定をしない
 			if (!(_skill.getType() == L1Skill.TYPE_CHANGE || _skill.getType() == L1Skill.TYPE_RESTORE)) {
 				_isGlanceCheckFail = true;
@@ -875,7 +876,8 @@ public class L1SkillUse {
 			}
 
 			if (_skill.getArea() == 0) { // 単体の場合
-				if (!_user.glanceCheck(_target.getX(), _target.getY())) { // 直線上に障害物があるか
+				if (!(_user.glanceCheck(_user.getX(), _user.getY(), _target.getX(), _target.getY())
+								|| _user.glanceCheck(_target.getX(), _target.getY(), _user.getX(), _user.getY()))) { // 直線上に障害物があるか
 					if ((_skill.getType() & L1Skill.TYPE_ATTACK) == L1Skill.TYPE_ATTACK
 							&& _skillId != 10026
 							&& _skillId != 10027

@@ -184,7 +184,8 @@ public class L1MobSkillUse {
 			if (pc.isGmInvis()) {
 				continue;
 			}
-			if (!_attacker.glanceCheck(pc.getX(), pc.getY())) {
+			if (!(_attacker.glanceCheck(_attacker.getX(), _attacker.getY(), pc.getX(), pc.getY())
+							|| _attacker.glanceCheck(pc.getX(), pc.getY(), _attacker.getX(), _attacker.getY()))) {
 				continue; // 射線が通らない
 			}
 
@@ -262,7 +263,8 @@ public class L1MobSkillUse {
 		}
 
 		// 障害物がある場合攻撃不可能
-		if (!_attacker.glanceCheck(target.getX(), target.getY())) {
+		if (!(_attacker.glanceCheck(_attacker.getX(), _attacker.getY(), target.getX(), target.getY())
+						|| _attacker.glanceCheck(target.getX(), target.getY(), _attacker.getX(), _attacker.getY()))) {
 			return false;
 		}
 
@@ -293,7 +295,8 @@ public class L1MobSkillUse {
 				}
 
 				// 障害物がある場合は対象外
-				if (!_attacker.glanceCheck(cha.getX(), cha.getY())) {
+				if (!(_attacker.glanceCheck(_attacker.getX(), _attacker.getY(), cha.getX(), cha.getY())
+								|| _attacker.glanceCheck(cha.getX(), cha.getY(), _attacker.getX(), _attacker.getY()))) {
 					continue;
 				}
 
@@ -460,7 +463,8 @@ public class L1MobSkillUse {
 		}
 
 		// 障害物がある場合は対象外
-		if (!_attacker.glanceCheck(cha.getX(), cha.getY())) {
+		if (!(_attacker.glanceCheck(_attacker.getX(), _attacker.getY(), cha.getX(), cha.getY())
+						|| _attacker.glanceCheck(cha.getX(), cha.getY(), _attacker.getX(), _attacker.getY()))) {
 			return false;
 		}
 
