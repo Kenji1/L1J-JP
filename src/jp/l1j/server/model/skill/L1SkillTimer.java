@@ -115,6 +115,8 @@ class L1SkillStop {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_SkillIconAura(116, 0));
 			}
+		} else if (skillId == BOUNCE_ATTACK) { // バウンスアタック
+			cha.addHitup(-5);
 		} else if (skillId == SHIELD) { // シールド
 			cha.addAc(2);
 			if (cha instanceof L1PcInstance) {

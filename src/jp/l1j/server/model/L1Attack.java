@@ -2073,7 +2073,6 @@ public class L1Attack {
 				short newHp = (short) (_pc.getCurrentHp() + _drainHp);
 				_pc.setCurrentHp(newHp);
 			}
-			damagePcWeaponDurability(); // 武器を損傷させる。
 			_targetPc.receiveDamage(_pc, _damage, false);
 		} else if (_calcType == NPC_PC) {
 			_targetPc.receiveDamage(_npc, _damage, false);
@@ -2212,26 +2211,6 @@ public class L1Attack {
 		}
 		// 祝福された武器
 		if (_weaponBless == 1 && ((_random.nextInt(100) + 1) < bchance)) {
-			// \f1あなたの%0が損傷しました。
-			_pc.sendPackets(new S_ServerMessage(268, weapon.getLogName()));
-			_pc.getInventory().receiveDamage(weapon, 1);
-		}
-	}
-
-	/*
-	 * バウンスアタックにより武器を損傷させる。 バウンスアタックの損傷確率は10%
-	 * 3.6Cにて効果変更予定 -> 攻撃成功+6
-	 */
-	private void damagePcWeaponDurability() {
-		// PvP以外、素手、弓、ガントトレット、相手がバウンスアタック未使用、SOF中の場合何もしない
-		if (_calcType != PC_PC || _weaponType == 0 || _weaponType == 20
-				|| _weaponType == 62
-				|| _targetPc.hasSkillEffect(BOUNCE_ATTACK) == false
-				|| _pc.hasSkillEffect(SOUL_OF_FLAME)) {
-			return;
-		}
-
-		if (_random.nextInt(100) + 1 <= 10) {
 			// \f1あなたの%0が損傷しました。
 			_pc.sendPackets(new S_ServerMessage(268, weapon.getLogName()));
 			_pc.getInventory().receiveDamage(weapon, 1);

@@ -2915,6 +2915,9 @@ public class L1SkillUse {
 						pc.addDmgup(5);
 						pc.sendPackets(new S_SkillIconAura(116,
 								buffIconDuration));
+					} else if (_skillId == BOUNCE_ATTACK) { // バウンスアタック
+						L1PcInstance pc = (L1PcInstance) cha;
+						pc.addHitup(5);
 					} else if (_skillId == SHIELD) { // シールド
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.addAc(-2);
