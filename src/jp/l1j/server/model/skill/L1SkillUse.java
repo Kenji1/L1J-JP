@@ -2917,7 +2917,7 @@ public class L1SkillUse {
 								buffIconDuration));
 					} else if (_skillId == BOUNCE_ATTACK) { // バウンスアタック
 						L1PcInstance pc = (L1PcInstance) cha;
-						pc.addHitup(5);
+						pc.addHitup(6);
 					} else if (_skillId == SHIELD) { // シールド
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.addAc(-2);
