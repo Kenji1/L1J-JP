@@ -1118,7 +1118,7 @@ public class L1SkillUse {
 		if (isHPMPConsume()) {
 			if (_skillId == FINAL_BURN) { // ファイナル バーン
 				_player.setCurrentHp(1);
-				_player.setCurrentMp(0);
+				_player.setCurrentMp(1);
 			} else {
 				int current_hp = _player.getCurrentHp() - _consumeHp;
 				_player.setCurrentHp(current_hp);
