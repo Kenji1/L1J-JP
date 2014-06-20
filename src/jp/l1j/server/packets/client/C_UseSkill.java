@@ -77,7 +77,8 @@ public class C_UseSkill extends ClientBasePacket {
 		if (abyte0.length > 4) {
 			try {
 				if (skillId == CALL_CLAN || skillId == RUN_CLAN) { // コールクラン、ランクラン
-					charName = readS();
+					String tempName[] = readS().split("\\[");
+					charName = tempName[0];
 				} else if (skillId == TRUE_TARGET) { // トゥルーターゲット
 					targetId = readD();
 					targetX = readH();
