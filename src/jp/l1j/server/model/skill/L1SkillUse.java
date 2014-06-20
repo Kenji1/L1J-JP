@@ -1503,28 +1503,24 @@ public class L1SkillUse {
 	// 例：ファイア ウェポンとバーニングウェポンなど
 	private void deleteRepeatedSkills(L1Character cha) {
 		final int[][] repeatedSkills = {
-				// ホーリー ウェポン、エンチャント ウェポン、ブレス ウェポン, シャドウ ファング
-				// これらはL1ItemInstanceで管理
-				// { HOLY_WEAPON, ENCHANT_WEAPON, BLESS_WEAPON, SHADOW_FANG },
-				// ファイアー ウェポン、ウィンド ショット、ファイアー ブレス、ストーム アイ、バーニング ウェポン、ストーム ショット
-				{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE,
-					BURNING_WEAPON, STORM_SHOT },
-					// シールド、シャドウ アーマー、アース スキン、アースブレス、アイアン スキン
-					{ SHIELD, SHADOW_ARMOR, EARTH_SKIN, EARTH_BLESS, IRON_SKIN },
-					// ホーリー ウォーク、ムービング アクセレーション、ウィンド ウォーク、BP、ワッフル、ブラッドラスト
-					{ HOLY_WALK, MOVING_ACCELERATION, WIND_WALK, STATUS_BRAVE,
-						STATUS_ELFBRAVE, BLOODLUST },
-						// ヘイスト、グレーター ヘイスト、GP
-						{ HASTE, GREATER_HASTE, STATUS_HASTE },
-						// フィジカル エンチャント：DEX、ドレス デクスタリティー
-						{ PHYSICAL_ENCHANT_DEX, DRESS_DEXTERITY,
-							STATUS_FLORA_POTION_DEX },
-							// フィジカル エンチャント：STR、ドレス マイティー
-							{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY, STATUS_FLORA_POTION_STR },
-							// グローウィングオーラ、シャイニングシールド
-							{ GLOWING_AURA, SHINING_SHIELD },
-							// 覚醒各種
-							{ AWAKEN_ANTHARAS, AWAKEN_FAFURION, AWAKEN_VALAKAS } };
+			// ホーリー ウェポン、エンチャント ウェポン、ブレス ウェポン, シャドウ ファング
+			// これらはL1ItemInstanceで管理
+			// { HOLY_WEAPON, ENCHANT_WEAPON, BLESS_WEAPON, SHADOW_FANG },
+			// ファイアー ウェポン、ウィンド ショット、ファイアー ブレス、ストーム アイ、バーニング ウェポン、ストーム ショット
+			{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE, BURNING_WEAPON, STORM_SHOT },
+			// シールド、シャドウ アーマー、アース スキン、アースブレス、アイアン スキン
+			{ SHIELD, SHADOW_ARMOR, EARTH_SKIN, EARTH_BLESS, IRON_SKIN },
+			// ホーリー ウォーク、ムービング アクセレーション、ウィンド ウォーク、BP、ワッフル、ブラッドラスト
+			{ HOLY_WALK, MOVING_ACCELERATION, WIND_WALK, STATUS_BRAVE, STATUS_ELFBRAVE, BLOODLUST },
+			// ヘイスト、グレーター ヘイスト、GP
+			{ HASTE, GREATER_HASTE, STATUS_HASTE },
+			// フィジカル エンチャント：DEX、ドレス デクスタリティー
+			{ PHYSICAL_ENCHANT_DEX, DRESS_DEXTERITY, STATUS_FLORA_POTION_DEX },
+			// フィジカル エンチャント：STR、ドレス マイティー
+			{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY, STATUS_FLORA_POTION_STR },
+			// 覚醒各種
+			{ AWAKEN_ANTHARAS, AWAKEN_FAFURION, AWAKEN_VALAKAS }
+		};
 
 		for (int[] skills : repeatedSkills) {
 			for (int id : skills) {
