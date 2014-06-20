@@ -2931,11 +2931,11 @@ public class L1SkillUse {
 								buffIconDuration));
 					} else if (_skillId == DRESS_DEXTERITY) { // ドレス デクスタリティー
 						L1PcInstance pc = (L1PcInstance) cha;
-						pc.addDex((byte) 2);
+						pc.addDex((byte) 3);
 						pc.sendPackets(new S_Dexup(pc, 2, buffIconDuration));
 					} else if (_skillId == DRESS_MIGHTY) { // ドレス マイティー
 						L1PcInstance pc = (L1PcInstance) cha;
-						pc.addStr((byte) 2);
+						pc.addStr((byte) 3);
 						pc.sendPackets(new S_Strup(pc, 2, buffIconDuration));
 					} else if (_skillId == SHADOW_FANG) { // シャドウ ファング
 						L1PcInstance pc = (L1PcInstance) cha;

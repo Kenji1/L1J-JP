@@ -136,13 +136,13 @@ class L1SkillStop {
 				pc.sendPackets(new S_SkillIconShield(3, 0));
 			}
 		} else if (skillId == DRESS_DEXTERITY) { // ドレス デクスタリティー
-			cha.addDex((byte) -2);
+			cha.addDex((byte) -3);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Dexup(pc, 2, 0));
 			}
 		} else if (skillId == DRESS_MIGHTY) { // ドレス マイティー
-			cha.addStr((byte) -2);
+			cha.addStr((byte) -3);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Strup(pc, 2, 0));
