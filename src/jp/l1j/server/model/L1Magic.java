@@ -738,7 +738,7 @@ public class L1Magic {
 
 		if (_targetPc.hasSkillEffect(COUNTER_MIRROR)) {
 			if (_calcType == PC_PC) {
-				if (_targetPc.getWis() >= _random.nextInt(100)) {
+				if (_targetPc.getInt() >= _random.nextInt(100)) {
 					_pc.sendPackets(new S_DoActionGFX(_pc.getId(),
 							ActionCodes.ACTION_Damage));
 					_pc.broadcastPacket(new S_DoActionGFX(_pc.getId(),
@@ -757,7 +757,7 @@ public class L1Magic {
 						|| npcId == 45684) {
 				} else if (!_npc.getNpcTemplate().enableErase()) {
 				} else {
-					if (_targetPc.getWis() >= _random.nextInt(100)) {
+					if (_targetPc.getInt() >= _random.nextInt(100)) {
 						_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(),
 								ActionCodes.ACTION_Damage));
 						_targetPc.sendPackets(new S_SkillSound(_targetPc
