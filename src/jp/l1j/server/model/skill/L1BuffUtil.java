@@ -184,6 +184,7 @@ public class L1BuffUtil {
 				pc.addMpr(3);
 				pc.addDmgup(1);
 				pc.addHitup(5);
+				pc.addBowHitup(5);
 				pc.addWeightReduction(40);
 				pc.addEarth(30);
 				break;
@@ -201,6 +202,7 @@ public class L1BuffUtil {
 				pc.addMpr(3);
 				pc.addDmgup(1);
 				pc.addHitup(5);
+				pc.addBowHitup(5);
 				pc.addWeightReduction(40);
 				pc.addWater(30);
 				break;
@@ -218,6 +220,7 @@ public class L1BuffUtil {
 				pc.addMpr(3);
 				pc.addDmgup(1);
 				pc.addHitup(5);
+				pc.addBowHitup(5);
 				pc.addWeightReduction(40);
 				pc.addWind(30);
 				break;
@@ -256,6 +259,7 @@ public class L1BuffUtil {
 				pc.addDex(5);
 				pc.addCon(1);
 				pc.addHitup(3);
+				pc.addBowHitup(3);
 				pc.addAc(-3);
 				break;
 			case BLESS_OF_COMA2: // コマの祝福Ｂ
@@ -272,6 +276,7 @@ public class L1BuffUtil {
 				pc.addDex(5);
 				pc.addCon(3);
 				pc.addHitup(5);
+				pc.addBowHitup(5);
 				pc.addAc(-8);
 				pc.addSp(1);
 				pc.addExpBonusPct(20);

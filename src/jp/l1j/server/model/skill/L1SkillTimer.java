@@ -117,6 +117,7 @@ class L1SkillStop {
 			}
 		} else if (skillId == BOUNCE_ATTACK) { // バウンスアタック
 			cha.addHitup(-6);
+			cha.addBowHitup(-6);
 		} else if (skillId == SHIELD) { // シールド
 			cha.addAc(2);
 			if (cha instanceof L1PcInstance) {
@@ -758,6 +759,7 @@ class L1SkillStop {
 				pc.addMpr(-3);
 				pc.addDmgup(-1);
 				pc.addHitup(-5);
+				pc.addBowHitup(-5);
 				pc.addWeightReduction(-40);
 				pc.addEarth(-30);
 				pc.sendPackets(new S_HpUpdate(pc.getCurrentHp(), pc.getMaxHp()));
@@ -776,6 +778,7 @@ class L1SkillStop {
 				pc.addMpr(-3);
 				pc.addDmgup(-1);
 				pc.addHitup(-5);
+				pc.addBowHitup(-5);
 				pc.addWeightReduction(-40);
 				pc.addWater(-30);
 				pc.sendPackets(new S_HpUpdate(pc.getCurrentHp(), pc.getMaxHp()));
@@ -794,6 +797,7 @@ class L1SkillStop {
 				pc.addMpr(-3);
 				pc.addDmgup(-1);
 				pc.addHitup(-5);
+				pc.addBowHitup(-5);
 				pc.addWeightReduction(-40);
 				pc.addWind(-30);
 				pc.sendPackets(new S_HpUpdate(pc.getCurrentHp(), pc.getMaxHp()));
@@ -810,6 +814,7 @@ class L1SkillStop {
 				pc.addDex(-5);
 				pc.addCon(-1);
 				pc.addHitup(-3);
+				pc.addBowHitup(-3);
 				pc.addAc(3);
 			}
 		}
@@ -820,6 +825,7 @@ class L1SkillStop {
 				pc.addDex(-5);
 				pc.addCon(-3);
 				pc.addHitup(-5);
+				pc.addBowHitup(-5);
 				pc.addAc(8);
 				pc.addSp(-1);
 				pc.addExpBonusPct(-20);
