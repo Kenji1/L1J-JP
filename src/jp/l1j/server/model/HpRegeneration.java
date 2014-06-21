@@ -257,7 +257,8 @@ public class HpRegeneration extends TimerTask {
 		// エキゾチックバイタライズ状態、アディショナルファイアー状態か
 		// ゴールデンウィング装備時であれば、重量オーバーでは無いとみなす。
 		if (pc.hasSkillEffect(EXOTIC_VITALIZE)
-				|| pc.hasSkillEffect(ADDITIONAL_FIRE)) {
+				|| pc.hasSkillEffect(ADDITIONAL_FIRE)
+				|| pc.hasSkillEffect(AWAKEN_FAFURION)) {
 			return false;
 		}
 		if (pc.getInventory().checkEquipped(20049)) {
