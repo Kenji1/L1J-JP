@@ -149,6 +149,8 @@ public class L1SkillUse {
 	private ArrayList<TargetStatus> _targetList;
 
 	private static Logger _log = Logger.getLogger(L1SkillUse.class.getName());
+	
+	private static RandomGenerator _random = RandomGeneratorFactory.newRandom();
 
 	public L1SkillUse() {
 	}
@@ -2131,9 +2133,7 @@ public class L1SkillUse {
 						npc.setParalysisTime(_skill.getBuffDuration() * 1000);
 					}
 				} else if (_skillId == SHOCK_STUN) {
-					RandomGenerator random = RandomGeneratorFactory
-							.getSharedRandom();
-					int stunTime = (random.nextInt(21) + 10) * 100;
+					int stunTime = (_random.nextInt(21) + 10) * 100;
 					_shockStunDuration = stunTime;
 					L1EffectSpawn.getInstance().spawnEffect(81162,
 							_shockStunDuration, cha.getX(), cha.getY(),
@@ -2150,9 +2150,7 @@ public class L1SkillUse {
 						npc.setParalysisTime(_shockStunDuration);
 					}
 				} else if (_skillId == MASS_SHOCK_STUN) {
-					RandomGenerator random = RandomGeneratorFactory
-							.getSharedRandom();
-					int stunTime = (random.nextInt(21) + 30) * 100;
+					int stunTime = (_random.nextInt(21) + 30) * 100;
 
 					_shockStunDuration = stunTime;
 					L1EffectSpawn.getInstance().spawnEffect(81162,
@@ -2388,9 +2386,7 @@ public class L1SkillUse {
 					// ダメージを対象のHPとする。
 					dmg = cha.getCurrentHp();
 				} else if (_skillId == MANA_DRAIN) { // マナ ドレイン
-					RandomGenerator random = RandomGeneratorFactory
-							.getSharedRandom();
-					int chance = random.nextInt(10) + 5;
+					int chance = _random.nextInt(10) + 5;
 					drainMana = chance + (_user.getInt() / 2);
 					if (cha.getCurrentMp() < drainMana) {
 						drainMana = cha.getCurrentMp();
@@ -2405,10 +2401,7 @@ public class L1SkillUse {
 							L1PcInstance pc = (L1PcInstance) cha;
 							L1ItemInstance weapon = pc.getWeapon();
 							if (weapon != null) {
-								RandomGenerator random = RandomGeneratorFactory
-										.getSharedRandom();
-								int weaponDamage = random.nextInt(_user
-										.getInt() / 3) + 1;
+								int weaponDamage = _random.nextInt(_user.getInt() / 3) + 1;
 								// \f1あなたの%0が損傷しました。
 								pc.sendPackets(new S_ServerMessage(268, weapon
 										.getLogName()));
@@ -2464,14 +2457,12 @@ public class L1SkillUse {
 						}
 					}
 				} else if (_skillId == BONE_BREAK) { // ボーンブレイク
-					RandomGenerator random = RandomGeneratorFactory
-							.getSharedRandom();
-					int stunTime = (random.nextInt(14) + 7) * 100;
+					int stunTime = (_random.nextInt(14) + 7) * 100;
 					_boneBreakDuration = stunTime;
 					L1EffectSpawn.getInstance().spawnEffect(91208,
 							_boneBreakDuration, cha.getX(), cha.getY(),
 							cha.getMapId());
-					int chance = (random.nextInt(100) + 1);
+					int chance = (_random.nextInt(100) + 1);
 					int probability = (l1skills.getProbabilityValue() - (2 * cha
 							.getResistStun()));
 					// DB ProbabitiyValueからスタン耐性２倍を引く
@@ -2507,7 +2498,6 @@ public class L1SkillUse {
 								6526));
 					}
 				} else if (_skillId == CONFUSION) { // コンフュージョン
-					RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
 					L1PcInstance pc = null;
 					int time = _skill.getBuffDuration() * 1000;
 					int chance = 0;
@@ -2515,7 +2505,7 @@ public class L1SkillUse {
 						pc = (L1PcInstance) cha;
 					}
 					if (pc == null || !pc.isGm()) {
-						chance = random.nextInt(100) + 1;
+						chance = _random.nextInt(100) + 1;
 					}
 					if (chance <= _skill.getProbabilityValue()) {
 						cha.setSkillEffect(SILENCE, time);
@@ -2720,8 +2710,6 @@ public class L1SkillUse {
 						}
 					} else if (_skillId == BRING_STONE) { // ブリング ストーン
 						L1PcInstance pc = (L1PcInstance) cha;
-						RandomGenerator random = RandomGeneratorFactory
-								.getSharedRandom();
 						L1ItemInstance item = pc.getInventory().getItem(
 								_itemobjid);
 						if (item != null) {
@@ -2730,7 +2718,7 @@ public class L1SkillUse {
 							int brave = (int) (dark / 2.1);
 							int wise = (int) (brave / 2.0);
 							int kayser = (int) (wise / 1.9);
-							int chance = random.nextInt(100) + 1;
+							int chance = _random.nextInt(100) + 1;
 							if (item.getItem().getItemId() == 40320) {
 								pc.getInventory().removeItem(item, 1);
 								if (dark >= chance) {
@@ -2864,9 +2852,7 @@ public class L1SkillUse {
 									}
 									// 特殊設定の場合ランダムで出現
 									if (summonid == 0) {
-										RandomGenerator random = RandomGeneratorFactory
-												.getSharedRandom();
-										int k3 = random.nextInt(4);
+										int k3 = _random.nextInt(4);
 										summonid = summons[k3];
 									}
 
