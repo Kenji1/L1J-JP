@@ -117,7 +117,6 @@ public class L1SkillUse {
 	private int _dmg;
 	private int _shockStunDuration;
 	private int _boneBreakDuration;
-	private int _confusionDuration;
 	private int _targetID;
 	private int _consumeMp = 0;
 	private int _consumeHp = 0;
@@ -1171,7 +1170,7 @@ public class L1SkillUse {
 			buffDuration = _boneBreakDuration;
 		}
 		if (_skillId == CONFUSION) {
-			buffDuration = _confusionDuration;
+			return;
 		}
 		if (_skillId == CURSE_POISON) { // カーズポイズンの効果処理はL1Poisonに移譲。
 			return;
@@ -2508,24 +2507,18 @@ public class L1SkillUse {
 								6526));
 					}
 				} else if (_skillId == CONFUSION) { // コンフュージョン
-					RandomGenerator random = RandomGeneratorFactory
-							.getSharedRandom();
-					int silenceTime = (random.nextInt(60) + 40) * 100;
-					_confusionDuration = silenceTime;
-					int chance = (random.nextInt(100) + 1);
-					int probability = l1skills.getProbabilityValue();
-					if (chance <= probability) {
-						if (cha instanceof L1PcInstance) {
-							L1PcInstance pc = (L1PcInstance) cha;
-							// 本鯖では、メッセージは無いが一応表示させておく
-							pc.sendPackets(new S_ServerMessage(697));
-							pc.setSkillEffect(SILENCE, _confusionDuration);
-						} else if (cha instanceof L1MonsterInstance
-								|| cha instanceof L1SummonInstance
-								|| cha instanceof L1PetInstance) {
-							L1NpcInstance npc = (L1NpcInstance) cha;
-							npc.setSkillEffect(SILENCE, _confusionDuration);
-						}
+					RandomGenerator random = RandomGeneratorFactory.getSharedRandom();
+					L1PcInstance pc = null;
+					int time = _skill.getBuffDuration() * 1000;
+					int chance = 0;
+					if (cha instanceof L1PcInstance) {
+						pc = (L1PcInstance) cha;
+					}
+					if (pc == null || !pc.isGm()) {
+						chance = random.nextInt(100) + 1;
+					}
+					if (chance <= _skill.getProbabilityValue()) {
+						cha.setSkillEffect(SILENCE, time);
 					}
 				} else if (_skillId == PHANTASM) { // ファンタズム
 					int time = _skill.getBuffDuration() * 1000;
