@@ -2482,20 +2482,11 @@ public class L1SkillUse {
 				} else if (_skillId == SMASH_ENERGY) { // スマッシュエネルギー
 					if (cha instanceof L1PcInstance) {
 						L1PcInstance pc = (L1PcInstance) cha;
-						pc.sendPackets(new S_SkillSound(pc.getId(), 6526));
-						pc.broadcastPacket(new S_SkillSound(pc.getId(), 6526));
-					} else if (cha instanceof L1MonsterInstance
-							|| cha instanceof L1SummonInstance
-							|| cha instanceof L1PetInstance
-							|| cha instanceof L1DwarfInstance
-							|| cha instanceof L1GuardInstance
-							|| cha instanceof L1MerchantInstance
-							|| cha instanceof L1TeleporterInstance
-							|| cha instanceof L1HousekeeperInstance) {
+						pc.sendPackets(new S_SkillSound(pc.getId(), _skill.getCastGfx()));
+						pc.broadcastPacket(new S_SkillSound(pc.getId(), _skill.getCastGfx()));
+					} else {
 						L1NpcInstance npc = (L1NpcInstance) cha;
-						npc
-						.broadcastPacket(new S_SkillSound(npc.getId(),
-								6526));
+						npc.broadcastPacket(new S_SkillSound(npc.getId(), _skill.getCastGfx()));
 					}
 				} else if (_skillId == CONFUSION) { // コンフュージョン
 					L1PcInstance pc = null;
