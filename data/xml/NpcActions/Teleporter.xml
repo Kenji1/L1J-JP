@@ -29,6 +29,10 @@
 	<Action Name="teleport talking island-in" NpcId="50003">
 		<Teleport X="32593" Y="32922" Map="0" Heading="5" Price="0"/>
 	</Action>
+  <!-- 新隠された渓谷⇒シルバーナイトタウン -->
+	<Action Name="teleport talking silverknight-in" NpcId="50003">
+		<Teleport X="33083" Y="33387" Map="4" Heading="5" Price="0"/>
+	</Action>
 	<!-- 新隠された渓谷⇒隠された渓谷ダンジョン -->
 	<Action Name="teleport dungeon-in" NpcId="50006">
 		<Teleport X="32871" Y="32866" Map="86" Heading="5" Price="0"/>
