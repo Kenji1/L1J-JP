@@ -114,6 +114,7 @@ public class ClanTable {
 		clan.setLeaderName(player.getName());
 		clan.setCastleId(0);
 		clan.setHouseId(0);
+		clan.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -124,7 +125,7 @@ public class ClanTable {
 			pstm.setInt(3, clan.getLeaderId());
 			pstm.setInt(4, clan.getCastleId());
 			pstm.setInt(5, clan.getHouseId());
-			pstm.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+			pstm.setTimestamp(6, clan.getCreatedAt());
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -157,8 +158,8 @@ public class ClanTable {
 			pstm.setInt(2, clan.getLeaderId());
 			pstm.setInt(3, clan.getCastleId());
 			pstm.setInt(4, clan.getHouseId());
-			pstm.setString(5, clan.getClanName());
-			pstm.setTimestamp(6, clan.getCreatedAt());
+			pstm.setTimestamp(5, clan.getCreatedAt());
+			pstm.setString(6, clan.getClanName());
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
