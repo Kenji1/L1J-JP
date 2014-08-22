@@ -61,6 +61,9 @@ public class L1ShopBuyOrderList {
 		if (_shop.getSellingItems().size() < orderNumber) {
 			return;
 		}
+		if (count > 9999) {
+			return;
+		}
 		L1ShopItem shopItem = _shop.getSellingItems().get(orderNumber);
 
 		int price = (int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE
