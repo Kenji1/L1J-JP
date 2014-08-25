@@ -35,9 +35,14 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 	public C_DeleteInventoryItem(byte[] decrypt, ClientThread client) {
 		super(decrypt);
 		int itemObjectId = readD();
+		int count = readD();
 		L1PcInstance pc = client.getActiveChar();
 		L1ItemInstance item = pc.getInventory().getItem(itemObjectId);
 
+		if (count == 0) {
+			count = item.getCount();
+		}
+		
 		// 削除しようとしたアイテムがサーバー上に無い場合
 		if (item == null) {
 			return;
@@ -74,9 +79,9 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 		}
 
 		if (Config.RECYCLE_SYSTEM) {
-			pc.getInventory().recycleItem(pc, item); // ゴミをアデナに換金
+			pc.getInventory().recycleItem(pc, item, count); // ゴミをアデナに換金
 		} else {
-			pc.getInventory().removeItem(item, item.getCount());
+			pc.getInventory().removeItem(item, count);
 		}
 		pc.updateLight();
 	}

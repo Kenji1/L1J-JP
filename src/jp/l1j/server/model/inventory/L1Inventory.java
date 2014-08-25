@@ -371,45 +371,45 @@ public class L1Inventory extends L1Object {
 
 	
 	// ゴミ箱に捨てられたアイテムをアデナに換金（価格設定されていないアイテムは削除）
-	public int recycleItem(L1PcInstance pc, L1ItemInstance item) {
-		int count = 0;
+	public int recycleItem(L1PcInstance pc, L1ItemInstance item, int count) {
+		int price = 0;
 		
 		if (item == null) {
 			_log.log(Level.INFO, "Item is null", new IllegalArgumentException());
-			return count;
+			return price;
 		}
-		if (item.getCount() <= 0 || item.getCount() <= 0) {
+		if (count > 0x77359400 || count < 0) {
 			_log.log(Level.INFO, "Invalid item count", new IllegalArgumentException());
-			return count;
+			return price;
 		}
 
 		L1ItemRate rate = _itemRates.get(item.getItemId());
 		if (rate != null && rate.getPurchasingPrice() > 0) {
-			count = (int) (rate.getPurchasingPrice() * item.getCount());
+			price = (int) (rate.getPurchasingPrice() * count);
 			
-			if (count > MAX_AMOUNT) {
-				count = MAX_AMOUNT;
+			if (price > MAX_AMOUNT) {
+				price = MAX_AMOUNT;
 			}
 			
 			L1ItemInstance adena = ItemTable.getInstance().createItem(L1ItemId.ADENA);
-			adena.setCount(count);
+			adena.setCount(price);
 			
-			if (checkAddItem(adena, count) == OK) {
+			if (checkAddItem(adena, price) == OK) {
 				storeItem(adena);
 				pc.sendPackets(new S_ServerMessage(143, "ゴミ箱", adena.getLogName()));
 				// f1%0が%1をくれました。
 			} else {
 				L1Inventory ground = L1World.getInstance().getInventory(
 						pc.getX(), pc.getY(), pc.getMapId());
-				tradeItem(adena, count, ground);
+				tradeItem(adena, price, ground);
 				// 持てないので足元に落とす
 			}
 		}
 		
-		deleteItem(item);
+		removeItem(item, count);
 		L1World.getInstance().removeObject(item);
 		
-		return count;
+		return price;
 	}
 
 	// _itemsから指定オブジェクトを削除(L1PcInstance、L1DwarfInstance、L1GroundInstanceでこの部分をオーバライドする)

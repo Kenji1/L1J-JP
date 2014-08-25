@@ -66,7 +66,7 @@ public class L1RemoveInventoryItem implements L1CommandExecutor {
 			}
 						
 			if (Config.RECYCLE_SYSTEM) {
-				pc.getInventory().recycleItem(pc, item); // ゴミをアデナに換金
+				pc.getInventory().recycleItem(pc, item, item.getCount()); // ゴミをアデナに換金
 			} else {
 				pc.getInventory().removeItem(item, item.getCount());
 			}
