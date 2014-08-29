@@ -2775,7 +2775,10 @@ public class L1PcInstance extends L1Character {
 	// TODO ユグドラの実　テレポートバグ対応
 	public boolean isFastMovable() {
 		return (hasSkillEffect(HOLY_WALK)
-				|| hasSkillEffect(MOVING_ACCELERATION) || hasSkillEffect(WIND_WALK));
+				|| hasSkillEffect(MOVING_ACCELERATION)
+				|| hasSkillEffect(WIND_WALK)
+				|| hasSkillEffect(STATUS_BRAVE2)
+		);
 	}
 
 	public boolean isRIBRAVE() {
