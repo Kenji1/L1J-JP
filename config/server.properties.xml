@@ -183,6 +183,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="ShutdownRequestMax">0</entry>
 
 <!-- シャットダウン処理を開始した場合のカウントダウン(秒) -->
-<entry key="ShutdownRequestDelay">300</entry>
+<entry key="ShutdownDelay">300</entry>
 
 </properties>
