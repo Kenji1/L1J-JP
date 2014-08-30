@@ -5491,7 +5491,7 @@ public class C_NpcAction extends ClientBasePacket {
 				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40893, 200, 40094, 0);
 			// スペルスクロール製作（リムーブ カーズ）
 			} else if (s.equals("V")) {
-				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40894, 200, 40094, 0);
+				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40895, 200, 40094, 0);
 			// スペルスクロール製作（マナ ドレイン）
 			} else if (s.equals("W")) {
 				htmlid = getSpellScroll(pc, (L1NpcInstance) obj, 40897, 200, 40094, 0);
