@@ -64,7 +64,7 @@ public class L1BluePotion {
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	private static class Effect {
-		@XmlElement(name = "Time")
+		@XmlAttribute(name = "Time")
 		private int _time;
 		
 		private int getTime() {
