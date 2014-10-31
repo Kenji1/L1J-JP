@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="Identify">鉴定</entry>
 <entry key="Interval">数值</entry>
 <entry key="ItemID">物品编号</entry>
-<entry key="ItemName">I物品名称</entry>
+<entry key="ItemName">物品名称</entry>
 <entry key="ItemSetName">套装名称</entry>
 <entry key="Level">等级</entry>
 <entry key="MaxLevel">最高等级</entry>
@@ -62,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="WaittingForClient">正在等待用户连接...</entry>
 <entry key="TryingToConnection">正在尝试连线: %s</entry>
 <entry key="BannedIP">被封锁的IP: %s</entry>
-<entry key="GenerateServerSocket">正在建立伺服端通讯</entry>
+<entry key="GenerateServerSocket">正在建立服务端通讯</entry>
 <entry key="ServerSettings">■■■■ 服务端设置 ■■■■</entry>
 <entry key="Exp">经验值: %s倍</entry>
 <entry key="Lawful">正义值: %s倍</entry>
@@ -77,7 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="WeightReduction">重量减少率: %s倍</entry>
 <entry key="GlobalChat">全体聊天等级: Lv%s</entry>
 <entry key="PvP">PvP: 是</entry>
-<entry key="NonPvP">PvP: 無(Non-PvP)</entry>
+<entry key="NonPvP">PvP: 无(Non-PvP)</entry>
 <entry key="MaxUsers">最大玩家数: %d</entry>
 <entry key="LoadingComplete">加载完成</entry>
 <entry key="ShutdownTheServer">关闭服务器。</entry>
@@ -158,8 +158,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="RemovedTheItemsOnTheWorldMap">地面的垃圾被GM清除了.</entry>
 
 <!-- jp/l1j/server/command/executor/L1Describe.java -->
-<entry key="DescDmg">Dmg: %d / </entry>
-<entry key="DescHit">Hit: %d / </entry>
+<entry key="DescDmg">伤害: %d / </entry>
+<entry key="DescHit">命中: %d / </entry>
 <entry key="DescBowDmg">BowDmg: %d / </entry>
 <entry key="DescBowHit">BowHit: %d / </entry>
 <entry key="DescMR">MR: %d / </entry>
@@ -187,34 +187,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="DoesNotExistCommandThatAreRegisterd">登记列表为空.</entry>
 
 <!-- jp/l1j/server/command/executor/L1GMRoome.java -->
-<entry key="DoesNotExistTheRoom">Does not exist the romm: %s</entry>
+<entry key="DoesNotExistTheRoom">Room编号不存在: %s</entry>
 
 <!-- jp/l1j/server/command/executor/L1InsertSpawn.java -->
-<entry key="DoesNotExistNPC">Does not exist NPC.</entry>
+<entry key="DoesNotExistNPC">NPC不存在.</entry>
 <entry key="IsNotMobs">%d is not mobs.</entry>
-<entry key="AddedToTheSpawnList">Added to the spawn list: %s(%d)</entry>
+<entry key="AddedToTheSpawnList">添加到刷怪资料库中: %s(%d)</entry>
 
 <!-- jp/l1j/server/command/executor/L1Invisible.java -->
-<entry key="BecameInvisible">Became invisible.</entry>
+<entry key="BecameInvisible">现在是隐身状态.</entry>
 
 <!-- jp/l1j/server/command/executor/L1Kick.java -->
-<entry key="AccountKick">Kick the %s.</entry>
+<entry key="AccountKick">强制踢出 %s.</entry>
 
 <!-- jp/l1j/server/command/executor/L1LevelPresetn.java -->
-<entry key="GaveTheItem1">Gave the %s(%d) (%s: %d, %s: %d)</entry>
+<entry key="GaveTheItem1">给予 %s(%d) (%s: %d, %s: %d)</entry>
 
 <!-- jp/l1j/server/command/executor/L1Loc.java -->
-<entry key="Location">Loc (%d, %d, %d) %d</entry>
+<entry key="Location">坐标 (%d, %d, %d) %d</entry>
 
 <!-- jp/l1j/server/command/executor/L1Move.java -->
-<entry key="MovedToLoc">Moved to Loc (%d, %d, %d) %d</entry>
+<entry key="MovedToLoc">移动到坐标 (%d, %d, %d) %d</entry>
 
 <!-- jp/l1j/server/command/executor/L1PartyRecall.java -->
-<entry key="RecalledByGM">Recalled by GM.</entry>
-<entry key="IsNotPartyMember">Is not a party member.</entry>
+<entry key="RecalledByGM">您被传唤到GM身边.</entry>
+<entry key="IsNotPartyMember">对方未加入血盟.</entry>
 
 <!-- jp/l1j/server/command/executor/L1PcBuff.java -->
-<entry key="BuffSkillsByGM">Received the Buff skills by GM.</entry>
+<entry key="BuffSkillsByGM">GM施放全体Buff.</entry>
 
 <!-- jp/l1j/server/command/executor/L1PotLog.java -->
 <entry key="ChangedToDisplayUseOfThePotions">Changed to display use of the potions.</entry>
@@ -337,25 +337,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="FailedToObtainTheRevivalPotion">Failed to obtain a revival potion.</entry>
 
 <!-- jp/l1j/server/model/item/executor/* -->
-<entry key="DoesNotExistItemList">%s does not exist in the item list.</entry>
-<entry key="DoesNotExistSkillList">%s does not exist in the skill list.</entry>
-<entry key="DoesNotExistPolyList">%s does not exist in the poly list.</entry>
-<entry key="DoesNotExistMapList">%s does not exist in the map list.</entry>
-<entry key="DoesNotExistNpcList">%s does not exist in the npc list.</entry>
-<entry key="ProbabilitiesError">%s total probabilities is not 100%%.</entry>
-<entry key="OverEnchantSuccessful">%s has succeeded in making the %s</entry>
+<entry key="DoesNotExistItemList">%s 不存在于物品列表.</entry>
+<entry key="DoesNotExistSkillList">%s 不存在于技能列表.</entry>
+<entry key="DoesNotExistPolyList">%s 不存在于变身列表.</entry>
+<entry key="DoesNotExistMapList">%s 不存在于地图列表.</entry>
+<entry key="DoesNotExistNpcList">%s 不存在于NPC列表.</entry>
+<entry key="ProbabilitiesError">%s 总概率不是100%%.</entry>
+<entry key="OverEnchantSuccessful">%s 成功制成 %s</entry>
 
 <!-- jp/l1j/server/packets/client/C_AuthLogin.java -->
-<entry key="DenyToMultipleLogins">Deny to multiple logins. account=%s host=%s</entry>
-<entry key="DenyToConnectFromSpecificIP">Deny to connect from specific IP range. account=%s host=%</entry>
-<entry key="DenyToLoginBanAccount">Deny to login BAN account. account=%s host=%</entry>
-<entry key="DenyToLoginBecauseReachedMaxConnections">Deny to login, because reached the maximum connections.</entry>
+<entry key="DenyToMultipleLogins">拒绝多开. 账号=%s host=%s</entry>
+<entry key="DenyToConnectFromSpecificIP">拒绝来自特定IP段的连接. 账号=%s host=%</entry>
+<entry key="DenyToLoginBanAccount">拒绝封锁账号登入. 账号=%s host=%</entry>
+<entry key="DenyToLoginBecauseReachedMaxConnections">拒绝登入, 达到最大连接数.</entry>
 
 <!-- jp/l1j/server/packets/client/C_LoginToServer.java -->
-<entry key="MultipleLoginsDetected">Multiple logins detected. Disconnect the connection of %s</entry>
-<entry key="LoginRequestIsInvalid">Login request is invalid. char=%s account=%s host=%s</entry>
-<entry key="BeyondTheToleranceOfTheLevelDown">Beyond the tolerance of the level-down. char=%s account=%s host=%s</entry>
-<entry key="LoggedCharacter">Logged character: char=%s account=%s host=%s</entry>
+<entry key="MultipleLoginsDetected">拒绝多开. 断开连接 %s</entry>
+<entry key="LoginRequestIsInvalid">登陆. char=%s account=%s host=%s</entry>
+<entry key="BeyondTheToleranceOfTheLevelDown">超过允许降等限制. char=%s account=%s host=%s</entry>
+<entry key="LoggedCharacter">登入的角色: char=%s account=%s host=%s</entry>
 
 <!-- jp/l1j/server/packets/client/C_PickUpItem.java -->
 <entry key="CanNotPickUpAdena">无法捡起超过 2,000,000,000 金币.</entry>
@@ -366,8 +366,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <entry key="LeaveTheClan">离开血盟</entry>
 
 <!-- jp/l1j/server/packets/client/C_Shop.java -->
-<entry key="TradingIsImpossible">%s trading is impossible.</entry>
-<entry key="CanNotToStack">%s is can not to stack. Trading is impossible.</entry>
+<entry key="TradingIsImpossible">%s 无法交易.</entry>
+<entry key="CanNotToStack">%s 无法堆叠. 无法交易.</entry>
 
 <!-- jp/l1j/server/packets/client/C_UseItem.java -->
 <entry key="CanBeUsedBelowTheMaxLevel">等级 %d 以下才能使用此道具.</entry>
