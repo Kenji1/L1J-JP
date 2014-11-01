@@ -46,8 +46,8 @@ mkdir -p release-build/log
 cp -fvR maps release-build/maps
 cp -fv l1jserver.jar release-build/l1jserver.jar
 cp -fv license.txt release-build/license.txt
-cp -fv RebootServer.bat release-build/ProcessMonitor.bat
-cp -fv RebootServer.sh release-build/ProcessMonitor.sh
+cp -fv ProcessMonitor.bat release-build/ProcessMonitor.bat
+cp -fv ProcessMonitor.sh release-build/ProcessMonitor.sh
 cp -fv ServerStart.bat release-build/ServerStart.bat
 cp -fv ServerStart.sh release-build/ServerStart.sh
 cp -fv ServerDebug.bat release-build/ServerDebug.bat

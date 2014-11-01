@@ -47,8 +47,8 @@ xcopy .\log .\release-build\log /D /E /I /Y
 xcopy .\maps .\release-build\maps /D /E /I /Y
 copy .\l1jserver.jar .\release-build\l1jserver.jar /Y
 copy .\license.txt .\release-build\license.txt /Y
-copy .\RebootServer.bat .\release-build\ProcessMonitor.bat /Y
-copy .\RebootServer.sh .\release-build\ProcessMonitor.sh /Y
+copy .\ProcessMonitor.bat .\release-build\ProcessMonitor.bat /Y
+copy .\ProcessMonitor.sh .\release-build\ProcessMonitor.sh /Y
 copy .\ServerStart.bat .\release-build\ServerStart.bat /Y
 copy .\ServerStart.sh .\release-build\ServerStart.sh /Y
 copy .\ServerDebug.bat .\release-build\ServerDebug.bat /Y
