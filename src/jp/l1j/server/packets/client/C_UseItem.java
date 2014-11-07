@@ -1171,14 +1171,17 @@ public class C_UseItem extends ClientBasePacket {
 				ring = pcInventory.getRingEquipped();
 				if (activeChar.getLevel() < 76){
 					activeChar.sendPackets(new S_ServerMessage(124));
-          // \f1すでに何かを装備しています。
+					// \f1すでに何かを装備しています。
 					return;
-				} else if ((ring[0].getItem().getItemId() == itemid
+				} 
+				/* 
+				else if ((ring[0].getItem().getItemId() == itemid
 						&& ring[1].getItem().getItemId() == itemid)) {
 					activeChar.sendPackets(new S_ServerMessage(124));
-          // \f1すでに何かを装備しています。
+					// \f1すでに何かを装備しています。
 					return;
 				}
+				*/
 			}
 
 			if (type == 11 && pcInventory.getTypeEquipped(2, 11) == 3) {
@@ -1186,18 +1189,21 @@ public class C_UseItem extends ClientBasePacket {
 				ring = pcInventory.getRingEquipped();
 				if (activeChar.getLevel() < 81){
 					activeChar.sendPackets(new S_ServerMessage(124));
-          // \f1すでに何かを装備しています。
+					// \f1すでに何かを装備しています。
 					return;
-				} else if ((ring[0].getItem().getItemId() == itemid
+				}
+				/*
+				else if ((ring[0].getItem().getItemId() == itemid
 						&& ring[1].getItem().getItemId() == itemid) 
 						|| (ring[0].getItem().getItemId() == itemid
 						&& ring[2].getItem().getItemId() == itemid)
 						|| (ring[1].getItem().getItemId() == itemid
 						&& ring[2].getItem().getItemId() == itemid)) {
 					activeChar.sendPackets(new S_ServerMessage(124));
-          // \f1すでに何かを装備しています。
+					 // \f1すでに何かを装備しています。
 					return;
 				}
+				*/
 			}
 			//TODO 修正判斷76等戒指&81等戒指等級判斷
 
