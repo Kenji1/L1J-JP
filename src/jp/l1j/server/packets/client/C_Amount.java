@@ -162,7 +162,7 @@ public class C_Amount extends ClientBasePacket {
 						if (dueTime != null) { // 宿屋再利用時間判定
 							Calendar cal = Calendar.getInstance();
 							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 利用時間以内
-								pc.sendPackets(new S_NpcTalkReturn(npcId, ""));
+								pc.sendPackets(new S_NpcTalkReturn(npc.getId(), ""));
 								return;
 							}
 						}
@@ -208,13 +208,13 @@ public class C_Amount extends ClientBasePacket {
 								itemName = (itemName + " (" + amount + ")");
 							}
 							String[] msg = { npc.getName() };
-							pc.sendPackets(new S_NpcTalkReturn(npcId, "inn4",
+							pc.sendPackets(new S_NpcTalkReturn(npc.getId(), "inn4",
 									msg));
 						}
 					}
 				} else {
 					String[] msg = { npc.getName() };
-					pc.sendPackets(new S_NpcTalkReturn(npcId, "inn3", msg));
+					pc.sendPackets(new S_NpcTalkReturn(npc.getId(), "inn3", msg));
 				}
 			} else {
 				L1NpcAction action = NpcActionTable.getInstance().get(s, pc,
