@@ -15,6 +15,7 @@
 package jp.l1j.server.model.instance;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.l1j.configure.Config;
@@ -128,7 +129,10 @@ public class L1MonsterInstance extends L1NpcInstance {
 		int minDistance = Short.MAX_VALUE;
 		int distance = 0;
 
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
+		ArrayList<L1PcInstance> list = L1World.getInstance().getVisiblePlayer(this);
+		Collections.shuffle(list);
+		
+		for (L1PcInstance pc : list) {
 			if (pc.getCurrentHp() <= 0 || pc.isDead() || pc.isGm()
 					|| pc.isMonitor() || pc.isGhost()) {
 				continue;
