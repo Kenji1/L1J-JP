@@ -4507,7 +4507,7 @@ public class L1PcInstance extends L1Character {
 	// 3.3C start
 	public void startRefreshParty() {// 3.3C追加パーティー開始
 
-		final int INTERVAL = 25000;
+		final int INTERVAL = 5000;
 
 		if (!_rpActive) {
 
