@@ -214,6 +214,7 @@ public class CharacterTable {
 		pc.getInventory().loadItems();
 		pc.getWarehouseInventory().loadItems();
 		pc.getElfWarehouseInventory().loadItems();
+		pc.getAdditionalWarehouseInventory().loadItems();
 	}
 
 	public static boolean doesCharNameExist(String name) {
