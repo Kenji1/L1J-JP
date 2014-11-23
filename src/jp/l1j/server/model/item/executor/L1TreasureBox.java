@@ -280,7 +280,7 @@ public class L1TreasureBox {
 				pc.death(null); // キャラクターを死亡させる
 			}
 			// ドラゴンキー
-			if (itemId == 50501) {
+			if (item.getItemId() == 50501) {
 				for (L1PcInstance listner : L1World.getInstance().getAllPlayers()) {
 					if (!listner.getExcludingList().contains(pc.getName())) {
 						if (listner.isShowTradeChat() || listner.isShowWorldChat()) {
