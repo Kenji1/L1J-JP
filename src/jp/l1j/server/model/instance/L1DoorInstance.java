@@ -190,10 +190,7 @@ public class L1DoorInstance extends L1NpcInstance {
 	private void sendPacket(L1PcInstance pc, int x, int y) {
 		S_Door packet = new S_Door(x, y, getDirection(), isPassable());
 		if (pc != null) { // onPerceive()経由の場合
-			// 開いている場合は通行不可パケット送信不要
-			if (getOpenStatus() == ActionCodes.ACTION_Close) {
-				pc.sendPackets(packet);
-			}
+			pc.sendPackets(packet);
 		} else {
 			broadcastPacket(packet);
 		}
@@ -205,7 +202,6 @@ public class L1DoorInstance extends L1NpcInstance {
 		}
 
 		setOpenStatus(ActionCodes.ACTION_Open);
-		broadcastPacket(new S_DoorPack(this));
 		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Open));
 		sendDoorPacket(null);
 	}
@@ -216,7 +212,6 @@ public class L1DoorInstance extends L1NpcInstance {
 		}
 
 		setOpenStatus(ActionCodes.ACTION_Close);
-		broadcastPacket(new S_DoorPack(this));
 		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Close));
 		sendDoorPacket(null);
 	}
