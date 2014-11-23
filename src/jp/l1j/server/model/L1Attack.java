@@ -1580,15 +1580,12 @@ public class L1Attack {
 		// チェーンソードによる弱点露出
 		if (_pc.getExposureTargetId() != _target.getId()) { // ターゲットが違う場合、弱点露出削除
 			if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
-				_pc.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV1);
 				_pc.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1);
 			}
 			if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
-				_pc.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV2);
 				_pc.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV2);
 			}
 			if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
-				_pc.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV3);
 				_pc.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV3);
 			}
 			_pc.sendPackets(new S_SkillIconGFX(75, 0));
@@ -1604,12 +1601,10 @@ public class L1Attack {
 		} else if (_weaponType2 == 13
 				&& (_random.nextInt(100) + 1) <= _weaponWeaknessExposureChance) {
 			if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1)) {
-				_pc.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV1);
 				_pc.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV1);
 				_pc.setSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV2, 15000);
 				_pc.sendPackets(new S_SkillIconGFX(75, 2));
 			} else if (_pc.hasSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV2)) {
-				_pc.killSkillEffectTimer(STATUS_WEAKNESS_EXPOSURE_LV2);
 				_pc.removeSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV2);
 				_pc.setSkillEffect(STATUS_WEAKNESS_EXPOSURE_LV3, 15000);
 				_pc.sendPackets(new S_SkillIconGFX(75, 3));
