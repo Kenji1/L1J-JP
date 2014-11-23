@@ -578,18 +578,20 @@ public class ClientThread implements Runnable, PacketOutput {
 				}
 			}
 		}
-
+		
 		// マジックドールをワールドマップ上から消す
 		Object[] dollList = pc.getDollList().values().toArray();
 		for (Object dollObject : dollList) {
 			L1DollInstance doll = (L1DollInstance) dollObject;
-			if (doll.isChargeDoll()) { // 課金マジックドールのタイマーを停止
-				L1ItemInstance item = pc.getInventory().getItem(doll.getItemObjId());
-				item.stopChargeTimer();
-			}
 			doll.deleteDoll();
 		}
 
+		// アイテム関連のタイマーを停止する
+		for(L1ItemInstance item : pc.getInventory().getItems()) {
+			item.stopChargeTimer();
+			item.stopExpirationTimer();
+		}
+		
 		// 従者をワールドマップ上から消し、同地点に再出現させる
 		Object[] followerList = pc.getFollowerList().values().toArray();
 		for (Object followerObject : followerList) {
