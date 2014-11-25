@@ -2273,7 +2273,7 @@ public class L1ItemInstance extends L1Object {
 		}
 	}
 
-	public void stopExpirationTimer(L1PcInstance pc) {
+	public void stopExpirationTimer() {
 		if (getExpirationTime() != null) {
 			_expirationTimer.cancel();
 			_expirationTimer = null;
