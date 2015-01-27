@@ -8,6 +8,10 @@
 			<Base Date="2008/5/18" Time="0:00" />
 			<Cycle Period="1d2h31m" Start="3h30m" End="1d5m" />
 		</BossCycle>
+		<BossCycle Name="Sample2">
+			<Base Day="Monday" Time="0:00" />
+			<Cycle Period="1d2h31m" Start="3h30m" />
+		</BossCycle>
 	-->
 	<BossCycle Name="DK">
 		<Base Day="Sunday" Time="0:00" />
