@@ -10,7 +10,7 @@
 		</BossCycle>
 	-->
 	<BossCycle Name="DK">
-		<Base Date="2008/5/18" Time="0:00" />
+		<Base Day="Sunday" Time="0:00" />
 		<Cycle Period="7h" Start="3h30m"/>
 	</BossCycle>
 	<BossCycle Name="Oren">

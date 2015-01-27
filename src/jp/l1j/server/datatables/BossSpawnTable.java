@@ -20,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jp.l1j.server.model.L1BossSpawn;
+import jp.l1j.server.model.boss.L1BossSpawn;
 import jp.l1j.server.random.RandomGenerator;
 import jp.l1j.server.random.RandomGeneratorFactory;
 import jp.l1j.server.templates.L1Npc;
@@ -53,12 +53,11 @@ public class BossSpawnTable {
 					_log.warning("mob data for id:" + npcTemplateId + " missing in npc table");
 					spawnDat = null;
 				} else {
-					spawnDat = new L1BossSpawn(template1);
+					spawnDat = new L1BossSpawn(template1, rs.getString("cycle_type"), rs.getInt("percentage"));
 					spawnDat.setId(rs.getInt("id"));
 					spawnDat.setNpcid(npcTemplateId);
 					L1Npc npc = NpcTable.getInstance().getTemplate(npcTemplateId);
 					spawnDat.setLocation(npc != null ? npc.getName() : null);
-					spawnDat.setCycleType(rs.getString("cycle_type"));
 					spawnDat.setAmount(rs.getInt("count"));
 					spawnDat.setGroupId(rs.getInt("group_id"));
 					spawnDat.setLocX(rs.getInt("loc_x"));
@@ -79,7 +78,6 @@ public class BossSpawnTable {
 					spawnDat.setMovementDistance(rs.getInt("movement_distance"));
 					spawnDat.setRest(rs.getBoolean("rest"));
 					spawnDat.setSpawnType(rs.getInt("spawn_type"));
-					spawnDat.setPercentage(rs.getInt("percentage"));
 					spawnDat.setName(template1.getName());
 
 					// start the spawning
