@@ -112,7 +112,7 @@ public class L1BossSpawn extends L1Spawn {
 	}
 	
 	/**
-	 * start から end の間の時刻までの時間を返す。
+	 * start から end の間のランダムな時刻までの時間を返す。
 	 * @param start 始点
 	 * @param end 終点
 	 * @param temporalUnit 時間の単位
