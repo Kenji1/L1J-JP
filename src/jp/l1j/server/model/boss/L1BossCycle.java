@@ -36,8 +36,8 @@ public class L1BossCycle {
 	 * @param name ボス周期の名前 (Caspa, DK など)
 	 * @param baseTime 基準時刻
 	 * @param period 周期の間隔
-	 * @param start スポーンを開始するまでの時間
-	 * @param end スポーンを終了するまでの時間
+	 * @param start タイムが開始するまでの時間
+	 * @param end タイムが終了するまでの時間
 	 */
 	public L1BossCycle(String name, LocalDateTime baseTime, Duration period, Duration start, Duration end) {
 		this.name = name;
@@ -48,24 +48,11 @@ public class L1BossCycle {
 	}
 	
 	/**
-	 * ボスがスポーンする時刻かどうかを返す
-	 * 時刻が現在の周期の start と end の間にあるかどうかを調べる。
-	 * @param time 時刻
-	 * @return ボスがスポーンする時刻であれば true, そうでなければ false
-	 */
-	public boolean inSpawnTime(LocalDateTime time) {
-		LocalDateTime currentSpawnStartTime = spawnStartTime(currentCycleStartTime(time));
-		LocalDateTime currentSpawnEndTime = spawnEndTime(currentCycleStartTime(time));
-		return (time.isEqual(currentSpawnStartTime) || time.isAfter(currentSpawnStartTime))
-				&& (time.isEqual(currentSpawnEndTime) || time.isBefore(currentSpawnEndTime));
-	}
-	
-	/**
 	 * 時刻を次の周期まで進めたものを返す
 	 * 
-	 * (現在の周期のスポーンが開始する時刻が 0:00 で
+	 * (現在のタイムが開始する時刻が 0:17 で
 	 * 周期の間隔が 30m なら
-	 * 次の周期のスポーンが開始する時刻は 0:30)
+	 * 次のタイムが開始する時刻は 0:47)
 	 * @param time 時刻
 	 * @return 周期の長さを足した時刻
 	 */
@@ -74,34 +61,21 @@ public class L1BossCycle {
 	}
 	
 	/**
-	 * 現在いる周期の開始時刻を返す
+	 * 現在時刻または現在時刻より前の最も近いタイムの開始する時刻を返す
 	 * @param now 現在時刻
-	 * @return 周期の開始時刻
+	 * @return タイムが開始する時刻
 	 */
-	public LocalDateTime currentCycleStartTime(LocalDateTime now) {
-		LocalDateTime dateTime = now.minusNanos(baseTime.until(now, ChronoUnit.NANOS) % period.toNanos());
-		if (now.isAfter(spawnEndTime(dateTime))) {
-			dateTime = nextTime(dateTime);
-		}
-		return dateTime;
+	public LocalDateTime currentTimeStartTime(LocalDateTime now) {
+		return now.minusNanos(baseTime.until(now, ChronoUnit.NANOS) % period.plus(start).toNanos());
 	}
 	
 	/**
-	 * その周期のスポーンが開始する時刻を返す
-	 * @param cycleStartTime 周期が開始する時刻
-	 * @return スポーンが開始する時刻
-	 */
-	public LocalDateTime spawnStartTime(LocalDateTime cycleStartTime) {
-		return cycleStartTime.plus(start);
-	}
-	
-	/**
-	 * その周期のスポーンが終了する時刻を返す
-	 * @param cycleStartTime 周期が開始する時刻
+	 * そのタイムのスポーンが終了する時刻を返す
+	 * @param timeStartTime タイムが開始する時刻
 	 * @return スポーンが終了する時刻
 	 */
-	public LocalDateTime spawnEndTime(LocalDateTime cycleStartTime) {
-		return cycleStartTime.plus(end);
+	public LocalDateTime timeEndTime(LocalDateTime timeStartTime) {
+		return timeStartTime.plus(end);
 	}
 	
 	public String getName() {

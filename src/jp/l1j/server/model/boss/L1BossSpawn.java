@@ -63,21 +63,19 @@ public class L1BossSpawn extends L1Spawn {
 	}
 	
 	private void schedule(boolean init, int spawnNumber, int objectId) {
+		// リロードされた時のために 毎回ボス周期を取りに行く
 		L1BossCycle bossCycle = L1BossCycleLoader.getInstance().getBossCycle(cycleType);
 		if (bossCycle == null) {
 			throw new RuntimeException(cycleType + " not found");
 		}
 		
 		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime cycleStartTime = bossCycle.currentCycleStartTime(now);
-		LocalDateTime start = bossCycle.spawnStartTime(cycleStartTime);
-		LocalDateTime end = bossCycle.spawnEndTime(cycleStartTime);
-		if (lastStartTime != null && lastStartTime.isEqual(start)) {
-			start = bossCycle.nextTime(start);
-			end = bossCycle.nextTime(end);
-		}
+		LocalDateTime start = bossCycle.currentTimeStartTime(now);
+		LocalDateTime end = bossCycle.timeEndTime(start);
 		if (probability()) {
-			if (init && !Config.INIT_BOSS_SPAWN && bossCycle.inSpawnTime(now)) {
+			if (now.isAfter(end) // 現在時刻がタイム終了時刻を過ぎている場合もある
+					|| (lastStartTime != null && lastStartTime.isEqual(start))
+					|| (init && !Config.INIT_BOSS_SPAWN && isOnTime(now, start, end))) {
 				start = bossCycle.nextTime(start);
 				end = bossCycle.nextTime(end);
 			}
@@ -111,6 +109,25 @@ public class L1BossSpawn extends L1Spawn {
 		}, sleepTime);
 	}
 	
+	private boolean probability() {
+		return Math.floor(Math.random() * 100) + 1 <= probability;
+	}
+	
+	private synchronized int currentBossAmount() {
+		return --bossAmount;
+	}
+	
+	/**
+	 * time が ボスタイムかどうかを返す
+	 * 時刻が start と end の間にあるかどうかを調べる。
+	 * @param time 時刻
+	 * @return ボスタイムであれば true, そうでなければ false
+	 */
+	private static boolean isOnTime(LocalDateTime time, LocalDateTime start, LocalDateTime end) {
+		return (time.isEqual(start) || time.isAfter(start))
+				&& (time.isEqual(end) || time.isBefore(end));
+	}
+	
 	/**
 	 * start から end の間のランダムな時刻までの時間を返す。
 	 * @param start 始点
@@ -118,15 +135,7 @@ public class L1BossSpawn extends L1Spawn {
 	 * @param temporalUnit 時間の単位
 	 * @return 時間
 	 */
-	private long random(LocalDateTime start, LocalDateTime end, TemporalUnit temporalUnit) {
+	private static long random(LocalDateTime start, LocalDateTime end, TemporalUnit temporalUnit) {
 		return (long) Math.floor(Math.random() * start.until(end, temporalUnit));
-	}
-	
-	private boolean probability() {
-		return Math.floor(Math.random() * 100) + 1 <= probability;
-	}
-	
-	private synchronized int currentBossAmount() {
-		return --bossAmount;
 	}
 }
