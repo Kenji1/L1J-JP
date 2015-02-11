@@ -47,7 +47,7 @@ import jp.l1j.server.datatables.SkillTable;
 import jp.l1j.server.datatables.SprTable;
 import jp.l1j.server.datatables.TrapTable;
 import jp.l1j.server.datatables.WeaponSkillTable;
-import jp.l1j.server.model.boss.L1BossCycleLoader;
+import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.executor.L1BeginnerItem;
 import jp.l1j.server.model.item.executor.L1BlankScroll;
@@ -102,7 +102,7 @@ public class L1ReloadConfig implements L1CommandExecutor {
 		// configs
 		Config.load();
 		GMCommandConfigs.getInstance().reload();
-		L1BossCycleLoader.getInstance().reload();
+		L1BossCycle.reload();
 		MapTimeController.getInstance().reload();
 		if (Config.AUTO_SHUTDOWN) {
 			ShutdownTimeController.getInstance().reload();

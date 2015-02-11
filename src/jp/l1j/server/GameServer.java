@@ -81,11 +81,11 @@ import jp.l1j.server.datatables.SprListTable;
 import jp.l1j.server.datatables.SprTable;
 import jp.l1j.server.datatables.WeaponSkillTable;
 import jp.l1j.server.model.ElementalStoneGenerator;
+import jp.l1j.server.model.L1BossCycle;
 import jp.l1j.server.model.L1BugBearRace;
 import jp.l1j.server.model.L1CastleLocation;
 import jp.l1j.server.model.L1NpcRegenerationTimer;
 import jp.l1j.server.model.L1World;
-import jp.l1j.server.model.boss.L1BossCycleLoader;
 import jp.l1j.server.model.gametime.L1GameTimeClock;
 import jp.l1j.server.model.instance.L1PcInstance;
 import jp.l1j.server.model.item.executor.L1BeginnerItem;
@@ -342,7 +342,7 @@ public class GameServer extends Thread {
 		ShutdownRequestTable.removeAll();
 		
 		// Loading the XML files
-		L1BossCycleLoader.getInstance().load();
+		L1BossCycle.load();
 		L1BeginnerItem.load();
 		L1BlankScroll.load();
 		L1BlessOfEva.load();

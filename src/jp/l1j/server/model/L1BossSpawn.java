@@ -13,30 +13,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jp.l1j.server.model.boss;
+package jp.l1j.server.model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import jp.l1j.configure.Config;
 import jp.l1j.server.GeneralThreadPool;
-import jp.l1j.server.model.L1Spawn;
+import jp.l1j.server.model.boss.L1BossCycle;
+import jp.l1j.server.model.boss.L1BossCycleLoader;
 import jp.l1j.server.templates.L1Npc;
 
 public class L1BossSpawn extends L1Spawn {
 	
-	private final String cycleType;
+	private String cycleType;
 	
-	private final int probability;
+	private int probability;
 	
 	private int bossAmount;
 	
 	private LocalDateTime lastStartTime;
 
-	public L1BossSpawn(L1Npc mobTemplate, String cycleType, int probability) {
+	public L1BossSpawn(L1Npc mobTemplate) {
 		super(mobTemplate);
-		this.cycleType = cycleType;
-		this.probability = probability;
 	}
 
 	@Override
@@ -137,5 +136,13 @@ public class L1BossSpawn extends L1Spawn {
 	 */
 	private static long random(LocalDateTime start, LocalDateTime end, TemporalUnit temporalUnit) {
 		return (long) Math.floor(Math.random() * start.until(end, temporalUnit));
+	}
+
+	public void setCycleType(String cycleType) {
+		this.cycleType = cycleType;
+	}
+
+	public void setPercentage(int probability) {
+		this.probability = probability;
 	}
 }
