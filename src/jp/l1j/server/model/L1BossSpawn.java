@@ -72,8 +72,7 @@ public class L1BossSpawn extends L1Spawn {
 		LocalDateTime start = bossCycle.currentTimeStartTime(now);
 		LocalDateTime end = bossCycle.timeEndTime(start);
 		if (probability()) {
-			if (now.isAfter(end) // 現在時刻がタイム終了時刻を過ぎている場合もある
-					|| (lastStartTime != null && lastStartTime.isEqual(start))
+			if ((lastStartTime != null && lastStartTime.isEqual(start))
 					|| (init && !Config.INIT_BOSS_SPAWN && isOnTime(now, start, end))) {
 				start = bossCycle.nextTime(start);
 				end = bossCycle.nextTime(end);

@@ -61,12 +61,16 @@ public class L1BossCycle {
 	}
 	
 	/**
-	 * 現在時刻または現在時刻より前の最も近いタイムの開始する時刻を返す
+	 * まだ終了時刻を過ぎておらず，現在時刻に最も近いタイム が開始する時刻を返す
 	 * @param now 現在時刻
 	 * @return タイムが開始する時刻
 	 */
 	public LocalDateTime currentTimeStartTime(LocalDateTime now) {
-		return now.minusNanos(baseTime.until(now, ChronoUnit.NANOS) % period.plus(start).toNanos());
+		LocalDateTime timeStartTime = now.minusNanos(baseTime.until(now, ChronoUnit.NANOS) % period.plus(start).toNanos());
+		if (timeEndTime(timeStartTime).isBefore(now)) {
+			timeStartTime = nextTime(timeStartTime);
+		}
+		return timeStartTime;
 	}
 	
 	/**
