@@ -48,9 +48,11 @@ public class L1Base {
 		} catch (NullPointerException | DateTimeParseException e) {
 			date = initDate;
 			if (dayStr != null) {
-				DayOfWeek day = DayOfWeek.valueOf(dayStr.toUpperCase());
-				DayOfWeek currentDay = date.getDayOfWeek();
-				date = date.plusDays(day.getValue() - currentDay.getValue());
+				int baseDay = DayOfWeek.valueOf(dayStr.toUpperCase()).getValue() - 1;
+				int currentDay = date.getDayOfWeek().getValue() - 1;
+				// 基準の曜日を0日目として，現在の曜日が何日目かを算出する。
+				currentDay = (currentDay + (7 - baseDay)) % 7;
+				date = date.minusDays(currentDay);
 			}
 		}
 		
