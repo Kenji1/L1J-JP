@@ -75,7 +75,7 @@ public class L1BossCycle {
 	 * @return スポーンが終了する時刻
 	 */
 	public LocalDateTime timeEndTime(LocalDateTime timeStartTime) {
-		return timeStartTime.plus(end);
+		return timeStartTime.plus(end).minus(start);
 	}
 	
 	public String getName() {
